@@ -1,2 +1,148 @@
-<h1>Mypages#index</h1>
-<p>Find me in app/views/mypages/index.html.erb</p>
+<div class="container">
+    <div class="row">
+      <div class="span3">
+        <div id="profile_id">
+          <div class="user_photo heading"> <a href="#" class="user_info">Photo</a> </div>
+          <div class="heading"> <a href="#" class="user_info">Name</a>  </div>
+          <div class="heading"> <a href="#" class="user_info">Data</a>  </div>
+          <div class="heading"> <a href="#" class="user_info">Profile</a> </div>
+          <div class="heading"> <a href="#" class="user_info">Favorite</a>  </div>
+          <div class="heading"> <a href="#" class="user_info">Following</a> </div>
+        </div>
+      </div>
+      <div class="span9">
+        <div class="div_tag">
+          <ul class="tab clear">
+            <li class="none active"><a href="#main" data-toggle="tab">Main</a></li>
+            <li class="none"><a href="#edited_summary" data-toggle="tab">Edited Summary</a></li>
+            <li class="none"><a href="#favorite" data-toggle="tab">Favorite</a></li>
+            <li class="none"><a href="#read" data-toggle="tab">Read</a></li>
+            <li class="none"><a href="#reserved" data-toggle="tab">Reserved</a></li>
+          </ul>
+        </div>
+        <div class="table">
+          <table class="summary_table active" id="main">
+            <tr class="table_top">
+              <th id="article_title_top">TITLE</th>
+              <th id="summary_number_top">summary</th>
+            </tr>
+            <tr>
+              <th class="title">
+                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
+                <ul class="dropdown-checkbox">
+                  <li>
+                    <a href="#">action</a>
+                  </li>
+                  <li>
+                    <a href="#">next action</a>
+                  </li>
+                  <li>
+                    <a href="#">more actions</a>
+                  </li>
+                </ul>
+                <a href="#">Article One</a>
+              </th>
+              <th class="summary_num"><a href="#">1</a></th>
+            </tr>
+            <tr>
+              <th class="title">
+                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
+                <ul class="dropdown-checkbox">
+                  <li>
+                    <a href="#">action</a>
+                  </li>
+                  <li>
+                    <a href="#">next action</a>
+                  </li>
+                  <li>
+                    <a href="#">more actions</a>
+                  </li>
+                </ul>
+                <a href="#">Article Two</a>
+              </th>
+              <th class="summary_num"><a href="#">2</a></th>
+            </tr>
+            <tr>
+              <th class="title">
+                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
+                <ul class="dropdown-checkbox">
+                  <li>
+                    <a href="#">action</a>
+                  </li>
+                  <li>
+                    <a href="#">next action</a>
+                  </li>
+                  <li>
+                    <a href="#">more actions</a>
+                  </li>
+                </ul>
+                <a href="#">Article Three</a>
+              </th>
+              <th class="summary_num"><a href="#">3</a></th>
+            </tr>
+            <tr>
+              <th class="title">
+                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
+                <ul class="dropdown-checkbox">
+                  <li>
+                    <a href="#">action</a>
+                  </li>
+                  <li>
+                    <a href="#">next action</a>
+                  </li>
+                  <li>
+                    <a href="#">more actions</a>
+                  </li>
+                </ul>
+                <a href="#">Article Four</a>
+              </th>
+              <th class="summary_num"><a href="#">4</a></th>
+            </tr>
+            <tr>
+              <th class="title">
+                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
+                <ul class="dropdown-checkbox">
+                  <li>
+                    <a href="#">action</a>
+                  </li>
+                  <li>
+                    <a href="#">next action</a>
+                  </li>
+                  <li>
+                    <a href="#">more actions</a>
+                  </li>
+                </ul>
+                <a href="#">Article Five</a>
+              </th>
+              <th class="summary_num"><a href="#">5</a></th>
+            </tr>
+          </table>
+          <table class="edited_summary_table" id="edited_summary">
+            <tr class="table_top">
+              <th id="article_title_top">TITLE</th>
+              <th id="summary_number_top">like</th>
+            </tr>
+          </table>
+          <table class="favorite_table" id="favorite">
+            <tr class="table_top">
+              <th id="article_title_top">TITLE</th>
+              <th id="summary_number_top">summary</th>
+            </tr>
+          </table>
+          <table class="read_table" id="read">
+            <tr class="table_top">
+              <th id="article_title_top">TITLE</th>
+              <th id="summary_number_top">summary</th>
+            </tr>
+          </table>
+          <table class="reserved_table" id="reserved">
+            <tr class="table_top">
+              <th id="article_title_top">none</th>
+              <th id="summary_number_top">none</th>
+            </tr>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
