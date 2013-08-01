@@ -6,11 +6,13 @@ $(function(){
 });
 </script>
 <form action="add_complete">
-  <div class="center">
-    <p> [url]: <%= @url %> </p>
-    <p> [title]: <%= @title %> </p>
-    <input type="submit" id="submit_button"value="確定">
-    <input type="hidden" name="url" value="<%= @url %>">
-    <input type="hidden" name="title" value="<%= @title %>">
-  </div>
+  <table>
+    <div class="center" align="left">
+      <p> [url]: <%= @url %> </p>
+      <p> [title]: <%= @title %> </p>
+      <input type="submit" id="submit_button"value="確定">
+      <input type="hidden" name="url" value="<%= @url %>">
+      <input type="hidden" name="title" value="<%= @title %>">
+    </div>
+  </table>
 </form>
