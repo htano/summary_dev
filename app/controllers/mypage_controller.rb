@@ -10,18 +10,38 @@ class MypageController < ApplicationController
     logger.debug("user_name  : #{user.user_name}")
     logger.debug("user_email : #{user.mail_addr}")
 =end
-
     # main tab
-    user_articles = R010UserArticle.find(:all, :conditions => {:user_id => user.user_id, :read_flg => false})
+    user_articles = R010UserArticle.where(:user_id => user.user_id, :read_flg => false)
     articles = nil
-    if user_articles != nil then
+    unless user_articles == nil then
+      articles_num = user_articles.size
+      articles = Array.new(articles_num)
+      i = 0
       user_articles.each do |user_article|
-        #logger.debug("articles title : #{A010Article.find_by_article_id(user_article.article_id).article_title}")
-        #articles += A010Article.find_by_article_id(user_article.article_id)
+        articles[i] = A010Article.find_by_article_id(user_article.article_id)
+        i += 1
+=begin
+        logger.debug("i : #{i}")
+        logger.debug("artile_id : #{articles[i].article_id}")
+=end
       end
     end
 
-    render :layout => 'application', :locals => {:user => user, :articles => articles}
-  end
+    # edited summary tab
+    # favorite tab
+    # read tab
+    user_read_articles = R010UserArticle.where(:user_id => user.user_id, :read_flg => true)
+    read_articles = nil
+    unless user_read_articles == nil then
+      read_articles_num = user_read_articles.size
+      read_articles = Array.new(read_articles_num)
+      i = 0
+      user_read_articles.each do |user_read_article|
+        read_articles[i] = A010Article.find_by_article_id(user_read_article.article_id)
+        i += 1
+      end
+    end
 
+    render :layout => 'application', :locals => {:user => user, :articles => articles, :read_articles => read_articles}
+  end
 end

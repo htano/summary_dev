@@ -37,7 +37,7 @@
                   <li><a href="#">delete</a></li>
                   <li><a href="#">edit summary</a></li>
                 </ul>
-                <a href="#"><%= article.article_title %></a>
+                <a href="<%= article.article_url %>"><%= article.article_title %></a>
               </th>
               <th class="summary_num"><a href="#">1</a></th>
             </tr>
@@ -61,6 +61,22 @@
               <th id="article_title_top">TITLE</th>
               <th id="summary_number_top">summary</th>
             </tr>
+            <% if read_articles %>
+            <% read_articles.each do |read_article| %>
+            <tr>
+              <th class="title">
+                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
+                <ul class="dropdown-checkbox">
+                  <li><a href="#">mark as favorite</a></li>
+                  <li><a href="#">delete</a></li>
+                  <li><a href="#">edit summary</a></li>
+                </ul>
+                <a href="<%= read_article.article_url %>"><%= read_article.article_title %></a>
+              </th>
+              <th class="summary_num"><a href="#">1</a></th>
+            </tr>
+            <% end %>
+            <% end %>
           </table>
           <table class="reserved_table" id="reserved">
             <tr class="table_top">
