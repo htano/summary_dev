@@ -13,20 +13,30 @@ class SummaryController < ApplicationController
     end
   end
 
+  def edit_confirm
+  	article = A010Article.where(:article_id => params[:article_id]).first;
+    @url = article.article_url;
+    @title = article.article_title;
+  	@user_name = "#{params[:user_name]}";
+  	@user_id = findUserIdByUserName(@user_name);
+  	@summary_content = "#{params[:summary_content]}";
+  end
+
+
   def edit_complete
     @user_name = "#{params[:user_name]}";
     @user_id = findUserIdByUserName(@user_name);
     summary = S010Summary.where(:user_id => @user_id,:article_id => params[:article_id]).first;
     if summary
       #すでに当該記事に対して要約が登録されていた場合、以下の処理をする
-      summary.update_attribute(:summary_content, params[:text_summary]);
+      summary.update_attribute(:summary_content, params[:summary_content]);
       if summary.save
         redirect_to :action => "show";
       end
     else
       #当該記事に対して要約が登録されていなかった場合、以下の処理をする
       summary_id = createSummaryID();
-      @summary = S010Summary.new(:summary_id => summary_id,:summary_content => params[:text_summary],:user_id => @user_id,:article_id => params[:article_id]);
+      @summary = S010Summary.new(:summary_id => summary_id,:summary_content => params[:summary_content],:user_id => @user_id,:article_id => params[:article_id]);
       if @summary.save
         redirect_to :action => "show";
       end

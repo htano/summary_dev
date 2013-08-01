@@ -7,10 +7,7 @@ $(function(){
 	$("#msg").addClass("highlight").fadeOut("slow");
 });
 </script>
-<div class="url_box">
-
-  <div class="input_url">
-  <div id="msg"><%= @msg %></div>
-  <p><%=link_to "要約しちゃうぜ！", :controller => "summary", :action => "edit", article_id:@article_id %></p>
+  <div class="center">
+    <div id="msg"><%= @msg %></div>
+    <p><%=link_to "要約しちゃうぜ！", :controller => "summary", :action => "edit", article_id:@article_id %></p>
   </div>
-</div>

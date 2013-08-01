@@ -58,6 +58,7 @@ SummaryDev::Application.routes.draw do
   get 'webpage/:user_name/add_complete' => 'webpage#add_complete'
 
   get 'summary/:user_name/:article_id/edit' => 'summary#edit'
+  get 'summary/:user_name/:article_id/edit_confirm' => 'summary#edit_confirm'
   get 'summary/:user_name/:article_id' => 'summary#show'
   get 'summary/:user_name/:article_id/edit_complete' => 'summary#edit_complete'
   #なんでこれだけgetにしたか堀田に聞く

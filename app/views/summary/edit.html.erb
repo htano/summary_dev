@@ -4,28 +4,19 @@
 }
 </style>
 <script>
-$(function(){
-	$('#edit_summary_submit').click(function(){
-		return confirm('要約しちゃうの！？');
-	});
-});
-
 $(document).ready(function (){
-  $('#text_summary').val('<%= @summary_content %>');
+  $('#summary_content').val('<%= @summary_content %>');
 });
-
 
 $(document).ready(function() {
     $("#edit_form").validate({});
 });
-
 </script>
-<div class="edit_box">
-  <p>[title] <%= @title %></p>
-  <p>[url] <%= @url %></p>
-  <form action="edit_complete" id="edit_form">
-    <textarea id="text_summary" name="text_summary" cols=50 rows=6 maxlength="300" class="required"></textarea>
-    </br>
+<form action="edit_confirm" id="edit_form">
+  <div class="center">
+    <p>[title] <%= @title %></p>
+    <p>[url] <%= @url %></p>
+    <textarea id="summary_content" name="summary_content" cols=50 rows=6 maxlength="300" class="required"></textarea><br>
     <input type="submit" id="edit_summary_submit" value="要約"></input>
-  </form>
-</div>
+  </div>
+</form>
