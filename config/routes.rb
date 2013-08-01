@@ -1,6 +1,5 @@
 SummaryDev::Application.routes.draw do
   get "mypage/index"
-  get "mypage/index/:user_name" => "mypage#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -42,7 +41,7 @@ SummaryDev::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
