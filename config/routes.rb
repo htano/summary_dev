@@ -53,4 +53,12 @@ SummaryDev::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  get 'webpage/:user_name/add' => 'webpage#add'
+  get 'webpage/:user_name/add_confirm' => 'webpage#add_confirm'
+  get 'webpage/:user_name/add_complete' => 'webpage#add_complete'
+
+  get 'summary/:user_name/:article_id/edit' => 'summary#edit'
+  get 'summary/:user_name/:article_id' => 'summary#show'
+  get 'summary/:user_name/:article_id/edit_complete' => 'summary#edit_complete'
+  #なんでこれだけgetにしたか堀田に聞く
 end

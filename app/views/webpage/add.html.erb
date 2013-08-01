@@ -1,0 +1,21 @@
+<style type="text/css">
+.error {
+	color: red;
+}
+</style>
+<script>
+$(document).ready(function() {
+    $("#add_form").validate({});
+});
+</script>
+<div class="url_box">
+
+  <div class="input_url">
+    <form id="add_form" action="add_confirm">
+      url
+      <!-- <input type="text" name="url" id="url" class="input_url_text"> -->
+      <input type="text" name="url" id="url" class="required url"><p>
+      <input type="submit" id="add_submit" value="登録！">
+    </form>
+  </div>
+</div>

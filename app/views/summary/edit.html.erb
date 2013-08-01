@@ -1,0 +1,20 @@
+<script>
+$(function(){
+	$('#edit_summary_submit').click(function(){
+		return confirm('要約しちゃうの！？');
+	});
+});
+
+$(document).ready(function (){
+  $('#text_summary').val('<%= @summary_content %>');
+});
+</script>
+<div class="edit_box">
+  <p>[title] <%= @title %></p>
+  <p>[url] <%= @url %></p>
+  <form action="edit_complete">
+    <textarea id="text_summary" name="text_summary" cols=50 rows=6 maxlength="300"></textarea>
+    </br>
+    <input type="submit" id="edit_summary_submit" value="要約"></input>
+  </form>
+</div>

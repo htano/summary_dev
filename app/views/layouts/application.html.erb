@@ -1,15 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <title>SummaryDev_test</title>
+  <title> 要約しようぜ！（仮）</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- こっから下追加 -->
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+  <script src="/assets/jquery.validate.js" charset="utf-8" type="text/javascript"></script>
+  <!-- ここまで -->
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
 
-<%= render :partial => "layouts/partials/navbar" %>
+<div class="all">
+  <div class="global_header">
+    <div class="global_title">
+      <h1>
+        要約しようぜい！（仮）
+      </h1>
+    </div>
+    <div class="user_name">
+      id: <%= @user_name %>
+    </div>
+  </div>
+
+  <div class="floatclear"></div>
+
 <%= yield %>
+
+  <div class="global_footer"> </div>
+  </div>
 
 </body>
 </html>
