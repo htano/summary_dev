@@ -1,3 +1,8 @@
+<style type="text/css">
+.error {
+  color: red;
+}
+</style>
 <script>
 $(function(){
 	$('#edit_summary_submit').click(function(){
@@ -8,12 +13,18 @@ $(function(){
 $(document).ready(function (){
   $('#text_summary').val('<%= @summary_content %>');
 });
+
+
+$(document).ready(function() {
+    $("#edit_form").validate({});
+});
+
 </script>
 <div class="edit_box">
   <p>[title] <%= @title %></p>
   <p>[url] <%= @url %></p>
-  <form action="edit_complete">
-    <textarea id="text_summary" name="text_summary" cols=50 rows=6 maxlength="300"></textarea>
+  <form action="edit_complete" id="edit_form">
+    <textarea id="text_summary" name="text_summary" cols=50 rows=6 maxlength="300" class="required"></textarea>
     </br>
     <input type="submit" id="edit_summary_submit" value="要約"></input>
   </form>
