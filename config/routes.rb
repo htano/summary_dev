@@ -53,4 +53,16 @@ SummaryDev::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  get 'hello' => 'webpage#hello'
+  get 'bye.html' => 'webpage#bye'
+  get 'webpage/:id/add' => 'webpage#add'
+  get 'webpage/:id/add_confirm' => 'webpage#add_confirm'
+
+  get 'summary/:id/:pageid/edit' => 'summary#edit'
+  get 'summary/:id/:pageid' => 'summary#show'
+  post 'summary/:id/:pageid/edit_complete' => 'summary#edit_complete'
+
+  get 'session/consumer/:action' => 'consumer#:action'
+  post 'session/consumer/:action' => 'consumer#:action'
 end
