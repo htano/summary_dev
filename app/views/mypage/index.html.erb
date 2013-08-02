@@ -26,8 +26,8 @@
               <th id="article_title_top">TITLE</th>
               <th id="summary_number_top">summary</th>
             </tr>
-            <% if articles %>
-            <% articles.each do |article| %>
+            <% if @articles %>
+            <% @articles.each do |article| %>
             <tr>
               <th class="title">
                 <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
@@ -61,8 +61,8 @@
               <th id="article_title_top">TITLE</th>
               <th id="summary_number_top">summary</th>
             </tr>
-            <% if read_articles %>
-            <% read_articles.each do |read_article| %>
+            <% if @read_articles %>
+            <% @read_articles.each do |read_article| %>
             <tr>
               <th class="title">
                 <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
