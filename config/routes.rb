@@ -1,5 +1,6 @@
 SummaryDev::Application.routes.draw do
   get "mypage/index"
+  get "mypage/delete"
   get "mypage/mark_as_read"
 
   # The priority is based upon order of creation: first created -> highest priority.

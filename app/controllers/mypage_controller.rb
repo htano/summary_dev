@@ -48,6 +48,14 @@ class MypageController < ApplicationController
     render :layout => 'application', :locals => {:user => @user}
   end
 
+  def delete
+    article = R010UserArticle.find(:first, :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
+    unless article == nil
+      article.destroy
+    end
+    redirect_to :action => "index", :params => {:user_name => params[:user_name]}
+  end
+
   def mark_as_read
 =begin
     logger.debug("mark_as_read")
