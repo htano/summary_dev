@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20130731132045) do
   end
 
   create_table "r010_user_articles", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "u010_user_id"
     t.integer  "article_id"
     t.boolean  "read_flg"
     t.datetime "created_at"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20130731132045) do
   create_table "s010_summaries", force: true do |t|
     t.integer  "summary_id"
     t.text     "summary_content"
-    t.integer  "user_id"
+    t.integer  "u010_user_id"
     t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -14,7 +14,7 @@ class MypageController < ApplicationController
 =end
     # FIXME : read_flgをみないでuser_idに引っかかるデータを一気に取ってきてlocalでread_flg判断して振り分けたほうが速いかも
     # main tab
-    user_articles = R010UserArticle.where(:user_id => @user.user_id, :read_flg => false)
+    user_articles = R010UserArticle.where(:u010_user_id => @user.user_id, :read_flg => false)
     @articles = []
     @main_summaries_num = []
     unless user_articles == nil then
@@ -31,7 +31,7 @@ class MypageController < ApplicationController
     end
 
     # edited summary tab
-    user_edited_summaries = S010Summary.where(:user_id => @user.user_id)
+    user_edited_summaries = S010Summary.where(:u010_user_id => @user.user_id)
     @edited_summaries = []
     @like_num = []
     unless user_edited_summaries == nil then
@@ -44,7 +44,7 @@ class MypageController < ApplicationController
     end
     # favorite tab
     # read tab
-    user_read_articles = R010UserArticle.where(:user_id => @user.user_id, :read_flg => true)
+    user_read_articles = R010UserArticle.where(:u010_user_id => @user.user_id, :read_flg => true)
     @read_articles = []
     @read_summaries_num = []
     unless user_read_articles == nil then
@@ -63,7 +63,7 @@ class MypageController < ApplicationController
     delete_mode = params[:delete_mode]
     logger.debug("delete_mode : #{delete_mode}")
     if delete_mode.to_i == 2 then
-      summary = S010Summary.find(:first, :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
+      summary = S010Summary.find(:first, :conditions => {:u010_user_id => params[:user_id], :article_id => params[:article_id]})
       unless summary == nil
         logger.debug("not nil")
         summary.destroy
@@ -71,7 +71,7 @@ class MypageController < ApplicationController
         logger.debug("nil nil")
       end
     else
-      article = R010UserArticle.find(:first, :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
+      article = R010UserArticle.find(:first, :conditions => {:u010_user_id => params[:user_id], :article_id => params[:article_id]})
       unless article == nil
         article.destroy
       end
@@ -94,5 +94,10 @@ class MypageController < ApplicationController
     end
 
     redirect_to :action => "index", :params => {:user_name => params[:user_name]}
+  end
+
+  def destroy
+    @user = U010User.find_by_user_name(params[:user_name]).destroy
+    render :nothing => true
   end
 end

@@ -12,12 +12,12 @@ U010User.create(user_id: 2, user_name: "shingo0809", mail_addr: "shingo0809@gmai
 U010User.create(user_id: 3, user_name: "yoshino023", mail_addr: "yoshino023@gmail.com")
 
 # R010UserArticle
-R010UserArticle.create(user_id: 1, article_id: 1, read_flg: false)
-R010UserArticle.create(user_id: 1, article_id: 2, read_flg: false)
-R010UserArticle.create(user_id: 1, article_id: 3, read_flg: true)
-R010UserArticle.create(user_id: 1, article_id: 4, read_flg: false)
-R010UserArticle.create(user_id: 1, article_id: 5, read_flg: true)
-R010UserArticle.create(user_id: 1, article_id: 6, read_flg: false)
+R010UserArticle.create(u010_user_id: 1, article_id: 1, read_flg: false)
+R010UserArticle.create(u010_user_id: 1, article_id: 2, read_flg: false)
+R010UserArticle.create(u010_user_id: 1, article_id: 3, read_flg: true)
+R010UserArticle.create(u010_user_id: 1, article_id: 4, read_flg: false)
+R010UserArticle.create(u010_user_id: 1, article_id: 5, read_flg: true)
+R010UserArticle.create(u010_user_id: 1, article_id: 6, read_flg: false)
 
 # A010Article
 A010Article.create(article_id: 1, article_url: "http://www.yahoo.co.jp/",   article_title: "Yahoo! JAPAN")
@@ -29,14 +29,14 @@ A010Article.create(article_id: 6, article_url: "http://www.waseda.jp/top/index-j
 A010Article.create(article_id: 7, article_url: "https://www.facebook.com/", article_title: "Facebook")
 
 # S010Summary
-S010Summary.create(summary_id: 1, summary_content: "summary id 1 test", user_id: 1, article_id: 1)
-S010Summary.create(summary_id: 2, summary_content: "summary id 2 test", user_id: 1, article_id: 2)
-S010Summary.create(summary_id: 3, summary_content: "summary id 3 test", user_id: 1, article_id: 3)
-S010Summary.create(summary_id: 4, summary_content: "summary id 4 test", user_id: 1, article_id: 4)
-S010Summary.create(summary_id: 5, summary_content: "summary id 5 test", user_id: 1, article_id: 5)
-S010Summary.create(summary_id: 6, summary_content: "summary id 6 test", user_id: 2, article_id: 1)
-S010Summary.create(summary_id: 7, summary_content: "summary id 7 test", user_id: 3, article_id: 1)
-S010Summary.create(summary_id: 8, summary_content: "summary id 8 test", user_id: 2, article_id: 2)
+S010Summary.create(summary_id: 1, summary_content: "summary id 1 test", u010_user_id: 1, article_id: 1)
+S010Summary.create(summary_id: 2, summary_content: "summary id 2 test", u010_user_id: 1, article_id: 2)
+S010Summary.create(summary_id: 3, summary_content: "summary id 3 test", u010_user_id: 1, article_id: 3)
+S010Summary.create(summary_id: 4, summary_content: "summary id 4 test", u010_user_id: 1, article_id: 4)
+S010Summary.create(summary_id: 5, summary_content: "summary id 5 test", u010_user_id: 1, article_id: 5)
+S010Summary.create(summary_id: 6, summary_content: "summary id 6 test", u010_user_id: 2, article_id: 1)
+S010Summary.create(summary_id: 7, summary_content: "summary id 7 test", u010_user_id: 3, article_id: 1)
+S010Summary.create(summary_id: 8, summary_content: "summary id 8 test", u010_user_id: 2, article_id: 2)
 
 # S011GoodSummary
 S011GoodSummary.create(user_id: 1, summary_id: 1)

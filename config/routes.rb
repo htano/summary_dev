@@ -3,6 +3,8 @@ SummaryDev::Application.routes.draw do
   get "mypage/delete"
   get "mypage/mark_as_read"
 
+  get "mypage/destroy"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

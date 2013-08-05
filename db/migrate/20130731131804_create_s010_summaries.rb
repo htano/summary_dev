@@ -3,7 +3,7 @@ class CreateS010Summaries < ActiveRecord::Migration
     create_table :s010_summaries do |t|
       t.integer :summary_id, :unique => true
       t.text :summary_content
-      t.integer :user_id
+      t.integer :u010_user_id
       t.integer :article_id
 
       t.timestamps
