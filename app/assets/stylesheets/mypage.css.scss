@@ -167,10 +167,10 @@ ul.tab {
   position: absolute;
   z-index: 2002;
   top: 2px;
-  left: -14px;
+  left: -13px;
   display: inline-block;
   border-top: 7px solid transparent;
-  border-right: 7px solid #ccc;
+  border-right: 7px solid white;
   border-bottom: 7px solid transparent;
   border-left: 7px solid transparent;
   content: '';
@@ -179,13 +179,13 @@ ul.tab {
 .title > .dropdown-checkbox:after {
   position: absolute;
   z-index: 2001;
-  top: 4px;
-  left: -14px;
+  top: 2px;
+  left: -15px;
   display: inline-block;
-/*  border-right: 6px solid #ffffff;*/
-  border-right: 6px solid white;
-  border-bottom: 6px solid transparent;
-  border-left: 6px solid transparent;
+  border-top: 8px solid transparent;
+  border-right: 8px solid #ccc;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid transparent;
   content: '';
 }
 
