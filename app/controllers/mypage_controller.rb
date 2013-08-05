@@ -3,8 +3,10 @@ class MypageController < ApplicationController
     logger.debug("action index")
     @user = U010User.find_by_user_name(params[:user_name])
     if @user == nil then
-      # TODO : no exsit account
+      # FIXME : ベタ書きでreturnより、関数を一つ定義してそこにredirect_toで飛ばすほうがよろしい気がする
       logger.debug("exit no account")
+      render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
+      return
     end
 =begin
     # debub
