@@ -37,3 +37,8 @@ S010Summary.create(summary_id: 5, summary_content: "summary id 5 test", user_id:
 S010Summary.create(summary_id: 6, summary_content: "summary id 6 test", user_id: 2, article_id: 1)
 S010Summary.create(summary_id: 7, summary_content: "summary id 7 test", user_id: 3, article_id: 1)
 S010Summary.create(summary_id: 8, summary_content: "summary id 8 test", user_id: 2, article_id: 2)
+
+# S011GoodSummary
+S011GoodSummary.create(user_id: 1, summary_id: 1)
+S011GoodSummary.create(user_id: 1, summary_id: 1)
+S011GoodSummary.create(user_id: 1, summary_id: 1)

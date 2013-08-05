@@ -15,7 +15,7 @@ class MypageController < ApplicationController
     # FIXME : read_flgをみないでuser_idに引っかかるデータを一気に取ってきてlocalでread_flg判断して振り分けたほうが速いかも
     # main tab
     user_articles = R010UserArticle.where(:user_id => @user.user_id, :read_flg => false)
-    @articles = nil
+    @articles = []
     @main_summaries_num = []
     unless user_articles == nil then
       articles_num = user_articles.size
@@ -31,10 +31,21 @@ class MypageController < ApplicationController
     end
 
     # edited summary tab
+    user_edited_summaries = S010Summary.where(:user_id => @user.user_id)
+    @edited_summaries = []
+    @like_num = []
+    unless user_edited_summaries == nil then
+      edited_sum_num = user_edited_summaries.size
+      @edited_summaries = Array.new(edited_sum_num)
+      user_edited_summaries.each_with_index do |edited_summary, i|
+        @edited_summaries[i] = A010Article.find_by_article_id(edited_summary.article_id)
+        @like_num[i] = S011GoodSummary.count(:all, :conditions => {:summary_id => edited_summary.summary_id})
+      end
+    end
     # favorite tab
     # read tab
     user_read_articles = R010UserArticle.where(:user_id => @user.user_id, :read_flg => true)
-    @read_articles = nil
+    @read_articles = []
     @read_summaries_num = []
     unless user_read_articles == nil then
       read_articles_num = user_read_articles.size
@@ -49,9 +60,21 @@ class MypageController < ApplicationController
   end
 
   def delete
-    article = R010UserArticle.find(:first, :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
-    unless article == nil
-      article.destroy
+    delete_mode = params[:delete_mode]
+    logger.debug("delete_mode : #{delete_mode}")
+    if delete_mode.to_i == 2 then
+      summary = S010Summary.find(:first, :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
+      unless summary == nil
+        logger.debug("not nil")
+        summary.destroy
+      else
+        logger.debug("nil nil")
+      end
+    else
+      article = R010UserArticle.find(:first, :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
+      unless article == nil
+        article.destroy
+      end
     end
     redirect_to :action => "index", :params => {:user_name => params[:user_name]}
   end
