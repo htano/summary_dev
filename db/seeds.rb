@@ -34,4 +34,6 @@ S010Summary.create(summary_id: 2, summary_content: "summary id 2 test", user_id:
 S010Summary.create(summary_id: 3, summary_content: "summary id 3 test", user_id: 1, article_id: 3)
 S010Summary.create(summary_id: 4, summary_content: "summary id 4 test", user_id: 1, article_id: 4)
 S010Summary.create(summary_id: 5, summary_content: "summary id 5 test", user_id: 1, article_id: 5)
-
+S010Summary.create(summary_id: 6, summary_content: "summary id 6 test", user_id: 2, article_id: 1)
+S010Summary.create(summary_id: 7, summary_content: "summary id 7 test", user_id: 3, article_id: 1)
+S010Summary.create(summary_id: 8, summary_content: "summary id 8 test", user_id: 2, article_id: 2)

@@ -16,13 +16,13 @@ class MypageController < ApplicationController
     # main tab
     user_articles = R010UserArticle.where(:user_id => @user.user_id, :read_flg => false)
     @articles = nil
+    @main_summaries_num = []
     unless user_articles == nil then
       articles_num = user_articles.size
       @articles = Array.new(articles_num)
-      i = 0
-      user_articles.each do |user_article|
+      user_articles.each_with_index do |user_article, i|
         @articles[i] = A010Article.find_by_article_id(user_article.article_id)
-        i += 1
+        @main_summaries_num[i] = S010Summary.count(:all, :conditions => {:article_id => user_article.article_id})
 =begin
         logger.debug("i : #{i}")
         logger.debug("artile_id : #{articles[i].article_id}")
@@ -35,13 +35,13 @@ class MypageController < ApplicationController
     # read tab
     user_read_articles = R010UserArticle.where(:user_id => @user.user_id, :read_flg => true)
     @read_articles = nil
+    @read_summaries_num = []
     unless user_read_articles == nil then
       read_articles_num = user_read_articles.size
       @read_articles = Array.new(read_articles_num)
-      i = 0
-      user_read_articles.each do |user_read_article|
+      user_read_articles.each_with_index do |user_read_article, i|
         @read_articles[i] = A010Article.find_by_article_id(user_read_article.article_id)
-        i += 1
+        @read_summaries_num[i] = S010Summary.count(:all, :conditions => {:article_id => user_read_article.article_id})
       end
     end
 

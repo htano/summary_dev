@@ -27,21 +27,19 @@
               <th id="summary_number_top">summary</th>
             </tr>
             <% if @articles %>
-            <% @articles.each do |article| %>
+            <% @articles.each_with_index do |article, i| %>
             <tr>
               <th class="title">
                 <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
                 <ul class="dropdown-checkbox">
-                  <li><%= link_to "mark as read", {:action => "mark_as_read", :user_id => @user.user_id,
-                    :user_name => @user.user_name, :article_id => article.article_id} %></li>
+                  <li><%= link_to "mark as read", {:action => "mark_as_read", :user_id => @user.user_id, :user_name => @user.user_name, :article_id => article.article_id} %></li>
                   <li><a href="#">mark as favorite</a></li>
-                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.user_id, :user_name => @user.user_name,
-                    :article_id => article.article_id} %></li>
+                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.user_id, :user_name => @user.user_name, :article_id => article.article_id} %></li>
                   <li><a href="#">edit summary</a></li>
                 </ul>
                 <a href="<%= article.article_url %>"><%= article.article_title %></a>
               </th>
-              <th class="summary_num"><a href="#">1</a></th>
+              <th class="summary_num"><a href="#"><%= @main_summaries_num[i] %></a></th>
             </tr>
             <% end %>
             <% end %>
@@ -64,7 +62,7 @@
               <th id="summary_number_top">summary</th>
             </tr>
             <% if @read_articles %>
-            <% @read_articles.each do |read_article| %>
+            <% @read_articles.each_with_index do |read_article, i| %>
             <tr>
               <th class="title">
                 <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
@@ -76,7 +74,7 @@
                 </ul>
                 <a href="<%= read_article.article_url %>"><%= read_article.article_title %></a>
               </th>
-              <th class="summary_num"><a href="#">1</a></th>
+              <th class="summary_num"><a href="#"><%= @read_summaries_num[i] %></a></th>
             </tr>
             <% end %>
             <% end %>
