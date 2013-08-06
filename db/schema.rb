@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20130731132045) do
     t.string   "mail_addr"
     t.boolean  "yuko_flg"
     t.datetime "last_login"
-    t.integer  "open_id"
+    t.string   "open_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
