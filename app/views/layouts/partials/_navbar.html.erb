@@ -21,18 +21,22 @@
             </li>
             <li class="divider-vertical"></li>
             <li>
-              <a class="dropdown-toggle nav_account" data-toggle="dropdown" href="#">toru1055</a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="#">action</a>
-                </li>
-                <li>
-                  <a href="#">next action</a>
-                </li>
-                <li>
-                  <a href="#">more actions</a>
-                </li>
-              </ul>
+              <% if signed_in? %>
+              <a class="dropdown-toggle nav_account" data-toggle="dropdown" href="#"><%= get_current_user_name %></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">action</a>
+                  </li>
+                  <li>
+                    <a href="#">next action</a>
+                  </li>
+                  <li>
+                    <a href="#">more actions</a>
+                  </li>
+                </ul>
+              <% else %>
+                <a href="/session/consumer/index">LogIn</a>
+              <% end %>
             </li>
           </ul>
         </div>

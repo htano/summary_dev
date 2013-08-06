@@ -6,7 +6,7 @@ class CreateU010Users < ActiveRecord::Migration
       t.string :mail_addr, :unique => true
       t.boolean :yuko_flg
       t.timestamp :last_login
-      t.integer :open_id, :unique => true
+      t.string :open_id, :unique => true
 
       t.timestamps
     end
