@@ -86,7 +86,7 @@ class MypageController < ApplicationController
     logger.debug("mark_as_read")
     logger.debug("user_id = #{params[:user_id]}, article_id = #{params[:article_id]}")
 =end
-    article = R010UserArticle.find(:first, :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
+    article = R010UserArticle.find(:first, :conditions => {:u010_user_id => params[:user_id], :article_id => params[:article_id]})
     if article.read_flg then
 #      logger.debug("read flag is true")
     else
