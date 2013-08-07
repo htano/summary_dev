@@ -130,6 +130,10 @@ class ConsumerController < ApplicationController
     U010User.create( user_name: @creating_user_id, open_id: session[:openid_url] );
   end
 
+  def sign_out
+    session[:openid_url] = nil
+  end
+
   private
 
   def consumer
