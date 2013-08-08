@@ -11,12 +11,23 @@ $(document).ready(function (){
 $(document).ready(function() {
     $("#edit_form").validate({});
 });
+
+$(function(){
+    $('#summary_content').bind('keyup',function(){
+        var thisValueLength = $(this).val().length;
+        $('.count').html(thisValueLength);
+    });
+});
+
 </script>
 <form action="edit_confirm" id="edit_form">
   <div class="center">
     <p>[title] <%= @title %></p>
     <p>[url] <%= @url %></p>
-    <textarea id="summary_content" name="summary_content" cols=50 rows=6 maxlength="300" class="required"></textarea><br>
-    <input type="submit" id="edit_summary_submit" value="要約"></input>
+    <textarea id="summary_content" name="summary_content" cols=50 rows=6 maxlength="300" class="required"></textarea>
+    <span class="count">0</count><br>
+  </div>
+  <div class="center">
+      <input type="submit" id="edit_summary_submit" value="要約"></input>  
   </div>
 </form>
