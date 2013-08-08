@@ -34,7 +34,7 @@
 
 .user_photo {
   margin-top: 50px;
-  height: 200px;
+  padding: 100px 0px 100px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -124,10 +124,20 @@ ul.tab {
 
 .title > a {
   color: rgb(162, 162, 162);
+
+  &:hover {
+    color: #5B91FF;
+    text-decoration: underline;
+  }
 }
 
 .summary_num {
   border: 1px solid #e5e5e5;
+
+  &>a:hover {
+    color: #5B91FF;
+    text-decoration: underline;
+  }
 }
 
 #article_check {
@@ -154,6 +164,13 @@ ul.tab {
   -webkit-box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2);
   background-clip: padding-box;
   -webkit-background-clip: padding-box;
+  &>li>a {
+    color: gray;
+  }
+  &>li>a:hover {
+    color: #5B91FF;
+    text-decoration: underline;
+  }
 }
 
 .open {
