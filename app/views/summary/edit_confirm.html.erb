@@ -7,8 +7,8 @@ $(function(){
 </script>
   <form action="edit_complete">
     <div class="center">
-      <p> [url]: <%= @url %> </p>
       <p> [title]: <%= @title %> </p>
+      <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
       <p>[要約] <%= @summary_content %></p>
       <input type="submit" id="submit_button"value="確定">
       <input type="hidden" name="summary_content" value="<%= @summary_content %>">

@@ -8,8 +8,8 @@ $(function(){
 <form action="add_complete">
   <table>
     <div class="center" align="left">
-      <p> [url]: <%= @url %> </p>
       <p> [title]: <%= @title %> </p>
+      <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
       <input type="submit" id="submit_button"value="確定">
       <input type="hidden" name="url" value="<%= @url %>">
       <input type="hidden" name="title" value="<%= @title %>">
