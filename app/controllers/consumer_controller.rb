@@ -110,7 +110,7 @@ class ConsumerController < ApplicationController
     case oidresp.status
     when OpenID::Consumer::SUCCESS
       session[:openid_url] = oidresp.display_identifier
-      if @current_user = U010User.find(:first, :conditions => ["open_id = ?", session[:openid_url]])
+      if(U010User.isExists?(session[:openid_url]))
         #redirect to any pages
         redirect_to :action => 'index'
       else
@@ -127,7 +127,7 @@ class ConsumerController < ApplicationController
 
   def signup_complete
     @creating_user_id = "#{params[:creating_user_id]}";
-    U010User.create( user_name: @creating_user_id, open_id: session[:openid_url] );
+    U010User.create( user_name: @creating_user_id, open_id: session[:openid_url], yuko_flg: true, last_login: Time.now  );
   end
 
   def sign_out
