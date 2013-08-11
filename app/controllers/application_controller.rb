@@ -12,4 +12,16 @@ class ApplicationController < ActionController::Base
     return U010User.isExists?(session[:openid_url])
   end
 
+  def is_UrlUser_equals_LoginUser?
+    @result = false
+    if signed_in?
+      @login_user = U010User.getName(session[:openid_url])
+      @url_user   = "#{params[:user_name]}"
+      if @login_user == @url_user
+        @result = true
+      end
+    end
+    return @result
+  end
+
 end
