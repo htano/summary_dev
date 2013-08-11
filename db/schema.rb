@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130731132045) do
+ActiveRecord::Schema.define(version: 20130811052551) do
 
   create_table "a010_articles", force: true do |t|
     t.integer  "article_id"
@@ -54,6 +54,13 @@ ActiveRecord::Schema.define(version: 20130731132045) do
     t.datetime "last_login"
     t.integer  "open_id"
     t.string   "prof_image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "u011_favorite_users", force: true do |t|
+    t.integer  "u010_user_id"
+    t.integer  "favorite_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

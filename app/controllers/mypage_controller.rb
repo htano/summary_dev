@@ -1,6 +1,7 @@
 class MypageController < ApplicationController
   def index
     logger.debug("action index")
+
     @user = U010User.find_by_user_name(params[:user_name])
     if @user == nil then
       # FIXME : ベタ書きでreturnより、関数を一つ定義してそこにredirect_toで飛ばすほうがよろしい気がする
@@ -8,7 +9,6 @@ class MypageController < ApplicationController
       render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
       return
     end
-    #
 =begin
     # debub
     logger.debug("user_id    : #{@user.user_id}")
@@ -18,6 +18,17 @@ class MypageController < ApplicationController
 
     # whether user has a photo or no
     @is_photo_data = @user.prof_image != nil ? true : false;
+
+    # follow user information
+    favorite_user_datas = U011FavoriteUser.find(:all, :conditions => {:u010_user_id => @user.user_id})
+    @favorite_users = []
+    unless favorite_user_datas == nil then
+      favorite_user_num = favorite_user_datas.size
+      @favorite_users = Array.new(favorite_user_num)
+      favorite_user_datas.each_with_index do |favorite_user, i|
+        @favorite_users[i] = U010User.find_by_user_id(favorite_user.favorite_user_id)
+      end
+    end
 
     # FIXME : read_flgをみないでuser_idに引っかかるデータを一気に取ってきてlocalでread_flg判断して振り分けたほうが速いかも
     # main tab
@@ -30,10 +41,6 @@ class MypageController < ApplicationController
       user_articles.each_with_index do |user_article, i|
         @articles[i] = A010Article.find_by_article_id(user_article.article_id)
         @main_summaries_num[i] = S010Summary.count(:all, :conditions => {:article_id => user_article.article_id})
-=begin
-        logger.debug("i : #{i}")
-        logger.debug("artile_id : #{articles[i].article_id}")
-=end
       end
     end
 
@@ -49,7 +56,9 @@ class MypageController < ApplicationController
         @like_num[i] = S011GoodSummary.count(:all, :conditions => {:summary_id => edited_summary.summary_id})
       end
     end
+
     # favorite tab
+
     # read tab
     user_read_articles = R010UserArticle.where(:u010_user_id => @user.user_id, :read_flg => true)
     @read_articles = []
@@ -87,15 +96,9 @@ class MypageController < ApplicationController
   end
 
   def mark_as_read
-=begin
-    logger.debug("mark_as_read")
-    logger.debug("user_id = #{params[:user_id]}, article_id = #{params[:article_id]}")
-=end
     article = R010UserArticle.find(:first, :conditions => {:u010_user_id => params[:user_id], :article_id => params[:article_id]})
     if article.read_flg then
-#      logger.debug("read flag is true")
     else
-#      logger.debug("read flag is false")
       article.read_flg = true
       article.save
     end
@@ -107,4 +110,5 @@ class MypageController < ApplicationController
     @user = U010User.find_by_user_name(params[:user_name]).destroy
     render :nothing => true
   end
+
 end

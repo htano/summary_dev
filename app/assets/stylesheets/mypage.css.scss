@@ -61,8 +61,8 @@
   }
 }
 
-
 #following {
+  width: 212px;
   clear: left;
   text-align: center;
   border-bottom: 0px;
@@ -77,6 +77,11 @@
   &>a {
     color: white;
   }
+}
+
+#follow_list {
+  margin-top: 5px;
+  width: 220px;
 }
 
 .span9 {

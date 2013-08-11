@@ -14,7 +14,15 @@
             <%= image_tag("icons/glyphicons_039_notes.png", :size => "19x18", :id => "profile_info")%>
             <a href="#">show profile</a>
           </div>
-          <div id="following"> <a href="#" class="user_info">Following</a> </div>
+          <div id="following"> <a href="#">Following</a> </div>
+          <div id="follow_list">
+          <% if @favorite_users != nil %>
+          <% @favorite_users.each do |favorite_user| %>
+          <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.user_name),
+          {:action => "index", :user_name => favorite_user.user_name} %>
+          <% end %>
+          <% end %>
+          </div>
         </div>
       </div>
       <div class="span9">
