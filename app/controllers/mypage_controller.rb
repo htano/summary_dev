@@ -10,7 +10,7 @@ class MypageController < ApplicationController
       return
     end
 =begin
-    # debub
+    # debug
     logger.debug("user_id    : #{@user.user_id}")
     logger.debug("user_name  : #{@user.user_name}")
     logger.debug("user_email : #{@user.mail_addr}")
@@ -20,59 +20,48 @@ class MypageController < ApplicationController
     @is_photo_data = @user.prof_image != nil ? true : false;
 
     # follow user information
-    favorite_user_datas = U011FavoriteUser.find(:all, :conditions => {:u010_user_id => @user.user_id})
     @favorite_users = []
-    unless favorite_user_datas == nil then
-      favorite_user_num = favorite_user_datas.size
-      @favorite_users = Array.new(favorite_user_num)
-      favorite_user_datas.each_with_index do |favorite_user, i|
-        @favorite_users[i] = U010User.find_by_user_id(favorite_user.favorite_user_id)
-      end
+    @user.u011_favorite_users.each do |favorite_user|
+#      logger.debug("favorite_user_id : #{favorite_user.favorite_user_id}")
+      user = U010User.find_by_user_id(favorite_user.favorite_user_id)
+      @favorite_users.push(user)
     end
 
-    # FIXME : read_flgをみないでuser_idに引っかかるデータを一気に取ってきてlocalでread_flg判断して振り分けたほうが速いかも
-    # main tab
-    user_articles = R010UserArticle.where(:u010_user_id => @user.user_id, :read_flg => false)
+    # main tab & read tab
     @articles = []
+    @read_articles = []
     @main_summaries_num = []
-    unless user_articles == nil then
-      articles_num = user_articles.size
-      @articles = Array.new(articles_num)
-      user_articles.each_with_index do |user_article, i|
-        @articles[i] = A010Article.find_by_article_id(user_article.article_id)
-        @main_summaries_num[i] = S010Summary.count(:all, :conditions => {:article_id => user_article.article_id})
+    @read_summaries_num = []
+    @user.r010_user_articles.each do |user_article|
+      article = A010Article.find_by_article_id(user_article.article_id)
+      summary_num = S010Summary.count(:all, :conditions => {:article_id => user_article.article_id})
+
+      if user_article.read_flg then
+        @read_articles.push(article)
+        @read_summaries_num.push(summary_num)
+      else
+        @articles.push(article)
+        @main_summaries_num.push(summary_num)
       end
+
     end
 
     # edited summary tab
-    user_edited_summaries = S010Summary.where(:u010_user_id => @user.user_id)
     @edited_summaries = []
     @like_num = []
-    unless user_edited_summaries == nil then
-      edited_sum_num = user_edited_summaries.size
-      @edited_summaries = Array.new(edited_sum_num)
-      user_edited_summaries.each_with_index do |edited_summary, i|
-        @edited_summaries[i] = A010Article.find_by_article_id(edited_summary.article_id)
-        @like_num[i] = S011GoodSummary.count(:all, :conditions => {:summary_id => edited_summary.summary_id})
-      end
+    @user.s010_summaries.each do |summary|
+      logger.debug("summary_id : #{summary.summary_id}")
+      article = A010Article.find_by_article_id(summary.article_id)
+      @edited_summaries.push(article)
+
+      like = S011GoodSummary.count(:all, :conditions => {:summary_id => summary.summary_id})
+      @like_num.push(like)
     end
 
     # favorite tab
 
-    # read tab
-    user_read_articles = R010UserArticle.where(:u010_user_id => @user.user_id, :read_flg => true)
-    @read_articles = []
-    @read_summaries_num = []
-    unless user_read_articles == nil then
-      read_articles_num = user_read_articles.size
-      @read_articles = Array.new(read_articles_num)
-      user_read_articles.each_with_index do |user_read_article, i|
-        @read_articles[i] = A010Article.find_by_article_id(user_read_article.article_id)
-        @read_summaries_num[i] = S010Summary.count(:all, :conditions => {:article_id => user_read_article.article_id})
-      end
-    end
-
     render :layout => 'application', :locals => {:user => @user}
+
   end
 
   def delete
@@ -81,10 +70,10 @@ class MypageController < ApplicationController
     if delete_mode.to_i == 2 then
       summary = S010Summary.find(:first, :conditions => {:u010_user_id => params[:user_id], :article_id => params[:article_id]})
       unless summary == nil
-        logger.debug("not nil")
+        # logger.debug("not nil")
         summary.destroy
       else
-        logger.debug("nil nil")
+        # logger.debug("nil nil")
       end
     else
       article = R010UserArticle.find(:first, :conditions => {:u010_user_id => params[:user_id], :article_id => params[:article_id]})
