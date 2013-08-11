@@ -123,8 +123,14 @@ class ConsumerController < ApplicationController
     end
   end
 
+  def sign_out
+    session[:openid_url] = nil
+    flash[:success] = "LogOut Complete."
+    redirect_to :action => 'index'
+  end
+
+  # signup and signup_complete actions should belong to other controller.
   def signup
-    #render :text => session[:openid_url]
   end
 
   def signup_complete
@@ -137,10 +143,30 @@ class ConsumerController < ApplicationController
     redirect_to :action => 'index'
   end
 
-  def sign_out
-    session[:openid_url] = nil
-    flash[:success] = "LogOut Complete."
-    redirect_to :action => 'index'
+  def profile
+    if(U010User.isExists?(session[:openid_url]))
+      @uname = U010User.getName(session[:openid_url])
+      @email = U010User.getMailAddr(session[:openid_url])
+      if @email == nil
+        @email = "(undefined)"
+      end
+    else
+      flash[:error] = "To show the profile page, you have to login."
+      redirect_to :action => 'index'
+    end
+  end
+
+  def profile_edit
+    if(U010User.isExists?(session[:openid_url]))
+      @uname = U010User.getName(session[:openid_url])
+      @email = U010User.getMailAddr(session[:openid_url])
+      if @email == nil
+        @email = "(undefined)"
+      end
+    else
+      flash[:error] = "To show the profile page, you have to login."
+      redirect_to :action => 'index'
+    end
   end
 
   private

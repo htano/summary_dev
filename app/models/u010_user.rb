@@ -14,4 +14,8 @@ class U010User < ActiveRecord::Base
     @created_user = create( user_name: uname, open_id: openid, yuko_flg: true, last_login: Time.now  )
     return !(@created_user.new_record?)
   end
+
+  def self.getMailAddr(openid)
+    return where(["open_id = ? and yuko_flg = ?", openid, true]).first.mail_addr
+  end
 end
