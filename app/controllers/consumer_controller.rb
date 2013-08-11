@@ -114,6 +114,10 @@ class ConsumerController < ApplicationController
         #redirect to any pages
         @uname = U010User.getName(session[:openid_url])
         flash[:success] = "Hello " + @uname + ". Login processing was successful."
+        if U010User.updateLastLoginTime?(session[:openid_url])
+          flash[:success] += "(" + U010User.getLastLogIn(session[:openid_url]).to_s + ")";
+        else
+        end
         redirect_to :action => 'index'
       else
         redirect_to :action => 'signup'

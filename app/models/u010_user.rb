@@ -18,4 +18,14 @@ class U010User < ActiveRecord::Base
   def self.getMailAddr(openid)
     return where(["open_id = ? and yuko_flg = ?", openid, true]).first.mail_addr
   end
+
+  def self.updateLastLoginTime?(openid)
+    @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
+    @current_user.last_login = Time.now
+    return @current_user.save
+  end
+
+  def self.getLastLogIn(openid)
+    return where(["open_id = ? and yuko_flg = ?", openid, true]).first.last_login
+  end
 end
