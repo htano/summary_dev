@@ -57,4 +57,7 @@ ActiveRecord::Schema.define(version: 20130731132045) do
     t.datetime "updated_at"
   end
 
+  add_index "u010_users", ["open_id"], name: "idx_openid", unique: true
+  add_index "u010_users", ["user_name"], name: "idx_user_name", unique: true
+
 end

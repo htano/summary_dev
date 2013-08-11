@@ -127,7 +127,11 @@ class ConsumerController < ApplicationController
 
   def signup_complete
     @creating_user_id = "#{params[:creating_user_id]}";
-    U010User.create( user_name: @creating_user_id, open_id: session[:openid_url], yuko_flg: true, last_login: Time.now  );
+    if U010User.regist?(@creating_user_id, session[:openid_url])
+      flash[:signup_message] = "SignUp Complete"
+    else
+      flash[:signup_message] = "SignUp Error: " + @creating_user_id + " has already exist."
+    end
   end
 
   def sign_out
