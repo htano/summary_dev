@@ -112,6 +112,8 @@ class ConsumerController < ApplicationController
       session[:openid_url] = oidresp.display_identifier
       if(U010User.isExists?(session[:openid_url]))
         #redirect to any pages
+        @uname = U010User.getName(session[:openid_url])
+        flash[:success] = "Hello " + @uname + ". Login processing was successful."
         redirect_to :action => 'index'
       else
         redirect_to :action => 'signup'
@@ -128,14 +130,17 @@ class ConsumerController < ApplicationController
   def signup_complete
     @creating_user_id = "#{params[:creating_user_id]}";
     if U010User.regist?(@creating_user_id, session[:openid_url])
-      flash[:signup_message] = "SignUp Complete"
+      flash[:success] = "Hello " + @creating_user_id + ". SignUp was successfully completed."
     else
-      flash[:signup_message] = "SignUp Error: " + @creating_user_id + " has already exist."
+      flash[:error] = "SignUp Error: " + @creating_user_id + " has already exist."
     end
+    redirect_to :action => 'index'
   end
 
   def sign_out
     session[:openid_url] = nil
+    flash[:success] = "LogOut Complete."
+    redirect_to :action => 'index'
   end
 
   private
