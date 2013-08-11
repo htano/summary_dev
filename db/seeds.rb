@@ -11,9 +11,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # U010User
-U010User.create(user_id: 1, user_name: "toru1055", mail_addr: "toru1055h@gmail.com")
-U010User.create(user_id: 2, user_name: "shingo0809", mail_addr: "shingo0809@gmail.com")
-U010User.create(user_id: 3, user_name: "yoshino023", mail_addr: "yoshino023@gmail.com")
+U010User.create(user_id: 1, user_name: "toru1055", mail_addr: "toru1055h@gmail.com", prof_image: "account_pictures/usertile44.bmp")
+U010User.create(user_id: 2, user_name: "shingo0809", mail_addr: "shingo0809@gmail.com", prof_image: "account_pictures/usertile15.bmp")
+U010User.create(user_id: 3, user_name: "yoshino023", mail_addr: "yoshino023@gmail.com", prof_image: "account_pictures/usertile14.bmp")
 
 # R010UserArticle
 R010UserArticle.create(u010_user_id: 1, article_id:  1, read_flg: false)

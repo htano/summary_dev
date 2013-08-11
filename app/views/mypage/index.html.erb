@@ -2,13 +2,19 @@
     <div class="row">
       <div class="span3">
         <div id="profile_id">
-          <div class="user_photo heading"> <a href="#" class="user_info">Photo</a> </div>
-          <!--
-          <div class="user_photo heading"> <%= image_tag("account_pictures/usertile10.png") %> </div>
-        -->
-          <div class="heading"> <a href="#" class="user_info"><%= @user.user_name %></a>  </div>
-          <div class="heading"> <a href="#" class="user_info">Profile</a> </div>
-          <div class="heading"> <a href="#" class="user_info">Following</a> </div>
+          <!-- TODO : 写真設定がされているか判定 -->
+          <% if @is_photo_data then %>
+          <div id="user_photo"> <%= image_tag(@user.prof_image, :size => "64x64") %> </div>
+          <% else %>
+          <div id="user_photo"> <a href="#" id="no_image">No Image</a> </div>
+          <% end %>
+          <div id="prof_name_detail">
+            <%= image_tag("icons/glyphicons_003_user.png", :size => "19x18")%>
+            <p><%= @user.user_name %></p>
+            <%= image_tag("icons/glyphicons_039_notes.png", :size => "19x18", :id => "profile_info")%>
+            <a href="#">show profile</a>
+          </div>
+          <div id="following"> <a href="#" class="user_info">Following</a> </div>
         </div>
       </div>
       <div class="span9">

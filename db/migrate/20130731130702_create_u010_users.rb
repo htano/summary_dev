@@ -7,6 +7,7 @@ class CreateU010Users < ActiveRecord::Migration
       t.boolean :yuko_flg
       t.timestamp :last_login
       t.integer :open_id, :unique => true
+      t.string :prof_image, :unique => true
 
       t.timestamps
     end

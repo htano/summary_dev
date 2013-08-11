@@ -8,12 +8,17 @@ class MypageController < ApplicationController
       render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
       return
     end
+    #
 =begin
     # debub
     logger.debug("user_id    : #{@user.user_id}")
     logger.debug("user_name  : #{@user.user_name}")
     logger.debug("user_email : #{@user.mail_addr}")
 =end
+
+    # whether user has a photo or no
+    @is_photo_data = @user.prof_image != nil ? true : false;
+
     # FIXME : read_flgをみないでuser_idに引っかかるデータを一気に取ってきてlocalでread_flg判断して振り分けたほうが速いかも
     # main tab
     user_articles = R010UserArticle.where(:u010_user_id => @user.user_id, :read_flg => false)
