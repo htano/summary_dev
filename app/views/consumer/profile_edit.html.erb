@@ -1,3 +1,8 @@
+<% if flash[:error] %>
+  <div class='error' style="border: 1px solid #ff0000; background: #ffaaaa;">
+   <%= h(flash[:error]) %>
+  </div>
+<% end %>
 <form method="post" accept-charset="UTF-8" action="<%= url_for :action => 'profile_edit_complete'%>">
 <div class="profile_table">
 <table border=1>
@@ -7,18 +12,22 @@
   </tr>
   <tr>
     <td> Mail Address </td>
+    <td> <%= @email %> </td>
+  </tr>
+  <tr>
+    <td> Mail Address(New) </td>
     <td>
-      <input type="text" name="mail_addr"></input>
+      <input type="text" name="mail_addr" value=""></input>
     </td>
   </tr>
   <tr>
     <td> Mail Address(Confirm) </td>
     <td>
-      <input type="text" name="mail_addr_confirm"></input>
+      <input type="text" name="mail_addr_confirm" value=""></input>
     </td>
   </tr>
 </table>
 </div>
-
+<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 <input type="submit" value="send"></input>
 </form>

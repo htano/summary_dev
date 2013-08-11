@@ -173,6 +173,23 @@ class ConsumerController < ApplicationController
     end
   end
 
+  def profile_edit_complete
+    @new_mail_address = params[:mail_addr]
+    @confirm_mail_address = params[:mail_addr_confirm]
+    if(U010User.isExists?(session[:openid_url]))
+      if @new_mail_address == @confirm_mail_address
+        U010User.updateMailAddr(@new_mail_address, session[:openid_url])
+        redirect_to :action => 'profile'
+      else
+        flash[:error] = "Different Mail Addresses are inputed."
+        redirect_to :action => 'profile_edit'
+      end
+    else
+      flash[:error] = "To show the profile page, you have to login."
+      redirect_to :action => 'index'
+    end
+  end
+
   private
 
   def consumer
