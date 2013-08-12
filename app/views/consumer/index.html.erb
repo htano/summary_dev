@@ -80,19 +80,19 @@
 
     <ul>
       <li>
-        <a href="<%= url_for :action => 'start' %>?openid_identifier=yahoo.co.jp">
-          <img src="http://i.yimg.jp/images/login/btn/btnXSLogin.gif" width="116" height="28"alt="Yahoo! JAPAN IDでログイン" border="0">
-        </a>
+      <a href="<%= url_for :action => 'start', :openid_identifier => 'yahoo.co.jp', :fromUrl => params[:fromUrl] %>">
+        <img src="http://i.yimg.jp/images/login/btn/btnXSLogin.gif" width="116" height="28"alt="Yahoo! JAPAN IDでログイン" border="0">
+      </a>
       </li>
       <li>
-        <a href="<%= url_for :action => 'start' %>?openid_identifier=mixi.jp">
-          <%= image_tag("login_mixi.png") %>
-        </a>
+      <a href="<%= url_for :action => 'start', :openid_identifier => 'mixi.jp', :fromUrl => params[:fromUrl] %>">
+        <%= image_tag("login_mixi.png") %>
+      </a>
       </li>
       <li>
-        <a href="<%= url_for :action => 'start' %>?openid_identifier=www.google.com/accounts/o8/id">
-          <button style="background-color: #dd4b39;">Sign in with Google</button>
-        </a>
+      <a href="<%= url_for :action => 'start', :openid_identifier => 'www.google.com/accounts/o8/id', :fromUrl => params[:fromUrl] %>">
+        <button style="background-color: #dd4b39;">Sign in with Google</button>
+      </a>
       </li>
   </body>
 </html>

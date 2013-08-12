@@ -35,7 +35,7 @@
                   </li>
                 </ul>
               <% else %>
-                <a href="/session/consumer/index">LogIn</a>
+                <a href="<%= url_for(:controller => 'consumer', :action => 'index', :fromUrl => request.url)%>">LogIn</a>
               <% end %>
             </li>
           </ul>

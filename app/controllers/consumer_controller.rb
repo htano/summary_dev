@@ -45,7 +45,7 @@ class ConsumerController < ApplicationController
     if params[:force_post]
       oidreq.return_to_args['force_post']='x'*2048
     end
-    return_to = url_for :action => 'complete', :only_path => false
+    return_to = url_for :action => 'complete', :only_path => false, :fromUrl => params[:fromUrl]
     realm = url_for :action => '', :id => nil, :only_path => false
     
     if oidreq.send_redirect?(realm, return_to, params[:immediate])
@@ -118,7 +118,12 @@ class ConsumerController < ApplicationController
           flash[:success] += "(" + U010User.getLastLogIn(session[:openid_url]).to_s + ")";
         else
         end
-        redirect_to :action => 'index'
+        if params[:fromUrl]
+          flash[:alert] = "FromUrl is set: " + params[:fromUrl]
+          redirect_to params[:fromUrl]
+        else
+          redirect_to :action => 'index'
+        end
       else
         redirect_to :action => 'signup'
       end
@@ -181,7 +186,7 @@ class ConsumerController < ApplicationController
         U010User.updateMailAddr(@new_mail_address, session[:openid_url])
         redirect_to :action => 'profile'
       else
-        flash[:error] = "Different Mail Addresses are inputed."
+        flash[:error] = "Different Mail Addresses were inputted."
         redirect_to :action => 'profile_edit'
       end
     else
