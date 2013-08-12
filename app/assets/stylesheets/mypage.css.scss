@@ -38,22 +38,22 @@
   font-size: 16px;
   color: #a2a2a2;
 
-  & > img {
+  img {
     margin-top: 20px;
     float: left;
   }
 
-  & > p {
+  p {
     float: left;
     padding: 5px 0px 0px 5px;
   }
 
-  & > #profile_info {
+  #profile_info {
     margin: 0px;
     clear: left;
   }
 
-  & > a {
+  a {
     float: left;
     padding: 1px 0px 0px 5px;
     color: #a2a2a2;
@@ -74,7 +74,7 @@
   height: 20px;
   background-color: rgb(230, 230, 230);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  &>a {
+  a {
     color: white;
   }
 }
