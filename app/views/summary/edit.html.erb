@@ -1,24 +1,14 @@
-<style type="text/css">
-.error {
-  color: red;
-}
-</style>
 <script>
 $(document).ready(function (){
   $('#summary_content').val('<%= @summary_content %>');
-  /*　文字数設定の処理はここに書くべき？/
+  var thisValueLength = $('#summary_content').val().length;
+  $('.count').html(thisValueLength);
 });
 
 $(document).ready(function() {
     $("#edit_form").validate({});
 });
-//TODO 画面初期表示時に文字数がカウントされた状態で出ない
-/*
-&(document).ready(function(){
-    var thisValueLength = $('#summary_content').val().length;
-    $('.count').html(thisValueLength);
-});
-*/
+
 $(function(){
     $('#summary_content').bind('keyup',function(){
         var thisValueLength = $(this).val().length;
@@ -27,14 +17,15 @@ $(function(){
 });
 
 </script>
+
 <form action="edit_confirm" id="edit_form">
   <div class="center">
     <p>[title] <%= @title %></p>
     <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
-    <textarea id="summary_content" name="summary_content" cols=50 rows=6 maxlength="300" class="required"></textarea>
-    <span class="count">0</count><br>
+    <textarea id="summary_content" name="summary_content" cols=100 rows=10 maxlength="300" class="required"></textarea>
+    <span class="count">0</count>
   </div>
   <div class="center">
-      <input type="submit" id="edit_summary_submit" value="要約"></input>  
+      <input type="submit" id="edit_summary_submit" class="button button-rounded button-flat-primary" value="要約"></input>  
   </div>
 </form>
