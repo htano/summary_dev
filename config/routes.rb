@@ -5,7 +5,7 @@ SummaryDev::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
       get 'summary_lists/:userId/:summaryId' => 'summary_lists#index'
-
+      get '*not_found' =>'application#error_404'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

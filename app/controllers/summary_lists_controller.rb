@@ -7,10 +7,6 @@ class SummaryListsController < ApplicationController
 	                @article  = A010Article.find_by article_id: @summary.article_id
 			@sumUser =  U010User.find_by user_id: @summary.user_id
 		end
-
-		if(@user == nil || @summary == nil)
-			redirect_to :public/404 
-		end
 	end
        
         def show
