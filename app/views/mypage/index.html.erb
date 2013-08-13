@@ -1,0 +1,122 @@
+<div class="container">
+    <div class="row">
+      <div class="span3">
+        <div id="profile_id">
+          <!-- TODO : 写真設定がされているか判定 -->
+          <% if @is_photo_data then %>
+          <div id="user_photo"> <%= image_tag(@user.prof_image, :size => "64x64") %> </div>
+          <% else %>
+          <div id="user_photo"> <a href="#" id="no_image">No Image</a> </div>
+          <% end %>
+          <div id="prof_name_detail">
+            <%= image_tag("icons/glyphicons_003_user.png", :size => "19x18")%>
+            <p><%= @user.user_name %></p>
+            <%= image_tag("icons/glyphicons_039_notes.png", :size => "19x18", :id => "profile_info")%>
+            <a href="#">show profile</a>
+          </div>
+          <div id="following"> <a href="#">Following</a> </div>
+          <div id="follow_list">
+          <% if @favorite_users != nil %>
+          <% @favorite_users.each do |favorite_user| %>
+          <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.user_name),
+          {:action => "index", :user_name => favorite_user.user_name} %>
+          <% end %>
+          <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="span9">
+        <div class="div_tag">
+          <ul class="tab clear">
+            <li class="none active"><a href="#main" data-toggle="tab">Main</a></li>
+            <li class="none"><a href="#edited_summary" data-toggle="tab">Edited Summary</a></li>
+            <li class="none"><a href="#favorite" data-toggle="tab">Favorite</a></li>
+            <li class="none"><a href="#read" data-toggle="tab">Read</a></li>
+            <li class="none"><a href="#reserved" data-toggle="tab">Reserved</a></li>
+          </ul>
+        </div>
+        <div class="table">
+          <table class="summary_table active" id="main">
+            <tr class="table_top">
+              <th id="article_title_top">TITLE</th>
+              <th id="summary_number_top">summary</th>
+            </tr>
+            <% if @articles %>
+            <% @articles.each_with_index do |article, i| %>
+            <tr>
+              <th class="title">
+                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
+                <ul class="dropdown-checkbox">
+                  <li><%= link_to "mark as read", {:action => "mark_as_read", :user_id => @user.user_id, :user_name => @user.user_name, :article_id => article.article_id} %></li>
+                  <li><a href="#">mark as favorite</a></li>
+                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.user_id, :user_name => @user.user_name, :article_id => article.article_id} %></li>
+                  <li><a href="#">edit summary</a></li>
+                </ul>
+                <a href="<%= article.article_url %>"><%= article.article_title %></a>
+              </th>
+              <th class="summary_num"><a href="#"><%= @main_summaries_num[i] %></a></th>
+            </tr>
+            <% end %>
+            <% end %>
+          </table>
+          <table class="edited_summary_table" id="edited_summary">
+            <tr class="table_top">
+              <th id="article_title_top">TITLE</th>
+              <th id="summary_number_top">like</th>
+            </tr>
+            <% if @edited_summaries %>
+            <% @edited_summaries.each_with_index do |summary, i| %>
+            <tr>
+              <th class="title">
+                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
+                <ul class="dropdown-checkbox">
+                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.user_id, :user_name => @user.user_name, :article_id => summary.article_id, :delete_mode => 2} %></li>
+                  <li><a href="#">revise</a></li>
+                </ul>
+                <a href="<%= summary.article_url %>"><%= summary.article_title %></a>
+              </th>
+              <th class="summary_num"><a href="#"><%= @like_num[i] %></a></th>
+            </tr>
+            <% end %>
+            <% end %>
+          </table>
+          <table class="favorite_table" id="favorite">
+            <tr class="table_top">
+              <th id="article_title_top">TITLE</th>
+              <th id="summary_number_top">summary</th>
+            </tr>
+          </table>
+          <table class="read_table" id="read">
+            <tr class="table_top">
+              <th id="article_title_top">TITLE</th>
+              <th id="summary_number_top">summary</th>
+            </tr>
+            <% if @read_articles %>
+            <% @read_articles.each_with_index do |read_article, i| %>
+            <tr>
+              <th class="title">
+                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
+                <ul class="dropdown-checkbox">
+                  <li><a href="#">mark as favorite</a></li>
+                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.user_id, :user_name => @user.user_name,
+                    :article_id => read_article.article_id} %></li>
+                  <li><a href="#">edit summary</a></li>
+                </ul>
+                <a href="<%= read_article.article_url %>"><%= read_article.article_title %></a>
+              </th>
+              <th class="summary_num"><a href="#"><%= @read_summaries_num[i] %></a></th>
+            </tr>
+            <% end %>
+            <% end %>
+          </table>
+          <table class="reserved_table" id="reserved">
+            <tr class="table_top">
+              <th id="article_title_top">none</th>
+              <th id="summary_number_top">none</th>
+            </tr>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>

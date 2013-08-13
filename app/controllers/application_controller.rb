@@ -2,14 +2,25 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  helper_method :signed_in?, :get_current_user_name
 
-  def error_404(exception = nil)
-    if exception
-      logger.info "Rendering 404 with exception: #{exception.message}"
-    end
-
-    render :template => "errors/error_404", :status => 404
+  def get_current_user_name
+    return U010User.getName(session[:openid_url])
   end
 
+  def signed_in?
+    return U010User.isExists?(session[:openid_url])
+  end
+
+  def isLoginUser?(url_user)
+    @result = false
+    if signed_in?
+      @login_user = U010User.getName(session[:openid_url])
+      if @login_user == url_user
+        @result = true
+      end
+    end
+    return @result
+  end
 
 end

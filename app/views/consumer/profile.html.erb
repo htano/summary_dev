@@ -1,0 +1,18 @@
+<div class="profile_table">
+<table border=1>
+  <tr>
+    <td> user name </td>
+    <td> <%= @uname %> </td>
+  </tr>
+  <tr>
+    <td> Mail Address </td>
+    <td> <%= @email %> </td>
+  </tr>
+</table>
+</div>
+
+<div class="profile_edit_link">
+  <a href="<%= url_for :action => 'profile_edit' %>">
+    <button>edit</button>
+  </a>
+</div>

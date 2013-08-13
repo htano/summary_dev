@@ -2,27 +2,29 @@
 
 <div id="yBox">
 	<h1 id="yArticleName">
-
+        <% if  @article != nil %>
 	<%= @article.article_title %>	
-
+        <% end %>
 	</h1>
 
         <div id="yArticleLink">
         
+        <% if  @article != nil %>
 	<%= link_to("元記事を見る",@article.article_url) %>
-        
+        <% end %>
+	
 	</div>
 
       
 	<div id="yAuther">
         
-	要約した人:	
-	<%= @sumUser.user_name %>	
+	要約した人: 要約ひっぱってくる論理考える前の暫定	
 	</div>
 
 	<h2 id="yArticleDetail">
 
-	<%= @summary.summary_content %>	
+	要約結果：要約ひっぱってくる論理考える前の暫定
+	
 
 	</h2>
 

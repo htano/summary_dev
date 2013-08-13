@@ -1,40 +1,44 @@
-<div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <a href="#" class="brand">Summary</a>
-      <div class="nav-collapse">
-        <ul class="nav pull-right">
-          <li>
-            <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#">7</a>
-            <ul class="dropdown-menu">
-              <li>
-                <a href="#">action</a>
-              </li>
-              <li>
-                <a href="#">next action</a>
-              </li>
-              <li>
-                <a href="#">more actions</a>
-              </li>
-            </ul>
-          </li>
-          <li class="divider-vertical"></li>
-          <li>
-            <a class="dropdown-toggle nav_account" data-toggle="dropdown" href="#"><%= @user.user_name %></a>
-            <ul class="dropdown-menu">
-              <li>
-                <a href="#">action</a>
-              </li>
-              <li>
-                <a href="#">next action</a>
-              </li>
-              <li>
-                <a href="#">more actions</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a href="#" class="brand">Summary</a>
+        <div class="nav-collapse">
+          <ul class="nav pull-right">
+            <li>
+              <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#">7</a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="#">action</a>
+                </li>
+                <li>
+                  <a href="#">next action</a>
+                </li>
+                <li>
+                  <a href="#">more actions</a>
+                </li>
+              </ul>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <% if signed_in? %>
+              <a class="dropdown-toggle nav_account" data-toggle="dropdown" href="#"><%= get_current_user_name %></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">action</a>
+                  </li>
+                  <li>
+                  <a href="<%= url_for :controller =>'consumer', :action => 'profile'%>">Show Profile</a>
+                  </li>
+                  <li>
+                    <a href="/session/consumer/sign_out">LogOut</a>
+                  </li>
+                </ul>
+              <% else %>
+                <a href="<%= url_for(:controller => 'consumer', :action => 'index', :fromUrl => request.url)%>">LogIn</a>
+              <% end %>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
