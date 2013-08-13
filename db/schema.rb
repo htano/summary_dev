@@ -58,14 +58,14 @@ ActiveRecord::Schema.define(version: 20130811052551) do
     t.datetime "updated_at"
   end
 
+  add_index "u010_users", ["open_id"], name: "idx_openid", unique: true
+  add_index "u010_users", ["user_name"], name: "idx_user_name", unique: true
+
   create_table "u011_favorite_users", force: true do |t|
     t.integer  "u010_user_id"
     t.integer  "favorite_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "u010_users", ["open_id"], name: "idx_openid", unique: true
-  add_index "u010_users", ["user_name"], name: "idx_user_name", unique: true
 
 end
