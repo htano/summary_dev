@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130731132045) do
+ActiveRecord::Schema.define(version: 20130811052551) do
 
   create_table "a010_articles", force: true do |t|
     t.integer  "article_id"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20130731132045) do
   end
 
   create_table "r010_user_articles", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "u010_user_id"
     t.integer  "article_id"
     t.boolean  "read_flg"
     t.datetime "created_at"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20130731132045) do
   create_table "s010_summaries", force: true do |t|
     t.integer  "summary_id"
     t.text     "summary_content"
-    t.integer  "user_id"
+    t.integer  "u010_user_id"
     t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(version: 20130731132045) do
     t.boolean  "yuko_flg"
     t.datetime "last_login"
     t.string   "open_id"
+    t.string   "prof_image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "u011_favorite_users", force: true do |t|
+    t.integer  "u010_user_id"
+    t.integer  "favorite_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

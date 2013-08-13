@@ -1,6 +1,9 @@
 class U010User < ActiveRecord::Base
   validates :user_name, :uniqueness => true
   validates :open_id,   :uniqueness => true
+  has_many :u011_favorite_users, :dependent => :destroy
+  has_many :r010_user_articles, :dependent => :destroy
+  has_many :s010_summaries, :dependent => :destroy
   def self.isExists?(openid)
     @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
     return (@current_user != nil)
