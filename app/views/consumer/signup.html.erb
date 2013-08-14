@@ -8,5 +8,8 @@
   ユーザ名(User Name)：
   <%= text_field_tag :creating_user_id %>
   </br>
+  <% if params[:fromUrl] %>
+    <input type="hidden" name="fromUrl" value="<%= params[:fromUrl] %>">
+  <% end %>
   <%= submit_tag("アカウント登録(SignUp)") %>
 <% end %>
