@@ -154,12 +154,12 @@
   zoom: 1;
   *display: inline;
   border: 1px solid #d4d4d4;
-  height: 32px;
-  line-height: 32px;
+  height: 20px;
+  line-height: 20px;
   padding: 0px 25.6px;
-  font-weight: 300;
-  font-size: 14px;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 200;
+  font-size: 12px;
+  *font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   color: #666666;
   text-shadow: 0 1px 1px white;
   margin: 0;

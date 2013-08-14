@@ -10,6 +10,7 @@ SummaryDev::Application.routes.draw do
   get 'webpage/add' => 'webpage#add'
   get 'webpage/add_confirm' => 'webpage#add_confirm'
   get 'webpage/add_complete' => 'webpage#add_complete'
+  #get 'webpage/add_complete'
   get 'webpage/webpage/invalid' => 'webpage#invalid'
 
   get 'summary/:article_id/edit' => 'summary#edit'
@@ -74,12 +75,12 @@ SummaryDev::Application.routes.draw do
 
   get 'hello' => 'webpage#hello'
   get 'bye.html' => 'webpage#bye'
-  get 'webpage/:id/add' => 'webpage#add'
-  get 'webpage/:id/add_confirm' => 'webpage#add_confirm'
+#  get 'webpage/:id/add' => 'webpage#add'
+#  get 'webpage/:id/add_confirm' => 'webpage#add_confirm'
 
-  get 'summary/:id/:pageid/edit' => 'summary#edit'
-  get 'summary/:id/:pageid' => 'summary#show'
-  post 'summary/:id/:pageid/edit_complete' => 'summary#edit_complete'
+#  get 'summary/:id/:pageid/edit' => 'summary#edit'
+#  get 'summary/:id/:pageid' => 'summary#show'
+#  post 'summary/:id/:pageid/edit_complete' => 'summary#edit_complete'
 
   get 'session/consumer/:action' => 'consumer#:action'
   post 'session/consumer/:action' => 'consumer#:action'
