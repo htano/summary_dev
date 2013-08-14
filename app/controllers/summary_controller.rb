@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class SummaryController < ApplicationController
   def edit
     article = Article.find(params[:article_id]);
