@@ -5,6 +5,14 @@ SummaryDev::Application.routes.draw do
 
   get "mypage/destroy"
 
+  get 'webpage/:user_name/add' => 'webpage#add'
+  get 'webpage/:user_name/add_confirm' => 'webpage#add_confirm'
+  get 'webpage/:user_name/add_complete' => 'webpage#add_complete'
+
+  get 'summary/:user_name/:article_id/edit' => 'summary#edit'
+  get 'summary/:user_name/:article_id/edit_confirm' => 'summary#edit_confirm'
+  get 'summary/:user_name/:article_id' => 'summary#show'
+  get 'summary/:user_name/:article_id/edit_complete' => 'summary#edit_complete'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

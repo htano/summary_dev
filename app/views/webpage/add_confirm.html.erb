@@ -1,0 +1,18 @@
+<script>
+$(function(){
+	$('#submit_button').click(function(){
+		return confirm('登録しますか？');
+	});
+});
+</script>
+<form action="add_complete">
+  <table>
+    <div class="center" align="left">
+      <p> [title]: <%= @title %> </p>
+      <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
+      <input type="submit" id="submit_button" class="button button-rounded button-flat-primary" value="確定">
+      <input type="hidden" name="url" value="<%= @url %>">
+      <input type="hidden" name="title" value="<%= @title %>">
+    </div>
+  </table>
+</form>

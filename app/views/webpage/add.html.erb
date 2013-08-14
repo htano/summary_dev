@@ -1,0 +1,14 @@
+<script>
+$(document).ready(function() {
+    $("#add_form").validate({});
+});
+</script>
+<form id="add_form" action="add_confirm">
+  <table>
+    <div class="center">
+      URLを入力してください。
+      <input type="text" name="url" id="url" class="required url " size="60"><br>
+      <input type="submit" id="add_submit" class="button button-rounded button-flat-primary" value="登録！">
+    </div>
+  </table>
+</form>
