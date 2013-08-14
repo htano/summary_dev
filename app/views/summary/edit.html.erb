@@ -1,0 +1,31 @@
+<script>
+$(document).ready(function (){
+  $('#summary_content').val('<%= @summary_content %>');
+  var thisValueLength = $('#summary_content').val().length;
+  $('.count').html(thisValueLength);
+});
+
+$(document).ready(function() {
+    $("#edit_form").validate({});
+});
+
+$(function(){
+    $('#summary_content').bind('keyup',function(){
+        var thisValueLength = $(this).val().length;
+        $('.count').html(thisValueLength);
+    });
+});
+
+</script>
+
+<form action="edit_confirm" id="edit_form">
+  <div class="center">
+    <p>[title] <%= @title %></p>
+    <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
+    <textarea id="summary_content" name="summary_content" cols=60 rows=10 maxlength="300" class="required"></textarea>
+    <span class="count">0</count>
+  </div>
+  <div class="center">
+      <input type="submit" id="edit_summary_submit" class="button button-rounded button-flat-primary" value="要約"></input>  
+  </div>
+</form>

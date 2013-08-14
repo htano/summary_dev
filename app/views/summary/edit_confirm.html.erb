@@ -1,0 +1,16 @@
+<script>
+$(function(){
+  $('#submit_button').click(function(){
+    return confirm('こちらの要約で確定しますか？');
+  });
+});
+</script>
+  <form action="edit_complete">
+    <div class="center">
+      <p> [title]: <%= @title %> </p>
+      <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
+      <p>[要約] <%= @summary_content %></p>
+      <input type="submit" id="submit_button" class="button button-rounded button-flat-primary" value="確定">
+      <input type="hidden" name="summary_content" value="<%= @summary_content %>">
+  </div>
+</form>

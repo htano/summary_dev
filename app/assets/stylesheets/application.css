@@ -11,6 +11,12 @@
  *= require_self
  *= require_tree .
  */
+.error {
+  color: red;
+}
+.center {
+    text-align: center;
+}
 html {
   overflow-y: scroll;
 }
