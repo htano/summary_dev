@@ -3,14 +3,14 @@
 <div id="yBox">
 	<h1 id="yArticleName">
         <% if  @article != nil %>
-	<%= @article.article_title %>	
+	<%= @article.title %>	
         <% end %>
 	</h1>
 
         <div id="yArticleLink">
         
         <% if  @article != nil %>
-	<%= link_to("元記事を見る",@article.article_url) %>
+	<%= link_to("元記事を見る",@article.url) %>
         <% end %>
 	
 	</div>
