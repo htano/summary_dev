@@ -5,17 +5,17 @@ class ApplicationController < ActionController::Base
   helper_method :signed_in?, :get_current_user_name
 
   def get_current_user_name
-    return U010User.getName(session[:openid_url])
+    return User.getName(session[:openid_url])
   end
 
   def signed_in?
-    return U010User.isExists?(session[:openid_url])
+    return User.isExists?(session[:openid_url])
   end
 
   def isLoginUser?(url_user)
     @result = false
     if signed_in?
-      @login_user = U010User.getName(session[:openid_url])
+      @login_user = User.getName(session[:openid_url])
       if @login_user == url_user
         @result = true
       end

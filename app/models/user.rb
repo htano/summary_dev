@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :favorite_users, :dependent => :destroy
   has_many :user_articles, :dependent => :destroy
   has_many :summaries, :dependent => :destroy
+  has_many :good_summaries, :dependent => :destroy
   def self.isExists?(openid)
     @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
     return (@current_user != nil)
