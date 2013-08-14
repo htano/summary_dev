@@ -8,20 +8,6 @@
 					<%= @article.title %>	
 				<% end %>
 			</h1>
-			<div id="yBox">
-				<h1 id="yArticleName">
-					<% if  @article != nil %>
-						<%= @article.title %>	
-					<% end %>
-				</h1>
-				<div id="yArticleLink">
-
-					<% if  @article != nil %>
-						<%= link_to("元記事を見る",@article.url) %>
-					<% end %>
-
-				</div>
-			</div>
 			<% unless @summarys.blank? %>
 				<div id="youyaku">
 					<% @summarys.each_with_index do |summary,i| %>
