@@ -65,16 +65,14 @@
                   <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
                     :name => @user.name, :article_id => article.id} %></li>
                   <li><%= link_to "edit summary", 
-                      {:controller => "summary", :action => "edit", :article_id => article.id},
-                      {:target => "_blank"} %>
+                      {:controller => "summary", :action => "edit", :article_id => article.id} %>
                   </li>
                 </ul>
                 <% end %>
                 <a href="<%= article.url %>" target="_blank"><%= article.title %></a>
               </th>
               <th class="num_column"><%= link_to @main_summaries_num[i], 
-                  {:controller => 'summary_lists', :action => 'index', :articleId => article.id},
-                  {:target => "_blank"} %>
+                  {:controller => 'summary_lists', :action => 'index', :articleId => article.id} %>
               </th>
               <% if false then %>
               <th class="num_column"><a href="#"><%= @main_summaries_num[i] %></a></th>
@@ -98,8 +96,7 @@
                   <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
                     :name => @user.name, :article_id => summary.id, :delete_mode => 2} %></li>
                   <li><%= link_to "revise", 
-                      {:controller => "summary", :action => "edit", :article_id => summary.id},
-                      {:target => "_blank"} %>
+                      {:controller => "summary", :action => "edit", :article_id => summary.id} %>
                   </li>
                 </ul>
                 <% end %>
@@ -134,16 +131,14 @@
                   <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
                     :article_id => read_article.id} %></li>
                   <li><%= link_to "edit summary", 
-                      {:controller => "summary", :action => "edit", :article_id => read_article.id},
-                      {:target => "_blank"} %>
+                      {:controller => "summary", :action => "edit", :article_id => read_article.id} %>
                   </li>
                 </ul>
                 <% end %>
                 <a href="<%= read_article.url %>" target="_blank"><%= read_article.title %></a>
               </th>
               <th class="num_column"><%= link_to @read_summaries_num[i], 
-                  {:controller => 'summary_lists', :action => 'index', :articleId => read_article.id},
-                  {:target => "_blank"} %>
+                  {:controller => 'summary_lists', :action => 'index', :articleId => read_article.id} %>
               </th>
             </tr>
             <% end %>
