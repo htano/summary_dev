@@ -8,6 +8,7 @@ $(function(){
           data: 'url=' + $('#url').val(),
           success: function(data) {
             alert('登録しました。');
+            location.reload();
           },
           error: function(data) {
             alert('失敗しました、urlを確認して下さい。');
