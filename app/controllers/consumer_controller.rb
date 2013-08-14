@@ -146,10 +146,11 @@ class ConsumerController < ApplicationController
     @creating_user_id = "#{params[:creating_user_id]}";
     if User.regist?(@creating_user_id, session[:openid_url])
       flash[:success] = "Hello " + @creating_user_id + ". SignUp was successfully completed."
+      redirect_to :controller => 'mypage',:action => 'index'
     else
       flash[:error] = "SignUp Error: " + @creating_user_id + " has already exist."
+      redirect_to :action => 'signup'
     end
-    redirect_to :action => 'index'
   end
 
   def profile
