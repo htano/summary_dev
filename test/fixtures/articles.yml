@@ -1,13 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  article_id: 1
-  article_url: MyString
-  article_title: MyString
+  url: MyString
+  title: MyString
   category_id: 1
 
 two:
-  article_id: 1
-  article_url: MyString
-  article_title: MyString
+  url: MyString
+  title: MyString
   category_id: 1
