@@ -1,0 +1,1 @@
+copy development.log ../development.log
