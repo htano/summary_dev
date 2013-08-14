@@ -10,8 +10,20 @@
           <div id="prof_name_detail">
             <%= image_tag("icons/glyphicons_003_user.png", :size => "19x18")%>
             <p><%= @user.name %></p>
+
             <%= image_tag("icons/glyphicons_039_notes.png", :size => "19x18", :id => "profile_info")%>
-            <a href="#">show profile</a>
+            <% if @is_login_user then %>
+              <a href="#">show profile</a>
+            <% else %>
+            <% unless @is_already_following then%>
+              <%= link_to "follow", 
+              {:action => "follow", :follow_user_name => @user.name, :follow_user_id => @user.id} %>
+            <% else %>
+              <%= link_to "unfollow", 
+              {:action => "unfollow", :unfollow_user_name => @user.name, :unfollow_user_id => @user.id} %>
+            <% end %>
+            <% end %>
+
           </div>
           <div id="following"> <a href="#">Following</a> </div>
           <div id="follow_list">
