@@ -1,42 +1,22 @@
-require "open-uri"
-require "rubygems"
+# encoding: utf-8
+
 require "nokogiri"
-require "kconv"
+require 'openssl'
 
 class WebpageController < ApplicationController
-  def add
-    #TODO 堀田の作成したメソッドを呼ぶ
-    @user_name = "#{params[:user_name]}";
-    render "webpage/add"
-  end
   
   def add_confirm
-    #TODO 堀田の作成したメソッドを呼ぶ
-    @user_name = "#{params[:user_name]}";
     @url = "#{params[:url]}";
-
-    charset = nil;
-    html = open(@url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
-      charset = f.charset;
-      f.read;
-    end
-    doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
-    @title = doc.title;
+    @title = returnTitle(@url);
   end
 
   def add_complete
-    #TODO 堀田の作成したメソッドを呼ぶ
-    @user_name = "#{params[:user_name]}";
-    user_id = User.find_by_name(@user_name).id;
-    #TODO first必要？
-    #article = Article.where(:url => params[:url]).first;
+    user_id = getLoginUser.id;
     article = Article.find_by_url(params[:url]);
     if article != nil then
-      #article_id = article.id;
-      #@article_id = @article.id;
       @article_id = article.id;
       user_article = UserArticle.find_by_user_id_and_article_id(user_id, article.id);
-        if user_article != nil then
+        if user_article != nil then 
           #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
           @msg = "あなたはすでに"+params[:title]+"を登録しています！"
         else
@@ -48,8 +28,6 @@ class WebpageController < ApplicationController
         end
    else
       #同じURLの情報がない場合、a010とr010両方にinsertする
-      #article_id = createArticleID();
-      #@article_id = article_id;
       #カテゴリはペンディング事項
       article = Article.new(:url => params[:url],:title => params[:title], :category_id =>"001");
       if article.save
@@ -60,5 +38,21 @@ class WebpageController < ApplicationController
         end
       end
    end
+  end
+
+  #指定されたurlのタイトルを返却するメソッド
+  def returnTitle(url)
+    begin
+      charset = nil;
+      html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
+        charset = f.charset;
+        f.read;
+      end
+      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
+      return doc.title;
+    rescue
+      @msg ="指定されたURLは存在しません";
+      render "webpage/invalid"
+    end
   end
 end
