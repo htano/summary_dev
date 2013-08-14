@@ -1,9 +1,12 @@
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
-        <a href="#" class="brand">Summary</a>
+        <a href="<%= url_for :controller => 'mypage', :action => 'index' %>" class="brand">Summary</a>
         <div class="nav-collapse">
           <ul class="nav pull-right">
+            <li>
+              <a href="<%= url_for :controller => 'webpage', :action => 'add' %>">book article!!</a>
+            </li>
             <li>
               <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#">7</a>
               <ul class="dropdown-menu">
