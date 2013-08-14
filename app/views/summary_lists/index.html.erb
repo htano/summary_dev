@@ -18,13 +18,17 @@
       
 	<div id="yAuther">
         
-	要約した人: 要約ひっぱってくる論理考える前の暫定	
+        <% if  @sumUsers[0] != nil %>
+		<%= @sumUsers[0].name %>	
+	<% end %>
+	
 	</div>
 
 	<h2 id="yArticleDetail">
 
-	要約結果：要約ひっぱってくる論理考える前の暫定
-	
+        <% if  @summarys[0] != nil %>
+		<%= @summarys[0].content %>	
+	<% end %>
 
 	</h2>
 
