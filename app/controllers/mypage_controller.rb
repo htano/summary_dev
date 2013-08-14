@@ -8,14 +8,19 @@ class MypageController < ApplicationController
 
       # check whether already following or not
       signed_user = User.find_by_name(get_current_user_name)
-      if signed_user.favorite_users.exists?(:favorite_user_id => @user.id) then
+      if signed_user && signed_user.favorite_users.exists?(:favorite_user_id => @user.id) then
         @is_already_following = true
       else
         @is_already_following = false
       end
     else
-      @is_login_user = true
-      @user = User.find_by_name(get_current_user_name)
+      if get_current_user_name
+        @is_login_user = true
+        @user = User.find_by_name(get_current_user_name)
+      else
+        redirect_to :controller => 'consumer', :action => 'index'
+        return
+      end
     end
 
     if @user == nil then
