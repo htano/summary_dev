@@ -1,7 +1,7 @@
 SummaryDev::Application.routes.draw do
   get "mypage/index"
   get "mypage/delete"
-  get "mypage/mark_as_read"
+  get "mypage/reverse_read_flg"
 
   get "mypage/destroy"
 
