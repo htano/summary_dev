@@ -1,6 +1,6 @@
-class CreateS011GoodSummaries < ActiveRecord::Migration
+class CreateGoodSummaries < ActiveRecord::Migration
   def change
-    create_table :s011_good_summaries do |t|
+    create_table :good_summaries do |t|
       t.integer :user_id
       t.integer :summary_id
 

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class U010UserTest < ActiveSupport::TestCase
+class FavoriteUserTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
