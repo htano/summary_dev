@@ -52,7 +52,10 @@
                   <li><a href="#">mark as favorite</a></li>
                   <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
                     :name => @user.name, :article_id => article.id} %></li>
-                  <li><a href="#">edit summary</a></li>
+                  <li><%= link_to "edit summary", 
+                      {:controller => "summary", :action => "edit", :article_id => article.id},
+                      {:target => "_blank"} %>
+                  </li>
                 </ul>
                 <% end %>
                 <a href="<%= article.url %>" target="_blank"><%= article.title %></a>
@@ -82,7 +85,10 @@
                 <ul class="dropdown-checkbox">
                   <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
                     :name => @user.name, :article_id => summary.id, :delete_mode => 2} %></li>
-                  <li><a href="#">revise</a></li>
+                  <li><%= link_to "revise", 
+                      {:controller => "summary", :action => "edit", :article_id => summary.id},
+                      {:target => "_blank"} %>
+                  </li>
                 </ul>
                 <% end %>
                 <a href="<%= summary.url %>" target="_blank"><%= summary.title %></a>
@@ -115,7 +121,10 @@
                   <li><a href="#">mark as favorite</a></li>
                   <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
                     :article_id => read_article.id} %></li>
-                  <li><a href="#">edit summary</a></li>
+                  <li><%= link_to "edit summary", 
+                      {:controller => "summary", :action => "edit", :article_id => read_article.id},
+                      {:target => "_blank"} %>
+                  </li>
                 </ul>
                 <% end %>
                 <a href="<%= read_article.url %>" target="_blank"><%= read_article.title %></a>
