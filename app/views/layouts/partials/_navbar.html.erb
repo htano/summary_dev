@@ -24,7 +24,7 @@
               <a class="dropdown-toggle nav_account" data-toggle="dropdown" href="#"><%= get_current_user_name %></a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="#">action</a>
+                  <a href="<%= url_for :controller => 'mypage', :action => 'index' %>">MyPage</a>
                   </li>
                   <li>
                   <a href="<%= url_for :controller =>'consumer', :action => 'profile'%>">Show Profile</a>
