@@ -1,10 +1,6 @@
 class SummaryListsController < ApplicationController
 	def index
 		#check current loginuser
-		if getLoginUser == nil then
-			redirect_to :controller => "consumer", :action => "index"
-		    return	
-		end
 			
 		@article = Article.find_by id: params[:articleId]
 		if @article == nil then
@@ -23,8 +19,12 @@ class SummaryListsController < ApplicationController
 			#calcurate sum of the goodSummaryPoint from summary_id.
 			goodSummary = GoodSummary.where(:summary_id => summary.id)
 			goodSummaryPoint = goodSummary.count
-			unless goodSummary.find_by(:user_id => getLoginUser.id) == nil then 
-				@isGoodCompleted[arrayCount] = true
+			unless getLoginUser == nil then
+				unless goodSummary.find_by(:user_id => getLoginUser.id) == nil then 
+					@isGoodCompleted[arrayCount] = true
+				else
+					@isGoodCompleted[arrayCount] = false 
+				end
 			else
 				@isGoodCompleted[arrayCount] = false 
 			end	
@@ -59,7 +59,10 @@ class SummaryListsController < ApplicationController
 	end
 
 	def goodSummary 
-
+		if getLoginUser == nil then
+			redirect_to :controller => "consumer", :action => "index"
+		    return	
+		end
 		goodSummary = GoodSummary.new(:user_id => getLoginUser.id, :summary_id =>params[:summaryId]) 
 
 		if goodSummary.save
