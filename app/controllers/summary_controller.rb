@@ -8,8 +8,8 @@ class SummaryController < ApplicationController
     user_id = getLoginUser.id;
     summary = Summary.find_by_user_id_and_article_id(user_id, params[:article_id]);
     if summary != nil then
-      #すでに当該記事に対して要約が登録されていた場合、以下の処理をする
-      @summary_content = summary.content;
+      @content = summary.content;
+      logger.error(@content);
     end
   end
 
@@ -50,7 +50,7 @@ class SummaryController < ApplicationController
     user_id = getLoginUser.id;
     @article_id = "#{params[:article_id]}";
     summary = Summary.find_by_user_id_and_article_id(user_id, @article_id);
-    @summary = summary.content;
+    @summary_content = summary.content;
     @msg = "要約が登録出来ました！"
   end
 end

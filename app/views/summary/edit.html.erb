@@ -1,6 +1,6 @@
 <script>
+
 $(document).ready(function (){
-  $('#summary_content').val('<%= @summary_content %>');
   var thisValueLength = $('#summary_content').val().length;
   $('.count').html(thisValueLength);
 });
@@ -22,7 +22,7 @@ $(function(){
   <div class="center">
     <p>[title] <%= @title %></p>
     <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
-    <textarea id="summary_content" name="summary_content" cols=60 rows=10 maxlength="300" class="required"></textarea>
+    <textarea id="summary_content" name="summary_content" cols=60 rows=10 maxlength="300" class="required"><%= @content %></textarea>
     <span class="count">0</count>
   </div>
   <div class="center">

@@ -1,7 +1,9 @@
 # encoding: utf-8
 
-require "nokogiri"
+require 'nokogiri'
 require 'openssl'
+require 'open-uri'
+require 'kconv'
 
 class WebpageController < ApplicationController
   

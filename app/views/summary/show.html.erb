@@ -13,7 +13,7 @@ $(function(){
   <div id="msg"><%= @msg %></div>
   <p>[title] <%= @title %></p>
   <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
-  <p>[要約] <%= @summary %></p>
+  <p>[要約] <%= simple_format(@summary_content) %></p>
   <p><%= link_to "URL追加へ戻る", :controller => "webpage", :action => "add" %></p>
-  <p><%=link_to "要約編集画面へ戻る", :controller => "summary", :action => "edit", article_id:@article_id %></p>
+  <p><%= link_to "要約編集画面へ戻る", :controller => "summary", :action => "edit", article_id:@article_id %></p>
 </div>
