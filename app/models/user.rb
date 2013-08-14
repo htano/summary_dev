@@ -42,4 +42,10 @@ class User < ActiveRecord::Base
   def self.getUserObj(openid)
     return where(["open_id = ? and yuko_flg = ?", openid, true]).first
   end
+
+  def self.updateImagePath(openid, img_path)
+    @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
+    @current_user.prof_image = img_path
+    return @current_user.save
+  end
 end

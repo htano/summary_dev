@@ -182,13 +182,35 @@ class ConsumerController < ApplicationController
   def profile_edit_complete
     @new_mail_address = params[:mail_addr]
     @confirm_mail_address = params[:mail_addr_confirm]
+    @uploaded_image_file = params[:profile_image]
+    
+    @mail_change = (@new_mail_address != "")
+    @redirect_url = url_for :action => 'profile'
+    @session_error = false
+    @edit_error = false
     if(User.isExists?(session[:openid_url]))
-      if @new_mail_address == @confirm_mail_address
-        User.updateMailAddr(@new_mail_address, session[:openid_url])
-        redirect_to :action => 'profile'
-      else
-        flash[:error] = "Different Mail Addresses were inputted."
+      if @mail_change
+        if @new_mail_address == @confirm_mail_address
+          User.updateMailAddr(@new_mail_address, session[:openid_url])
+        else
+          flash[:error] = "Different Mail Addresses were inputted."
+          @edit_error = true
+        end
+      end
+
+      if !@edit_error && @uploaded_image_file != nil
+        @save_file_name = './app/assets/images/' + 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
+        @for_db_image_path = 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
+        File.open(@save_file_name, 'wb') do |of|
+          of.write(@uploaded_image_file.read)
+        end
+        User.updateImagePath(session[:openid_url], @for_db_image_path)
+      end
+
+      if @edit_error
         redirect_to :action => 'profile_edit'
+      else
+        redirect_to :action => 'profile'
       end
     else
       flash[:error] = "To show the profile page, you have to login."
