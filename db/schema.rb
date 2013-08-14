@@ -11,18 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130731132045) do
+ActiveRecord::Schema.define(version: 20130811052551) do
 
-  create_table "a010_articles", force: true do |t|
-    t.integer  "article_id"
-    t.string   "article_url"
-    t.string   "article_title"
+  create_table "articles", force: true do |t|
+    t.string   "url"
+    t.string   "title"
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "r010_user_articles", force: true do |t|
+  create_table "favorite_users", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "favorite_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "good_summaries", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "summary_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "summaries", force: true do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "article_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_articles", force: true do |t|
     t.integer  "user_id"
     t.integer  "article_id"
     t.boolean  "read_flg"
@@ -30,31 +51,18 @@ ActiveRecord::Schema.define(version: 20130731132045) do
     t.datetime "updated_at"
   end
 
-  create_table "s010_summaries", force: true do |t|
-    t.integer  "summary_id"
-    t.text     "summary_content"
-    t.integer  "user_id"
-    t.integer  "article_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "s011_good_summaries", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "summary_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "u010_users", force: true do |t|
-    t.integer  "user_id"
-    t.string   "user_name"
+  create_table "users", force: true do |t|
+    t.string   "name"
     t.string   "mail_addr"
     t.boolean  "yuko_flg"
     t.datetime "last_login"
-    t.integer  "open_id"
+    t.string   "open_id"
+    t.string   "prof_image"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "users", ["name"], name: "idx_name", unique: true
+  add_index "users", ["open_id"], name: "idx_openid", unique: true
 
 end

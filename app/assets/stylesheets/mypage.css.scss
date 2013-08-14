@@ -1,0 +1,280 @@
+// Place all the styles related to the mypage controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.row {
+  margin-left: -30px;
+}
+
+.span3 {
+  width: 270px;
+}
+
+[class*="span"] {
+  float: left;
+  margin-left: 30px;
+}
+
+#profile_info {
+  margin-top: 8px;
+}
+
+#user_photo {
+  float: left;
+  width: 64px;
+  height: 64px;
+  margin: 30px 0px 0px;
+  background-color: rgb(230, 230, 230);
+}
+
+#no_image {
+  color: white;
+  text-align: center;
+}
+
+#prof_name_detail {
+  float: left;
+  margin-top:15px;
+  padding: 0px 0px 0px 10px;
+  font-size: 16px;
+  color: #a2a2a2;
+
+  img {
+    margin-top: 20px;
+    float: left;
+  }
+
+  p {
+    float: left;
+    padding: 5px 0px 0px 5px;
+  }
+
+  #profile_info {
+    margin: 0px;
+    clear: left;
+  }
+
+  a {
+    float: left;
+    padding: 1px 0px 0px 5px;
+    color: #a2a2a2;
+    margin: 0px 0px 10px;
+  }
+}
+
+#following {
+  width: 212px;
+  clear: left;
+  text-align: center;
+  border-bottom: 0px;
+  margin-bottom: 2px;
+  margin-top: 20px;
+  padding: 3px 0px;
+  font-size: 20px;
+  border: 1p solid #e15e5e5;
+  height: 20px;
+  background-color: rgb(230, 230, 230);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  a {
+    color: white;
+  }
+}
+
+#follow_list {
+  margin-top: 5px;
+  width: 220px;
+}
+
+.span9 {
+  width: 870px;
+}
+
+ul.tab {
+  margin: 20px;
+  padding: 0;
+  padding-left: 10px;
+  border-bottom: 2px #ddd solid;
+  li {
+    float: left;
+    margin: 5px 5px 0px 5px;
+    position: relative;
+    bottom: -2px;
+    list-style-type: none;
+    border: 1px #ddd solid;
+    border-bottom: 2px #ddd solid;
+    width: 150px;
+    text-align: center;
+
+    a {
+      color: #000;
+      display: block;
+      padding: 3px 10px 5px;
+      text-decoration: none;
+      background-color: #fff;
+      font-size: 16px;
+      color: rgb(162, 162, 162);
+
+      &:hover {
+        position: relative;
+        background-color: gray;
+        color: white;
+      }
+    }
+  }
+}
+
+.clear:after {
+  content: "";
+  display: block;
+}
+
+.clear:after {
+  clear: both;
+}
+
+.clear {
+  zoom: 1;
+}
+
+.tab > .active > .none , .tab > .active > a {
+  background-color: rgb(230, 230, 230);
+  color: white;
+}
+
+.table {
+  width: 800px;
+  padding-left: 35px;
+}
+
+.table_top {
+  border: 1px solid #e5e5e5;
+  color: white;
+  background-color: rgb(230, 230, 230);
+}
+
+#article_title_top {
+  width: 700px;
+}
+
+#summary_number_top {
+  width: 100px;
+}
+
+.title {
+  border: 1px solid #e5e5e5;
+  height: 50px;
+}
+
+.title > a {
+  color: rgb(162, 162, 162);
+
+  &:hover {
+    color: #5B91FF;
+    text-decoration: underline;
+  }
+}
+
+.summary_num {
+  border: 1px solid #e5e5e5;
+
+  &>a:hover {
+    color: #5B91FF;
+    text-decoration: underline;
+  }
+}
+
+#article_check {
+  float: left;
+  margin-left: 10px;
+}
+
+.summary_num > a {
+  color: rgb(162, 162, 162);
+}
+
+.dropdown-checkbox {
+  position: absolute;
+  z-index: 2000;
+  display: none;
+  float: left;
+  min-width: 130px;
+  padding: 5px 10px;
+  margin: 0px 0px 0px 30px;
+  list-style: none;
+  background-color: white;
+  border-radius: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2);
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  &>li>a {
+    color: gray;
+  }
+  &>li>a:hover {
+    color: #5B91FF;
+    text-decoration: underline;
+  }
+}
+
+.open {
+}
+
+.open > .dropdown-checkbox {
+  display: block;
+}
+
+.title > .dropdown-checkbox:before {
+  position: absolute;
+  z-index: 2002;
+  top: 2px;
+  left: -13px;
+  display: inline-block;
+  border-top: 7px solid transparent;
+  border-right: 7px solid white;
+  border-bottom: 7px solid transparent;
+  border-left: 7px solid transparent;
+  content: '';
+}
+
+.title > .dropdown-checkbox:after {
+  position: absolute;
+  z-index: 2001;
+  top: 4px;
+  left: -12px;
+  display: inline-block;
+  border-top: 6px solid transparent;
+  border-right: 6px solid #ccc;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: '';
+}
+
+.dropdown-checkbox > li {
+  text-align: start;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.table > .summary_table {
+  display: none;
+}
+
+.table > .edited_summary_table {
+  display: none;
+}
+
+.table > .favorite_table {
+  display: none;
+}
+
+.table > .read_table {
+  display: none;
+}
+
+.table > .reserved_table {
+  display: none;
+}
+
+.table > .active {
+  display: block;
+}
+

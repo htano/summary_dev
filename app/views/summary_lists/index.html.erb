@@ -1,0 +1,39 @@
+
+
+<div id="yBox">
+	<h1 id="yArticleName">
+        <% if  @article != nil %>
+	<%= @article.title %>	
+        <% end %>
+	</h1>
+
+        <div id="yArticleLink">
+        
+        <% if  @article != nil %>
+	<%= link_to("元記事を見る",@article.url) %>
+        <% end %>
+	
+	</div>
+
+      
+	<div id="yAuther">
+        
+	要約した人: 要約ひっぱってくる論理考える前の暫定	
+	</div>
+
+	<h2 id="yArticleDetail">
+
+	要約結果：要約ひっぱってくる論理考える前の暫定
+	
+
+	</h2>
+
+
+	<div id="yLinkToOtherY">
+        
+	他の要約を見る
+	
+	</div>
+</div>
+
+

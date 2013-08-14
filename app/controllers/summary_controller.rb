@@ -1,77 +1,61 @@
 class SummaryController < ApplicationController
   def edit
-    article = A010Article.where(:article_id => params[:article_id]).first;
-    @url = article.article_url;
-    @title = article.article_title;
+    article = Article.find_by_id(params[:article_id]);
+    @url = article.url;
+    @title = article.title;
+    #TODO 堀田の作成したメソッドを呼ぶ
     @user_name = "#{params[:user_name]}";
-    @user_id = findUserIdByUserName(@user_name);
- 
-    summary = S010Summary.where(:user_id => @user_id,:article_id => params[:article_id]).first;
-    if summary
+    user_id = User.find_by_name(@user_name).id;
+    summary = Summary.find_by_user_id_and_article_id(user_id, params[:article_id]);
+    if summary != nil then
       #すでに当該記事に対して要約が登録されていた場合、以下の処理をする
-      @summary_content = summary.summary_content;
+      @summary_content = summary.content;
     end
   end
 
   def edit_confirm
-  	article = A010Article.where(:article_id => params[:article_id]).first;
-    @url = article.article_url;
-    @title = article.article_title;
+  	article = Article.find_by_id(params[:article_id]);
+    @url = article.url;
+    @title = article.title;
+    #TODO 堀田の作成したメソッドを呼ぶ
   	@user_name = "#{params[:user_name]}";
-  	@user_id = findUserIdByUserName(@user_name);
+    user_id = User.find_by_name(@user_name).id;
   	@summary_content = "#{params[:summary_content]}";
   end
 
 
   def edit_complete
+    #TODO 堀田の作成したメソッドを呼ぶ
     @user_name = "#{params[:user_name]}";
-    @user_id = findUserIdByUserName(@user_name);
-    summary = S010Summary.where(:user_id => @user_id,:article_id => params[:article_id]).first;
-    if summary
+    user_id = User.find_by_name(@user_name).id;
+    summary = Summary.find_by_user_id_and_article_id(user_id, params[:article_id]);
+    if summary != nil then
       #すでに当該記事に対して要約が登録されていた場合、以下の処理をする
-      summary.update_attribute(:summary_content, params[:summary_content]);
+      summary.update_attribute(:content, params[:summary_content]);
       if summary.save
         redirect_to :action => "show";
       end
     else
       #当該記事に対して要約が登録されていなかった場合、以下の処理をする
-      summary_id = createSummaryID();
-      @summary = S010Summary.new(:summary_id => summary_id,:summary_content => params[:summary_content],:user_id => @user_id,:article_id => params[:article_id]);
-      if @summary.save
+      #summary_id = createSummaryID();
+      summary = Summary.new(:content => params[:summary_content],:user_id => user_id,:article_id => params[:article_id]);
+      if summary.save
         redirect_to :action => "show";
       end
     end 
   end
 
   def show
-    article = A010Article.where(:article_id => params[:article_id]).first;
-    @url = article.article_url;
-    @title = article.article_title;
+    article = Article.find_by_id(params[:article_id]);
+    @url = article.url;
+    @title = article.title;
+    #TODO 堀田の作成したメソッドを呼ぶ
     @user_name = "#{params[:user_name]}";
-    @user_id = findUserIdByUserName(@user_name);
+    user_id = User.find_by_name(@user_name).id;
     @article_id = "#{params[:article_id]}";
-
-    summary = S010Summary.where(:user_id => @user_id,:article_id => params[:article_id]).first;
-    @summary = summary.summary_content;
+    summary = Summary.find_by_user_id_and_article_id(user_id, @article_id);
+    @summary = summary.content;
     @msg = "要約が登録出来ました！"
   end
-
-  #要約IDの導出
-  #すでに登録されているIDをインクリメントして導出する。1件も要約が登録されていない場合は1を返す。
-  def createSummaryID
-      summary = S010Summary.first(:order => "created_at DESC");
-      if summary
-        summary_id = summary.summary_id;
-        return summary_id += 1;
-      else
-        return summary_id = 1;
-      end
-  end
-
-  def findUserIdByUserName(user_name)
-    user = U010User.where(:user_name => params[:user_name]).first;
-    return user.user_id;
-  end
-
 end
   

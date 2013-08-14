@@ -1,9 +1,24 @@
 SummaryDev::Application.routes.draw do
+  get "mypage/index"
+  get "mypage/delete"
+  get "mypage/mark_as_read"
+
+  get "mypage/destroy"
+
+  get 'webpage/:user_name/add' => 'webpage#add'
+  get 'webpage/:user_name/add_confirm' => 'webpage#add_confirm'
+  get 'webpage/:user_name/add_complete' => 'webpage#add_complete'
+
+  get 'summary/:user_name/:article_id/edit' => 'summary#edit'
+  get 'summary/:user_name/:article_id/edit_confirm' => 'summary#edit_confirm'
+  get 'summary/:user_name/:article_id' => 'summary#show'
+  get 'summary/:user_name/:article_id/edit_complete' => 'summary#edit_complete'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
+      get 'summary_lists/:articleId' => 'summary_lists#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -39,7 +54,7 @@ SummaryDev::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
@@ -53,13 +68,16 @@ SummaryDev::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  get 'webpage/:user_name/add' => 'webpage#add'
-  get 'webpage/:user_name/add_confirm' => 'webpage#add_confirm'
-  get 'webpage/:user_name/add_complete' => 'webpage#add_complete'
 
-  get 'summary/:user_name/:article_id/edit' => 'summary#edit'
-  get 'summary/:user_name/:article_id/edit_confirm' => 'summary#edit_confirm'
-  get 'summary/:user_name/:article_id' => 'summary#show'
-  get 'summary/:user_name/:article_id/edit_complete' => 'summary#edit_complete'
-  #なんでこれだけgetにしたか堀田に聞く
+  get 'hello' => 'webpage#hello'
+  get 'bye.html' => 'webpage#bye'
+  get 'webpage/:id/add' => 'webpage#add'
+  get 'webpage/:id/add_confirm' => 'webpage#add_confirm'
+
+  get 'summary/:id/:pageid/edit' => 'summary#edit'
+  get 'summary/:id/:pageid' => 'summary#show'
+  post 'summary/:id/:pageid/edit_complete' => 'summary#edit_complete'
+
+  get 'session/consumer/:action' => 'consumer#:action'
+  post 'session/consumer/:action' => 'consumer#:action'
 end

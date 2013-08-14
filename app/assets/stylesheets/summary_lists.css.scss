@@ -1,0 +1,70 @@
+// Place all the styles related to the YouyakuLists controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#yBox {
+ clear:boath;
+ margin: 30px auto;
+ width: 800px;
+}
+
+#yArticleName{
+ border-top-right-radius: 20px;
+ border-top-left-radius: 20px;
+ margin: 0px;
+ padding: 10px;
+ width: 100%; 
+ height: 30px;
+ color: #EEEEEE;
+ background-color: #150908;
+}
+
+#yArticleLink{
+ text-align: right;
+ margin: 0px;
+ padding-bottom: 10px;
+ padding-left: 10px;
+ padding-right: 10px;
+ width: 100%; 
+ height: 20px;
+ color: #EEEEEE;
+ background-color: #150908;
+}
+
+#yAuther{
+ margin: 0px;
+ padding-top: 10px;
+ padding-left: 10px;
+ padding-right: 10px;
+ text-align: right;
+ width: 100%;
+ min-height: 10px;
+ color: #150908;
+ background-color: #E1541F;
+}
+
+#yArticleDetail{
+ margin: 0px;
+ padding: 10px;
+ width: 100%;
+ min-height: 400px;
+ color: #150908;
+ background-color: #E1541F;
+}
+
+#yLinkToOtherY{
+ border-bottom-right-radius: 20px;
+ border-bottom-left-radius: 20px;
+ margin: 0px;
+ padding: 10px;
+ width: 100%;
+ text-align: right;
+ height: 20px;
+ color: #150908;
+ background-color: #E1541F;
+}
+
+
+
+
+

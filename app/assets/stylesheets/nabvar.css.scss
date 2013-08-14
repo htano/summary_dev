@@ -54,7 +54,7 @@ h2 {
 .navbar {
   overflow: visible;
   margin-bottom: 18px;
-
+  z-index :2010;
   .brand {
     float: left;
     display: block;
@@ -129,6 +129,13 @@ h2 {
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   background-clip: padding-box;
   -webkit-background-clip: padding-box;
+  &>li>a {
+    color: gray;
+  }
+  &>li>a:hover {
+    color: #5B91FF;
+    text-decoration: underline;
+  }
 }
 
 .open {

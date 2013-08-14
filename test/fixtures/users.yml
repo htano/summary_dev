@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  mail_addr: MyString
+  yuko_flg: false
+  last_login: 2013-07-31 22:07:02
+  open_id: 1
+
+two:
+  name: MyString
+  mail_addr: MyString
+  yuko_flg: false
+  last_login: 2013-07-31 22:07:02
+  open_id: 1
