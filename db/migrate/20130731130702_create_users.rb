@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.boolean :yuko_flg
       t.timestamp :last_login
       t.string :open_id
-      t.string :prof_image
+      t.string :prof_image, {:default => 'no_image.png'}
 
       t.timestamps
     end

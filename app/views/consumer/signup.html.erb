@@ -1,4 +1,12 @@
+<% if flash[:error] %>
+  <div class='login_error'>
+   <%= h(flash[:error]) %>
+  </div>
+<% end %>
+
 <%= form_tag "/session/consumer/signup_complete" do %>
-<%= text_field_tag :creating_user_id %>
-<%= submit_tag("送信") %>
+  ユーザ名(User Name)：
+  <%= text_field_tag :creating_user_id %>
+  </br>
+  <%= submit_tag("アカウント登録(SignUp)") %>
 <% end %>
