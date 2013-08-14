@@ -173,8 +173,12 @@ ul.tab {
   }
 }
 
-.summary_num {
+.num_column {
   border: 1px solid #e5e5e5;
+
+  a {
+    color: rgb(162, 162, 162);    
+  }
 
   &>a:hover {
     color: #5B91FF;
@@ -185,10 +189,6 @@ ul.tab {
 #article_check {
   float: left;
   margin-left: 10px;
-}
-
-.summary_num > a {
-  color: rgb(162, 162, 162);
 }
 
 .dropdown-checkbox {
