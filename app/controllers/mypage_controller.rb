@@ -3,8 +3,10 @@ class MypageController < ApplicationController
     logger.debug("action index")
 
     if params[:name] then
+      @is_login_user = false
       @user = User.find_by_name(params[:name])
     else
+      @is_login_user = true
       @user = User.find_by_name(get_current_user_name)
     end
 
