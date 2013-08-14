@@ -19,3 +19,6 @@
 
 # Ignore all swp file
 *.swp
+
+# Ignore uploaded images
+/app/assets/images/account_pictures/*_uploaded_image_*
