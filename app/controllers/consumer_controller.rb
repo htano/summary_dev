@@ -125,7 +125,11 @@ class ConsumerController < ApplicationController
           redirect_to :controller => 'mypage', :action => 'index'
         end
       else
-        redirect_to :action => 'signup'
+        if params[:fromUrl]
+          redirect_to :action => 'signup', :fromUrl => params[:fromUrl]
+        else
+          redirect_to :action => 'signup'
+        end
       end
     else
       redirect_to :action => 'index'
@@ -146,7 +150,11 @@ class ConsumerController < ApplicationController
     @creating_user_id = "#{params[:creating_user_id]}";
     if User.regist?(@creating_user_id, session[:openid_url])
       flash[:success] = "Hello " + @creating_user_id + ". SignUp was successfully completed."
-      redirect_to :controller => 'mypage',:action => 'index'
+      if params[:fromUrl]
+        redirect_to params[:fromUrl]
+      else
+        redirect_to :controller => 'mypage',:action => 'index'
+      end
     else
       flash[:error] = "SignUp Error: " + @creating_user_id + " has already exist."
       redirect_to :action => 'signup'

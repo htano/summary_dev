@@ -2,27 +2,34 @@ class MypageController < ApplicationController
   def index
     logger.debug("action index")
 
-    if params[:name] && !isLoginUser?(params[:name]) then
-      @is_login_user = false
-      @user = User.find_by_name(params[:name])
-
-      # check whether already following or not
-      signed_user = User.find_by_name(get_current_user_name)
-      if signed_user.favorite_users.exists?(:favorite_user_id => @user.id) then
-        @is_already_following = true
+    # check wheter user accessed to this action is signed in user or not
+    if params[:name] then
+      if isLoginUser?(params[:name]) then
+        @is_login_user = true
       else
-        @is_already_following = false
+        @is_login_user = false
       end
     else
-      @is_login_user = true
-      @user = User.find_by_name(get_current_user_name)
+      if signed_in? then
+        @is_login_user = true
+      else
+        redirect_to :controller => 'consumer', :action => 'index'
+        return
+      end
     end
 
-    if @user == nil then
-      # FIXME : ベタ書きでreturnより、関数を一つ定義してそこにredirect_toで飛ばすほうがよろしい気がする
-      logger.debug("exit no account")
-      render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
-      return
+    if @is_login_user then
+      @user = User.find_by_name(get_current_user_name)
+    else
+      @user = User.find_by_name(params[:name])
+      if @user then
+        # check whether already follows or not
+        @is_already_following = is_already_following(@user)
+      else
+        # error account doesn't exist
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
+        return
+      end
     end
 
     # whether user has a photo or no
@@ -133,4 +140,15 @@ class MypageController < ApplicationController
     render :nothing => true
   end
 
+private
+  def is_already_following(user)
+    is_already_following = false
+    signed_user = User.find_by_name(get_current_user_name)
+    if signed_user && signed_user.favorite_users.exists?(:favorite_user_id => user.id) then
+      is_already_following = true
+    else
+      is_already_following = false
+    end
+    return is_already_following
+  end
 end

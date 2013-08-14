@@ -11,7 +11,12 @@ class User < ActiveRecord::Base
   end
 
   def self.getName(openid)
-    return where(["open_id = ? and yuko_flg = ?", openid, true]).first.name
+    @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
+    if @current_user != nil
+      return where(["open_id = ? and yuko_flg = ?", openid, true]).first.name
+    else
+      return nil
+    end
   end
 
   def self.regist?(uname, openid)
