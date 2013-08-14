@@ -19,7 +19,7 @@
 				<%= @sumUsers[i].name %>	
 			</div>
 			<h2 id="yArticleDetail">
-				<%= summary.content %>	
+				<%= simple_format(summary.content) %>	
 			</h2>
 		<% end %>
 	<% else %>
