@@ -23,4 +23,9 @@ class ApplicationController < ActionController::Base
     return @result
   end
 
+  def getLoginUser
+    #if not login, return 'nil'
+    return User.getUserObj(session[:openid_url])
+  end
+
 end
