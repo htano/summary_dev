@@ -2,9 +2,11 @@ class MypageController < ApplicationController
   def index
     logger.debug("action index")
 
-    if params[:name] then
+    if params[:name] && !isLoginUser?(params[:name]) then
+      @is_login_user = false
       @user = User.find_by_name(params[:name])
     else
+      @is_login_user = true
       @user = User.find_by_name(get_current_user_name)
     end
 
@@ -87,19 +89,19 @@ class MypageController < ApplicationController
         article.destroy
       end
     end
-    redirect_to :action => "index", :params => {:name => params[:name]}
+    redirect_to :action => "index"
   end
 
-  def mark_as_read
+  def reverse_read_flg
     article = UserArticle.find(:first, 
       :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
-    if article.read_flg then
-    else
-      article.read_flg = true
+
+    if article then
+      article.read_flg = !article.read_flg
       article.save
     end
 
-    redirect_to :action => "index", :params => {:name => params[:name]}
+    redirect_to :action => "index"
   end
 
   def destroy

@@ -38,4 +38,8 @@ class User < ActiveRecord::Base
     @current_user.mail_addr = email
     return @current_user.save
   end
+
+  def self.getUserObj(openid)
+    return where(["open_id = ? and yuko_flg = ?", openid, true]).first
+  end
 end

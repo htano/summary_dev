@@ -1,10 +1,19 @@
 SummaryDev::Application.routes.draw do
   get "mypage/index"
   get "mypage/delete"
-  get "mypage/mark_as_read"
+  get "mypage/reverse_read_flg"
 
   get "mypage/destroy"
 
+  get 'webpage/add' => 'webpage#add'
+  get 'webpage/add_confirm' => 'webpage#add_confirm'
+  get 'webpage/add_complete' => 'webpage#add_complete'
+  get 'webpage/webpage/invalid' => 'webpage#invalid'
+
+  get 'summary/:article_id/edit' => 'summary#edit'
+  get 'summary/:article_id/edit_confirm' => 'summary#edit_confirm'
+  get 'summary/:article_id' => 'summary#show'
+  get 'summary/:article_id/edit_complete' => 'summary#edit_complete'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
