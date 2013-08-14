@@ -50,7 +50,7 @@ class WebpageController < ApplicationController
     logger.debug("url:"+url)
   	#url_escape = URI.escape(url)
     charset = nil;
-    html = open(url_escape,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
+    html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
       charset = f.charset;
       f.read;
     end
