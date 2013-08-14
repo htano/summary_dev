@@ -21,11 +21,21 @@
 			<h2 id="yArticleDetail">
 				<%= simple_format(summary.content) %>	
 			</h2>
+
+			<% unless @isGoodCompleted[i] then %>
+				<%= link_to image_tag("icons/good_summary.jpg", { :border => '0', :alt => 'いい要約だね！'}),{:action => "goodSummary",:summaryId =>summary.id, :articleId => @article.id} %>
+
+			<% else %>
+				<%= image_tag("icons/good_summary_cmp.jpg", { :border => '0', :alt => 'あなたは既にいい要約だねをしています'}) %>
+			<% end %>
+			ただいまのいい要約だねの数は<%= @goodSummaryPoint[i] %>です。 
+		
 		<% end %>
-	<% else %>
-		<!-- 建設中 -->
-	<% end %>
+
+	 <% else %>
+		 <!-- 建設中 -->
+	 <% end %>
 	<div id="yLinkToOtherY">
-		他の要約を見る
-	</div>
+			 他の要約を見る
+	 </div>
 </div>
