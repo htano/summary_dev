@@ -1,6 +1,16 @@
 class SummaryListsController < ApplicationController
 	def index
+		#check current loginuser
+		if getLoginUser == nil then
+			redirect_to :controller => "consumer", :action => "index"
+		    return	
+		end
+			
 		@article = Article.find_by id: params[:articleId]
+		if @article == nil then
+			redirect_to :controller => "mypage", :action => "index" 
+			return
+		end
 
 		#create array for calcration 
 		arrayCount = 0
