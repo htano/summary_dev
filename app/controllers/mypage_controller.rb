@@ -2,7 +2,12 @@ class MypageController < ApplicationController
   def index
     logger.debug("action index")
 
-    @user = U010User.find_by_user_name(params[:user_name])
+    if params[:name] then
+      @user = User.find_by_name(params[:name])
+    else
+      @user = User.find_by_name(get_current_user_name)
+    end
+
     if @user == nil then
       # FIXME : ベタ書きでreturnより、関数を一つ定義してそこにredirect_toで飛ばすほうがよろしい気がする
       logger.debug("exit no account")
@@ -21,9 +26,9 @@ class MypageController < ApplicationController
 
     # follow user information
     @favorite_users = []
-    @user.u011_favorite_users.each do |favorite_user|
+    @user.favorite_users.each do |favorite_user|
 #      logger.debug("favorite_user_id : #{favorite_user.favorite_user_id}")
-      user = U010User.find_by_user_id(favorite_user.favorite_user_id)
+      user = User.find(favorite_user.favorite_user_id)
       @favorite_users.push(user)
     end
 
@@ -32,9 +37,9 @@ class MypageController < ApplicationController
     @read_articles = []
     @main_summaries_num = []
     @read_summaries_num = []
-    @user.r010_user_articles.each do |user_article|
-      article = A010Article.find_by_article_id(user_article.article_id)
-      summary_num = S010Summary.count(:all, :conditions => {:article_id => user_article.article_id})
+    @user.user_articles.each do |user_article|
+      article = Article.find(user_article.article_id)
+      summary_num = Summary.count(:all, :conditions => {:article_id => user_article.article_id})
 
       if user_article.read_flg then
         @read_articles.push(article)
@@ -49,26 +54,26 @@ class MypageController < ApplicationController
     # edited summary tab
     @edited_summaries = []
     @like_num = []
-    @user.s010_summaries.each do |summary|
-      logger.debug("summary_id : #{summary.summary_id}")
-      article = A010Article.find_by_article_id(summary.article_id)
+    @user.summaries.each do |summary|
+      logger.debug("summary_id : #{summary.id}")
+      article = Article.find(summary.article_id)
       @edited_summaries.push(article)
 
-      like = S011GoodSummary.count(:all, :conditions => {:summary_id => summary.summary_id})
+      like = GoodSummary.count(:all, :conditions => {:summary_id => summary.id})
       @like_num.push(like)
     end
 
     # favorite tab
 
     render :layout => 'application', :locals => {:user => @user}
-
   end
 
   def delete
     delete_mode = params[:delete_mode]
     logger.debug("delete_mode : #{delete_mode}")
     if delete_mode.to_i == 2 then
-      summary = S010Summary.find(:first, :conditions => {:u010_user_id => params[:user_id], :article_id => params[:article_id]})
+      summary = Summary.find(:first, 
+        :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
       unless summary == nil
         # logger.debug("not nil")
         summary.destroy
@@ -76,27 +81,29 @@ class MypageController < ApplicationController
         # logger.debug("nil nil")
       end
     else
-      article = R010UserArticle.find(:first, :conditions => {:u010_user_id => params[:user_id], :article_id => params[:article_id]})
+      article = UserArticle.find(:first, 
+        :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
       unless article == nil
         article.destroy
       end
     end
-    redirect_to :action => "index", :params => {:user_name => params[:user_name]}
+    redirect_to :action => "index", :params => {:name => params[:name]}
   end
 
   def mark_as_read
-    article = R010UserArticle.find(:first, :conditions => {:u010_user_id => params[:user_id], :article_id => params[:article_id]})
+    article = UserArticle.find(:first, 
+      :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
     if article.read_flg then
     else
       article.read_flg = true
       article.save
     end
 
-    redirect_to :action => "index", :params => {:user_name => params[:user_name]}
+    redirect_to :action => "index", :params => {:name => params[:name]}
   end
 
   def destroy
-    @user = U010User.find_by_user_name(params[:user_name]).destroy
+    @user = User.find_by_name(params[:name]).destroy
     render :nothing => true
   end
 

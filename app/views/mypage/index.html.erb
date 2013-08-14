@@ -2,7 +2,6 @@
     <div class="row">
       <div class="span3">
         <div id="profile_id">
-          <!-- TODO : 写真設定がされているか判定 -->
           <% if @is_photo_data then %>
           <div id="user_photo"> <%= image_tag(@user.prof_image, :size => "64x64") %> </div>
           <% else %>
@@ -10,7 +9,7 @@
           <% end %>
           <div id="prof_name_detail">
             <%= image_tag("icons/glyphicons_003_user.png", :size => "19x18")%>
-            <p><%= @user.user_name %></p>
+            <p><%= @user.name %></p>
             <%= image_tag("icons/glyphicons_039_notes.png", :size => "19x18", :id => "profile_info")%>
             <a href="#">show profile</a>
           </div>
@@ -18,8 +17,8 @@
           <div id="follow_list">
           <% if @favorite_users != nil %>
           <% @favorite_users.each do |favorite_user| %>
-          <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.user_name),
-          {:action => "index", :user_name => favorite_user.user_name} %>
+          <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.name),
+          {:action => "index", :name => favorite_user.name} %>
           <% end %>
           <% end %>
           </div>
@@ -47,12 +46,14 @@
               <th class="title">
                 <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
                 <ul class="dropdown-checkbox">
-                  <li><%= link_to "mark as read", {:action => "mark_as_read", :user_id => @user.user_id, :user_name => @user.user_name, :article_id => article.article_id} %></li>
+                  <li><%= link_to "mark as read", {:action => "mark_as_read", :user_id => @user.id, 
+                    :name => @user.name, :article_id => article.id} %></li>
                   <li><a href="#">mark as favorite</a></li>
-                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.user_id, :user_name => @user.user_name, :article_id => article.article_id} %></li>
+                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
+                    :name => @user.name, :article_id => article.id} %></li>
                   <li><a href="#">edit summary</a></li>
                 </ul>
-                <a href="<%= article.article_url %>"><%= article.article_title %></a>
+                <a href="<%= article.url %>"><%= article.title %></a>
               </th>
               <th class="summary_num"><a href="#"><%= @main_summaries_num[i] %></a></th>
             </tr>
@@ -70,10 +71,11 @@
               <th class="title">
                 <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
                 <ul class="dropdown-checkbox">
-                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.user_id, :user_name => @user.user_name, :article_id => summary.article_id, :delete_mode => 2} %></li>
+                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
+                    :name => @user.name, :article_id => summary.id, :delete_mode => 2} %></li>
                   <li><a href="#">revise</a></li>
                 </ul>
-                <a href="<%= summary.article_url %>"><%= summary.article_title %></a>
+                <a href="<%= summary.url %>"><%= summary.title %></a>
               </th>
               <th class="summary_num"><a href="#"><%= @like_num[i] %></a></th>
             </tr>
@@ -98,11 +100,12 @@
                 <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
                 <ul class="dropdown-checkbox">
                   <li><a href="#">mark as favorite</a></li>
-                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.user_id, :user_name => @user.user_name,
-                    :article_id => read_article.article_id} %></li>
+                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
+                    :name => @user.name,
+                    :article_id => read_article.id} %></li>
                   <li><a href="#">edit summary</a></li>
                 </ul>
-                <a href="<%= read_article.article_url %>"><%= read_article.article_title %></a>
+                <a href="<%= read_article.url %>"><%= read_article.title %></a>
               </th>
               <th class="summary_num"><a href="#"><%= @read_summaries_num[i] %></a></th>
             </tr>
