@@ -5,6 +5,14 @@ class MypageController < ApplicationController
     if params[:name] && !isLoginUser?(params[:name]) then
       @is_login_user = false
       @user = User.find_by_name(params[:name])
+
+      # check whether already following or not
+      signed_user = User.find_by_name(get_current_user_name)
+      if signed_user.favorite_users.exists?(:favorite_user_id => @user.id) then
+        @is_already_following = true
+      else
+        @is_already_following = false
+      end
     else
       @is_login_user = true
       @user = User.find_by_name(get_current_user_name)
@@ -16,12 +24,6 @@ class MypageController < ApplicationController
       render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
       return
     end
-=begin
-    # debug
-    logger.debug("user_id    : #{@user.user_id}")
-    logger.debug("user_name  : #{@user.user_name}")
-    logger.debug("user_email : #{@user.mail_addr}")
-=end
 
     # whether user has a photo or no
     @is_photo_data = @user.prof_image != nil ? true : false;
@@ -102,6 +104,28 @@ class MypageController < ApplicationController
     end
 
     redirect_to :action => "index"
+  end
+
+  def follow
+    logger.debug("follow")
+    current_user = getLoginUser
+
+    # error handle
+    FavoriteUser.create(:user_id => current_user.id, :favorite_user_id => params[:follow_user_id])
+
+    redirect_to :action => "index", :name => params[:follow_user_name]
+  end
+
+  def unfollow
+    logger.debug("unfollow")
+    current_user = getLoginUser
+
+    # error check
+    # ? first
+    FavoriteUser.find(:first, 
+      :conditions => {:user_id => current_user.id, :favorite_user_id => params[:unfollow_user_id]}).destroy
+
+    redirect_to :action => "index", :name => params[:unfollow_user_name]
   end
 
   def destroy
