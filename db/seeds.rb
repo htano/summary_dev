@@ -157,8 +157,8 @@ Article.create(url: "http://matome.naver.jp/odai/2136353103939321201",
 # Summary
 Summary.create(content: "summary id 1 test", user_id: 1, article_id: 1)
 Summary.create(content: "summary id 2 test", user_id: 1, article_id: 2)
-Summary.create(content: "summary id 3 test", user_id: 1, article_id: 3)
-Summary.create(content: "summary id 4 test", user_id: 1, article_id: 4)
+Summary.create(content: "summary id 3 test", user_id: 4, article_id: 3)
+Summary.create(content: "summary id 4 test", user_id: 3, article_id: 4)
 Summary.create(content: "summary id 5 test", user_id: 1, article_id: 5)
 Summary.create(content: "summary id 6 test", user_id: 2, article_id: 1)
 Summary.create(content: "summary id 7 test", user_id: 3, article_id: 1)
