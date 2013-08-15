@@ -6,18 +6,13 @@ require 'open-uri'
 require 'kconv'
 
 class WebpageController < ApplicationController
-  
-  def add_confirm
-    @url = "#{params[:url]}";
-    @title = returnTitle(@url);
-  end
 
-  def add_complete
-    if signed_in?
+  def add
+  	if signed_in?
       user_id = getLoginUser.id;
-      @url = "#{params[:url]}";
-      title = returnTitle(@url);
-      article = Article.find_by_url(@url);
+      @booked_url = "#{params[:booked_url]}";
+      title = returnTitle(@booked_url);
+      article = Article.find_by_url(@booked_url);
       if article != nil then
         @article_id = article.id;
         user_article = UserArticle.find_by_user_id_and_article_id(user_id, article.id);
@@ -32,32 +27,32 @@ class WebpageController < ApplicationController
             @msg = "登録に完了しました！"
             end
           end
-     else
+        else
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:url],:title => title, :category_id =>"001");
+        article = Article.new(:url => params[:booked_url],:title => title, :category_id =>"001");
         if article.save
-          @article_id = article.id;
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
             @msg = "登録に完了しました！"
           end
         end
-     end
-   else
-    redirect_to :controller=>"consumer",:action=>"index", :fromUrl => request.url;
-   end
+      end
+    else
+      redirect_to :controller => "consumer", :action => "index";
+ 	end
   end
 
   #指定されたurlのタイトルを返却するメソッド
-  def returnTitle(url)
+  def returnTitle(booked_url)
+    logger.error("returnTitle")
+    logger.error("booked_url:"+booked_url)
     charset = nil;
-    html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
+    html = open(booked_url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
       charset = f.charset;
       f.read;
     end
     doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
     return doc.title;
   end
-
 end
