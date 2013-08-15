@@ -1,26 +1,39 @@
-<h1>User Profile</h1>
-<br>
-<div class="profile_table">
-<table border=1 CELLSPACING="0" CELLPADDING="0">
-  <tr>
-    <td> user name </td>
-    <td> <%= @uname %> </td>
-  </tr>
-  <tr>
-    <td> Mail Address </td>
-    <td> <%= @email %> </td>
-  </tr>
-  <tr>
-    <td> profile image </td>
-    <td>
-      <%= image_tag(getLoginUser.prof_image, :size => "64x64") %>
-    </td>
-  </tr>
-</table>
-</div>
+<div class="profile_container">
+  <div class="profile_box">
+    <h3>User Profile</h3>
+    <div class="profile_box_inner">
 
-<div class="profile_edit_link">
-  <a href="<%= url_for :action => 'profile_edit' %>">
-    <button>edit</button>
-  </a>
+      <dl>
+        <dt>
+          <label>UserId</label>
+        </dt>
+        <dd>
+          <%= @uname %>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Mail Address</label>
+        </dt>
+        <dd>
+          <%= @email %>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Profile Image</label>
+        </dt>
+        <dd>
+          <%= image_tag(getLoginUser.prof_image, :size => "128x128") %>
+        </dd>
+      </dl>
+
+      <a href="<%= url_for :action => 'profile_edit' %>">
+        <button class="profile_btn">edit</button>
+      </a>
+
+    </div>
+  </div>
 </div>

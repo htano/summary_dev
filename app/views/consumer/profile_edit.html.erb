@@ -1,48 +1,66 @@
-<h1>User Profile(Edit)</h1>
-<br>
 
+<div class="profile_container">
 <% if flash[:error] %>
   <div class='login_error'>
    <%= h(flash[:error]) %>
   </div>
 <% end %>
-<form method="post" accept-charset="UTF-8" action="<%= url_for :action => 'profile_edit_complete'%>" enctype="multipart/form-data">
-<div class="profile_table">
-<table border=1>
-  <tr>
-    <td> user name </td>
-    <td> <%= @uname %> </td>
-  </tr>
-  <tr>
-    <td> Mail Address </td>
-    <td> <%= @email %> </td>
-  </tr>
-  <tr>
-    <td> Mail Address(New) </td>
-    <td>
-      <input type="text" name="mail_addr" value=""></input>(Empty for no change)
-    </td>
-  </tr>
-  <tr>
-    <td> Mail Address(Confirm) </td>
-    <td>
-      <input type="text" name="mail_addr_confirm" value=""></input>(Empty for no change)
-    </td>
-  </tr>
-  <tr>
-    <td> profile image </td>
-    <td>
-      <%= image_tag(getLoginUser.prof_image, :size => "64x64") %>
-    </td>
-  </tr>
-  <tr>
-    <td> profile image(New) </td>
-    <td>
-      <input name="profile_image" type="file" />
-    </td>
-  </tr>
-</table>
+  <div class="profile_box">
+    <h3>User Profile(Edit)</h3>
+    <form method="post" accept-charset="UTF-8" action="<%= url_for :action => 'profile_edit_complete'%>" enctype="multipart/form-data">
+    <div class="profile_box_inner">
+
+      <dl>
+        <dt>
+          <label>UserId</label>
+        </dt>
+        <dd>
+          <%= @uname %>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Mail Address</label>
+        </dt>
+        <dd>
+          <%= @email %>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Mail Address(New)</label> (Empty for no change)
+        </dt>
+        <input type="text" name="mail_addr" value="" style="width:98%;"/>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Mail Address(Confirm)</label>
+        </dt>
+        <input type="text" name="mail_addr_confirm" value="" style="width:98%"/>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Profile Image</label>
+        </dt>
+        <dd>
+          <%= image_tag(getLoginUser.prof_image, :size => "128x128") %>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Profile Image(New)</label>
+        </dt>
+        <input name="profile_image" type="file" style="width:98%"/>
+      </dl>
+
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="submit" class="profile_btn" value="send"></input>
+    </div>
+    </form>
+  </div>
 </div>
-<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-<input type="submit" value="send"></input>
-</form>

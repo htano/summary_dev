@@ -146,26 +146,35 @@ class ConsumerController < ApplicationController
     end
   end
 
-  # signup and signup_complete actions should belong to other controller.
   def signup
-  end
-
-  def signup_complete
-    @creating_user_id = "#{params[:creating_user_id]}";
-    @error_message = User.regist(@creating_user_id, session[:openid_url])
-    if !@error_message
-      flash[:success] = "Hello " + @creating_user_id + ". SignUp was successfully completed."
-      if params[:fromUrl]
-        redirect_to params[:fromUrl]
-      else
-        redirect_to :controller => 'mypage',:action => 'index'
-      end
-    else
-      flash[:error] = @error_message
-      redirect_to :action => 'signup'
+    if !session[:openid_url]
+      flash[:error] = "Error: To signup, you have to login by openid."
+      redirect_to :action => 'index'
     end
   end
 
+  def signup_complete
+    if session[:openid_url]
+      @creating_user_id = "#{params[:creating_user_id]}";
+      @error_message = User.regist(@creating_user_id, session[:openid_url])
+      if !@error_message
+        flash[:success] = "Hello " + @creating_user_id + ". SignUp was successfully completed."
+        if params[:fromUrl]
+          redirect_to params[:fromUrl]
+        else
+          redirect_to :controller => 'mypage',:action => 'index'
+        end
+      else
+        flash[:error] = @error_message
+        redirect_to :action => 'signup'
+      end
+    else
+      flash[:error] = "Error: To signup, you have to login by openid."
+      redirect_to :action => 'index'
+    end
+  end
+
+  # TODO: Profile actions shoud be other controller.
   def profile
     if(User.isExists?(session[:openid_url]))
       @uname = User.getName(session[:openid_url])

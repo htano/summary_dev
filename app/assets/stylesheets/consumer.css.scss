@@ -22,3 +22,79 @@ input.openid {
   background-color: #fff;
   padding-left: 18px;
 }
+
+.profile_box {
+  position: relative;
+  background: #efefef;
+  padding: 3px;
+  border-radius: 3px;
+  margin: 0 0 15px 0;
+}
+
+.profile_container {
+  width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+}
+
+.profile_box > h3 {
+  background-color: #e0e0e0;
+  background-image: linear-gradient(#fafafa, #e0e0e0);
+  background-repeat: repeat-x;
+  margin: 0;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+  border: 1px solid #d8d8d8;
+  border-bottom: none;
+  padding: 10px 10px 11px 10px;
+  font-size: 14px;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.profile_box_inner {
+  padding: 1px 10px;
+  background: #fff;
+  border: 1px solid #d8d8d8;
+  border-top: 1px solid #ccc;
+  border-bottom-left-radius: 1px;
+  border-bottom-right-radius: 1px;
+  color: #666;
+  font-size: 13px;
+}
+
+.profile_box_inner > dl > dd {
+  border: 1px solid #d8d8d8;
+  padding: 10px;
+  margin-left: 0;
+}
+
+.profile_box_inner > dl > input {
+  border: 1px solid #d8d8d8;
+  padding: 10px;
+  margin-left: 0;
+}
+
+.profile_box_inner > dl > dt > label {
+  font-weight: bold;
+}
+
+.profile_btn {
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  background-color: #60b044;
+  background-repeat: repeat-x;
+  border-color: #5ca941;
+  width: 130px;
+  height: 34px;
+  outline: none;
+  border-radius: 5px;  /* CSS3草案 */
+  -webkit-border-radius: 5px;  /* Safari,Google Chrome用 */
+  -moz-border-radius: 5px; /* Firefox用 */
+  background-image: -moz-linear-gradient(#8add6d, #60b044);
+  background-image: -webkit-linear-gradient(#8add6d, #60b044);
+  background-image: linear-gradient(#8add6d, #60b044);
+  margin-bottom: 1em;
+  border: 1px solid #d8d8d8;
+}
+
