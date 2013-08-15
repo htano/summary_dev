@@ -76,7 +76,7 @@ class MypageController < ApplicationController
 
     # favorite tab
 
-    render :layout => 'application', :locals => {:user => @user}
+    render :layout => 'application'
   end
 
   def delete
@@ -118,7 +118,9 @@ class MypageController < ApplicationController
     current_user = getLoginUser
 
     # error handle
-    FavoriteUser.create(:user_id => current_user.id, :favorite_user_id => params[:follow_user_id])
+    if current_user then
+      FavoriteUser.create(:user_id => current_user.id, :favorite_user_id => params[:follow_user_id])
+    end
 
     redirect_to :action => "index", :name => params[:follow_user_name]
   end
@@ -127,10 +129,9 @@ class MypageController < ApplicationController
     logger.debug("unfollow")
     current_user = getLoginUser
 
-    # error check
-    # ? first
-    FavoriteUser.find(:first, 
-      :conditions => {:user_id => current_user.id, :favorite_user_id => params[:unfollow_user_id]}).destroy
+    if current_user && current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id]) then
+      current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
+    end
 
     redirect_to :action => "index", :name => params[:unfollow_user_name]
   end
