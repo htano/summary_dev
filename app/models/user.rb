@@ -19,9 +19,22 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.regist?(uname, openid)
-    @created_user = create( name: uname, open_id: openid, yuko_flg: true, last_login: Time.now  )
-    return !(@created_user.new_record?)
+  def self.regist(uname, openid)
+    @error_message = nil
+    if uname
+      #uname = uname.downcase
+      if uname =~ /^[A-Za-z0-9_\-]{4,32}$/
+        @created_user = create( name: uname, open_id: openid, yuko_flg: true, last_login: Time.now  )
+        if @created_user.new_record?
+          @error_message = "Error: '" + uname + "' has already existed."
+        end
+      else
+        @error_message = "Error: User name's characters are only allowed 'a-z', '0-9', '_', '-'. And the name length is allowed from 4 to 32 characters."
+      end
+    else
+      @error_message = "Fatal Error: Internal Server Error."
+    end
+    return @error_message
   end
 
   def self.getMailAddr(openid)
