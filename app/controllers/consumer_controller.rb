@@ -205,7 +205,6 @@ class ConsumerController < ApplicationController
           @edit_error = true
         end
       end
-
       if !@edit_error && @uploaded_image_file != nil
         @save_file_name = './app/assets/images/' + 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
         @for_db_image_path = 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
@@ -214,7 +213,6 @@ class ConsumerController < ApplicationController
         end
         User.updateImagePath(session[:openid_url], @for_db_image_path)
       end
-
       if @edit_error
         redirect_to :action => 'profile_edit'
       else
