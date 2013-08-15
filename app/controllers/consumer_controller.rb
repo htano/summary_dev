@@ -139,7 +139,11 @@ class ConsumerController < ApplicationController
   def sign_out
     session[:openid_url] = nil
     flash[:success] = "LogOut Complete."
-    redirect_to :action => 'index'
+    if params[:fromUrl]
+      redirect_to params[:fromUrl]
+    else
+      redirect_to :action => 'index'
+    end
   end
 
   # signup and signup_complete actions should belong to other controller.
