@@ -4,16 +4,15 @@ require 'nokogiri'
 require 'openssl'
 require 'open-uri'
 require 'kconv'
-require 'uri'
 
 class WebpageController < ApplicationController
 
   def add
   	if signed_in?
       user_id = getLoginUser.id;
-      @url = "#{params[:url]}";
-      title = returnTitle(@url);
-      article = Article.find_by_url(@url);
+      @booked_url = "#{params[:booked_url]}";
+      title = returnTitle(@booked_url);
+      article = Article.find_by_url(@booked_url);
       if article != nil then
         @article_id = article.id;
         user_article = UserArticle.find_by_user_id_and_article_id(user_id, article.id);
@@ -31,7 +30,7 @@ class WebpageController < ApplicationController
         else
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:url],:title => title, :category_id =>"001");
+        article = Article.new(:url => params[:booked_url],:title => title, :category_id =>"001");
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
@@ -45,12 +44,11 @@ class WebpageController < ApplicationController
   end
 
   #指定されたurlのタイトルを返却するメソッド
-  def returnTitle(url)
+  #TODO google検索等は同じタイトルで返す
+  def returnTitle(booked_url)
     logger.debug("returnTitle")
-    logger.debug("url:"+url)
-  	#url_escape = URI.escape(url)
     charset = nil;
-    html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
+    html = open(booked_url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
       charset = f.charset;
       f.read;
     end
