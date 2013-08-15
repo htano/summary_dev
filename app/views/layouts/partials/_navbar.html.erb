@@ -3,9 +3,10 @@ $(function(){
     $('#submit').click(function(){
       if(confirm('登録して宜しいですか？')){
         $.ajax({
-          url: '/webpage/add_complete',
+          url: '/webpage/add',
           type: 'GET',
-          data: 'url=' + $('#url').val(),
+          data: 'booked_url=' +  escape($('#booked_url').val()),
+          //data: 'booked_url=' +  $('#booked_url').val(),
           success: function(data) {
             alert('登録しました。');
             location.reload();
@@ -26,7 +27,7 @@ $(function(){
         <div class="nav-collapse">
           <ul class="nav pull-right">
             <li>
-              <input class="nav_text" type="text" name="url" id="url" size="50"></a>
+              <input class="nav_text" type="text" name="booked_url" id="booked_url" size="50"></a>
             </li>
             <li>
               <input type="submit" id="submit" class="button button-flat:hover" value="book!">
