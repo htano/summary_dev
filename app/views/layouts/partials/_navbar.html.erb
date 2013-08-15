@@ -1,3 +1,24 @@
+ <script>
+$(function(){
+    $('#submit').click(function(){
+      if(confirm('登録して宜しいですか？')){
+        $.ajax({
+          url: '/webpage/add_complete',
+          type: 'GET',
+          data: 'url=' + $('#url').val(),
+          success: function(data) {
+            alert('登録しました。');
+            location.reload();
+          },
+          error: function(data) {
+            alert('失敗しました、urlを確認して下さい。');
+          }
+        });
+      }
+    });
+});
+</script> 
+
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
@@ -5,8 +26,12 @@
         <div class="nav-collapse">
           <ul class="nav pull-right">
             <li>
-              <a href="<%= url_for :controller => 'webpage', :action => 'add' %>">book article.</a>
+              <input class="nav_text" type="text" name="url" id="url" size="50"></a>
             </li>
+            <li>
+              <input type="submit" id="submit" class="button button-flat:hover" value="book!">
+            </li>
+            <li class="divider-vertical"></li>
             <li>
               <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#">7</a>
               <ul class="dropdown-menu">
