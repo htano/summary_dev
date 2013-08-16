@@ -29,27 +29,24 @@ class User < ActiveRecord::Base
     return @error_message
   end
 
-  def self.updateLastLoginTime?(openid)
-    @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
-    @current_user.last_login = Time.now
-    return @current_user.save
-  end
-
-  def self.updateMailAddr(email, openid)
-    @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
-    @current_user.mail_addr = email
-    return @current_user.save
-  end
-
-  def self.updateImagePath(openid, img_path)
-    @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
-    @current_user.prof_image = img_path
-    return @current_user.save
-  end
-
   # Instance Method
   def updateMypageAccess
     self.last_mypage_access = Time.now
+    return self.save
+  end
+
+  def updateLastLoginTime
+    self.last_login = Time.now
+    return self.save
+  end
+
+  def updateMailAddr(email)
+    self.mail_addr = email
+    return self.save
+  end
+
+  def updateImagePath(img_path)
+    self.prof_image = img_path
     return self.save
   end
 

@@ -113,7 +113,7 @@ class ConsumerController < ApplicationController
       if getLoginUser
         @uname = getLoginUser.name
         flash[:success] = "Hello " + @uname + ". Login processing was successful."
-        if User.updateLastLoginTime?(session[:openid_url])
+        if getLoginUser.updateLastLoginTime
           flash[:success] += "(" + getLoginUser.last_login.to_s + ")";
         else
         end
@@ -212,7 +212,7 @@ class ConsumerController < ApplicationController
     if getLoginUser
       if @mail_change
         if @new_mail_address == @confirm_mail_address
-          User.updateMailAddr(@new_mail_address, session[:openid_url])
+          getLoginUser.updateMailAddr(@new_mail_address)
         else
           flash[:error] = "Different Mail Addresses were inputted."
           @edit_error = true
@@ -224,7 +224,7 @@ class ConsumerController < ApplicationController
         File.open(@save_file_name, 'wb') do |of|
           of.write(@uploaded_image_file.read)
         end
-        User.updateImagePath(session[:openid_url], @for_db_image_path)
+        getLoginUser.updateImagePath(@for_db_image_path)
       end
       if @edit_error
         redirect_to :action => 'profile_edit'
