@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   has_many :user_articles, :dependent => :destroy
   has_many :summaries, :dependent => :destroy
   has_many :good_summaries, :dependent => :destroy
+
+  # TODO: 全体的にイケてない実装。全メソッドは毎回openidを渡すのではなく、getLoginUserからインスタンスメソッドで呼ぶべきでした。
   def self.isExists?(openid)
     @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
     return (@current_user != nil)
@@ -66,4 +68,23 @@ class User < ActiveRecord::Base
     @current_user.prof_image = img_path
     return @current_user.save
   end
+
+  # Instance Method
+  def updateMypageAccess
+    self.last_mypage_access = Time.now
+    return self.save
+  end
+
+  def getNotifyingArticles
+    @new_articles = Hash.new
+    self.user_articles.where(read_flg: false).each do |user_article|
+      Summary.where(["article_id = ? and user_id != ? and updated_at > ?", user_article.article_id, user_article.user_id, self.last_mypage_access]).each do |summary|
+        if !@new_articles[user_article.article_id]
+          @new_articles[user_article.article_id] = Article.find(user_article.article_id)
+        end
+      end
+    end
+    return @new_articles
+  end
+  
 end

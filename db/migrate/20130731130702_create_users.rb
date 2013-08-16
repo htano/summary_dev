@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :mail_addr
       t.boolean :yuko_flg
       t.timestamp :last_login
+      t.timestamp :last_mypage_access
       t.string :open_id
       t.string :prof_image, {:default => 'no_image.png'}
 
