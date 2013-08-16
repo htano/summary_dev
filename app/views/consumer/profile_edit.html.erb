@@ -58,7 +58,9 @@
         <dd>
           <div id="result"></div>
           <input id="inputFile" name="profile_image" type="file" style="width:98%"/>
-          <%= javascript_include_tag "consumer", "data-turbolinks-track" => false %>
+          <script>
+            display_input_image(window, document);
+          </script>
         </dd>
       </dl>
 

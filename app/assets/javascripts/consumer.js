@@ -1,4 +1,4 @@
-(function(win, doc){
+function display_input_image(win, doc) {
     
     if (win.File && win.FileReader && win.FileList && win.Blob){
     }else{
@@ -60,5 +60,4 @@
         }
         
     };
-    
-})(window, document);
+}
