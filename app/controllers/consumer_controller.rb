@@ -110,12 +110,11 @@ class ConsumerController < ApplicationController
     case oidresp.status
     when OpenID::Consumer::SUCCESS
       session[:openid_url] = oidresp.display_identifier
-      if(User.isExists?(session[:openid_url]))
-        #redirect to any pages
-        @uname = User.getName(session[:openid_url])
+      if getLoginUser
+        @uname = getLoginUser.name
         flash[:success] = "Hello " + @uname + ". Login processing was successful."
         if User.updateLastLoginTime?(session[:openid_url])
-          flash[:success] += "(" + User.getLastLogIn(session[:openid_url]).to_s + ")";
+          flash[:success] += "(" + getLoginUser.last_login.to_s + ")";
         else
         end
         if params[:fromUrl]
@@ -176,9 +175,9 @@ class ConsumerController < ApplicationController
 
   # TODO: Profile actions shoud be other controller.
   def profile
-    if(User.isExists?(session[:openid_url]))
-      @uname = User.getName(session[:openid_url])
-      @email = User.getMailAddr(session[:openid_url])
+    if getLoginUser
+      @uname = getLoginUser.name
+      @email = getLoginUser.mail_addr
       if @email == nil
         @email = "(undefined)"
       end
@@ -189,9 +188,9 @@ class ConsumerController < ApplicationController
   end
 
   def profile_edit
-    if(User.isExists?(session[:openid_url]))
-      @uname = User.getName(session[:openid_url])
-      @email = User.getMailAddr(session[:openid_url])
+    if getLoginUser
+      @uname = getLoginUser.name
+      @email = getLoginUser.mail_addr
       if @email == nil
         @email = "(undefined)"
       end
@@ -210,7 +209,7 @@ class ConsumerController < ApplicationController
     @redirect_url = url_for :action => 'profile'
     @session_error = false
     @edit_error = false
-    if(User.isExists?(session[:openid_url]))
+    if getLoginUser
       if @mail_change
         if @new_mail_address == @confirm_mail_address
           User.updateMailAddr(@new_mail_address, session[:openid_url])

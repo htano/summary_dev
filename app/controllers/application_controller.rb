@@ -5,18 +5,21 @@ class ApplicationController < ActionController::Base
   helper_method :signed_in?, :get_current_user_name, :getLoginUser, :getNotifyingObjects
 
   def get_current_user_name
-    return User.getName(session[:openid_url])
+    if getLoginUser
+      return getLoginUser.name
+    else
+      return nil
+    end
   end
 
   def signed_in?
-    return User.isExists?(session[:openid_url])
+    return (getLoginUser != nil)
   end
 
-  def isLoginUser?(url_user)
+  def isLoginUser?(user_name)
     @result = false
-    if signed_in?
-      @login_user = User.getName(session[:openid_url])
-      if @login_user == url_user
+    if getLoginUser
+      if getLoginUser.name == user_name
         @result = true
       end
     end

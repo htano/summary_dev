@@ -6,19 +6,9 @@ class User < ActiveRecord::Base
   has_many :summaries, :dependent => :destroy
   has_many :good_summaries, :dependent => :destroy
 
-  # TODO: 全体的にイケてない実装。全メソッドは毎回openidを渡すのではなく、getLoginUserからインスタンスメソッドで呼ぶべきでした。
-  def self.isExists?(openid)
-    @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
-    return (@current_user != nil)
-  end
-
-  def self.getName(openid)
-    @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
-    if @current_user != nil
-      return where(["open_id = ? and yuko_flg = ?", openid, true]).first.name
-    else
-      return nil
-    end
+  # Class method
+  def self.getUserObj(openid)
+    return where(["open_id = ? and yuko_flg = ?", openid, true]).first
   end
 
   def self.regist(uname, openid)
@@ -39,28 +29,16 @@ class User < ActiveRecord::Base
     return @error_message
   end
 
-  def self.getMailAddr(openid)
-    return where(["open_id = ? and yuko_flg = ?", openid, true]).first.mail_addr
-  end
-
   def self.updateLastLoginTime?(openid)
     @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
     @current_user.last_login = Time.now
     return @current_user.save
   end
 
-  def self.getLastLogIn(openid)
-    return where(["open_id = ? and yuko_flg = ?", openid, true]).first.last_login
-  end
-
   def self.updateMailAddr(email, openid)
     @current_user = where(["open_id = ? and yuko_flg = ?", openid, true]).first
     @current_user.mail_addr = email
     return @current_user.save
-  end
-
-  def self.getUserObj(openid)
-    return where(["open_id = ? and yuko_flg = ?", openid, true]).first
   end
 
   def self.updateImagePath(openid, img_path)
@@ -86,5 +64,5 @@ class User < ActiveRecord::Base
     end
     return @new_articles
   end
-  
+
 end
