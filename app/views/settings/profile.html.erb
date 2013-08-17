@@ -10,7 +10,11 @@
           <label>Profile Image</label>
         </dt>
         <dd>
+        <% begin %>
           <%= image_tag(getLoginUser.prof_image, :size => "128x128") %>
+        <% rescue %>
+          Error Image.
+        <% end %>
         </dd>
       </dl>
 

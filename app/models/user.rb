@@ -41,6 +41,8 @@ class User < ActiveRecord::Base
   end
 
   def updateMailAddr(email)
+    #TODO SecureRandom.uuidでtokenの発行と有効期限をユーザーテーブルに登録する
+    #TODO migrateファイルに上の２つのカラムとstatusのカラムを追加する
     self.mail_addr = email
     return self.save
   end
