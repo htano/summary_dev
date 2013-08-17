@@ -212,7 +212,12 @@ class ConsumerController < ApplicationController
     if getLoginUser
       if @mail_change
         if @new_mail_address == @confirm_mail_address
-          getLoginUser.updateMailAddr(@new_mail_address)
+          if getLoginUser.updateMailAddr(@new_mail_address)
+            Message.change_mail_addr(getLoginUser.name, getLoginUser.mail_addr, "http://localhost:3000/mypage/index").deliver
+          else
+            logger.debug("Fail to update email address: " + @new_mail_address)
+            # TODO 失敗した理由によってはエラーレベルを変える
+          end
         else
           flash[:error] = "Different Mail Addresses were inputted."
           @edit_error = true
