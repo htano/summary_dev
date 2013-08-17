@@ -1,0 +1,43 @@
+
+<div class="setting_container">
+  <% if flash[:error] %>
+  <div class='login_error'>
+   <%= h(flash[:error]) %>
+  </div>
+  <% end %>
+
+  <%= render :partial => "settings/partials/navilist", :locals => {:user => @user} %>
+
+  <div class="setting_contents">
+    <h3>User Profile(Edit)</h3>
+    <form method="post" accept-charset="UTF-8" action="<%= url_for :action => 'profile_edit_complete'%>" enctype="multipart/form-data">
+    <div class="setting_inner">
+
+      <dl>
+        <dt>
+          <label>Profile Image</label>
+        </dt>
+        <dd>
+          <%= image_tag(getLoginUser.prof_image, :size => "128x128") %>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Profile Image(New)</label>
+        </dt>
+        <dd>
+          <div id="result"></div>
+          <input id="inputFile" name="profile_image" type="file" style="width:98%"/>
+          <script>
+            display_input_image(window, document);
+          </script>
+        </dd>
+      </dl>
+
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="submit" class="profile_btn" value="send"></input>
+    </div>
+    </form>
+  </div>
+</div>

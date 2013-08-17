@@ -1,0 +1,30 @@
+<div class="setting_navi">
+  <h3>
+    [id] <%= getLoginUser.name %>
+  </h3>
+  <div class="setting_inner">
+    <ul>
+      <li>
+      <% if @action_type == 'profile' %>
+        <a class="selected" href="<%= url_for :controller => 'settings', :action => 'profile' %>">Profile</a>
+      <% else %>
+        <a href="<%= url_for :controller => 'settings', :action => 'profile' %>">Profile</a>
+      <% end %>
+      </li>
+      <li>
+      <% if @action_type == 'email' %>
+        <a class="selected" href="<%= url_for :controller => 'settings', :action => 'email' %>">Emails</a>
+      <% else %>
+        <a href="<%= url_for :controller => 'settings', :action => 'email' %>">Emails</a>
+      <% end %>
+      </li>
+      <li>
+      <% if @action_type == 'account' %>
+        <a class="selected" href="<%= url_for :controller => 'settings', :action => 'account' %>">Account Settings</a>
+      <% else %>
+        <a href="<%= url_for :controller => 'settings', :action => 'account' %>">Account Settings</a>
+      <% end %>
+      </li>
+    </ul>
+  </div>
+</div>
