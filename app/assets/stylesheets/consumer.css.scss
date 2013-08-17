@@ -23,7 +23,59 @@ input.openid {
   padding-left: 18px;
 }
 
-.profile_box {
+.setting_container {
+  width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+}
+
+.setting_navi {
+  float: left;
+  width: 220px;
+  padding: 3px;
+  background: #efefef;
+  border-radius: 2px;
+}
+
+.setting_navi > .setting_inner {
+  padding: 1px;
+}
+
+.setting_navi > .setting_inner > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  -webkit-margin-before: 0px;
+  -webkit-margin-after: 0px;
+}
+
+.setting_navi > .setting_inner > ul > li {
+  border-radius: 2px;
+  border: 1px solid #d8d8d8;
+}
+
+.setting_navi > .setting_inner > ul > li > a {
+  color: #4183c4;
+  text-decoration: none;
+  display: block;
+  padding: 8px 10px 8px 8px;
+  text-shadow: 0 1px 0 #fff;
+  border-left: 2px solid #fafafb;
+}
+
+.setting_navi > .setting_inner > ul > li > a.selected {
+  background: #fff;
+  border-left: 2px solid #d26911;
+  font-weight: bold;
+  color: #222;
+  cursor: default;
+  box-shadow: inset 0 0px 1px rgba(0,0,0,0.1);
+}
+
+.setting_contents {
+  float: right;
+  width: 715px;
   position: relative;
   background: #efefef;
   padding: 3px;
@@ -31,14 +83,7 @@ input.openid {
   margin: 0 0 15px 0;
 }
 
-.profile_container {
-  width: 980px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 10px;
-}
-
-.profile_box > h3 {
+.setting_contents > h3, .setting_navi > h3 {
   background-color: #e0e0e0;
   background-image: linear-gradient(#fafafa, #e0e0e0);
   background-repeat: repeat-x;
@@ -52,7 +97,11 @@ input.openid {
   text-shadow: 0 1px 0 #fff;
 }
 
-.profile_box_inner {
+.setting_navi > h3 {
+  font-size: 12px;
+}
+
+.setting_inner {
   padding: 1px 10px;
   background: #fff;
   border: 1px solid #d8d8d8;
@@ -63,19 +112,19 @@ input.openid {
   font-size: 13px;
 }
 
-.profile_box_inner > dl > dd {
+.setting_inner > dl > dd {
   border: 1px solid #d8d8d8;
   padding: 10px;
   margin-left: 0;
 }
 
-.profile_box_inner > dl > input {
+.setting_inner > dl > input {
   border: 1px solid #d8d8d8;
   padding: 10px;
   margin-left: 0;
 }
 
-.profile_box_inner > dl > dt > label {
+.setting_inner > dl > dt > label {
   font-weight: bold;
 }
 

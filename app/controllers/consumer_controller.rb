@@ -139,7 +139,7 @@ class ConsumerController < ApplicationController
     session[:openid_url] = nil
     flash[:success] = "LogOut Complete."
     if params[:fromUrl]
-      redirect_to params[:fromUrl]
+      redirect_to :action => 'index', :fromUrl => params[:fromUrl]
     else
       redirect_to :action => 'index'
     end
