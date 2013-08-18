@@ -19,14 +19,19 @@ class SettingsController < ApplicationController
     @session_error = false
     @edit_error = false
     if getLoginUser
-      # TODO ファイルサイズや画像ファイルかどうかの判定をする。javascript側でもある程度やるとして、拡張子の確認くらいはする。
       if !@edit_error && @uploaded_image_file != nil
-        @save_file_name = './app/assets/images/' + 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
-        @for_db_image_path = 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
-        File.open(@save_file_name, 'wb') do |of|
-          of.write(@uploaded_image_file.read)
+        logger.debug("image file size: " + @uploaded_image_file.size.to_s + " Byte")
+        if @uploaded_image_file.size < 1024 * 1024
+          @save_file_name = './app/assets/images/' + 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
+          @for_db_image_path = 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
+          File.open(@save_file_name, 'wb') do |of|
+            of.write(@uploaded_image_file.read)
+          end
+          getLoginUser.updateImagePath(@for_db_image_path)
+        else
+          @edit_error = true
+          flash[:error] = "Input image-file does not meet the requirement."
         end
-        getLoginUser.updateImagePath(@for_db_image_path)
       end
       if @edit_error
         redirect_to :action => 'profile_edit'
@@ -42,7 +47,6 @@ class SettingsController < ApplicationController
   def email
     @action_type = 'email'
     if getLoginUser
-      #TODO ステータスをdbから見るようにする
       case getLoginUser.mail_addr_status
       when User::MAIL_STATUS_UNDEFINED
         @email_status = "　"
@@ -88,7 +92,6 @@ class SettingsController < ApplicationController
           if getLoginUser.updateMailAddr(@new_mail_address)
             @mail_auth_url = url_for :action => 'email_auth', :token_uuid => getLoginUser.token_uuid
             Message.change_mail_addr(getLoginUser.name, getLoginUser.mail_addr, @mail_auth_url).deliver
-            #TODO token_urlにする
           else
             logger.debug("Fail to update email address: " + @new_mail_address)
             # TODO 失敗した理由によってはエラーレベルを変える

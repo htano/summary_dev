@@ -1,11 +1,4 @@
-
 <div class="setting_container">
-  <% if flash[:error] %>
-  <div class='login_error'>
-   <%= h(flash[:error]) %>
-  </div>
-  <% end %>
-
   <%= render :partial => "settings/partials/navilist", :locals => {:user => @user} %>
 
   <div class="setting_contents">

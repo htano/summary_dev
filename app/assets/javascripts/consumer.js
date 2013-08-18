@@ -48,9 +48,9 @@ function display_input_image(win, doc) {
         result.innerHTML = "";
                 
         for(var i = 0; i < files.length; i++){
-            
+            $('.profile_btn').attr('disabled', true);
             if( isImage(files[i]) ){
-                
+                $('.profile_btn').attr('disabled', false);
                 loadDataURL(files[i], function(dataURL){
                     appendDataURLImage(result, dataURL);
                 });
