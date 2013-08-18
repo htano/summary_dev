@@ -21,7 +21,8 @@ class SettingsController < ApplicationController
     if getLoginUser
       if !@edit_error && @uploaded_image_file != nil
         logger.debug("image file size: " + @uploaded_image_file.size.to_s + " Byte")
-        if @uploaded_image_file.size < 1024 * 1024
+        logger.debug("image content type: " + @uploaded_image_file.content_type + "")
+        if @uploaded_image_file.size < 1024 * 1024 && @uploaded_image_file.content_type =~ /^image/
           @save_file_name = './app/assets/images/' + 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
           @for_db_image_path = 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
           File.open(@save_file_name, 'wb') do |of|
@@ -30,7 +31,7 @@ class SettingsController < ApplicationController
           getLoginUser.updateImagePath(@for_db_image_path)
         else
           @edit_error = true
-          flash[:error] = "Input image-file does not meet the requirement."
+          flash[:error] = "Input image-file is not image file or exceeds 1024KB."
         end
       end
       if @edit_error
