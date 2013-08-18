@@ -86,8 +86,9 @@ class SettingsController < ApplicationController
       if @mail_change
         if @new_mail_address == @confirm_mail_address
           if getLoginUser.updateMailAddr(@new_mail_address)
+            @mail_auth_url = url_for :action => 'email_auth', :token_uuid => getLoginUser.token_uuid
+            Message.change_mail_addr(getLoginUser.name, getLoginUser.mail_addr, @mail_auth_url).deliver
             #TODO token_urlにする
-            #Message.change_mail_addr(getLoginUser.name, getLoginUser.mail_addr, "http://localhost:3000/mypage/index").deliver
           else
             logger.debug("Fail to update email address: " + @new_mail_address)
             # TODO 失敗した理由によってはエラーレベルを変える
@@ -107,6 +108,19 @@ class SettingsController < ApplicationController
     else
       flash[:error] = "To show the profile page, you have to login."
       redirect_to :controller => 'consumer', :action => 'index'
+    end
+  end
+
+  def email_auth
+    @url_token_uuid = params[:token_uuid]
+    if getLoginUser
+      if getLoginUser.authenticateUpdateMailAddr(@url_token_uuid)
+        render :text => 'success'
+      else
+        render :text => 'token_uuid is not match or this token was expired.'
+      end
+    else
+      render :text => 'you have to login'
     end
   end
 

@@ -4,6 +4,7 @@ SummaryDev::Application.routes.draw do
   post "settings/profile_edit_complete"
   get "settings/email"
   get "settings/email_edit"
+  get "settings/email_auth"
   post "settings/email_edit_complete"
   get "settings/account"
 
