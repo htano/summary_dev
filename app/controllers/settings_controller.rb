@@ -45,7 +45,7 @@ class SettingsController < ApplicationController
       #TODO ステータスをdbから見るようにする
       case getLoginUser.mail_addr_status
       when User::MAIL_STATUS_UNDEFINED
-        @email_status = "(undefined)"
+        @email_status = "　"
       when User::MAIL_STATUS_PROVISIONAL
         @email_status = "(provisional registration)"
         if getLoginUser.token_expire && getLoginUser.token_expire < Time.now
@@ -115,12 +115,15 @@ class SettingsController < ApplicationController
     @url_token_uuid = params[:token_uuid]
     if getLoginUser
       if getLoginUser.authenticateUpdateMailAddr(@url_token_uuid)
-        render :text => 'success'
+        flash[:success] = "MailAddress change has been authentificated."
+        redirect_to :action => 'email'
       else
-        render :text => 'token_uuid is not match or this token was expired.'
+        flash[:error] = "Token_uuid is not match or this token was expired."
+        redirect_to :action => 'email_edit'
       end
     else
-      render :text => 'you have to login'
+      flash[:alert] = "To authentificate your mail change, you have to login."
+      redirect_to :controller => 'consumer', :action => 'index', :fromUrl => request.url
     end
   end
 
