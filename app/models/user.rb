@@ -1,6 +1,12 @@
 class User < ActiveRecord::Base
+  MAIL_STATUS_UNDEFINED   = nil
+  MAIL_STATUS_PROVISIONAL = 1
+  MAIL_STATUS_DEFINITIVE  = 2
+  MAIL_STATUS_ERROR       = 3
   validates :name, :uniqueness => true
   validates :open_id,   :uniqueness => true
+  #validates :mail_addr, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create }
+  validates :mail_addr_status, inclusion: { in: [MAIL_STATUS_UNDEFINED, MAIL_STATUS_PROVISIONAL, MAIL_STATUS_DEFINITIVE, MAIL_STATUS_ERROR] }
   has_many :favorite_users, :dependent => :destroy
   has_many :user_articles, :dependent => :destroy
   has_many :summaries, :dependent => :destroy
@@ -44,7 +50,20 @@ class User < ActiveRecord::Base
     #TODO SecureRandom.uuidでtokenの発行と有効期限をユーザーテーブルに登録する
     #TODO migrateファイルに上の２つのカラムとstatusのカラムを追加する
     self.mail_addr = email
+    self.mail_addr_status = MAIL_STATUS_PROVISIONAL
+    self.token_uuid = SecureRandom.uuid
+    self.token_expire = Time.now + 3.days
     return self.save
+  end
+
+  def authenticateUpdateMailAddr(url_token_uuid)
+    if url_token_uuid == self.token_uuid
+      if self.token_expire > Time.now
+        self.mail_addr_status = MAIL_STATUS_DEFINITIVE
+        return self.save
+      end
+    end
+    return false
   end
 
   def updateImagePath(img_path)

@@ -10,12 +10,7 @@ class SettingsController < ApplicationController
   end
 
   def profile_edit
-    @action_type = 'profile'
-    if getLoginUser
-    else
-      flash[:error] = "To show the profile page, you have to login."
-      redirect_to :controller => 'consumer', :action => 'index'
-    end
+    profile
   end
 
   def profile_edit_complete
@@ -48,7 +43,21 @@ class SettingsController < ApplicationController
     @action_type = 'email'
     if getLoginUser
       #TODO ステータスをdbから見るようにする
-      @email_status = "(undefined) / (provisional registration) / (definitive registration) / (expired)"
+      case getLoginUser.mail_addr_status
+      when User::MAIL_STATUS_UNDEFINED
+        @email_status = "(undefined)"
+      when User::MAIL_STATUS_PROVISIONAL
+        @email_status = "(provisional registration)"
+        if getLoginUser.token_expire && getLoginUser.token_expire < Time.now
+          @email_status = "(provisional registration has been expired.)"
+        end
+      when User::MAIL_STATUS_DEFINITIVE
+         @email_status = "(definitive registration)"
+      when User::MAIL_STATUS_ERROR
+        @email_status = "(error)"
+      else
+        @email_status = "(unknown status)"
+      end
       @email = getLoginUser.mail_addr
       if @email == nil
         @email = "(undefined)"
@@ -61,19 +70,7 @@ class SettingsController < ApplicationController
   end
 
   def email_edit
-    @action_type = 'email'
-    if getLoginUser
-      #TODO ステータスをdbから見るようにする
-      @email_status = "(undefined) / (provisional registration) / (definitive registration) / (expired)"
-      @email = getLoginUser.mail_addr
-      if @email == nil
-        @email = "(undefined)"
-      else
-      end
-    else
-      flash[:error] = "To show the profile page, you have to login."
-      redirect_to :controller => 'consumer', :action => 'index'
-    end
+    email
   end
 
   def email_edit_complete
@@ -94,7 +91,7 @@ class SettingsController < ApplicationController
           else
             logger.debug("Fail to update email address: " + @new_mail_address)
             # TODO 失敗した理由によってはエラーレベルを変える
-            flash[:error] = "Different Mail Addresses were inputted."
+            flash[:error] = "Can't change the mail address."
             @edit_error = true
           end
         else

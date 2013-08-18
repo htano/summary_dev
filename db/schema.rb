@@ -59,6 +59,9 @@ ActiveRecord::Schema.define(version: 20130811052551) do
     t.datetime "last_mypage_access"
     t.string   "open_id"
     t.string   "prof_image",         default: "no_image.png"
+    t.integer  "mail_addr_status"
+    t.string   "token_uuid"
+    t.datetime "token_expire"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

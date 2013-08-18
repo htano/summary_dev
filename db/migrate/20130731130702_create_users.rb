@@ -8,6 +8,9 @@ class CreateUsers < ActiveRecord::Migration
       t.timestamp :last_mypage_access
       t.string :open_id
       t.string :prof_image, {:default => 'no_image.png'}
+      t.integer :mail_addr_status, {:default => nil}
+      t.string :token_uuid, {:default => nil}
+      t.timestamp :token_expire, {:default => nil} 
 
       t.timestamps
     end
