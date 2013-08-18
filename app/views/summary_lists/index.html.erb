@@ -8,26 +8,26 @@
 					<%= @article.title %>	
 				<% end %>
 			</h1>
-				<div id="yArticleLink">
-					<% if  @article != nil %>
-						<%= link_to("元記事を見る",@article.url) %>
-					<% end %>
+			<div id="yArticleLink">
+				<% if  @article != nil %>
+					<%= link_to("元記事を見る",@article.url) %>
+				<% end %>
 
 			</div>
-																					
-			<% unless @summarys.blank? %>
+
+			<% unless @summaryList.blank? %>
 				<div id="youyaku">
-					<% @summarys.each_with_index do |summary,i| %>
+					<% @summaryList.each do |summaryItem| %>
 						<div id="yAuther">
-							<%= @sumUsers[i].name %>	
+							<%= summaryItem.user.name %>	
 						</div>
 						<h2 id="yArticleDetail">
-							<%= summary.content %>	
+							<%= summaryItem.summary.content %>	
 						</h2>
 
 						<div id ="yArticleIiyo">
-							<% unless @isGoodCompleted[i] then %>
-								<%= link_to image_tag("icons/good_summary.jpg", { :border => '0', :alt => 'いい要約だね！'}),{:action => "goodSummary",:summaryId =>summary.id, :articleId => @article.id} %>
+							<% unless summaryItem.isGoodCompleted then %>
+								<%= link_to image_tag("icons/good_summary.jpg", { :border => '0', :alt => 'いい要約だね！'}),{:action => "goodSummary",:summaryId =>summaryItem.summary.id, :articleId => @article.id} %>
 
 							<% else %>
 								<%= image_tag("icons/good_summary_cmp.jpg", { :border => '0', :alt => 'あなたは既にいい要約だねをしています'}) %>
@@ -35,7 +35,7 @@
 						</div>
 
 						<div id ="yArticleIiyo">
-							ただいまのいい要約だねの数は<%= @goodSummaryPoint[i] %>です。 
+							ただいまのいい要約だねの数は<%= summaryItem.summaryPoint %>です。 
 						</div>
 
 						<hr id = "yArticleLine">
