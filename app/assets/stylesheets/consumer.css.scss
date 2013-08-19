@@ -148,3 +148,22 @@ input.openid {
   border: 1px solid #d8d8d8;
 }
 
+.google_btn {
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  background-color: #dd4b39;
+  background-repeat: repeat-x;
+  border-color: #dd4b39;
+  width: 130px;
+  height: 34px;
+  outline: none;
+  border-radius: 5px;  /* CSS3草案 */
+  -webkit-border-radius: 5px;  /* Safari,Google Chrome用 */
+  -moz-border-radius: 5px; /* Firefox用 */
+  background-image: -moz-linear-gradient(#E48383, #dd4b39);
+  background-image: -webkit-linear-gradient(#E48383, #dd4b39);
+  background-image: linear-gradient(#E48383, #dd4b39);
+  margin-bottom: 1em;
+  border: 1px solid #EBCDCD;
+}
+
