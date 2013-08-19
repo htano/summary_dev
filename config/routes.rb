@@ -8,8 +8,7 @@ SummaryDev::Application.routes.draw do
   post "settings/email_edit_complete"
   get "settings/account"
 
-  get "auth/github/callback" => "consumer#oauth_complete"
-  #get "auth/twitter/callback" => "consumer#oauth_complete"
+  get "auth/:provider/callback" => "consumer#oauth_complete"
 
   get "mypage/index"
   get "mypage/delete"

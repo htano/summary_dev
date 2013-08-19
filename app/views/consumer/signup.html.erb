@@ -11,5 +11,8 @@
   <% if params[:fromUrl] %>
     <input type="hidden" name="fromUrl" value="<%= params[:fromUrl] %>">
   <% end %>
+  <% if params[:image] %>
+    <input type="hidden" name="image" value="<%= params[:image] %>">
+  <% end %>
   <%= submit_tag("アカウント登録(SignUp)") %>
 <% end %>

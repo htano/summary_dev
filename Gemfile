@@ -49,3 +49,4 @@ end
 gem 'nokogiri'
 
 gem 'omniauth-github'
+gem 'omniauth-twitter'

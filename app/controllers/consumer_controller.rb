@@ -9,7 +9,9 @@ class ConsumerController < ApplicationController
   layout nil
 
   def oauth_complete
+    logger.debug env['omniauth.auth'].to_yaml
     @oauth_url = "oauth://" + env['omniauth.auth']['provider'] + "/" + env['omniauth.auth']['uid']
+    @image_url = env['omniauth.auth'].info.image
     session[:openid_url] = @oauth_url
     if getLoginUser
       @uname = getLoginUser.name
@@ -26,9 +28,9 @@ class ConsumerController < ApplicationController
       end
     else
       if params[:fromUrl]
-        redirect_to :action => 'signup', :fromUrl => params[:fromUrl]
+        redirect_to :action => 'signup', :image => @image_url,:fromUrl => params[:fromUrl]
       else
-        redirect_to :action => 'signup'
+        redirect_to :action => 'signup', :image => @image_url
       end
     end
   end
@@ -182,6 +184,9 @@ class ConsumerController < ApplicationController
       @creating_user_id = "#{params[:creating_user_id]}";
       @error_message = User.regist(@creating_user_id, session[:openid_url])
       if !@error_message
+        if params[:image]
+          getLoginUser.updateImagePath(params[:image])
+        end
         flash[:success] = "Hello " + @creating_user_id + ". SignUp was successfully completed."
         if params[:fromUrl]
           redirect_to params[:fromUrl]
