@@ -8,6 +8,31 @@ require 'openid/store/filesystem'
 class ConsumerController < ApplicationController
   layout nil
 
+  def oauth_complete
+    @oauth_url = "oauth://" + env['omniauth.auth']['provider'] + "/" + env['omniauth.auth']['uid']
+    session[:openid_url] = @oauth_url
+    if getLoginUser
+      @uname = getLoginUser.name
+      flash[:success] = "Hello " + @uname + ". Login processing was successful."
+      if getLoginUser.updateLastLoginTime
+        flash[:success] += "(" + getLoginUser.last_login.to_s + ")";
+      else
+      end
+      if params[:fromUrl]
+        flash[:alert] = "FromUrl is set: " + params[:fromUrl]
+        redirect_to params[:fromUrl]
+      else
+        redirect_to :controller => 'mypage', :action => 'index'
+      end
+    else
+      if params[:fromUrl]
+        redirect_to :action => 'signup', :fromUrl => params[:fromUrl]
+      else
+        redirect_to :action => 'signup'
+      end
+    end
+  end
+
   def index
     # render an openid form
   end
