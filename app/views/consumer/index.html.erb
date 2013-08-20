@@ -38,34 +38,41 @@
 </div>
 
 <ul>
+
   <li>
-  <a href="<%= url_for :action => 'start', :openid_identifier => 'yahoo.co.jp', :fromUrl => params[:fromUrl] %>">
-    <img src="http://i.yimg.jp/images/login/btn/btnXSLogin.gif" width="116" height="28"alt="Yahoo! JAPAN IDでログイン" border="0">
-  </a>
-  </li>
-  <li>
-  <a href="<%= url_for :action => 'start', :openid_identifier => 'mixi.jp', :fromUrl => params[:fromUrl] %>">
-    <%= image_tag("login_mixi.png") %>
-  </a>
-  </li>
-  <li>
-  <a href="<%= url_for :action => 'start', :openid_identifier => 'www.google.com/accounts/o8/id', :fromUrl => params[:fromUrl] %>">
-    <button class="google_btn">Sign in with Google</button>
-  </a>
-  </li>
-  <li>
-  <a href="<%= url_for '/auth/github'%>">
-    <button class="profile_btn">Sign in with Github</button>
-  </a>
-  </li>
-  <li>
-  <a href="<%= url_for '/auth/twitter'%>">
-    <%= image_tag("https://dev.twitter.com/sites/default/files/images_documentation/sign-in-with-twitter-gray.png") %>
-  </a>
-  </li>
-  <li>
-    <a href="<%= url_for '/auth/facebook'%>">
-    <button class="profile_btn" style="width:145px;">Sign in with Facebook</button>
+    <a href="<%= url_for :action => 'start', :openid_identifier => 'yahoo.co.jp', :fromUrl => params[:fromUrl] %>">
+      <img src="http://i.yimg.jp/images/login/btn/btnXSLogin.gif" width="116" height="28"alt="Yahoo! JAPAN IDでログイン" border="0">
     </a>
   </li>
+
+  <li>
+    <a href="<%= url_for :action => 'start', :openid_identifier => 'mixi.jp', :fromUrl => params[:fromUrl] %>">
+      <%= image_tag("login_mixi.png") %>
+    </a>
+  </li>
+
+  <li>
+    <a href="<%= url_for '/auth/twitter'%>">
+      <%= image_tag("https://dev.twitter.com/sites/default/files/images_documentation/sign-in-with-twitter-gray.png") %>
+    </a>
+  </li>
+
+  <li>
+    <a href="<%= url_for '/auth/facebook'%>">
+      <%= image_tag "http://booklazy.com/images/facebook-login-button.png" %>
+    </a>
+  </li>
+
+  <li>
+    <a href="<%= url_for :action => 'start', :openid_identifier => 'www.google.com/accounts/o8/id', :fromUrl => params[:fromUrl] %>">
+      <button class="google_btn">Sign in with Google</button>
+    </a>
+  </li>
+
+  <li>
+    <a href="<%= url_for '/auth/github'%>">
+      <button class="profile_btn">Sign in with Github</button>
+    </a>
+  </li>
+
 </ul>
