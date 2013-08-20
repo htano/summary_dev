@@ -5,7 +5,7 @@ $(function(){
         if(confirm('登録して宜しいですか？')){
           $.ajax({
             url: '/webpage/add',
-            type: 'GET',
+            type: 'POST',
             data: 'booked_url=' + escape($('#booked_url').val()),
             success: function(data) {
               alert('登録しました。');
@@ -22,7 +22,7 @@ $(function(){
     });
 });
 </script> 
-
+<!--<form method="POST" controller="webpage" action="add" id="add_form" remote="true">-->
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
@@ -31,7 +31,7 @@ $(function(){
           <ul class="nav pull-right">
           <% if signed_in? %>
             <li>
-              <input class="nav_text" type="text" name="booked_url" id="booked_url" size="50"></a>
+              <input class="nav_text" type="text" name="booked_url" id="booked_url" size="100"></a>
             </li>
             <li>
               <input type="submit" id="submit" class="button button-flat:hover" value="book!">
@@ -76,3 +76,4 @@ $(function(){
       </div>
     </div>
   </div>
+<!--</form>-->

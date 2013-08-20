@@ -18,7 +18,7 @@ $(function(){
 
 </script>
 
-<form action="edit_confirm" id="edit_form">
+<form method="POST" action="edit_confirm" id="edit_form">
   <div class="center">
     <p>[title] <%= @title %></p>
     <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
@@ -28,4 +28,5 @@ $(function(){
   <div class="center">
       <input type="submit" id="edit_summary_submit" class="button button-flat:hover" value="要約"></input>  
   </div>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 </form>

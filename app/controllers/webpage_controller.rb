@@ -15,10 +15,9 @@ class WebpageController < ApplicationController
       article = Article.find_by_url(@booked_url);
       if article != nil then
         @article_id = article.id;
-        user_article = UserArticle.find_by_user_id_and_article_id(user_id, article.id);
+        user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
           if user_article != nil then 
             #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
-            #TOTO
             @msg = "あなたはすでに登録しています！"
           else
             #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
