@@ -10,6 +10,7 @@ class ConsumerController < ApplicationController
 
   def oauth_complete
     logger.debug env['omniauth.auth'].to_yaml
+    logger.debug env['omniauth.origin']
     @oauth_url = "oauth://" + env['omniauth.auth']['provider'] + "/" + env['omniauth.auth']['uid']
     @image_url = env['omniauth.auth'].info.image
     session[:openid_url] = @oauth_url
@@ -20,15 +21,15 @@ class ConsumerController < ApplicationController
         flash[:success] += "(" + getLoginUser.last_login.to_s + ")";
       else
       end
-      if params[:fromUrl]
-        flash[:alert] = "FromUrl is set: " + params[:fromUrl]
-        redirect_to params[:fromUrl]
+      if env['omniauth.origin']
+        flash[:alert] = "FromUrl is set: " + env['omniauth.origin']
+        redirect_to env['omniauth.origin']
       else
         redirect_to :controller => 'mypage', :action => 'index'
       end
     else
-      if params[:fromUrl]
-        redirect_to :action => 'signup', :image => @image_url,:fromUrl => params[:fromUrl]
+      if env['omniauth.origin']
+        redirect_to :action => 'signup', :image => @image_url,:fromUrl => env['omniauth.origin']
       else
         redirect_to :action => 'signup', :image => @image_url
       end

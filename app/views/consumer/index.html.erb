@@ -52,13 +52,21 @@
   </li>
 
   <li>
+    <% if params[:fromUrl] %>
+    <a href="<%= url_for '/auth/twitter?origin=' + params[:fromUrl] %>">
+    <% else %>
     <a href="<%= url_for '/auth/twitter'%>">
+    <% end %>
       <%= image_tag("https://dev.twitter.com/sites/default/files/images_documentation/sign-in-with-twitter-gray.png") %>
     </a>
   </li>
 
   <li>
+    <% if params[:fromUrl] %>
+    <a href="<%= url_for '/auth/facebook?origin=' + params[:fromUrl] %>">
+    <% else %>
     <a href="<%= url_for '/auth/facebook'%>">
+    <% end %>
       <%= image_tag "http://booklazy.com/images/facebook-login-button.png" %>
     </a>
   </li>
@@ -70,7 +78,11 @@
   </li>
 
   <li>
+    <% if params[:fromUrl] %>
+    <a href="<%= url_for '/auth/github?origin=' + params[:fromUrl] %>">
+    <% else %>
     <a href="<%= url_for '/auth/github'%>">
+    <% end %>
       <button class="profile_btn">Sign in with Github</button>
     </a>
   </li>
