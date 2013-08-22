@@ -10,6 +10,7 @@ class WebpageController < ApplicationController
   def add
   	if signed_in?
       user_id = getLoginUser.id;
+      #@booked_url = params[:booked_url];
       @booked_url = "#{params[:booked_url]}";
       title = returnTitle(@booked_url);
       article = Article.find_by_url(@booked_url);

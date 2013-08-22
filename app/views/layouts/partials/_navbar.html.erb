@@ -8,6 +8,7 @@ $(function(){
             type: 'POST',
             data: 'booked_url=' + escape($('#booked_url').val()),
             success: function(data) {
+              alert(msg);
               alert('登録しました。');
               location.reload();
             },
@@ -34,7 +35,7 @@ $(function(){
             </li>
             <li>
               <input type="submit" id="submit" class="button button-flat:hover" value="book!">
-              <!--<%= link_to 'book!!', { :controller => 'webpage', :action => 'add' }, :confirm => '登録しますか?', :remote => true, :method => 'POST', :class => 'button button-flat:hover', :"data-type" => "text"%>-->
+              <!--<%= link_to 'book!!', { :controller => 'webpage', :action => 'add' ,:booked_url => "booked_url"}, :confirm => '登録しますか?', :remote => true, :method => 'POST', :class => 'dropdown-toggle nav_account' %>-->
             </li>
           <% end %>
             <li class="divider-vertical"></li>
