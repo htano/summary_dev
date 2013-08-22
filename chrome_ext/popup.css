@@ -1,7 +1,7 @@
 body{
   margin:0px;
   padding:0px 10px 10px;
-  width:420px;
+  width:640px;
   font-size: 10pt;
 }
 h1{
@@ -9,6 +9,9 @@ h1{
   border-style: solid;
   border-width: 1px;
   text-align: center;
+}
+p {
+  margin-left: 10px;
 }
 div #header{
   width: 100%;
