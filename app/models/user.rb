@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
     @error_message = nil
     if uname
       #uname = uname.downcase
-      if uname =~ /^[A-Za-z0-9_\-]{4,32}$/
+      if uname =~ /^[A-Za-z0-9_\-]{4,20}$/
         @created_user = create( name: uname, open_id: openid, yuko_flg: true, last_login: Time.now  )
         if @created_user.new_record?
           @error_message = "Error: '" + uname + "' has already existed."

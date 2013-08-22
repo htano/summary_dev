@@ -1,7 +1,7 @@
 body{
   margin:0px;
   padding:0px 10px 10px;
-  width:640px;
+  width: 460px;
   font-size: 10pt;
 }
 h1{
@@ -10,9 +10,16 @@ h1{
   border-width: 1px;
   text-align: center;
 }
-p {
-  margin-left: 10px;
+p#p_title, p#p_url {
+  margin-left: 20px;
+  width: 420px;  
+  white-space: nowrap;  
+  overflow: hidden;  
+  text-overflow: ellipsis;  
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
 }
+
 div #header{
   width: 100%;
   margin: 0px;
