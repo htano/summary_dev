@@ -2,27 +2,43 @@
 $(function(){
     $('#submit').click(function(){
       if($("#booked_url").val().length){
-        if(confirm('登録して宜しいですか？')){
           $.ajax({
-            url: '/webpage/add',
+            url: '/webpage/get_title',
             type: 'POST',
             data: 'booked_url=' + escape($('#booked_url').val()),
+            dataType: 'text',
             success: function(data) {
-              alert(msg);
-              alert('登録しました。');
-              location.reload();
+            	if(data) {
+            	  if(confirm(data+'を登録して宜しいですか？')){
+            	  	$.ajax({
+            			url: '/webpage/add',
+            			type: 'POST',
+            			data: 'booked_url=' + escape($('#booked_url').val()),
+            			dataType: 'text',
+            			success: function(data) {
+            				alert(data);
+            				location.reload();
+            			},
+            			error: function(data) {
+            				alert('システム管理者に連絡して下さい！');
+            			}
+            		});
+            	  }
+              } else {
+              	alert('指定されたURLは存在しません。URLを確認して下さい。');
+              }
             },
             error: function(data) {
-              alert('失敗しました、urlを確認して下さい。');
+              alert('システム管理者に連絡して下さい！');
             }
           });
-        }
       } else {
-        alert('urlを入力して下さい。');
+        alert('URLを入力して下さい。');
       }
     });
 });
-</script> 
+
+</script>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
@@ -31,11 +47,10 @@ $(function(){
           <ul class="nav pull-right">
           <% if signed_in? %>
             <li>
-              <input class="nav_text" type="text" name="booked_url" id="booked_url" size="100">
+              <input class="nav_text required url" type="text" name="booked_url" id="booked_url" size="75">
             </li>
             <li>
-              <input type="submit" id="submit" class="button button-flat:hover" value="book!">
-              <!--<%= link_to 'book!!', { :controller => 'webpage', :action => 'add' ,:booked_url => "booked_url"}, :confirm => '登録しますか?', :remote => true, :method => 'POST', :class => 'dropdown-toggle nav_account' %>-->
+              <input id="submit" class="button button-flat:hover" value="book!" size="5">
             </li>
           <% end %>
             <li class="divider-vertical"></li>

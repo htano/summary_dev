@@ -76,6 +76,10 @@ class SummaryController < ApplicationController
       user_id = getLoginUser.id;
       @article_id = "#{params[:article_id]}";
       summary = Summary.find_by_user_id_and_article_id(user_id, @article_id);
+      if summary == nil then
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
+        return
+      end
       @summary_content = summary.content;
       @msg = "要約が登録出来ました！"
     else

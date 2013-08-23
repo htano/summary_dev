@@ -8,6 +8,7 @@ SummaryDev::Application.routes.draw do
   get "mypage/destroy"
 
   post 'webpage/add' => 'webpage#add'
+  post 'webpage/get_title' => 'webpage#get_title'
   #get 'webpage/add_confirm' => 'webpage#add_confirm'
   #get 'webpage/add_complete' => 'webpage#add_complete'
   #get 'webpage/add_complete'
