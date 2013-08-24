@@ -43,7 +43,7 @@ User.create(name: "sigrun", mail_addr: "sigrun@gmail.com", open_id:"openid14",
   prof_image: "account_pictures/usertile24.bmp")
 User.create(name: "svipul", mail_addr: "svipul@gmail.com", open_id:"openid15",
   prof_image: "account_pictures/usertile25.bmp")
-User.create(name: "tanngnidr", mail_addr: "tanngnidr@gmail.com", open_id:"openid16",
+User.create(name: "tanngnidr", mail_addr: "tanngnidr@4mail.com", open_id:"openid16",
   prof_image: "account_pictures/usertile26.bmp")
 User.create(name: "pogn", mail_addr: "pogn@gmail.com", open_id:"openid17",
   prof_image: "account_pictures/usertile27.bmp")
@@ -70,8 +70,20 @@ FavoriteUser.create(user_id: 1, favorite_user_id: 17)
 FavoriteUser.create(user_id: 1, favorite_user_id: 18)
 FavoriteUser.create(user_id: 1, favorite_user_id: 19)
 FavoriteUser.create(user_id: 1, favorite_user_id: 20)
+FavoriteUser.create(user_id: 2, favorite_user_id: 1)
+FavoriteUser.create(user_id: 3, favorite_user_id: 1)
+FavoriteUser.create(user_id: 4, favorite_user_id: 1)
+FavoriteUser.create(user_id: 5, favorite_user_id: 1)
+FavoriteUser.create(user_id: 13, favorite_user_id: 1)
+FavoriteUser.create(user_id: 14, favorite_user_id: 1)
+FavoriteUser.create(user_id: 15, favorite_user_id: 1)
+FavoriteUser.create(user_id: 16, favorite_user_id: 1)
+FavoriteUser.create(user_id: 17, favorite_user_id: 1)
+FavoriteUser.create(user_id: 18, favorite_user_id: 1)
+FavoriteUser.create(user_id: 19, favorite_user_id: 1)
+FavoriteUser.create(user_id: 20, favorite_user_id: 1)
 
-# R010UserArticle
+# UserArticle
 UserArticle.create(user_id: 1, article_id:  1, read_flg: false)
 UserArticle.create(user_id: 1, article_id:  2, read_flg: false)
 UserArticle.create(user_id: 1, article_id:  3, read_flg: true)
@@ -101,7 +113,7 @@ UserArticle.create(user_id: 1, article_id: 26, read_flg: false)
 UserArticle.create(user_id: 1, article_id: 27, read_flg: false)
 UserArticle.create(user_id: 1, article_id: 28, read_flg: false)
 
-# A010Article
+# Article
 Article.create(url: "http://www.yahoo.co.jp/", title: "Yahoo! JAPAN")
 Article.create(url: "http://www.ibm.com/jp/ja/", title: "IBM - Japan")
 Article.create(url: "http://www.sony.co.jp/", title: "Sony Japan")

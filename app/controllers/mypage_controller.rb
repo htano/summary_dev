@@ -43,6 +43,15 @@ class MypageController < ApplicationController
       @favorite_users.push(user)
     end
 
+    # followers 
+    followers_favorite_users = FavoriteUser.where(:favorite_user_id => @user.id)
+    @followers = []
+    followers_favorite_users.each do |follower_favorite_user|
+      user = follower_favorite_user.user
+      @followers.push(user)
+    end
+
+
     # main tab & read tab
     @articles = []
     @read_articles = []
@@ -76,7 +85,7 @@ class MypageController < ApplicationController
 
     # favorite tab
 
-    render :layout => 'application'
+    render :layout => 'application', :locals => {:user => @user}
   end
 
   def delete
@@ -118,9 +127,7 @@ class MypageController < ApplicationController
     current_user = getLoginUser
 
     # error handle
-    if current_user then
-      FavoriteUser.create(:user_id => current_user.id, :favorite_user_id => params[:follow_user_id])
-    end
+    FavoriteUser.create(:user_id => current_user.id, :favorite_user_id => params[:follow_user_id])
 
     redirect_to :action => "index", :name => params[:follow_user_name]
   end
@@ -129,9 +136,10 @@ class MypageController < ApplicationController
     logger.debug("unfollow")
     current_user = getLoginUser
 
-    if current_user && current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id]) then
-      current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
-    end
+    # error check
+    # ? first
+    FavoriteUser.find(:first, 
+      :conditions => {:user_id => current_user.id, :favorite_user_id => params[:unfollow_user_id]}).destroy
 
     redirect_to :action => "index", :name => params[:unfollow_user_name]
   end

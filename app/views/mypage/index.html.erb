@@ -1,17 +1,74 @@
 <div class="container">
     <div class="row">
       <div class="span3">
-        <div id="profile_id">
-          <% if @is_photo_data then %>
-          <div id="user_photo"> <%= image_tag(@user.prof_image, :size => "64x64") %> </div>
-          <% else %>
-          <div id="user_photo"> <a href="#" id="no_image">No Image</a> </div>
-          <% end %>
-          <div id="prof_name_detail">
-            <%= image_tag("icons/glyphicons_003_user.png", :size => "19x18")%>
+        <div id="user_profile">
+          <%= image_tag(@user.prof_image, :size => "100x100") %>
+          <div id="prof_user_name">
             <p><%= @user.name %></p>
+            <a href="#" id="add_submit" class="button button-rounded button-flat-primary">follow</a>
+            <hr/>
+            <p>profile</p>
+          </div>
+          <div id="user_comment">
+            <p>六本木で働く冴えない会社員です。I work at Roppongi and I'm so dull.</p>
+            </div>
+          </div>
+        <hr/>
+        <div id="user_info_tab">
+          <ul>
+            <li class="prof_tab_elem none active">
+              <a href="#prof_tab_following" data-toggle="tab">
+                following<br>
+                <%= @favorite_users.size %>
+              </a>
+              <div id="info_tab_marker"></div>
+            </li>
+            <li class="divider-vertical"></li>
+            <li class="prof_tab_elem none">
+              <a href="#prof_tab_followers" data-toggle="tab">
+                followers<br>
+                <%= @followers.size %>
+              </a>
+              <div id="info_tab_marker"></div>
+            </li>
+            <li class="divider-vertical"></li>
+            <li class="prof_tab_elem none">
+              <a href="#prof_tab_summary" data-toggle="tab">
+                summary<br>
+                <!-- TODO : 動的に取る、そもそもsummaryでよいかも考える -->
+                10
+              </a>
+              <div id="info_tab_marker"></div>
+          </ul>
+        </div>
+        <hr/>
 
-            <%= image_tag("icons/glyphicons_039_notes.png", :size => "19x18", :id => "profile_info")%>
+        <div id="user_info">
+          <div id="prof_tab_following" class="active">
+            <% if @favorite_users != nil then %>
+            <% @favorite_users.each do |favorite_user| %>
+            <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.name),
+            {:action => "index", :name => favorite_user.name} %>
+            <% end %>
+            <% end %>
+          </div>
+
+          <div id="prof_tab_followers">
+            <% if @followers != nil then %>
+            <% @followers.each do |follower| %>
+            <%= link_to image_tag(follower.prof_image, :size => "32x32", :title => follower.name),
+            {:action => "index", :name => follower.name} %>
+            <% end %>
+            <% end %>
+          </div>
+
+          <div id="prof_tab_summary">
+          </div>
+        </div>
+
+
+
+        <% if false then %>
             <% if @is_login_user then %>
               <a href="#">show profile</a>
             <% else %>
@@ -23,7 +80,8 @@
               {:action => "unfollow", :unfollow_user_name => @user.name, :unfollow_user_id => @user.id} %>
             <% end %>
             <% end %>
-
+          </div>
+        </div>
           </div>
           <div id="following"> <a href="#">Following</a> </div>
           <div id="follow_list">
@@ -34,16 +92,16 @@
           <% end %>
           <% end %>
           </div>
-        </div>
+          <% end %>
       </div>
       <div class="span9">
         <div class="div_tag">
           <ul class="tab clear">
-            <li class="none active"><a href="#main" data-toggle="tab">Main</a></li>
-            <li class="none"><a href="#edited_summary" data-toggle="tab">Edited Summary</a></li>
-            <li class="none"><a href="#favorite" data-toggle="tab">Favorite</a></li>
-            <li class="none"><a href="#read" data-toggle="tab">Read</a></li>
-            <li class="none"><a href="#reserved" data-toggle="tab">Reserved</a></li>
+            <li class="none active my_overflow"><a href="#main" data-toggle="tab">Main</a></li>
+            <li class="none my_overflow"><a href="#edited_summary" data-toggle="tab">Edited Summary</a></li>
+            <li class="none my_overflow"><a href="#favorite" data-toggle="tab">Favorite</a></li>
+            <li class="none my_overflow"><a href="#read" data-toggle="tab">Read</a></li>
+            <li class="none my_overflow"><a href="#reserved" data-toggle="tab">Reserved</a></li>
           </ul>
         </div>
         <div class="table">

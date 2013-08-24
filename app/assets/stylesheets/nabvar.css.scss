@@ -80,14 +80,6 @@ h2 {
     margin: 0px 10px 0px 0px;
   }
 
-  .divider-vertical {
-    height: 40px;
-    width: 1px;
-    margin: 0px 9px;
-    overflow: hidden;
-    background-color: #B3B3B3;
-    border-right: 1px solid #FCFCFC;
-  }
 
   .nav > li > a {
     float: none;
@@ -104,6 +96,15 @@ h2 {
     display: block;
     float: left;
   }
+}
+
+.divider-vertical {
+  height: 40px;
+  width: 1px;
+  margin: 0px 9px;
+  overflow: hidden;
+  background-color: #B3B3B3;
+  border-right: 1px solid #FCFCFC;
 }
 
 .nav {

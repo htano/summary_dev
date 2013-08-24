@@ -6,85 +6,151 @@
 }
 
 .span3 {
+  border: 2px solid #ddd;
+  padding: 5px;
+  height: 1000px;
+
+  float: left;
+  margin: 20px 0px 0px 10px;
   width: 270px;
-}
-
-[class*="span"] {
-  float: left;
-  margin-left: 30px;
-}
-
-#profile_info {
-  margin-top: 8px;
-}
-
-#user_photo {
-  float: left;
-  width: 64px;
-  height: 64px;
-  margin: 30px 0px 0px;
-  background-color: rgb(230, 230, 230);
-}
-
-#no_image {
-  color: white;
-  text-align: center;
-}
-
-#prof_name_detail {
-  float: left;
-  margin-top:15px;
-  padding: 0px 0px 0px 10px;
-  font-size: 16px;
   color: #a2a2a2;
 
-  img {
-    margin-top: 20px;
-    float: left;
+  // ----------------------
+  // user_profile
+  // ----------------------
+  #user_profile {
+    height: auto;
+
+    img {
+      width: 100px;
+      height: 100px;
+      float: left;
+      margin-right: 5px;
+    }
+
+    #prof_user_name {
+      width: 150px;
+
+      float: left;
+      p {
+        font-size: 16px;
+        font-weight: 550;
+        margin: 5px 0px 5px 0px;
+      }
+
+      a {
+        background-color: #a2a2a2;
+        color: white;
+        text-align: left;
+        &:hover {
+          background-color: #5B91FF
+        }
+      }
+
+      hr {
+        width: 100%;
+        &+a {
+          margin: 0px 0px 5px 0px;
+        }
+      }
+    }
+
+    #user_comment {
+      p {
+        margin: 0px 5px;
+        word-break: break-all;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+      }
+    }
   }
 
-  p {
-    float: left;
-    padding: 5px 0px 0px 5px;
+  hr {
+    width: 90%;
   }
 
-  #profile_info {
-    margin: 0px 0px 10px;
-    clear: left;
+  // ----------------------
+  // user_info_tab
+  // ----------------------
+  #user_info_tab {
+    height: 50px;
+    padding-left: 15px;
+    ul {
+      list-style: none;
+      margin: 0px;
+      li {
+        float: left;
+        margin: 0px;
+        text-align: center;
+      }
+
+      .prof_tab_elem {
+        width: 32%;
+        font-size: 15px;
+        line-height: 25px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+
+        a {
+          color: #a2a2a2;
+        }
+
+        &:hover {
+          a {
+            color: #5B91FF;
+          }
+        }
+
+      }
+
+      .active {
+        #info_tab_marker {
+          background-color: #5B91FF;
+
+          margin-right: auto;
+          margin-left: auto;
+          width: 80%;
+          height: 3px;
+        }
+      }
+
+      .divider-vertical {
+        height: 50px;
+      }
+    }
   }
 
-  a {
-    float: left;
-    padding: 1px 0px 0px 5px;
-    color: #a2a2a2;
-  }
-}
+  // ----------------------
+  // user_ifo
+  // ----------------------
+  #user_info {
+    div {
+      display: none;
+    }
 
-#following {
-  width: 212px;
-  clear: left;
-  text-align: center;
-  border-bottom: 0px;
-  margin-bottom: 2px;
-  margin-top: 20px;
-  padding: 3px 0px;
-  font-size: 20px;
-  border: 1p solid #e15e5e5;
-  height: 20px;
-  background-color: rgb(230, 230, 230);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  a {
-    color: white;
-  }
-}
+    .active {
+      display: block;
+    }
 
-#follow_list {
-  margin-top: 5px;
-  width: 220px;
+    #prof_tab_following {
+      margin-left: 10px;
+    }
+    #prof_tab_followers {
+      margin-left: 10px;
+    }
+  }
 }
 
 .span9 {
-  width: 870px;
+  float: right;
+}
+
+.my_overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
 }
 
 ul.tab {
@@ -101,6 +167,7 @@ ul.tab {
     border: 1px #ddd solid;
     border-bottom: 2px #ddd solid;
     width: 150px;
+    height: 38px;
     text-align: center;
 
     a {
