@@ -1,0 +1,4 @@
+<% follow = link_to 'follow', 
+              {:action => 'follow', :follow_user_id => @user_id, :remote => true}, 
+              {:id => 'follow_button', :class => 'button button-rounded button-flat-primary'} %>
+$('#follow_toggle').html("<%= raw(escape_javascript(follow))  %>")

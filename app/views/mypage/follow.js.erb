@@ -1,0 +1,4 @@
+<% unfollow = link_to 'unfollow', 
+              {:action => 'unfollow', :unfollow_user_id => @user_id, :remote => true}, 
+              {:id => 'unfollow_button', :class => 'button button-rounded button-flat-primary'} %>
+$('#follow_toggle').html("<%= raw(escape_javascript(unfollow))  %>")

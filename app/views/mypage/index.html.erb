@@ -5,7 +5,23 @@
           <%= image_tag(@user.prof_image, :size => "100x100") %>
           <div id="prof_user_name">
             <p><%= @user.name %></p>
-            <a href="#" id="add_submit" class="button button-rounded button-flat-primary">follow</a>
+            <% if @is_login_user then %>
+            <div></div>
+            <% else %>
+            <% unless @is_already_following then%>
+            <div id="follow_toggle">
+            <%= link_to "follow", 
+              {:action => "follow", :follow_user_id => @user.id,:remote => true}, 
+              {:id => "follow_button", :class => "button button-rounded button-flat-primary"} %>
+            </div>
+            <% else %>
+            <div id="follow_toggle">
+              <%= link_to "unfollow", 
+              {:action => "unfollow", :unfollow_user_id => @user.id, :remote => true}, 
+              {:id => "unfollow_button", :class => "button button-rounded button-flat-primary"} %>
+            </div>
+            <% end %>
+            <% end %>
             <hr/>
             <p>profile</p>
           </div>
@@ -42,7 +58,6 @@
           </ul>
         </div>
         <hr/>
-
         <div id="user_info">
           <div id="prof_tab_following" class="active">
             <% if @favorite_users != nil then %>
@@ -52,7 +67,6 @@
             <% end %>
             <% end %>
           </div>
-
           <div id="prof_tab_followers">
             <% if @followers != nil then %>
             <% @followers.each do |follower| %>
@@ -61,38 +75,9 @@
             <% end %>
             <% end %>
           </div>
-
           <div id="prof_tab_summary">
           </div>
         </div>
-
-
-
-        <% if false then %>
-            <% if @is_login_user then %>
-              <a href="#">show profile</a>
-            <% else %>
-            <% unless @is_already_following then%>
-              <%= link_to "follow", 
-              {:action => "follow", :follow_user_name => @user.name, :follow_user_id => @user.id} %>
-            <% else %>
-              <%= link_to "unfollow", 
-              {:action => "unfollow", :unfollow_user_name => @user.name, :unfollow_user_id => @user.id} %>
-            <% end %>
-            <% end %>
-          </div>
-        </div>
-          </div>
-          <div id="following"> <a href="#">Following</a> </div>
-          <div id="follow_list">
-          <% if @favorite_users != nil %>
-          <% @favorite_users.each do |favorite_user| %>
-          <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.name),
-          {:action => "index", :name => favorite_user.name} %>
-          <% end %>
-          <% end %>
-          </div>
-          <% end %>
       </div>
       <div class="span9">
         <div class="div_tag">
