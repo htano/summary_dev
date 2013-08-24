@@ -1,5 +1,6 @@
 <script>
 $(function(){
+    error_msg = '指定されたURLは存在しません。URLを確認して下さい。'
     $('#submit').click(function(){
       if($("#booked_url").val().length){
           $.ajax({
@@ -20,16 +21,16 @@ $(function(){
             				location.reload();
             			},
             			error: function(data) {
-            				alert('システム管理者に連絡して下さい！');
+            				alert(error_msg);
             			}
             		});
             	  }
               } else {
-              	alert('指定されたURLは存在しません。URLを確認して下さい。');
+              	alert(error_msg);
               }
             },
             error: function(data) {
-              alert('システム管理者に連絡して下さい！');
+              alert(error_msg);
             }
           });
       } else {

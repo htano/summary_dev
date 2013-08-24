@@ -1,6 +1,17 @@
 # encoding: utf-8
 
 class SummaryController < ApplicationController
+  def get_summary_num
+    @url = "#{params[:url]}"
+    article = Article.find_by_url(@url);
+    if article != nil then
+      summary_num = Summary.count(:all, :conditions => {:article_id => article.id})
+      render :text => summary_num;
+    else
+      render :text => 0;
+    end
+  end
+
   def edit
     if signed_in?
       article = Article.find_by id: params[:article_id]
