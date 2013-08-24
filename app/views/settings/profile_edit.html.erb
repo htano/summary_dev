@@ -8,6 +8,13 @@
 
       <dl>
         <dt>
+          <label>Your Name</label>
+        </dt>
+        <input type="text" name="user_full_name" value="<%= getLoginUser.full_name %>" style="width:97%;"/>
+      </dl>
+
+      <dl>
+        <dt>
           <label>Profile Image</label>
         </dt>
         <dd>
@@ -32,8 +39,37 @@
         </dd>
       </dl>
 
+      <dl>
+        <dt>
+          <label>Self Introduction</label>
+        </dt>
+        <textarea name="user_comment" style="width:97%; height: 100px;"><%= getLoginUser.comment %></textarea>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Your Site</label>
+        </dt>
+        <input type="text" name="user_site_url" value="<%= getLoginUser.site_url %>" style="width:97%;"/>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Public Setting</label>
+        </dt>
+        <dd>
+        <% if getLoginUser.public_flg %>
+          <input type="radio" name="user_public_flg" value="FALSE" >Private　
+          <input type="radio" name="user_public_flg" value="TRUE" checked>Public
+        <% else %>
+          <input type="radio" name="user_public_flg" value="FALSE" checked>Private　
+          <input type="radio" name="user_public_flg" value="TRUE" >Public
+        <% end %>
+        </dd>
+      </dl>
+
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <input type="submit" class="profile_btn" value="send"></input>
+      <input type="submit" class="profile_btn" value="save"></input>
     </div>
     </form>
   </div>

@@ -15,26 +15,65 @@ class SettingsController < ApplicationController
 
   def profile_edit_complete
     @uploaded_image_file = params[:profile_image]
+    @user_full_name = params[:user_full_name]
+    @user_comment = params[:user_comment]
+    @user_site_url = params[:user_site_url]
+    @user_public_flg = (params[:user_public_flg] == "TRUE")
+
     @redirect_url = url_for :action => 'profile'
-    @session_error = false
+    @edit_flg = false
     @edit_error = false
-    if getLoginUser
+    @error_message = ""
+
+    @login_user = getLoginUser
+    if @login_user
+
+      if @user_full_name && @user_full_name != @login_user.full_name
+        logger.debug @user_full_name
+        @login_user.full_name = @user_full_name
+        @edit_flg = true
+      end
+
+      if @user_comment && @user_comment != @login_user.comment
+        @login_user.comment = @user_comment
+        @edit_flg = true
+      end
+
+      if @user_site_url && @user_site_url != @login_user.site_url
+        @login_user.site_url = @user_site_url
+        @edit_flg = true
+      end
+      
+      if @user_public_flg != @login_user.public_flg
+        @login_user.public_flg = @user_public_flg
+        @edit_flg = true
+      end
+
       if !@edit_error && @uploaded_image_file != nil
         logger.debug("image file size: " + @uploaded_image_file.size.to_s + " Byte")
         logger.debug("image content type: " + @uploaded_image_file.content_type + "")
         if @uploaded_image_file.size < 1024 * 1024 && @uploaded_image_file.content_type =~ /^image/
-          @save_file_name = './app/assets/images/' + 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
-          @for_db_image_path = 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
+          @save_file_name = './app/assets/images/' + 'account_pictures/' + @login_user.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
+          @for_db_image_path = 'account_pictures/' + @login_user.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
           File.open(@save_file_name, 'wb') do |of|
             of.write(@uploaded_image_file.read)
           end
-          getLoginUser.updateImagePath(@for_db_image_path)
+          @login_user.prof_image = @for_db_image_path
+          @edit_flg = true
         else
           @edit_error = true
           flash[:error] = "Input image-file is not image file or exceeds 1024KB."
         end
       end
+
+      if @edit_flg
+        if !@login_user.save
+          @edit_error = true
+        end
+      end
       if @edit_error
+        #TODO ModelでValidationをすれば、errorsにエラーメッセージが入るはずなので、flashとかに入れる
+        logger.debug @login_user.errors.to_yaml
         redirect_to :action => 'profile_edit'
       else
         redirect_to :action => 'profile'

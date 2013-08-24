@@ -11,6 +11,10 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :mail_addr_status, {:default => nil}
       t.string :token_uuid, {:default => nil}
       t.timestamp :token_expire, {:default => nil} 
+      t.string :full_name, {:default => ''}
+      t.text :comment, {:default => ''}
+      t.string :site_url, {:default => ''}
+      t.boolean :public_flg, {:default => false}
 
       t.timestamps
     end

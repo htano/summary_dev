@@ -9,9 +9,7 @@
         <dt>
           <label>Your Name</label>
         </dt>
-        <dd>
-          　
-        </dd>
+        <input type="text" name="user_full_name" value="<%= getLoginUser.full_name %>" style="width:97%;" disabled="disabled"/>
       </dl>
 
       <dl>
@@ -31,20 +29,28 @@
         <dt>
           <label>Self Introduction</label>
         </dt>
-        <dd>
-        　<br>
-        　<br>
-        　<br>
-        　<br>
-        </dd>
+        <textarea name="user_comment" style="width:97%; height: 100px;" disabled="disabled"><%= getLoginUser.comment %></textarea>
       </dl>
 
       <dl>
         <dt>
           <label>Your Site</label>
         </dt>
+        <input type="text" name="user_site_url" value="<%= getLoginUser.site_url %>" style="width:97%;" disabled="disabled"/>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Public Setting</label>
+        </dt>
         <dd>
-          　
+        <% if getLoginUser.public_flg %>
+          <input type="radio" name="user_public_flg" value="FALSE" disabled="disabled" >Private　
+          <input type="radio" name="user_public_flg" value="TRUE" disabled="disabled" checked>Public
+        <% else %>
+          <input type="radio" name="user_public_flg" value="FALSE" disabled="disabled" checked>Private　
+          <input type="radio" name="user_public_flg" value="TRUE" disabled="disabled" >Public
+        <% end %>
         </dd>
       </dl>
 

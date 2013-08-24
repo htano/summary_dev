@@ -62,6 +62,10 @@ ActiveRecord::Schema.define(version: 20130811052551) do
     t.integer  "mail_addr_status"
     t.string   "token_uuid"
     t.datetime "token_expire"
+    t.string   "full_name",          default: ""
+    t.text     "comment",            default: ""
+    t.string   "site_url",           default: ""
+    t.boolean  "public_flg",         default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
