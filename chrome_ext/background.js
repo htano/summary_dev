@@ -47,5 +47,18 @@ chrome.windows.onFocusChanged.addListener(function(windowId) {
   chrome.tabs.getSelected(windowId, function(c_tab) {
     current_tab.title = c_tab.title;
     current_tab.url = c_tab.url;
+    //TODO いちいち取得するのはいけてない
+    $.ajax({
+    	url: 'http://localhost:3000/summary/get_summary_num',
+        type: 'GET',
+        data: 'url=' + tab.url,
+        dataType: 'text',
+        success: function(data) {
+          chrome.browserAction.setBadgeText({text:String(data)});
+        },
+        error: function(data) {
+          alert("失敗");
+        }
+    });
   });
 });
