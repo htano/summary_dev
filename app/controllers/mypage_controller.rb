@@ -129,6 +129,9 @@ class MypageController < ApplicationController
     end
 
     @user_id = params[:follow_user_id]
+    # for renewing followers number on profile view
+    @follower_num = "followers" + "<br>" + 
+                    FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]}).to_s
 
   end
 
@@ -141,6 +144,8 @@ class MypageController < ApplicationController
     end
 
     @user_id = params[:unfollow_user_id]
+    @follower_num = "followers" + "<br>" + 
+                    FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:unfollow_user_id]}).to_s
 
   end
 
