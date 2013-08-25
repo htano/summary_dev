@@ -71,7 +71,8 @@
             <% if @followers != nil then %>
             <% @followers.each do |follower| %>
             <%= link_to image_tag(follower.prof_image, :size => "32x32", :title => follower.name),
-            {:action => "index", :name => follower.name} %>
+            {:action => "index", :name => follower.name},
+            {:id => "follower_id_"+follower.id.to_s } %>
             <% end %>
             <% end %>
           </div>

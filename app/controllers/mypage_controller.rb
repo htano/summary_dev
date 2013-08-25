@@ -51,7 +51,6 @@ class MypageController < ApplicationController
       @followers.push(user)
     end
 
-
     # main tab & read tab
     @articles = []
     @read_articles = []
@@ -121,11 +120,11 @@ class MypageController < ApplicationController
 
   def follow
     logger.debug("follow")
-    current_user = getLoginUser
+    @current_user = getLoginUser
 
-    if current_user then
+    if @current_user then
       # TODO : error handle
-      FavoriteUser.create(:user_id => current_user.id, :favorite_user_id => params[:follow_user_id])
+      FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
     end
 
     @user_id = params[:follow_user_id]
@@ -137,10 +136,10 @@ class MypageController < ApplicationController
 
   def unfollow
     logger.debug("unfollow")
-    current_user = getLoginUser
+    @current_user = getLoginUser
 
-    if current_user && current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id]) then
-      current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
+    if @current_user && @current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id]) then
+      @current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
     end
 
     @user_id = params[:unfollow_user_id]
@@ -165,4 +164,5 @@ private
     end
     return is_already_following
   end
+
 end
