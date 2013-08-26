@@ -7,6 +7,14 @@ require 'kconv'
 
 class WebpageController < ApplicationController
 
+  def get_current_user_name_for_chrome_extension
+    if signed_in?
+      render :text => get_current_user_name;
+    else
+      render :text => "";
+    end
+  end
+
   def get_title
     if signed_in?
       @booked_url = "#{params[:booked_url]}";

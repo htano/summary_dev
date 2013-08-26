@@ -5,7 +5,6 @@ chrome.tabs.onSelectionChanged.addListener(function(tabid){
   chrome.tabs.get(tabid, function(tab){
     current_tab.title = tab.title;
     current_tab.url = tab.url;
-    //TODO いちいち取得するのはいけてない
     $.ajax({
       url: 'http://localhost:3000/summary/get_summary_num',
       type: 'GET',
@@ -26,7 +25,6 @@ chrome.tabs.onUpdated.addListener( function(tabId, changeInfo, tab) {
     if( c_tab.id == tabId && changeInfo.status == "complete" ) {
       current_tab.title = tab.title;
       current_tab.url = tab.url;
-      //TODO いちいち取得するのはいけてない
       $.ajax({
         url: 'http://localhost:3000/summary/get_summary_num',
         type: 'GET',
@@ -47,7 +45,6 @@ chrome.windows.onFocusChanged.addListener(function(windowId) {
   chrome.tabs.getSelected(windowId, function(c_tab) {
     current_tab.title = c_tab.title;
     current_tab.url = c_tab.url;
-    //TODO いちいち取得するのはいけてない
     $.ajax({
     	url: 'http://localhost:3000/summary/get_summary_num',
         type: 'GET',

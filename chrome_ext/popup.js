@@ -4,18 +4,24 @@ $(document).ready( function(){
   console.log( $("p#p_title").text() );
   $("p#p_title").text(bg.current_tab.title);
   $("p#p_url").text(bg.current_tab.url);
-/*  alert('カマン')
   $.ajax({
-      url: 'http://localhost:3000/webpage/signed_in?',
+      url: 'http://localhost:3000/webpage/get_current_user_name_for_chrome_extension',
       type: 'GET',
+      dataType: 'text',
       success: function(data) {
-        chrome.browserAction.setBadgeText({text:String(data)});
+        if(data){
+          $("p#p_user").text(data);
+        }else{
+          $('.popup_btn').attr("disabled", true);
+          $('.popup_btn').attr("class", "btn_disabled");
+          $("#a_link").attr("style", "visibility:visible;");
+        }
       },
       error: function(data) {
         alert("失敗");
       }
   });
-*/
+
   $('.popup_btn').click(function(){
     $("img.a_load").attr("style", "visibility:visible;");
     $.ajax({
@@ -36,3 +42,11 @@ $(document).ready( function(){
     });
   });
 });
+
+function setButtonforNotLogin(){
+
+}
+
+function setButtonforLogin(){
+
+}
