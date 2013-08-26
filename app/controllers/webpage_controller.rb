@@ -7,6 +7,19 @@ require 'kconv'
 
 class WebpageController < ApplicationController
 
+  def get_add_history
+    user_id = getLoginUser.id;
+    @booked_url = "#{params[:booked_url]}";
+    article = Article.find_by_url(@booked_url);
+    if article != nil then
+      user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
+      if user_article != nil then 
+      #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
+      render :text => "登録済みです。"
+      end
+    end
+  end
+
   def get_current_user_name_for_chrome_extension
     if signed_in?
       render :text => get_current_user_name;

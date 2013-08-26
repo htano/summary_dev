@@ -7,6 +7,7 @@ SummaryDev::Application.routes.draw do
 
   get "mypage/destroy"
 
+  get 'webpage/get_add_history' => 'webpage#get_add_history'
   get 'webpage/get_current_user_name_for_chrome_extension' => 'webpage#get_current_user_name_for_chrome_extension'
   post 'webpage/add' => 'webpage#add'
   get 'webpage/add' => 'webpage#add'

@@ -16,11 +16,23 @@ $(document).ready( function(){
           $('.popup_btn').attr("class", "btn_disabled");
           $("#a_link").attr("style", "visibility:visible;");
         }
-      },
-      error: function(data) {
-        alert("失敗");
       }
   });
+
+  $.ajax({
+      url: 'http://localhost:3000/webpage/get_add_history',
+      type: 'GET',
+      data: 'booked_url=' + escape(bg.current_tab.url),
+      dataType: 'text',
+      success: function(data) {
+        if(data){
+          $('.popup_btn').text("登録済みです。");
+          $('.popup_btn').attr("disabled", true);
+          $('.popup_btn').attr("class", "btn_disabled");
+        }
+      }
+  });
+
 
   $('.popup_btn').click(function(){
     $("img.a_load").attr("style", "visibility:visible;");
@@ -42,11 +54,3 @@ $(document).ready( function(){
     });
   });
 });
-
-function setButtonforNotLogin(){
-
-}
-
-function setButtonforLogin(){
-
-}
