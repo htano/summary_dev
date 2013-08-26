@@ -7,7 +7,7 @@ require 'kconv'
 
 class WebpageController < ApplicationController
 
-  def get_add_history
+  def get_add_history_for_chrome_extension
     user_id = getLoginUser.id;
     @booked_url = "#{params[:booked_url]}";
     article = Article.find_by_url(@booked_url);

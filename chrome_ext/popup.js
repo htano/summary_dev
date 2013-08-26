@@ -12,6 +12,7 @@ $(document).ready( function(){
         if(data){
           $("p#p_user").text(data);
         }else{
+          $("p#p_user").text("");
           $('.popup_btn').attr("disabled", true);
           $('.popup_btn').attr("class", "btn_disabled");
           $("#a_link").attr("style", "visibility:visible;");
@@ -20,7 +21,7 @@ $(document).ready( function(){
   });
 
   $.ajax({
-      url: 'http://localhost:3000/webpage/get_add_history',
+      url: 'http://localhost:3000/webpage/get_add_history_for_chrome_extension',
       type: 'GET',
       data: 'booked_url=' + escape(bg.current_tab.url),
       dataType: 'text',
