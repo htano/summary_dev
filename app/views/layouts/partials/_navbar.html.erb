@@ -78,7 +78,7 @@ $(function(){
                   </li>
                 </ul>
               <% else %>
-                <% if request.url == url_for(:controller => 'consumer', :action => 'index', :only_path => false) %>
+                <% if request.url =~ %r!^#{url_for(:controller => 'consumer', :action => 'index', :only_path => false)}! %>
                   <a href="<%= url_for(:controller => 'consumer', :action => 'index')%>">LogIn</a>
                 <% else %>
                   <a href="<%= url_for(:controller => 'consumer', :action => 'index', :fromUrl => request.url)%>">LogIn</a>
