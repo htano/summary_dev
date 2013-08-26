@@ -22,7 +22,6 @@ class ConsumerController < ApplicationController
       else
       end
       if env['omniauth.origin']
-        flash[:alert] = "FromUrl is set: " + env['omniauth.origin']
         redirect_to env['omniauth.origin']
       else
         redirect_to :controller => 'mypage', :action => 'index'
