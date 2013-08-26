@@ -23,6 +23,28 @@ input.openid {
   padding-left: 18px;
 }
 
+.login_buttons_container {
+  background-color: #EEEEEE;
+  padding: 2em;
+}
+
+ul.login_buttons {
+}
+
+ul.login_buttons li {
+  margin: 1em;
+  list-style-type: none;
+}
+
+.login_buttons_contents {
+  width: 715px;
+  background: #efefef;
+  padding: 3px;
+  border-radius: 3px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .setting_container {
   width: 980px;
   margin-left: auto;
@@ -84,7 +106,7 @@ input.openid {
   margin: 0 0 15px 0;
 }
 
-.setting_contents > h3, .setting_navi > h3 {
+.setting_contents > h3, .setting_navi > h3, .login_buttons_contents > h3 {
   background-color: #e0e0e0;
   background-image: linear-gradient(#fafafa, #e0e0e0);
   background-repeat: repeat-x;

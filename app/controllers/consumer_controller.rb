@@ -146,7 +146,6 @@ class ConsumerController < ApplicationController
         else
         end
         if params[:fromUrl]
-          flash[:alert] = "FromUrl is set: " + params[:fromUrl]
           redirect_to params[:fromUrl]
         else
           redirect_to :controller => 'mypage', :action => 'index'
@@ -183,16 +182,21 @@ class ConsumerController < ApplicationController
   def signup_complete
     if session[:openid_url]
       @creating_user_id = "#{params[:creating_user_id]}";
+      @edit_profile_flg = (params[:edit_profile_flg] == "1")
       @error_message = User.regist(@creating_user_id, session[:openid_url])
       if !@error_message
         if params[:image]
           getLoginUser.updateImagePath(params[:image])
         end
         flash[:success] = "Hello " + @creating_user_id + ". SignUp was successfully completed."
-        if params[:fromUrl]
-          redirect_to params[:fromUrl]
+        if @edit_profile_flg
+          redirect_to :controller => 'settings', :action => 'profile_edit'
         else
-          redirect_to :controller => 'mypage',:action => 'index'
+          if params[:fromUrl]
+            redirect_to params[:fromUrl]
+          else
+            redirect_to :controller => 'mypage',:action => 'index'
+          end
         end
       else
         flash[:error] = @error_message
