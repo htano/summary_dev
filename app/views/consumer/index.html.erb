@@ -29,7 +29,7 @@
               <% if params[:fromUrl] %>
               <a class="zocial twitter" href="<%= url_for '/auth/twitter?origin=' + params[:fromUrl] %>" style="width:140px;">
               <% else %>
-              <a class="zocial twitter" href="<%= url_for '/auth/twitter'%>" style="width:140px;">
+              <a class="zocial twitter" href="<%= url_for '/auth/twitter?origin='%>" style="width:140px;">
               <% end %>
                 Twitter
               </a>
@@ -38,7 +38,7 @@
               <% if params[:fromUrl] %>
               <a class='zocial facebook' href="<%= url_for '/auth/facebook?origin=' + params[:fromUrl] %>" style="width:140px;">
               <% else %>
-              <a class='zocial facebook' href="<%= url_for '/auth/facebook'%>" style="width:140px;">
+              <a class='zocial facebook' href="<%= url_for '/auth/facebook?origin='%>" style="width:140px;">
               <% end %>
                 Facebook
               </a>
@@ -47,7 +47,7 @@
               <% if params[:fromUrl] %>
               <a class="zocial github" href="<%= url_for '/auth/github?origin=' + params[:fromUrl] %>" style="width:140px;">
               <% else %>
-              <a class="zocial github" href="<%= url_for '/auth/github'%>" style="width:140px;">
+              <a class="zocial github" href="<%= url_for '/auth/github?origin='%>" style="width:140px;">
               <% end %>
                 Github
               </a>

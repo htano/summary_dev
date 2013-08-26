@@ -10,7 +10,6 @@ class ConsumerController < ApplicationController
 
   def oauth_complete
     logger.debug env['omniauth.auth'].to_yaml
-    logger.debug env['omniauth.origin']
     @oauth_url = "oauth://" + env['omniauth.auth']['provider'] + "/" + env['omniauth.auth']['uid']
     @image_url = env['omniauth.auth'].info.image
     session[:openid_url] = @oauth_url
@@ -36,6 +35,9 @@ class ConsumerController < ApplicationController
   end
 
   def index
+    if signed_in?
+      redirect_to :controller => 'mypage', :action => 'index'
+    end
     # render an openid form
   end
 
@@ -199,7 +201,7 @@ class ConsumerController < ApplicationController
         end
       else
         flash[:error] = @error_message
-        redirect_to :action => 'signup'
+        redirect_to :back
       end
     else
       flash[:error] = "Error: To signup, you have to login by openid."

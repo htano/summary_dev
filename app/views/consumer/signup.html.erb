@@ -23,9 +23,15 @@
 
       <dl>
         <dt>
-        <label>UserID</label>
+        <label>UserID(*)</label>
         </dt>
         <input type="text" name="creating_user_id" value="" style="width:97%;"/>
+      </dl>
+
+      <dl>
+        <dt>
+          <input type="checkbox" name="edit_profile_flg" value="1" />Edit User Profile and/or Mail Address after the SignUp
+        </dt>
       </dl>
 
       <% if params[:fromUrl] %>
@@ -34,7 +40,6 @@
       <% if params[:image] %>
         <input type="hidden" name="image" value="<%= params[:image] %>">
       <% end %>
-      <input type="checkbox" name="edit_profile_flg" value="1" />Edit User Profile and/or Mail Address after the SignUp</br></br>
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
       <input type="submit" class="profile_btn" value="SignUp"></input>
 
