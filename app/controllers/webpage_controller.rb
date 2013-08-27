@@ -90,7 +90,7 @@ class WebpageController < ApplicationController
             #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
             user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
             if user_article.save
-              render :text => "登録に完了しました。"
+              render :text => "登録が完了しました。"
             end
           end
         else
@@ -100,7 +100,7 @@ class WebpageController < ApplicationController
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
-            render :text => "登録に完了しました。"
+            render :text => "登録が完了しました。"
           end
         end
       end

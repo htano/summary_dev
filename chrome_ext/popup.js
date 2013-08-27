@@ -4,7 +4,7 @@ $(document).ready( function(){
   console.log( $("p#p_title").text() );
   $("p#p_title").text(bg.current_tab.title);
   $("p#p_url").text(bg.current_tab.url);
-  
+
   $.ajax({
       url: 'http://localhost:3000/webpage/get_current_user_name_for_chrome_extension',
       type: 'GET',
@@ -24,6 +24,7 @@ $(document).ready( function(){
       dataType: 'text',
       success: function(data) {
         if(data){
+          setCommentAlreadyBooked();
           setBtnDisabled();
           setSummaryEditLink(data);
         }
@@ -40,7 +41,7 @@ $(document).ready( function(){
       dataType: 'text',
       success: function(data) {
         $("img.a_load").attr("style", "visibility:hidden;");
-        setBookedComment();
+        setCommentComplete();
         setBtnDisabled();
         setSummaryEditLink(data);
       }
@@ -48,9 +49,16 @@ $(document).ready( function(){
   });
 });
 
+
+//既に登録されている旨のコメントを設定する
+function setCommentAlreadyBooked(){
+  $('p#p_comment').text("登録済みです。");
+  $('p#p_comment').attr("style", "visibility:visible;");
+}
+
 //登録後のコメントを設定する
-function setBookedComment(){
-  $('p#p_comment').text("booked!");
+function setCommentComplete(){
+  $('p#p_comment').text("登録が完了しました。");
   $('p#p_comment').attr("style", "visibility:visible;");
 }
 
