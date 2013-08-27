@@ -12,9 +12,6 @@ chrome.tabs.onSelectionChanged.addListener(function(tabid){
       dataType: 'text',
       success: function(data) {
         chrome.browserAction.setBadgeText({text:String(data), tabId:tab.id});
-      },
-      error: function(data) {
-        alert("失敗");
       }
     });
   });
@@ -32,9 +29,6 @@ chrome.tabs.onUpdated.addListener( function(tabId, changeInfo, tab) {
         dataType: 'text',
         success: function(data) {
           chrome.browserAction.setBadgeText({text:String(data), tabId:tab.id});
-        },
-        error: function(data) {
-          alert("失敗");
         }
       });
     }
@@ -52,9 +46,6 @@ chrome.windows.onFocusChanged.addListener(function(windowId) {
         dataType: 'text',
         success: function(data) {
           chrome.browserAction.setBadgeText({text:String(data), tabId:c_tab.id});
-        },
-        error: function(data) {
-          alert("失敗");
         }
     });
   });
