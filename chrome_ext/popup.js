@@ -20,7 +20,7 @@ $(document).ready( function(){
   $.ajax({
       url: 'http://localhost:3000/webpage/get_add_history_for_chrome_extension',
       type: 'GET',
-      data: 'booked_url=' + escape(bg.current_tab.url),
+      data: 'url=' + escape(bg.current_tab.url),
       dataType: 'text',
       success: function(data) {
         if(data){
@@ -37,7 +37,7 @@ $(document).ready( function(){
     $.ajax({
       url: 'http://localhost:3000/webpage/add_for_chrome_extension',
       type: 'GET',
-      data: 'booked_url=' + escape(bg.current_tab.url),
+      data: 'url=' + escape(bg.current_tab.url),
       dataType: 'text',
       success: function(data) {
         $("img.a_load").attr("style", "visibility:hidden;");

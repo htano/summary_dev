@@ -9,8 +9,8 @@ class WebpageController < ApplicationController
 
   def get_add_history_for_chrome_extension
     user_id = getLoginUser.id;
-    @booked_url = "#{params[:booked_url]}";
-    article = Article.find_by_url(@booked_url);
+    @url = "#{params[:url]}";
+    article = Article.find_by_url(@url);
     if article != nil then
       user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
       if user_article != nil then 
@@ -30,12 +30,12 @@ class WebpageController < ApplicationController
 
   def add_for_chrome_extension
       user_id = getLoginUser.id;
-      @booked_url = "#{params[:booked_url]}";
-      title = returnTitle(@booked_url);
+      @url = "#{params[:url]}";
+      title = returnTitle(@url);
       if title == nil
         return
       end
-      article = Article.find_by_url(@booked_url);
+      article = Article.find_by_url(@url);
       if article != nil then
         user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
         if user_article.save
@@ -44,7 +44,7 @@ class WebpageController < ApplicationController
       else
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:booked_url],:title => title, :category_id =>"001");
+        article = Article.new(:url => params[:url],:title => title, :category_id =>"001");
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
@@ -56,8 +56,8 @@ class WebpageController < ApplicationController
 
   def get_title
     if signed_in?
-      @booked_url = "#{params[:booked_url]}";
-      title = returnTitle(@booked_url);
+      @url = "#{params[:url]}";
+      title = returnTitle(@url);
       if title == nil
         render :text => "";
         return
@@ -73,13 +73,13 @@ class WebpageController < ApplicationController
   def add
   	if signed_in?
       user_id = getLoginUser.id;
-      @booked_url = "#{params[:booked_url]}";
-      title = returnTitle(@booked_url);
+      @url = "#{params[:url]}";
+      title = returnTitle(@url);
       if title == nil
         render :text => "指定されたURLは存在しません。URLを確認して下さい。"
         return
       end
-      article = Article.find_by_url(@booked_url);
+      article = Article.find_by_url(@url);
       if article != nil then
         @article_id = article.id;
         user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
@@ -96,7 +96,7 @@ class WebpageController < ApplicationController
         else
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:booked_url],:title => title, :category_id =>"001");
+        article = Article.new(:url => params[:url],:title => title, :category_id =>"001");
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
@@ -110,10 +110,10 @@ class WebpageController < ApplicationController
   end
 
   #指定されたurlのタイトルを返却するメソッド
-  def returnTitle(booked_url)
+  def returnTitle(url)
     begin
       charset = nil;
-      html = open(booked_url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
+      html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
         charset = f.charset;
         f.read;
       end
