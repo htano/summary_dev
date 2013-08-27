@@ -7,15 +7,13 @@ SummaryDev::Application.routes.draw do
 
   get "mypage/destroy"
 
+  #for chrome extension
   get 'webpage/get_add_history_for_chrome_extension' => 'webpage#get_add_history_for_chrome_extension'
   get 'webpage/get_current_user_name_for_chrome_extension' => 'webpage#get_current_user_name_for_chrome_extension'
+  get 'webpage/add_for_chrome_extension' => 'webpage#add_for_chrome_extension'
+  #for webpage
   post 'webpage/add' => 'webpage#add'
-  get 'webpage/add' => 'webpage#add'
   post 'webpage/get_title' => 'webpage#get_title'
-  #get 'webpage/add_confirm' => 'webpage#add_confirm'
-  #get 'webpage/add_complete' => 'webpage#add_complete'
-  #get 'webpage/add_complete'
-  #get 'webpage/webpage/invalid' => 'webpage#invalid'
 
   get 'summary/get_summary_num' => 'summary#get_summary_num'
   get 'summary/:article_id/edit' => 'summary#edit'

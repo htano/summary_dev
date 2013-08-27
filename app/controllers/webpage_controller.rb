@@ -14,8 +14,8 @@ class WebpageController < ApplicationController
     if article != nil then
       user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
       if user_article != nil then 
-      #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
-      render :text => "登録済みです。"
+      #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、article.idを返却する
+      render :text => article.id
       end
     end
   end
@@ -26,6 +26,32 @@ class WebpageController < ApplicationController
     else
       render :text => "";
     end
+  end
+
+  def add_for_chrome_extension
+      user_id = getLoginUser.id;
+      @booked_url = "#{params[:booked_url]}";
+      title = returnTitle(@booked_url);
+      if title == nil
+        return
+      end
+      article = Article.find_by_url(@booked_url);
+      if article != nil then
+        user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
+        if user_article.save
+          render :text => article.id
+        end
+      else
+        #同じURLの情報がない場合、a010とr010両方にinsertする
+        #カテゴリはペンディング事項
+        article = Article.new(:url => params[:booked_url],:title => title, :category_id =>"001");
+        if article.save
+          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
+          if user_article.save
+            render :text => article.id
+          end
+        end
+      end
   end
 
   def get_title

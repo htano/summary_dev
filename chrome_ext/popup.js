@@ -4,18 +4,15 @@ $(document).ready( function(){
   console.log( $("p#p_title").text() );
   $("p#p_title").text(bg.current_tab.title);
   $("p#p_url").text(bg.current_tab.url);
+  
   $.ajax({
       url: 'http://localhost:3000/webpage/get_current_user_name_for_chrome_extension',
       type: 'GET',
       dataType: 'text',
       success: function(data) {
-        if(data){
-          $("p#p_user").text(data);
-        }else{
-          $("p#p_user").text("");
-          $('.popup_btn').attr("disabled", true);
-          $('.popup_btn').attr("class", "btn_disabled");
-          $("#a_link").attr("style", "visibility:visible;");
+        if(!data){
+          $("#a_link_to_login").attr("style", "visibility:visible;");
+          setBtnDisabled();
         }
       }
   });
@@ -27,9 +24,8 @@ $(document).ready( function(){
       dataType: 'text',
       success: function(data) {
         if(data){
-          $('.popup_btn').text("登録済みです。");
-          $('.popup_btn').attr("disabled", true);
-          $('.popup_btn').attr("class", "btn_disabled");
+          setBtnDisabled();
+          setSummaryEditLink(data);
         }
       }
   });
@@ -38,20 +34,34 @@ $(document).ready( function(){
   $('.popup_btn').click(function(){
     $("img.a_load").attr("style", "visibility:visible;");
     $.ajax({
-      url: 'http://localhost:3000/webpage/add',
+      url: 'http://localhost:3000/webpage/add_for_chrome_extension',
       type: 'GET',
       data: 'booked_url=' + escape(bg.current_tab.url),
       dataType: 'text',
       success: function(data) {
         $("img.a_load").attr("style", "visibility:hidden;");
-        $("p#p_comment").attr("style", "visibility:visible;");
-        $("p#p_comment").text(data);
-      },
-      error: function(data) {
-        $("img.a_load").attr("style", "visibility:hidden;");
-        $("p#p_comment").attr("style", "visibility:visible;");
-        $("p#p_comment").text("システム管理者に連絡して下さい！");
+        setBookedComment();
+        setBtnDisabled();
+        setSummaryEditLink(data);
       }
     });
   });
 });
+
+//登録後のコメントを設定する
+function setBookedComment(){
+  $('p#p_comment').text("booked!");
+  $('p#p_comment').attr("style", "visibility:visible;");
+}
+
+//要約編集画面へのリンクを設定する
+function setSummaryEditLink(data){
+  $("#a_link_to_summary_edit").attr("style", "visibility:visible;");
+  $("#a_link_to_summary_edit").attr("href", "http://localhost:3000/summary/"+data+"/edit");
+}
+
+//登録ボタンを非活性にする。ついでにクラスも変更する。
+function setBtnDisabled(){
+  $('.popup_btn').attr("disabled", true);
+  $('.popup_btn').attr("class", "btn_disabled");
+}
