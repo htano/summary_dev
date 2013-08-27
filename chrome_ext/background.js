@@ -11,7 +11,7 @@ chrome.tabs.onSelectionChanged.addListener(function(tabid){
       data: 'url=' + tab.url,
       dataType: 'text',
       success: function(data) {
-        chrome.browserAction.setBadgeText({text:String(data)});
+        chrome.browserAction.setBadgeText({text:String(data), tabId:tab.id});
       },
       error: function(data) {
         alert("失敗");
@@ -31,7 +31,7 @@ chrome.tabs.onUpdated.addListener( function(tabId, changeInfo, tab) {
         data: 'url=' + tab.url,
         dataType: 'text',
         success: function(data) {
-          chrome.browserAction.setBadgeText({text:String(data)});
+          chrome.browserAction.setBadgeText({text:String(data), tabId:tab.id});
         },
         error: function(data) {
           alert("失敗");
@@ -48,10 +48,10 @@ chrome.windows.onFocusChanged.addListener(function(windowId) {
     $.ajax({
     	url: 'http://localhost:3000/summary/get_summary_num',
         type: 'GET',
-        data: 'url=' + tab.url,
+        data: 'url=' + c_tab.url,
         dataType: 'text',
         success: function(data) {
-          chrome.browserAction.setBadgeText({text:String(data)});
+          chrome.browserAction.setBadgeText({text:String(data), tabId:c_tab.id});
         },
         error: function(data) {
           alert("失敗");
