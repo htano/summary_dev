@@ -1,7 +1,9 @@
 # encoding: utf-8
 
 class SummaryController < ApplicationController
-  def get_summary_num
+
+  #TODO 画面からURL直打ちの回避
+  def get_summary_num_for_chrome_extension
     @url = "#{params[:url]}"
     article = Article.find_by_url(@url);
     if article != nil then

@@ -15,7 +15,9 @@ SummaryDev::Application.routes.draw do
   post 'webpage/add' => 'webpage#add'
   post 'webpage/get_title' => 'webpage#get_title'
 
-  get 'summary/get_summary_num' => 'summary#get_summary_num'
+  #for chrome extension
+  get 'summary/get_summary_num_for_chrome_extension' => 'summary#get_summary_num_for_chrome_extension'
+  #for webpage
   get 'summary/:article_id/edit' => 'summary#edit'
   post 'summary/:article_id/edit_confirm' => 'summary#edit_confirm'
   post 'summary/:article_id/edit_complete' => 'summary#edit_complete'
