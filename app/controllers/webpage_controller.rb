@@ -7,6 +7,8 @@ require 'kconv'
 
 class WebpageController < ApplicationController
 
+  #TODO ログインしてないユーザーの場合
+  #TODO 画面からURL直打ちの回避
   def get_add_history_for_chrome_extension
     user_id = getLoginUser.id;
     @url = "#{params[:url]}";
@@ -14,12 +16,13 @@ class WebpageController < ApplicationController
     if article != nil then
       user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
       if user_article != nil then 
-      #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、article.idを返却する
-      render :text => article.id
+        #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、article.idを返却する
+        render :text => article.id
       end
     end
   end
 
+  #TODO 画面からURL直打ちの回避
   def get_current_user_name_for_chrome_extension
     if signed_in?
       render :text => get_current_user_name;
@@ -28,6 +31,9 @@ class WebpageController < ApplicationController
     end
   end
 
+  #TODO ログインしてないユーザーの場合
+  #TODO 画面からURL直打ちの回避
+  #TODO URLが不正な場合
   def add_for_chrome_extension
       user_id = getLoginUser.id;
       @url = "#{params[:url]}";
