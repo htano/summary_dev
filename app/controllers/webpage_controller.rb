@@ -35,13 +35,13 @@ class WebpageController < ApplicationController
   end
 
   #TODO 画面からURL直打ちの回避
-  #TODO URLが不正な場合
   def add_for_chrome_extension
     if signed_in?
       user_id = getLoginUser.id;
       @url = "#{params[:url]}";
       title = returnTitle(@url);
       if title == nil
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
         return
       end
       article = Article.find_by_url(@url);
@@ -93,7 +93,6 @@ class WebpageController < ApplicationController
       end
       article = Article.find_by_url(@url);
       if article != nil then
-        @article_id = article.id;
         user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
           if user_article != nil then 
             #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
