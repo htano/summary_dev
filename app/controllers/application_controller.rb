@@ -28,7 +28,18 @@ class ApplicationController < ActionController::Base
 
   def getLoginUser
     #if not login, return 'nil'
-    return User.getUserObj(session[:openid_url])
+    @user_obj = User.getUserObj(session[:openid_url])
+    if @user_obj
+      return @user_obj
+    else
+      @user_obj_by_token = User.getUserObjByLoginToken(cookies[:keep_login_token])
+      if @user_obj_by_token
+        return @user_obj_by_token
+      else
+        cookies.delete :keep_login_token
+        return nil
+      end
+    end
   end
 
   def getNotifyingObjects

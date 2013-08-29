@@ -15,6 +15,8 @@ class CreateUsers < ActiveRecord::Migration
       t.text :comment, {:default => ''}
       t.string :site_url, {:default => ''}
       t.boolean :public_flg, {:default => false}
+      t.string :keep_login_token, {:default => nil}
+      t.timestamp :keep_login_expire, {:default => nil}
 
       t.timestamps
     end

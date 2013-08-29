@@ -9,16 +9,19 @@ class ConsumerController < ApplicationController
   layout nil
 
   def oauth_complete
-    logger.debug env['omniauth.auth'].to_yaml
+    #logger.debug env['omniauth.auth'].to_yaml
     @oauth_url = "oauth://" + env['omniauth.auth']['provider'] + "/" + env['omniauth.auth']['uid']
     @image_url = env['omniauth.auth'].info.image
     session[:openid_url] = @oauth_url
     if getLoginUser
       @uname = getLoginUser.name
       flash[:success] = "Hello " + @uname + ". Login processing was successful."
-      if getLoginUser.updateLastLoginTime
-        flash[:success] += "(" + getLoginUser.last_login.to_s + ")";
+      if getLoginUser.updateLoginInfo
+        if env['omniauth.params']['keep_login'] == "on"
+          cookies[:keep_login_token] = { :value => getLoginUser.keep_login_token, :expires => Time.now + 3.days }
+        end
       else
+        #TODO Error handling
       end
       if env['omniauth.origin']
         redirect_to env['omniauth.origin']
@@ -74,7 +77,7 @@ class ConsumerController < ApplicationController
     if params[:force_post]
       oidreq.return_to_args['force_post']='x'*2048
     end
-    return_to = url_for :action => 'complete', :only_path => false, :fromUrl => params[:fromUrl]
+    return_to = url_for :action => 'complete', :only_path => false, :fromUrl => params[:fromUrl], :keep_login => params[:keep_login]
     realm = url_for :action => '', :id => nil, :only_path => false
     
     if oidreq.send_redirect?(realm, return_to, params[:immediate])
@@ -142,8 +145,10 @@ class ConsumerController < ApplicationController
       if getLoginUser
         @uname = getLoginUser.name
         flash[:success] = "Hello " + @uname + ". Login processing was successful."
-        if getLoginUser.updateLastLoginTime
-          flash[:success] += "(" + getLoginUser.last_login.to_s + ")";
+        if getLoginUser.updateLoginInfo
+          if params[:keep_login] == "on"
+            cookies[:keep_login_token] = { :value => getLoginUser.keep_login_token, :expires => Time.now + 3.days }
+          end
         else
         end
         if params[:fromUrl]
@@ -164,6 +169,7 @@ class ConsumerController < ApplicationController
   end
 
   def sign_out
+    getLoginUser.execSignOut
     session[:openid_url] = nil
     flash[:success] = "LogOut Complete."
     if params[:fromUrl]

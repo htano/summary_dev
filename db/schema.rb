@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 20130811052551) do
     t.text     "comment",            default: ""
     t.string   "site_url",           default: ""
     t.boolean  "public_flg",         default: false
+    t.string   "keep_login_token"
+    t.datetime "keep_login_expire"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
