@@ -3,15 +3,36 @@
   <head>
     <meta charset="utf-8" />
     <script type="text/javascript" src="lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap.js"></script>
     <script type="text/javascript" src="popup.js"></script>
     <link href="popup.css" rel="stylesheet" type="text/css">
+    <link href="lib/bootstrap.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-    <h1><a href="http://localhost:3000/mypage/index" target="_blank">SummaryDev</a></h1>
-    <label>[title] </label>
-    <p id='p_title'>(default)</p>
-    <label>[url] </label>
-    <p id='p_url'>(default)</p>
+  <!--<h1><a href="http://localhost:3000/mypage/index" target="_blank">SummaryDev</a></h1>-->
+  <p>MENU:</p>
+    <ul class="nav nav-tabs">
+    <li class="active"><a href="tabmenu1.html"><span>メイン</span></a></li>
+    <li><a href="popup2.html" ><span>要約</span></a></li>
+    </ul>
+
+    <div class="table">
+     <table id = "main">
+       <tr class="table_top">
+         <td>
+           <label>[title] </label>
+           <p id='p_title'>(default)</p>
+         </td>
+       </tr>
+       <tr>
+         <td>
+           <label>[url] </label>
+           <p id='p_url'>(default)</p>
+         </td>
+       </tr>
+     </table>
+    </div>
+ 
     <button class="popup_btn">book!</button>
     <p id="p_comment" style="visibility:hidden;">(default)</p>
     <a id="a_link_to_login" style="visibility:hidden;" href="http://localhost:3000/session/consumer/index" target="_blank">login</a><br>

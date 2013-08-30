@@ -23,6 +23,7 @@ SummaryDev::Application.routes.draw do
   post 'summary/:article_id/edit_complete' => 'summary#edit_complete'
   get 'summary/:article_id' => 'summary#show'
   
+  get 'summary_lists/get_summary_list_for_chrome_extension' => 'summary_lists#get_summary_list_for_chrome_extension'
   get 'summary_lists/:articleId' => 'summary_lists#index'
   get 'summary_lists/goodSummary/:summaryId/:articleId' => 'summary_lists#goodSummary'
   # The priority is based upon order of creation: first created -> highest priority.

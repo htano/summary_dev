@@ -1,4 +1,17 @@
 class SummaryListsController < ApplicationController
+	def get_summary_list_for_chrome_extension
+      article = Article.find_by_url(@url);
+      if article == nil then
+        return;
+      else
+      	# 今日は寝る
+      	#　TODO　summary上位３ぐらいを取得してJSON形式へ変換し、もとへ戻す
+
+      end
+	end
+
+
+
 	def index
 		#check current loginuser
 			
