@@ -19,14 +19,25 @@ $(function(){
 </script>
 
 <form method="POST" action="edit_confirm" id="edit_form">
+<!--<table class="table">
+  <tr class="table_top">-->
   <div class="center">
     <p>[title] <%= @title %></p>
     <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
     <textarea id="content" name="content" cols=60 rows=10 maxlength="300" class="required"><%= @content %></textarea>
-    <span class="count">0</count>
+    <span class="count">0</span>
   </div>
   <div class="center">
     <input type="submit" id="edit_summary_submit" class="button button-flat:hover" value="要約"></input>  
   </div>
   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+<!--
+  <div class="clearfix">
+    <label for="textarea">Textarea</label>
+      <div class="input">
+        <textarea class="xxlarge" id="textarea2" name="textarea2" rows="3"></textarea>
+        <span class="help-block"> Block of help text to describe the field above i need be. </span>
+      </div>
+  </div>
+  -->
 </form>
