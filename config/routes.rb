@@ -8,21 +8,23 @@ SummaryDev::Application.routes.draw do
   get "mypage/destroy"
 
   get 'webpage/add' => 'webpage#add'
-  get 'webpage/add_confirm' => 'webpage#add_confirm'
-  get 'webpage/add_complete' => 'webpage#add_complete'
+  #get 'webpage/add_confirm' => 'webpage#add_confirm'
+  #get 'webpage/add_complete' => 'webpage#add_complete'
   #get 'webpage/add_complete'
-  get 'webpage/webpage/invalid' => 'webpage#invalid'
+  #get 'webpage/webpage/invalid' => 'webpage#invalid'
 
   get 'summary/:article_id/edit' => 'summary#edit'
   get 'summary/:article_id/edit_confirm' => 'summary#edit_confirm'
   get 'summary/:article_id' => 'summary#show'
   get 'summary/:article_id/edit_complete' => 'summary#edit_complete'
+  
+  get 'summary_lists/:articleId' => 'summary_lists#index'
+  get 'summary_lists/goodSummary/:summaryId/:articleId' => 'summary_lists#goodSummary'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
-      get 'summary_lists/:articleId' => 'summary_lists#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

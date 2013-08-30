@@ -1,19 +1,23 @@
  <script>
 $(function(){
     $('#submit').click(function(){
-      if(confirm('登録して宜しいですか？')){
-        $.ajax({
-          url: '/webpage/add_complete',
-          type: 'GET',
-          data: 'url=' + $('#url').val(),
-          success: function(data) {
-            alert('登録しました。');
-            location.reload();
-          },
-          error: function(data) {
-            alert('失敗しました、urlを確認して下さい。');
-          }
-        });
+      if($("#booked_url").val().length){
+        if(confirm('登録して宜しいですか？')){
+          $.ajax({
+            url: '/webpage/add',
+            type: 'GET',
+            data: 'booked_url=' + escape($('#booked_url').val()),
+            success: function(data) {
+              alert('登録しました。');
+              location.reload();
+            },
+            error: function(data) {
+              alert('失敗しました、urlを確認して下さい。');
+            }
+          });
+        }
+      } else {
+        alert('urlを入力して下さい。');
       }
     });
 });
@@ -25,12 +29,14 @@ $(function(){
         <a href="<%= url_for :controller => 'mypage', :action => 'index' %>" class="brand">Summary</a>
         <div class="nav-collapse">
           <ul class="nav pull-right">
+          <% if signed_in? %>
             <li>
-              <input class="nav_text" type="text" name="url" id="url" size="50"></a>
+              <input class="nav_text" type="text" name="booked_url" id="booked_url" size="50"></a>
             </li>
             <li>
               <input type="submit" id="submit" class="button button-flat:hover" value="book!">
             </li>
+          <% end %>
             <li class="divider-vertical"></li>
             <li>
               <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#">7</a>

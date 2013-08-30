@@ -1,34 +1,54 @@
 <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<div id="yBoxOutline">
+	<div id ="yBox">
+		<div id = "yArticle">
+			<h1 id="yArticleName">
+				<% if  @article != nil %>
+					<%= @article.title %>	
+				<% end %>
+			</h1>
+				<div id="yArticleLink">
+					<% if  @article != nil %>
+						<%= link_to("元記事を見る",@article.url) %>
+					<% end %>
 
-<div id="yBox">
-	<h1 id="yArticleName">
-		<% if  @article != nil %>
-			<%= @article.title %>	
-		<% end %>
-	</h1>
-
-	<div id="yArticleLink">
-
-		<% if  @article != nil %>
-			<%= link_to("元記事を見る",@article.url) %>
-		<% end %>
-
-	</div>
-
-	<% unless @summarys.blank? %>
-		<% @summarys.each_with_index do |summary,i| %>
-			<div id="yAuther">
-				<%= @sumUsers[i].name %>	
 			</div>
-			<h2 id="yArticleDetail">
-				<%= simple_format(summary.content) %>	
-			</h2>
-		<% end %>
-	<% else %>
-		<!-- 建設中 -->
-	<% end %>
-	<div id="yLinkToOtherY">
-		他の要約を見る
+																					
+			<% unless @summarys.blank? %>
+				<div id="youyaku">
+					<% @summarys.each_with_index do |summary,i| %>
+						<div id="yAuther">
+							<%= @sumUsers[i].name %>	
+						</div>
+						<h2 id="yArticleDetail">
+							<%= summary.content %>	
+						</h2>
+
+						<div id ="yArticleIiyo">
+							<% unless @isGoodCompleted[i] then %>
+								<%= link_to image_tag("icons/good_summary.jpg", { :border => '0', :alt => 'いい要約だね！'}),{:action => "goodSummary",:summaryId =>summary.id, :articleId => @article.id} %>
+
+							<% else %>
+								<%= image_tag("icons/good_summary_cmp.jpg", { :border => '0', :alt => 'あなたは既にいい要約だねをしています'}) %>
+							<% end %>
+						</div>
+
+						<div id ="yArticleIiyo">
+							ただいまのいい要約だねの数は<%= @goodSummaryPoint[i] %>です。 
+						</div>
+
+						<hr id = "yArticleLine">
+
+					<% end %>
+
+				<% else %>
+					<!-- 建設中 -->
+				<% end %>
+				<div id="yLinkToOtherY">
+					他の要約を見る
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
