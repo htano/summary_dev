@@ -13,24 +13,23 @@ $(document).ready( function(){
         if(!data){
           $("#a_link_to_login").attr("style", "visibility:visible;");
           setBtnDisabled();
+        } else {
+        	$.ajax({
+        		url: 'http://localhost:3000/webpage/get_add_history_for_chrome_extension',
+        		type: 'GET',
+        		data: 'url=' + escape(bg.current_tab.url),
+        		dataType: 'text',
+        		success: function(data) {
+        			if(data){
+        				setCommentAlreadyBooked();
+        				setBtnDisabled();
+        				setSummaryEditLink(data);
+        			}
+        		}
+        	});
         }
       }
   });
-
-  $.ajax({
-      url: 'http://localhost:3000/webpage/get_add_history_for_chrome_extension',
-      type: 'GET',
-      data: 'url=' + escape(bg.current_tab.url),
-      dataType: 'text',
-      success: function(data) {
-        if(data){
-          setCommentAlreadyBooked();
-          setBtnDisabled();
-          setSummaryEditLink(data);
-        }
-      }
-  });
-
 
   $('.popup_btn').click(function(){
     $("img.a_load").attr("style", "visibility:visible;");
