@@ -6,8 +6,7 @@ class SummaryController < ApplicationController
     if signed_in?
       article = Article.find_by id: params[:article_id]
       if article == nil then
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
-        return
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
       end
       @url = article.url;
       @title = article.title;
@@ -25,8 +24,7 @@ class SummaryController < ApplicationController
     if signed_in?
       article = Article.find_by id: params[:article_id]
       if article == nil then
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
-        return
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
       end
       @url = article.url;
       @title = article.title;
@@ -43,8 +41,7 @@ class SummaryController < ApplicationController
       user_id = getLoginUser.id;
       article = Article.find_by id: params[:article_id]
       if article == nil then
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
-        return
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
       end
       summary = Summary.find_by_user_id_and_article_id(user_id, params[:article_id]);
       if summary != nil then
@@ -69,8 +66,7 @@ class SummaryController < ApplicationController
     if signed_in?
       article = Article.find_by id: params[:article_id]
       if article == nil then
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
-        return
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
       end
       @url = article.url;
       @title = article.title;
@@ -78,8 +74,7 @@ class SummaryController < ApplicationController
       @article_id = "#{params[:article_id]}";
       summary = Summary.find_by_user_id_and_article_id(user_id, @article_id);
       if summary == nil then
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
-        return
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
       end
       @content = summary.content;
       @msg = "要約が登録出来ました！"

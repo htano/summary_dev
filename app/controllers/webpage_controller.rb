@@ -17,19 +17,19 @@ class WebpageController < ApplicationController
       @url = "#{params[:url]}";
       title = returnTitle(@url);
       if title == nil
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
       end
       article = Article.find_by_url(@url);
       if article != nil then
         user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
         if user_article != nil then 
           #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、article.idを返却する
-          render :text => article.id
+          render :text => article.id and return
         else
-          render :text => BLANK
+          render :text => BLANK and return
         end
       else
-        render :text => BLANK
+        render :text => BLANK and return
       end
     else
       redirect_to :controller => "consumer", :action => "index";
@@ -39,9 +39,9 @@ class WebpageController < ApplicationController
   #TODO 画面からURL直打ちの回避
   def get_current_user_name_for_chrome_extension
     if signed_in?
-      render :text => get_current_user_name;
+      render :text => get_current_user_name and return
     else
-      render :text => BLANK
+      render :text => BLANK and return
     end
   end
 
@@ -52,14 +52,13 @@ class WebpageController < ApplicationController
       @url = "#{params[:url]}";
       title = returnTitle(@url);
       if title == nil
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
-        return
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
       end
       article = Article.find_by_url(@url);
       if article != nil then
         user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
         if user_article.save
-          render :text => article.id
+          render :text => article.id and return
         end
       else
         #同じURLの情報がない場合、a010とr010両方にinsertする
@@ -68,7 +67,7 @@ class WebpageController < ApplicationController
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
-            render :text => article.id
+            render :text => article.id and return
           end
         end
       end
@@ -82,11 +81,9 @@ class WebpageController < ApplicationController
       @url = "#{params[:url]}";
       title = returnTitle(@url);
       if title == nil
-        render :text => BLANK
-        return
+        render :text => BLANK and return
       else
-        render :text => title;
-        return
+        render :text => title and return
       end
     else
       redirect_to :controller => "consumer", :action => "index";
@@ -99,20 +96,19 @@ class WebpageController < ApplicationController
       @url = "#{params[:url]}";
       title = returnTitle(@url);
       if title == nil
-        render :text => "指定されたURLは存在しません。URLを確認して下さい。"
-        return
+        render :text => "指定されたURLは存在しません。URLを確認して下さい。" and return
       end
       article = Article.find_by_url(@url);
       if article != nil then
         user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
           if user_article != nil then 
             #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
-            render :text => "登録済みです。"
+            render :text => "登録済みです。" and return
           else
             #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
             user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
             if user_article.save
-              render :text => "登録が完了しました。"
+              render :text => "登録が完了しました。" and return
             end
           end
         else
@@ -122,13 +118,13 @@ class WebpageController < ApplicationController
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
-            render :text => "登録が完了しました。"
+            render :text => "登録が完了しました。" and return
           end
         end
       end
     else
       redirect_to :controller => "consumer", :action => "index";
- 	end
+    end
   end
 
   #指定されたurlのタイトルを返却するメソッド

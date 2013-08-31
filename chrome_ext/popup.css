@@ -20,9 +20,25 @@ p#p_user, p#p_title, p#p_url {
   -o-text-overflow: ellipsis;  
 }
 
-.btn_disabled {
-  color: #808080;  
+.popup_btn_disabled {
+  color: #808080;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #007AFF;
+  background-repeat: repeat-x;
+  border-color: #007AFF;
+  width: 130px;
+  height: 34px;
+  outline: none;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  background-image: -moz-linear-gradient(#96B9F6, #007AFF);
+  background-image: -webkit-linear-gradient(#96B9F6, #007AFF);
+  background-image: linear-gradient(#96B9F6, #007AFF);
+  margin-bottom: 1em;
+  border: 1px solid #C1E7F8;
 }
+
 
 .popup_btn {
   color: #fff;

@@ -70,5 +70,5 @@ function setSummaryEditLink(data){
 //登録ボタンを非活性にする。ついでにクラスも変更する。
 function setBtnDisabled(){
   $('.popup_btn').attr("disabled", true);
-  $('.popup_btn').attr("class", "btn_disabled");
+  $('.popup_btn').attr("class", "popup_btn_disabled");
 }
