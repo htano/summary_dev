@@ -11,12 +11,12 @@ $(document).ready( function(){
       success: function(data) {
         if(data){
           for(var i in data){
-            $('tbody').append('<tr><td>');
+            $('tbody').append('<tr class="table_top"><td>');
             $('tbody').append('<li>' + data[i].content + '</li>');
             $('tbody').append('</td></tr>');
           }
         }　else {
-          $('tbody').append('<tr><td>');
+          $('tbody').append('<tr class="table_top"><td>');
           $('tbody').append('<li>この記事に対する要約は登録されていません。</li>');
           $('tbody').append('</td></tr>');
         }
