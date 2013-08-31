@@ -22,13 +22,16 @@ class Article < ActiveRecord::Base
 		#
 		#
 		#Under Construction
+		scoreList_sorted = scoreList.sort{|i,j|
+				j.goodSummaryPoint<=>i.goodSummaryPoint								 
+		}
 		#
 		#
 
 		summaryItem = Struct.new(:summary, :user, :summaryPoint, :isGoodCompleted) 
 		summaryList = Array.new
 		#insert to each params  
-		scoreList.each_with_index do |scoreItem, i| 				
+		scoreList_sorted.each_with_index do |scoreItem, i| 				
 			unless user == nil then
 				unless scoreItem.summary.good_summaries.find_by(:user_id => user.id) == nil then 
 					isGoodCompleted = true
