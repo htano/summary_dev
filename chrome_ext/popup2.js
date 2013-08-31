@@ -2,13 +2,14 @@
 $(document).ready( function(){
   var bg = window.chrome.extension.getBackgroundPage();
   console.log( $("p#p_title").text() );
-  $("p#p_comment2").text("popup2.jsです。");
+  $("img.a_load").attr("style", "visibility:visible;");
   $.ajax({
       url: 'http://localhost:3000/summary_lists/get_summary_list_for_chrome_extension',
       type: 'GET',
       data: 'url=' + escape(bg.current_tab.url),
       dataType: 'json',
       success: function(data) {
+        $("img.a_load").attr("style", "visibility:hidden;");
         if(data){
           for(var i in data){
             $('tbody').append('<tr class="table_top"><td>');
