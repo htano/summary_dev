@@ -17,7 +17,7 @@ class SummaryListsController < ApplicationController
       if article == nil then
         render :json => nil;
       else
-      	summaries = article.summaries.all
+      	summaries = article.summaries.find(:all,:limit => 10)
       	if summaries != nil
       		render :json => summaries
       	else
