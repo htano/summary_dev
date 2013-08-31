@@ -22,6 +22,42 @@ $(function(){
     });
 });
 
+function check_uid() {
+  var user_name = $('#input_user_name').val();
+  $("span#message_of_check_uname2").text("　");
+  $("span#message_of_check_uname2").attr("style","");
+  if(!user_name.match(/^[A-Za-z0-9_-]{4,20}$/)) {
+    $("span#message_of_check_uname").text("UserID Format: NG");
+    $("span#message_of_check_uname").attr("style","background-color:#ffaaaa; border: 1px solid #ff0000; padding: 3px 50px;");
+  } else {
+    $("span#message_of_check_uname").text("UserID Format: OK");
+    $("span#message_of_check_uname").attr("style","background-color:#aaffaa; border: 1px solid #00ff00; padding: 3px 50px;");
+    $("img#ajax_loading").attr("hidden", false);
+
+    $.ajax({
+      url: '/session/consumer/getUserExisting',
+      type: 'GET',
+      data: 'creating_user_name=' + user_name,
+      dataType: 'text',
+      success: function(data) {
+        $("img#ajax_loading").attr("hidden", true);
+        if(data == "NONE") {
+          $("span#message_of_check_uname2").text("You can use this user_id.");
+          $("span#message_of_check_uname2").attr("style","background-color:#aaffaa; border: 1px solid #00ff00; padding: 3px 50px;");
+        } else {
+          $("span#message_of_check_uname2").text("Inputed user name has already existed.");
+          $("span#message_of_check_uname2").attr("style","background-color:#ffaaaa; border: 1px solid #ff0000; padding: 3px 50px;");
+        }
+      },
+      error: function(data) {
+        $("span#message_of_check_uname2").text("Server error has occured.");
+        $("span#message_of_check_uname2").attr("style","background-color:#ffaaaa; border: 1px solid #ff0000; padding: 3px 50px;");
+        $("img#ajax_loading").attr("hidden", true);
+      }
+    });
+  }
+}
+
 function display_input_image(win, doc) {
     
     if (win.File && win.FileReader && win.FileList && win.Blob){

@@ -215,6 +215,15 @@ class ConsumerController < ApplicationController
     end
   end
 
+  def getUserExisting
+    @uname = params[:creating_user_name]
+    if User.is_exists?(@uname)
+      render :text => "EXISTS"
+    else
+      render :text => "NONE"
+    end
+  end
+
   private
 
   def consumer

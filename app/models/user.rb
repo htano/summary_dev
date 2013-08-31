@@ -39,6 +39,14 @@ class User < ActiveRecord::Base
     return @error_message
   end
 
+  def self.is_exists?(uname)
+    if where(["name = ?", uname]).first
+      return true
+    else
+      return false
+    end
+  end
+
   # Instance Method
   def updateMypageAccess
     self.last_mypage_access = Time.now
