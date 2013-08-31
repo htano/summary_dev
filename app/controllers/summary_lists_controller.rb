@@ -19,9 +19,21 @@ class SummaryListsController < ApplicationController
 		goodSummary = GoodSummary.new(:user_id => getLoginUser.id, :summary_id =>params[:summaryId]) 
 
 		if goodSummary.save
-			#nothing yet
-			redirect_to :action => "index", :artcileId =>params[:articleId]
+			@listIndex = params[:listIndex]
+			render
+		end
+	end
+
+
+	def cancelGoodSummary 
+		if getLoginUser == nil then
+			redirect_to :controller => "consumer", :action => "index"
+			return	
 		end
 
+		GoodSummary.where(:user_id => getLoginUser.id).where(:summary_id =>params[:summaryId]).delete_all 
+			@listIndex = params[:listIndex]
+			render
 	end
+
 end

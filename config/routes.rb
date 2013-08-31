@@ -19,7 +19,8 @@ SummaryDev::Application.routes.draw do
   get 'summary/:article_id/edit_complete' => 'summary#edit_complete'
   
   get 'summary_lists/:articleId' => 'summary_lists#index'
-  get 'summary_lists/goodSummary/:summaryId/:articleId' => 'summary_lists#goodSummary'
+  get 'summary_lists/goodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#goodSummary'
+  get 'summary_lists/cancelGoodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#cancelGoodSummary'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
