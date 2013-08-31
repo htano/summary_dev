@@ -2,18 +2,6 @@
 
 class SummaryController < ApplicationController
 
-  #TODO 画面からURL直打ちの回避
-  def get_summary_num_for_chrome_extension
-    @url = "#{params[:url]}"
-    article = Article.find_by_url(@url);
-    if article != nil then
-      summary_num = Summary.count(:all, :conditions => {:article_id => article.id})
-      render :text => summary_num;
-    else
-      render :text => 0;
-    end
-  end
-
   def edit
     if signed_in?
       article = Article.find_by id: params[:article_id]

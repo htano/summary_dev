@@ -7,6 +7,9 @@ require 'kconv'
 
 class WebpageController < ApplicationController
 
+  #定数定義
+  BLANK = ""
+
   #TODO 画面からURL直打ちの回避
   def get_add_history_for_chrome_extension
     if signed_in?
@@ -15,7 +18,6 @@ class WebpageController < ApplicationController
       title = returnTitle(@url);
       if title == nil
         render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
-        return
       end
       article = Article.find_by_url(@url);
       if article != nil then
@@ -23,7 +25,11 @@ class WebpageController < ApplicationController
         if user_article != nil then 
           #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、article.idを返却する
           render :text => article.id
+        else
+          render :text => BLANK
         end
+      else
+        render :text => BLANK
       end
     else
       redirect_to :controller => "consumer", :action => "index";
@@ -35,7 +41,7 @@ class WebpageController < ApplicationController
     if signed_in?
       render :text => get_current_user_name;
     else
-      render :text => "";
+      render :text => BLANK
     end
   end
 
@@ -76,7 +82,7 @@ class WebpageController < ApplicationController
       @url = "#{params[:url]}";
       title = returnTitle(@url);
       if title == nil
-        render :text => "";
+        render :text => BLANK
         return
       else
         render :text => title;

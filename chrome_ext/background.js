@@ -6,7 +6,7 @@ chrome.tabs.onSelectionChanged.addListener(function(tabid){
     current_tab.title = tab.title;
     current_tab.url = tab.url;
     $.ajax({
-      url: 'http://localhost:3000/summary/get_summary_num_for_chrome_extension',
+      url: 'http://localhost:3000/summary_lists/get_summary_num_for_chrome_extension',
       type: 'GET',
       data: 'url=' + tab.url,
       dataType: 'text',
@@ -23,7 +23,7 @@ chrome.tabs.onUpdated.addListener( function(tabId, changeInfo, tab) {
       current_tab.title = tab.title;
       current_tab.url = tab.url;
       $.ajax({
-        url: 'http://localhost:3000/summary/get_summary_num_for_chrome_extension',
+        url: 'http://localhost:3000/summary_lists/get_summary_num_for_chrome_extension',
         type: 'GET',
         data: 'url=' + tab.url,
         dataType: 'text',
@@ -40,7 +40,7 @@ chrome.windows.onFocusChanged.addListener(function(windowId) {
     current_tab.title = c_tab.title;
     current_tab.url = c_tab.url;
     $.ajax({
-    	url: 'http://localhost:3000/summary/get_summary_num_for_chrome_extension',
+    	url: 'http://localhost:3000/summary_lists/get_summary_num_for_chrome_extension',
         type: 'GET',
         data: 'url=' + c_tab.url,
         dataType: 'text',

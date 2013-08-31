@@ -15,15 +15,16 @@ SummaryDev::Application.routes.draw do
   post 'webpage/add' => 'webpage#add'
   post 'webpage/get_title' => 'webpage#get_title'
 
-  #for chrome extension
-  get 'summary/get_summary_num_for_chrome_extension' => 'summary#get_summary_num_for_chrome_extension'
   #for webpage
   get 'summary/:article_id/edit' => 'summary#edit'
   post 'summary/:article_id/edit_confirm' => 'summary#edit_confirm'
   post 'summary/:article_id/edit_complete' => 'summary#edit_complete'
   get 'summary/:article_id' => 'summary#show'
   
+  #for chrome extension
+  get 'summary_lists/get_summary_num_for_chrome_extension' => 'summary_lists#get_summary_num_for_chrome_extension'
   get 'summary_lists/get_summary_list_for_chrome_extension' => 'summary_lists#get_summary_list_for_chrome_extension'
+  #for webpage
   get 'summary_lists/:articleId' => 'summary_lists#index'
   get 'summary_lists/goodSummary/:summaryId/:articleId' => 'summary_lists#goodSummary'
   # The priority is based upon order of creation: first created -> highest priority.

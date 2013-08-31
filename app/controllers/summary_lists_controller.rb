@@ -1,16 +1,30 @@
 class SummaryListsController < ApplicationController
+    #TODO 画面からURL直打ちの回避
+    def get_summary_num_for_chrome_extension
+    	@url = "#{params[:url]}"
+    	article = Article.find_by_url(@url);
+    	if article != nil then
+    		summary_num = Summary.count(:all, :conditions => {:article_id => article.id})
+    		render :text => summary_num;
+    	else
+    		render :text => 0;
+    	end
+    end
+
 	def get_summary_list_for_chrome_extension
+	  @url = "#{params[:url]}"
       article = Article.find_by_url(@url);
       if article == nil then
-        return;
+        render :json => nil;
       else
-      	# 今日は寝る
-      	#　TODO　summary上位３ぐらいを取得してJSON形式へ変換し、もとへ戻す
-
+      	summaries = article.summaries.all
+      	if summaries != nil
+      		render :json => summaries
+      	else
+      		render :json => nil;
+      	end
       end
 	end
-
-
 
 	def index
 		#check current loginuser
