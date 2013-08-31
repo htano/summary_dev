@@ -10,7 +10,7 @@ $(document).ready( function(){
       dataType: 'json',
       success: function(data) {
         $("img.a_load").attr("style", "visibility:hidden;");
-        if(data){
+        if(data && data.length != 0){
           for(var i in data){
             $('tbody').append('<tr><td>'+data[i].content+'</td></tr>');
           }

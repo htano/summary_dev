@@ -5,9 +5,9 @@ class SummaryListsController < ApplicationController
     	article = Article.find_by_url(@url);
     	if article != nil then
     		summary_num = Summary.count(:all, :conditions => {:article_id => article.id})
-    		render :text => summary_num;
+    		render :text => summary_num and return
     	else
-    		render :text => 0;
+    		render :text => 0 and return
     	end
     end
 
@@ -15,13 +15,13 @@ class SummaryListsController < ApplicationController
 	  @url = "#{params[:url]}"
       article = Article.find_by_url(@url);
       if article == nil then
-        render :json => nil;
+        render :json => nil and return
       else
       	summaries = article.summaries.find(:all,:limit => 10)
-      	if summaries != nil
-      		render :json => summaries
+      	if summaries != nil then
+      		render :json => summaries and return
       	else
-      		render :json => nil;
+      		render :json => nil and return
       	end
       end
 	end

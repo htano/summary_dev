@@ -31,7 +31,8 @@ $(document).ready( function(){
       }
   });
 
-  $('.popup_btn').click(function(){
+  $('#p_button').click(function(){
+  //$('.popup_btn').click(function(){
     $("img.a_load").attr("style", "visibility:visible;");
     $.ajax({
       url: 'http://localhost:3000/webpage/add_for_chrome_extension',
@@ -69,6 +70,8 @@ function setSummaryEditLink(data){
 
 //登録ボタンを非活性にする。ついでにクラスも変更する。
 function setBtnDisabled(){
-  $('.popup_btn').attr("disabled", true);
-  $('.popup_btn').attr("class", "popup_btn_disabled");
+  $('#p_button').attr("disabled", true);
+  $('#p_button').attr("class", "button button-flat.disabled");
+  //$('.popup_btn').attr("disabled", true);
+  //$('.popup_btn').attr("class", "popup_btn_disabled");
 }
