@@ -21,7 +21,8 @@ SummaryDev::Application.configure do
     :port => 587,
     :authentication => :login,
     :user_name => 'summary.dev',
-    :password => ENV['MAIL_PASSWORD']
+    #:password => ENV['MAIL_PASSWORD']
+    :password => 'summary0813'
   }
 
   # Print deprecation notices to the Rails logger.
