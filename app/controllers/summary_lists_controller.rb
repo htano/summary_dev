@@ -67,7 +67,7 @@ class SummaryListsController < ApplicationController
 			redirect_to :controller => "consumer", :action => "index"
 			return	
 		end
-        userArticleForIsRead=UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId])
+        userArticleForIsRead=UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId]).first
 
         unless userArticleForIsRead == nil then
 			userArticleForIsRead.read_flg = true	
@@ -76,11 +76,9 @@ class SummaryListsController < ApplicationController
 		end
 
         if userArticleForIsRead.save
-			oppai1
 			render
 
 		else
-			oppai3
 		end
 	end
 	
@@ -99,12 +97,10 @@ class SummaryListsController < ApplicationController
 		end
 
         if userArticleForIsRead.save
-			oppai2
 			render
-			else
+		else
 			
-			oppai4
-			end
+		end
 
 	end
 

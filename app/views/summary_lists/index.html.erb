@@ -1,14 +1,14 @@
 <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-<div id="yBoxOutline">
-	<div id ="yBox">
-		<div id = "yArticle">
-			<h1 id="yArticleName">
+<div>
+	<div>
+		<div>
+			<h1>
 				<% if  @article != nil %>
 					<%= link_to(@article.title,@article.url,:class => "summary_list_link") %>	
 				<% end %>
 			</h1>
-			<div id="yArticleIsRead">				
+			<div>				
 				<% unless @isReadArticle then %>
 					<%= link_to "既読にする",{:action => "isRead", :articleId => @article.id, :remote => true}, { :class => "summary_list_link" }%>
 				<% else %>
@@ -17,16 +17,16 @@
 			</div>
 
 			<% unless @summaryList.blank? %>
-				<div id="youyaku">
+				<div>
 					<% @summaryList.each_with_index do |summaryItem,index| %>
-						<div id="yAuther">
+						<div>
 							<%= summaryItem.user.name %>	
 						</div>
-						<h2 id="yArticleDetail">
+						<h2>
 							<%= simple_format_2(summaryItem.summary.content) %>	
 						</h2>
 
-						<div class ="yArticleIiyo">
+						<div>
 							<% unless summaryItem.isGoodCompleted then %>
 								<div id = "yetGoodSummary<%=index%>">
 									<%= link_to image_tag("icons/good_summary.jpg",
@@ -76,7 +76,7 @@
 							<% end %>
 						</div>
 
-						<div class ="yArticleIiyo">
+						<div>
 							<% unless summaryItem.isGoodCompleted then %>
 								<div id = "yetGoodSummary_point<%=index%>">
 								ただいまのいい要約だねの数は<%= summaryItem.summaryPoint %>です。 
@@ -94,20 +94,14 @@
 							<% end%>
 						</div>
 
-
-
-
-
-
-
-						<hr id = "yArticleLine">
+						<hr>
 
 					<% end %>
 
 				<% else %>
 					<!-- 建設中 -->
 				<% end %>
-				<div id="yLinkToOtherY">
+				<div>
 					他の要約を見る
 				</div>
 			</div>
