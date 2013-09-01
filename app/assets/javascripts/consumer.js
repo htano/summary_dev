@@ -57,7 +57,7 @@ function check_uid() {
                 $("span#message_of_check_uname2").text("You can use this user_id.");
                 $("span#message_of_check_uname2").attr("style","background-color:#aaffaa; border: 1px solid #00ff00; padding: 3px 50px;");
               } else {
-                $("span#message_of_check_uname2").text("Inputed user name has already existed.");
+                $("span#message_of_check_uname2").text("Input user name has already existed.");
                 $("span#message_of_check_uname2").attr("style","background-color:#ffaaaa; border: 1px solid #ff0000; padding: 3px 50px;");
               }
             }
