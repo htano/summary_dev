@@ -18,19 +18,29 @@ SummaryDev::Application.routes.draw do
 
   get "mypage/destroy"
 
-  get 'webpage/add' => 'webpage#add'
-  #get 'webpage/add_confirm' => 'webpage#add_confirm'
-  #get 'webpage/add_complete' => 'webpage#add_complete'
-  #get 'webpage/add_complete'
-  #get 'webpage/webpage/invalid' => 'webpage#invalid'
+  #for chrome extension
+  get 'webpage/get_add_history_for_chrome_extension' => 'webpage#get_add_history_for_chrome_extension'
+  get 'webpage/get_current_user_name_for_chrome_extension' => 'webpage#get_current_user_name_for_chrome_extension'
+  get 'webpage/add_for_chrome_extension' => 'webpage#add_for_chrome_extension'
+  #for webpage
+  post 'webpage/add' => 'webpage#add'
+  post 'webpage/get_title' => 'webpage#get_title'
 
+  #for webpage
   get 'summary/:article_id/edit' => 'summary#edit'
-  get 'summary/:article_id/edit_confirm' => 'summary#edit_confirm'
+  post 'summary/:article_id/edit_confirm' => 'summary#edit_confirm'
+  post 'summary/:article_id/edit_complete' => 'summary#edit_complete'
   get 'summary/:article_id' => 'summary#show'
-  get 'summary/:article_id/edit_complete' => 'summary#edit_complete'
   
+  #for chrome extension
+  get 'summary_lists/get_summary_num_for_chrome_extension' => 'summary_lists#get_summary_num_for_chrome_extension'
+  get 'summary_lists/get_summary_list_for_chrome_extension' => 'summary_lists#get_summary_list_for_chrome_extension'
+  #for webpage
   get 'summary_lists/:articleId' => 'summary_lists#index'
-  get 'summary_lists/goodSummary/:summaryId/:articleId' => 'summary_lists#goodSummary'
+  get 'summary_lists/goodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#goodSummary'
+  get 'summary_lists/cancelGoodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#cancelGoodSummary'
+  get 'summary_lists/isRead/:articleId' => 'summary_lists#isRead'
+  get 'summary_lists/cancelIsRead/:articleId' => 'summary_lists#cancelIsRead'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,7 +1,7 @@
 <script>
 
 $(document).ready(function (){
-  var thisValueLength = $('#summary_content').val().length;
+  var thisValueLength = $('#content').val().length;
   $('.count').html(thisValueLength);
 });
 
@@ -10,22 +10,33 @@ $(document).ready(function() {
 });
 
 $(function(){
-    $('#summary_content').bind('keyup',function(){
+    $('#content').bind('keyup',function(){
         var thisValueLength = $(this).val().length;
         $('.count').html(thisValueLength);
     });
 });
 
+$(function(){
+    $('#clear_summary').bind('click',function(){
+      if(confirm("内容をクリアして宜しいですか？")){
+        $('#content').val("");
+        $('.count').html(0);
+      }
+    });
+});
+
 </script>
 
-<form action="edit_confirm" id="edit_form">
+<form method="POST" action="edit_confirm" id="edit_form">
   <div class="center">
-    <p>[title] <%= @title %></p>
+    <p> [title]: <%= @title %> </p>
     <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
-    <textarea id="summary_content" name="summary_content" cols=60 rows=10 maxlength="300" class="required"><%= @content %></textarea>
-    <span class="count">0</count>
+    <textarea id="content" name="content" cols=60 rows=10 maxlength="300" class="required"><%= @content %></textarea>
+    <span class="count">0</span>
   </div>
   <div class="center">
-      <input type="submit" id="edit_summary_submit" class="button button-flat:hover" value="要約"></input>  
+    <input type="submit" id="edit_summary_submit" class="button button-flat:hover" value="要約"></input>  
+    <input type="button" id="clear_summary" class="button button-flat:hover" value="クリア"></input>  
   </div>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 </form>

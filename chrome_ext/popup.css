@@ -10,7 +10,7 @@ h1{
   border-width: 1px;
   text-align: center;
 }
-p#p_title, p#p_url {
+p#p_user, p#p_title, p#p_url {
   margin-left: 20px;
   width: 420px;  
   white-space: nowrap;  

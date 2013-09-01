@@ -1,30 +1,45 @@
 <script>
 $(function(){
+    error_msg = '指定されたURLは存在しません。URLを確認して下さい。'
     $('#submit').click(function(){
-      if($("#booked_url").val().length){
-        if(confirm('登録して宜しいですか？')){
+      if($("#url").val().length){
           $.ajax({
-            url: '/webpage/add',
-            type: 'GET',
-            data: 'booked_url=' + escape($('#booked_url').val()),
+            url: '/webpage/get_title',
+            type: 'POST',
+            data: 'url=' + escape($('#url').val()),
+            dataType: 'text',
             success: function(data) {
-              alert('登録しました。');
-              location.reload();
+            	if(data) {
+            	  if(confirm(data+'を登録して宜しいですか？')){
+            	  	$.ajax({
+            			url: '/webpage/add',
+            			type: 'POST',
+            			data: 'url=' + escape($('#url').val()),
+            			dataType: 'text',
+            			success: function(data) {
+            				alert(data);
+            				location.reload();
+            			},
+            			error: function(data) {
+            				alert(error_msg);
+            			}
+            		});
+            	  }
+              } else {
+              	alert(error_msg);
+              }
             },
             error: function(data) {
-              alert('失敗しました、urlを確認して下さい。');
+              alert(error_msg);
             }
           });
-        }
       } else {
-        alert('urlを入力して下さい。');
+        alert('URLを入力して下さい。');
       }
     });
 
 });
-
-</script> 
-
+</script>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
@@ -34,10 +49,10 @@ $(function(){
 
           <% if signed_in? %>
             <li>
-              <input class="nav_text" type="text" name="booked_url" id="booked_url" size="50"></a>
+              <input class="nav_text" type="text" name="url" id="url" size="50">
             </li>
             <li>
-              <input type="submit" id="submit" class="button button-flat:hover" value="book!">
+              <input id="submit" class="button button-flat:hover" value="book!" size="5">
             </li>
           <% end %>
 
