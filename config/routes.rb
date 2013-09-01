@@ -26,7 +26,10 @@ SummaryDev::Application.routes.draw do
   get 'summary_lists/get_summary_list_for_chrome_extension' => 'summary_lists#get_summary_list_for_chrome_extension'
   #for webpage
   get 'summary_lists/:articleId' => 'summary_lists#index'
-  get 'summary_lists/goodSummary/:summaryId/:articleId' => 'summary_lists#goodSummary'
+  get 'summary_lists/goodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#goodSummary'
+  get 'summary_lists/cancelGoodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#cancelGoodSummary'
+  get 'summary_lists/isRead/:articleId' => 'summary_lists#isRead'
+  get 'summary_lists/cancelIsRead/:articleId' => 'summary_lists#cancelIsRead'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
