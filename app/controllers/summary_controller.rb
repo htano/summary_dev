@@ -2,25 +2,33 @@
 
 class SummaryController < ApplicationController
   def edit
-    article = Article.find(params[:article_id]);
-    @url = article.url;
-    @title = article.title;
-    user_id = getLoginUser.id;
-    summary = Summary.find_by_user_id_and_article_id(user_id, params[:article_id]);
-    if summary != nil then
-      @content = summary.content;
-      logger.error(@content);
+    if signed_in?
+      article = Article.find(params[:article_id]);
+      @url = article.url;
+      @title = article.title;
+      user_id = getLoginUser.id;
+      summary = Summary.find_by_user_id_and_article_id(user_id, params[:article_id]);
+      if summary != nil then
+        @content = summary.content;
+      end
+    else
+      redirect_to :controller => "consumer", :action => "index";
+      #redirect_to :controller => "consumer", :action => "index", :fromUrl => request.url;
     end
   end
 
   def edit_confirm
-    article = Article.find(params[:article_id]);
-    @url = article.url;
-    @title = article.title;
-    user_id = getLoginUser.id;
-    @summary_content = "#{params[:summary_content]}";
+    if signed_in?
+      article = Article.find(params[:article_id]);
+      @url = article.url;
+      @title = article.title;
+      user_id = getLoginUser.id;
+      @summary_content = "#{params[:summary_content]}";
+    else
+      redirect_to :controller => "consumer", :action => "index";
+      #redirect_to :controller => "consumer", :action => "index", :fromUrl => request.url;
+    end      
   end
-
 
   def edit_complete
     if signed_in?
@@ -40,18 +48,23 @@ class SummaryController < ApplicationController
         end
       end 
     else
+      redirect_to :controller => "consumer", :action => "index";
     end
   end
 
   def show
-    article = Article.find(params[:article_id]);
-    @url = article.url;
-    @title = article.title;
-    user_id = getLoginUser.id;
-    @article_id = "#{params[:article_id]}";
-    summary = Summary.find_by_user_id_and_article_id(user_id, @article_id);
-    @summary_content = summary.content;
-    @msg = "要約が登録出来ました！"
+    if signed_in?
+      article = Article.find(params[:article_id]);
+      @url = article.url;
+      @title = article.title;
+      user_id = getLoginUser.id;
+      @article_id = "#{params[:article_id]}";
+      summary = Summary.find_by_user_id_and_article_id(user_id, @article_id);
+      @summary_content = summary.content;
+      @msg = "要約が登録出来ました！"
+    else
+      redirect_to :controller => "consumer", :action => "index";
+    end
   end
 end
   
