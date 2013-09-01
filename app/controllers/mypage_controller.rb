@@ -90,22 +90,60 @@ class MypageController < ApplicationController
   def delete
     delete_mode = params[:delete_mode]
     logger.debug("delete_mode : #{delete_mode}")
-    if delete_mode.to_i == 2 then
-      summary = Summary.find(:first, 
-        :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
-      unless summary == nil
-        summary.destroy
-      end
-    else
-      article = UserArticle.find(:first, 
-        :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
-      unless article == nil
-        article.destroy
+
+    params[:article_ids].each do |article_id|
+      if delete_mode.to_i == 2 then
+        summary = Summary.find(:first, 
+          :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+        unless summary == nil
+          summary.destroy
+        end
+      else
+        article = UserArticle.find(:first, 
+          :conditions => {:user_id =>getLoginUser.id, :article_id => article_id})
+        unless article == nil
+          article.destroy
+        end
       end
     end
     redirect_to :action => "index"
   end
 
+  def mark_as_read
+    params[:article_ids].each do |article_id|
+      logger.debug("#{article_id}")
+
+      article = UserArticle.find(:first, 
+        :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+
+      if article && article.read_flg != true then
+        logger.debug("in in in!!!!")
+        article.read_flg = true
+        article.save
+      end
+    end
+
+    redirect_to :action => "index"
+  end
+
+  def mark_as_unread
+    redirect_to :action => "index"
+=begin
+    article = UserArticle.find(:first, 
+      :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
+
+    if article && article.read_flg == true then
+      article.read_flg = false
+      article.save
+    end
+
+
+=end
+  end
+
+  def mark_as_favorite
+  end
+=begin
   def reverse_read_flg
     article = UserArticle.find(:first, 
       :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
@@ -117,9 +155,11 @@ class MypageController < ApplicationController
 
     redirect_to :action => "index"
   end
-
+=end
   def follow
     logger.debug("follow")
+    # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
+    
     @current_user = getLoginUser
 
     if @current_user then
@@ -136,6 +176,8 @@ class MypageController < ApplicationController
 
   def unfollow
     logger.debug("unfollow")
+    # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
+
     @current_user = getLoginUser
 
     if @current_user && @current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id]) then

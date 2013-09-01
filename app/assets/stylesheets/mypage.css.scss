@@ -8,7 +8,8 @@
 .span3 {
   border: 2px solid #ddd;
   padding: 5px;
-  height: 1000px;
+//  height: 1000px;
+  height: 500px;
 
   float: left;
   margin: 20px 0px 0px 10px;
@@ -159,6 +160,43 @@
   -o-text-overflow: ellipsis;
 }
 
+#operate_article {
+//  border: 2px solid #ddd;
+  width: 100%;
+
+  float: left;
+  margin-top: -15px;
+  padding-left: 30px;
+
+  div {
+    border: 2px solid #ddd;
+    border-radius: 0.3em;
+    background-color: #ddd;
+    //background-color: #f6f4f6;
+
+//    background:-moz-linear-gradient(rgba(34,85,136,0.5), rgba(34,85,136,1));
+//    background:-webkit-gradient(linear, 100% 0%, 100% 100%, from(#f6f4f6), to(#ddd));
+
+    float: left;
+    margin-left: 10px;
+    margin-bottom: 3px;
+    padding: 0px 10px 0px 0px;
+    width: auto;
+    height: 22px;
+
+    img {
+      float: left;
+      margin-top: 3px;
+      margin-left: 5px;
+    }
+    p {
+      float: left;
+      margin: 2px 0px 5px 5px;
+      color: #a2a2a2;
+    }
+  }
+}
+
 ul.tab {
   margin: 20px;
   padding: 0;
@@ -213,6 +251,7 @@ ul.tab {
 }
 
 .table {
+  clear: left;
   width: 800px;
   padding-left: 35px;
 }
@@ -232,12 +271,13 @@ ul.tab {
 }
 
 .title {
-  border: 1px solid #e5e5e5;
-  height: 50px;
+  border-bottom: 2px solid #e5e5e5;
+  height: 30px;
 }
 
 .title > a {
   color: rgb(162, 162, 162);
+  margin-left: 0px;
 
   &:hover {
     color: #5B91FF;
@@ -246,7 +286,7 @@ ul.tab {
 }
 
 .num_column {
-  border: 1px solid #e5e5e5;
+  border-bottom: 2px solid #e5e5e5;
 
   a {
     color: rgb(162, 162, 162);    
@@ -321,7 +361,6 @@ ul.tab {
 }
 
 .dropdown-checkbox > li {
-  text-align: start;
   font-size: 13px;
   font-weight: normal;
 }

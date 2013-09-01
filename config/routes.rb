@@ -2,6 +2,9 @@ SummaryDev::Application.routes.draw do
   get "mypage/index"
   get "mypage/delete"
   get "mypage/reverse_read_flg"
+  get "mypage/mark_as_read"
+  get "mypage/mark_as_unread"
+  get "mypage/mark_as_favorite"
   get "mypage/follow"
   get "mypage/unfollow"
 
