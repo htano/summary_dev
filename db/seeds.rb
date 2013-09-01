@@ -8,6 +8,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # User
+User.create(name: "summary", mail_addr: "summary.dev@gmail.com",
+  open_id: "https://www.google.com/accounts/o8/id?id=AItOawlDmHFynj5HotAc7FisQwAD3kZC_jeaMTE",
+  prof_image: "account_pictures/usertile44.bmp", yuko_flg: true)
 User.create(name: "tetsuma", mail_addr: "usdeurjpy0305@gmail.com",
   open_id: "https://www.google.com/accounts/o8/id?id=AItOawkx385OG8-mA1YBPW-VZTRsASfBO_tYuw0",
   prof_image: "account_pictures/usertile44.bmp", yuko_flg: true)

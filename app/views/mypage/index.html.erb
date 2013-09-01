@@ -219,6 +219,7 @@
             <tr>
               <th class="title">
                 <% if @is_login_user then %>
+                <% if false then %>
                 <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
                 <ul class="dropdown-checkbox">
                   <li><%= link_to "mark as unread", {:action => "reverse_read_flg", :user_id => @user.id, 
@@ -230,6 +231,7 @@
                       {:controller => "summary", :action => "edit", :article_id => read_article.id} %>
                   </li>
                 </ul>
+                <% end %>
                 <% end %>
                 <a href="<%= read_article.url %>" target="_blank"><%= read_article.title %></a>
               </th>
