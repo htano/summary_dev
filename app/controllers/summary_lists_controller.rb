@@ -67,14 +67,45 @@ class SummaryListsController < ApplicationController
 			redirect_to :controller => "consumer", :action => "index"
 			return	
 		end
-	    #underConstaction
-	end
+        userArticleForIsRead=UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId])
 
+        unless userArticleForIsRead == nil then
+			userArticleForIsRead.read_flg = true	
+		else
+            userArticleForIsRead=UserArticle.new(:user_id=>getLoginUser.id,:article_id=>params[:articleId],:read_flg=>true)
+		end
+
+        if userArticleForIsRead.save
+			oppai1
+			render
+
+		else
+			oppai3
+		end
+	end
+	
 	def cancelIsRead 
 		if getLoginUser == nil then
 			redirect_to :controller => "consumer", :action => "index"
 			return	
 		end
-		#underConstraction
+
+        userArticleForIsRead=UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId])
+
+        unless userArticleForIsRead == nil then
+			userArticleForIsRead.read_flg = false
+		else
+            userArticleForIsRead=UserArticle.new(:user_id=>getLoginUser.id,:article_id=>params[:articleId],:read_flg=>false)
+		end
+
+        if userArticleForIsRead.save
+			oppai2
+			render
+			else
+			
+			oppai4
+			end
+
 	end
+
 end

@@ -4,8 +4,19 @@ class Article < ActiveRecord::Base
 
 	def isRead(user,article)
 		unless user == nil then
-			unless article.user_articles.find_by(:user_id => user.id) == nil then 
-				isRead = true
+			userArticleForIsRead = article.user_articles.find_by(:user_id => user.id)
+			unless  userArticleForIsRead == nil then
+				
+				if userArticleForIsRead.read_flg == true then
+				
+                isRead = true
+
+				else
+			    	
+				isRead = false
+
+				end
+
 			else
 				isRead = false 
 			end
