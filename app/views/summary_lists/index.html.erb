@@ -9,11 +9,10 @@
 				<% end %>
 			</h1>
 			<div id="yArticleIsRead">				
-				既読にする
 				<% unless @isReadArticle then %>
-					<!-- 建設中 --!>
+					<%= link_to "既読にする",{:action => "isRead", :articleId => @article.id, :remote => true}, { :class => "summary_list_link" }%>
 				<% else %>
-					<!-- 建設中 --!>
+					<%= link_to "未読に戻す",{:action => "cancelIsRead", :articleId => @article.id, :remote => true}, { :class => "summary_list_link" }%>
 				<% end %>
 			</div>
 
