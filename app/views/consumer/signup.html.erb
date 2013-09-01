@@ -1,15 +1,55 @@
+<% if flash[:alert] %>
+  <div class='alert'>
+   <%= h(flash[:alert]) %>
+  </div>
+<% end %>
 <% if flash[:error] %>
   <div class='login_error'>
    <%= h(flash[:error]) %>
   </div>
 <% end %>
-
-<%= form_tag "/session/consumer/signup_complete" do %>
-  ユーザ名(User Name)：
-  <%= text_field_tag :creating_user_id %>
-  </br>
-  <% if params[:fromUrl] %>
-    <input type="hidden" name="fromUrl" value="<%= params[:fromUrl] %>">
-  <% end %>
-  <%= submit_tag("アカウント登録(SignUp)") %>
+<% if flash[:success] %>
+  <div class='success'>
+   <%= h(flash[:success]) %>
+  </div>
 <% end %>
+
+<form method="post" accept-charset="UTF-8" action="<%= url_for :action => 'signup_complete'%>">
+
+<div class="setting_container">
+  <div class="login_buttons_contents">
+    <h3>SignUp Page</h3>
+    <div class="setting_inner">
+      <dl style="margin-bottom:0px;">
+        <dt>
+        <label>UserID(*)</label> 
+        </dt>
+        <input type="text" name="creating_user_id" id="input_user_name" value="" style="width:97%;" onKeyUp="check_uid()"/>
+        <span>RegExp: /^[A-Za-z0-9_-]{4,20}$/</span>
+      </dl>
+      
+      <div style="margin-top:5px;">
+        <span id="message_of_check_uname">　</span>
+      </div>
+      <div style="margin-top:10px;">
+        <%= image_tag("ajax-loader.gif", id: "ajax_loading", hidden: true) %>
+        <span id="message_of_check_uname2">　</span>
+      </div>
+      <dl>
+        <dt>
+          <input type="checkbox" name="edit_profile_flg" value="1" />Edit User Profile and/or Mail Address after the SignUp
+        </dt>
+      </dl>
+
+      <% if params[:fromUrl] %>
+        <input type="hidden" name="fromUrl" value="<%= params[:fromUrl] %>">
+      <% end %>
+      <% if params[:image] %>
+        <input type="hidden" name="image" value="<%= params[:image] %>">
+      <% end %>
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="submit" class="profile_btn" value="SignUp"></input>
+
+    </div>
+  </div>
+</div>

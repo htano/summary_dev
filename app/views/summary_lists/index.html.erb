@@ -5,19 +5,20 @@
 		<div id = "yArticle">
 			<h1 id="yArticleName">
 				<% if  @article != nil %>
-					<%= @article.title %>	
+					<%= link_to(@article.title,@article.url,:class => "summary_list_link") %>	
 				<% end %>
 			</h1>
-			<div id="yArticleLink">
-				<% if  @article != nil %>
-					<%= link_to("元記事を見る",@article.url) %>
+			<div id="yArticleIsRead">				
+				<% unless @isReadArticle then %>
+					<%= link_to "既読にする",{:action => "isRead", :articleId => @article.id, :remote => true}, { :class => "summary_list_link" }%>
+				<% else %>
+					<%= link_to "未読に戻す",{:action => "cancelIsRead", :articleId => @article.id, :remote => true}, { :class => "summary_list_link" }%>
 				<% end %>
-
 			</div>
 
 			<% unless @summaryList.blank? %>
 				<div id="youyaku">
-					<% @summaryList.each do |summaryItem| %>
+					<% @summaryList.each_with_index do |summaryItem,index| %>
 						<div id="yAuther">
 							<%= summaryItem.user.name %>	
 						</div>
@@ -25,18 +26,79 @@
 							<%= summaryItem.summary.content %>	
 						</h2>
 
-						<div id ="yArticleIiyo">
+						<div class ="yArticleIiyo">
 							<% unless summaryItem.isGoodCompleted then %>
-								<%= link_to image_tag("icons/good_summary.jpg", { :border => '0', :alt => 'いい要約だね！'}),{:action => "goodSummary",:summaryId =>summaryItem.summary.id, :articleId => @article.id} %>
+								<div id = "yetGoodSummary<%=index%>">
+									<%= link_to image_tag("icons/good_summary.jpg",
+														  { :border => '0', :alt => 'いい要約だね！'}),
+														  {	:action => "goodSummary",
+															  :listIndex =>index,
+															  :summaryId =>summaryItem.summary.id, 
+															  :articleId => @article.id,
+															  :remote => true,
+									} %>
+								</div>
 
+								<div id = "alreadyGoodSummary<%=index%>" style="display:none"	>
+									<%= link_to image_tag("icons/good_summary_cmp.jpg", 
+														  { :border => '0', 
+															:alt => 'あなたは既にいい要約だねをしています'}),
+														  {	:action => "cancelGoodSummary",
+															  :listIndex =>index,
+															  :summaryId =>summaryItem.summary.id, 
+															  :articleId => @article.id,
+															  :remote => true,
+									} %>
+								</div>
 							<% else %>
-								<%= image_tag("icons/good_summary_cmp.jpg", { :border => '0', :alt => 'あなたは既にいい要約だねをしています'}) %>
+								<div id = "yetGoodSummary<%=index%>" style="display:none"	>
+									<%= link_to image_tag("icons/good_summary.jpg",
+														  { :border => '0', :alt => 'いい要約だね！'}),
+														  {	:action => "goodSummary",
+															  :listIndex =>index,
+															  :summaryId =>summaryItem.summary.id, 
+															  :articleId => @article.id,
+															  :remote => true,
+									} %>
+								</div>
+
+								<div id = "alreadyGoodSummary<%=index%>">
+									<%= link_to image_tag("icons/good_summary_cmp.jpg", 
+														  { :border => '0', 
+															:alt => 'あなたは既にいい要約だねをしています'}),
+														  {	:action => "cancelGoodSummary",
+															  :listIndex =>index,
+															  :summaryId =>summaryItem.summary.id, 
+															  :articleId => @article.id,
+															  :remote => true,
+									} %>
+								</div>
 							<% end %>
 						</div>
 
-						<div id ="yArticleIiyo">
-							ただいまのいい要約だねの数は<%= summaryItem.summaryPoint %>です。 
+						<div class ="yArticleIiyo">
+							<% unless summaryItem.isGoodCompleted then %>
+								<div id = "yetGoodSummary_point<%=index%>">
+								ただいまのいい要約だねの数は<%= summaryItem.summaryPoint %>です。 
+							    </div>
+								<div id = "alreadyGoodSummary_point<%=index%>" style="display:none"	>
+								ただいまのいい要約だねの数は<%= summaryItem.summaryPoint + 1 %>です。 
+								</div>
+							<% else %>
+								<div id = "yetGoodSummary_point<%=index%>" style="display:none"	>
+								ただいまのいい要約だねの数は<%= summaryItem.summaryPoint - 1%>です。 
+							    </div>
+								<div id = "alreadyGoodSummary_point<%=index%>">
+								ただいまのいい要約だねの数は<%= summaryItem.summaryPoint  %>です。 
+								</div>
+							<% end%>
 						</div>
+
+
+
+
+
+
 
 						<hr id = "yArticleLine">
 

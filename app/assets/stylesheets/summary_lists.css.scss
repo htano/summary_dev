@@ -2,6 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+a.summary_list_link{ color: #EEEEEE }
+
 #yBoxOutline {
  clear:boath;
  margin: 30px auto;
@@ -29,7 +32,8 @@
  height: 40px;
 }
 
-#yArticleLink{
+#yArticleIsRead{
+ color: #EEEEEE;
  background-color: #150908;
  text-align: right;
  padding-left: 10px;
@@ -58,7 +62,7 @@
  padding-right: 10px;
 }
 
-#yArticleIiyo{
+.yArticleIiyo{
  text-align: right;
  background-color: #E1541F;
  padding-left: 10px;
