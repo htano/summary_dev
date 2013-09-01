@@ -8,7 +8,8 @@ class SummaryListsController < ApplicationController
 		end
 		@user = getLoginUser
 		@summaryList = @article.getSortedSummaryList(@user, @article)
-
+        @isReadArticle = true
+		# @isReadArticle = @article.isRead(@user, @article)
 	end
 
 	def goodSummary 
@@ -24,7 +25,6 @@ class SummaryListsController < ApplicationController
 		end
 	end
 
-
 	def cancelGoodSummary 
 		if getLoginUser == nil then
 			redirect_to :controller => "consumer", :action => "index"
@@ -36,4 +36,30 @@ class SummaryListsController < ApplicationController
 			render
 	end
 
+=begin
+	def isRead 
+		if getLoginUser == nil then
+			redirect_to :controller => "consumer", :action => "index"
+			return	
+		end
+		 userArticle = UserArticle.where(:user_id => getLoginUser.id).where(:article_id =>params[:articleId]) 
+         userArticle.read_flg = true
+		if userArtcile.save
+			render
+		end
+	end
+
+	def cancelIsRead 
+		if getLoginUser == nil then
+			redirect_to :controller => "consumer", :action => "index"
+			return	
+		end
+		 userArticle = UserArticle.where(:user_id => getLoginUser.id).where(:article_id =>params[:articleId]) 
+         userArticle.read_flg = false 
+		if userArtcile.save
+			render
+		end
+
+	end
+=end
 end

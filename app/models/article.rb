@@ -2,6 +2,19 @@ class Article < ActiveRecord::Base
 	has_many :user_articles, :dependent => :destroy
 	has_many :summaries, :dependent => :destroy
 
+	def isRead(user,article)
+		unless user == nil then
+			unless article.user_articles.find_by(:user_id => user.id) == nil then 
+				isRead = true
+			else
+				isRead = false 
+			end
+		else
+			isRead = false 
+		end	
+		return isRead
+	end
+
 	def getSortedSummaryList(user,article)
 		#create array for calcration 
 		scoreItem = Struct.new(:summary,:goodSummaryPoint)
