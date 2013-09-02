@@ -11,9 +11,6 @@
 User.create(name: "summary", mail_addr: "summary.dev@gmail.com",
   open_id: "https://www.google.com/accounts/o8/id?id=AItOawlDmHFynj5HotAc7FisQwAD3kZC_jeaMTE",
   prof_image: "account_pictures/usertile44.bmp", yuko_flg: true)
-User.create(name: "tetsuma", mail_addr: "usdeurjpy0305@gmail.com",
-  open_id: "https://www.google.com/accounts/o8/id?id=AItOawkx385OG8-mA1YBPW-VZTRsASfBO_tYuw0",
-  prof_image: "account_pictures/usertile44.bmp", yuko_flg: true)
 User.create(name: "shingo0809", mail_addr: "shingo0809@gmail.com", open_id:"openid",
   prof_image: "account_pictures/usertile15.bmp")
 User.create(name: "yoshino023", mail_addr: "yoshino023@gmail.com", open_id:"openid1",
