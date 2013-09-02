@@ -27,7 +27,6 @@ SummaryDev::Application.routes.draw do
   get 'webpage/add_for_chrome_extension' => 'webpage#add_for_chrome_extension'
   #for webpage
   post 'webpage/add' => 'webpage#add'
-  post 'webpage/get_title' => 'webpage#get_title'
 
   #for webpage
   get 'summary/:article_id/edit' => 'summary#edit'

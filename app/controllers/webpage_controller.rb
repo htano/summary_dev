@@ -82,20 +82,6 @@ class WebpageController < ApplicationController
     end
   end
 
-  def get_title
-    if signed_in?
-      @url = "#{params[:url]}";
-      title = returnTitle(@url);
-      if title == nil
-        render :text => BLANK and return
-      else
-        render :text => title and return
-      end
-    else
-      redirect_to :controller => "consumer", :action => "index";
-    end
-  end
-
   def add
   	if signed_in?
       user_id = getLoginUser.id;
