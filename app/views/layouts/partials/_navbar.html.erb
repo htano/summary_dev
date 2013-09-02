@@ -1,45 +1,13 @@
 <script>
-$(function(){
-    error_msg = '指定されたURLは存在しません。URLを確認して下さい。'
-    $('#submit').click(function(){
-      if($("#url").val().length){
-          $.ajax({
-            url: '/webpage/get_title',
-            type: 'POST',
-            data: 'url=' + escape($('#url').val()),
-            dataType: 'text',
-            success: function(data) {
-            	if(data) {
-            	  if(confirm(data+'を登録して宜しいですか？')){
-            	  	$.ajax({
-            			url: '/webpage/add',
-            			type: 'POST',
-            			data: 'url=' + escape($('#url').val()),
-            			dataType: 'text',
-            			success: function(data) {
-            				alert(data);
-            				location.reload();
-            			},
-            			error: function(data) {
-            				alert(error_msg);
-            			}
-            		});
-            	  }
-              } else {
-              	alert(error_msg);
-              }
-            },
-            error: function(data) {
-              alert(error_msg);
-            }
-          });
-      } else {
-        alert('URLを入力して下さい。');
-      }
-    });
-
-});
+function checkURL(){
+  if(!$("#url").val().length){
+    alert("URLを入力して下さい。")
+    return false;
+  }
+}
 </script>
+
+<%= form_tag({:controller => 'webpage', :action => 'add'}, {:method => 'POST', :remote => 'true'}) do %>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
@@ -49,10 +17,10 @@ $(function(){
 
           <% if signed_in? %>
             <li>
-              <input class="nav_text" type="text" name="url" id="url" size="50">
+              <input class="nav_text" type="text" name="url" id="url">
             </li>
             <li>
-              <input id="submit" class="button button-flat:hover" value="book!" size="5">
+              <input type="submit" class="button button-flat:hover" value="book!" onclick="return checkURL()">
             </li>
           <% end %>
 
@@ -107,3 +75,5 @@ $(function(){
       </div>
     </div>
   </div>
+<% end %>
+<!--</form>-->

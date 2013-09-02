@@ -191,6 +191,7 @@
 
 /* line 59, ../scss/partials/_buttons.scss */
 input.button, button.button {
+  width: 100px;
   height: 34px;
   cursor: pointer;
 }

@@ -102,19 +102,19 @@ class WebpageController < ApplicationController
       @url = "#{params[:url]}";
       title = returnTitle(@url);
       if title == nil
-        render :text => "指定されたURLは存在しません。URLを確認して下さい。" and return
+        @msg = "指定されたURLは存在しません。URLを確認して下さい。" and return
       end
       article = Article.find_by_url(@url);
       if article != nil then
         user_article = article.user_articles.find_by_user_id(user_id);
           if user_article != nil then 
             #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
-            render :text => "登録済みです。" and return
+            @msg = "登録済みです。"  and return
           else
             #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
             user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
             if user_article.save
-              render :text => "登録が完了しました。" and return
+              @msg = "登録が完了しました。" and return
             end
           end
         else
@@ -124,7 +124,7 @@ class WebpageController < ApplicationController
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
-            render :text => "登録が完了しました。" and return
+              @msg = "登録が完了しました。" and return
           end
         end
       end
