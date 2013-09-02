@@ -1,0 +1,31 @@
+<div class="setting_container">
+  <%= render :partial => "settings/partials/navilist", :locals => {:user => @user} %>
+
+  <div class="setting_contents">
+    <h3>Mail Setting</h3>
+    <div class="setting_inner">
+
+      <dl>
+        <dt>
+          <label>Mail Address</label>
+        </dt>
+        <dd>
+          <%= @email %>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>
+          <label>Status</label>
+        </dt>
+        <dd>
+          <%= @email_status %>
+        </dd>
+      </dl>
+
+      <a href="<%= url_for :action => 'email_edit' %>">
+        <button class="profile_btn">edit</button>
+      </a>
+    </div>
+  </div>
+</div>

@@ -11,6 +11,9 @@
 User.create(name: "summary", mail_addr: "summary.dev@gmail.com",
   open_id: "https://www.google.com/accounts/o8/id?id=AItOawlDmHFynj5HotAc7FisQwAD3kZC_jeaMTE",
   prof_image: "account_pictures/usertile44.bmp", yuko_flg: true)
+User.create(name: "tetsuma", mail_addr: "usdeurjpy0305@gmail.com",
+  open_id: "https://www.google.com/accounts/o8/id?id=AItOawkx385OG8-mA1YBPW-VZTRsASfBO_tYuw0",
+  prof_image: "account_pictures/usertile44.bmp", yuko_flg: true)
 User.create(name: "shingo0809", mail_addr: "shingo0809@gmail.com", open_id:"openid",
   prof_image: "account_pictures/usertile15.bmp")
 User.create(name: "yoshino023", mail_addr: "yoshino023@gmail.com", open_id:"openid1",
@@ -178,5 +181,14 @@ Summary.create(content: "summary id 8 test", user_id: 2, article_id: 2)
 
 # GoodSummary
 GoodSummary.create(user_id: 1, summary_id: 1)
-GoodSummary.create(user_id: 1, summary_id: 1)
-GoodSummary.create(user_id: 1, summary_id: 1)
+GoodSummary.create(user_id: 2, summary_id: 1)
+GoodSummary.create(user_id: 3, summary_id: 1)
+GoodSummary.create(user_id: 4, summary_id: 1)
+GoodSummary.create(user_id: 5, summary_id: 1)
+GoodSummary.create(user_id: 3, summary_id: 2)
+GoodSummary.create(user_id: 2, summary_id: 2)
+GoodSummary.create(user_id: 4, summary_id: 2)
+GoodSummary.create(user_id: 3, summary_id: 3)
+GoodSummary.create(user_id: 3, summary_id: 4)
+GoodSummary.create(user_id: 4, summary_id: 4)
+GoodSummary.create(user_id: 2, summary_id: 5)

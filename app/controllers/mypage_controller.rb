@@ -20,6 +20,7 @@ class MypageController < ApplicationController
 
     if @is_login_user then
       @user = User.find_by_name(get_current_user_name)
+      @user.updateMypageAccess
     else
       @user = User.find_by_name(params[:name])
       if @user then
@@ -50,7 +51,6 @@ class MypageController < ApplicationController
       user = follower_favorite_user.user
       @followers.push(user)
     end
-
 
     # main tab & read tab
     @articles = []
@@ -85,31 +85,66 @@ class MypageController < ApplicationController
 
     # favorite tab
 
-    render :layout => 'application', :locals => {:user => @user}
+    render :layout => 'application'
   end
 
   def delete
     delete_mode = params[:delete_mode]
     logger.debug("delete_mode : #{delete_mode}")
-    if delete_mode.to_i == 2 then
-      summary = Summary.find(:first, 
-        :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
-      unless summary == nil
-        # logger.debug("not nil")
-        summary.destroy
+
+    params[:article_ids].each do |article_id|
+      if delete_mode.to_i == 2 then
+        summary = Summary.find(:first, 
+          :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+        unless summary == nil
+          summary.destroy
+        end
       else
-        # logger.debug("nil nil")
-      end
-    else
-      article = UserArticle.find(:first, 
-        :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
-      unless article == nil
-        article.destroy
+        article = UserArticle.find(:first, 
+          :conditions => {:user_id =>getLoginUser.id, :article_id => article_id})
+        unless article == nil
+          article.destroy
+        end
       end
     end
     redirect_to :action => "index"
   end
 
+  def mark_as_read
+    params[:article_ids].each do |article_id|
+      logger.debug("#{article_id}")
+
+      article = UserArticle.find(:first, 
+        :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+
+      if article && article.read_flg != true then
+        logger.debug("in in in!!!!")
+        article.read_flg = true
+        article.save
+      end
+    end
+
+    redirect_to :action => "index"
+  end
+
+  def mark_as_unread
+    redirect_to :action => "index"
+=begin
+    article = UserArticle.find(:first, 
+      :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
+
+    if article && article.read_flg == true then
+      article.read_flg = false
+      article.save
+    end
+
+
+=end
+  end
+
+  def mark_as_favorite
+  end
+=begin
   def reverse_read_flg
     article = UserArticle.find(:first, 
       :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
@@ -121,27 +156,39 @@ class MypageController < ApplicationController
 
     redirect_to :action => "index"
   end
-
+=end
   def follow
     logger.debug("follow")
-    current_user = getLoginUser
+    # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
+    
+    @current_user = getLoginUser
 
-    # error handle
-    FavoriteUser.create(:user_id => current_user.id, :favorite_user_id => params[:follow_user_id])
+    if @current_user then
+      # TODO : error handle
+      FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
+    end
 
-    redirect_to :action => "index", :name => params[:follow_user_name]
+    @user_id = params[:follow_user_id]
+    # for renewing followers number on profile view
+    @follower_num = "followers" + "<br>" + 
+                    FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]}).to_s
+
   end
 
   def unfollow
     logger.debug("unfollow")
-    current_user = getLoginUser
+    # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
 
-    # error check
-    # ? first
-    FavoriteUser.find(:first, 
-      :conditions => {:user_id => current_user.id, :favorite_user_id => params[:unfollow_user_id]}).destroy
+    @current_user = getLoginUser
 
-    redirect_to :action => "index", :name => params[:unfollow_user_name]
+    if @current_user && @current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id]) then
+      @current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
+    end
+
+    @user_id = params[:unfollow_user_id]
+    @follower_num = "followers" + "<br>" + 
+                    FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:unfollow_user_id]}).to_s
+
   end
 
   def destroy
@@ -160,4 +207,5 @@ private
     end
     return is_already_following
   end
+
 end

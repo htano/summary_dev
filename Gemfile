@@ -47,3 +47,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'nokogiri'
+
+gem 'omniauth-github'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'

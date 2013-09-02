@@ -8,7 +8,39 @@ require 'openid/store/filesystem'
 class ConsumerController < ApplicationController
   layout nil
 
+  def oauth_complete
+    #logger.debug env['omniauth.auth'].to_yaml
+    @oauth_url = "oauth://" + env['omniauth.auth']['provider'] + "/" + env['omniauth.auth']['uid']
+    @image_url = env['omniauth.auth'].info.image
+    session[:openid_url] = @oauth_url
+    if getLoginUser
+      @uname = getLoginUser.name
+      flash[:success] = "Hello " + @uname + ". Login processing was successful."
+      if getLoginUser.updateLoginInfo
+        if env['omniauth.params']['keep_login'] == "on"
+          cookies[:keep_login_token] = { :value => getLoginUser.keep_login_token, :expires => Time.now + 3.days }
+        end
+      else
+        #TODO Error handling
+      end
+      if env['omniauth.origin']
+        redirect_to env['omniauth.origin']
+      else
+        redirect_to :controller => 'mypage', :action => 'index'
+      end
+    else
+      if env['omniauth.origin']
+        redirect_to :action => 'signup', :image => @image_url,:fromUrl => env['omniauth.origin']
+      else
+        redirect_to :action => 'signup', :image => @image_url
+      end
+    end
+  end
+
   def index
+    if signed_in?
+      redirect_to :controller => 'mypage', :action => 'index'
+    end
     # render an openid form
   end
 
@@ -45,7 +77,7 @@ class ConsumerController < ApplicationController
     if params[:force_post]
       oidreq.return_to_args['force_post']='x'*2048
     end
-    return_to = url_for :action => 'complete', :only_path => false, :fromUrl => params[:fromUrl]
+    return_to = url_for :action => 'complete', :only_path => false, :fromUrl => params[:fromUrl], :keep_login => params[:keep_login]
     realm = url_for :action => '', :id => nil, :only_path => false
     
     if oidreq.send_redirect?(realm, return_to, params[:immediate])
@@ -110,16 +142,16 @@ class ConsumerController < ApplicationController
     case oidresp.status
     when OpenID::Consumer::SUCCESS
       session[:openid_url] = oidresp.display_identifier
-      if(User.isExists?(session[:openid_url]))
-        #redirect to any pages
-        @uname = User.getName(session[:openid_url])
+      if getLoginUser
+        @uname = getLoginUser.name
         flash[:success] = "Hello " + @uname + ". Login processing was successful."
-        if User.updateLastLoginTime?(session[:openid_url])
-          flash[:success] += "(" + User.getLastLogIn(session[:openid_url]).to_s + ")";
+        if getLoginUser.updateLoginInfo
+          if params[:keep_login] == "on"
+            cookies[:keep_login_token] = { :value => getLoginUser.keep_login_token, :expires => Time.now + 3.days }
+          end
         else
         end
         if params[:fromUrl]
-          flash[:alert] = "FromUrl is set: " + params[:fromUrl]
           redirect_to params[:fromUrl]
         else
           redirect_to :controller => 'mypage', :action => 'index'
@@ -137,90 +169,58 @@ class ConsumerController < ApplicationController
   end
 
   def sign_out
+    getLoginUser.execSignOut
     session[:openid_url] = nil
     flash[:success] = "LogOut Complete."
-    redirect_to :action => 'index'
+    if params[:fromUrl]
+      redirect_to :action => 'index', :fromUrl => params[:fromUrl]
+    else
+      redirect_to :action => 'index'
+    end
   end
 
-  # signup and signup_complete actions should belong to other controller.
   def signup
+    if !session[:openid_url]
+      flash[:error] = "Error: To signup, you have to login by openid."
+      redirect_to :action => 'index'
+    end
   end
 
   def signup_complete
-    @creating_user_id = "#{params[:creating_user_id]}";
-    if User.regist?(@creating_user_id, session[:openid_url])
-      flash[:success] = "Hello " + @creating_user_id + ". SignUp was successfully completed."
-      if params[:fromUrl]
-        redirect_to params[:fromUrl]
-      else
-        redirect_to :controller => 'mypage',:action => 'index'
-      end
-    else
-      flash[:error] = "SignUp Error: " + @creating_user_id + " has already exist."
-      redirect_to :action => 'signup'
-    end
-  end
-
-  def profile
-    if(User.isExists?(session[:openid_url]))
-      @uname = User.getName(session[:openid_url])
-      @email = User.getMailAddr(session[:openid_url])
-      if @email == nil
-        @email = "(undefined)"
-      end
-    else
-      flash[:error] = "To show the profile page, you have to login."
-      redirect_to :action => 'index'
-    end
-  end
-
-  def profile_edit
-    if(User.isExists?(session[:openid_url]))
-      @uname = User.getName(session[:openid_url])
-      @email = User.getMailAddr(session[:openid_url])
-      if @email == nil
-        @email = "(undefined)"
-      end
-    else
-      flash[:error] = "To show the profile page, you have to login."
-      redirect_to :action => 'index'
-    end
-  end
-
-  def profile_edit_complete
-    @new_mail_address = params[:mail_addr]
-    @confirm_mail_address = params[:mail_addr_confirm]
-    @uploaded_image_file = params[:profile_image]
-    
-    @mail_change = (@new_mail_address != "")
-    @redirect_url = url_for :action => 'profile'
-    @session_error = false
-    @edit_error = false
-    if(User.isExists?(session[:openid_url]))
-      if @mail_change
-        if @new_mail_address == @confirm_mail_address
-          User.updateMailAddr(@new_mail_address, session[:openid_url])
+    if session[:openid_url]
+      @creating_user_id = "#{params[:creating_user_id]}";
+      @edit_profile_flg = (params[:edit_profile_flg] == "1")
+      @error_message = User.regist(@creating_user_id, session[:openid_url])
+      if !@error_message
+        if params[:image]
+          getLoginUser.updateImagePath(params[:image])
+        end
+        flash[:success] = "Hello " + @creating_user_id + ". SignUp was successfully completed."
+        if @edit_profile_flg
+          redirect_to :controller => 'settings', :action => 'profile_edit'
         else
-          flash[:error] = "Different Mail Addresses were inputted."
-          @edit_error = true
+          if params[:fromUrl]
+            redirect_to params[:fromUrl]
+          else
+            redirect_to :controller => 'mypage',:action => 'index'
+          end
         end
-      end
-      if !@edit_error && @uploaded_image_file != nil
-        @save_file_name = './app/assets/images/' + 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
-        @for_db_image_path = 'account_pictures/' + getLoginUser.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
-        File.open(@save_file_name, 'wb') do |of|
-          of.write(@uploaded_image_file.read)
-        end
-        User.updateImagePath(session[:openid_url], @for_db_image_path)
-      end
-      if @edit_error
-        redirect_to :action => 'profile_edit'
       else
-        redirect_to :action => 'profile'
+        flash[:error] = @error_message
+        redirect_to :back
       end
     else
-      flash[:error] = "To show the profile page, you have to login."
+      flash[:error] = "Error: To signup, you have to login by openid."
       redirect_to :action => 'index'
+    end
+  end
+
+  def getUserExisting
+    @uname = params[:creating_user_name]
+    if User.is_exists?(@uname)
+      render :text => "EXISTS"
+    else
+      render :text => "NONE"
     end
   end
 

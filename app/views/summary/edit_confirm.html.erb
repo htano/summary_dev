@@ -1,16 +1,26 @@
 <script>
+
+$(document).ready(function (){
+  var thisValueLength = $('#content').val().length;
+  $('.count').html(thisValueLength);
+});
+
 $(function(){
   $('#submit_button').click(function(){
     return confirm('こちらの要約で確定しますか？');
   });
 });
 </script>
-  <form action="edit_complete">
+  <form method="POST" action="edit_complete">
     <div class="center">
       <p> [title]: <%= @title %> </p>
       <p>[url]<a href="<%= @url %>" target="_blank"> <%= @url %></a></p>
-      <p>[要約] <%= simple_format(@summary_content) %></p>
-      <input type="submit" id="submit_button" class="button button-flat:hover" value="確定">
-      <input type="hidden" name="summary_content" value="<%= @summary_content %>">
+      <textarea readonly id="content" name="content" cols=60 rows=10 maxlength="300" class="required"><%= @content %></textarea>
+      <span class="count">0</count><br/>
   </div>
+  <div class="center">
+    <input type="submit" id="submit_button" class="button button-flat:hover" value="確定">
+    <%= link_to '戻る', :back %>
+  </div>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 </form>
