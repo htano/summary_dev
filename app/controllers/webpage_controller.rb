@@ -145,6 +145,7 @@ class WebpageController < ApplicationController
       if doc.title != nil && doc.title != BLANK
         return doc.title;
       else
+      	#タイトルが取得出来ない時はホスト名をタイトルに設定する
         return URI.parse(url).host
       end
     rescue
