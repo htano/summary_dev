@@ -22,7 +22,7 @@ class WebpageController < ApplicationController
       end
       article = Article.find_by_url(@url);
       if article != nil then
-        user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
+        user_article = article.user_articles.find_by_user_id(user_id);
         if user_article != nil then 
           #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、article.idを返却する
           render :text => article.id and return
@@ -57,10 +57,15 @@ class WebpageController < ApplicationController
       end
       article = Article.find_by_url(@url);
       if article != nil then
-        user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
-        if user_article.save
-          render :text => article.id and return
-        end
+      	user_article = article.user_articles.find_by_user_id(user_id);
+      	if user_article != nil then
+      		render :text => article.id and return
+      	else
+      		user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
+      		if user_article.save
+      			render :text => article.id and return
+      		end
+      	end
       else
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
@@ -101,7 +106,7 @@ class WebpageController < ApplicationController
       end
       article = Article.find_by_url(@url);
       if article != nil then
-        user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
+        user_article = article.user_articles.find_by_user_id(user_id);
           if user_article != nil then 
             #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
             render :text => "登録済みです。" and return

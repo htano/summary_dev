@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 20130811052551) do
     t.datetime "updated_at"
   end
 
+  add_index "user_articles", ["user_id", "article_id"], name: "index_user_articles_on_user_id_and_article_id", unique: true
+
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "mail_addr"

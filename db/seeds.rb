@@ -87,7 +87,7 @@ FavoriteUser.create(user_id: 19, favorite_user_id: 1)
 FavoriteUser.create(user_id: 20, favorite_user_id: 1)
 
 # UserArticle
-UserArticle.create(user_id: 1, article_id:  1, read_flg: false)
+#UserArticle.create(user_id: 1, article_id:  1, read_flg: false)
 UserArticle.create(user_id: 1, article_id:  2, read_flg: false)
 UserArticle.create(user_id: 1, article_id:  3, read_flg: true)
 UserArticle.create(user_id: 1, article_id:  4, read_flg: false)

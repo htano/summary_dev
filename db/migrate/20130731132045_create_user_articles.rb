@@ -8,5 +8,6 @@ class CreateUserArticles < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index(:user_articles, [:user_id, :article_id], :unique => true)
   end
 end
