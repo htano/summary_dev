@@ -4,6 +4,7 @@ require 'nokogiri'
 require 'openssl'
 require 'open-uri'
 require 'kconv'
+require 'uri'
 
 class WebpageController < ApplicationController
 
@@ -136,7 +137,11 @@ class WebpageController < ApplicationController
         f.read;
       end
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
-      return doc.title;
+      if doc.title != nil && doc.title != BLANK
+        return doc.title;
+      else
+        return URI.parse(url).host
+      end
     rescue
       return nil;
     end
