@@ -13,8 +13,7 @@ class MypageController < ApplicationController
       if signed_in? then
         @is_login_user = true
       else
-        redirect_to :controller => 'consumer', :action => 'index'
-        return
+        redirect_to :controller => 'consumer', :action => 'index' and return
       end
     end
 
@@ -32,9 +31,6 @@ class MypageController < ApplicationController
         return
       end
     end
-
-    # whether user has a photo or no
-    @is_photo_data = @user.prof_image != nil ? true : false;
 
     # follow user information
     @favorite_users = []
@@ -160,6 +156,8 @@ class MypageController < ApplicationController
   def follow
     logger.debug("follow")
     # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
+    if getLoginUser == nil then
+    end
     
     @current_user = getLoginUser
 
