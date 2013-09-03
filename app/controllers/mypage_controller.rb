@@ -48,15 +48,23 @@ class MypageController < ApplicationController
       @followers.push(user)
     end
 
-    # main tab & read tab
+    # main tab & favorite tab & read tab
     @articles = []
+    @favorite_articles = []
     @read_articles = []
-    @main_summaries_num = []
-    @read_summaries_num = []
+
+    @main_summaries_num     = []
+    @favorite_summaries_num = []
+    @read_summaries_num     = []
+
     @user.user_articles.each do |user_article|
       article = Article.find(user_article.article_id)
       summary_num = Summary.count(:all, :conditions => {:article_id => user_article.article_id})
 
+      if user_article.favorite_flg then
+        @favorite_articles.push(article)
+        @favorite_summaries_num.push(summary_num)
+      end
       if user_article.read_flg then
         @read_articles.push(article)
         @read_summaries_num.push(summary_num)
@@ -141,6 +149,34 @@ class MypageController < ApplicationController
   end
 
   def mark_as_favorite
+    logger.debug("mark as favorite")
+    params[:article_ids].each do |article_id|
+      logger.debug("#{article_id}")
+      article = getLoginUser.user_articles.find_by_article_id(article_id)
+
+      if article && article.favorite_flg != true then
+        article.favorite_flg = true
+        article.save
+      end
+    end
+
+    redirect_to :action => "index"
+  end
+
+  def mark_as_unfavorite
+    logger.debug("mark as unfavorite")
+
+    params[:article_ids].each do |article_id|
+      logger.debug("#{article_id}")
+      article = getLoginUser.user_articles.find_by_article_id(article_id)
+
+      if article && article.favorite_flg == true then
+        article.favorite_flg = false
+        article.save
+      end
+    end
+
+    redirect_to :action => "index"
   end
 
   def clip

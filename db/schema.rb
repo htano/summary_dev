@@ -48,7 +48,8 @@ ActiveRecord::Schema.define(version: 20130811052551) do
   create_table "user_articles", force: true do |t|
     t.integer  "user_id"
     t.integer  "article_id"
-    t.boolean  "read_flg"
+    t.boolean  "read_flg",     default: false
+    t.boolean  "favorite_flg", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

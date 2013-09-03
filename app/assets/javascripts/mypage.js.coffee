@@ -66,8 +66,69 @@
     $("div>#m_mark_as_read_btn").wrap("<a href=/mypage/mark_as_read?#{params}></a>")
     if checked_num == 1
       $("div>#m_edit_summary_btn").wrap("<a href='/summary/#{article_ids}/edit'></a>")
-    $("div>#m_mark_as_favorite_btn").wrap("<a href='/mypage/index'></a>")
+    $("div>#m_mark_as_favorite_btn").wrap("<a href='/mypage/mark_as_favorite?#{params}'></a>")
     $("div>#m_delete_btn").wrap("<a href='/mypage/delete_article?#{params}'></a>")
+
+@clickFavoriteCheckBox = ->
+  checkbox = document.favorite_checkbox
+  checkbox_num = checkbox.elements.length
+
+  checked_num = 0
+  article_ids = []
+  i = 0
+
+  while i < checkbox_num
+    if checkbox.elements[i].checked
+      checked_num++
+      article_id = checkbox.elements[i].value
+      article_ids.push(article_id)
+    i++
+
+  # handle layout
+  edit_summary_btn       = document.getElementById('f_edit_summary_btn')
+  mark_as_unfavorite_btn = document.getElementById('f_mark_as_unfavorite_btn')
+  delete_btn             = document.getElementById('f_delete_btn')
+
+  if checked_num is 0
+    edit_summary_btn.style.backgroundColor     = "#ddd"
+    $("a>#f_edit_summary_btn").unwrap()
+
+    mark_as_unfavorite_btn.style.backgroundColor = "#ddd"
+    $("a>#f_mark_as_unfavorite_btn").unwrap()
+
+    delete_btn.style.backgroundColor           = "#ddd"
+    $("a>#f_delete_btn").unwrap()
+
+  else if checked_num is 1
+    edit_summary_btn.style.backgroundColor     = "white"
+    mark_as_unfavorite_btn.style.backgroundColor = "white"
+    delete_btn.style.backgroundColor           = "white"
+    
+  else if checked_num is 2
+    edit_summary_btn.style.backgroundColor = "#ddd"
+    $("a>#f_edit_summary_btn").unwrap()
+
+  console.debug "checked num = " + checked_num
+
+  # create link
+  if checked_num > 0
+    # create parameters
+    i = 0
+    params = ""
+    while i < article_ids.length
+      params += "article_ids[]=" + "#{article_ids[i]}&"
+      i++
+    console.debug params
+
+    $("a>#f_edit_summary_btn").unwrap()
+    $("a>#f_mark_as_unfavorite_btn").unwrap()
+    $("a>#f_delete_btn").unwrap()
+
+
+    if checked_num == 1
+      $("div>#f_edit_summary_btn").wrap("<a href='/summary/#{article_ids}/edit'></a>")
+    $("div>#f_mark_as_unfavorite_btn").wrap("<a href='/mypage/mark_as_unfavorite?#{params}'></a>")
+    $("div>#f_delete_btn").wrap("<a href='/mypage/delete_article?#{params}'></a>")
 
 @clickReadCheckBox = ->
   checkbox = document.read_checkbox
@@ -130,7 +191,7 @@
     $("div>#r_mark_as_unread_btn").wrap("<a href=/mypage/mark_as_unread?#{params}></a>")
     if checked_num == 1
       $("div>#r_edit_summary_btn").wrap("<a href='/summary/#{article_ids}/edit'></a>")
-    $("div>#r_mark_as_favorite_btn").wrap("<a href='/mypage/index'></a>")
+    $("div>#r_mark_as_favorite_btn").wrap("<a href='/mypage/mark_as_favorite?#{params}'></a>")
     $("div>#r_delete_btn").wrap("<a href='/mypage/delete_article?#{params}'></a>")
 
 @clickSummaryCheckBox = ->
@@ -186,12 +247,10 @@
   main_checkbox     = document.main_checkbox
   summary_checkbox  = document.summary_checkbox
   # TODO : add favorite checkbox
-#  favorite_checkbox = document.favorite_checkbox
+  favorite_checkbox = document.favorite_checkbox
   read_checkbox     = document.read_checkbox
 
-  checkbox_num = main_checkbox.elements.length + summary_checkbox.elements.length + read_checkbox.elements.length
-  # TODO : add favorite checkbox
-#  checkbox_num = main_checkbox.elements.length + summary_checkbox.elements.length + read_checkbox.elements.length + favorite_checkbox.elements.length
+  checkbox_num = main_checkbox.elements.length + summary_checkbox.elements.length + read_checkbox.elements.length + favorite_checkbox.elements.length
 
   checked_num = 0
   article_ids = []
@@ -212,7 +271,14 @@
       article_id = summary_checkbox.elements[i].value
       article_ids.push(article_id)
     i++
-  # TODO : add favorite checkbox
+  # favorite tab
+  i = 0
+  while i < favorite_checkbox.elements.length
+    if favorite_checkbox.elements[i].checked
+      checked_num++
+      article_id = favorite_checkbox.elements[i].value
+      article_ids.push(article_id)
+    i++
   # read tab
   i = 0
   while i < read_checkbox.elements.length

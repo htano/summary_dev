@@ -117,8 +117,8 @@
             <div id="f_edit_summary_btn">
               <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
             </div>
-            <div id="f_mark_off_favorite_btn">
-              <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark off favorite") %>
+            <div id="f_mark_as_unfavorite_btn">
+              <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark as unfavorite") %>
             </div>
             <div id="f_delete_btn">
               <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
@@ -184,17 +184,6 @@
             <% @edited_summaries.each_with_index do |summary, i| %>
             <tr>
               <th class="title">
-                <% if false then %>
-                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
-                <ul class="dropdown-checkbox">
-                  <li><%= link_to "delete", {:action => "delete_summary", :user_id => @user.id, 
-                    :name => @user.name, :article_id => summary.id } %></li>
-                    <li><%= link_to "revise", 
-                    {:controller => "summary", :action => "edit", :article_id => summary.id} %>
-                  </li>
-                </ul>
-                <% end %>
-
                 <% if @is_login_user then %>
                 <%= check_box 'check_article', i, 
                 {:class => "article_checkbox", :id => "summary_checkbox", :onclick => "clickSummaryCheckBox()"}, summary.id, false %>
@@ -215,13 +204,34 @@
             <th id="article_title_top">TITLE</th>
             <th id="summary_number_top">summary</th>
           </tr>
+          <% if @favorite_articles then %>
+          <form name="favorite_checkbox">
+            <% @favorite_articles.each_with_index do |favorite_article, i| %>
+            <tr>
+              <th class="title">
+                <% if @is_login_user then %>
+                <%= check_box 'check_article', i,
+                {:class => "article_checkbox", :id => "favorite_checkbox", :onclick => "clickFavoriteCheckBox()"}, favorite_article.id, false %>
+                <% else %>
+                <%= check_box 'check_article', i,
+                {:class => "article_checkbox", :id => "article_check", :onclick => "clickCheckBoxForClip()"}, favorite_article.id, false %>
+                <% end %>
+                <a href="<%= favorite_article.url %>" target="_blank"><%= favorite_article.title %></a>
+              </th>
+              <th class="num_column"><%= link_to @favorite_summaries_num[i], 
+              {:controller => 'summary_lists', :action => 'index', :articleId => favorite_article.id} %>
+              </th>
+            </tr>
+            <% end %>
+          </form>
+          <% end %>
         </table>
         <table class="read_table read">
           <tr class="table_top">
             <th id="article_title_top">TITLE</th>
             <th id="summary_number_top">summary</th>
           </tr>
-          <% if @read_articles %>
+          <% if @read_articles then %>
           <form name="read_checkbox">
             <% @read_articles.each_with_index do |read_article, i| %>
             <tr>
@@ -237,7 +247,7 @@
               </th>
               <th class="num_column"><%= link_to @read_summaries_num[i], 
               {:controller => 'summary_lists', :action => 'index', :articleId => read_article.id} %>
-            </th>
+              </th>
           </tr>
           <% end %>
         </form>
