@@ -11,11 +11,12 @@ SummaryDev::Application.routes.draw do
   get "auth/:provider/callback" => "consumer#oauth_complete"
 
   get "mypage/index"
-  get "mypage/delete"
-  get "mypage/reverse_read_flg"
+  get "mypage/delete_article"
+  get "mypage/delete_summary"
   get "mypage/mark_as_read"
   get "mypage/mark_as_unread"
   get "mypage/mark_as_favorite"
+  get "mypage/clip"
   get "mypage/follow"
   get "mypage/unfollow"
 

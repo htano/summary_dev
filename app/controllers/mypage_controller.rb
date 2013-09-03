@@ -13,8 +13,7 @@ class MypageController < ApplicationController
       if signed_in? then
         @is_login_user = true
       else
-        redirect_to :controller => 'consumer', :action => 'index'
-        return
+        redirect_to :controller => 'consumer', :action => 'index' and return
       end
     end
 
@@ -32,9 +31,6 @@ class MypageController < ApplicationController
         return
       end
     end
-
-    # whether user has a photo or no
-    @is_photo_data = @user.prof_image != nil ? true : false;
 
     # follow user information
     @favorite_users = []
@@ -88,25 +84,27 @@ class MypageController < ApplicationController
     render :layout => 'application'
   end
 
-  def delete
-    delete_mode = params[:delete_mode]
-    logger.debug("delete_mode : #{delete_mode}")
-
+  def delete_article
     params[:article_ids].each do |article_id|
-      if delete_mode.to_i == 2 then
-        summary = Summary.find(:first, 
-          :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
-        unless summary == nil
-          summary.destroy
-        end
-      else
-        article = UserArticle.find(:first, 
-          :conditions => {:user_id =>getLoginUser.id, :article_id => article_id})
-        unless article == nil
-          article.destroy
-        end
+      article = UserArticle.find(:first, 
+        :conditions => {:user_id =>getLoginUser.id, :article_id => article_id})
+      unless article == nil
+        article.destroy
       end
     end
+
+    redirect_to :action => "index"
+  end
+
+  def delete_summary
+    params[:article_ids].each do |article_id|
+      summary = Summary.find(:first, 
+        :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+      unless summary == nil
+        summary.destroy
+      end
+    end
+
     redirect_to :action => "index"
   end
 
@@ -118,7 +116,6 @@ class MypageController < ApplicationController
         :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
 
       if article && article.read_flg != true then
-        logger.debug("in in in!!!!")
         article.read_flg = true
         article.save
       end
@@ -128,38 +125,41 @@ class MypageController < ApplicationController
   end
 
   def mark_as_unread
-    redirect_to :action => "index"
-=begin
-    article = UserArticle.find(:first, 
-      :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
+    params[:article_ids].each do |article_id|
+      logger.debug("#{article_id}")
 
-    if article && article.read_flg == true then
-      article.read_flg = false
-      article.save
+      article = UserArticle.find(:first, 
+        :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+
+      if article && article.read_flg == true then
+        article.read_flg = false
+        article.save
+      end
     end
 
-
-=end
+    redirect_to :action => "index"
   end
 
   def mark_as_favorite
   end
-=begin
-  def reverse_read_flg
-    article = UserArticle.find(:first, 
-      :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
 
-    if article then
-      article.read_flg = !article.read_flg
-      article.save
+  def clip
+    logger.debug("clip")
+    params[:article_ids].each do |article_id|
+      logger.debug("#{article_id}")
+      unless UserArticle.exists?(:user_id => getLoginUser.id, :article_id => article_id) then
+        UserArticle.create(:user_id => getLoginUser.id, :article_id => article_id)
+      end
     end
 
     redirect_to :action => "index"
   end
-=end
+
   def follow
     logger.debug("follow")
     # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
+    if getLoginUser == nil then
+    end
     
     @current_user = getLoginUser
 
@@ -173,6 +173,10 @@ class MypageController < ApplicationController
     @follower_num = "followers" + "<br>" + 
                     FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]}).to_s
 
+    respond_to do |format|
+      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.js
+    end
   end
 
   def unfollow
@@ -189,6 +193,10 @@ class MypageController < ApplicationController
     @follower_num = "followers" + "<br>" + 
                     FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:unfollow_user_id]}).to_s
 
+    respond_to do |format|
+      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.js
+    end
   end
 
   def destroy

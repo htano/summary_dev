@@ -51,3 +51,11 @@ gem 'nokogiri'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
+
+group :development do
+  # エラー画面をわかりやすく整形してくれる
+  gem 'better_errors'
+
+  # better_errorsの画面上にirb/pry(PERL)を表示する
+  gem 'binding_of_caller'
+end
