@@ -75,6 +75,7 @@
 
   hr {
     width: 245px;
+    clear: left;
   }
 
   // ----------------------
@@ -304,11 +305,6 @@ ul.tab {
     color: #5B91FF;
     text-decoration: underline;
   }
-}
-
-#article_check {
-//  float: left;
-//  margin-left: 10px;
 }
 
 .article_checkbox {
