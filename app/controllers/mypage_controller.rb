@@ -13,8 +13,7 @@ class MypageController < ApplicationController
       if signed_in? then
         @is_login_user = true
       else
-        redirect_to :controller => 'consumer', :action => 'index'
-        return
+        redirect_to :controller => 'consumer', :action => 'index' and return
       end
     end
 
@@ -32,9 +31,6 @@ class MypageController < ApplicationController
         return
       end
     end
-
-    # whether user has a photo or no
-    @is_photo_data = @user.prof_image != nil ? true : false;
 
     # follow user information
     @favorite_users = []
@@ -160,6 +156,8 @@ class MypageController < ApplicationController
   def follow
     logger.debug("follow")
     # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
+    if getLoginUser == nil then
+    end
     
     @current_user = getLoginUser
 
@@ -173,6 +171,10 @@ class MypageController < ApplicationController
     @follower_num = "followers" + "<br>" + 
                     FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]}).to_s
 
+    respond_to do |format|
+      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.js
+    end
   end
 
   def unfollow
@@ -189,6 +191,10 @@ class MypageController < ApplicationController
     @follower_num = "followers" + "<br>" + 
                     FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:unfollow_user_id]}).to_s
 
+    respond_to do |format|
+      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.js
+    end
   end
 
   def destroy

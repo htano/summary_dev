@@ -4,7 +4,7 @@ $(document).ready( function(){
   console.log( $("p#p_title").text() );
   $("img.a_load").attr("style", "visibility:visible;");
   $.ajax({
-      url: 'http://localhost:3000/summary_lists/get_summary_list_for_chrome_extension',
+      url: 'http://' + bg.SERVICE_HOSTNAME + '/summary_lists/get_summary_list_for_chrome_extension',
       type: 'GET',
       data: 'url=' + escape(bg.current_tab.url),
       dataType: 'json',
