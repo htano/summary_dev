@@ -7,5 +7,6 @@ class CreateSummaries < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index(:summaries, [:user_id, :article_id], :unique => true)
   end
 end

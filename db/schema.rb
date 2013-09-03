@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 20130811052551) do
     t.datetime "updated_at"
   end
 
+  add_index "summaries", ["user_id", "article_id"], name: "index_summaries_on_user_id_and_article_id", unique: true
+
   create_table "user_articles", force: true do |t|
     t.integer  "user_id"
     t.integer  "article_id"
