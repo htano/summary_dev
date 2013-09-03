@@ -1,9 +1,13 @@
 <script>
 function checkURL(){
-  if(!$("#url").val().length){
-    alert("URLを入力して下さい。")
-    return false;
-  }
+	if(!$("#url").val().length){
+		alert("URLを入力して下さい。")
+		return false;
+	} else {
+		if(!confirm($("#url").val()+'を登録して宜しいですか？')){
+			return false;
+		}
+	}
 }
 </script>
 

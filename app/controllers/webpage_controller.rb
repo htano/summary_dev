@@ -118,6 +118,22 @@ class WebpageController < ApplicationController
       redirect_to :controller => "consumer", :action => "index";
     end
   end
+  
+=begin
+  def get_title
+    if signed_in?
+      @url = "#{params[:url]}";
+      title = returnTitle(@url);
+      if title == nil
+        render :text => BLANK and return
+      else
+        render :text => title and return
+      end
+    else
+      redirect_to :controller => "consumer", :action => "index";
+    end
+  end
+=end
 
   #指定されたurlのタイトルを返却するメソッド
   def returnTitle(url)
