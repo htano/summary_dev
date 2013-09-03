@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130811052551) do
+ActiveRecord::Schema.define(version: 20130903131856) do
 
   create_table "articles", force: true do |t|
     t.string   "url"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20130811052551) do
     t.datetime "keep_login_expire"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "keep_login_ip"
   end
 
   add_index "users", ["name"], name: "idx_name", unique: true

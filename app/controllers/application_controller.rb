@@ -32,7 +32,8 @@ class ApplicationController < ActionController::Base
     if @user_obj
       return @user_obj
     else
-      @user_obj_by_token = User.getUserObjByLoginToken(cookies[:keep_login_token])
+      @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
+      @user_obj_by_token = User.getUserObjByLoginToken(cookies[:keep_login_token], @remote_ip)
       if @user_obj_by_token
         return @user_obj_by_token
       else

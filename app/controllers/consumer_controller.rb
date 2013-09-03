@@ -16,7 +16,8 @@ class ConsumerController < ApplicationController
     if getLoginUser
       @uname = getLoginUser.name
       flash[:success] = "Hello " + @uname + ". Login processing was successful."
-      if getLoginUser.updateLoginInfo
+      @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
+      if getLoginUser.updateLoginInfo(@remote_ip)
         if env['omniauth.params']['keep_login'] == "on"
           cookies[:keep_login_token] = { :value => getLoginUser.keep_login_token, :expires => Time.now + 3.days }
         end
@@ -145,7 +146,8 @@ class ConsumerController < ApplicationController
       if getLoginUser
         @uname = getLoginUser.name
         flash[:success] = "Hello " + @uname + ". Login processing was successful."
-        if getLoginUser.updateLoginInfo
+        @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
+        if getLoginUser.updateLoginInfo(@remote_ip)
           if params[:keep_login] == "on"
             cookies[:keep_login_token] = { :value => getLoginUser.keep_login_token, :expires => Time.now + 3.days }
           end
