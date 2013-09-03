@@ -227,7 +227,7 @@
 
   if checked_num is 0
     clip_btn.style.backgroundColor = "#ddd"
-    $("a>#clip_btn").unwrap
+    $("a>#clip_btn").unwrap()
   else
     clip_btn.style.backgroundColor = "white"
 
