@@ -85,28 +85,26 @@ class MypageController < ApplicationController
   end
 
   def delete_article
-    delete_mode = params[:delete_mode]
-    logger.debug("delete_mode : #{delete_mode}")
-
     params[:article_ids].each do |article_id|
-      if delete_mode.to_i == 2 then
-        summary = Summary.find(:first, 
-          :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
-        unless summary == nil
-          summary.destroy
-        end
-      else
-        article = UserArticle.find(:first, 
-          :conditions => {:user_id =>getLoginUser.id, :article_id => article_id})
-        unless article == nil
-          article.destroy
-        end
+      article = UserArticle.find(:first, 
+        :conditions => {:user_id =>getLoginUser.id, :article_id => article_id})
+      unless article == nil
+        article.destroy
       end
     end
+
     redirect_to :action => "index"
   end
 
   def delete_summary
+    params[:article_ids].each do |article_id|
+      summary = Summary.find(:first, 
+        :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+      unless summary == nil
+        summary.destroy
+      end
+    end
+
     redirect_to :action => "index"
   end
 

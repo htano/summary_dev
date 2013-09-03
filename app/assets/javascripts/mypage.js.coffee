@@ -132,3 +132,52 @@
       $("div>#r_edit_summary_btn").wrap("<a href='/summary/#{article_ids}/edit'></a>")
     $("div>#r_mark_as_favorite_btn").wrap("<a href='/mypage/index'></a>")
     $("div>#r_delete_btn").wrap("<a href='/mypage/delete_article?#{params}'></a>")
+
+@clickSummaryCheckBox = ->
+  checkbox = document.summary_checkbox
+  checkbox_num = checkbox.elements.length
+
+  checked_num = 0
+  article_ids = []
+  i = 0
+
+  while i < checkbox_num
+    if checkbox.elements[i].checked
+      checked_num++
+      article_id = checkbox.elements[i].value
+      article_ids.push(article_id)
+    i++
+
+  # handle layout
+  s_edit_summary_btn     = document.getElementById('s_edit_summary_btn')
+  s_delete_btn           = document.getElementById('s_delete_btn')
+
+  if checked_num is 0
+    s_edit_summary_btn.style.backgroundColor = "#ddd"
+    $("a>#s_edit_summary_btn").unwrap()
+
+    s_delete_btn.style.backgroundColor = "#ddd"
+    $("a>#s_delete_btn").unwrap()
+
+  else if checked_num is 1
+    s_edit_summary_btn.style.backgroundColor     = "white"
+    s_delete_btn.style.backgroundColor           = "white"
+  else if checked_num is 2
+    s_edit_summary_btn.style.backgroundColor = "#ddd"
+    $("a>#s_edit_summary_btn").unwrap
+
+  # create link
+  if checked_num > 0
+    i = 0
+    params = ""
+    while i < article_ids.length
+      params += "article_ids[]=" + "#{article_ids[i]}&"
+      i++
+    console.debug params
+
+    $("a>#s_edit_summary_btn").unwrap()
+    $("a>#s_delete_btn").unwrap()
+
+    if checked_num == 1
+      $("div>#s_edit_summary_btn").wrap("<a href='/summary/#{article_ids}/edit'></a>")
+    $("div>#s_delete_btn").wrap("<a href='/mypage/delete_summary?#{params}'></a>")

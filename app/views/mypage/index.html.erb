@@ -177,24 +177,31 @@
               <th id="summary_number_top">like</th>
             </tr>
             <% if @edited_summaries %>
-            <% @edited_summaries.each_with_index do |summary, i| %>
-            <tr>
-              <th class="title">
-                <% if @is_login_user then %>
-                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
-                <ul class="dropdown-checkbox">
-                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
-                    :name => @user.name, :article_id => summary.id, :delete_mode => 2} %></li>
-                  <li><%= link_to "revise", 
+            <form name="summary_checkbox">
+              <% @edited_summaries.each_with_index do |summary, i| %>
+              <tr>
+                <th class="title">
+                  <% if false then %>
+                  <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
+                  <ul class="dropdown-checkbox">
+                    <li><%= link_to "delete", {:action => "delete_summary", :user_id => @user.id, 
+                      :name => @user.name, :article_id => summary.id } %></li>
+                      <li><%= link_to "revise", 
                       {:controller => "summary", :action => "edit", :article_id => summary.id} %>
-                  </li>
-                </ul>
-                <% end %>
-                <a href="<%= summary.url %>" target="_blank"><%= summary.title %></a>
-              </th>
-              <th class="num_column"><a href="#"><%= @like_num[i] %></a></th>
-            </tr>
-            <% end %>
+                    </li>
+                  </ul>
+                  <% end %>
+
+                  <% if @is_login_user then %>
+                  <%= check_box 'check_article', i, 
+                  {:class => "article_checkbox", :id => "summary_checkbox", :onclick => "clickSummaryCheckBox()"}, summary.id, false %>
+                  <% end %>
+                  <a href="<%= summary.url %>" target="_blank"><%= summary.title %></a>
+                </th>
+                <th class="num_column"><a href="#"><%= @like_num[i] %></a></th>
+              </tr>
+              <% end %>
+            </form>
             <% end %>
           </table>
           <table class="favorite_table favorite">
@@ -213,22 +220,6 @@
               <% @read_articles.each_with_index do |read_article, i| %>
               <tr>
                 <th class="title">
-                  <% if @is_login_user then %>
-                  <% if false then %>
-                  <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
-                  <ul class="dropdown-checkbox">
-                    <li><%= link_to "mark as unread", {:action => "reverse_read_flg", :user_id => @user.id, 
-                      :article_id => read_article.id} %></li>
-                      <li><a href="#">mark as favorite</a></li>
-                      <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
-                        :article_id => read_article.id} %></li>
-                        <li><%= link_to "edit summary", 
-                        {:controller => "summary", :action => "edit", :article_id => read_article.id} %>
-                      </li>
-                    </ul>
-                    <% end %>
-                    <% end %>
-
                     <% if @is_login_user %>
                     <%= check_box 'check_article', i, 
                     {:class => "article_checkbox", :id => "read_checkbox", :onclick => "clickReadCheckBox()"}, read_article.id, false %>
