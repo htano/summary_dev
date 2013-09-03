@@ -181,3 +181,64 @@
     if checked_num == 1
       $("div>#s_edit_summary_btn").wrap("<a href='/summary/#{article_ids}/edit'></a>")
     $("div>#s_delete_btn").wrap("<a href='/mypage/delete_summary?#{params}'></a>")
+
+@clickCheckBoxForClip = ->
+  main_checkbox     = document.main_checkbox
+  summary_checkbox  = document.summary_checkbox
+  # TODO : add favorite checkbox
+#  favorite_checkbox = document.favorite_checkbox
+  read_checkbox     = document.read_checkbox
+
+  checkbox_num = main_checkbox.elements.length + summary_checkbox.elements.length + read_checkbox.elements.length
+  # TODO : add favorite checkbox
+#  checkbox_num = main_checkbox.elements.length + summary_checkbox.elements.length + read_checkbox.elements.length + favorite_checkbox.elements.length
+
+  checked_num = 0
+  article_ids = []
+
+  # main tab
+  i = 0
+  while i < main_checkbox.elements.length
+    if main_checkbox.elements[i].checked
+      checked_num++
+      article_id = main_checkbox.elements[i].value
+      article_ids.push(article_id)
+    i++
+  # summary tab
+  i = 0
+  while i < summary_checkbox.elements.length
+    if summary_checkbox.elements[i].checked
+      checked_num++
+      article_id = summary_checkbox.elements[i].value
+      article_ids.push(article_id)
+    i++
+  # TODO : add favorite checkbox
+  # read tab
+  i = 0
+  while i < read_checkbox.elements.length
+    if read_checkbox.elements[i].checked
+      checked_num++
+      article_id = read_checkbox.elements[i].value
+      article_ids.push(article_id)
+    i++
+
+#  console.debug ("checked num = #{checked_num}")
+  clip_btn = document.getElementById('clip_btn')
+
+  if checked_num is 0
+    clip_btn.style.backgroundColor = "#ddd"
+    $("a>#clip_btn").unwrap
+  else
+    clip_btn.style.backgroundColor = "white"
+
+  # create link
+  if checked_num > 0
+    i = 0
+    params = ""
+    while i < article_ids.length
+      params += "article_ids[]=" + "#{article_ids[i]}&"
+      i++
+    console.debug params
+
+    $("a>#clip_btn").unwrap()
+    $("div>#clip_btn").wrap("<a href='/mypage/clip?#{params}'></a>")

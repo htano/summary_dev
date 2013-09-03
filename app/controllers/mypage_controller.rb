@@ -138,34 +138,23 @@ class MypageController < ApplicationController
     end
 
     redirect_to :action => "index"
-=begin
-    article = UserArticle.find(:first, 
-      :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
-
-    if article && article.read_flg == true then
-      article.read_flg = false
-      article.save
-    end
-
-
-=end
   end
 
   def mark_as_favorite
   end
-=begin
-  def reverse_read_flg
-    article = UserArticle.find(:first, 
-      :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
 
-    if article then
-      article.read_flg = !article.read_flg
-      article.save
+  def clip
+    logger.debug("clip")
+    params[:article_ids].each do |article_id|
+      logger.debug("#{article_id}")
+      unless UserArticle.exists?(:user_id => getLoginUser.id, :article_id => article_id) then
+        UserArticle.create(:user_id => getLoginUser.id, :article_id => article_id)
+      end
     end
 
     redirect_to :action => "index"
   end
-=end
+
   def follow
     logger.debug("follow")
     # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
