@@ -84,7 +84,7 @@ class MypageController < ApplicationController
     render :layout => 'application'
   end
 
-  def delete
+  def delete_article
     delete_mode = params[:delete_mode]
     logger.debug("delete_mode : #{delete_mode}")
 
@@ -106,6 +106,10 @@ class MypageController < ApplicationController
     redirect_to :action => "index"
   end
 
+  def delete_summary
+    redirect_to :action => "index"
+  end
+
   def mark_as_read
     params[:article_ids].each do |article_id|
       logger.debug("#{article_id}")
@@ -114,7 +118,6 @@ class MypageController < ApplicationController
         :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
 
       if article && article.read_flg != true then
-        logger.debug("in in in!!!!")
         article.read_flg = true
         article.save
       end
@@ -124,6 +127,18 @@ class MypageController < ApplicationController
   end
 
   def mark_as_unread
+    params[:article_ids].each do |article_id|
+      logger.debug("#{article_id}")
+
+      article = UserArticle.find(:first, 
+        :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+
+      if article && article.read_flg == true then
+        article.read_flg = false
+        article.save
+      end
+    end
+
     redirect_to :action => "index"
 =begin
     article = UserArticle.find(:first, 

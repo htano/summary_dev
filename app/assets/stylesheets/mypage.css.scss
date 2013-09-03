@@ -161,7 +161,7 @@
   -o-text-overflow: ellipsis;
 }
 
-#operate_article {
+#article_controller {
 //  border: 2px solid #ddd;
   width: 100%;
 
@@ -169,11 +169,18 @@
   margin-top: -15px;
   padding-left: 30px;
 
-  div {
+  .none > div, .none > a {
+    display: none;
+  }
+
+  .active > div {
+    background-color: #ddd;
+  }
+
+  .active > div, .active > a {
+    display: block;
     border: 2px solid #ddd;
     border-radius: 0.3em;
-    background-color: #ddd;
-    //background-color: #f6f4f6;
 
 //    background:-moz-linear-gradient(rgba(34,85,136,0.5), rgba(34,85,136,1));
 //    background:-webkit-gradient(linear, 100% 0%, 100% 100%, from(#f6f4f6), to(#ddd));
@@ -300,6 +307,11 @@ ul.tab {
 }
 
 #article_check {
+//  float: left;
+//  margin-left: 10px;
+}
+
+.article_checkbox {
   float: left;
   margin-left: 10px;
 }
