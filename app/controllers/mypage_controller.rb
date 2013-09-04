@@ -87,15 +87,14 @@ class MypageController < ApplicationController
       @like_num.push(like)
     end
 
-    # favorite tab
-
     render :layout => 'application'
   end
 
   def delete_article
+    login_user = getLoginUser
+
     params[:article_ids].each do |article_id|
-      article = UserArticle.find(:first, 
-        :conditions => {:user_id =>getLoginUser.id, :article_id => article_id})
+      article = login_user.user_articles.find_by_article_id(article_id)
       unless article == nil
         article.destroy
       end
@@ -105,9 +104,9 @@ class MypageController < ApplicationController
   end
 
   def delete_summary
+    login_user = getLoginUser
     params[:article_ids].each do |article_id|
-      summary = Summary.find(:first, 
-        :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+      summary = login_user.summaries.find_by_article_id(article_id)
       unless summary == nil
         summary.destroy
       end
@@ -117,11 +116,11 @@ class MypageController < ApplicationController
   end
 
   def mark_as_read
+    login_user = getLoginUser
+
     params[:article_ids].each do |article_id|
       logger.debug("#{article_id}")
-
-      article = UserArticle.find(:first, 
-        :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+      article = login_user.user_articles.find_by_article_id(article_id)
 
       if article && article.read_flg != true then
         article.read_flg = true
@@ -133,11 +132,11 @@ class MypageController < ApplicationController
   end
 
   def mark_as_unread
+    login_user = getLoginUser
+
     params[:article_ids].each do |article_id|
       logger.debug("#{article_id}")
-
-      article = UserArticle.find(:first, 
-        :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+      article = login_user.user_articles.find_by_article_id(article_id)
 
       if article && article.read_flg == true then
         article.read_flg = false
@@ -150,9 +149,11 @@ class MypageController < ApplicationController
 
   def mark_as_favorite
     logger.debug("mark as favorite")
+    login_user = getLoginUser
+
     params[:article_ids].each do |article_id|
       logger.debug("#{article_id}")
-      article = getLoginUser.user_articles.find_by_article_id(article_id)
+      article = login_user.user_articles.find_by_article_id(article_id)
 
       if article && article.favorite_flg != true then
         article.favorite_flg = true
@@ -165,10 +166,11 @@ class MypageController < ApplicationController
 
   def mark_as_unfavorite
     logger.debug("mark as unfavorite")
+    login_user = getLoginUser
 
     params[:article_ids].each do |article_id|
       logger.debug("#{article_id}")
-      article = getLoginUser.user_articles.find_by_article_id(article_id)
+      article = login_user.user_articles.find_by_article_id(article_id)
 
       if article && article.favorite_flg == true then
         article.favorite_flg = false
@@ -186,9 +188,9 @@ class MypageController < ApplicationController
       redirect_to :controller => 'consumer', :action => 'index' and return
     end
 
+    login_user = getLoginUser
     params[:article_ids].each do |article_id|
-      logger.debug("#{article_id}")
-      unless UserArticle.exists?(:user_id => getLoginUser.id, :article_id => article_id) then
+      unless login_user.user_articles.exists?(:user_id => getLoginUser.id, :article_id => article_id) then
         UserArticle.create(:user_id => getLoginUser.id, :article_id => article_id)
       end
     end
