@@ -181,6 +181,11 @@ class MypageController < ApplicationController
 
   def clip
     logger.debug("clip")
+
+    unless signed_in? then
+      redirect_to :controller => 'consumer', :action => 'index' and return
+    end
+
     params[:article_ids].each do |article_id|
       logger.debug("#{article_id}")
       unless UserArticle.exists?(:user_id => getLoginUser.id, :article_id => article_id) then
@@ -193,8 +198,9 @@ class MypageController < ApplicationController
 
   def follow
     logger.debug("follow")
-    # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
-    if getLoginUser == nil then
+
+    unless signed_in? then
+      # TODO : ログインしてなかった時
     end
     
     @current_user = getLoginUser
@@ -217,7 +223,7 @@ class MypageController < ApplicationController
 
   def unfollow
     logger.debug("unfollow")
-    # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
+    # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす? そもそも、その状況はない
 
     @current_user = getLoginUser
 
