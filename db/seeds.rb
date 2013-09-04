@@ -10,14 +10,14 @@
 # User
 User.create(name: "summary", mail_addr: "summary.dev@gmail.com",
   open_id: "https://www.google.com/accounts/o8/id?id=AItOawlDmHFynj5HotAc7FisQwAD3kZC_jeaMTE",
-  prof_image: "account_pictures/usertile44.bmp", yuko_flg: true)
+  prof_image: "account_pictures/usertile44.bmp", yuko_flg: true, public_flg: true)
 User.create(name: "tetsuma", mail_addr: "usdeurjpy0305@gmail.com",
   open_id: "https://www.google.com/accounts/o8/id?id=AItOawkx385OG8-mA1YBPW-VZTRsASfBO_tYuw0",
   prof_image: "account_pictures/usertile44.bmp", yuko_flg: true)
 User.create(name: "shingo0809", mail_addr: "shingo0809@gmail.com", open_id:"openid",
-  prof_image: "account_pictures/usertile15.bmp")
+  prof_image: "account_pictures/usertile15.bmp", public_flg: true)
 User.create(name: "yoshino023", mail_addr: "yoshino023@gmail.com", open_id:"openid1",
-  prof_image: "account_pictures/usertile14.bmp")
+  prof_image: "account_pictures/usertile14.bmp", public_flg: true)
 User.create(name: "brynhildr", mail_addr: "brynhildr@gmail.com", open_id:"openid2",
   prof_image: "account_pictures/usertile10.bmp")
 User.create(name: "eir", mail_addr: "eir@gmail.com", open_id:"openid3",
@@ -27,7 +27,7 @@ User.create(name: "geirahoo", mail_addr: "geirahoo@gmail.com", open_id:"openid4"
 User.create(name: "geiravor", mail_addr: "geiravor@gmail.com", open_id:"openid5",
   prof_image: "account_pictures/usertile13.bmp")
 User.create(name: "geirdriful", mail_addr: "geirdriful@gmail.com", open_id:"openid6",
-  prof_image: "account_pictures/usertile16.bmp")
+  prof_image: "account_pictures/usertile16.bmp", public_flg: true)
 User.create(name: "herja", mail_addr: "herja@gmail.com", open_id:"openid7",
   prof_image: "account_pictures/usertile17.bmp")
 User.create(name: "hildr", mail_addr: "hildr@gmail.com", open_id:"openid8",
@@ -37,21 +37,21 @@ User.create(name: "kara", mail_addr: "kara@gmail.com", open_id:"openid9",
 User.create(name: "mist", mail_addr: "mist@gmail.com", open_id:"openid10",
   prof_image: "account_pictures/usertile20.bmp")
 User.create(name: "qlrun", mail_addr: "qlrun@gmail.com", open_id:"openid11",
-  prof_image: "account_pictures/usertile21.bmp")
+  prof_image: "account_pictures/usertile21.bmp", public_flg: true)
 User.create(name: "rota", mail_addr: "rota@gmail.com", open_id:"openid12",
-  prof_image: "account_pictures/usertile22.bmp")
+  prof_image: "account_pictures/usertile22.bmp", public_flg: true)
 User.create(name: "sanngrior", mail_addr: "sanngrior@gmail.com", open_id:"openid13",
   prof_image: "account_pictures/usertile23.bmp")
 User.create(name: "sigrun", mail_addr: "sigrun@gmail.com", open_id:"openid14",
   prof_image: "account_pictures/usertile24.bmp")
 User.create(name: "svipul", mail_addr: "svipul@gmail.com", open_id:"openid15",
-  prof_image: "account_pictures/usertile25.bmp")
+  prof_image: "account_pictures/usertile25.bmp", public_flg: true)
 User.create(name: "tanngnidr", mail_addr: "tanngnidr@4mail.com", open_id:"openid16",
-  prof_image: "account_pictures/usertile26.bmp")
+  prof_image: "account_pictures/usertile26.bmp", public_flg: true)
 User.create(name: "pogn", mail_addr: "pogn@gmail.com", open_id:"openid17",
   prof_image: "account_pictures/usertile27.bmp")
 User.create(name: "prima", mail_addr: "prima@gmail.com", open_id:"openid18",
-  prof_image: "account_pictures/usertile28.bmp")
+  prof_image: "account_pictures/usertile28.bmp", public_flg: true)
 
 # FavoriteUser
 FavoriteUser.create(user_id: 1, favorite_user_id: 2)
