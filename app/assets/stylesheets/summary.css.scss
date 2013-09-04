@@ -3,10 +3,17 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-#content {
+.content {
   width: 700px;
   height: 100px;
 }
+
+.content_disabled {
+  background-color: whitesmoke;
+  width: 700px;
+  height: 100px;
+}
+
 
 .edit_table {
   width: 800px;

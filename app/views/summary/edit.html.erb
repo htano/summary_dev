@@ -1,66 +1,18 @@
 <script>
 
+//TODO coffee script へ移行するか、あるべき場所へ移動させたい
 //文字数の設定と要約内容の初期設定
 $(document).ready(function (){
   var thisValueLength = $('#content').val().length;
   $('.count').html(thisValueLength);
 });
 
-//バリデーション
-$(document).ready(function() {
-    $("#edit_form").validate({});
-});
-
-//テキストエリア編集時の文字数変更ファンクション
-$(function(){
-    $('#content').bind('keyup',function(){
-        var thisValueLength = $(this).val().length;
-        $('.count').html(thisValueLength);
-    });
-});
-
-//クリアボタン押下時のファンクション
-//要約内容をクリアし、文字数を０にする
-$(function(){
-    $('#clear_summary').bind('click',function(){
-      if(confirm("内容をクリアして宜しいですか？")){
-        $('#content').val("");
-        $('.count').html(0);
-      }
-    });
-});
-
-//要約ボタン押下時のファンクション
-//テキストエリア・要約・クリアボタンを非活性にし、確定・戻るボタンを活性にする
-$(function(){
-  $('#edit_summary').bind('click',function(){
-      $('#submit_button').attr("disabled", false);
-      $('#back_button').attr("disabled", false);
-      $('#edit_summary').attr("disabled", true);
-      $('#clear_summary').attr("disabled", true);
-      $('#content').attr("readonly", true);
-    });
-});
-
-//戻るボタン押下時のファンクション
-//テキストエリア・要約・クリアボタンを活性にし、確定・戻るボタンを非活性にする
-$(function(){
-  $('#back_button').bind('click',function(){
-      $('#submit_button').attr("disabled", true);
-      $('#back_button').attr("disabled", true);
-      $('#edit_summary').attr("disabled", false);
-      $('#clear_summary').attr("disabled", false);
-      $('#content').attr("readonly", false);
-    });
-});
-
-
 </script>
 
 <!--TODO 要約の数持ってくる -->
 <!--TODO 要約一覧へのリンク貼る -->
 
-<form method="POST" action="edit_complete" id="edit_form">
+<form method="POST" action="edit_complete">
   <div id="main">
     <table class="edit_table" id="main" align="center">
       <tr class="table_top">
@@ -72,15 +24,15 @@ $(function(){
         <th class="num_column"><a href="#">0</a></th>
       </tr>
       <tr>
-        <th><textarea class="content required" id="content" name="content"><%= @content %></textarea></th>
+        <th><textarea class="content" id="content" name="content" onKeyUp="countContentCharacters()"><%= @content %></textarea></th>
         <th><span class="count">0</span>characters</th>
       </tr>
       <tr>
         <th>
-          <input type="button" id="edit_summary" class="button button-flat:hover" value="要約"></input>
-          <input type="button" id="clear_summary" class="button button-flat:hover" value="クリア"></input>
-          <input type="submit" id="submit_button" class="button button-flat:hover" value="確定" disabled="true"></input>
-          <input type="button" id="back_button" class="button button-flat:hover" value="戻る" disabled="true"></input>
+          <input type="button" id="edit" class="button button-flat:hover" value="要約" onclick="clickEditButton()"></input>
+          <input type="button" id="clear" class="button button-flat:hover" value="クリア" onclick="clickClearButton()"></input>
+          <input type="submit" id="submit" class="button button-flat:hover" value="確定" disabled="true"></input>
+          <input type="button" id="back" class="button button-flat:hover" value="戻る" onclick="clickBackButton()" disabled="true"></input>
         </th>
       </tr>
     </table>    
