@@ -1,17 +1,7 @@
-<script>
-
-//TODO coffee script へ移行するか、あるべき場所へ移動させたい
-//文字数の設定と要約内容の初期設定
-$(document).ready(function (){
-  var thisValueLength = $('#content').val().length;
-  $('.count').html(thisValueLength);
-});
-
-</script>
-
 <!--TODO 要約の数持ってくる -->
 <!--TODO 要約一覧へのリンク貼る -->
-
+<!--TODO CSSがmypageのまま -->
+<!--TODO ヘルプ画面 -->
 <form method="POST" action="edit_complete">
   <div id="main">
     <table class="edit_table" id="main" align="center">
@@ -23,16 +13,23 @@ $(document).ready(function (){
         <th class="title"><a href="<%= @url %>" target="_blank"><%= @title %></a></th>
         <th class="num_column"><a href="#">0</a></th>
       </tr>
+      <tr class="table_top">
+        <th id="article_title_top">content</th>
+        <th id="summary_number_top">characters</th>
+      </tr>
       <tr>
         <th><textarea class="content" id="content" name="content" onKeyUp="countContentCharacters()"><%= @content %></textarea></th>
-        <th><span class="count">0</span>characters</th>
+        <th><span id="count" class="count"><%= @content_num %></span></th>
       </tr>
       <tr>
         <th>
-          <input type="button" id="edit" class="button button-flat:hover" value="要約" onclick="clickEditButton()"></input>
-          <input type="button" id="clear" class="button button-flat:hover" value="クリア" onclick="clickClearButton()"></input>
-          <input type="submit" id="submit" class="button button-flat:hover" value="確定" disabled="true"></input>
-          <input type="button" id="back" class="button button-flat:hover" value="戻る" onclick="clickBackButton()" disabled="true"></input>
+          <input type="button" id="edit" class="button button-flat:hover" value="Edit" onclick="clickEditButton()"></input>
+          <input type="button" id="clear" class="button button-flat:hover" value="Clear" onclick="clickClearButton()"></input>
+          <input type="submit" id="submit" class="button button-flat:hover" value="Submit" disabled="true"></input>
+          <input type="button" id="back" class="button button-flat:hover" value="Back" onclick="clickBackButton()" disabled="true"></input>
+        </th>
+        <th>
+          <%= link_to image_tag("icons/glyphicons_194_circle_question_mark.png", :size => "16x16"), {:controller => "summary", :action => "edit", :article_id => 20} %>	
         </th>
       </tr>
     </table>    

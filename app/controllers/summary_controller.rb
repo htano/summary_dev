@@ -15,6 +15,7 @@ class SummaryController < ApplicationController
       summary = Summary.find_by_user_id_and_article_id(user_id, @article_id);
       if summary != nil then
         @content = summary.content;
+        @content_num = summary.content.gsub(/\r\n|\r|\n/, "").length;
       end
     else
       redirect_to :controller => "consumer", :action => "index";

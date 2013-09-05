@@ -2,6 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.count {
+  width: 50px;
+}
+
+.count_over {
+  color: red;
+  width: 50px;
+}
+
 
 .content {
   width: 700px;
@@ -13,7 +22,6 @@
   width: 700px;
   height: 100px;
 }
-
 
 .edit_table {
   width: 800px;
