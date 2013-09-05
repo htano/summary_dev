@@ -3,11 +3,19 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 overFlag = false
+BLANK = ''
+
+@clearContent = ->
+	firstEditFlag = document.getElementById('firstEditFlag')
+	if firstEditFlag.value.length > 0
+		document.getElementById('content').value = BLANK
+		document.getElementById('firstEditFlag').value = BLANK
 
 @clickClearButton = ->
 	if confirm "Clear?"
-		document.getElementById('content').value = ''
+		document.getElementById('content').value = 'Please edit summary within 300 characters.'
 		document.getElementById('count').innerHTML = '0'
+		document.getElementById('firstEditFlag').value = 'true'
 	else
 		return false
 
@@ -15,22 +23,22 @@ overFlag = false
 @clickEditButton = ->
 	content = document.getElementById('content')
 	if content.value.length is 0 
-		alert 'Please input summary.'
+		alert 'Please edit summary.'
 		return false
 	else
 		document.getElementById('edit').disabled = 'true'
 		document.getElementById('clear').disabled = 'true'
-		document.getElementById('submit').disabled = ''
-		document.getElementById('back').disabled = ''
+		document.getElementById('submit').disabled = BLANK
+		document.getElementById('back').disabled = BLANK
 		content.readOnly = 'true'
 		content.setAttribute('class', 'content_disabled'); 
 
 @clickBackButton = ->
-	document.getElementById('edit').disabled = ''
-	document.getElementById('clear').disabled = ''
+	document.getElementById('edit').disabled = BLANK
+	document.getElementById('clear').disabled = BLANK
 	document.getElementById('submit').disabled = 'true'
 	document.getElementById('back').disabled = 'true'
-	content.readOnly = ''
+	content.readOnly = BLANK
 	content.setAttribute('class', 'content'); 
 
 @countContentCharacters = ->
@@ -45,7 +53,7 @@ overFlag = false
 			overFlag = true
 	else if content_num <= max and overFlag
 		document.getElementById('count').setAttribute('class', 'count');
-		document.getElementById('edit').disabled = ''
+		document.getElementById('edit').disabled = BLANK
 		overFlag = false
 
 	document.getElementById('count').innerHTML = content_num

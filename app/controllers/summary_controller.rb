@@ -2,6 +2,9 @@
 
 class SummaryController < ApplicationController
 
+  def help
+  end
+
   def edit
     if signed_in?
       @article_id = "#{params[:article_id]}";
@@ -11,11 +14,16 @@ class SummaryController < ApplicationController
       end
       @url = article.url;
       @title = article.title;
+      @summary_num = article.summaries.count(:all)
       user_id = getLoginUser.id;
       summary = Summary.find_by_user_id_and_article_id(user_id, @article_id);
       if summary != nil then
         @content = summary.content;
         @content_num = summary.content.gsub(/\r\n|\r|\n/, "").length;
+      else
+        @content = "Please edit summary within 300 characters.";
+        @content_num = 0;
+        @firstEditFlag = true;
       end
     else
       redirect_to :controller => "consumer", :action => "index";
