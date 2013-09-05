@@ -22,3 +22,6 @@
 
 # Ignore uploaded images
 /public/images/account_pictures/*_uploaded_image_*
+
+# Ignore precompiled files
+/public/assets
