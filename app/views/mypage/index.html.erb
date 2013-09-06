@@ -153,11 +153,17 @@
       <div class="article_table">
         <table class="summary_table active main">
           <tr class="table_top">
-            <th id="article_title_top">TITLE</th>
+            <th id="article_title_top">
+              <div class="article_checkbox">
+                <%= check_box 'check_all', 0, 
+                {:id => "main_check_all", :onclick => "checkAll('main_check_all', 'main_check_form')"}, 0, false %>
+              </div>
+              TITLE
+            </th>
             <th id="summary_number_top">summary</th>
           </tr>
           <% if @articles %>
-          <form name="main_checkbox">
+          <form id="main_check_form" name="main_checkbox">
             <% @articles.each_with_index do |article, i| %>
             <tr>
               <th>
@@ -187,11 +193,17 @@
         </table>
         <table class="summary_table summary">
           <tr class="table_top">
-            <th id="article_title_top">TITLE</th>
+            <th id="article_title_top">
+              <div class="article_checkbox">
+                <%= check_box 'check_all', 0, 
+                {:id => "summary_check_all", :onclick => "checkAll('summary_check_all', 'summary_check_form')"}, 0, false %>
+              </div>
+              TITLE
+            </th>
             <th id="summary_number_top">like</th>
           </tr>
           <% if @summaries %>
-          <form name="summary_checkbox">
+          <form id="summary_check_form" name="summary_checkbox">
             <% @summaries.each_with_index do |summary, i| %>
             <tr>
               <th>
@@ -218,11 +230,16 @@
         </table>
         <table class="favorite_table favorite">
           <tr class="table_top">
-            <th id="article_title_top">TITLE</th>
+            <th id="article_title_top">
+              <div class="article_checkbox">
+                <%= check_box 'check_all', 0, 
+                {:id => "favorite_check_all", :onclick => "checkAll('favorite_check_all', 'favorite_check_form')"}, 0, false %>
+              </div>
+              TITLE</th>
             <th id="summary_number_top">summary</th>
           </tr>
           <% if @favorite_articles then %>
-          <form name="favorite_checkbox">
+          <form id="favorite_check_form" name="favorite_checkbox">
             <% @favorite_articles.each_with_index do |favorite_article, i| %>
             <tr>
               <th>
@@ -252,11 +269,17 @@
         </table>
         <table class="read_table read">
           <tr class="table_top">
-            <th id="article_title_top">TITLE</th>
+            <th id="article_title_top">
+              <div class="article_checkbox">
+                <%= check_box 'check_all', 0, 
+                {:id => "read_check_all", :onclick => "checkAll('read_check_all', 'read_check_form')"}, 0, false %>
+              </div>
+              TITLE
+            </th>
             <th id="summary_number_top">summary</th>
           </tr>
           <% if @read_articles then %>
-          <form name="read_checkbox">
+          <form id="read_check_form" name="read_checkbox">
             <% @read_articles.each_with_index do |read_article, i| %>
             <tr>
               <th>

@@ -308,3 +308,16 @@
 
     $("a>#clip_btn").unwrap()
     $("div>#clip_btn").wrap("<a href='/mypage/clip?#{params}'></a>")
+
+@checkAll = (checker, form_name)->
+  form = document.getElementById(form_name)
+#  console.debug "form name = #{form.name}, form length = #{form.length}"
+  checkbox_num = form.length
+
+  i = 0
+  value = document.getElementById(checker).checked
+#  console.debug "value = #{value}"
+  while i < checkbox_num
+    form.elements[i].checked = value
+    i++
+  form.elements[0].onclick() unless i is 0
