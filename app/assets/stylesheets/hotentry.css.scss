@@ -1,0 +1,165 @@
+// Place all the styles related to the Hotentry controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+* {
+  color: #999;
+}
+
+div.hotentry_container {
+  margin: auto;
+  margin-top: 20px;
+  width: 945px;
+}
+
+h1.hotentry {
+  color: #999;
+}
+
+ul.entry_container li {
+  list-style-type: none;
+  line-height: 1;
+}
+
+div.entry_box {
+  margin: auto;
+  margin-top: 20px;
+  width: 945px;
+  border: solid 2px #eee;
+  border-top: solid 3px #F5AC0F;
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+}
+
+div.entry_box_top {
+  width: 945px;
+  height: 77px;
+  border-bottom: solid 1px #eee;
+}
+
+div.entry_title {
+  width: 700px;
+  padding: 10px;
+  font-size: 18px;
+  float: left;
+}
+
+div.entry_title h3 {
+  color: #999;
+}
+
+div.entry_count_num {
+  padding: 3px;
+  width: 100px;
+  height: 70px;
+  float: right;
+  border-left: solid 1px #eee;
+  text-align: center;
+}
+
+div.entry_count_num label {
+  text-decoration: underline;
+  font-size: 16px;
+}
+
+div.entry_count_num span {
+  font-size: 32px;
+}
+
+div.entry_box_left {
+  width: 800px;
+  height: 190px;
+  border-right: solid 1px #eee;
+  float: left;
+}
+
+div.entry_box_right {
+  width: 140px;
+  height: 170px;
+  float: left;
+  text-align: center;
+  padding-top: 20px;
+}
+
+div.entry_clear {
+  clear: both;
+}
+
+div.entry_summary_label {
+  clear: both;
+  margin: 5px;
+}
+
+div.entry_top_icon {
+  padding: 15px;
+  height: 80%;
+  float: left;
+  text-align: center;
+}
+
+div.entry_summary_label label {
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+div.entry_top_summary {
+  padding: 10px;
+  height: 140px;
+  width: 600px;
+  float: left;
+}
+
+div.entry_top_summary label {
+  font-size: 16px;
+}
+
+div.entry_top_summary textarea {
+  resize: none;
+  margin-top: 10px;
+  width: 590px;
+  height: 80%;
+  font-size: 14px;
+}
+
+div.entry_top_like {
+  padding-top: 20px;
+  height: 140px;
+  width: 113px;
+  float: left;
+  border-left: 0px #eee;
+  text-align: center;
+}
+
+div.entry_top_like_label {
+  clear: both;
+}
+
+div.entry_like_num {
+  margin: auto;
+  position: relative;
+  background: #eee;
+  height: 50px;
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+div.entry_like_num:after {
+  content: '';
+  position: absolute;
+  border-top: 10px solid #eee;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  bottom: -9px;
+  left: 5px;
+}
+
+div.entry_like_num div {
+  width: 94px;
+  position: absolute;
+  bottom: 9px;
+  left: 3px;
+  padding-top: 15px;
+  font-size: 32px;
+}

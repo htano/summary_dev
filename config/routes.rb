@@ -1,4 +1,5 @@
 SummaryDev::Application.routes.draw do
+  get "hotentry/index"
   get "settings/profile"
   get "settings/profile_edit"
   post "settings/profile_edit_complete"
