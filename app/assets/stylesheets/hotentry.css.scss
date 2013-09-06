@@ -69,15 +69,15 @@ div.entry_count_num span {
 }
 
 div.entry_box_left {
-  width: 800px;
-  height: 190px;
+  width: 760px;
+  height: 195px;
   border-right: solid 1px #eee;
   float: left;
 }
 
 div.entry_box_right {
-  width: 140px;
-  height: 170px;
+  width: 180px;
+  height: 175px;
   float: left;
   text-align: center;
   padding-top: 20px;
@@ -93,7 +93,7 @@ div.entry_summary_label {
 }
 
 div.entry_top_icon {
-  padding: 15px;
+  padding: 10px;
   height: 80%;
   float: left;
   text-align: center;
@@ -105,19 +105,21 @@ div.entry_summary_label label {
 }
 
 div.entry_top_summary {
-  padding: 10px;
+  padding: 5px;
   height: 140px;
   width: 600px;
   float: left;
 }
 
-div.entry_top_summary label {
-  font-size: 16px;
+div.entry_top_summary_user label {
+  vertical-align: super;
+  margin-left: 3px;
+  font-size: 14px;
 }
 
 div.entry_top_summary textarea {
   resize: none;
-  margin-top: 10px;
+  margin-top: 7px;
   width: 590px;
   height: 80%;
   font-size: 14px;
@@ -137,6 +139,9 @@ div.entry_top_like_label {
 }
 
 div.entry_like_num {
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
   margin: auto;
   position: relative;
   background: #eee;

@@ -10,7 +10,7 @@
           <h3><%= e %>. Title</h3>
         </div>
         <div class="entry_count_num">
-          <label>Summarist</label>
+          <label>Summaries</label>
           </br>
           </br>
           <span>5</span>
@@ -27,10 +27,12 @@
           <label>Top rated summary</label>
         </div>
         <div class="entry_top_icon">
-          <%= image_tag "account_pictures/23_uploaded_image_Australia.png", :class => "summarist_icon", :size => "32x32" %>
         </div>
         <div class="entry_top_summary">
-          <label>___UserName___</label>
+          <div class="entry_top_summary_user">
+            <%= image_tag "account_pictures/23_uploaded_image_Australia.png", :class => "summarist_icon", :size => "26x26" %>
+            <label>UserName</label>
+        </div>
           <textarea disabled="disabled">
 This is a top rated summary.
 Best summary is here.
