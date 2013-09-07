@@ -47,20 +47,23 @@ div.entry_title {
 }
 
 div.entry_title h3 {
+  text-decoration: underline;
+  line-height: 30px;
+  overflow: hidden;
   color: #999;
 }
 
 div.entry_count_num {
-  padding: 3px;
-  width: 100px;
-  height: 70px;
+  padding: 5px;
+  width: 96px;
+  height: 66px;
   float: right;
   border-left: solid 1px #eee;
   text-align: center;
 }
 
 div.entry_count_num label {
-  text-decoration: underline;
+  //text-decoration: underline;
   font-size: 16px;
 }
 
@@ -100,8 +103,9 @@ div.entry_top_icon {
 }
 
 div.entry_summary_label label {
+  margin-left: 10px;
   font-size: 16px;
-  text-decoration: underline;
+  //text-decoration: underline;
 }
 
 div.entry_top_summary {
@@ -112,7 +116,7 @@ div.entry_top_summary {
 }
 
 div.entry_top_summary_user label {
-  vertical-align: super;
+  vertical-align: 80%;
   margin-left: 3px;
   font-size: 14px;
 }

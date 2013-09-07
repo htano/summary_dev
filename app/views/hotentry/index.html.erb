@@ -3,23 +3,26 @@
 <ul class="entry_container">
 
   <% @entries.each do |e| %>
+  <% if e.getTopRatedSummary %>
   <li>
     <div class="entry_box">
       <div class="entry_box_top">
         <div class="entry_title">
-          <h3><%= e %>. Title</h3>
+          <a href="<%= e.url %>">
+            <h3><%= e.title %></h3>
+          </a>
         </div>
         <div class="entry_count_num">
           <label>Summaries</label>
           </br>
           </br>
-          <span>5</span>
+          <span><%= e.summaries.count %></span>
         </div>
         <div class="entry_count_num">
           <label>Reading</label>
           </br>
           </br>
-          <span>25</span>
+          <span><%= e.user_articles.count %></span>
         </div>
       </div>
       <div class="entry_box_left">
@@ -30,18 +33,14 @@
         </div>
         <div class="entry_top_summary">
           <div class="entry_top_summary_user">
-            <%= image_tag "account_pictures/23_uploaded_image_Australia.png", :class => "summarist_icon", :size => "26x26" %>
-            <label>UserName</label>
+            <%= image_tag e.getTopRatedSummary.user.prof_image, :class => "summarist_icon", :size => "26x26" %>
+            <label><%= e.getTopRatedSummary.user.name %></label>
         </div>
-          <textarea disabled="disabled">
-This is a top rated summary.
-Best summary is here.
-Wonderful summary!
-          </textarea>
+          <textarea disabled="disabled"><%= e.getTopRatedSummary.content %></textarea>
         </div>
         <div class="entry_top_like">
           <div class="entry_like_num">
-            <div>10</div>
+            <div><%= e.getTopRatedSummary.good_summaries.count %></div>
           </div>
           <%= image_tag "favicon_munch.png", :size => "48x48" %>
           <div class="entry_top_like_label">
@@ -50,12 +49,13 @@ Wonderful summary!
         </div>
       </div>
       <div class="entry_box_right">
-        <%= image_tag "http://img.simpleapi.net/small/http://www.rubylife.jp/rails/model/index7.html", :size => "128x160" %>
+        <%= image_tag "icons/good_summary.jpg", :size => "128x160" %>
       </div>
       <div class="entry_clear">
       </div>
     </div>
   </li>
+  <% end %>
   <% end %>
 
 </ul>

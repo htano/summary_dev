@@ -83,8 +83,9 @@ class Article < ActiveRecord::Base
     # まず７日(ZERO_ZERO_ONE_DAYS)以内に「あとで読む登録」された記事のうち、
     # 最終登録時の「勢い(strength)」でソートした上位１００件くらいを取ってくる
     # 1. getCandidateHotentries
-
+    @candidate_entries = where("last_added_at > ?", Time.now - ZERO_ZERO_ONE_DAYS.days).order('strength desc').limit(100)
     # 2. sort by current strength
+    return @candidate_entries.sort{|a,b| (-1)*(a.getCurrentStrength <=> b.getCurrentStrength)}
   end
 
   # Instance Method
@@ -106,6 +107,18 @@ class Article < ActiveRecord::Base
       @current_strength = self.strength * (DECAY_DELTA**@diff_hours)
     end
     return @current_strength
+  end
+
+  def getTopRatedSummary
+    @top_rated_summary = nil
+    @top_rate = -1
+    self.summaries.order('created_at desc').each_with_index do |summary|
+      if @top_rate < summary.good_summaries.count
+        @top_rate = summary.good_summaries.count
+        @top_rated_summary = summary
+      end
+    end
+    return @top_rated_summary
   end
 
 end
