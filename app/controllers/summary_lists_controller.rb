@@ -51,6 +51,28 @@ class SummaryListsController < ApplicationController
 		end
 	end
 
+  def goodSummaryAjax
+    if !getLoginUser
+      render :text => 'To submit good summary, you should login.'
+    else
+      good_summary_pre = GoodSummary.where(['user_id = ? and summary_id = ?', getLoginUser.id, params[:summaryId]])
+      if good_summary_pre.count > 0
+        if good_summary_pre.delete_all > 0
+          render :text => 'cancel'
+        else
+          render :text => "Can't delete. Server Error has occured."
+        end
+      else
+        good_summary_new = GoodSummary.new(:user_id => getLoginUser.id, :summary_id =>params[:summaryId])
+        if good_summary_new.save
+          render :text => 'good'
+        else
+          render :text => "Can't add. Server Error has occured."
+        end
+      end
+    end
+  end
+
 	def cancelGoodSummary 
 		if getLoginUser == nil then
 			redirect_to :controller => "consumer", :action => "index"

@@ -41,6 +41,7 @@ SummaryDev::Application.routes.draw do
   get 'summary_lists/get_summary_num_for_chrome_extension' => 'summary_lists#get_summary_num_for_chrome_extension'
   get 'summary_lists/get_summary_list_for_chrome_extension' => 'summary_lists#get_summary_list_for_chrome_extension'
   #for webpage
+  get 'summary_lists/goodSummaryAjax' => 'summary_lists#goodSummaryAjax'
   get 'summary_lists/:articleId' => 'summary_lists#index'
   get 'summary_lists/goodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#goodSummary'
   get 'summary_lists/cancelGoodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#cancelGoodSummary'

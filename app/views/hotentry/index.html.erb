@@ -14,17 +14,17 @@
         </div>
         <a href="<%= url_for :controller => 'summary_lists', :action => 'index', :articleId => e.id %>">
           <div class="entry_count_num">
-            <label>Summaries</label>
+            <span class="entry_count_label">Summaries</span>
             </br>
             </br>
-            <span><%= e.summaries.count %></span>
+            <span class="entry_count_num" style="text-decoration: underline;"><%= e.summaries.count %></span>
           </div>
         </a>
         <div class="entry_count_num">
-          <label>Reading</label>
+          <span class="entry_count_label">Reading</span>
           </br>
           </br>
-          <span><%= e.user_articles.count %></span>
+          <span class="entry_count_num"><%= e.user_articles.count %></span>
         </div>
       </div>
       <div class="entry_box_left">
@@ -34,19 +34,26 @@
         <div class="entry_top_icon">
         </div>
         <div class="entry_top_summary">
-          <a href="<%= url_for :controller => 'mypage', :action => 'index', :name => e.getTopRatedSummary.user.name %>">
-            <div class="entry_top_summary_user">
+          <div class="entry_top_summary_user">
+            <a href="<%= url_for :controller => 'mypage', :action => 'index', :name => e.getTopRatedSummary.user.name %>">
               <%= image_tag e.getTopRatedSummary.user.prof_image, :class => "summarist_icon", :size => "26x26" %>
               <span><%= e.getTopRatedSummary.user.name %></span>
-            </div>
-          </a>
+            </a>
+          </div>
           <textarea disabled="disabled"><%= e.getTopRatedSummary.content %></textarea>
         </div>
         <div class="entry_top_like">
           <div class="entry_like_num">
-            <div><%= e.getTopRatedSummary.good_summaries.count %></div>
+            <div id="good_summary_count<%= e.getTopRatedSummary.id %>"><%= e.getTopRatedSummary.good_summaries.count %></div>
           </div>
-          <%= image_tag "icons/MunchLike.png", :size => "48x48" %>
+          <a onclick="clickGoodSummary(<%= e.getTopRatedSummary.id %>)">
+            <% if getLoginUser && e.getTopRatedSummary.good_summaries.where(:user_id => getLoginUser.id).first %>
+              <%= image_tag("icons/MunchCancel.png", :size => "48x48", :id => 'good_summary_img'+e.getTopRatedSummary.id.to_s, :style => "cursor:pointer;")%>
+            <% else %>
+              <%= image_tag("icons/MunchLike.png", :size => "48x48", :id => 'good_summary_img'+e.getTopRatedSummary.id.to_s, :style => "cursor:pointer;")%>
+            <% end %>
+          </a>
+
           <div class="entry_top_like_label">
             <label>Good Summary</label>
           </div>

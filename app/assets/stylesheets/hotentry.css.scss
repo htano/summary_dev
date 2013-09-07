@@ -54,20 +54,21 @@ div.entry_title h3 {
 }
 
 div.entry_count_num {
-  padding: 5px;
-  width: 96px;
-  height: 66px;
+  line-height: 16px;
+  padding: 9px;
+  width: 88px;
+  height: 58px;
   float: right;
   border-left: solid 1px #eee;
   text-align: center;
 }
 
-div.entry_count_num label {
+span.entry_count_label {
   //text-decoration: underline;
   font-size: 16px;
 }
 
-div.entry_count_num span {
+span.entry_count_num {
   font-size: 32px;
 }
 
