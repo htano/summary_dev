@@ -23,7 +23,8 @@ BLANK = ''
 @clickEditButton = ->
 	content = document.getElementById('content').value
 	content_num = content.replace(/\n|\r\n/g,"").length
-	if content_num is 0 
+	firstEditFlag = document.getElementById('firstEditFlag')
+	if content_num is 0 or firstEditFlag.value.length > 0
 		alert 'Please edit summary.'
 		return false
 	else

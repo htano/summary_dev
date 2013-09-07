@@ -2,6 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.edit_main {
+//  width: 815px;
+  position: relative;
+  padding: 3px;
+  border-radius: 3px;
+  margin: 0 0 15px 0;
+}
+
 .count {
   width: 50px;
 }
@@ -25,4 +33,5 @@
 
 .edit_table {
   width: 800px;
+  padding: 1px 10px;
 }
