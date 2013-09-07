@@ -6,11 +6,11 @@ function clickGoodSummary(summary_id) {
     dataType: 'text',
     success: function(data) {
       if(data == "good") {
-        $('#good_summary_img'+summary_id).attr('src', '/assets/icons/MunchCancel.png');
+        $('#good_summary_img'+summary_id).attr('src', '/images/icons/MunchCancel.png');
         var good_count = $('#good_summary_count'+summary_id).text();
         $('#good_summary_count'+summary_id).text(parseInt(good_count)+1);
       } else if (data == "cancel") {
-        $('#good_summary_img'+summary_id).attr('src', '/assets/icons/MunchLike.png');
+        $('#good_summary_img'+summary_id).attr('src', '/images/icons/MunchLike.png');
         var good_count = $('#good_summary_count'+summary_id).text();
         $('#good_summary_count'+summary_id).text(parseInt(good_count)-1);
       } else {
