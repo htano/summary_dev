@@ -8,16 +8,18 @@
     <div class="entry_box">
       <div class="entry_box_top">
         <div class="entry_title">
-          <a href="<%= e.url %>">
+          <a href="<%= e.url %>" target="_blank">
             <h3><%= e.title %></h3>
           </a>
         </div>
-        <div class="entry_count_num">
-          <label>Summaries</label>
-          </br>
-          </br>
-          <span><%= e.summaries.count %></span>
-        </div>
+        <a href="<%= url_for :controller => 'summary_lists', :action => 'index', :articleId => e.id %>">
+          <div class="entry_count_num">
+            <label>Summaries</label>
+            </br>
+            </br>
+            <span><%= e.summaries.count %></span>
+          </div>
+        </a>
         <div class="entry_count_num">
           <label>Reading</label>
           </br>
@@ -32,17 +34,19 @@
         <div class="entry_top_icon">
         </div>
         <div class="entry_top_summary">
-          <div class="entry_top_summary_user">
-            <%= image_tag e.getTopRatedSummary.user.prof_image, :class => "summarist_icon", :size => "26x26" %>
-            <label><%= e.getTopRatedSummary.user.name %></label>
-        </div>
+          <a href="<%= url_for :controller => 'mypage', :action => 'index', :name => e.getTopRatedSummary.user.name %>">
+            <div class="entry_top_summary_user">
+              <%= image_tag e.getTopRatedSummary.user.prof_image, :class => "summarist_icon", :size => "26x26" %>
+              <span><%= e.getTopRatedSummary.user.name %></span>
+            </div>
+          </a>
           <textarea disabled="disabled"><%= e.getTopRatedSummary.content %></textarea>
         </div>
         <div class="entry_top_like">
           <div class="entry_like_num">
             <div><%= e.getTopRatedSummary.good_summaries.count %></div>
           </div>
-          <%= image_tag "favicon_munch.png", :size => "48x48" %>
+          <%= image_tag "icons/MunchLike.png", :size => "48x48" %>
           <div class="entry_top_like_label">
             <label>Good Summary</label>
           </div>
