@@ -34,8 +34,9 @@ class SummaryListsController < ApplicationController
 			return
 		end
 		@user = getLoginUser
-		@summaryList = @article.getSortedSummaryList(@user, @article)
-		@isReadArticle = @article.isRead(@user, @article)
+		@summaryList = @article.getSortedSummaryList(@user)
+		@isReadArticle = @article.isRead(@user)
+		@numOfMarkUsers = @article.getMarkedUser
 	end
 
 	def goodSummary 

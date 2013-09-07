@@ -1,110 +1,133 @@
 <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-<div>
-	<div>
-		<div>
-			<h1>
+
+
+
+<div id ="sumlist_layout">
+	<table id ="summary_lists">
+		<tr>
+
+			<th id ="article_title" class ="main">
 				<% if  @article != nil %>
 					<%= link_to(@article.title,@article.url,:class => "summary_list_link") %>	
 				<% end %>
-			</h1>
-			<div>				
-				<% unless @isReadArticle then %>
-					<%= link_to "既読にする",{:action => "isRead", :articleId => @article.id, :remote => true}, { :class => "summary_list_link" }%>
-				<% else %>
-					<%= link_to "未読に戻す",{:action => "cancelIsRead", :articleId => @article.id, :remote => true}, { :class => "summary_list_link" }%>
-				<% end %>
-			</div>
+			</th>
+			<td id ="article_status" class ="status">
+				<div id ="article_read_mark">
+					<% unless @isReadArticle then %>
+
+						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_153_unchecked_gray.png">
+						<%= link_to "unread",{:action => "isRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
+					<% else %>
+
+						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_152_check_gray.png">
+						<%= link_to "already read",{:action => "cancelIsRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
+					<% end %>
+				</div>
+
+				<hr>
+
+				<div id ="mark_article">
+					<div id ="mark_user">
+						mark users
+						<%= @numOfMarkUsers %>
+					</div>
+
+
+				</th>
+
+			</tr> 
+
+
+			<!-- ここで、自分我要約してればその結果、してなければ要約への導線をだす --!>
+
+
+
 
 			<% unless @summaryList.blank? %>
-				<div>
-					<% @summaryList.each_with_index do |summaryItem,index| %>
-						<div>
-							<%= summaryItem.user.name %>	
-						</div>
-						<h2>
+				<% @summaryList.each_with_index do |summaryItem,index| %>
+					<tr>
+						<td id="summary_detail" class ="main">	
 							<%= simple_format_2(summaryItem.summary.content) %>	
-						</h2>
+						</td>
+						<td id="summary_auther" class ="status">
 
-						<div>
-							<% unless summaryItem.isGoodCompleted then %>
-								<div id = "yetGoodSummary<%=index%>">
-									<%= link_to image_tag("icons/good_summary.jpg",
-														  { :border => '0', :alt => 'いい要約だね！'}),
-														  {	:action => "goodSummary",
-															  :listIndex =>index,
-															  :summaryId =>summaryItem.summary.id, 
-															  :articleId => @article.id,
-															  :remote => true,
-									} %>
-								</div>
+							<%= summaryItem.user.name %>	
+							<hr>
+								<% unless summaryItem.isGoodCompleted then %>
+									<div id = "yetGoodSummary<%=index%>" class="iiyo">
+										<%= link_to image_tag("icons/glyphicons_343_thumbs_up.png",
+															  { :border => '0', 
+																:alt => 'いい要約だね！', 
+																:id => "bottun"}),
 
-								<div id = "alreadyGoodSummary<%=index%>" style="display:none"	>
-									<%= link_to image_tag("icons/good_summary_cmp.jpg", 
-														  { :border => '0', 
-															:alt => 'あなたは既にいい要約だねをしています'}),
-														  {	:action => "cancelGoodSummary",
-															  :listIndex =>index,
-															  :summaryId =>summaryItem.summary.id, 
-															  :articleId => @article.id,
-															  :remote => true,
-									} %>
-								</div>
-							<% else %>
-								<div id = "yetGoodSummary<%=index%>" style="display:none"	>
-									<%= link_to image_tag("icons/good_summary.jpg",
-														  { :border => '0', :alt => 'いい要約だね！'}),
-														  {	:action => "goodSummary",
-															  :listIndex =>index,
-															  :summaryId =>summaryItem.summary.id, 
-															  :articleId => @article.id,
-															  :remote => true,
-									} %>
-								</div>
+															  {	:action => "goodSummary",
+																  :listIndex =>index,
+																  :summaryId =>summaryItem.summary.id, 
+																  :articleId => @article.id,
+																  :remote => true,
+										} %>
+										<div id="count">
+										<%= summaryItem.summaryPoint %> 
+									</div>
+									</div>
 
-								<div id = "alreadyGoodSummary<%=index%>">
-									<%= link_to image_tag("icons/good_summary_cmp.jpg", 
-														  { :border => '0', 
-															:alt => 'あなたは既にいい要約だねをしています'}),
-														  {	:action => "cancelGoodSummary",
-															  :listIndex =>index,
-															  :summaryId =>summaryItem.summary.id, 
-															  :articleId => @article.id,
-															  :remote => true,
-									} %>
-								</div>
-							<% end %>
-						</div>
+									<div id = "alreadyGoodSummary<%=index%>" class="iiyo" style="display:none"	>
+										<%= link_to image_tag("icons/glyphicons_343_thumbs_up_gray.png", 
+															  { :border => '0', 
+																  :alt => 'あなたは既にいい要約だねをしています', :id => "cmpBottun"} ),
+																  {	:action => "cancelGoodSummary",
+																	  :listIndex =>index,
+																	  :summaryId =>summaryItem.summary.id, 
+																	  :articleId => @article.id,
+																	  :remote => true,
+										} %>
+										<div id="count">
+										<%= summaryItem.summaryPoint + 1 %> 
+									</div>
+									</div>
+								<% else %>
+									<div id = "yetGoodSummary<%=index%>" class="iiyo" style="display:none">
+										<%= link_to image_tag("icons/glyphicons_343_thumbs_up.png",
+															  { :border => '0', :alt => 'いい要約だね！', :id => "bottun"}),
+															  {	:action => "goodSummary",
+																  :listIndex =>index,
+																  :summaryId =>summaryItem.summary.id, 
+																  :articleId => @article.id,
+																  :remote => true,
+										} %>
+										<div id="count">
+										<%= summaryItem.summaryPoint - 1%> 
+									</div>
+									</div>
 
-						<div>
-							<% unless summaryItem.isGoodCompleted then %>
-								<div id = "yetGoodSummary_point<%=index%>">
-								ただいまのいい要約だねの数は<%= summaryItem.summaryPoint %>です。 
-							    </div>
-								<div id = "alreadyGoodSummary_point<%=index%>" style="display:none"	>
-								ただいまのいい要約だねの数は<%= summaryItem.summaryPoint + 1 %>です。 
-								</div>
-							<% else %>
-								<div id = "yetGoodSummary_point<%=index%>" style="display:none"	>
-								ただいまのいい要約だねの数は<%= summaryItem.summaryPoint - 1%>です。 
-							    </div>
-								<div id = "alreadyGoodSummary_point<%=index%>">
-								ただいまのいい要約だねの数は<%= summaryItem.summaryPoint  %>です。 
-								</div>
-							<% end%>
-						</div>
+									<div id = "alreadyGoodSummary<%=index%>" class="iiyo">
+										<%= link_to image_tag("icons/glyphicons_343_thumbs_up_gray.png", 
+															  { :border => '0', 
+																  :alt => 'あなたは既にいい要約だねをしています',:id => "cmpBottun"}),
+																  {	:action => "cancelGoodSummary",
+																	  :listIndex =>index,
+																	  :summaryId =>summaryItem.summary.id, 
+																	  :articleId => @article.id,
+																	  :remote => true,
+										} %>
+										<div id="count">
+										<%= summaryItem.summaryPoint  %> 
+									</div>
+									</div>
+								<% end %>
 
-						<hr>
 
-					<% end %>
-
-				<% else %>
-					<!-- 建設中 -->
-				<% end %>
-				<div>
-					他の要約を見る
-				</div>
-			</div>
-		</div>
+						<% end %>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						他の要約を見る
+					</td>
+					<td>
+					</td>
+				</tr>
+			<% end %>
+		</table>
 	</div>
-</div>
