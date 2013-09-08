@@ -180,11 +180,10 @@
                   <div class="title">
                     <a href="<%= article.url %>" target="_blank">
                       <%= article.title %>
-  
                       <p>
-                      100 points, 100 like, 7 summaries
+                        100 points, 100 like, 7 summaries
                       <br>
-                      <%= article.contents_preview %> ...
+                        <%= article.contents_preview %> ...
                       <p>
                     </p>
                     </a>
@@ -227,7 +226,14 @@
                     <% end %>
                   </div>
                   <div class="title">
-                    <a href="<%= summary.url %>" target="_blank"><%= summary.title %></a>
+                    <a href="<%= summary.url %>" target="_blank">
+                      <%= summary.title %>
+                      <p>
+                        100 points, 100 like, 7 summaries
+                      <br>
+                        <%= summary.contents_preview %> ...
+                      </p>
+                    </a>
                   </div>
                 </div>
               </th>
@@ -263,7 +269,14 @@
                     <% end %>
                   </div>
                   <div class="title">
-                    <a href="<%= favorite_article.url %>" target="_blank"><%= favorite_article.title %></a>
+                    <a href="<%= favorite_article.url %>" target="_blank">
+                      <%= favorite_article.title %>
+                      <p>
+                        100 points, 100 like, 7 summaries
+                      <br>
+                        <%= favorite_article.contents_preview %> ...
+                      </p>
+                    </a>
                   </div>
                 </div>
               </th>
@@ -303,7 +316,14 @@
                     <% end %>
                   </div>
                   <div class="title">
-                    <a href="<%= read_article.url %>" target="_blank"><%= read_article.title %></a>
+                    <a href="<%= read_article.url %>" target="_blank">
+                      <%= read_article.title %>
+                      <p>
+                        100 points, 100 like, 7 summaries
+                      <br>
+                        <%= read_article.contents_preview %> ...
+                      </p>
+                    </a>
                   </div>
               </th>
               <th class="num_column">
