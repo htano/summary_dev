@@ -4,6 +4,8 @@ require 'nokogiri'
 require 'openssl'
 require 'open-uri'
 require 'kconv'
+require 'bundler/setup'
+require 'extractcontent'
 
 class WebpageController < ApplicationController
 
@@ -101,20 +103,36 @@ class WebpageController < ApplicationController
       article = Article.find_by_url(@url);
       if article != nil then
         user_article = article.user_articles.find_by_user_id_and_article_id(user_id, article.id);
-          if user_article != nil then 
-            #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
-            render :text => "登録済みです。" and return
-          else
-            #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
-            user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
-            if user_article.save
-              render :text => "登録が完了しました。" and return
-            end
-          end
+        if user_article != nil then 
+          #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
+          render :text => "登録済みです。" and return
         else
+          #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
+          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
+          if user_article.save
+            render :text => "登録が完了しました。" and return
+          end
+        end
+      else
+
+        contents_preview = ""
+        open(@url) do |io|
+          html = io.read
+          begin
+            html = html.force_encoding("UTF-8")
+            html = html.encode("UTF-8", "UTF-8")
+            contents_preview, title = ExtractContent.analyse(html)
+            # logger.debug("content_preview : #{contents_preview}")
+          rescue => e
+            # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
+            logger.error("error :#{e}")
+          end
+        end
+        #logger.debug("preview : #{contents_preview}}")
+
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:url],:title => title, :category_id =>"001");
+        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001");
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save

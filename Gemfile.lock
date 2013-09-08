@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/mono0x/extractcontent.git
+  revision: 220ed055e8f8e22b2fb085da593881c3ec9bba12
+  specs:
+    extractcontent (0.0.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -163,6 +169,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   coffee-rails (~> 4.0.0)
+  extractcontent!
   jbuilder (~> 1.2)
   jquery-rails
   nokogiri

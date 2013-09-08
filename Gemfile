@@ -59,3 +59,5 @@ group :development do
   # better_errorsの画面上にirb/pry(PERL)を表示する
   gem 'binding_of_caller'
 end
+
+gem 'extractcontent', :git => 'https://github.com/mono0x/extractcontent.git'

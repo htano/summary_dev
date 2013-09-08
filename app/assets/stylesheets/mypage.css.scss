@@ -278,6 +278,9 @@ ul.tab {
 #article_title_top {
   width: 700px;
   padding: 4px 0px 0px 0px;
+  input {
+    margin-left: 4px;
+  }
 }
 
 #summary_number_top {
@@ -295,15 +298,24 @@ ul.tab {
   margin-top: 1px;
   margin-left: 10px;
   text-align: left;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: normal;
 
   a {
-    color: rgb(162, 162, 162);
-
+    //color: rgb(162, 162, 162);
+    color: gray;
     &:hover {
       color: #5B91FF;
       text-decoration: underline;
+      p {
+        color: #5B91FF;
+      }
+    }
+    p {
+      margin-top: 0px;
+  //    margin-left: -25px;
+      font-size: 11px;
+      color: rgb(162, 162, 162);
     }
   }
 }
