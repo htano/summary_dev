@@ -42,8 +42,11 @@ $(function(){
       <input type="button" id="clear" class="button button-flat:hover" value="Clear" onclick="clickClearButton()"></input>
       <input type="submit" id="submit" class="button button-flat:hover" value="Submit" disabled="true"></input>
       <input type="button" id="back" class="button button-flat:hover" value="Back" onclick="clickBackButton()" disabled="true"></input>
-      <%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16"),content_tag(:p, "delete"), {:action => "edit_complete"} %>
-      <a href="/help.html" target="_blank"><%= image_tag"icons/glyphicons_194_circle_question_mark.png" %></a>
+      <!--<%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16")%>-->
+      <% unless @firstEditFlag then %>
+        <%= link_to(image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16"), url_for(:controller => "summary", :action => "delete"), :method => "POST") %>
+      <% end %>
+      <a href="/help.html" target="_blank"><%= image_tag("icons/glyphicons_194_circle_question_mark.png", :size => "16x16") %></a>
     </div>
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
     <input type="hidden" id="firstEditFlag" value="<%= @firstEditFlag %>">

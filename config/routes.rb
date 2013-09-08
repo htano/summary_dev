@@ -32,6 +32,7 @@ SummaryDev::Application.routes.draw do
   #for webpage
   get 'summary/:article_id/edit' => 'summary#edit'
   post 'summary/:article_id/edit_complete' => 'summary#edit_complete'
+  post 'summary/:article_id/delete' => 'summary#delete'
   
   #for chrome extension
   get 'summary_lists/get_summary_num_for_chrome_extension' => 'summary_lists#get_summary_num_for_chrome_extension'

@@ -2,7 +2,21 @@
 
 class SummaryController < ApplicationController
 
-  def help
+  def delete
+    if signed_in?
+      user_id = getLoginUser.id;
+      @article_id = "#{params[:article_id]}";
+      summary = Summary.find_by_user_id_and_article_id(user_id, @article_id);
+      if summary != nil then
+        if summary.destroy
+          redirect_to :controller => "mypage", :action => "index";
+        end
+      else
+        redirect_to :controller => "mypage", :action => "index";
+      end 
+    else
+      redirect_to :controller => "consumer", :action => "index";
+    end
   end
 
   def edit
