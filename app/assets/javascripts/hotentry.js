@@ -21,3 +21,21 @@ function clickGoodSummary(summary_id) {
     }
   });
 }
+
+function clickReadItLater(btn, url, aid) {
+  if(url.length) {
+    $.ajax({
+      url: '/webpage/add_for_chrome_extension',
+      type: 'GET',
+      data: 'url=' + escape(url),
+      dataType: 'text',
+      success: function(data) {
+        btn.className="read_it_cancel";
+        btn.disabled=true;
+        btn.innerHTML="reading";
+        var reading_num = $('#reading_counter'+aid).text();
+        $('#reading_counter'+aid).text(parseInt(reading_num) + 1);
+      }
+    });
+  }
+}

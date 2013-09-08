@@ -21,10 +21,20 @@
           </div>
         </a>
         <div class="entry_count_num">
-          <span class="entry_count_label">Reading</span>
+          <span class="entry_count_label">Read User</span>
           </br>
           </br>
-          <span class="entry_count_num"><%= e.user_articles.count %></span>
+          <span id="reading_counter<%= e.id %>" class="entry_count_num"><%= e.user_articles.count %></span>
+        </div>
+        <div class="entry_count_num" style="border: solid 0px;">
+          <% if getLoginUser %>
+            <% if e.user_articles.where(:user_id => getLoginUser.id).first %>
+              <button class="read_it_cancel" style="width:80px; margin-top: 2.2em;" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' disabled>reading</button>
+            <% else %>
+              <button class="read_it_later" style="width:80px; margin-top: 2.2em;" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>ReadItLater</button>
+            <% end %>
+          <% else %>
+          <% end %>
         </div>
       </div>
       <div class="entry_box_left">
