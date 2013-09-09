@@ -15,11 +15,11 @@
 				<div id ="article_read_mark">
 					<% unless @isReadArticle then %>
 
-						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_153_unchecked_gray.png">
+						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_153_unchecked.png">
 						<%= link_to "unread",{:action => "isRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
 					<% else %>
 
-						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_152_check_gray.png">
+						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_152_check.png">
 						<%= link_to "already read",{:action => "cancelIsRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
 					<% end %>
 				</div>
@@ -60,10 +60,21 @@
 										:action => "index", 
 										:name => summaryItem.user.name} %>
 
+
+										<div id="follow_mark">
+											follow
+										</div>
+
 									</div>
 						<div id="last_update_time">
 							LastUpdate:<br><%= summaryItem.summary.updated_at.strftime("%Y/%m/%d %H:%M") %>
 						</div>
+
+
+
+
+
+
 									<hr>
 									<% unless summaryItem.isGoodCompleted then %>
 										<div id = "yetGoodSummary<%=index%>" class="iiyo">
