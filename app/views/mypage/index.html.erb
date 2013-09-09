@@ -179,7 +179,12 @@
                     <a href="<%= article.url %>" target="_blank">
                       <%= article.title %>
                       <p>
-                        100 registered 10 days ago | 7 summaries
+                        <%= @article_reg_num[i] %> registered, created at <%= @article_reg_date[i].strftime("%Y/%m/%d") %> | <%= @main_summaries_num[i] %>
+                        <% unless @main_summaries_num[i] > 1 %>
+                        summary
+                        <% else %>
+                        summaries
+                        <% end %>
                       <br>
                         <%= article.contents_preview %> ...
                       <p>
@@ -237,7 +242,19 @@
                     <a href="<%= summary.url %>" target="_blank">
                       <%= summary.title %>
                       <p>
-                        100 points, 100 like, 7 summaries
+                        <%= @summaries_reg_num[i] %> registered, 
+                        <%= @like_num[i] %>
+                        <% unless @like_num[i] > 1 then %>
+                        like
+                        <% else %>
+                        likes
+                        <% end %>
+                        , last updated at <%= @last_updated_at[i].strftime("%Y/%m/%d") %> | <%= @summaries_num[i] %>
+                        <% unless @summaries_num[i] > 1 %>
+                        summary
+                        <% else %>
+                        summaries
+                        <% end %>
                       <br>
                         <%= summary.contents_preview %> ...
                       </p>
@@ -246,10 +263,6 @@
                 </div>
               </th>
               <th class="num_column">
-                <% if false then %>
-                <% # likeの数 %>
-                <a href="#"><%= @like_num[i] %></a>
-                <% end %>
                 <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => summary.id) do %>
                 <p><%= @summaries_num[i] %></p>
                 <% unless @summaries_num[i] > 1 %>
@@ -297,7 +310,12 @@
                     <a href="<%= favorite_article.url %>" target="_blank">
                       <%= favorite_article.title %>
                       <p>
-                        100 points, 100 like, 7 summaries
+                      <%= @favorite_reg_num[i] %> registered, created at <%= @favorite_reg_date[i].strftime("%Y/%m/%d") %> | <%= @favorite_summaries_num[i] %>
+                      <% unless @favorite_summaries_num[i] > 1 %>
+                      summary
+                      <% else %>
+                      summaries
+                      <% end %>
                       <br>
                         <%= favorite_article.contents_preview %> ...
                       </p>
@@ -354,7 +372,12 @@
                     <a href="<%= read_article.url %>" target="_blank">
                       <%= read_article.title %>
                       <p>
-                        100 points, 100 like, 7 summaries
+                      <%= @read_reg_num[i] %> registered, created at <%= @read_reg_date[i].strftime("%Y/%m/%d") %> | <%= @read_summaries_num[i] %>
+                      <% unless @read_summaries_num[i] > 1 %>
+                      summary
+                      <% else %>
+                      summaries
+                      <% end %>
                       <br>
                         <%= read_article.contents_preview %> ...
                       </p>
