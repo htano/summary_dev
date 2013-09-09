@@ -36,11 +36,15 @@
 		</tr> 
 
 
-		<!-- ここで、自分我要約してればその結果、してなければ要約への導線をだす --!>
+		<!-- ここで、自分我要約してればその結果、してなければ要約への導線をだす -->
+		<tr>
+			<td class="main"> あなたも要約をして、誰かの時間を節約しませんか？
+			<td class="status">
+		</tr>
 
 
 
-
+		<!-- summary lists -->
 		<% unless @summaryList.blank? %>
 			<% @summaryList.each_with_index do |summaryItem,index| %>
 				<tr>
@@ -48,7 +52,6 @@
 						<%= simple_format_2(summaryItem.summary.content) %>	
 					</td>
 					<td id="summary_auther" class ="status">
-
 						<%= link_to image_tag(summaryItem.user.prof_image, :size => "50x50", :title => summaryItem.user.name, :id =>"auther_photo"),
 							{:controller => 'mypage',:action => "index", :name => summaryItem.user.name} %>
 							<div id ="auther_name">
@@ -58,6 +61,9 @@
 										:name => summaryItem.user.name} %>
 
 									</div>
+						<div id="last_update_time">
+							LastUpdate:<br><%= summaryItem.summary.updated_at.strftime("%Y/%m/%d %H:%M") %>
+						</div>
 									<hr>
 									<% unless summaryItem.isGoodCompleted then %>
 										<div id = "yetGoodSummary<%=index%>" class="iiyo">

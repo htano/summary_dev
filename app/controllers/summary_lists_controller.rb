@@ -1,5 +1,5 @@
 class SummaryListsController < ApplicationController
-    #TODO 画面からURL直打ちの回避
+	#TODO 画面からURL直打ちの回避
     def get_summary_num_for_chrome_extension
     	@url = "#{params[:url]}"
     	article = Article.find_by_url(@url);
@@ -37,6 +37,7 @@ class SummaryListsController < ApplicationController
 		@summaryList = @article.getSortedSummaryList(@user)
 		@isReadArticle = @article.isRead(@user)
 		@numOfMarkUsers = @article.getMarkedUser
+		@isSummarizedByMe = @article.summaries.find_by user_id: @user 
 	end
 
 	def goodSummary 
