@@ -25,9 +25,7 @@
           <hr/>
           <p>profile</p>
         </div>
-        <div id="user_comment">
-          <p><%= @user.comment %></p>
-        </div>
+          <%= @user.comment %>
       </div>
       <hr/>
       <div id="user_info_tab">
@@ -181,7 +179,7 @@
                     <a href="<%= article.url %>" target="_blank">
                       <%= article.title %>
                       <p>
-                        100 points, 100 like, 7 summaries
+                        100 registered 10 days ago | 7 summaries
                       <br>
                         <%= article.contents_preview %> ...
                       <p>
