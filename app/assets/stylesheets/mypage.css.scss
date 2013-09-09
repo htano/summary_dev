@@ -322,16 +322,27 @@ ul.tab {
 
 .num_column {
   border-bottom: 2px solid #e5e5e5;
-  font-size: 13px;
+  font-size: 20px;
   font-weight: normal;
 
+  p {
+    margin: 0px;
+  }
+
   a {
-    color: rgb(162, 162, 162);    
+    color: rgb(162, 162, 162);
   }
 
   &>a:hover {
     color: #5B91FF;
     text-decoration: underline;
+  }
+
+  span {
+    p {
+      font-size: 13px;
+      margin-top: 0px;
+    }
   }
 }
 
