@@ -127,11 +127,13 @@ div.entry_top_summary_user span {
 }
 
 div.entry_top_summary textarea {
+  padding: 5px 10px;
   border: solid 1px #eee;
+  background-color: #fff;
   resize: none;
   margin-top: 7px;
-  width: 590px;
-  height: 190px;
+  width: 574px;
+  height: 184px;
   font-size: 14px;
 }
 

@@ -17,9 +17,10 @@ class ConsumerController < ApplicationController
       @uname = getLoginUser.name
       flash[:success] = "Hello " + @uname + ". Login processing was successful."
       @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
-      if getLoginUser.updateLoginInfo(@remote_ip)
+      if getLoginUser.updateLastLogin
         if env['omniauth.params']['keep_login'] == "on"
           cookies[:keep_login_token] = { :value => getLoginUser.keep_login_token, :expires => Time.now + 3.days }
+          getLoginUser.updateKeepLogin(@remote_ip)
         end
       else
         #TODO Error handling
@@ -147,9 +148,10 @@ class ConsumerController < ApplicationController
         @uname = getLoginUser.name
         flash[:success] = "Hello " + @uname + ". Login processing was successful."
         @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
-        if getLoginUser.updateLoginInfo(@remote_ip)
+        if getLoginUser.updateLastLogin
           if params[:keep_login] == "on"
             cookies[:keep_login_token] = { :value => getLoginUser.keep_login_token, :expires => Time.now + 3.days }
+            getLoginUser.updateKeepLogin(@remote_ip)
           end
         else
         end

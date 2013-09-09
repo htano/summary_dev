@@ -1,5 +1,5 @@
 <div class="hotentry_container">
-<h1 class="hotentry">Hot Entry</h1>
+  <h1 class="hotentry"><a href="<%= url_for :controller => 'hotentry', :action => 'index' %>">Hot Entry</a></h1>
 <ul class="entry_container">
 
   <% @entries.each do |e| %>

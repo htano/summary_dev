@@ -53,8 +53,12 @@ class User < ActiveRecord::Base
     return self.save
   end
 
-  def updateLoginInfo(ip_address)
+  def updateLastLogin
     self.last_login = Time.now
+    return self.save
+  end
+
+  def updateKeepLogin(ip_address)
     self.keep_login_token = SecureRandom.uuid
     self.keep_login_ip = ip_address
     self.keep_login_expire = Time.now + 3.days
@@ -99,6 +103,7 @@ class User < ActiveRecord::Base
   def execSignOut
     self.keep_login_token = nil
     self.keep_login_expire = nil
+    self.keep_login_ip = nil
     return self.save
   end
 
