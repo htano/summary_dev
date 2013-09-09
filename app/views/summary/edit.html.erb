@@ -1,5 +1,5 @@
 <script>
-
+/*
 $(function(){
   $('.content').change(
     function(){
@@ -11,10 +11,8 @@ $(function(){
     }
   );
 });
-
+*/
 </script>
-
-<!--TODO CSSがmypageのまま -->
 <form method="POST" action="edit_complete">
   <div class="edit_main" align="center">
     <div id ="edit_table">
@@ -32,7 +30,7 @@ $(function(){
           <th id="summary_number_top">characters</th>
         </tr>
         <tr>
-          <th><textarea class="content" id="content" name="content" onfocus="clearContent()" onKeyUp="countContentCharacters()"><%= @content %></textarea></th>
+          <th><textarea rows="30" class="content" id="content" name="content" onfocus="clearContent()" onKeyUp="countContentCharacters()"><%= @content %></textarea></th>
           <th><span id="count" class="count"><%= @content_num %></span></th>
         </tr>
       </table>
@@ -46,7 +44,7 @@ $(function(){
       <% unless @firstEditFlag then %>
         <%= link_to(image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16"), url_for(:controller => "summary", :action => "delete"), :method => "POST") %>
       <% end %>
-      <a href="/help.html" target="_blank"><%= image_tag("icons/glyphicons_194_circle_question_mark.png", :size => "16x16") %></a>
+      <span class="help"><a href="/help.html" target="_blank"><%= image_tag("icons/glyphicons_194_circle_question_mark.png", :size => "16x16") %></a></span>
     </div>
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
     <input type="hidden" id="firstEditFlag" value="<%= @firstEditFlag %>">

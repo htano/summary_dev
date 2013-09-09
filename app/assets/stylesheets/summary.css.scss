@@ -22,16 +22,24 @@
 
 .content {
   width: 700px;
-  height: 100px;
+  height: 200px;
 }
 
 .content_disabled {
   background-color: whitesmoke;
   width: 700px;
-  height: 100px;
+  height: 200px;
 }
 
 .edit_table {
   width: 800px;
-  padding: 1px 10px;
+  border: 1px solid #ccc;
+}
+
+#operate_summary {
+  padding: 10px;
+}
+
+.help {
+  cursor: help;
 }
