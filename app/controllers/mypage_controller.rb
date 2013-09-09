@@ -77,14 +77,18 @@ class MypageController < ApplicationController
 
     # summary tab
     @summaries = []
-    @like_num = []
+    @summaries_num = []
     @user.summaries.each do |summary|
       logger.debug("summary_id : #{summary.id}")
       article = Article.find(summary.article_id)
       @summaries.push(article)
 
+      summary_num = Summary.count(:all, :conditions => {:article_id => summary.article_id})
+      @summaries_num.push(summary_num)
+=begin
       like = GoodSummary.count(:all, :conditions => {:summary_id => summary.id})
       @like_num.push(like)
+=end
     end
 
     render :layout => 'application'

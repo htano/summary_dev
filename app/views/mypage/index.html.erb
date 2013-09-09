@@ -216,7 +216,7 @@
               </div>
               TITLE
             </th>
-            <th id="summary_number_top">like</th>
+            <th id="summary_number_top">summary</th>
           </tr>
           <% if @summaries %>
           <form id="summary_check_form" name="summary_checkbox">
@@ -245,7 +245,24 @@
                   </div>
                 </div>
               </th>
-              <th class="num_column"><a href="#"><%= @like_num[i] %></a></th>
+              <th class="num_column">
+                <% if false then %>
+                <% # likeの数 %>
+                <a href="#"><%= @like_num[i] %></a>
+                <% end %>
+                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => summary.id) do %>
+                <p><%= @summaries_num[i] %></p>
+                <% unless @summaries_num[i] > 1 %>
+                <span>
+                  <p>summary</p>
+                </span>
+                <% else %>
+                <span>
+                  <p>summaries</p>
+                </span>
+                <% end %>
+                <% end %>
+              </th>
             </tr>
             <% end %>
           </form>
