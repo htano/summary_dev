@@ -162,33 +162,33 @@
             </th>
             <th id="summary_number_top">summary</th>
           </tr>
-          <% if @articles %>
+          <% if @main_articles_table %>
           <form id="main_check_form" name="main_checkbox">
-            <% @articles.each_with_index do |article, i| %>
+            <% @main_articles_table.each_with_index do |table_data, i| %>
             <tr>
               <th>
                 <div>
                   <div class="article_checkbox">
                     <% if @is_login_user then %>
                     <%= check_box 'check_article', i, 
-                    {:id => "article_check", :onclick => "clickMainCheckBox()"}, article.id, false %>
+                    {:id => "article_check", :onclick => "clickMainCheckBox()"}, table_data[:article].id, false %>
                     <% else %>
                     <%= check_box 'check_article', i,
-                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, article.id, false%>
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false%>
                     <% end %>
                   </div>
                   <div class="title">
-                    <a href="<%= article.url %>" target="_blank">
-                      <%= article.title %>
+                    <a href="<%= table_data[:article].url %>" target="_blank">
+                      <%= table_data[:article].title %>
                       <p>
-                        <%= @article_reg_num[i] %> registered, created at <%= @article_reg_date[i].strftime("%Y/%m/%d") %> | <%= @main_summaries_num[i] %>
-                        <% unless @main_summaries_num[i] > 1 %>
+                        <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
+                        <% unless table_data[:summary_num] > 1 %>
                         summary
                         <% else %>
                         summaries
                         <% end %>
                       <br>
-                        <%= article.contents_preview %> ...
+                        <%= table_data[:article].contents_preview %> ...
                       <p>
                     </p>
                     </a>
@@ -196,9 +196,9 @@
                 </div>
               </th>
               <th class="num_column">
-                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => article.id) do %>
-                <p><%= @main_summaries_num[i] %></p>
-                <% unless @main_summaries_num[i] > 1 %>
+                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
+                <p><%= table_data[:summary_num] %></p>
+                <% unless table_data[:summary_num] > 1 %>
                 <span>
                   <p>summary</p>
                 </span>
@@ -225,49 +225,49 @@
             </th>
             <th id="summary_number_top">summary</th>
           </tr>
-          <% if @summaries %>
+          <% if @summaries_table %>
           <form id="summary_check_form" name="summary_checkbox">
-            <% @summaries.each_with_index do |summary, i| %>
+            <% @summaries_table.each_with_index do |table_data, i| %>
             <tr>
               <th>
                 <div>
                   <div class="article_checkbox">
                     <% if @is_login_user then %>
                     <%= check_box 'check_article', i, 
-                    {:id => "summary_checkbox", :onclick => "clickSummaryCheckBox()"}, summary.id, false %>
+                    {:id => "summary_checkbox", :onclick => "clickSummaryCheckBox()"}, table_data[:article].id, false %>
                     <% else %>
                     <%= check_box 'check_article', i,
-                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, summary.id, false%>
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false %>
                     <% end %>
                   </div>
                   <div class="title">
-                    <a href="<%= summary.url %>" target="_blank">
-                      <%= summary.title %>
+                    <a href="<%= table_data[:article].url %>" target="_blank">
+                      <%= table_data[:article].title %>
                       <p>
-                        <%= @summaries_reg_num[i] %> registered, 
-                        <%= @like_num[i] %>
-                        <% unless @like_num[i] > 1 then %>
+                        <%= table_data[:registered_num] %> registered, 
+                        <%= table_data[:like_num] %>
+                        <% unless table_data[:like_num] > 1 then %>
                         like
                         <% else %>
                         likes
                         <% end %>
-                        , last updated at <%= @last_updated_at[i].strftime("%Y/%m/%d") %> | <%= @summaries_num[i] %>
-                        <% unless @summaries_num[i] > 1 %>
+                        , last updated at <%= table_data[:last_updated].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
+                        <% unless table_data[:summary_num] > 1 %>
                         summary
                         <% else %>
                         summaries
                         <% end %>
                       <br>
-                        <%= summary.contents_preview %> ...
+                        <%= table_data[:article].contents_preview %> ...
                       </p>
                     </a>
                   </div>
                 </div>
               </th>
               <th class="num_column">
-                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => summary.id) do %>
-                <p><%= @summaries_num[i] %></p>
-                <% unless @summaries_num[i] > 1 %>
+                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
+                <p><%= table_data[:summary_num] %></p>
+                <% unless table_data[:summary_num] > 1 %>
                 <span>
                   <p>summary</p>
                 </span>
@@ -293,42 +293,42 @@
               TITLE</th>
             <th id="summary_number_top">summary</th>
           </tr>
-          <% if @favorite_articles then %>
+          <% if @favorite_articles_table then %>
           <form id="favorite_check_form" name="favorite_checkbox">
-            <% @favorite_articles.each_with_index do |favorite_article, i| %>
+            <% @favorite_articles_table.each_with_index do |table_data, i| %>
             <tr>
               <th>
                 <div>
                   <div class="article_checkbox">
                     <% if @is_login_user then %>
                     <%= check_box 'check_article', i,
-                    {:id => "favorite_checkbox", :onclick => "clickFavoriteCheckBox()"}, favorite_article.id, false %>
+                    {:id => "favorite_checkbox", :onclick => "clickFavoriteCheckBox()"}, table_data[:article].id, false %>
                     <% else %>
                     <%= check_box 'check_article', i,
-                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, favorite_article.id, false %>
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false %>
                     <% end %>
                   </div>
                   <div class="title">
-                    <a href="<%= favorite_article.url %>" target="_blank">
-                      <%= favorite_article.title %>
+                    <a href="<%= table_data[:article].url %>" target="_blank">
+                      <%= table_data[:article].title %>
                       <p>
-                      <%= @favorite_reg_num[i] %> registered, created at <%= @favorite_reg_date[i].strftime("%Y/%m/%d") %> | <%= @favorite_summaries_num[i] %>
-                      <% unless @favorite_summaries_num[i] > 1 %>
+                      <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
+                      <% unless table_data[:summary_num] > 1 %>
                       summary
                       <% else %>
                       summaries
                       <% end %>
                       <br>
-                        <%= favorite_article.contents_preview %> ...
+                        <%= table_data[:article].contents_preview %> ...
                       </p>
                     </a>
                   </div>
                 </div>
               </th>
               <th class="num_column">
-                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => favorite_article.id) do %>
-                <p><%= @favorite_summaries_num[i] %></p>
-                <% unless @favorite_summaries_num[i] > 1 %>
+                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
+                <p><%= table_data[:summary_num] %></p>
+                <% unless table_data[:summary_num] > 1 %>
                 <span>
                   <p>summary</p>
                 </span>
@@ -355,41 +355,41 @@
             </th>
             <th id="summary_number_top">summary</th>
           </tr>
-          <% if @read_articles then %>
+          <% if @read_articles_table then %>
           <form id="read_check_form" name="read_checkbox">
-            <% @read_articles.each_with_index do |read_article, i| %>
+            <% @read_articles_table.each_with_index do |table_data, i| %>
             <tr>
               <th>
                 <div>
                   <div class="article_checkbox">
                     <% if @is_login_user %>
                     <%= check_box 'check_article', i, 
-                    {:id => "read_checkbox", :onclick => "clickReadCheckBox()"}, read_article.id, false %>
+                    {:id => "read_checkbox", :onclick => "clickReadCheckBox()"}, table_data[:article].id, false %>
                     <% else %>
                     <%= check_box 'check_article', i,
-                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, read_article.id, false%>
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false %>
                     <% end %>
                   </div>
                   <div class="title">
-                    <a href="<%= read_article.url %>" target="_blank">
-                      <%= read_article.title %>
+                    <a href="<%= table_data[:article].url %>" target="_blank">
+                      <%= table_data[:article].title %>
                       <p>
-                      <%= @read_reg_num[i] %> registered, created at <%= @read_reg_date[i].strftime("%Y/%m/%d") %> | <%= @read_summaries_num[i] %>
-                      <% unless @read_summaries_num[i] > 1 %>
+                      <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
+                      <% unless table_data[:summary_num] > 1 %>
                       summary
                       <% else %>
                       summaries
                       <% end %>
                       <br>
-                        <%= read_article.contents_preview %> ...
+                        <%= table_data[:article].contents_preview %> ...
                       </p>
                     </a>
                   </div>
               </th>
               <th class="num_column">
-                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => read_article.id) do %>
-                <p><%= @read_summaries_num[i] %></p>
-                <% unless @read_summaries_num[i] > 1 %>
+                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
+                <p><%= table_data[:summary_num] %></p>
+                <% unless table_data[:summary_num] > 1 %>
                 <span>
                   <p>summary</p>
                 </span>
@@ -404,6 +404,7 @@
             <% end %>
           </form>
           <% end %>
+
         </table>
       </div>
       <% else # @is_login_user || @user.public_flg %>

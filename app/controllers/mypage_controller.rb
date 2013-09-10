@@ -49,73 +49,43 @@ class MypageController < ApplicationController
     end
 
     # main tab & favorite tab & read tab
-    @articles = []
-    @favorite_articles = []
-    @read_articles = []
-
-    @article_reg_num = []
-    @favorite_reg_num = []
-    @read_reg_num = []
-
-    @article_reg_date = []
-    @favorite_reg_date = []
-    @read_reg_date = []
-
-    @main_summaries_num     = []
-    @favorite_summaries_num = []
-    @read_summaries_num     = []
+    @main_articles_table = []
+    @favorite_articles_table = []
+    @read_articles_table = []
 
     @user.user_articles.each do |user_article|
       article = Article.find(user_article.article_id)
+      summary_num = Summary.count_by_sql("select count(*) from summaries where summaries.article_id = #{user_article.article_id}")
+      registered_num = UserArticle.count_by_sql("select count(*) from user_articles where user_articles.article_id = #{user_article.article_id}")
+      registered_date = user_article.created_at
 
-      article_reg_num = UserArticle.count_by_sql("select count(*) from user_articles where user_articles.article_id = #{user_article.article_id}")
-
-      article_reg_date = user_article.created_at
-
-      summary_num = Summary.count(:all, :conditions => {:article_id => user_article.article_id})
+      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :registered_date => registered_date}
 
       if user_article.favorite_flg then
-        @favorite_articles.push(article)
-        @favorite_summaries_num.push(summary_num)
-        @favorite_reg_num.push(article_reg_num)
-        @favorite_reg_date.push(article_reg_date)
+        @favorite_articles_table.push(table_data)
       end
 
       if user_article.read_flg then
-        @read_articles.push(article)
-        @read_summaries_num.push(summary_num)
-        @read_reg_num.push(article_reg_num)
-        @read_reg_date.push(article_reg_date)
+        @read_articles_table.push(table_data)
       else
-        @articles.push(article)
-        @main_summaries_num.push(summary_num)
-        @article_reg_num.push(article_reg_num)
-        @article_reg_date.push(article_reg_date)
+        @main_articles_table.push(table_data)
       end
 
     end
 
     # summary tab
-    @summaries = []
-    @summaries_num = []
-
-    @summaries_reg_num = []
-    @last_updated_at = []
-    @like_num = []
+    @summaries_table = []
 
     @user.summaries.each do |summary|
-      logger.debug("summary_id : #{summary.id}")
       article = Article.find(summary.article_id)
-      @summaries.push(article)
-
-      article_reg_num = UserArticle.count_by_sql("select count(*) from user_articles where user_articles.article_id = #{summary.article_id}")
-      @summaries_reg_num.push(article_reg_num)
-      @last_updated_at.push(summary.updated_at)
+      registered_num = UserArticle.count_by_sql("select count(*) from user_articles where user_articles.article_id = #{summary.article_id}")
+      last_updated = summary.updated_at
       like_num = GoodSummary.count_by_sql("select count(*) from good_summaries where good_summaries.summary_id = #{summary.id}")
-      @like_num.push(like_num)
+      summary_num = Summary.count_by_sql("select count(*) from summaries where summaries.article_id = #{summary.article_id}")
 
-      summary_num = Summary.count(:all, :conditions => {:article_id => summary.article_id})
-      @summaries_num.push(summary_num)
+      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :last_updated => last_updated, :like_num => like_num}
+
+      @summaries_table.push(table_data)
     end
 
     render :layout => 'application'
