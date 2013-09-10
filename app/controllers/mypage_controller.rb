@@ -61,10 +61,10 @@ class MypageController < ApplicationController
 
       is_registered = false
       is_already_read = false
-      unless @is_login_user then
+      if signed_in? && @is_login_user == false then
         if getLoginUser.user_articles.exists?(:article_id => user_article.article_id) then
           is_registered = true
-          is_already_read = getLoginUser.user_articles.where(:article_id => user_article.article_id).first.read_flg
+          is_already_read = getLoginUser.user_articles.find_by_article_id(user_article.article_id).read_flg
         end
       end
 
@@ -94,10 +94,10 @@ class MypageController < ApplicationController
 
       is_registered = false
       is_already_read = false
-      unless @is_login_user then
+      if signed_in? && @is_login_user == false then
         if getLoginUser.user_articles.exists?(:article_id => summary.article_id) then
           is_registered = true
-          is_already_read = getLoginUser.user_articles.where(:article_id => summary.article_id).first.read_flg
+          is_already_read = getLoginUser.user_articles.find_by_article_id(summary.article_id).read_flg
         end
       end
 
