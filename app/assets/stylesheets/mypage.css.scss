@@ -298,8 +298,14 @@ ul.tab {
   font-weight: normal;
 
   a {
-    //color: rgb(162, 162, 162);
     color: gray;
+
+    span {
+      float: right;
+      color: #F9ACAC;
+      font-size: 10px;
+    }
+
     &:hover {
       color: #5B91FF;
       text-decoration: underline;

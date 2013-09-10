@@ -59,7 +59,16 @@ class MypageController < ApplicationController
       registered_num = UserArticle.count_by_sql("select count(*) from user_articles where user_articles.article_id = #{user_article.article_id}")
       registered_date = user_article.created_at
 
-      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :registered_date => registered_date}
+      is_registered = false
+      is_already_read = false
+      unless @is_login_user then
+        if getLoginUser.user_articles.exists?(:article_id => user_article.article_id) then
+          is_registered = true
+          is_already_read = getLoginUser.user_articles.where(:article_id => user_article.article_id).first.read_flg
+        end
+      end
+
+      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :registered_date => registered_date, :is_registered => is_registered, :is_already_read => is_already_read}
 
       if user_article.favorite_flg then
         @favorite_articles_table.push(table_data)
@@ -83,7 +92,16 @@ class MypageController < ApplicationController
       like_num = GoodSummary.count_by_sql("select count(*) from good_summaries where good_summaries.summary_id = #{summary.id}")
       summary_num = Summary.count_by_sql("select count(*) from summaries where summaries.article_id = #{summary.article_id}")
 
-      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :last_updated => last_updated, :like_num => like_num}
+      is_registered = false
+      is_already_read = false
+      unless @is_login_user then
+        if getLoginUser.user_articles.exists?(:article_id => summary.article_id) then
+          is_registered = true
+          is_already_read = getLoginUser.user_articles.where(:article_id => summary.article_id).first.read_flg
+        end
+      end
+
+      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :last_updated => last_updated, :like_num => like_num, :is_registered => is_registered, :is_already_read => is_already_read}
 
       @summaries_table.push(table_data)
     end

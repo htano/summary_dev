@@ -180,6 +180,15 @@
                   <div class="title">
                     <a href="<%= table_data[:article].url %>" target="_blank">
                       <%= table_data[:article].title %>
+                      <% if @is_login_user != true && table_data[:is_registered] %>
+                      <span>
+                        <% if table_data[:is_already_read] then %>
+                        << you already read
+                        <% else %>
+                        << you also register
+                        <% end %>
+                      </span>
+                      <% end %>
                       <p>
                         <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
                         <% unless table_data[:summary_num] > 1 %>
@@ -243,6 +252,15 @@
                   <div class="title">
                     <a href="<%= table_data[:article].url %>" target="_blank">
                       <%= table_data[:article].title %>
+                      <% if @is_login_user != true && table_data[:is_registered] %>
+                      <span>
+                        <% if table_data[:is_already_read] then %>
+                        << you already read
+                        <% else %>
+                        << you also register
+                        <% end %>
+                      </span>
+                      <% end %>
                       <p>
                         <%= table_data[:registered_num] %> registered, 
                         <%= table_data[:like_num] %>
@@ -311,6 +329,15 @@
                   <div class="title">
                     <a href="<%= table_data[:article].url %>" target="_blank">
                       <%= table_data[:article].title %>
+                      <% if @is_login_user != true && table_data[:is_registered] %>
+                      <span>
+                        <% if table_data[:is_already_read] then %>
+                        << you already read
+                        <% else %>
+                        << you also register
+                        <% end %>
+                      </span>
+                      <% end %>
                       <p>
                       <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
                       <% unless table_data[:summary_num] > 1 %>
@@ -373,6 +400,15 @@
                   <div class="title">
                     <a href="<%= table_data[:article].url %>" target="_blank">
                       <%= table_data[:article].title %>
+                      <% if @is_login_user != true && table_data[:is_registered] %>
+                      <span>
+                        <% if table_data[:is_already_read] then %>
+                        << you already read
+                        <% else %>
+                        << you also register
+                        <% end %>
+                      </span>
+                      <% end %>
                       <p>
                       <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
                       <% unless table_data[:summary_num] > 1 %>
