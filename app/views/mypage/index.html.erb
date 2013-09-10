@@ -1,255 +1,452 @@
 <div class="container">
-    <div class="row">
-      <div class="span3">
-        <div id="user_profile">
-          <%= image_tag(@user.prof_image, :size => "100x100") %>
-          <div id="prof_user_name">
-            <p><%= @user.name %></p>
-            <% if @is_login_user then %>
-            <div></div>
-            <% else %>
-            <% unless @is_already_following then%>
-            <div id="follow_toggle">
+  <div class="row">
+    <div class="span3">
+      <div id="user_profile">
+        <%= image_tag(@user.prof_image, :size => "100x100") %>
+        <div id="prof_user_name">
+          <p><%= @user.name %></p>
+          <% if @is_login_user then %>
+          <div></div>
+          <% else %>
+          <% unless @is_already_following then %>
+          <div id="follow_toggle">
             <%= link_to "follow", 
-              {:action => "follow", :follow_user_id => @user.id,:remote => true}, 
-              {:id => "follow_button", :class => "button button-rounded button-flat-primary"} %>
-            </div>
-            <% else %>
-            <div id="follow_toggle">
-              <%= link_to "unfollow", 
-              {:action => "unfollow", :unfollow_user_id => @user.id, :remote => true}, 
-              {:id => "unfollow_button", :class => "button button-rounded button-flat-primary"} %>
-            </div>
-            <% end %>
-            <% end %>
-            <hr/>
-            <p>profile</p>
+            {:action => "follow", :follow_user_id => @user.id,:remote => true}, 
+            {:id => "follow_button", :class => "button button-rounded button-flat-primary"} %>
           </div>
-          <div id="user_comment">
-            <p>六本木で働く冴えない会社員です。I work at Roppongi and I'm so dull.</p>
-            </div>
+          <% else %>
+          <div id="follow_toggle">
+            <%= link_to "unfollow", 
+            {:action => "unfollow", :unfollow_user_id => @user.id, :remote => true}, 
+            {:id => "unfollow_button", :class => "button button-rounded button-flat-primary"} %>
           </div>
-        <hr/>
-        <div id="user_info_tab">
-          <ul>
-            <li class="prof_tab_elem none active">
-              <a href="#prof_tab_following" data-toggle="tab">
-                following<br>
-                <%= @favorite_users.size %>
-              </a>
-              <div id="info_tab_marker"></div>
-            </li>
-            <li class="divider-vertical"></li>
-            <li class="prof_tab_elem none">
-              <a href="#prof_tab_followers" data-toggle="tab" id="followers_num">
-                followers<br>
-                <%= @followers.size %>
-              </a>
-              <div id="info_tab_marker"></div>
-            </li>
-            <li class="divider-vertical"></li>
-            <li class="prof_tab_elem none">
-              <a href="#prof_tab_summary" data-toggle="tab">
-                summary<br>
-                <!-- TODO : 動的に取る、そもそもsummaryでよいかも考える -->
-                10
-              </a>
-              <div id="info_tab_marker"></div>
-          </ul>
+          <% end %>
+          <% end %>
+          <hr/>
+          <p>profile</p>
         </div>
-        <hr/>
-        <div id="user_info">
-          <div id="prof_tab_following" class="active">
-            <% if @favorite_users != nil then %>
-            <% @favorite_users.each do |favorite_user| %>
-            <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.name),
-            {:action => "index", :name => favorite_user.name} %>
-            <% end %>
-            <% end %>
-          </div>
-          <div id="prof_tab_followers">
-            <% if @followers != nil then %>
-            <% @followers.each do |follower| %>
-            <%= link_to image_tag(follower.prof_image, :size => "32x32", :title => follower.name),
-            {:action => "index", :name => follower.name},
-            {:id => "follower_id_"+follower.id.to_s } %>
-            <% end %>
-            <% end %>
-          </div>
-          <div id="prof_tab_summary">
-          </div>
-        </div>
+        <span>
+          <%= @user.comment %>
+        </span>
       </div>
-      <div class="span9">
-        <div class="div_tag">
-          <ul class="tab clear">
-            <li class="none active my_overflow"><a href="#main" data-toggle="tab">Main</a></li>
-            <li class="none my_overflow"><a href="#edited_summary" data-toggle="tab">Edited Summary</a></li>
-            <li class="none my_overflow"><a href="#favorite" data-toggle="tab">Favorite</a></li>
-            <li class="none my_overflow"><a href="#read" data-toggle="tab">Read</a></li>
-            <li class="none my_overflow"><a href="#reserved" data-toggle="tab">Reserved</a></li>
-          </ul>
+      <hr/>
+      <div id="user_info_tab">
+        <ul>
+          <li class="prof_tab_elem none active">
+            <a href="#prof_tab_following" data-toggle="tab">
+              following<br>
+              <%= @favorite_users.size %>
+            </a>
+            <div id="info_tab_marker"></div>
+          </li>
+          <li class="divider-vertical"></li>
+          <li class="prof_tab_elem none">
+            <a href="#prof_tab_followers" data-toggle="tab" id="followers_num">
+              followers<br>
+              <%= @followers.size %>
+            </a>
+            <div id="info_tab_marker"></div>
+          </li>
+          <li class="divider-vertical"></li>
+          <li class="prof_tab_elem none">
+            <a href="#prof_tab_summary" data-toggle="tab">
+              summary<br>
+              <!-- TODO : 動的に取る、そもそもsummaryでよいかも考える -->
+              10
+            </a>
+            <div id="info_tab_marker"></div>
+          </li>
+        </ul>
+      </div>
+      <hr/>
+      <div id="user_info">
+        <div id="prof_tab_following" class="active">
+          <% if @favorite_users != nil then %>
+          <% @favorite_users.each do |favorite_user| %>
+          <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.name),
+          {:action => "index", :name => favorite_user.name} %>
+          <% end %>
+          <% end %>
         </div>
-        <div id="operate_article">
-          <div id="mark_as_read_btn">
-            <% if true then %>
-            <!-- disableの時 -->
-            <%= image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16", :class => "inner") + content_tag(:p, "mark as read", :class => "inner") %>
-            <% else %>
-            <!-- checkbox にチェックが入って enable になった時   -->
-            <%= link_to image_tag("icons/glyphicons_152_check.png", :size => "16x16") + 
-            content_tag(:p, "mark as read"), {:action => "mark_as_read", :name => @user.name} %>
-            <% end %>
-          </div>
-          <div id="edit_summary_btn">
-            <% if true then %>
-            <!-- disableの時 -->
-            <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
-            <% else %>
-            <!-- checkbox にチェックが入って enable になった時   -->
-            <%= link_to image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + 
-            content_tag(:p, "edit summary"), {:action => "index", :name => @user.name} %>
-            <% end %>
-          </div>
-          <div id="mark_as_favorite_btn">
-            <% if true then %>
-            <!-- disableの時 -->
-            <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark as favorite") %>
-            <% else %>
-            <!-- checkbox にチェックが入って enable になった時   -->
-            <%= link_to image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + 
-            content_tag(:p, "mark as favorite"), {:action => "index", :name => @user.name} %>
-            <% end %>
-          </div>
-          <div id="delete_btn">
-            <% if true then %>
-            <!-- disableの時 -->
-            <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
-            <% else %>
-            <!-- checkbox にチェックが入って enable になった時   -->
-            <%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + 
-            content_tag(:p, "delete"), {:action => "index", :name => @user.name} %>
-            <% end %>
-          </div>
+        <div id="prof_tab_followers">
+          <% if @followers != nil then %>
+          <% @followers.each do |follower| %>
+          <%= link_to image_tag(follower.prof_image, :size => "32x32", :title => follower.name),
+          {:action => "index", :name => follower.name},
+          {:id => "follower_id_"+follower.id.to_s } %>
+          <% end %>
+          <% end %>
         </div>
-        <div class="table">
-          <table class="summary_table active" id="main">
-            <tr class="table_top">
-              <th id="article_title_top">TITLE</th>
-              <th id="summary_number_top">summary</th>
-            </tr>
-            <% if @articles %>
-            <form name="article_checkbox">
-              <% @articles.each_with_index do |article, i| %>
-              <tr>
-                <th class="title">
-                  <% if false then %>
-                  <% if @is_login_user then %>
-                  <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
-                  <ul class="dropdown-checkbox">
-                    <li><%= link_to "mark as read", {:action => "reverse_read_flg", :user_id => @user.id, 
-                      :name => @user.name, :article_id => article.id} %></li>
-                    <li><a href="#">mark as favorite</a></li>
-                    <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
-                      :name => @user.name, :article_id => article.id} %></li>
-                    <li><%= link_to "edit summary", 
-                        {:controller => "summary", :action => "edit", :article_id => article.id} %>
-                    </li>
-                  </ul>
-                  <% end %>
-                  <% end %>
-
-                  <% if @is_login_user then %>
-                  <%= check_box 'check_article', i, 
-                  {:id => "article_check", :onclick => "clickCheckbox()"}, article.id, false %>
-                  <% end %>
-                  <a href="<%= article.url %>" target="_blank"><%= article.title %></a>
-
-                </th>
-                <th class="num_column"><%= link_to @main_summaries_num[i], 
-                    {:controller => 'summary_lists', :action => 'index', :articleId => article.id} %>
-                </th>
-                <% if false then %>
-                <th class="num_column"><a href="#"><%= @main_summaries_num[i] %></a></th>
-                <% end %>
-              </tr>
-              <% end %>
-            </form>
-            <% end %>
-          </table>
-          <table class="edited_summary_table" id="edited_summary">
-            <tr class="table_top">
-              <th id="article_title_top">TITLE</th>
-              <th id="summary_number_top">like</th>
-            </tr>
-            <% if @edited_summaries %>
-            <% @edited_summaries.each_with_index do |summary, i| %>
-            <tr>
-              <th class="title">
-                <% if @is_login_user then %>
-                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
-                <ul class="dropdown-checkbox">
-                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
-                    :name => @user.name, :article_id => summary.id, :delete_mode => 2} %></li>
-                  <li><%= link_to "revise", 
-                      {:controller => "summary", :action => "edit", :article_id => summary.id} %>
-                  </li>
-                </ul>
-                <% end %>
-                <a href="<%= summary.url %>" target="_blank"><%= summary.title %></a>
-              </th>
-              <th class="num_column"><a href="#"><%= @like_num[i] %></a></th>
-            </tr>
-            <% end %>
-            <% end %>
-          </table>
-          <table class="favorite_table" id="favorite">
-            <tr class="table_top">
-              <th id="article_title_top">TITLE</th>
-              <th id="summary_number_top">summary</th>
-            </tr>
-          </table>
-          <table class="read_table" id="read">
-            <tr class="table_top">
-              <th id="article_title_top">TITLE</th>
-              <th id="summary_number_top">summary</th>
-            </tr>
-            <% if @read_articles %>
-            <% @read_articles.each_with_index do |read_article, i| %>
-            <tr>
-              <th class="title">
-                <% if @is_login_user then %>
-                <% if false then %>
-                <input type="checkbox" id="article_check" class="dropdown-toggle" data-toggle="dropdown">
-                <ul class="dropdown-checkbox">
-                  <li><%= link_to "mark as unread", {:action => "reverse_read_flg", :user_id => @user.id, 
-                    :article_id => read_article.id} %></li>
-                  <li><a href="#">mark as favorite</a></li>
-                  <li><%= link_to "delete", {:action => "delete", :user_id => @user.id, 
-                    :article_id => read_article.id} %></li>
-                  <li><%= link_to "edit summary", 
-                      {:controller => "summary", :action => "edit", :article_id => read_article.id} %>
-                  </li>
-                </ul>
-                <% end %>
-                <% end %>
-                <a href="<%= read_article.url %>" target="_blank"><%= read_article.title %></a>
-              </th>
-              <th class="num_column"><%= link_to @read_summaries_num[i], 
-                  {:controller => 'summary_lists', :action => 'index', :articleId => read_article.id} %>
-              </th>
-            </tr>
-            <% end %>
-            <% end %>
-          </table>
-          <table class="reserved_table" id="reserved">
-            <tr class="table_top">
-              <th id="article_title_top">none</th>
-              <th id="summary_number_top">none</th>
-            </tr>
-          </table>
-
+        <div id="prof_tab_summary">
         </div>
       </div>
     </div>
+    <div class="span9">
+      <div class="div_tag">
+        <ul class="tab clear">
+          <li class="none active my_overflow"><a href=".main" data-toggle="tab">Main</a></li>
+          <li class="none my_overflow"><a href=".summary" data-toggle="tab">Summary</a></li>
+          <li class="none my_overflow"><a href=".favorite" data-toggle="tab">Favorite</a></li>
+          <li class="none my_overflow"><a href=".read" data-toggle="tab">Read</a></li>
+        </ul>
+      </div>
+      <div id="article_controller">
+        <% if @is_login_user then %>
+        <div class="none active main">
+          <div id="m_mark_as_read_btn">
+            <%= image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16", :class => "inner") + content_tag(:p, "mark as read", :class => "inner") %>
+          </div>
+          <div id="m_edit_summary_btn">
+            <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
+          </div>
+          <div id="m_mark_as_favorite_btn">
+            <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark as favorite") %>
+          </div>
+          <div id="m_delete_btn">
+            <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
+          </div>
+        </div>
+        <div class="none summary">
+          <div id="s_edit_summary_btn">
+            <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
+          </div>
+          <div id="s_delete_btn">
+            <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
+          </div>
+        </div>
+        <div class="none favorite">
+          <div id="f_edit_summary_btn">
+            <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
+          </div>
+          <div id="f_mark_as_unfavorite_btn">
+            <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark as unfavorite") %>
+          </div>
+          <div id="f_delete_btn">
+            <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
+          </div>
+        </div>
+        <div class="none read">
+          <div id="r_mark_as_unread_btn">
+            <%= image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16", :class => "inner") + content_tag(:p, "mark as unread", :class => "inner") %>
+          </div>
+          <div id="r_edit_summary_btn">
+            <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
+          </div>
+          <div id="r_mark_as_favorite_btn">
+            <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark as favorite") %>
+          </div>
+          <div id="r_delete_btn">
+            <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
+          </div>
+        </div>
+        <% else  # is_login_user %>
+        <% if @user.public_flg then %>
+        <div class="active">
+          <div id="clip_btn">
+            <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
+          </div>
+        </div>
+        <% end # @user.public_flg %>
+        <% end # is_login_user %>
+      </div>
+      <% if @is_login_user || @user.public_flg %>
+      <div class="article_table">
+        <table class="summary_table active main">
+          <tr class="table_top">
+            <th id="article_title_top">
+              <div class="article_checkbox">
+                <%= check_box 'check_all', 0, 
+                {:id => "main_check_all", :onclick => "checkAll('main_check_all', 'main_check_form')"}, 0, false %>
+              </div>
+              TITLE
+            </th>
+            <th id="summary_number_top">summary</th>
+          </tr>
+          <% if @main_articles_table %>
+          <form id="main_check_form" name="main_checkbox">
+            <% @main_articles_table.each_with_index do |table_data, i| %>
+            <tr>
+              <th>
+                <div>
+                  <div class="article_checkbox">
+                    <% if @is_login_user then %>
+                    <%= check_box 'check_article', i, 
+                    {:id => "article_check", :onclick => "clickMainCheckBox()"}, table_data[:article].id, false %>
+                    <% else %>
+                    <%= check_box 'check_article', i,
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false %>
+                    <% end %>
+                  </div>
+                  <div class="title">
+                    <a href="<%= table_data[:article].url %>" target="_blank">
+                      <%= table_data[:article].title %>
+                      <% if @is_login_user != true && table_data[:is_registered] %>
+                      <span>
+                        <% if table_data[:is_already_read] then %>
+                        << you already read
+                        <% else %>
+                        << you also register
+                        <% end %>
+                      </span>
+                      <% end %>
+                      <p>
+                        <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
+                        <% unless table_data[:summary_num] > 1 %>
+                        summary
+                        <% else %>
+                        summaries
+                        <% end %>
+                      <br>
+                        <%= table_data[:article].contents_preview %> ...
+                      <p>
+                    </p>
+                    </a>
+                  </div>
+                </div>
+              </th>
+              <th class="num_column">
+                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
+                <p><%= table_data[:summary_num] %></p>
+                <% unless table_data[:summary_num] > 1 %>
+                <span>
+                  <p>summary</p>
+                </span>
+                <% else %>
+                <span>
+                  <p>summaries</p>
+                </span>
+                <% end %>
+                <% end %>
+              </th>
+            </tr>
+            <% end %>
+          </form>
+          <% end %>
+        </table>
+        <table class="summary_table summary">
+          <tr class="table_top">
+            <th id="article_title_top">
+              <div class="article_checkbox">
+                <%= check_box 'check_all', 0, 
+                {:id => "summary_check_all", :onclick => "checkAll('summary_check_all', 'summary_check_form')"}, 0, false %>
+              </div>
+              TITLE
+            </th>
+            <th id="summary_number_top">summary</th>
+          </tr>
+          <% if @summaries_table %>
+          <form id="summary_check_form" name="summary_checkbox">
+            <% @summaries_table.each_with_index do |table_data, i| %>
+            <tr>
+              <th>
+                <div>
+                  <div class="article_checkbox">
+                    <% if @is_login_user then %>
+                    <%= check_box 'check_article', i, 
+                    {:id => "summary_checkbox", :onclick => "clickSummaryCheckBox()"}, table_data[:article].id, false %>
+                    <% else %>
+                    <%= check_box 'check_article', i,
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false %>
+                    <% end %>
+                  </div>
+                  <div class="title">
+                    <a href="<%= table_data[:article].url %>" target="_blank">
+                      <%= table_data[:article].title %>
+                      <% if @is_login_user != true && table_data[:is_registered] %>
+                      <span>
+                        <% if table_data[:is_already_read] then %>
+                        << you already read
+                        <% else %>
+                        << you also register
+                        <% end %>
+                      </span>
+                      <% end %>
+                      <p>
+                        <%= table_data[:registered_num] %> registered, 
+                        <%= table_data[:like_num] %>
+                        <% unless table_data[:like_num] > 1 then %>
+                        like
+                        <% else %>
+                        likes
+                        <% end %>
+                        , last updated at <%= table_data[:last_updated].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
+                        <% unless table_data[:summary_num] > 1 %>
+                        summary
+                        <% else %>
+                        summaries
+                        <% end %>
+                      <br>
+                        <%= table_data[:article].contents_preview %> ...
+                      </p>
+                    </a>
+                  </div>
+                </div>
+              </th>
+              <th class="num_column">
+                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
+                <p><%= table_data[:summary_num] %></p>
+                <% unless table_data[:summary_num] > 1 %>
+                <span>
+                  <p>summary</p>
+                </span>
+                <% else %>
+                <span>
+                  <p>summaries</p>
+                </span>
+                <% end %>
+                <% end %>
+              </th>
+            </tr>
+            <% end %>
+          </form>
+          <% end %>
+        </table>
+        <table class="favorite_table favorite">
+          <tr class="table_top">
+            <th id="article_title_top">
+              <div class="article_checkbox">
+                <%= check_box 'check_all', 0, 
+                {:id => "favorite_check_all", :onclick => "checkAll('favorite_check_all', 'favorite_check_form')"}, 0, false %>
+              </div>
+              TITLE</th>
+            <th id="summary_number_top">summary</th>
+          </tr>
+          <% if @favorite_articles_table then %>
+          <form id="favorite_check_form" name="favorite_checkbox">
+            <% @favorite_articles_table.each_with_index do |table_data, i| %>
+            <tr>
+              <th>
+                <div>
+                  <div class="article_checkbox">
+                    <% if @is_login_user then %>
+                    <%= check_box 'check_article', i,
+                    {:id => "favorite_checkbox", :onclick => "clickFavoriteCheckBox()"}, table_data[:article].id, false %>
+                    <% else %>
+                    <%= check_box 'check_article', i,
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false %>
+                    <% end %>
+                  </div>
+                  <div class="title">
+                    <a href="<%= table_data[:article].url %>" target="_blank">
+                      <%= table_data[:article].title %>
+                      <% if @is_login_user != true && table_data[:is_registered] %>
+                      <span>
+                        <% if table_data[:is_already_read] then %>
+                        << you already read
+                        <% else %>
+                        << you also register
+                        <% end %>
+                      </span>
+                      <% end %>
+                      <p>
+                      <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
+                      <% unless table_data[:summary_num] > 1 %>
+                      summary
+                      <% else %>
+                      summaries
+                      <% end %>
+                      <br>
+                        <%= table_data[:article].contents_preview %> ...
+                      </p>
+                    </a>
+                  </div>
+                </div>
+              </th>
+              <th class="num_column">
+                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
+                <p><%= table_data[:summary_num] %></p>
+                <% unless table_data[:summary_num] > 1 %>
+                <span>
+                  <p>summary</p>
+                </span>
+                <% else %>
+                <span>
+                  <p>summaries</p>
+                </span>
+                <% end %>
+                <% end %>
+              </th>
+            </tr>
+            <% end %>
+          </form>
+          <% end %>
+        </table>
+        <table class="read_table read">
+          <tr class="table_top">
+            <th id="article_title_top">
+              <div class="article_checkbox">
+                <%= check_box 'check_all', 0, 
+                {:id => "read_check_all", :onclick => "checkAll('read_check_all', 'read_check_form')"}, 0, false %>
+              </div>
+              TITLE
+            </th>
+            <th id="summary_number_top">summary</th>
+          </tr>
+          <% if @read_articles_table then %>
+          <form id="read_check_form" name="read_checkbox">
+            <% @read_articles_table.each_with_index do |table_data, i| %>
+            <tr>
+              <th>
+                <div>
+                  <div class="article_checkbox">
+                    <% if @is_login_user %>
+                    <%= check_box 'check_article', i, 
+                    {:id => "read_checkbox", :onclick => "clickReadCheckBox()"}, table_data[:article].id, false %>
+                    <% else %>
+                    <%= check_box 'check_article', i,
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false %>
+                    <% end %>
+                  </div>
+                  <div class="title">
+                    <a href="<%= table_data[:article].url %>" target="_blank">
+                      <%= table_data[:article].title %>
+                      <% if @is_login_user != true && table_data[:is_registered] %>
+                      <span>
+                        <% if table_data[:is_already_read] then %>
+                        << you already read
+                        <% else %>
+                        << you also register
+                        <% end %>
+                      </span>
+                      <% end %>
+                      <p>
+                      <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
+                      <% unless table_data[:summary_num] > 1 %>
+                      summary
+                      <% else %>
+                      summaries
+                      <% end %>
+                      <br>
+                        <%= table_data[:article].contents_preview %> ...
+                      </p>
+                    </a>
+                  </div>
+              </th>
+              <th class="num_column">
+                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
+                <p><%= table_data[:summary_num] %></p>
+                <% unless table_data[:summary_num] > 1 %>
+                <span>
+                  <p>summary</p>
+                </span>
+                <% else %>
+                <span>
+                  <p>summaries</p>
+                </span>
+                <% end %>
+                <% end %>
+              </th>
+            </tr>
+            <% end %>
+          </form>
+          <% end %>
+
+        </table>
+      </div>
+      <% else # @is_login_user || @user.public_flg %>
+      <p id="private_message">@<%= @user.name%>'s articles are protected. </p>
+      <% end # @is_login_user || @user.public_flg %>
+
+    </div>
   </div>
+</div>

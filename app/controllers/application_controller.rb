@@ -46,4 +46,18 @@ class ApplicationController < ActionController::Base
     return getLoginUser.getNotifyingArticles
   end
 
+  private
+  def exec_authenticate
+    if Rails.env.production?
+      authenticate
+    end
+  end
+
+  def authenticate
+    authenticate_or_request_with_http_basic('Enter Password') do |u, p|
+      u == 'summary.dev' && Digest::MD5.hexdigest(p) == "7fd9244849e93ace721ae1c569a939aa"
+    end
+  end
+  before_filter :exec_authenticate
+
 end

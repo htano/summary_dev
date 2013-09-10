@@ -13,8 +13,7 @@ class MypageController < ApplicationController
       if signed_in? then
         @is_login_user = true
       else
-        redirect_to :controller => 'consumer', :action => 'index'
-        return
+        redirect_to :controller => 'consumer', :action => 'index' and return
       end
     end
 
@@ -33,9 +32,6 @@ class MypageController < ApplicationController
       end
     end
 
-    # whether user has a photo or no
-    @is_photo_data = @user.prof_image != nil ? true : false;
-
     # follow user information
     @favorite_users = []
     @user.favorite_users.each do |favorite_user|
@@ -52,73 +48,100 @@ class MypageController < ApplicationController
       @followers.push(user)
     end
 
-    # main tab & read tab
-    @articles = []
-    @read_articles = []
-    @main_summaries_num = []
-    @read_summaries_num = []
+    # main tab & favorite tab & read tab
+    @main_articles_table = []
+    @favorite_articles_table = []
+    @read_articles_table = []
+
     @user.user_articles.each do |user_article|
       article = Article.find(user_article.article_id)
-      summary_num = Summary.count(:all, :conditions => {:article_id => user_article.article_id})
+      summary_num = Summary.count_by_sql("select count(*) from summaries where summaries.article_id = #{user_article.article_id}")
+      registered_num = UserArticle.count_by_sql("select count(*) from user_articles where user_articles.article_id = #{user_article.article_id}")
+      registered_date = user_article.created_at
+
+      is_registered = false
+      is_already_read = false
+      if signed_in? && @is_login_user == false then
+        if getLoginUser.user_articles.exists?(:article_id => user_article.article_id) then
+          is_registered = true
+          is_already_read = getLoginUser.user_articles.find_by_article_id(user_article.article_id).read_flg
+        end
+      end
+
+      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :registered_date => registered_date, :is_registered => is_registered, :is_already_read => is_already_read}
+
+      if user_article.favorite_flg then
+        @favorite_articles_table.push(table_data)
+      end
 
       if user_article.read_flg then
-        @read_articles.push(article)
-        @read_summaries_num.push(summary_num)
+        @read_articles_table.push(table_data)
       else
-        @articles.push(article)
-        @main_summaries_num.push(summary_num)
+        @main_articles_table.push(table_data)
       end
 
     end
 
-    # edited summary tab
-    @edited_summaries = []
-    @like_num = []
+    # summary tab
+    @summaries_table = []
+
     @user.summaries.each do |summary|
-      logger.debug("summary_id : #{summary.id}")
       article = Article.find(summary.article_id)
-      @edited_summaries.push(article)
+      registered_num = UserArticle.count_by_sql("select count(*) from user_articles where user_articles.article_id = #{summary.article_id}")
+      last_updated = summary.updated_at
+      like_num = GoodSummary.count_by_sql("select count(*) from good_summaries where good_summaries.summary_id = #{summary.id}")
+      summary_num = Summary.count_by_sql("select count(*) from summaries where summaries.article_id = #{summary.article_id}")
 
-      like = GoodSummary.count(:all, :conditions => {:summary_id => summary.id})
-      @like_num.push(like)
+      is_registered = false
+      is_already_read = false
+      if signed_in? && @is_login_user == false then
+        if getLoginUser.user_articles.exists?(:article_id => summary.article_id) then
+          is_registered = true
+          is_already_read = getLoginUser.user_articles.find_by_article_id(summary.article_id).read_flg
+        end
+      end
+
+      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :last_updated => last_updated, :like_num => like_num, :is_registered => is_registered, :is_already_read => is_already_read}
+
+      @summaries_table.push(table_data)
     end
-
-    # favorite tab
 
     render :layout => 'application'
   end
 
-  def delete
-    delete_mode = params[:delete_mode]
-    logger.debug("delete_mode : #{delete_mode}")
+  def delete_article
+    login_user = getLoginUser
 
     params[:article_ids].each do |article_id|
-      if delete_mode.to_i == 2 then
-        summary = Summary.find(:first, 
-          :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
-        unless summary == nil
-          summary.destroy
-        end
-      else
-        article = UserArticle.find(:first, 
-          :conditions => {:user_id =>getLoginUser.id, :article_id => article_id})
-        unless article == nil
-          article.destroy
-        end
+      article = login_user.user_articles.find_by_article_id(article_id)
+      unless article == nil
+        article.destroy
       end
     end
+
+    redirect_to :action => "index"
+  end
+
+  def delete_summary
+    login_user = getLoginUser
+    params[:article_ids].each do |article_id|
+      summary = login_user.summaries.find_by_article_id(article_id)
+      unless summary == nil
+        summary.destroy
+      end
+    end
+
     redirect_to :action => "index"
   end
 
   def mark_as_read
+    login_user = getLoginUser
+
     params[:article_ids].each do |article_id|
       logger.debug("#{article_id}")
-
-      article = UserArticle.find(:first, 
-        :conditions => {:user_id => getLoginUser.id, :article_id => article_id})
+      article = login_user.user_articles.find_by_article_id(article_id)
 
       if article && article.read_flg != true then
-        logger.debug("in in in!!!!")
         article.read_flg = true
         article.save
       end
@@ -128,38 +151,78 @@ class MypageController < ApplicationController
   end
 
   def mark_as_unread
-    redirect_to :action => "index"
-=begin
-    article = UserArticle.find(:first, 
-      :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
+    login_user = getLoginUser
 
-    if article && article.read_flg == true then
-      article.read_flg = false
-      article.save
+    params[:article_ids].each do |article_id|
+      logger.debug("#{article_id}")
+      article = login_user.user_articles.find_by_article_id(article_id)
+
+      if article && article.read_flg == true then
+        article.read_flg = false
+        article.save
+      end
     end
 
-
-=end
+    redirect_to :action => "index"
   end
 
   def mark_as_favorite
-  end
-=begin
-  def reverse_read_flg
-    article = UserArticle.find(:first, 
-      :conditions => {:user_id => params[:user_id], :article_id => params[:article_id]})
+    logger.debug("mark as favorite")
+    login_user = getLoginUser
 
-    if article then
-      article.read_flg = !article.read_flg
-      article.save
+    params[:article_ids].each do |article_id|
+      logger.debug("#{article_id}")
+      article = login_user.user_articles.find_by_article_id(article_id)
+
+      if article && article.favorite_flg != true then
+        article.favorite_flg = true
+        article.save
+      end
     end
 
     redirect_to :action => "index"
   end
-=end
+
+  def mark_as_unfavorite
+    logger.debug("mark as unfavorite")
+    login_user = getLoginUser
+
+    params[:article_ids].each do |article_id|
+      logger.debug("#{article_id}")
+      article = login_user.user_articles.find_by_article_id(article_id)
+
+      if article && article.favorite_flg == true then
+        article.favorite_flg = false
+        article.save
+      end
+    end
+
+    redirect_to :action => "index"
+  end
+
+  def clip
+    logger.debug("clip")
+
+    unless signed_in? then
+      redirect_to :controller => 'consumer', :action => 'index' and return
+    end
+
+    login_user = getLoginUser
+    params[:article_ids].each do |article_id|
+      unless login_user.user_articles.exists?(:user_id => getLoginUser.id, :article_id => article_id) then
+        UserArticle.create(:user_id => getLoginUser.id, :article_id => article_id)
+      end
+    end
+
+    redirect_to :action => "index"
+  end
+
   def follow
     logger.debug("follow")
-    # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
+
+    unless signed_in? then
+      # TODO : ログインしてなかった時
+    end
     
     @current_user = getLoginUser
 
@@ -173,11 +236,15 @@ class MypageController < ApplicationController
     @follower_num = "followers" + "<br>" + 
                     FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]}).to_s
 
+    respond_to do |format|
+      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.js
+    end
   end
 
   def unfollow
     logger.debug("unfollow")
-    # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす
+    # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす? そもそも、その状況はない
 
     @current_user = getLoginUser
 
@@ -189,6 +256,10 @@ class MypageController < ApplicationController
     @follower_num = "followers" + "<br>" + 
                     FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:unfollow_user_id]}).to_s
 
+    respond_to do |format|
+      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.js
+    end
   end
 
   def destroy

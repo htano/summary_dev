@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20130906142347) do
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "contents_preview"
   end
 
   create_table "favorite_users", force: true do |t|
@@ -50,7 +51,8 @@ ActiveRecord::Schema.define(version: 20130906142347) do
   create_table "user_articles", force: true do |t|
     t.integer  "user_id"
     t.integer  "article_id"
-    t.boolean  "read_flg"
+    t.boolean  "read_flg",     default: false
+    t.boolean  "favorite_flg", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

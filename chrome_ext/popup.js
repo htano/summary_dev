@@ -6,7 +6,7 @@ $(document).ready( function(){
   $("p#p_url").text(bg.current_tab.url);
 
   $.ajax({
-      url: 'http://localhost:3000/webpage/get_current_user_name_for_chrome_extension',
+      url: 'http://' + bg.SERVICE_HOSTNAME + '/webpage/get_current_user_name_for_chrome_extension',
       type: 'GET',
       dataType: 'text',
       success: function(data) {
@@ -15,7 +15,7 @@ $(document).ready( function(){
           setBtnDisabled();
         } else {
         	$.ajax({
-        		url: 'http://localhost:3000/webpage/get_add_history_for_chrome_extension',
+        		url: 'http://' + bg.SERVICE_HOSTNAME + '/webpage/get_add_history_for_chrome_extension',
         		type: 'GET',
         		data: 'url=' + escape(bg.current_tab.url),
         		dataType: 'text',
@@ -34,7 +34,7 @@ $(document).ready( function(){
   $('#p_button').click(function(){
     $("img.a_load").attr("style", "visibility:visible;");
     $.ajax({
-      url: 'http://localhost:3000/webpage/add_for_chrome_extension',
+      url: 'http://' + bg.SERVICE_HOSTNAME + '/webpage/add_for_chrome_extension',
       type: 'GET',
       data: 'url=' + escape(bg.current_tab.url),
       dataType: 'text',
@@ -58,7 +58,7 @@ function setCommentComplete(){
 //要約編集画面へのリンクを設定する
 function setSummaryEditLink(data){
   $("#a_link_to_summary_edit").attr("style", "visibility:visible;");
-  $("#a_link_to_summary_edit").attr("href", "http://localhost:3000/summary/"+data+"/edit");
+  $("#a_link_to_summary_edit").attr("href", "http://" + bg.SERVICE_HOSTNAME + "/summary/"+data+"/edit");
 }
 
 //登録ボタンを非活性にする。ついでにクラスも変更する。

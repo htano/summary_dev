@@ -5,6 +5,8 @@ require 'openssl'
 require 'open-uri'
 require 'kconv'
 require 'uri'
+require 'bundler/setup'
+require 'extractcontent'
 
 class WebpageController < ApplicationController
 
@@ -67,9 +69,25 @@ class WebpageController < ApplicationController
       		end
       	end
       else
+
+        contents_preview = ""
+        open(@url) do |io|
+          html = io.read
+          begin
+            html = html.force_encoding("UTF-8")
+            html = html.encode("UTF-8", "UTF-8")
+            contents_preview, title = ExtractContent.analyse(html)
+            # logger.debug("content_preview : #{contents_preview}")
+          rescue => e
+            # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
+            logger.error("error :#{e}")
+          end
+        end
+        #logger.debug("preview : #{contents_preview}}")
+
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:url],:title => title, :category_id =>"001");
+        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001");
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
@@ -93,20 +111,42 @@ class WebpageController < ApplicationController
       article = Article.find_by_url(@url);
       if article != nil then
         user_article = article.user_articles.find_by_user_id(user_id);
-          if user_article != nil then 
-            #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
-            @msg = "登録済みです。"  and return
-          else
-            #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
-            user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
-            if user_article.save
-              @msg = "登録が完了しました。" and return
-            end
-          end
+        if user_article != nil then 
+          #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
+          @msg = "登録済みです。"  and return
         else
+          #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
+          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
+          if user_article.save
+            @msg = "登録が完了しました。" and return
+          end
+        end
+      else
+
+        img_url = getImgURL(@url);
+        #logger.error("img_url" + img_url)
+        # ファイル名を決定（オリジナルのファイル名を採用）
+        #file = open(img_url, "wb")
+
+        contents_preview = ""
+        open(@url) do |io|
+          html = io.read
+          begin
+            html = html.force_encoding("UTF-8")
+            html = html.encode("UTF-8", "UTF-8")
+            contents_preview, title = ExtractContent.analyse(html)
+            # logger.debug("content_preview : #{contents_preview}")
+          rescue => e
+            # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
+            logger.error("error :#{e}")
+          end
+        end
+        #logger.debug("preview : #{contents_preview}}")
+
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:url],:title => title, :category_id =>"001");
+        #article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :img => file);
+        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001");
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
@@ -151,6 +191,27 @@ class WebpageController < ApplicationController
         return URI.parse(url).host
       end
     rescue
+      return nil;
+    end
+  end
+
+  def getImgURL(url)
+    begin
+      charset = nil;
+      html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
+        charset = f.charset;
+        f.read;
+      end
+      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
+      #条件、一番目の画像とってきてるだけ
+      doc.xpath("//img[starts-with(@src, 'http://')]").each{|img|
+        #logger.error("img['src']"+ img['src'])
+        return img['src']
+        #return img
+        break;
+      }
+    rescue
+      logger.error("getImgItem.rescue")
       return nil;
     end
   end

@@ -27,10 +27,11 @@
       height: 100px;
       float: left;
       margin-right: 5px;
+      margin-bottom: 3px;
     }
 
     #prof_user_name {
-      width: 150px;
+     width: 160px;
 
       float: left;
       p {
@@ -61,19 +62,16 @@
         height: 20px;
       }
     }
+  }
 
-    #user_comment {
-      p {
-        margin: 0px 5px;
-        word-break: break-all;
-        word-wrap: break-word;
-        white-space: pre-wrap;
-      }
-    }
+  span {
+    margin: 0px 5px;
+    word-wrap: break-word;
   }
 
   hr {
-    width: 90%;
+    width: 245px;
+    clear: left;
   }
 
   // ----------------------
@@ -160,7 +158,7 @@
   -o-text-overflow: ellipsis;
 }
 
-#operate_article {
+#article_controller {
 //  border: 2px solid #ddd;
   width: 100%;
 
@@ -168,17 +166,24 @@
   margin-top: -15px;
   padding-left: 30px;
 
-  div {
+  .none > div, .none > a {
+    display: none;
+  }
+
+  .active > div {
+    background-color: #ddd;
+  }
+
+  .active > div, .active > a {
+    display: block;
     border: 2px solid #ddd;
     border-radius: 0.3em;
-    background-color: #ddd;
-    //background-color: #f6f4f6;
 
 //    background:-moz-linear-gradient(rgba(34,85,136,0.5), rgba(34,85,136,1));
 //    background:-webkit-gradient(linear, 100% 0%, 100% 100%, from(#f6f4f6), to(#ddd));
 
     float: left;
-    margin-left: 10px;
+    margin-left: 7px;
     margin-bottom: 3px;
     padding: 0px 10px 0px 0px;
     width: auto;
@@ -200,27 +205,27 @@
 ul.tab {
   margin: 20px;
   padding: 0;
-  padding-left: 10px;
+  padding-left: 18px;
   border-bottom: 2px #ddd solid;
+  width: 810px;
+
   li {
     float: left;
-    margin: 5px 5px 0px 5px;
+    margin: 5px 5px 0px 0px;
     position: relative;
     bottom: -2px;
     list-style-type: none;
     border: 1px #ddd solid;
     border-bottom: 2px #ddd solid;
-    width: 150px;
-    height: 38px;
     text-align: center;
 
     a {
       color: #000;
       display: block;
-      padding: 3px 10px 5px;
+      padding: 0px 10px 0px;
       text-decoration: none;
       background-color: #fff;
-      font-size: 16px;
+      font-size: 15px;
       color: rgb(162, 162, 162);
 
       &:hover {
@@ -250,10 +255,14 @@ ul.tab {
   color: white;
 }
 
-.table {
+.article_table {
   clear: left;
   width: 800px;
   padding-left: 35px;
+
+  th {
+    border-bottom: 2px solid #e5e5e5;
+  }
 }
 
 .table_top {
@@ -264,43 +273,79 @@ ul.tab {
 
 #article_title_top {
   width: 700px;
+  padding: 4px 0px 0px 0px;
+  input {
+    margin-left: 4px;
+  }
 }
 
 #summary_number_top {
   width: 100px;
+  padding: 4px 0px 0px 0px;
+}
+
+.article_checkbox {
+  float: left;
 }
 
 .title {
-  border-bottom: 2px solid #e5e5e5;
-  height: 30px;
-}
+  width: 660px;
+  float: left;
+  margin-top: 1px;
+  margin-left: 10px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: normal;
 
-.title > a {
-  color: rgb(162, 162, 162);
-  margin-left: 0px;
+  a {
+    color: gray;
 
-  &:hover {
-    color: #5B91FF;
-    text-decoration: underline;
+    span {
+      float: right;
+      color: #F9ACAC;
+      font-size: 10px;
+    }
+
+    &:hover {
+      color: #5B91FF;
+      text-decoration: underline;
+      p {
+        color: #5B91FF;
+      }
+    }
+    p {
+      margin-top: 0px;
+  //    margin-left: -25px;
+      font-size: 11px;
+      color: rgb(162, 162, 162);
+    }
   }
 }
 
 .num_column {
   border-bottom: 2px solid #e5e5e5;
+  font-size: 20px;
+  font-weight: normal;
+
+  p {
+    margin: 0px;
+  }
 
   a {
-    color: rgb(162, 162, 162);    
+    color: rgb(162, 162, 162);
   }
 
   &>a:hover {
     color: #5B91FF;
     text-decoration: underline;
   }
-}
 
-#article_check {
-  float: left;
-  margin-left: 10px;
+  span {
+    p {
+      font-size: 13px;
+      margin-top: 0px;
+    }
+  }
 }
 
 .dropdown-checkbox {
@@ -365,27 +410,33 @@ ul.tab {
   font-weight: normal;
 }
 
-.table > .summary_table {
+.article_table > .summary_table {
   display: none;
 }
 
-.table > .edited_summary_table {
+.article_table > .edited_summary_table {
   display: none;
 }
 
-.table > .favorite_table {
+.article_table > .favorite_table {
   display: none;
 }
 
-.table > .read_table {
+.article_table > .read_table {
   display: none;
 }
 
-.table > .reserved_table {
+.article_table > .reserved_table {
   display: none;
 }
 
-.table > .active {
+.article_table > .active {
   display: block;
 }
 
+#private_message {
+  margin-left: 40px;
+  font-size: 16px;
+  font-style: italic;
+  color: #a2a2a2;
+}
