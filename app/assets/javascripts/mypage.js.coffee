@@ -45,7 +45,7 @@
     edit_summary_btn.style.backgroundColor = "#ddd"
     $("a>#m_edit_summary_btn").unwrap()
 
-  console.debug "checked num = " + checked_num
+#  console.debug "checked num = " + checked_num
 
   # create link
   if checked_num > 0
@@ -55,7 +55,7 @@
     while i < article_ids.length
       params += "article_ids[]=" + "#{article_ids[i]}&"
       i++
-    console.debug params
+#    console.debug params
 
     $("a>#m_mark_as_read_btn").unwrap()
     $("a>#m_edit_summary_btn").unwrap()
@@ -108,7 +108,7 @@
     edit_summary_btn.style.backgroundColor = "#ddd"
     $("a>#f_edit_summary_btn").unwrap()
 
-  console.debug "checked num = " + checked_num
+#  console.debug "checked num = " + checked_num
 
   # create link
   if checked_num > 0
@@ -118,7 +118,7 @@
     while i < article_ids.length
       params += "article_ids[]=" + "#{article_ids[i]}&"
       i++
-    console.debug params
+#    console.debug params
 
     $("a>#f_edit_summary_btn").unwrap()
     $("a>#f_mark_as_unfavorite_btn").unwrap()
@@ -180,7 +180,7 @@
     while i < article_ids.length
       params += "article_ids[]=" + "#{article_ids[i]}&"
       i++
-    console.debug params
+#    console.debug params
 
     $("a>#r_mark_as_unread_btn").unwrap()
     $("a>#r_edit_summary_btn").unwrap()
@@ -234,7 +234,7 @@
     while i < article_ids.length
       params += "article_ids[]=" + "#{article_ids[i]}&"
       i++
-    console.debug params
+#    console.debug params
 
     $("a>#s_edit_summary_btn").unwrap()
     $("a>#s_delete_btn").unwrap()
@@ -304,7 +304,7 @@
     while i < article_ids.length
       params += "article_ids[]=" + "#{article_ids[i]}&"
       i++
-    console.debug params
+#    console.debug params
 
     $("a>#clip_btn").unwrap()
     $("div>#clip_btn").wrap("<a href='/mypage/clip?#{params}'></a>")
@@ -321,3 +321,14 @@
     form.elements[i].checked = value
     i++
   form.elements[0].onclick() unless i is 0
+
+scrollNavbar = ->
+  win = $(window)
+  overwriteLeft = ->
+    scrollLeft = win.scrollLeft()
+    $(".navbar-fixed-top").css "left", -scrollLeft + "px"
+
+  win.scroll overwriteLeft
+  overwriteLeft()
+
+scrollNavbar()
