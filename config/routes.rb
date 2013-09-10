@@ -16,7 +16,7 @@ SummaryDev::Application.routes.draw do
   get "mypage/mark_as_read"
   get "mypage/mark_as_unread"
   get "mypage/mark_as_favorite"
-  get "mypage/mark_as_unfavorite"
+  get "mypage/mark_off_favorite"
   get "mypage/clip"
   get "mypage/follow"
   get "mypage/unfollow"

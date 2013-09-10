@@ -86,23 +86,23 @@
 
   # handle layout
   edit_summary_btn       = document.getElementById('f_edit_summary_btn')
-  mark_as_unfavorite_btn = document.getElementById('f_mark_as_unfavorite_btn')
+  mark_off_favorite_btn  = document.getElementById('f_mark_off_favorite_btn')
   delete_btn             = document.getElementById('f_delete_btn')
 
   if checked_num is 0
-    edit_summary_btn.style.backgroundColor     = "#ddd"
+    edit_summary_btn.style.backgroundColor      = "#ddd"
     $("a>#f_edit_summary_btn").unwrap()
 
-    mark_as_unfavorite_btn.style.backgroundColor = "#ddd"
-    $("a>#f_mark_as_unfavorite_btn").unwrap()
+    mark_off_favorite_btn.style.backgroundColor = "#ddd"
+    $("a>#f_mark_off_favorite_btn").unwrap()
 
-    delete_btn.style.backgroundColor           = "#ddd"
+    delete_btn.style.backgroundColor            = "#ddd"
     $("a>#f_delete_btn").unwrap()
 
   else if checked_num is 1
-    edit_summary_btn.style.backgroundColor     = "white"
-    mark_as_unfavorite_btn.style.backgroundColor = "white"
-    delete_btn.style.backgroundColor           = "white"
+    edit_summary_btn.style.backgroundColor      = "white"
+    mark_off_favorite_btn.style.backgroundColor = "white"
+    delete_btn.style.backgroundColor            = "white"
     
   else if checked_num is 2
     edit_summary_btn.style.backgroundColor = "#ddd"
@@ -121,13 +121,13 @@
 #    console.debug params
 
     $("a>#f_edit_summary_btn").unwrap()
-    $("a>#f_mark_as_unfavorite_btn").unwrap()
+    $("a>#f_mark_off_favorite_btn").unwrap()
     $("a>#f_delete_btn").unwrap()
 
 
     if checked_num == 1
       $("div>#f_edit_summary_btn").wrap("<a href='/summary/#{article_ids}/edit'></a>")
-    $("div>#f_mark_as_unfavorite_btn").wrap("<a href='/mypage/mark_as_unfavorite?#{params}'></a>")
+    $("div>#f_mark_off_favorite_btn").wrap("<a href='/mypage/mark_off_favorite?#{params}'></a>")
     $("div>#f_delete_btn").wrap("<a href='/mypage/delete_article?#{params}'></a>")
 
 @clickReadCheckBox = ->

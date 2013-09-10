@@ -48,6 +48,7 @@ class MypageController < ApplicationController
       @followers.push(user)
     end
 
+
     # main tab & favorite tab & read tab
     @main_articles_table = []
     @favorite_articles_table = []
@@ -73,7 +74,6 @@ class MypageController < ApplicationController
       if user_article.favorite_flg then
         @favorite_articles_table.push(table_data)
       end
-
       if user_article.read_flg then
         @read_articles_table.push(table_data)
       else
@@ -183,8 +183,8 @@ class MypageController < ApplicationController
     redirect_to :action => "index"
   end
 
-  def mark_as_unfavorite
-    logger.debug("mark as unfavorite")
+  def mark_off_favorite
+    logger.debug("mark off favorite")
     login_user = getLoginUser
 
     params[:article_ids].each do |article_id|
