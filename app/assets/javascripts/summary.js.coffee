@@ -45,7 +45,19 @@ BLANK = ''
 
 @countContentCharacters = ->
 	max = 300
+
 	content = document.getElementById('content').value
+	ret = content.match(/\n|\r\n/g)
+	if ret != null
+		if ret.length > 29
+			estr = escape(content)
+			en = estr.length
+			em = en-3
+			estr2 = estr.slice(0, em)
+			content = unescape(estr2)
+			document.getElementById('content').value = content
+			alert "Please edit summary within 30 rows."
+
 	content_num = content.replace(/\n|\r\n/g,"").length
 	if content_num > max
 		content_num　= 300 - content_num
