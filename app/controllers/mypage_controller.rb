@@ -55,8 +55,8 @@ class MypageController < ApplicationController
 
     @user.user_articles.each do |user_article|
       article = Article.find(user_article.article_id)
-      summary_num = Summary.count_by_sql("select count(*) from summaries where summaries.article_id = #{user_article.article_id}")
-      registered_num = UserArticle.count_by_sql("select count(*) from user_articles where user_articles.article_id = #{user_article.article_id}")
+      summary_num = article.summaries.size
+      registered_num = article.user_articles.size
       registered_date = user_article.created_at
 
       is_registered = false

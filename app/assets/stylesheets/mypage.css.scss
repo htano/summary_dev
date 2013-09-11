@@ -200,6 +200,35 @@
       color: #a2a2a2;
     }
   }
+
+  #page_ejection {
+    float: right;
+    margin-right: 70px;
+    border: 2px solid #ddd;
+    border-radius: 0.3em;
+    background-color: white;
+    padding: 0px;
+
+    ul {
+      list-style: none;
+      margin-top: 0px;
+      height: 100%;
+      li {
+        float: left;
+        width: 20px;
+      }
+      .vertical_boder {
+        border: 1px solid #ddd;
+        height: 100%;
+        width: auto;
+      }
+      #page_next {
+        img {
+          margin-left: 6px;
+        }
+      }
+    }
+  }
 }
 
 ul.tab {
