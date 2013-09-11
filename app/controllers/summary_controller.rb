@@ -28,9 +28,6 @@ class SummaryController < ApplicationController
       end
       @url = article.url;
       @title = article.title;
-      @article_id = "#{params[:article_id]}";
-      article = Article.find_by id: @article_id
-      @image =  Magick::Image.from_blob(article.image).shift.to_blob
       @summary_num = article.summaries.count(:all)
       user_id = getLoginUser.id;
       summary = Summary.find_by_user_id_and_article_id(user_id, @article_id);
