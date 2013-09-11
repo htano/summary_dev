@@ -2,6 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "summary_settings";
+
+@mixin count_style {
+  width: 50px;
+  font-size: 15px;
+  padding: 10px;  
+}
+
+@mixin content_style {
+  width: $contentWidth;
+  height: $contentHeigth; 
+}
+
 #edit_summary {
 
   table {
@@ -13,7 +26,7 @@
       color: white;
       background-color: #e6e6e6;
 
-      #title_top #summary_top {
+      #title_top, #summary_top {
         width: 700px;
         padding: 4px 0px 0px 0px;
       }
@@ -32,27 +45,23 @@
   margin: 0 0 15px 0;
 }
 
-.count {
-  padding: 10px;
-  width: 50px;
+.num_column, .count {
+  @include count_style;
 }
 
 .count_over {
-  padding: 10px;
+  @extend .count;
   color: red;
-  width: 50px;
 }
 
 
-.content {
-  width: 700px;
-  height: 200px;
+#content {
+  @include content_style;
 }
 
-.content_disabled {
+#content_disabled {
+  @extend #content;
   background-color: whitesmoke;
-  width: 700px;
-  height: 200px;
 }
 
 .help {

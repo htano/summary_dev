@@ -15,6 +15,7 @@ BLANK = ''
 	if confirm "Clear?"
 		document.getElementById('content').value = 'Please edit summary within 300 characters.'
 		document.getElementById('count').innerHTML = '0'
+		document.getElementById('count').setAttribute('class', 'count');
 		document.getElementById('firstEditFlag').value = 'true'
 	else
 		return false
@@ -32,8 +33,8 @@ BLANK = ''
 		document.getElementById('clear').disabled = 'true'
 		document.getElementById('submit').disabled = BLANK
 		document.getElementById('back').disabled = BLANK
-		content.readOnly = 'true'
-		content.setAttribute('class', 'content_disabled'); 
+		document.getElementById('content').readOnly = 'true'
+		document.getElementById('content').setAttribute('class', 'content_disabled'); 
 
 @clickBackButton = ->
 	document.getElementById('edit').disabled = BLANK
