@@ -5,10 +5,10 @@
         <%= image_tag(@user.prof_image, :size => "100x100") %>
         <div id="prof_user_name">
           <p><%= @user.name %></p>
-          <% if @is_login_user then %>
+          <% if @is_login_user %>
           <div></div>
           <% else %>
-          <% unless @is_already_following then %>
+          <% unless @is_already_following %>
           <div id="follow_toggle">
             <%= link_to "follow", 
             {:action => "follow", :follow_user_id => @user.id,:remote => true}, 
@@ -61,7 +61,7 @@
       <hr/>
       <div id="user_info">
         <div id="prof_tab_following" class="active">
-          <% if @favorite_users != nil then %>
+          <% if @favorite_users %>
           <% @favorite_users.each do |favorite_user| %>
           <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.name),
           {:action => "index", :name => favorite_user.name} %>
@@ -69,11 +69,11 @@
           <% end %>
         </div>
         <div id="prof_tab_followers">
-          <% if @followers != nil then %>
+          <% if @followers %>
           <% @followers.each do |follower| %>
           <%= link_to image_tag(follower.prof_image, :size => "32x32", :title => follower.name),
           {:action => "index", :name => follower.name},
-          {:id => "follower_id_"+follower.id.to_s } %>
+          {:id => "follower_id_"+ follower.id.to_s } %>
           <% end %>
           <% end %>
         </div>
@@ -91,7 +91,7 @@
         </ul>
       </div>
       <div id="article_controller">
-        <% if @is_login_user then %>
+        <% if @is_login_user %>
         <div class="none active main">
           <div id="m_mark_as_read_btn">
             <%= image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16", :class => "inner") + content_tag(:p, "mark as read", :class => "inner") %>
@@ -140,7 +140,7 @@
           </div>
         </div>
         <% else  # is_login_user %>
-        <% if @user.public_flg then %>
+        <% if @user.public_flg %>
         <div class="active">
           <div id="clip_btn">
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
@@ -169,7 +169,7 @@
               <th>
                 <div>
                   <div class="article_checkbox">
-                    <% if @is_login_user then %>
+                    <% if @is_login_user %>
                     <%= check_box 'check_article', i, 
                     {:id => "article_check", :onclick => "clickMainCheckBox()"}, table_data[:article].id, false %>
                     <% else %>
@@ -182,7 +182,7 @@
                       <%= table_data[:article].title %>
                       <% if @is_login_user != true && table_data[:is_registered] %>
                       <span>
-                        <% if table_data[:is_already_read] then %>
+                        <% if table_data[:is_already_read] %>
                         << you already read
                         <% else %>
                         << you also register
@@ -241,7 +241,7 @@
               <th>
                 <div>
                   <div class="article_checkbox">
-                    <% if @is_login_user then %>
+                    <% if @is_login_user %>
                     <%= check_box 'check_article', i, 
                     {:id => "summary_checkbox", :onclick => "clickSummaryCheckBox()"}, table_data[:article].id, false %>
                     <% else %>
@@ -254,7 +254,7 @@
                       <%= table_data[:article].title %>
                       <% if @is_login_user != true && table_data[:is_registered] %>
                       <span>
-                        <% if table_data[:is_already_read] then %>
+                        <% if table_data[:is_already_read] %>
                         << you already read
                         <% else %>
                         << you also register
@@ -264,7 +264,7 @@
                       <p>
                         <%= table_data[:registered_num] %> registered, 
                         <%= table_data[:like_num] %>
-                        <% unless table_data[:like_num] > 1 then %>
+                        <% unless table_data[:like_num] > 1 %>
                         like
                         <% else %>
                         likes
@@ -311,14 +311,14 @@
               TITLE</th>
             <th id="summary_number_top">summary</th>
           </tr>
-          <% if @favorite_articles_table then %>
+          <% if @favorite_articles_table %>
           <form id="favorite_check_form" name="favorite_checkbox">
             <% @favorite_articles_table.each_with_index do |table_data, i| %>
             <tr>
               <th>
                 <div>
                   <div class="article_checkbox">
-                    <% if @is_login_user then %>
+                    <% if @is_login_user %>
                     <%= check_box 'check_article', i,
                     {:id => "favorite_checkbox", :onclick => "clickFavoriteCheckBox()"}, table_data[:article].id, false %>
                     <% else %>
@@ -331,7 +331,7 @@
                       <%= table_data[:article].title %>
                       <% if @is_login_user != true && table_data[:is_registered] %>
                       <span>
-                        <% if table_data[:is_already_read] then %>
+                        <% if table_data[:is_already_read] %>
                         << you already read
                         <% else %>
                         << you also register
@@ -382,7 +382,7 @@
             </th>
             <th id="summary_number_top">summary</th>
           </tr>
-          <% if @read_articles_table then %>
+          <% if @read_articles_table %>
           <form id="read_check_form" name="read_checkbox">
             <% @read_articles_table.each_with_index do |table_data, i| %>
             <tr>
@@ -402,7 +402,7 @@
                       <%= table_data[:article].title %>
                       <% if @is_login_user != true && table_data[:is_registered] %>
                       <span>
-                        <% if table_data[:is_already_read] then %>
+                        <% if table_data[:is_already_read] %>
                         << you already read
                         <% else %>
                         << you also register

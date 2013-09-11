@@ -3,26 +3,26 @@ class MypageController < ApplicationController
     logger.debug("action index")
 
     # check wheter user accessed to this action is signed in user or not
-    if params[:name] then
-      if isLoginUser?(params[:name]) then
+    if params[:name]
+      if isLoginUser?(params[:name])
         @is_login_user = true
       else
         @is_login_user = false
       end
     else
-      if signed_in? then
+      if signed_in?
         @is_login_user = true
       else
         redirect_to :controller => 'consumer', :action => 'index' and return
       end
     end
 
-    if @is_login_user then
+    if @is_login_user
       @user = User.find_by_name(get_current_user_name)
       @user.updateMypageAccess
     else
       @user = User.find_by_name(params[:name])
-      if @user then
+      if @user
         # check whether already follows or not
         @is_already_following = is_already_following(@user)
       else
@@ -48,7 +48,6 @@ class MypageController < ApplicationController
       @followers.push(user)
     end
 
-
     # main tab & favorite tab & read tab
     @main_articles_table = []
     @favorite_articles_table = []
@@ -62,8 +61,8 @@ class MypageController < ApplicationController
 
       is_registered = false
       is_already_read = false
-      if signed_in? && @is_login_user == false then
-        if getLoginUser.user_articles.exists?(:article_id => user_article.article_id) then
+      if signed_in? && @is_login_user == false
+        if getLoginUser.user_articles.exists?(:article_id => user_article.article_id)
           is_registered = true
           is_already_read = getLoginUser.user_articles.find_by_article_id(user_article.article_id).read_flg
         end
@@ -71,15 +70,14 @@ class MypageController < ApplicationController
 
       table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :registered_date => registered_date, :is_registered => is_registered, :is_already_read => is_already_read}
 
-      if user_article.favorite_flg then
+      if user_article.favorite_flg
         @favorite_articles_table.push(table_data)
       end
-      if user_article.read_flg then
+      if user_article.read_flg
         @read_articles_table.push(table_data)
       else
         @main_articles_table.push(table_data)
       end
-
     end
 
     # summary tab
@@ -94,8 +92,8 @@ class MypageController < ApplicationController
 
       is_registered = false
       is_already_read = false
-      if signed_in? && @is_login_user == false then
-        if getLoginUser.user_articles.exists?(:article_id => summary.article_id) then
+      if signed_in? && @is_login_user == false
+        if getLoginUser.user_articles.exists?(:article_id => summary.article_id)
           is_registered = true
           is_already_read = getLoginUser.user_articles.find_by_article_id(summary.article_id).read_flg
         end
@@ -141,7 +139,7 @@ class MypageController < ApplicationController
       logger.debug("#{article_id}")
       article = login_user.user_articles.find_by_article_id(article_id)
 
-      if article && article.read_flg != true then
+      if article && article.read_flg != true
         article.read_flg = true
         article.save
       end
@@ -157,7 +155,7 @@ class MypageController < ApplicationController
       logger.debug("#{article_id}")
       article = login_user.user_articles.find_by_article_id(article_id)
 
-      if article && article.read_flg == true then
+      if article && article.read_flg == true
         article.read_flg = false
         article.save
       end
@@ -174,7 +172,7 @@ class MypageController < ApplicationController
       logger.debug("#{article_id}")
       article = login_user.user_articles.find_by_article_id(article_id)
 
-      if article && article.favorite_flg != true then
+      if article && article.favorite_flg != true
         article.favorite_flg = true
         article.save
       end
@@ -191,7 +189,7 @@ class MypageController < ApplicationController
       logger.debug("#{article_id}")
       article = login_user.user_articles.find_by_article_id(article_id)
 
-      if article && article.favorite_flg == true then
+      if article && article.favorite_flg == true
         article.favorite_flg = false
         article.save
       end
@@ -203,13 +201,13 @@ class MypageController < ApplicationController
   def clip
     logger.debug("clip")
 
-    unless signed_in? then
+    unless signed_in?
       redirect_to :controller => 'consumer', :action => 'index' and return
     end
 
     login_user = getLoginUser
     params[:article_ids].each do |article_id|
-      unless login_user.user_articles.exists?(:user_id => getLoginUser.id, :article_id => article_id) then
+      unless login_user.user_articles.exists?(:user_id => getLoginUser.id, :article_id => article_id)
         UserArticle.create(:user_id => getLoginUser.id, :article_id => article_id)
       end
     end
@@ -220,13 +218,13 @@ class MypageController < ApplicationController
   def follow
     logger.debug("follow")
 
-    unless signed_in? then
+    unless signed_in?
       # TODO : ログインしてなかった時
     end
     
     @current_user = getLoginUser
 
-    if @current_user then
+    if @current_user
       # TODO : error handle
       FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
     end
@@ -248,7 +246,7 @@ class MypageController < ApplicationController
 
     @current_user = getLoginUser
 
-    if @current_user && @current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id]) then
+    if @current_user && @current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id])
       @current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
     end
 
@@ -271,7 +269,7 @@ private
   def is_already_following(user)
     is_already_following = false
     signed_user = User.find_by_name(get_current_user_name)
-    if signed_user && signed_user.favorite_users.exists?(:favorite_user_id => user.id) then
+    if signed_user && signed_user.favorite_users.exists?(:favorite_user_id => user.id)
       is_already_following = true
     else
       is_already_following = false
