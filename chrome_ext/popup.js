@@ -57,6 +57,7 @@ function setCommentComplete(){
 
 //要約編集画面へのリンクを設定する
 function setSummaryEditLink(data){
+  var bg = window.chrome.extension.getBackgroundPage();
   $("#a_link_to_summary_edit").attr("style", "visibility:visible;");
   $("#a_link_to_summary_edit").attr("href", "http://" + bg.SERVICE_HOSTNAME + "/summary/"+data+"/edit");
 }

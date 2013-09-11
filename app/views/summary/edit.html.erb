@@ -1,33 +1,18 @@
-<script>
-/*
-$(function(){
-  $('.content').change(
-    function(){
-      var status_text = $(this).val();
-      status_text = status_text.replace(/@([0-9a-z_]+)/gi , function( all, m1 ){
-        return '<a href="http://twitter.com/'+m1+'" target="_blank">'+all+'</a>';
-      });
-      $(this).val( status_text );
-    }
-  );
-});
-*/
-</script>
 <form method="POST" action="edit_complete">
-  <div class="edit_main" align="center">
-    <div id ="edit_table">
+  <div class="main" align="center">
+    <div id ="edit_summary">
       <table class="edit_table" id="main" >
         <tr class="table_top">
-          <th id="article_title_top">TITLE</th>
-          <th id="summary_number_top">summary</th>
+          <th id="title_top">TITLE</th>
+          <th id="summary_top">summary</th>
         </tr>
         <tr>
           <th class="title"><a href="<%= @url %>" target="_blank"><%= @title %></a></th>
           <th class="num_column"><%= link_to @summary_num , {:controller => "summary_lists", :action => "index", :articleId => @article_id} %></th>
         </tr>
         <tr class="table_top">
-          <th id="article_title_top">content</th>
-          <th id="summary_number_top">characters</th>
+          <th id="title_top">content</th>
+          <th id="title_top">characters</th>
         </tr>
         <tr>
           <th><textarea rows="30" class="content" id="content" name="content" onfocus="clearContent()" onKeyUp="countContentCharacters()"><%= @content %></textarea></th>
@@ -40,12 +25,12 @@ $(function(){
       <input type="button" id="clear" class="button button-flat:hover" value="Clear" onclick="clickClearButton()"></input>
       <input type="submit" id="submit" class="button button-flat:hover" value="Submit" disabled="true"></input>
       <input type="button" id="back" class="button button-flat:hover" value="Back" onclick="clickBackButton()" disabled="true"></input>
-      <!--<%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16")%>-->
       <% unless @firstEditFlag then %>
         <%= link_to(image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16"), url_for(:controller => "summary", :action => "delete"), :method => "POST") %>
       <% end %>
       <span class="help"><a href="/help.html" target="_blank"><%= image_tag("icons/glyphicons_194_circle_question_mark.png", :size => "16x16") %></a></span>
     </div>
+    <%= image_tag(url_for(:controller => 'summary', :action => 'get_article_image', :format => :png)) %>
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
     <input type="hidden" id="firstEditFlag" value="<%= @firstEditFlag %>">
   </div>

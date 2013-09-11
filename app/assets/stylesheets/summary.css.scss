@@ -2,8 +2,30 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.edit_main {
-//  width: 815px;
+#edit_summary {
+
+  table {
+    width: 800px;
+    border: 1px solid #ccc;
+
+    .table_top {
+      border: 1px solid #e5e5e5;
+      color: white;
+      background-color: #e6e6e6;
+
+      #title_top #summary_top {
+        width: 700px;
+        padding: 4px 0px 0px 0px;
+      }
+    }
+  }
+}
+
+#operate_summary {
+  padding: 10px;
+}
+
+.edit {
   position: relative;
   padding: 3px;
   border-radius: 3px;
@@ -31,15 +53,6 @@
   background-color: whitesmoke;
   width: 700px;
   height: 200px;
-}
-
-.edit_table {
-  width: 800px;
-  border: 1px solid #ccc;
-}
-
-#operate_summary {
-  padding: 10px;
 }
 
 .help {

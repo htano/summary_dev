@@ -7,6 +7,7 @@ require 'kconv'
 require 'uri'
 require 'bundler/setup'
 require 'extractcontent'
+require 'RMagick'
 
 class WebpageController < ApplicationController
 
@@ -70,6 +71,8 @@ class WebpageController < ApplicationController
       	end
       else
 
+        image = getImagefromURL(@url);
+
         contents_preview = ""
         open(@url) do |io|
           html = io.read
@@ -87,7 +90,8 @@ class WebpageController < ApplicationController
 
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001");
+        #article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001");
+        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :image => image.to_blob);
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
@@ -123,10 +127,7 @@ class WebpageController < ApplicationController
         end
       else
 
-        img_url = getImgURL(@url);
-        #logger.error("img_url" + img_url)
-        # ファイル名を決定（オリジナルのファイル名を採用）
-        #file = open(img_url, "wb")
+        image = getImagefromURL(@url);
 
         contents_preview = ""
         open(@url) do |io|
@@ -146,7 +147,7 @@ class WebpageController < ApplicationController
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
         #article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :img => file);
-        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001");
+        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :image => image.to_blob);
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
@@ -195,7 +196,10 @@ class WebpageController < ApplicationController
     end
   end
 
-  def getImgURL(url)
+  #指定されたURLで使用されている画像を抜き出すメソッド
+  #TODO 一番目の画像とってきてるだけ
+  #象徴的な画像をどう選別するか、フローを決める
+  def getImagefromURL(url)
     begin
       charset = nil;
       html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
@@ -203,11 +207,9 @@ class WebpageController < ApplicationController
         f.read;
       end
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
-      #条件、一番目の画像とってきてるだけ
       doc.xpath("//img[starts-with(@src, 'http://')]").each{|img|
-        #logger.error("img['src']"+ img['src'])
-        return img['src']
-        #return img
+        image = Magick::ImageList.new(img['src'])
+        return image
         break;
       }
     rescue
