@@ -5,14 +5,66 @@
 @import "summary_settings";
 
 @mixin count_style {
+  color: gray;
   width: 50px;
-  font-size: 15px;
-  padding: 10px;  
+  font-size: 13px;
+  padding: 10px;
 }
 
 @mixin content_style {
   width: $contentWidth;
   height: $contentHeigth; 
+}
+
+.summary_num {
+  /*border-bottom: 2px solid #e5e5e5;*/
+  font-size: 13px;
+  font-weight: normal;
+  p {
+    margin: 0px;
+  }
+  a {
+    color: #a2a2a2;
+    &:hover {
+      color: #5B91FF;
+      text-decoration: underline;
+    }
+  }
+  span p {
+    font-size: 13px;
+    margin-top: 0px;
+  }
+}
+
+
+.article_title {
+  width: 660px;
+  float: left;
+  margin-top: 1px;
+  margin-left: 10px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: normal;
+  a {
+    color: gray; 
+    span {
+      float: right;
+      color: #F9ACAC;
+      font-size: 10px;
+    }
+    a:hover {
+      color: #5B91FF;
+      text-decoration: underline;
+      p {
+        color: #5B91FF;
+      }
+    }
+    p {
+      margin-top: 0px;
+      font-size: 11px;
+      color: #a2a2a2;
+    }
+  }
 }
 
 #edit_summary {
@@ -45,7 +97,7 @@
   margin: 0 0 15px 0;
 }
 
-.num_column, .count {
+.count {
   @include count_style;
 }
 

@@ -197,8 +197,9 @@ class WebpageController < ApplicationController
   end
 
   #指定されたURLで使用されている画像を抜き出すメソッド
-  #TODO 一番目の画像とってきてるだけ
   #象徴的な画像をどう選別するか、フローを決める
+  #基準に達した画像がなかった場合にもっとも基準に近い画像を返す
+  #パフォーマンス
   def getImagefromURL(url)
     begin
       charset = nil;
@@ -209,9 +210,20 @@ class WebpageController < ApplicationController
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
       doc.xpath("//img[starts-with(@src, 'http://')]").each{|img|
         image = Magick::ImageList.new(img['src'])
-        return image
-        break;
+        #画像の大きさから象徴的な画像を判断する
+        #幅
+        columns = image.columns 
+        #高さ
+        rows = image.rows
+        #幅×高さが10000(px)を超える最初の画像を象徴的な画像として返却する
+		if columns.to_i*rows.to_i > 10000
+		    return image
+	        break;
+		end
       }
+      #returnしていない場合（幅×高さが10000(px)を超える画像がなかった場合）
+      no_image = Magick::ImageList.new("#{Rails.root}/app/assets/images/no_image.png")
+      return no_image
     rescue
       logger.error("getImgItem.rescue")
       return nil;
