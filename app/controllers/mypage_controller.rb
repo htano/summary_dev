@@ -199,7 +199,7 @@ class MypageController < ApplicationController
       end
     end
 
-    redirect_to :action => "index"
+    redirect_to :action => "index", :name => params[:name]
   end
 
   def follow

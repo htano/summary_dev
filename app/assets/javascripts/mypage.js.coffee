@@ -307,7 +307,7 @@
 #    console.debug params
 
     $("a>#clip_btn").unwrap()
-    $("div>#clip_btn").wrap("<a href='/mypage/clip?#{name}&#{params}'></a>")
+    $("div>#clip_btn").wrap("<a href='/mypage/clip?name=#{name}&#{params}'></a>")
 
 @checkAll = (checker, form_name) ->
   form = document.getElementById(form_name)
