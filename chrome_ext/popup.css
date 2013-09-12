@@ -1,3 +1,7 @@
+.table-bordered {
+  width: 100%;
+}
+
 body{
   margin:0px;
   padding:0px 10px 10px;
@@ -7,7 +11,6 @@ body{
 
 td {
   word-break: break-all;
-  /*word-wrap: break-word;*/
 }
 
 h1{
