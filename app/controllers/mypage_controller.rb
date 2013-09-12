@@ -74,6 +74,19 @@ class MypageController < ApplicationController
     summaries = @user.summaries.reverse_order.offset(offset).take(10)
     @summaries_table = get_summary_table(summaries, @is_login_user)
 
+    if params[:mpage]
+      @current_tab = "main"
+    elsif params[:spage]
+      @current_tab = "summary"
+    elsif params[:fpage]
+      @current_tab = "favorite"
+    elsif params[:rpage]
+      @current_tab = "read"
+    else
+      @current_tab = "main"
+    end
+
+
     respond_to do |format|
       format.html { render :layout => 'application'}
       format.js
@@ -216,7 +229,6 @@ class MypageController < ApplicationController
 
   def unfollow
     logger.debug("unfollow")
-    # FIXME : ログインしてない状態で来た時にログイン画面に飛ばす? そもそも、その状況はない
 
     @current_user = getLoginUser
 

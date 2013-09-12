@@ -11,7 +11,7 @@
           <% unless @is_already_following %>
           <div id="follow_toggle">
             <%= link_to "follow", 
-            {:action => "follow", :follow_user_id => @user.id,:remote => true}, 
+            {:action => "follow", :follow_user_id => @user.id, :remote => true}, 
             {:id => "follow_button", :class => "button button-rounded button-flat-primary"} %>
           </div>
           <% else %>
@@ -51,7 +51,7 @@
           <li class="prof_tab_elem none">
             <a href="#prof_tab_summary" data-toggle="tab">
               summary<br>
-              <!-- TODO : 動的に取る、そもそもsummaryでよいかも考える -->
+              <% # 動的に取る、そもそもsummaryでよいかも考える %>
               10
             </a>
             <div id="info_tab_marker"></div>
@@ -84,15 +84,35 @@
     <div class="span9">
       <div class="div_tag">
         <ul class="tab clear">
+          <% if @current_tab == 'main' %>
           <li class="none active my_overflow"><a href=".main" data-toggle="tab">Main</a></li>
+          <% else %>
+          <li class="none my_overflow"><a href=".main" data-toggle="tab">Main</a></li>
+          <% end %>
+          <% if @current_tab == 'summary' %>
+          <li class="none active my_overflow"><a href=".summary" data-toggle="tab">Summary</a></li>
+          <% else %>
           <li class="none my_overflow"><a href=".summary" data-toggle="tab">Summary</a></li>
+          <% end %>
+          <% if @current_tab == 'favorite' %>
+          <li class="none active my_overflow"><a href=".favorite" data-toggle="tab">Favorite</a></li>
+          <% else %>
           <li class="none my_overflow"><a href=".favorite" data-toggle="tab">Favorite</a></li>
+          <% end %>
+          <% if @current_tab == 'read' %>
+          <li class="none active my_overflow"><a href=".read" data-toggle="tab">Read</a></li>
+          <% else %>
           <li class="none my_overflow"><a href=".read" data-toggle="tab">Read</a></li>
+          <% end %>
         </ul>
       </div>
       <div id="article_controller">
         <% if @is_login_user %>
+        <% if @current_tab == "main" %>
         <div class="none active main">
+        <% else %>
+        <div class="none main">
+        <% end %>
           <div id="m_mark_as_read_btn">
             <%= image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16", :class => "inner") + content_tag(:p, "mark as read", :class => "inner") %>
           </div>
@@ -109,39 +129,66 @@
             <ul>
               <li class="page_prev">
                 <% if @mpage.to_i > 1 %>
-                <a href="index?mpage=<%= @mpage.to_i - 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
-                </a>
+                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :mpage => (@mpage.to_i - 1)}%>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
                 </div>
                 <% end %>
               </li>
               <li class="vertical_boder"></li>
               <li class="page_next">
                 <% unless @main_articles_table.size < 10 %>
-                <a href="index?mpage=<%= @mpage.to_i + 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
-                </a>
+                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :mpage => (@mpage.to_i + 1)} %>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
                 </div>
                 <% end %>
               </li>
             </ul>
           </div>
         </div>
+        <% if @current_tab == "summary" %>
+        <div class="none active summary">
+        <% else %>
         <div class="none summary">
+        <% end %>
           <div id="s_edit_summary_btn">
             <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
           </div>
           <div id="s_delete_btn">
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
+          <div class="page_ejection">
+            <ul>
+              <li class="page_prev">
+                <% if @spage.to_i > 1 %>
+                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :spage => (@spage.to_i - 1)}%>
+                <% else %>
+                <div>
+                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
+                </div>
+                <% end %>
+              </li>
+              <li class="vertical_boder"></li>
+              <li class="page_next">
+                <% unless @summaries_table.size < 10 %>
+                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :spage => (@spage.to_i + 1)} %>
+                <% else %>
+                <div>
+                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
+                </div>
+                <% end %>
+              </li>
+            </ul>
+          </div>
         </div>
+        <% if @current_tab == "favorite" %>
+        <div class="none active favorite">
+        <% else %>
         <div class="none favorite">
+        <% end %>
           <div id="f_edit_summary_btn">
             <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
           </div>
@@ -155,31 +202,31 @@
             <ul>
               <li class="page_prev">
                 <% if @fpage.to_i > 1 %>
-                <a href="index?fpage=<%= @fpage.to_i - 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
-                </a>
+                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :fpage => (@fpage.to_i - 1)} %>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
                 </div>
                 <% end %>
               </li>
               <li class="vertical_boder"></li>
               <li class="page_next">
                 <% unless @favorite_articles_table.size < 10 %>
-                <a href="index?fpage=<%= @fpage.to_i + 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
-                </a>
+                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :fpage => (@fpage.to_i + 1)} %>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
                 </div>
                 <% end %>
               </li>
             </ul>
           </div>
         </div>
+        <% if @current_tab == "read" %>
+        <div class="none active read">
+        <% else %>
         <div class="none read">
+        <% end %>
           <div id="r_mark_as_unread_btn">
             <%= image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16", :class => "inner") + content_tag(:p, "mark as unread", :class => "inner") %>
           </div>
@@ -196,24 +243,20 @@
             <ul>
               <li class="page_prev">
                 <% if @rpage.to_i > 1 %>
-                <a href="index?rpage=<%= @rpage.to_i - 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
-                </a>
+                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :rpage => (@rpage.to_i - 1)} %>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
                 </div>
                 <% end %>
               </li>
               <li class="vertical_boder"></li>
               <li class="page_next">
-                <% unless @favorite_articles_table.size < 10 %>
-                <a href="index?rpage=<%= @rpage.to_i + 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
-                </a>
+                <% unless @read_articles_table.size < 10 %>
+                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :rpage => (@rpage.to_i + 1)} %>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
                 </div>
                 <% end %>
               </li>
@@ -222,7 +265,11 @@
         </div>
         <% else  # is_login_user %>
         <% if @user.public_flg %>
+        <% if @current_tab == "main" %>
         <div class="none main active">
+        <% else %>
+        <div class="none main">
+        <% end %>
           <div id="clip_btn">
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
@@ -230,36 +277,64 @@
             <ul>
               <li class="page_prev">
                 <% if @mpage.to_i > 1 %>
-                <a href="index?name=<%= @user.name %>&mpage=<%= @mpage.to_i - 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
-                </a>
+                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, :mpage => (@mpage.to_i - 1)} %>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16")%>
                 </div>
                 <% end %>
               </li>
               <li class="vertical_boder"></li>
               <li class="page_next">
                 <% unless @main_articles_table.size < 10 %>
-                <a href="index?name=<%= @user.name %>&mpage=<%= @mpage.to_i + 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
-                </a>
+                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, :mpage => (@mpage.to_i + 1)} %>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
                 </div>
                 <% end %>
               </li>
             </ul>
           </div>
         </div>
+        <% if @current_tab == "summary" %>
+        <div class="none summary active">
+        <% else%>
         <div class="none summary">
+        <% end %>
           <div id="clip_btn">
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
+          <div class="page_ejection">
+            <ul>
+              <li class="page_prev">
+                <% if @spage.to_i > 1 %>
+                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, :fpage => (sfpage.to_i - 1)} %>
+                <% else %>
+                <div>
+                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
+                </div>
+                <% end %>
+              </li>
+              <li class="vertical_boder"></li>
+              <li class="page_next">
+                <% unless @summaries_table.size < 10 %>
+                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, :fpage => (@spage + 1 )} %>
+                </a>
+                <% else %>
+                <div>
+                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
+                </div>
+                <% end %>
+              </li>
+            </ul>
+          </div>
         </div>
+        <% if @current_tab == "favorite" %>
+        <div class="none favorite active">
+        <% else %>
         <div class="none favorite">
+        <% end %>
           <div id="clip_btn">
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
@@ -267,31 +342,32 @@
             <ul>
               <li class="page_prev">
                 <% if @fpage.to_i > 1 %>
-                <a href="index?name=<%= @user.name %>&fpage=<%= @fpage.to_i - 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
-                </a>
+                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, :fpage => (@fpage.to_i - 1)} %>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
                 </div>
                 <% end %>
               </li>
               <li class="vertical_boder"></li>
               <li class="page_next">
                 <% unless @favorite_articles_table.size < 10 %>
-                <a href="index?name=<%= @user.name %>&fpage=<%= @fpage.to_i + 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, :fpage => (@fpage + 1 )} %>
                 </a>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
                 </div>
                 <% end %>
               </li>
             </ul>
           </div>
         </div>
+        <% if @current_tab == "read" %>
+        <div class="none read active">
+        <% else %>
         <div class="none read">
+        <% end %>
           <div id="clip_btn">
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
@@ -299,24 +375,20 @@
             <ul>
               <li class="page_prev">
                 <% if @rpage.to_i > 1 %>
-                <a href="index?name=<%= @user.name %>&rpage=<%= @rpage.to_i - 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
-                </a>
+                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, :rpage => (@rpage.to_i - 1)} %>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
                 </div>
                 <% end %>
               </li>
               <li class="vertical_boder"></li>
               <li class="page_next">
                 <% unless @favorite_articles_table.size < 10 %>
-                <a href="index?name=<%= @user.name %>&rpage=<%= @rpage.to_i + 1 %>">
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
-                </a>
+                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, :rpage => (@rpage.to_i + 1)} %>
                 <% else %>
                 <div>
-                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
                 </div>
                 <% end %>
               </li>
@@ -328,7 +400,11 @@
       </div>
       <% if @is_login_user || @user.public_flg %>
       <div class="article_table">
+        <% if @current_tab == "main" %>
         <table class="summary_table active main">
+        <% else %>
+        <table class="summary_table main">
+        <% end %>
           <tr class="table_top">
             <th id="article_title_top">
               <div class="article_checkbox">
@@ -400,7 +476,11 @@
           </form>
           <% end %>
         </table>
+        <% if @current_tab == "summary" %>
+        <table class="summary_table active summary">
+        <% else %>
         <table class="summary_table summary">
+        <% end %>
           <tr class="table_top">
             <th id="article_title_top">
               <div class="article_checkbox">
@@ -478,7 +558,11 @@
           </form>
           <% end %>
         </table>
+        <% if @current_tab == "favorite" %>
+        <table class="favorite_table active favorite">
+        <% else %>
         <table class="favorite_table favorite">
+        <% end %>
           <tr class="table_top">
             <th id="article_title_top">
               <div class="article_checkbox">
@@ -548,7 +632,11 @@
           </form>
           <% end %>
         </table>
+        <% if @current_tab == "read" %>
+        <table class="read_table active read">
+        <% else %>
         <table class="read_table read">
+        <% end %>
           <tr class="table_top">
             <th id="article_title_top">
               <div class="article_checkbox">
