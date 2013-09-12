@@ -13,6 +13,7 @@ class WebpageController < ApplicationController
 
   #定数定義
   BLANK = ""
+  THRESHOLD = 10000
 
   #TODO 画面からURL直打ちの回避
   def get_add_history_for_chrome_extension
@@ -215,8 +216,8 @@ class WebpageController < ApplicationController
         columns = image.columns 
         #高さ
         rows = image.rows
-        #幅×高さが10000(px)を超える最初の画像を象徴的な画像として返却する
-		if columns.to_i*rows.to_i > 10000
+        #幅×高さが閾値(10000px)を超える最初の画像を象徴的な画像として返却する
+		if columns.to_i*rows.to_i > THRESHOLD
 		    return image
 	        break;
 		end
