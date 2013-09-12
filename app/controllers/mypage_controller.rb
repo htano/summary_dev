@@ -69,27 +69,10 @@ class MypageController < ApplicationController
 
     # summary tab
     @summaries_table = []
-
-    @user.summaries.each do |summary|
-      article = Article.find(summary.article_id)
-      registered_num = UserArticle.count_by_sql("select count(*) from user_articles where user_articles.article_id = #{summary.article_id}")
-      last_updated = summary.updated_at
-      like_num = GoodSummary.count_by_sql("select count(*) from good_summaries where good_summaries.summary_id = #{summary.id}")
-      summary_num = Summary.count_by_sql("select count(*) from summaries where summaries.article_id = #{summary.article_id}")
-
-      is_registered = false
-      is_already_read = false
-      if signed_in? && @is_login_user == false
-        if getLoginUser.user_articles.exists?(:article_id => summary.article_id)
-          is_registered = true
-          is_already_read = getLoginUser.user_articles.find_by_article_id(summary.article_id).read_flg
-        end
-      end
-
-      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :last_updated => last_updated, :like_num => like_num, :is_registered => is_registered, :is_already_read => is_already_read}
-
-      @summaries_table.push(table_data)
-    end
+    @spage = params[:spage] ? params[:spage] : 1
+    offset = (@spage.to_i - 1) * 10
+    summaries = @user.summaries.reverse_order.offset(offset).take(10)
+    @summaries_table = get_summary_table(summaries, @is_login_user)
 
     respond_to do |format|
       format.html { render :layout => 'application'}
@@ -290,9 +273,31 @@ private
 
       table.push(table_data)
     end
-
     return table
   end
 
+  def get_summary_table(summaries, is_login_user)
+    table = []
+    summaries.each do |summary|
+      article = summary.article
+      registered_num = article.user_articles.size
+      last_updated = summary.updated_at
+      like_num = summary.good_summaries.size
+      summary_num = article.summaries.size
 
+      is_registered = false
+      is_already_read = false
+      if signed_in? && is_login_user == false
+        if getLoginUser.user_articles.exists?(:article_id => summary.article_id)
+          is_registered = true
+          is_already_read = getLoginUser.user_articles.find_by_article_id(summary.article_id).read_flg
+        end
+      end
+
+      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :last_updated => last_updated, :like_num => like_num, :is_registered => is_registered, :is_already_read => is_already_read}
+
+      table.push(table_data)
+    end
+    return table
+  end
 end
