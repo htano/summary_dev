@@ -50,35 +50,22 @@ class MypageController < ApplicationController
 
     # main tab & favorite tab & read tab
     @main_articles_table = []
+    @mpage = params[:mpage] ? params[:mpage] : 1
+    offset = (@mpage.to_i - 1) * 10
+    user_articles = @user.user_articles.reverse_order.offset(offset).where(:read_flg => false).take(10)
+    @main_articles_table = get_table(user_articles, @is_login_user)
+
     @favorite_articles_table = []
+    @fpage = params[:fpage] ? params[:fpage] : 1
+    offset = (@fpage.to_i - 1) * 10
+    user_articles = @user.user_articles.reverse_order.offset(offset).where(:favorite_flg => true).take(10)
+    @favorite_articles_table = get_table(user_articles, @is_login_user)
+
     @read_articles_table = []
-
-    @user.user_articles.each do |user_article|
-      article = Article.find(user_article.article_id)
-      summary_num = article.summaries.size
-      registered_num = article.user_articles.size
-      registered_date = user_article.created_at
-
-      is_registered = false
-      is_already_read = false
-      if signed_in? && @is_login_user == false
-        if getLoginUser.user_articles.exists?(:article_id => user_article.article_id)
-          is_registered = true
-          is_already_read = getLoginUser.user_articles.find_by_article_id(user_article.article_id).read_flg
-        end
-      end
-
-      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :registered_date => registered_date, :is_registered => is_registered, :is_already_read => is_already_read}
-
-      if user_article.favorite_flg
-        @favorite_articles_table.push(table_data)
-      end
-      if user_article.read_flg
-        @read_articles_table.push(table_data)
-      else
-        @main_articles_table.push(table_data)
-      end
-    end
+    @rpage = params[:rpage] ? params[:rpage] : 1
+    offset = (@rpage.to_i - 1) * 10
+    user_articles = @user.user_articles.reverse_order.offset(offset).where(:read_flg => true).take(10)
+    @read_articles_table = get_table(user_articles, @is_login_user)
 
     # summary tab
     @summaries_table = []
@@ -104,7 +91,11 @@ class MypageController < ApplicationController
       @summaries_table.push(table_data)
     end
 
-    render :layout => 'application'
+    respond_to do |format|
+      format.html { render :layout => 'application'}
+      format.js
+    end
+
   end
 
   def delete_article
@@ -276,5 +267,32 @@ private
     end
     return is_already_following
   end
+
+  def get_table(user_articles, is_login_user)
+    table = []
+
+    user_articles.each do |user_article|
+      article = user_article.article
+      summary_num = article.summaries.size
+      registered_num = article.user_articles.size
+      registered_date = user_article.created_at
+
+      is_registered = false
+      is_already_read = false
+      if signed_in? && is_login_user == false
+        if getLoginUser.user_articles.exists?(:article_id => user_article.article_id)
+          is_registered = true
+          is_already_read = getLoginUser.user_articles.find_by_article_id(user_article.article_id).read_flg
+        end
+      end
+
+      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :registered_date => registered_date, :is_registered => is_registered, :is_already_read => is_already_read}
+
+      table.push(table_data)
+    end
+
+    return table
+  end
+
 
 end

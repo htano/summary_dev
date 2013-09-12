@@ -105,18 +105,30 @@
           <div id="m_delete_btn">
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
-          <div id="page_ejection">
+          <div class="page_ejection">
             <ul>
-              <li id="page_prev">
-                <a href="#">
+              <li class="page_prev">
+                <% if @mpage.to_i > 1 %>
+                <a href="index?mpage=<%= @mpage.to_i - 1 %>">
                   <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
                 </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                </div>
+                <% end %>
               </li>
               <li class="vertical_boder"></li>
-              <li id="page_next">
-                <a href="#">
+              <li class="page_next">
+                <% unless @main_articles_table.size < 10 %>
+                <a href="index?mpage=<%= @mpage.to_i + 1 %>">
                   <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
                 </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                </div>
+                <% end %>
               </li>
             </ul>
           </div>
@@ -139,6 +151,33 @@
           <div id="f_delete_btn">
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
+          <div class="page_ejection">
+            <ul>
+              <li class="page_prev">
+                <% if @fpage.to_i > 1 %>
+                <a href="index?fpage=<%= @fpage.to_i - 1 %>">
+                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                </div>
+                <% end %>
+              </li>
+              <li class="vertical_boder"></li>
+              <li class="page_next">
+                <% unless @favorite_articles_table.size < 10 %>
+                <a href="index?fpage=<%= @fpage.to_i + 1 %>">
+                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                </div>
+                <% end %>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="none read">
           <div id="r_mark_as_unread_btn">
@@ -153,12 +192,135 @@
           <div id="r_delete_btn">
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
+          <div class="page_ejection">
+            <ul>
+              <li class="page_prev">
+                <% if @rpage.to_i > 1 %>
+                <a href="index?rpage=<%= @rpage.to_i - 1 %>">
+                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                </div>
+                <% end %>
+              </li>
+              <li class="vertical_boder"></li>
+              <li class="page_next">
+                <% unless @favorite_articles_table.size < 10 %>
+                <a href="index?rpage=<%= @rpage.to_i + 1 %>">
+                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                </div>
+                <% end %>
+              </li>
+            </ul>
+          </div>
         </div>
         <% else  # is_login_user %>
         <% if @user.public_flg %>
-        <div class="active">
+        <div class="none main active">
           <div id="clip_btn">
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
+          </div>
+          <div class="page_ejection">
+            <ul>
+              <li class="page_prev">
+                <% if @mpage.to_i > 1 %>
+                <a href="index?name=<%= @user.name %>&mpage=<%= @mpage.to_i - 1 %>">
+                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                </div>
+                <% end %>
+              </li>
+              <li class="vertical_boder"></li>
+              <li class="page_next">
+                <% unless @main_articles_table.size < 10 %>
+                <a href="index?name=<%= @user.name %>&mpage=<%= @mpage.to_i + 1 %>">
+                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                </div>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="none summary">
+          <div id="clip_btn">
+            <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
+          </div>
+        </div>
+        <div class="none favorite">
+          <div id="clip_btn">
+            <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
+          </div>
+          <div class="page_ejection">
+            <ul>
+              <li class="page_prev">
+                <% if @fpage.to_i > 1 %>
+                <a href="index?name=<%= @user.name %>&fpage=<%= @fpage.to_i - 1 %>">
+                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                </div>
+                <% end %>
+              </li>
+              <li class="vertical_boder"></li>
+              <li class="page_next">
+                <% unless @favorite_articles_table.size < 10 %>
+                <a href="index?name=<%= @user.name %>&fpage=<%= @fpage.to_i + 1 %>">
+                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                </div>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="none read">
+          <div id="clip_btn">
+            <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
+          </div>
+          <div class="page_ejection">
+            <ul>
+              <li class="page_prev">
+                <% if @rpage.to_i > 1 %>
+                <a href="index?name=<%= @user.name %>&rpage=<%= @rpage.to_i - 1 %>">
+                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_224_chevron-left_gray.png" width="10">
+                </div>
+                <% end %>
+              </li>
+              <li class="vertical_boder"></li>
+              <li class="page_next">
+                <% unless @favorite_articles_table.size < 10 %>
+                <a href="index?name=<%= @user.name %>&rpage=<%= @rpage.to_i + 1 %>">
+                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                </a>
+                <% else %>
+                <div>
+                  <img height="16" src="/assets/icons/glyphicons_223_chevron-right_gray.png" width="10">
+                </div>
+                <% end %>
+              </li>
+            </ul>
           </div>
         </div>
         <% end # @user.public_flg %>
