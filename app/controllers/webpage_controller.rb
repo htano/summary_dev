@@ -13,7 +13,10 @@ class WebpageController < ApplicationController
 
   #定数定義
   BLANK = ""
-  THRESHOLD = 10000
+  THRESHOLD_ALL = 20000
+  THRESHOLD_SIDE = 100
+  WIDTH  = 80
+  HEIGHT = 80
 
   #TODO 画面からURL直打ちの回避
   def get_add_history_for_chrome_extension
@@ -198,16 +201,16 @@ class WebpageController < ApplicationController
   end
 
   #指定されたURLで使用されている画像を抜き出すメソッド
-  #象徴的な画像をどう選別するか、フローを決める
-  #基準に達した画像がなかった場合にもっとも基準に近い画像を返す
   #パフォーマンス
   def getImagefromURL(url)
     begin
       charset = nil;
+      
       html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
         charset = f.charset;
         f.read;
       end
+
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
       doc.xpath("//img[starts-with(@src, 'http://')]").each{|img|
         image = Magick::ImageList.new(img['src'])
@@ -216,15 +219,17 @@ class WebpageController < ApplicationController
         columns = image.columns 
         #高さ
         rows = image.rows
-        #幅×高さが閾値(10000px)を超える最初の画像を象徴的な画像として返却する
-		if columns.to_i*rows.to_i > THRESHOLD
-		    return image
-	        break;
-		end
+        #幅×高さが閾値を超える最初の画像を象徴的な画像として返却する
+    		if columns.to_i > THRESHOLD_SIDE and rows.to_i > THRESHOLD_SIDE and (columns.to_i*rows.to_i) > THRESHOLD_ALL
+          return image.resize(WIDTH, HEIGHT)
+          break;
+        end
       }
+
       #returnしていない場合（幅×高さが10000(px)を超える画像がなかった場合）
       no_image = Magick::ImageList.new("#{Rails.root}/app/assets/images/no_image.png")
-      return no_image
+      return no_image.resize(WIDTH, HEIGHT)
+
     rescue
       logger.error("getImgItem.rescue")
       return nil;
