@@ -243,7 +243,7 @@
       $("div>#s_edit_summary_btn").wrap("<a href='/summary/#{article_ids}/edit'></a>")
     $("div>#s_delete_btn").wrap("<a href='/mypage/delete_summary?#{params}'></a>")
 
-@clickCheckBoxForClip = ->
+@clickCheckBoxForClip = (name) ->
   main_checkbox     = document.main_checkbox
   summary_checkbox  = document.summary_checkbox
   # TODO : add favorite checkbox
@@ -307,9 +307,9 @@
 #    console.debug params
 
     $("a>#clip_btn").unwrap()
-    $("div>#clip_btn").wrap("<a href='/mypage/clip?#{params}'></a>")
+    $("div>#clip_btn").wrap("<a href='/mypage/clip?#{name}&#{params}'></a>")
 
-@checkAll = (checker, form_name)->
+@checkAll = (checker, form_name) ->
   form = document.getElementById(form_name)
 #  console.debug "form name = #{form.name}, form length = #{form.length}"
   checkbox_num = form.length

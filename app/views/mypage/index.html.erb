@@ -351,7 +351,7 @@
                     {:id => "article_check", :onclick => "clickMainCheckBox()"}, table_data[:article].id, false %>
                     <% else %>
                     <%= check_box 'check_article', i,
-                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false %>
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip('#{@user.name}')"}, table_data[:article].id, false %>
                     <% end %>
                   </div>
                   <div class="title">
@@ -423,7 +423,7 @@
                     {:id => "summary_checkbox", :onclick => "clickSummaryCheckBox()"}, table_data[:article].id, false %>
                     <% else %>
                     <%= check_box 'check_article', i,
-                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false %>
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip('#{@user.name}')"}, table_data[:article].id, false %>
                     <% end %>
                   </div>
                   <div class="title">
@@ -500,7 +500,7 @@
                     {:id => "favorite_checkbox", :onclick => "clickFavoriteCheckBox()"}, table_data[:article].id, false %>
                     <% else %>
                     <%= check_box 'check_article', i,
-                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false %>
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip('#{@user.name}')"}, table_data[:article].id, false %>
                     <% end %>
                   </div>
                   <div class="title">
@@ -571,7 +571,7 @@
                     {:id => "read_checkbox", :onclick => "clickReadCheckBox()"}, table_data[:article].id, false %>
                     <% else %>
                     <%= check_box 'check_article', i,
-                    {:id => "article_check", :onclick => "clickCheckBoxForClip()"}, table_data[:article].id, false %>
+                    {:id => "article_check", :onclick => "clickCheckBoxForClip('#{@user.name}')"}, table_data[:article].id, false %>
                     <% end %>
                   </div>
                   <div class="title">
