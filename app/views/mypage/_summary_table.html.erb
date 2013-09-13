@@ -1,0 +1,60 @@
+<% summary_table.each_with_index do |table_data, i| %>
+<tr>
+  <th>
+    <div>
+      <div class="article-checkbox">
+      <% if @is_login_user %>
+        <%= check_box 'check_article', i, {:id => "summary-checkbox", :onclick => clickSummaryCheckBox}, table_data[:article].id, false %>
+      <% else %>
+        <%= check_box 'check_article', i, {:id => "article-check", :onclick => "clickCheckBoxForClip('#{@user.name}')"}, table_data[:article].id, false %>
+      <% end %>
+      </div>
+      <div class="title">
+        <a href="<%= table_data[:article].url %>" target="_blank">
+        <%= table_data[:article].title %>
+        <% if @is_login_user != true && table_data[:is_registered] %>
+          <span>
+          <% if table_data[:is_already_read] %>
+          << you already read
+          <% else %>
+          << you also register
+          <% end %>
+          </span>
+        <% end %>
+          <p>
+          <%= table_data[:registered_num] %> registered, 
+          <%= table_data[:like_num] %>
+          <% unless table_data[:like_num] > 1 %>
+          like
+          <% else %>
+          likes
+          <% end %>
+          , last updated at <%= table_data[:last_updated].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
+          <% unless table_data[:summary_num] > 1 %>
+          summary
+          <% else %>
+          summaries
+          <% end %>
+          <br>
+          <%= table_data[:article].contents_preview %> ...
+          </p>
+        </a>
+      </div>
+    </div>
+  </th>
+  <th class="num-column">
+  <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
+    <p><%= table_data[:summary_num] %></p>
+    <% unless table_data[:summary_num] > 1 %>
+    <span>
+      <p>summary</p>
+    </span>
+    <% else %>
+    <span>
+      <p>summaries</p>
+    </span>
+    <% end %>
+ <% end %>
+ </th>
+</tr>
+<% end %>

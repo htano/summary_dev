@@ -85,24 +85,24 @@
       <div class="div-tag">
         <ul class="tab clear">
           <% if @current_tab == 'main' %>
-          <li class="none active my-overflow"><a href=".main" data-toggle="tab">Main</a></li>
+          <li class="none active my-overflow"><a href=".main" data-toggle="tab">main</a></li>
           <% else %>
-          <li class="none my-overflow"><a href=".main" data-toggle="tab">Main</a></li>
+          <li class="none my-overflow"><a href=".main" data-toggle="tab">main</a></li>
           <% end %>
           <% if @current_tab == 'summary' %>
-          <li class="none active my-overflow"><a href=".summary" data-toggle="tab">Summary</a></li>
+          <li class="none active my-overflow"><a href=".summary" data-toggle="tab">summary</a></li>
           <% else %>
-          <li class="none my-overflow"><a href=".summary" data-toggle="tab">Summary</a></li>
+          <li class="none my-overflow"><a href=".summary" data-toggle="tab">summary</a></li>
           <% end %>
           <% if @current_tab == 'favorite' %>
-          <li class="none active my-overflow"><a href=".favorite" data-toggle="tab">Favorite</a></li>
+          <li class="none active my-overflow"><a href=".favorite" data-toggle="tab">favorite</a></li>
           <% else %>
-          <li class="none my-overflow"><a href=".favorite" data-toggle="tab">Favorite</a></li>
+          <li class="none my-overflow"><a href=".favorite" data-toggle="tab">favorite</a></li>
           <% end %>
           <% if @current_tab == 'read' %>
-          <li class="none active my-overflow"><a href=".read" data-toggle="tab">Read</a></li>
+          <li class="none active my-overflow"><a href=".read" data-toggle="tab">read</a></li>
           <% else %>
-          <li class="none my-overflow"><a href=".read" data-toggle="tab">Read</a></li>
+          <li class="none my-overflow"><a href=".read" data-toggle="tab">read</a></li>
           <% end %>
         </ul>
       </div>
@@ -126,27 +126,7 @@
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
-            <ul>
-              <li class="page-prev">
-                <% if @mpage.to_i > 1 %>
-                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :mpage => (@mpage.to_i - 1)}%>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-              <li class="vertical-boder"></li>
-              <li class="page-next">
-                <% unless @main_articles_table.size < 10 %>
-                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :mpage => (@mpage.to_i + 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-            </ul>
+          <%= render :partial => "page_ejection", :locals => {:page => @mpage, :table_size => @main_articles_table.size, :page_param => :mpage} %>
           </div>
         </div>
         <% if @current_tab == "summary" %>
@@ -161,27 +141,7 @@
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
-            <ul>
-              <li class="page-prev">
-                <% if @spage.to_i > 1 %>
-                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :spage => (@spage.to_i - 1)}%>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-              <li class="vertical-boder"></li>
-              <li class="page-next">
-                <% unless @summaries_table.size < 10 %>
-                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :spage => (@spage.to_i + 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-            </ul>
+          <%= render :partial => "page_ejection", :locals => {:page => @spage, :table_size => @summaries_table.size, :page_param => :spage} %>
           </div>
         </div>
         <% if @current_tab == "favorite" %>
@@ -199,27 +159,7 @@
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
-            <ul>
-              <li class="page-prev">
-                <% if @fpage.to_i > 1 %>
-                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :fpage => (@fpage.to_i - 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-              <li class="vertical-boder"></li>
-              <li class="page-next">
-                <% unless @favorite_articles_table.size < 10 %>
-                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :fpage => (@fpage.to_i + 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-            </ul>
+          <%= render :partial => "page_ejection", :locals => {:page => @fpage, :table_size => @favorite_articles_table.size, :page_param => :fpage} %>
           </div>
         </div>
         <% if @current_tab == "read" %>
@@ -240,27 +180,7 @@
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
-            <ul>
-              <li class="page-prev">
-                <% if @rpage.to_i > 1 %>
-                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :rpage => (@rpage.to_i - 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-              <li class="vertical-boder"></li>
-              <li class="page-next">
-                <% unless @read_articles_table.size < 10 %>
-                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :rpage => (@rpage.to_i + 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-            </ul>
+          <%= render :partial => "page_ejection", :locals => {:page => @rpage, :table_size => @read_articles_table.size, :page_param => :rpage} %>
           </div>
         </div>
         <% else  # is_login_user %>
@@ -274,27 +194,7 @@
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
           <div class="page-ejection">
-            <ul>
-              <li class="page-prev">
-                <% if @mpage.to_i > 1 %>
-                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, :mpage => (@mpage.to_i - 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16")%>
-                </div>
-                <% end %>
-              </li>
-              <li class="vertical-boder"></li>
-              <li class="page-next">
-                <% unless @main_articles_table.size < 10 %>
-                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, :mpage => (@mpage.to_i + 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-            </ul>
+          <%= render :partial => "page_ejection", :locals => {:page => @mpage, :table_size => @main_articles_table.size, :page_param => :mpage} %>
           </div>
         </div>
         <% if @current_tab == "summary" %>
@@ -306,28 +206,7 @@
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
           <div class="page-ejection">
-            <ul>
-              <li class="page-prev">
-                <% if @spage.to_i > 1 %>
-                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, :fpage => (sfpage.to_i - 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-              <li class="vertical-boder"></li>
-              <li class="page-next">
-                <% unless @summaries_table.size < 10 %>
-                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, :fpage => (@spage + 1 )} %>
-                </a>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-            </ul>
+          <%= render :partial => "page_ejection", :locals => {:page => @spage, :table_size => @summaries_table.size, :page_param => :spage} %>
           </div>
         </div>
         <% if @current_tab == "favorite" %>
@@ -339,28 +218,7 @@
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
           <div class="page-ejection">
-            <ul>
-              <li class="page-prev">
-                <% if @fpage.to_i > 1 %>
-                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, :fpage => (@fpage.to_i - 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-              <li class="vertical-boder"></li>
-              <li class="page-next">
-                <% unless @favorite_articles_table.size < 10 %>
-                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, :fpage => (@fpage + 1 )} %>
-                </a>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-            </ul>
+          <%= render :partial => "page_ejection", :locals => {:page => @fpage, :table_size => @favorite_articles_table.size, :page_param => :fpage} %>
           </div>
         </div>
         <% if @current_tab == "read" %>
@@ -372,27 +230,7 @@
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
           <div class="page-ejection">
-            <ul>
-              <li class="page-prev">
-                <% if @rpage.to_i > 1 %>
-                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, :rpage => (@rpage.to_i - 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-              <li class="vertical-boder"></li>
-              <li class="page-next">
-                <% unless @favorite_articles_table.size < 10 %>
-                <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, :rpage => (@rpage.to_i + 1)} %>
-                <% else %>
-                <div>
-                  <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
-                </div>
-                <% end %>
-              </li>
-            </ul>
+          <%= render :partial => "page_ejection", :locals => {:page => @rpage, :table_size => @read_articles_table.size, :page_param => :rpage} %>
           </div>
         </div>
         <% end # @user.public_flg %>
@@ -417,62 +255,7 @@
           </tr>
           <% if @main_articles_table %>
           <form id="main-check-form" name="main_checkbox">
-            <% @main_articles_table.each_with_index do |table_data, i| %>
-            <tr>
-              <th>
-                <div>
-                  <div class="article-checkbox">
-                    <% if @is_login_user %>
-                    <%= check_box 'check_article', i, 
-                    {:id => "article-check", :onclick => "clickMainCheckBox()"}, table_data[:article].id, false %>
-                    <% else %>
-                    <%= check_box 'check_article', i,
-                    {:id => "article-check", :onclick => "clickCheckBoxForClip('#{@user.name}')"}, table_data[:article].id, false %>
-                    <% end %>
-                  </div>
-                  <div class="title">
-                    <a href="<%= table_data[:article].url %>" target="_blank">
-                      <%= table_data[:article].title %>
-                      <% if @is_login_user != true && table_data[:is_registered] %>
-                      <span>
-                        <% if table_data[:is_already_read] %>
-                        << you already read
-                        <% else %>
-                        << you also register
-                        <% end %>
-                      </span>
-                      <% end %>
-                      <p>
-                        <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
-                        <% unless table_data[:summary_num] > 1 %>
-                        summary
-                        <% else %>
-                        summaries
-                        <% end %>
-                      <br>
-                        <%= table_data[:article].contents_preview %> ...
-                      <p>
-                    </p>
-                    </a>
-                  </div>
-                </div>
-              </th>
-              <th class="num-column">
-                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
-                <p><%= table_data[:summary_num] %></p>
-                <% unless table_data[:summary_num] > 1 %>
-                <span>
-                  <p>summary</p>
-                </span>
-                <% else %>
-                <span>
-                  <p>summaries</p>
-                </span>
-                <% end %>
-                <% end %>
-              </th>
-            </tr>
-            <% end %>
+          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickMainCheckBox()"}, :object => @main_articles_table %>
           </form>
           <% end %>
         </table>
@@ -493,68 +276,7 @@
           </tr>
           <% if @summaries_table %>
           <form id="summary-check-form" name="summary_checkbox">
-            <% @summaries_table.each_with_index do |table_data, i| %>
-            <tr>
-              <th>
-                <div>
-                  <div class="article-checkbox">
-                    <% if @is_login_user %>
-                    <%= check_box 'check_article', i, 
-                    {:id => "summary-checkbox", :onclick => "clickSummaryCheckBox()"}, table_data[:article].id, false %>
-                    <% else %>
-                    <%= check_box 'check_article', i,
-                    {:id => "article-check", :onclick => "clickCheckBoxForClip('#{@user.name}')"}, table_data[:article].id, false %>
-                    <% end %>
-                  </div>
-                  <div class="title">
-                    <a href="<%= table_data[:article].url %>" target="_blank">
-                      <%= table_data[:article].title %>
-                      <% if @is_login_user != true && table_data[:is_registered] %>
-                      <span>
-                        <% if table_data[:is_already_read] %>
-                        << you already read
-                        <% else %>
-                        << you also register
-                        <% end %>
-                      </span>
-                      <% end %>
-                      <p>
-                        <%= table_data[:registered_num] %> registered, 
-                        <%= table_data[:like_num] %>
-                        <% unless table_data[:like_num] > 1 %>
-                        like
-                        <% else %>
-                        likes
-                        <% end %>
-                        , last updated at <%= table_data[:last_updated].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
-                        <% unless table_data[:summary_num] > 1 %>
-                        summary
-                        <% else %>
-                        summaries
-                        <% end %>
-                      <br>
-                        <%= table_data[:article].contents_preview %> ...
-                      </p>
-                    </a>
-                  </div>
-                </div>
-              </th>
-              <th class="num-column">
-                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
-                <p><%= table_data[:summary_num] %></p>
-                <% unless table_data[:summary_num] > 1 %>
-                <span>
-                  <p>summary</p>
-                </span>
-                <% else %>
-                <span>
-                  <p>summaries</p>
-                </span>
-                <% end %>
-                <% end %>
-              </th>
-            </tr>
-            <% end %>
+          <%= render :partial => "summary_table", :locals => {:click_checkbox => "clickSummaryCheckBox()"}, :object => @summaries_table %>
           </form>
           <% end %>
         </table>
@@ -574,61 +296,7 @@
           </tr>
           <% if @favorite_articles_table %>
           <form id="favorite-check-form" name="favorite_checkbox">
-            <% @favorite_articles_table.each_with_index do |table_data, i| %>
-            <tr>
-              <th>
-                <div>
-                  <div class="article-checkbox">
-                    <% if @is_login_user %>
-                    <%= check_box 'check_article', i,
-                    {:id => "favorite-checkbox", :onclick => "clickFavoriteCheckBox()"}, table_data[:article].id, false %>
-                    <% else %>
-                    <%= check_box 'check_article', i,
-                    {:id => "article-check", :onclick => "clickCheckBoxForClip('#{@user.name}')"}, table_data[:article].id, false %>
-                    <% end %>
-                  </div>
-                  <div class="title">
-                    <a href="<%= table_data[:article].url %>" target="_blank">
-                      <%= table_data[:article].title %>
-                      <% if @is_login_user != true && table_data[:is_registered] %>
-                      <span>
-                        <% if table_data[:is_already_read] %>
-                        << you already read
-                        <% else %>
-                        << you also register
-                        <% end %>
-                      </span>
-                      <% end %>
-                      <p>
-                      <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
-                      <% unless table_data[:summary_num] > 1 %>
-                      summary
-                      <% else %>
-                      summaries
-                      <% end %>
-                      <br>
-                        <%= table_data[:article].contents_preview %> ...
-                      </p>
-                    </a>
-                  </div>
-                </div>
-              </th>
-              <th class="num-column">
-                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
-                <p><%= table_data[:summary_num] %></p>
-                <% unless table_data[:summary_num] > 1 %>
-                <span>
-                  <p>summary</p>
-                </span>
-                <% else %>
-                <span>
-                  <p>summaries</p>
-                </span>
-                <% end %>
-                <% end %>
-              </th>
-            </tr>
-            <% end %>
+          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickFavoriteCheckBox()"}, :object => @favorite_articles_table %>
           </form>
           <% end %>
         </table>
@@ -649,69 +317,14 @@
           </tr>
           <% if @read_articles_table %>
           <form id="read-check-form" name="read_checkbox">
-            <% @read_articles_table.each_with_index do |table_data, i| %>
-            <tr>
-              <th>
-                <div>
-                  <div class="article-checkbox">
-                    <% if @is_login_user %>
-                    <%= check_box 'check_article', i, 
-                    {:id => "read-checkbox", :onclick => "clickReadCheckBox()"}, table_data[:article].id, false %>
-                    <% else %>
-                    <%= check_box 'check_article', i,
-                    {:id => "article-check", :onclick => "clickCheckBoxForClip('#{@user.name}')"}, table_data[:article].id, false %>
-                    <% end %>
-                  </div>
-                  <div class="title">
-                    <a href="<%= table_data[:article].url %>" target="_blank">
-                      <%= table_data[:article].title %>
-                      <% if @is_login_user != true && table_data[:is_registered] %>
-                      <span>
-                        <% if table_data[:is_already_read] %>
-                        << you already read
-                        <% else %>
-                        << you also register
-                        <% end %>
-                      </span>
-                      <% end %>
-                      <p>
-                      <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
-                      <% unless table_data[:summary_num] > 1 %>
-                      summary
-                      <% else %>
-                      summaries
-                      <% end %>
-                      <br>
-                        <%= table_data[:article].contents_preview %> ...
-                      </p>
-                    </a>
-                  </div>
-              </th>
-              <th class="num-column">
-                <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
-                <p><%= table_data[:summary_num] %></p>
-                <% unless table_data[:summary_num] > 1 %>
-                <span>
-                  <p>summary</p>
-                </span>
-                <% else %>
-                <span>
-                  <p>summaries</p>
-                </span>
-                <% end %>
-                <% end %>
-              </th>
-            </tr>
-            <% end %>
+          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickReadCheckBox()"}, :object => @read_articles_table %>
           </form>
           <% end %>
-
         </table>
       </div>
       <% else # @is_login_user || @user.public_flg %>
       <p id="private-message">@<%= @user.name%>'s articles are protected. </p>
       <% end # @is_login_user || @user.public_flg %>
-
     </div>
   </div>
 </div>
