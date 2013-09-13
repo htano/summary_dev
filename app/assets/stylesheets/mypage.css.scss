@@ -17,9 +17,9 @@
   color: #a2a2a2;
 
   // ----------------------
-  // user_profile
+  // user-profile
   // ----------------------
-  #user_profile {
+  #user-profile {
     height: auto;
 
     img {
@@ -30,7 +30,7 @@
       margin-bottom: 3px;
     }
 
-    #prof_user_name {
+    #prof-user-name {
      width: 160px;
 
       float: left;
@@ -75,9 +75,9 @@
   }
 
   // ----------------------
-  // user_info_tab
+  // user-info-tab
   // ----------------------
-  #user_info_tab {
+  #user-info-tab {
     height: 50px;
     padding-left: 15px;
     ul {
@@ -89,7 +89,7 @@
         text-align: center;
       }
 
-      .prof_tab_elem {
+      .prof-tab-elem {
         width: 32%;
         font-size: 15px;
         line-height: 25px;
@@ -111,7 +111,7 @@
       }
 
       .active {
-        #info_tab_marker {
+        #info-tab-marker {
           background-color: #5B91FF;
 
           margin-right: auto;
@@ -128,9 +128,9 @@
   }
 
   // ----------------------
-  // user_ifo
+  // user-info
   // ----------------------
-  #user_info {
+  #user-info {
     div {
       display: none;
     }
@@ -139,10 +139,10 @@
       display: block;
     }
 
-    #prof_tab_following {
+    #prof-tab-following {
       margin-left: 10px;
     }
-    #prof_tab_followers {
+    #prof-tab-followers {
       margin-left: 10px;
     }
   }
@@ -152,13 +152,13 @@
   float: right;
 }
 
-.my_overflow {
+.my-overflow {
   overflow: hidden;
   text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
 }
 
-#article_controller {
+#article-controller {
 //  border: 2px solid #ddd;
   width: 800px;
 
@@ -201,7 +201,7 @@
     }
   }
 
-  div > .page_ejection {
+  div > .page-ejection {
     float: right;
     border: 2px solid #ddd;
     border-radius: 0.3em;
@@ -223,12 +223,12 @@
           height: 100%;
         }
       }
-      .vertical_boder {
+      .vertical-boder {
         border: 1px solid #ddd;
         height: 100%;
         width: auto;
       }
-      .page_next {
+      .page-next {
         img {
           margin-left: 6px;
         }
@@ -290,7 +290,7 @@ ul.tab {
   color: white;
 }
 
-.article_table {
+.article-table {
   clear: left;
   width: 800px;
   padding-left: 35px;
@@ -300,13 +300,13 @@ ul.tab {
   }
 }
 
-.table_top {
+.table-top {
   border: 1px solid #e5e5e5;
   color: white;
   background-color: rgb(230, 230, 230);
 }
 
-#article_title_top {
+#article-title-top {
   width: 700px;
   padding: 4px 0px 0px 0px;
   input {
@@ -314,12 +314,12 @@ ul.tab {
   }
 }
 
-#summary_number_top {
+#summary-number-top {
   width: 100px;
   padding: 4px 0px 0px 0px;
 }
 
-.article_checkbox {
+.article-checkbox {
   float: left;
 }
 
@@ -357,7 +357,7 @@ ul.tab {
   }
 }
 
-.num_column {
+.num-column {
   border-bottom: 2px solid #e5e5e5;
   font-size: 20px;
   font-weight: normal;
@@ -445,31 +445,31 @@ ul.tab {
   font-weight: normal;
 }
 
-.article_table > .summary_table {
+.article-table > .summary-table {
   display: none;
 }
 
-.article_table > .edited_summary_table {
+.article-table > .edited-summary-table {
   display: none;
 }
 
-.article_table > .favorite_table {
+.article-table > .favorite-table {
   display: none;
 }
 
-.article_table > .read_table {
+.article-table > .read-table {
   display: none;
 }
 
-.article_table > .reserved_table {
+.article-table > .reserved-table {
   display: none;
 }
 
-.article_table > .active {
+.article-table > .active {
   display: block;
 }
 
-#private_message {
+#private-message {
   margin-left: 40px;
   font-size: 16px;
   font-style: italic;
