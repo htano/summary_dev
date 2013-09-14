@@ -98,14 +98,27 @@
                   </div>
                 </div>
               </div>
-
             </div>
 
-            <div class="col-md-2 entry_box_right">
-              <%= image_tag "icons/good_summary.jpg", :size => "128x160" %>
+            <div class="col-md-3 entry_box_right">
+              <div class="row" style="margin-top:60px;">
+                <div class="col-md-8 col-md-offset-2">
+                  <%= image_tag "icons/good_summary.jpg", :size => "128x160" %>
+                </div>
+              </div>
+              <div class="row" style="margin: 10px 0;">
+                <div class="col-md-1 col-md-offset-1">
+                  <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
+                </div>
+                <div class="col-md-7">
+                  <cite>
+                    <%= URI(e.url).host %>
+                  </cite>
+                </div>
+              </div>
             </div>
+
           </div>
-
         </div>
       </div>
 
@@ -159,13 +172,29 @@
                 <div class="col-md-10 col-md-offset-1">
                   <div class="entry_contents_prev">
                     <p><%= e.contents_preview %></p>
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-2 entry_box_right">
+
+            <div class="col-md-3 entry_box_right">
+              <div class="row" style="margin-top:10px;">
+                <div class="col-md-8 col-md-offset-2">
+                  <%= image_tag "icons/good_summary.jpg", :size => "128x160" %>
+                </div>
+              </div>
+              <div class="row" style="margin: 10px 0;">
+                <div class="col-md-1 col-md-offset-1">
+                  <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
+                </div>
+                <div class="col-md-7">
+                  <cite>
+                    <%= URI(e.url).host %>
+                  </cite>
+                </div>
+              </div>
             </div>
-          </div>
+
         </div>
       </div>
     <% end %>
