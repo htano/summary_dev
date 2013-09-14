@@ -1,12 +1,12 @@
 
 <div class="hotentry_container">
-  <a href="<%= url_for :controller => 'hotentry', :action => 'index' %>">
-    <h1 class="hotentry">
+  <h1 class="hotentry">
+    <a href="<%= url_for :controller => 'hotentry', :action => 'index' %>">
       Hot Entry
-    </h1>
-  </a>
+    </a>
+  </h1>
 <ul class="entry_container">
-  <input type="checkbox" id="only_summarized" style="font-size: 19px;"> Summarized only. </input>
+  <input type="checkbox" id="only_summarized" style="font-size: 16px;"> Summarized only. </input>
 
   <% @entries.each do |e| %>
     <li>
@@ -19,7 +19,11 @@
             <div class="col-md-12 entry_box_top">
               <div class="row">
                 <div class="col-md-8 entry_title">
-                  <a href="<%= e.url %>" target="_blank"> <h3><%= e.title %></h3> </a>
+                  <a href="<%= e.url %>" target="_blank">
+                    <h3>
+                      <%= e.title %>
+                    </h3>
+                  </a>
                 </div>
                 <div class="col-md-4">
                   <div class="row">

@@ -13,7 +13,7 @@ div.hotentry_container {
   width: 945px;
 }
 
-h1.hotentry {
+h1.hotentry a{
   margin-left: 0;
   color: #999;
 }
@@ -52,6 +52,7 @@ div.entry_title {
 }
 
 div.entry_title h3 {
+  font-size: 20px;
   margin-top: 8px;
   height: 60px;
   text-decoration: underline;
@@ -116,8 +117,9 @@ div.entry_top_icon {
 }
 
 div.entry_contents_prev {
+  margin-top: 5px;
   border: solid 1px #eee;
-  padding: 10px;
+  padding-left: 10px;
   height: 100px;
 }
 
@@ -126,6 +128,11 @@ div.entry_contents_prev_label {
   margin-top: 0px;
   font-size: 16px;
 }
+
+div.entry_summary_label {
+  margin-bottom: 5px;
+}
+
 div.entry_summary_label label {
   //margin-left: 10px;
   font-size: 16px;
