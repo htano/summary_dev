@@ -2,6 +2,13 @@ class Article < ActiveRecord::Base
 	has_many :user_articles, :dependent => :destroy
 	has_many :summaries, :dependent => :destroy
 
+  # This is a decay parameter for article's strength.
+  # A 'point' means a people say he is reading the article.
+  # And the points are decaying by time spending.
+  # This parameter means that '1' point will decay to '0.01' point until some days after.
+  ZERO_ZERO_ONE_DAYS = 7
+  DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
+
 	def getMarkedUser
 		return self.user_articles.count
 	end
@@ -74,5 +81,48 @@ class Article < ActiveRecord::Base
 
 		return summaryList
 	end
+
+  # Class Method
+  def self.getHotEntryArtileList
+    # まず７日(ZERO_ZERO_ONE_DAYS)以内に「あとで読む登録」された記事のうち、
+    # 最終登録時の「勢い(strength)」でソートした上位１００件くらいを取ってくる
+    # 1. getCandidateHotentries
+    @candidate_entries = where("last_added_at > ?", Time.now - ZERO_ZERO_ONE_DAYS.days).order('strength desc').limit(100)
+    # 2. sort by current strength
+    return @candidate_entries.sort{|a,b| (-1)*(a.getCurrentStrength <=> b.getCurrentStrength)}
+  end
+
+  # Instance Method
+  def addStrength
+    if self.last_added_at && self.strength
+      @diff_hours = ((Time.now - self.last_added_at) / 1.hours).to_i
+      self.strength = self.strength * (DECAY_DELTA**@diff_hours) + 1
+    else
+      self.strength = 1.0
+    end
+    self.last_added_at = Time.now
+    return self.save
+  end
+
+  def getCurrentStrength
+    @current_strength = 0
+    if self.last_added_at && self.strength
+      @diff_hours = ((Time.now - self.last_added_at) / 1.hours).to_i
+      @current_strength = self.strength * (DECAY_DELTA**@diff_hours)
+    end
+    return @current_strength
+  end
+
+  def getTopRatedSummary
+    @top_rated_summary = nil
+    @top_rate = -1
+    self.summaries.order('created_at desc').each do |summary|
+      if @top_rate < summary.good_summaries.count
+        @top_rate = summary.good_summaries.count
+        @top_rated_summary = summary
+      end
+    end
+    return @top_rated_summary
+  end
 
 end

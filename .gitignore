@@ -19,6 +19,10 @@
 
 # Ignore all swp file
 *.swp
+*.DS_Store
 
 # Ignore uploaded images
-/app/assets/images/account_pictures/*_uploaded_image_*
+/public/images/account_pictures/*_uploaded_image_*
+
+# Ignore precompiled files
+/public/assets

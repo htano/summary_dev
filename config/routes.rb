@@ -1,4 +1,5 @@
 SummaryDev::Application.routes.draw do
+  get "hotentry/index"
   get "settings/profile"
   get "settings/profile_edit"
   post "settings/profile_edit_complete"
@@ -16,7 +17,7 @@ SummaryDev::Application.routes.draw do
   get "mypage/mark_as_read"
   get "mypage/mark_as_unread"
   get "mypage/mark_as_favorite"
-  get "mypage/mark_as_unfavorite"
+  get "mypage/mark_off_favorite"
   get "mypage/clip"
   get "mypage/follow"
   get "mypage/unfollow"
@@ -41,6 +42,7 @@ SummaryDev::Application.routes.draw do
   get 'summary_lists/get_summary_num_for_chrome_extension' => 'summary_lists#get_summary_num_for_chrome_extension'
   get 'summary_lists/get_summary_list_for_chrome_extension' => 'summary_lists#get_summary_list_for_chrome_extension'
   #for webpage
+  get 'summary_lists/goodSummaryAjax' => 'summary_lists#goodSummaryAjax'
   get 'summary_lists/:articleId' => 'summary_lists#index'
   get 'summary_lists/goodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#goodSummary'
   get 'summary_lists/cancelGoodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#cancelGoodSummary'

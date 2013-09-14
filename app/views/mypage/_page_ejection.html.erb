@@ -1,0 +1,29 @@
+<ul>
+  <li class="page-prev">
+  <% if page.to_i > 1 %>
+    <% if @is_login_user %>
+      <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", page_param => (page.to_i - 1)}%>
+    <% else %>
+      <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, page_param => (page.to_i - 1)}%>
+    <% end %>
+  <% else %>
+    <div>
+    <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
+    </div>
+  <% end %>
+  </li>
+  <li class="vertical-boder"></li>
+  <li class="page-next">
+  <% unless table_size < 10 %>
+    <% if @is_login_user %>
+      <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", page_param => (page.to_i + 1)} %>
+    <% else %>
+      <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, page_param => (page.to_i + 1)} %>
+    <% end %>
+  <% else %>
+    <div>
+    <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
+    </div>
+  <% end %>
+  </li>
+</ul>

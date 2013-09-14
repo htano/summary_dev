@@ -113,6 +113,7 @@ UserArticle.create(user_id: 1, article_id: 26, read_flg: false)
 UserArticle.create(user_id: 1, article_id: 27, read_flg: false)
 UserArticle.create(user_id: 1, article_id: 28, read_flg: false)
 
+
 # Article
 Article.create(url: "http://www.yahoo.co.jp/", title: "Yahoo! JAPAN")
 Article.create(url: "http://www.ibm.com/jp/ja/", title: "IBM - Japan")

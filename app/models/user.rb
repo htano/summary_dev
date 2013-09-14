@@ -17,8 +17,8 @@ class User < ActiveRecord::Base
     return where(["open_id = ? and yuko_flg = ?", openid, true]).first
   end
 
-  def self.getUserObjByLoginToken(login_token)
-    return where(["keep_login_token = ? and yuko_flg = ? and keep_login_expire > ?", login_token, true, Time.now]).first
+  def self.getUserObjByLoginToken(login_token, ip_address)
+    return where(["keep_login_token = ? and yuko_flg = ? and keep_login_expire > ? and keep_login_ip = ?", login_token, true, Time.now, ip_address]).first
   end
 
   def self.regist(uname, openid)
@@ -53,9 +53,14 @@ class User < ActiveRecord::Base
     return self.save
   end
 
-  def updateLoginInfo
+  def updateLastLogin
     self.last_login = Time.now
+    return self.save
+  end
+
+  def updateKeepLogin(ip_address)
     self.keep_login_token = SecureRandom.uuid
+    self.keep_login_ip = ip_address
     self.keep_login_expire = Time.now + 3.days
     return self.save
   end
@@ -98,6 +103,7 @@ class User < ActiveRecord::Base
   def execSignOut
     self.keep_login_token = nil
     self.keep_login_expire = nil
+    self.keep_login_ip = nil
     return self.save
   end
 

@@ -9,7 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
+ *= require navbar.css
  */
 .error {
   color: red;
@@ -19,4 +19,8 @@
 }
 html {
   overflow-y: scroll;
+}
+
+* {
+  font-family: Meiryo;
 }

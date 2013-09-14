@@ -20,8 +20,12 @@ ActiveRecord::Schema.define(version: 20130911140644) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "contents_preview"
+    t.decimal  "strength"
+    t.datetime "last_added_at"
     t.binary   "image"
   end
+
+  add_index "articles", ["last_added_at", "strength"], name: "idx_strength"
 
   create_table "favorite_users", force: true do |t|
     t.integer  "user_id"
@@ -53,9 +57,9 @@ ActiveRecord::Schema.define(version: 20130911140644) do
     t.integer  "user_id"
     t.integer  "article_id"
     t.boolean  "read_flg",     default: false
-    t.boolean  "favorite_flg", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "favorite_flg", default: false
   end
 
   add_index "user_articles", ["user_id", "article_id"], name: "index_user_articles_on_user_id_and_article_id", unique: true
@@ -79,6 +83,7 @@ ActiveRecord::Schema.define(version: 20130911140644) do
     t.datetime "keep_login_expire"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "keep_login_ip"
   end
 
   add_index "users", ["name"], name: "idx_name", unique: true

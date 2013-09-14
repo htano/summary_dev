@@ -55,7 +55,7 @@ class SettingsController < ApplicationController
         logger.debug("image file size: " + @uploaded_image_file.size.to_s + " Byte")
         logger.debug("image content type: " + @uploaded_image_file.content_type + "")
         if @uploaded_image_file.size < 1024 * 1024 && @uploaded_image_file.content_type =~ /^image/
-          @save_file_name = './app/assets/images/' + 'account_pictures/' + @login_user.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
+          @save_file_name = './public/images/' + 'account_pictures/' + @login_user.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
           @for_db_image_path = 'account_pictures/' + @login_user.id.to_s + '_uploaded_image_' + @uploaded_image_file.original_filename
           File.open(@save_file_name, 'wb') do |of|
             of.write(@uploaded_image_file.read)
