@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  　<%= stylesheet_link_tag "consumer", "social-buttons/zocial.css"%>
+<% end %> 
+
 <% if flash[:alert] %>
   <div class='alert'>
    <%= h(flash[:alert]) %>
