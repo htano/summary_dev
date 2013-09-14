@@ -2,9 +2,9 @@ $(function(){
   $('#only_summarized').click(function(){
     var isChecked = $('#only_summarized:checked').val();
     if(isChecked){
-      $('.entry_box_no_summary').hide(1000);
+      $('.entry_box_no_summary').hide();
     } else {
-      $('.entry_box_no_summary').show(1000);
+      $('.entry_box_no_summary').show();
     }
   });
 });
