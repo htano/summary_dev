@@ -1,0 +1,5 @@
+<% if @current_tab == title %>
+<li class="none active my-overflow"><a href=<%= "." + title %> data-toggle="tab"><%= title %></a></li>
+<% else %>
+<li class="none my-overflow"><a href=<%= "." + title %> data-toggle="tab"><%= title %></a></li>
+<% end %>

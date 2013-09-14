@@ -1,5 +1,5 @@
 <%= content_for :head do %>
-  <%= stylesheet_link_tag "mypage", "buttons" %>
+  <%= stylesheet_link_tag "mypage" %>
 <% end %>
 
 <div class="container">
@@ -88,26 +88,10 @@
     <div class="span9">
       <div class="div-tag">
         <ul class="tab clear">
-          <% if @current_tab == 'main' %>
-          <li class="none active my-overflow"><a href=".main" data-toggle="tab">main</a></li>
-          <% else %>
-          <li class="none my-overflow"><a href=".main" data-toggle="tab">main</a></li>
-          <% end %>
-          <% if @current_tab == 'summary' %>
-          <li class="none active my-overflow"><a href=".summary" data-toggle="tab">summary</a></li>
-          <% else %>
-          <li class="none my-overflow"><a href=".summary" data-toggle="tab">summary</a></li>
-          <% end %>
-          <% if @current_tab == 'favorite' %>
-          <li class="none active my-overflow"><a href=".favorite" data-toggle="tab">favorite</a></li>
-          <% else %>
-          <li class="none my-overflow"><a href=".favorite" data-toggle="tab">favorite</a></li>
-          <% end %>
-          <% if @current_tab == 'read' %>
-          <li class="none active my-overflow"><a href=".read" data-toggle="tab">read</a></li>
-          <% else %>
-          <li class="none my-overflow"><a href=".read" data-toggle="tab">read</a></li>
-          <% end %>
+          <%= render :partial => "tab", :locals => {:title => "main"} %>
+          <%= render :partial => "tab", :locals => {:title => "summary"} %>
+          <%= render :partial => "tab", :locals => {:title => "favorite"} %>
+          <%= render :partial => "tab", :locals => {:title => "read"} %>
         </ul>
       </div>
       <div id="article-controller">
@@ -117,16 +101,16 @@
         <% else %>
         <div class="none main">
         <% end %>
-          <div id="m-mark-as-read-btn">
+          <div id="mark-as-read-btn">
             <%= image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16", :class => "inner") + content_tag(:p, "mark as read", :class => "inner") %>
           </div>
-          <div id="m-edit-summary-btn">
+          <div id="edit-summary-btn">
             <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
           </div>
-          <div id="m-mark-as-favorite-btn">
+          <div id="mark-as-favorite-btn">
             <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark as favorite") %>
           </div>
-          <div id="m-delete-btn">
+          <div id="delete-btn">
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
@@ -138,10 +122,10 @@
         <% else %>
         <div class="none summary">
         <% end %>
-          <div id="s-edit-summary-btn">
+          <div id="edit-summary-btn">
             <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
           </div>
-          <div id="s-delete-btn">
+          <div id="delete-summary-btn">
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
@@ -153,13 +137,13 @@
         <% else %>
         <div class="none favorite">
         <% end %>
-          <div id="f-edit-summary-btn">
+          <div id="edit-summary-btn">
             <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
           </div>
-          <div id="f-mark-off-favorite-btn">
+          <div id="mark-off-favorite-btn">
             <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark off favorite") %>
           </div>
-          <div id="f-delete-btn">
+          <div id="delete-btn">
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
@@ -171,16 +155,16 @@
         <% else %>
         <div class="none read">
         <% end %>
-          <div id="r-mark-as-unread-btn">
+          <div id="mark-as-unread-btn">
             <%= image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16", :class => "inner") + content_tag(:p, "mark as unread", :class => "inner") %>
           </div>
-          <div id="r-edit-summary-btn">
+          <div id="edit-summary-btn">
             <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") %>
           </div>
-          <div id="r-mark-as-favorite-btn">
+          <div id="mark-as-favorite-btn">
             <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark as favorite") %>
           </div>
-          <div id="r-delete-btn">
+          <div id="delete-btn">
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
@@ -259,7 +243,7 @@
           </tr>
           <% if @main_articles_table %>
           <form id="main-check-form" name="main_checkbox">
-          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickMainCheckBox()"}, :object => @main_articles_table %>
+          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(main_checkbox, 'main')"}, :object => @main_articles_table %>
           </form>
           <% end %>
         </table>
@@ -280,7 +264,7 @@
           </tr>
           <% if @summaries_table %>
           <form id="summary-check-form" name="summary_checkbox">
-          <%= render :partial => "summary_table", :locals => {:click_checkbox => "clickSummaryCheckBox()"}, :object => @summaries_table %>
+          <%= render :partial => "summary_table", :locals => {:click_checkbox => "clickArticleCheckBox(summary_checkbox, 'summary')"}, :object => @summaries_table %>
           </form>
           <% end %>
         </table>
@@ -300,7 +284,7 @@
           </tr>
           <% if @favorite_articles_table %>
           <form id="favorite-check-form" name="favorite_checkbox">
-          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickFavoriteCheckBox()"}, :object => @favorite_articles_table %>
+          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(favorite_checkbox, 'favorite')"}, :object => @favorite_articles_table %>
           </form>
           <% end %>
         </table>
@@ -321,7 +305,7 @@
           </tr>
           <% if @read_articles_table %>
           <form id="read-check-form" name="read_checkbox">
-          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickReadCheckBox()"}, :object => @read_articles_table %>
+          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(read_checkbox, 'read')"}, :object => @read_articles_table %>
           </form>
           <% end %>
         </table>
