@@ -34,9 +34,6 @@
       <% end %>
       <span class="help"><a href="/help.html" target="_blank"><%= image_tag("icons/glyphicons_194_circle_question_mark.png", :size => "16x16") %></a></span>
     </div>
-    <!-- test code
-    <%= image_tag(url_for(:controller => 'summary', :action => 'get_article_image', :format => :png)) %>
-    -->
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
     <input type="hidden" id="firstEditFlag" value="<%= @firstEditFlag %>">
   </div>

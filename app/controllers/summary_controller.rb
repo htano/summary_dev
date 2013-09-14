@@ -70,13 +70,5 @@ class SummaryController < ApplicationController
       redirect_to :controller => "consumer", :action => "index";
     end
   end
-
-  def get_article_image
-    @article_id = "#{params[:article_id]}";
-    article = Article.find_by id: @article_id
-    image =  Magick::Image.from_blob(article.image).shift
-    send_data(image.to_blob, :disposition => "inline")
-  end
-
 end
   
