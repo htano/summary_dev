@@ -14,13 +14,26 @@
 			<td id ="article_status" class ="status">
 				<div id ="article_read_mark">
 					<% unless @isReadArticle then %>
-
+						<div id="unreadBottun">
 						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_153_unchecked.png">
 						<%= link_to "unread",{:action => "isRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
-					<% else %>
-
+					    </div>
+						<div id="alreadyReadBottun" style="display:none">
 						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_152_check.png">
 						<%= link_to "already read",{:action => "cancelIsRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
+					</div>
+					   
+					<% else %>
+
+						<div id="unreadBottun" style="display:none">
+						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_153_unchecked.png">
+						<%= link_to "unread",{:action => "isRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
+					    </div>
+
+						<div id="alreadyReadBottun">
+						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_152_check.png">
+						<%= link_to "already read",{:action => "cancelIsRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
+					    </div>
 					<% end %>
 				</div>
 

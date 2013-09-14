@@ -90,7 +90,7 @@ class SummaryListsController < ApplicationController
 			return	
 		end
 
-        userArticleForIsRead=UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId])
+        userArticleForIsRead=UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId]).first
 
         unless userArticleForIsRead == nil then
 			userArticleForIsRead.read_flg = false
