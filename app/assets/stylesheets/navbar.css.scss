@@ -33,25 +33,25 @@ h2 {
   line-height: 36px;
 }
 
-.mynavbar-fixed-top {
+.navbar-fixed-top {
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
   z-index: 1030;
-  .mynavbar-inner {
+  .navbar-inner {
     border-radius: 0px;
     -webkit-border-radius: 0px;
   }
 }
 
-.mynavbar-inner {
+.navbar-inner {
   background-color: rgb(230,230,230);
   background-repeat: repeat-x;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1)
 }
 
-.mynavbar {
+.navbar {
   overflow: visible;
   margin-bottom: 18px;
   z-index :2010;
@@ -67,13 +67,13 @@ h2 {
     color: #ffffff;
   }
 
-  .mynav.pull-right {
+  .nav.pull-right {
     float: right;
     margin-left: 10px;
     margin-right: 0px;
   }
 
-  .mynav {
+  .nav {
     position: relative;
     left: 0;
     display: block;
@@ -81,7 +81,7 @@ h2 {
   }
 
 
-  .mynav > li > a {
+  .nav > li > a {
     float: none;
     margin-top: 5px;
     line-height: 30px;
@@ -92,7 +92,7 @@ h2 {
     color: white;
   }
 
-  .mynav > li {
+  .nav > li {
     display: block;
     float: left;
   }
@@ -107,7 +107,7 @@ h2 {
   border-right: 1px solid #FCFCFC;
 }
 
-.mynav {
+.nav {
   list-style: none;
 }
 
@@ -145,7 +145,7 @@ h2 {
   }
 }
 
-.mynav > li > .dropdown-menu:before {
+.nav > li > .dropdown-menu:before {
   position: absolute;
   top: -7px;
   left: 9px;
@@ -157,7 +157,7 @@ h2 {
   content: '';
 }
 
-.mynav > li > .dropdown-menu:after {
+.nav > li > .dropdown-menu:after {
   position: absolute;
   top: -6px;
   left: 10px;
@@ -172,26 +172,27 @@ ul {
   padding: 0px;
 }
 
-.mynav_text {
-  vertical-align: middle
+.nav_text {
+  vertical-align: middle;
+  width: 500px;
 }
 
-.mynav_news {
+.nav_news {
   width: 30px;
   background-color: rgb(255, 155, 155);
 }
 
-.mynav_account {
+.nav_account {
   padding-left: 5px;
   padding-right: 5px;
   background-color: gray;
 }
 
-.mynav > li > a {
+.nav > li > a {
   display: block;
 }
 
-.mynav {
+.nav {
   list-style: none;
 }
 

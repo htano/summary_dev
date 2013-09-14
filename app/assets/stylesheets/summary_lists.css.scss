@@ -3,93 +3,152 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-a.summary_list_link{ color: #EEEEEE }
 
-#yBoxOutline {
- clear:boath;
- margin: 30px auto;
- width: 800px;
+//---------------------------------------
+// whole layout
+//---------------------------------------
+
+#sumlist_layout{
+
+	margin: 20px 0px 0px 10px;
+
+	//----------------------------------------	
+	// summary_lists
+	//----------------------------------------
+	#summary_lists{
+		margin: 0 auto;
+		width: 1000px;
+		color: #a2a2a2;
+
+		//----------------------------------------	
+		//  class 
+		//----------------------------------------
+		.main{
+			border: 2px solid #ddd;
+			width: 750px;
+			padding: 10px;
+		}
+
+		.status{
+			border: 2px solid #ddd;
+			width: 150px;
+			padding: 10px;
+		}
+		//----------------------------------------	
+		//  article 
+		//----------------------------------------
+		#article_title{
+			height: 60px;
+			font-size: 24px;
+			background: #c6c6c6;
+			color: #FFFFFF;
+			a.summary_list_link{ color: #FFFFFF }
+		}
+
+		#article_status{
+			height: 60px;
+			text-align: center;
+			vertical-align: top;
+			a.summary_list_link{ color: #a2a2a2 }
+
+			hr{
+				border: 0.5px solid #ddd;
+			}
+			//-------------------------------------------
+			//  read bottun
+			//-------------------------------------------
+
+			#article_read_mark{
+				margin: 0 auto;
+				border: 0.5px solid #ddd;
+				border-radius: 5px;
+				width:  140px;
+				height: 22px;
+			}	
+
+			#check_bottun_icon{
+				float: left;
+				padding: 3px 0px 0px 6px;				
+			}
+			#read_link{
+				padding: 3px 0px 0px 0px;				
+			}
+
+			//-------------------------------------------
+			//  read bottun
+			//-------------------------------------------
+			#mark_user_count{
+
+			}
+		} 
+
+		//----------------------------------------	
+		//  summary 
+		//----------------------------------------
+		#summary_detail{
+			height: 150px;
+			font-size: 20px;
+			vertical-align: top;
+		}
+
+		#summary_auther{
+			vertical-align: top;
+
+			hr{
+				clear:both;
+				border: 0.5px solid #ddd;
+			}
+
+			//-------------------------------------------
+			//  auther
+			//-------------------------------------------
+			#last_update_time{
+				margin: 8px 10px 0px 10px;				
+				clear: both;
+			}
+			#auther_name{
+				margin: 8px 0px 0px 0px;				
+				a{ color: #a2a2a2 }
+			}
+
+			#auther_photo{
+				margin: 8px 8px 8px 8px;				
+				float: left;
+			}
+			
+			#follow_mark{
+				margin: 2px 2px 2px 62px;
+				padding: 2px;				
+				border: 0.5px solid #ddd;
+				border-radius: 5px;
+				width:  70px;
+				text-align: center;
+				vertical-align: middle;
+			}	
+
+			//-------------------------------------------
+			//  iiyo 
+			//-------------------------------------------
+			.iiyo{
+				margin: 0 auto;
+				width:  140px;
+				height: 21px;
+				#bottun{
+				margin: 0px 10px 0px 0px;				
+					float: left;
+					background: white;
+				}
+
+				#cmpBottun{
+				margin: 0px 10px 0px 0px;				
+					float: left;
+					background: gray;
+				}
+
+				#count{
+				padding: 3px 0px 0px 0px;				
+				}
+			}
+		} 
+	}
 }
-
-#yBox {
- margin: 0px;
- padding-left: 10px;
- padding-right: 10px;
-}
-
-#yArticle{
- color: #EEEEEE;
-}
-
-#yArticleName{
- padding-top: 20px;
- color: #EEEEEE;
- background-color: #150908;
- border-top-right-radius: 20px;
- border-top-left-radius: 20px;
- padding-left: 10px;
- padding-right: 10px;
- height: 40px;
-}
-
-#yArticleIsRead{
- color: #EEEEEE;
- background-color: #150908;
- text-align: right;
- padding-left: 10px;
- padding-right: 10px;
- height: 20px;
-}
-
-#youyaku{
- padding-top: 0;
- padding-bottom: 0;
- width: 100%;
- color: #150908;
-}
-
-#yAuther{
- text-align: right;
- background-color: #E1541F;
- padding-left: 10px;
- padding-right: 10px;
-}
-
-#yArticleDetail{
- min-height: 200px;
- background-color: #E1541F;
- padding-left: 10px;
- padding-right: 10px;
-}
-
-.yArticleIiyo{
- text-align: right;
- background-color: #E1541F;
- padding-left: 10px;
- padding-right: 10px;
-}
-
-#yArticleLine{
- margin: 0px;
- background-color: #E1541F;
-}
-
-#yLinkToOtherY{
- margin: 0px;
- padding-left: 10px;
- padding-right: 10px;
- border-bottom-right-radius: 20px;
- border-bottom-left-radius: 20px;
- padding: 10px;
- text-align: right;
- height: 20px;
- color: #150908;
- background-color: #E1541F;
- padding-left: 10px;
- padding-right: 10px;
-}
-
-
-
-
-

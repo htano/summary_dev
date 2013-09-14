@@ -1,58 +1,30 @@
 <script>
-$(function(){
-    error_msg = '指定されたURLは存在しません。URLを確認して下さい。'
-    $('#submit').click(function(){
-      if($("#url").val().length){
-          $.ajax({
-            url: '/webpage/get_title',
-            type: 'POST',
-            data: 'url=' + escape($('#url').val()),
-            dataType: 'text',
-            success: function(data) {
-            	if(data) {
-            	  if(confirm(data+'を登録して宜しいですか？')){
-            	  	$.ajax({
-            			url: '/webpage/add',
-            			type: 'POST',
-            			data: 'url=' + escape($('#url').val()),
-            			dataType: 'text',
-            			success: function(data) {
-            				alert(data);
-            				location.reload();
-            			},
-            			error: function(data) {
-            				alert(error_msg);
-            			}
-            		});
-            	  }
-              } else {
-              	alert(error_msg);
-              }
-            },
-            error: function(data) {
-              alert(error_msg);
-            }
-          });
-      } else {
-        alert('URLを入力して下さい。');
-      }
-    });
-});
+function checkURL(){
+	if(!$("#url").val().length){
+		alert("URLを入力して下さい。")
+		return false;
+	} else {
+		if(!confirm($("#url").val()+'を登録して宜しいですか？')){
+			return false;
+		}
+	}
+}
 </script>
 
-  <div class="mynavbar mynavbar-fixed-top">
-    <div class="mynavbar-inner">
+<%= form_tag({:controller => 'webpage', :action => 'add'}, {:method => 'POST', :remote => 'true'}) do %>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
       <div class="container">
         <a href="<%= url_for :controller => 'mypage', :action => 'index' %>" class="brand">Summary</a>
-        <div class="mynav-collapse">
-          <ul class="mynav pull-right">
+        <div class="nav-collapse">
+          <ul class="nav pull-right">
 
           <% if signed_in? %>
             <li>
-              <input class="mynav_text" type="text" name="url" id="url" size="50">
+              <input class="nav_text" type="text" name="url" id="url">
             </li>
             <li>
-              <input id="submit" class="button button-flat:hover" value="book!" size="5">
+              <input type="submit" class="button button-flat:hover" value="book!" onclick="return checkURL()">
             </li>
           <% end %>
 
@@ -60,7 +32,7 @@ $(function(){
 
           <% if signed_in? %>
             <li>
-              <a class="dropdown-toggle mynav_news" data-toggle="dropdown" href="#"><%= getNotifyingObjects.size %></a>
+              <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#"><%= getNotifyingObjects.size %></a>
               <ul class="dropdown-menu">
                 <li>
                   <a href="#">action</a>
@@ -75,14 +47,14 @@ $(function(){
             </li>
           <% else %>
             <li>
-              <a class="dropdown-toggle mynav_news" data-toggle="dropdown" href="#">-</a>
+              <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#">-</a>
             </li>
           <% end%>
 
             <li class="divider-vertical"></li>
             <li>
               <% if signed_in? %>
-              <a class="dropdown-toggle mynav_account" data-toggle="dropdown" href="#"><%= get_current_user_name %></a>
+              <a class="dropdown-toggle nav_account" data-toggle="dropdown" href="#"><%= get_current_user_name %></a>
                 <ul class="dropdown-menu">
                   <li>
                   <a href="<%= url_for :controller => 'mypage', :action => 'index' %>">MyPage</a>
@@ -107,3 +79,5 @@ $(function(){
       </div>
     </div>
   </div>
+<% end %>
+<!--</form>-->

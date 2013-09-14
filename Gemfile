@@ -29,6 +29,9 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'ruby-openid'
 
+gem 'rmagick'
+#gem 'paperclip'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -59,3 +62,5 @@ group :development do
   # better_errorsの画面上にirb/pry(PERL)を表示する
   gem 'binding_of_caller'
 end
+
+gem 'extractcontent', :git => 'http://github.com/mono0x/extractcontent.git'

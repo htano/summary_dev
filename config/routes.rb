@@ -17,6 +17,7 @@ SummaryDev::Application.routes.draw do
   get "mypage/mark_as_read"
   get "mypage/mark_as_unread"
   get "mypage/mark_as_favorite"
+  get "mypage/mark_off_favorite"
   get "mypage/clip"
   get "mypage/follow"
   get "mypage/unfollow"
@@ -33,9 +34,9 @@ SummaryDev::Application.routes.draw do
 
   #for webpage
   get 'summary/:article_id/edit' => 'summary#edit'
-  post 'summary/:article_id/edit_confirm' => 'summary#edit_confirm'
   post 'summary/:article_id/edit_complete' => 'summary#edit_complete'
-  get 'summary/:article_id' => 'summary#show'
+  post 'summary/:article_id/delete' => 'summary#delete'
+  get 'summary/:article_id/get_article_image' => 'summary#get_article_image'
   
   #for chrome extension
   get 'summary_lists/get_summary_num_for_chrome_extension' => 'summary_lists#get_summary_num_for_chrome_extension'

@@ -1,5 +1,5 @@
 class SummaryListsController < ApplicationController
-    #TODO 画面からURL直打ちの回避
+	#TODO 画面からURL直打ちの回避
     def get_summary_num_for_chrome_extension
     	@url = "#{params[:url]}"
     	article = Article.find_by_url(@url);
@@ -34,8 +34,10 @@ class SummaryListsController < ApplicationController
 			return
 		end
 		@user = getLoginUser
-		@summaryList = @article.getSortedSummaryList(@user, @article)
-		@isReadArticle = @article.isRead(@user, @article)
+		@summaryList = @article.getSortedSummaryList(@user)
+		@isReadArticle = @article.isRead(@user)
+		@numOfMarkUsers = @article.getMarkedUser
+		@isSummarizedByMe = @article.summaries.find_by user_id: @user 
 	end
 
 	def goodSummary 
@@ -89,7 +91,7 @@ class SummaryListsController < ApplicationController
 			redirect_to :controller => "consumer", :action => "index"
 			return	
 		end
-        userArticleForIsRead=UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId])
+        userArticleForIsRead=UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId]).first
 
         unless userArticleForIsRead == nil then
 			userArticleForIsRead.read_flg = true	
@@ -98,11 +100,9 @@ class SummaryListsController < ApplicationController
 		end
 
         if userArticleForIsRead.save
-			oppai1
 			render
 
 		else
-			oppai3
 		end
 	end
 	
@@ -112,7 +112,7 @@ class SummaryListsController < ApplicationController
 			return	
 		end
 
-        userArticleForIsRead=UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId])
+        userArticleForIsRead=UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId]).first
 
         unless userArticleForIsRead == nil then
 			userArticleForIsRead.read_flg = false
@@ -121,12 +121,10 @@ class SummaryListsController < ApplicationController
 		end
 
         if userArticleForIsRead.save
-			oppai2
 			render
-			else
+		else
 			
-			oppai4
-			end
+		end
 
 	end
 
