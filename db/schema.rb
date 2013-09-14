@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20130911140644) do
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "contents_preview"
     t.decimal  "strength"
     t.datetime "last_added_at"
+    t.string   "contents_preview"
     t.binary   "image"
   end
 

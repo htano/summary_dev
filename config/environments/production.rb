@@ -60,7 +60,7 @@ SummaryDev::Application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  # config.assets.precompile += %w( search.js )
+  config.assets.precompile += %w( _summary_settings.css application.css bootstrap/bootstrap.css buttons.css consumer.css font-awesome.min.css hotentry.css mypage.css navbar.css settings.css social-buttons/zocial.css summary.css summary_lists.css webpage.css )
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
