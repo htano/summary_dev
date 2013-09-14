@@ -35,13 +35,13 @@
                         <% if e.user_articles.where(:user_id => getLoginUser.id).first %>
                           <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' disabled>reading</button>
                         <% else %>
-                          <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>ReadItLater</button>
+                          <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>Read later</button>
                         <% end %>
                       <% else %>
                       <% end %>
                     </div>
                     <div class="col-md-4 entry_count_num">
-                      <span class="entry_count_label">Read User</span>
+                      <span class="entry_count_label">Reader</span>
                       </br>
                       </br>
                       <span id="reading_counter<%= e.id %>" class="entry_count_num"><%= e.user_articles.count %></span>
@@ -111,7 +111,7 @@
 
     <% else %>
       <div class="row entry_box_no_summary">
-        <div class="col-md-12 entry_box">
+        <div class="col-md-12 entry_box_no_sum">
           <div class="row entry_box_top">
             <div class="col-md-8 entry_title">
               <a href="<%= e.url %>" target="_blank">
@@ -125,7 +125,7 @@
                     <% if e.user_articles.where(:user_id => getLoginUser.id).first %>
                       <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' disabled>reading</button>
                     <% else %>
-                      <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>ReadItLater</button>
+                      <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>Read later</button>
                     <% end %>
                   <% else %>
                   <% end %>
@@ -158,7 +158,7 @@
               <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                   <div class="entry_contents_prev">
-                    <p>aiueo</p>
+                    <p><%= e.contents_preview %></p>
                   </p>
                 </div>
               </div>

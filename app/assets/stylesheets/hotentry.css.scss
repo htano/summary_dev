@@ -9,17 +9,16 @@
 
 div.hotentry_container {
   margin: auto;
-  margin-top: 20px;
-  width: 945px;
+  width: 900px;
 }
 
 h1.hotentry a{
-  margin-left: 0;
+  //margin-left: 0;
   color: #999;
 }
 
 ul.entry_container {
-  margin: 20px 0px;
+  //margin: 0px 0px;
 }
 
 ul.entry_container li {
@@ -33,6 +32,16 @@ div.entry_box {
   //width: 945px;
   border: solid 2px #eee;
   border-top: solid 3px #F5AC0F;
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+}
+
+div.entry_box_no_sum {
+  margin: auto;
+  //width: 945px;
+  border: solid 2px #eee;
+  border-top: solid 3px #0FC7F5;
   border-radius:5px;
   -webkit-border-radius:5px;
   -moz-border-radius:5px;
@@ -78,7 +87,7 @@ div.entry_count_num {
 
 span.entry_count_label {
   //text-decoration: underline;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 span.entry_count_num {
@@ -210,13 +219,14 @@ div.entry_like_num div {
 }
 
 button.read_it_later {
+  font-size: 12px;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #60b044;
   background-repeat: repeat-x;
   border-color: #5ca941;
   width: 80px;
-  height: 34px;
+  height: 30px;
   outline: none;
   border-radius: 5px;  /* CSS3草案 */
   -webkit-border-radius: 5px;  /* Safari,Google Chrome用 */
@@ -225,18 +235,19 @@ button.read_it_later {
   background-image: -webkit-linear-gradient(#8add6d, #60b044);
   background-image: linear-gradient(#8add6d, #60b044);
   //margin-bottom: 1em;
-  margin-top: 25px;
+  margin-top: 30px;
   border: 1px solid #d8d8d8;
 }
 
 button.read_it_cancel {
+  font-size: 12px;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #999;
   background-repeat: repeat-x;
   border-color: #999;
   width: 80px;
-  height: 34px;
+  height: 30px;
   outline: none;
   border-radius: 5px;  /* CSS3草案 */
   -webkit-border-radius: 5px;  /* Safari,Google Chrome用 */
@@ -245,7 +256,7 @@ button.read_it_cancel {
   background-image: -webkit-linear-gradient(#aaa, #999);
   background-image: linear-gradient(#aaa, #999);
   //margin-bottom: 1em;
-  margin-top: 25px;
+  margin-top: 30px;
   border: 1px solid #d8d8d8;
 }
 
