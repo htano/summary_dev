@@ -1,3 +1,7 @@
+<% content_for :head do %>
+　<%= stylesheet_link_tag "summary" %>
+<% end %> 
+
 <form method="POST" action="edit_complete">
   <div class="main" align="center">
     <div id ="edit_summary">
@@ -30,9 +34,9 @@
       <% end %>
       <span class="help"><a href="/help.html" target="_blank"><%= image_tag("icons/glyphicons_194_circle_question_mark.png", :size => "16x16") %></a></span>
     </div>
-    <!-- test code -->
+    <!-- test code
     <%= image_tag(url_for(:controller => 'summary', :action => 'get_article_image', :format => :png)) %>
-    <!--  -->
+    -->
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
     <input type="hidden" id="firstEditFlag" value="<%= @firstEditFlag %>">
   </div>
