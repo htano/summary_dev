@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require navbar.css
+ *= require buttons.css
  */
 .error {
   color: red;
