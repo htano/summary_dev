@@ -14,18 +14,23 @@ div.hotentry_container {
 }
 
 h1.hotentry {
+  margin-left: 0;
   color: #999;
+}
+
+ul.entry_container {
+  margin: 20px 0px;
 }
 
 ul.entry_container li {
   list-style-type: none;
   line-height: 1;
+  margin-top: 20px;
 }
 
 div.entry_box {
   margin: auto;
-  margin-top: 20px;
-  width: 945px;
+  //width: 945px;
   border: solid 2px #eee;
   border-top: solid 3px #F5AC0F;
   border-radius:5px;
@@ -34,19 +39,20 @@ div.entry_box {
 }
 
 div.entry_box_top {
-  width: 945px;
-  height: 77px;
+  //width: 945px;
+  //height: 80px;
   border-bottom: solid 1px #eee;
 }
 
 div.entry_title {
-  width: 590px;
-  padding: 10px;
-  font-size: 18px;
-  float: left;
+  //width: 590px;
+  //padding-left: 10px;
+  //font-size: 18px;
+  //float: left;
 }
 
 div.entry_title h3 {
+  margin-top: 8px;
   height: 60px;
   text-decoration: underline;
   line-height: 30px;
@@ -60,9 +66,11 @@ div.entry_title h3 {
 div.entry_count_num {
   line-height: 16px;
   padding: 9px;
-  width: 88px;
-  height: 58px;
-  float: right;
+  //width: 107px;
+  height: 80px;
+  //width: 88px;
+  //height: 58px;
+  //float: right;
   border-left: solid 1px #eee;
   text-align: center;
 }
@@ -77,77 +85,90 @@ span.entry_count_num {
 }
 
 div.entry_box_left {
-  width: 760px;
-  height: 275px;
-  border-right: solid 1px #eee;
-  float: left;
+  //width: 760px;
+  //height: 275px;
+  //border-right: solid 1px #eee;
+  padding: 10px 0px;
+  //float: left;
 }
 
 div.entry_box_right {
-  width: 180px;
-  height: 175px;
-  float: left;
-  text-align: center;
-  padding-top: 60px;
-}
-
-div.entry_clear {
-  clear: both;
+  //margin-left: 20px;
+  //border-left: solid 1px #eee;
+  //width: 180px;
+  //height: 270px;
+  //height: 175px;
+  //float: left;
+  //text-align: center;
+  //padding-top: 60px;
 }
 
 div.entry_summary_label {
-  clear: both;
-  margin: 5px;
+  //clear: both;
+  //margin: 5px;
 }
 
 div.entry_top_icon {
   padding: 10px;
   height: 80%;
-  float: left;
+  //float: left;
   text-align: center;
 }
 
+div.entry_contents_prev {
+  border: solid 1px #eee;
+  padding: 10px;
+  height: 100px;
+}
+
+div.entry_contents_prev_label {
+  //padding-left: 0;
+  margin-top: 0px;
+  font-size: 16px;
+}
 div.entry_summary_label label {
-  margin-left: 10px;
+  //margin-left: 10px;
   font-size: 16px;
   //text-decoration: underline;
 }
 
 div.entry_top_summary {
-  padding: 5px;
+  //padding: 5px;
   height: 200px;
-  width: 600px;
-  float: left;
+  //width: 600px;
+  //float: left;
 }
 
 div.entry_top_summary_user span {
-  vertical-align: 50%;
-  margin-left: 3px;
+  //vertical-align: 50%;
+  //margin-left: 3px;
   font-size: 14px;
 }
 
 div.entry_top_summary textarea {
-  padding: 5px 10px;
+  padding: 10px;
   border: solid 1px #eee;
   background-color: #fff;
   resize: none;
   margin-top: 7px;
-  width: 574px;
+  width: 100%;
   height: 184px;
   font-size: 14px;
 }
 
 div.entry_top_like {
-  padding-top: 110px;
+  padding-top: 60px;
+  padding-left: 0px;
   height: 140px;
-  width: 113px;
-  float: left;
+  //width: 113px;
+  //float: left;
   border-left: 0px #eee;
   text-align: center;
 }
 
-div.entry_top_like_label {
-  clear: both;
+div.entry_top_like_label label {
+  margin: 5px 0px;
+  //clear: both;
 }
 
 div.entry_like_num {
@@ -187,7 +208,7 @@ button.read_it_later {
   background-color: #60b044;
   background-repeat: repeat-x;
   border-color: #5ca941;
-  width: 130px;
+  width: 80px;
   height: 34px;
   outline: none;
   border-radius: 5px;  /* CSS3草案 */
@@ -196,7 +217,8 @@ button.read_it_later {
   background-image: -moz-linear-gradient(#8add6d, #60b044);
   background-image: -webkit-linear-gradient(#8add6d, #60b044);
   background-image: linear-gradient(#8add6d, #60b044);
-  margin-bottom: 1em;
+  //margin-bottom: 1em;
+  margin-top: 25px;
   border: 1px solid #d8d8d8;
 }
 
@@ -206,7 +228,7 @@ button.read_it_cancel {
   background-color: #999;
   background-repeat: repeat-x;
   border-color: #999;
-  width: 130px;
+  width: 80px;
   height: 34px;
   outline: none;
   border-radius: 5px;  /* CSS3草案 */
@@ -215,7 +237,8 @@ button.read_it_cancel {
   background-image: -moz-linear-gradient(#aaa, #999);
   background-image: -webkit-linear-gradient(#aaa, #999);
   background-image: linear-gradient(#aaa, #999);
-  margin-bottom: 1em;
+  //margin-bottom: 1em;
+  margin-top: 25px;
   border: 1px solid #d8d8d8;
 }
 

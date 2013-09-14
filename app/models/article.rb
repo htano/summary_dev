@@ -112,7 +112,7 @@ class Article < ActiveRecord::Base
   def getTopRatedSummary
     @top_rated_summary = nil
     @top_rate = -1
-    self.summaries.order('created_at desc').each_with_index do |summary|
+    self.summaries.order('created_at desc').each do |summary|
       if @top_rate < summary.good_summaries.count
         @top_rate = summary.good_summaries.count
         @top_rated_summary = summary

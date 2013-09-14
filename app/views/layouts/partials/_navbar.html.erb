@@ -40,16 +40,16 @@ $(function(){
 
 });
 </script>
-  <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
+  <div class="mynavbar mynavbar-fixed-top">
+    <div class="mynavbar-inner">
       <div class="container">
         <a href="<%= url_for :controller => 'mypage', :action => 'index' %>" class="brand">Summary</a>
-        <div class="nav-collapse">
-          <ul class="nav pull-right">
+        <div class="mynav-collapse">
+          <ul class="mynav pull-right">
 
           <% if signed_in? %>
             <li>
-              <input class="nav_text" type="text" name="url" id="url" size="50">
+              <input class="mynav_text" type="text" name="url" id="url" size="50">
             </li>
             <li>
               <input id="submit" class="button button-flat:hover" value="book!" size="5">
@@ -60,7 +60,7 @@ $(function(){
 
           <% if signed_in? %>
             <li>
-              <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#"><%= getNotifyingObjects.size %></a>
+              <a class="dropdown-toggle mynav_news" data-toggle="dropdown" href="#"><%= getNotifyingObjects.size %></a>
               <ul class="dropdown-menu">
                 <li>
                   <a href="#">action</a>
@@ -75,14 +75,14 @@ $(function(){
             </li>
           <% else %>
             <li>
-              <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#">-</a>
+              <a class="dropdown-toggle mynav_news" data-toggle="dropdown" href="#">-</a>
             </li>
           <% end%>
 
             <li class="divider-vertical"></li>
             <li>
               <% if signed_in? %>
-              <a class="dropdown-toggle nav_account" data-toggle="dropdown" href="#"><%= get_current_user_name %></a>
+              <a class="dropdown-toggle mynav_account" data-toggle="dropdown" href="#"><%= get_current_user_name %></a>
                 <ul class="dropdown-menu">
                   <li>
                   <a href="<%= url_for :controller => 'mypage', :action => 'index' %>">MyPage</a>

@@ -33,25 +33,25 @@ h2 {
   line-height: 36px;
 }
 
-.navbar-fixed-top {
+.mynavbar-fixed-top {
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
   z-index: 1030;
-  .navbar-inner {
+  .mynavbar-inner {
     border-radius: 0px;
     -webkit-border-radius: 0px;
   }
 }
 
-.navbar-inner {
+.mynavbar-inner {
   background-color: rgb(230,230,230);
   background-repeat: repeat-x;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1)
 }
 
-.navbar {
+.mynavbar {
   overflow: visible;
   margin-bottom: 18px;
   z-index :2010;
@@ -67,13 +67,13 @@ h2 {
     color: #ffffff;
   }
 
-  .nav.pull-right {
+  .mynav.pull-right {
     float: right;
     margin-left: 10px;
     margin-right: 0px;
   }
 
-  .nav {
+  .mynav {
     position: relative;
     left: 0;
     display: block;
@@ -81,7 +81,7 @@ h2 {
   }
 
 
-  .nav > li > a {
+  .mynav > li > a {
     float: none;
     margin-top: 5px;
     line-height: 30px;
@@ -92,7 +92,7 @@ h2 {
     color: white;
   }
 
-  .nav > li {
+  .mynav > li {
     display: block;
     float: left;
   }
@@ -107,7 +107,7 @@ h2 {
   border-right: 1px solid #FCFCFC;
 }
 
-.nav {
+.mynav {
   list-style: none;
 }
 
@@ -145,7 +145,7 @@ h2 {
   }
 }
 
-.nav > li > .dropdown-menu:before {
+.mynav > li > .dropdown-menu:before {
   position: absolute;
   top: -7px;
   left: 9px;
@@ -157,7 +157,7 @@ h2 {
   content: '';
 }
 
-.nav > li > .dropdown-menu:after {
+.mynav > li > .dropdown-menu:after {
   position: absolute;
   top: -6px;
   left: 10px;
@@ -172,26 +172,26 @@ ul {
   padding: 0px;
 }
 
-.nav_text {
+.mynav_text {
   vertical-align: middle
 }
 
-.nav_news {
+.mynav_news {
   width: 30px;
   background-color: rgb(255, 155, 155);
 }
 
-.nav_account {
+.mynav_account {
   padding-left: 5px;
   padding-right: 5px;
   background-color: gray;
 }
 
-.nav > li > a {
+.mynav > li > a {
   display: block;
 }
 
-.nav {
+.mynav {
   list-style: none;
 }
 

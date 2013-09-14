@@ -1,3 +1,14 @@
+$(function(){ 
+  $('#only_summarized').click(function(){
+    var isChecked = $('#only_summarized:checked').val();
+    if(isChecked){
+      $('.entry_box_no_summary').hide(1000);
+    } else {
+      $('.entry_box_no_summary').show(1000);
+    }
+  });
+});
+
 function clickGoodSummary(summary_id) {
   $.ajax({
     url: '/summary_lists/goodSummaryAjax',
