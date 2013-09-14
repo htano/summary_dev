@@ -204,6 +204,7 @@ class WebpageController < ApplicationController
   #パフォーマンス
   def getImagefromURL(url)
     begin
+      no_image = Magick::ImageList.new("#{Rails.root}/app/assets/images/no_image.png").resize(WIDTH, HEIGHT)
       charset = nil;
       
       html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
@@ -213,7 +214,12 @@ class WebpageController < ApplicationController
 
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
       doc.xpath("//img[starts-with(@src, 'http://')]").each{|img|
-        image = Magick::ImageList.new(img['src'])
+        #image_uri = URI.escape(img['src'])
+        if open(URI.parse(img['src']))
+          image = Magick::ImageList.new(img['src'])
+        else
+          next;
+        end
         #画像の大きさから象徴的な画像を判断する
         #幅
         columns = image.columns 
@@ -226,13 +232,12 @@ class WebpageController < ApplicationController
         end
       }
 
-      #returnしていない場合（幅×高さが10000(px)を超える画像がなかった場合）
-      no_image = Magick::ImageList.new("#{Rails.root}/app/assets/images/no_image.png")
-      return no_image.resize(WIDTH, HEIGHT)
+      #returnしていない場合（閾値を超える画像がなかった場合）
+      return no_image
 
     rescue
       logger.error("getImgItem.rescue")
-      return nil;
+      return no_image
     end
   end
 end
