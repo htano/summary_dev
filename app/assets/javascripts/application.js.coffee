@@ -1,1 +1,2 @@
 //= require mypage
+//= require summary
