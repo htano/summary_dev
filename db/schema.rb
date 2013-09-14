@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130911140644) do
+ActiveRecord::Schema.define(version: 20130914143856) do
 
   create_table "articles", force: true do |t|
     t.string   "url"
@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(version: 20130911140644) do
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "contents_preview"
     t.decimal  "strength"
     t.datetime "last_added_at"
-    t.string   "contents_preview"
-    t.binary   "image"
+    t.string   "thumbnail"
   end
 
   add_index "articles", ["last_added_at", "strength"], name: "idx_strength"

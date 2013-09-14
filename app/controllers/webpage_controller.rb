@@ -7,7 +7,6 @@ require 'kconv'
 require 'uri'
 require 'bundler/setup'
 require 'extractcontent'
-require 'RMagick'
 
 class WebpageController < ApplicationController
 
@@ -76,7 +75,7 @@ class WebpageController < ApplicationController
       	end
       else
 
-        image = getImagefromURL(@url);
+        thumbnail = getThumbnailfromURL(@url);
 
         contents_preview = ""
         open(@url) do |io|
@@ -96,7 +95,7 @@ class WebpageController < ApplicationController
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
         #article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001");
-        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :image => image.to_blob);
+        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :thumbnail => thumbnail);
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
@@ -134,7 +133,7 @@ class WebpageController < ApplicationController
         end
       else
 
-        image = getImagefromURL(@url);
+        thumbnail = getThumbnailfromURL(@url);
 
         contents_preview = ""
         open(@url) do |io|
@@ -154,7 +153,7 @@ class WebpageController < ApplicationController
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
         #article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :img => file);
-        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :image => image.to_blob);
+        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :thumbnail => thumbnail);
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
@@ -205,10 +204,9 @@ class WebpageController < ApplicationController
   end
 
   #指定されたURLで使用されている画像を抜き出すメソッド
-  #パフォーマンス
-  def getImagefromURL(url)
+  #TODO 大きさのみで判定している
+  def getThumbnailfromURL(url)
     begin
-      no_image = Magick::ImageList.new("#{Rails.root}/app/assets/images/no_image.png").resize(WIDTH, HEIGHT)
       charset = nil;
       
       html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
@@ -217,31 +215,14 @@ class WebpageController < ApplicationController
       end
 
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
-      doc.xpath("//img[starts-with(@src, 'http://')]").each{|img|
-        #image_uri = URI.escape(img['src'])
-        if open(URI.parse(img['src']))
-          image = Magick::ImageList.new(img['src'])
-        else
-          next;
-        end
-        #画像の大きさから象徴的な画像を判断する
-        #幅
-        columns = image.columns 
-        #高さ
-        rows = image.rows
-        #幅×高さが閾値を超える最初の画像を象徴的な画像として返却する
-    		if columns.to_i > THRESHOLD_SIDE and rows.to_i > THRESHOLD_SIDE and (columns.to_i*rows.to_i) > THRESHOLD_ALL
-          return image.resize(WIDTH, HEIGHT)
-          break;
-        end
+      doc.xpath("//img[starts-with(@src, 'http://')][@height >= 80 and @width >= 80]").each{|img|
+        return img['src']
+        break;
       }
-
-      #returnしていない場合（閾値を超える画像がなかった場合）
-      return no_image
-
+      return BLANK;
     rescue
       logger.error("getImgItem.rescue")
-      return no_image
+      return BLANK;
     end
   end
 end
