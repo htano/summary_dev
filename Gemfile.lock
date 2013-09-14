@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/mono0x/extractcontent.git
+  remote: http://github.com/mono0x/extractcontent.git
   revision: 220ed055e8f8e22b2fb085da593881c3ec9bba12
   specs:
     extractcontent (0.0.1)
@@ -124,6 +124,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
+    rmagick (2.13.2)
     ruby-openid (2.2.3)
     sass (3.2.10)
     sass-rails (4.0.0)
@@ -177,6 +178,7 @@ DEPENDENCIES
   omniauth-github
   omniauth-twitter
   rails (= 4.0.0)
+  rmagick
   ruby-openid
   sass-rails (~> 4.0.0)
   sdoc

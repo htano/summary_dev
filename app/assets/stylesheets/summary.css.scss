@@ -1,3 +1,121 @@
 // Place all the styles related to the summary controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "summary_settings";
+
+@mixin count_style {
+  color: gray;
+  width: 50px;
+  font-size: 13px;
+  padding: 10px;
+}
+
+@mixin content_style {
+  width: $contentWidth;
+  height: $contentHeigth; 
+}
+
+.summary_num {
+  /*border-bottom: 2px solid #e5e5e5;*/
+  font-size: 13px;
+  font-weight: normal;
+  p {
+    margin: 0px;
+  }
+  a {
+    color: #a2a2a2;
+    &:hover {
+      color: #5B91FF;
+      text-decoration: underline;
+    }
+  }
+  span p {
+    font-size: 13px;
+    margin-top: 0px;
+  }
+}
+
+
+.article_title {
+  width: 660px;
+  float: left;
+  margin-top: 1px;
+  margin-left: 10px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: normal;
+  a {
+    color: gray; 
+    span {
+      float: right;
+      color: #F9ACAC;
+      font-size: 10px;
+    }
+    a:hover {
+      color: #5B91FF;
+      text-decoration: underline;
+      p {
+        color: #5B91FF;
+      }
+    }
+    p {
+      margin-top: 0px;
+      font-size: 11px;
+      color: #a2a2a2;
+    }
+  }
+}
+
+#edit_summary {
+
+  table {
+    width: 800px;
+    border: 1px solid #ccc;
+
+    .table_top {
+      border: 1px solid #e5e5e5;
+      color: white;
+      background-color: #e6e6e6;
+
+      #title_top, #summary_top {
+        width: 700px;
+        padding: 4px 0px 0px 0px;
+      }
+    }
+  }
+}
+
+#operate_summary {
+  padding: 10px;
+}
+
+.edit {
+  position: relative;
+  padding: 3px;
+  border-radius: 3px;
+  margin: 0 0 15px 0;
+}
+
+.count {
+  @include count_style;
+}
+
+.count_over {
+  @extend .count;
+  color: red;
+}
+
+
+#content {
+  @include content_style;
+}
+
+#content_disabled {
+  @extend #content;
+  background-color: whitesmoke;
+}
+
+.help {
+  cursor: help;
+}

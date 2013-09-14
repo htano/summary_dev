@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130910130933) do
+ActiveRecord::Schema.define(version: 20130911140644) do
 
   create_table "articles", force: true do |t|
     t.string   "url"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20130910130933) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "contents_preview"
+    t.binary   "image"
   end
 
   create_table "favorite_users", force: true do |t|
@@ -46,6 +47,8 @@ ActiveRecord::Schema.define(version: 20130910130933) do
     t.datetime "updated_at"
   end
 
+  add_index "summaries", ["user_id", "article_id"], name: "index_summaries_on_user_id_and_article_id", unique: true
+
   create_table "user_articles", force: true do |t|
     t.integer  "user_id"
     t.integer  "article_id"
@@ -54,6 +57,8 @@ ActiveRecord::Schema.define(version: 20130910130933) do
     t.datetime "updated_at"
     t.boolean  "favorite_flg", default: false
   end
+
+  add_index "user_articles", ["user_id", "article_id"], name: "index_user_articles_on_user_id_and_article_id", unique: true
 
   create_table "users", force: true do |t|
     t.string   "name"

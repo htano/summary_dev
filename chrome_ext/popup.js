@@ -21,7 +21,7 @@ $(document).ready( function(){
         		dataType: 'text',
         		success: function(data) {
         			if(data){
-        				setCommentAlreadyBooked();
+        				setCommentComplete();
         				setBtnDisabled();
         				setSummaryEditLink(data);
         			}
@@ -32,7 +32,6 @@ $(document).ready( function(){
   });
 
   $('#p_button').click(function(){
-  //$('.popup_btn').click(function(){
     $("img.a_load").attr("style", "visibility:visible;");
     $.ajax({
       url: 'http://' + bg.SERVICE_HOSTNAME + '/webpage/add_for_chrome_extension',
@@ -50,20 +49,15 @@ $(document).ready( function(){
 });
 
 
-//既に登録されている旨のコメントを設定する
-function setCommentAlreadyBooked(){
-  $('p#p_comment').text("登録済みです。");
-  $('p#p_comment').attr("style", "visibility:visible;");
-}
-
-//登録後のコメントを設定する
+//コメントを設定する
 function setCommentComplete(){
-  $('p#p_comment').text("登録が完了しました。");
+  $('p#p_comment').text("登録済みです。");
   $('p#p_comment').attr("style", "visibility:visible;");
 }
 
 //要約編集画面へのリンクを設定する
 function setSummaryEditLink(data){
+  var bg = window.chrome.extension.getBackgroundPage();
   $("#a_link_to_summary_edit").attr("style", "visibility:visible;");
   $("#a_link_to_summary_edit").attr("href", "http://" + bg.SERVICE_HOSTNAME + "/summary/"+data+"/edit");
 }
@@ -72,6 +66,4 @@ function setSummaryEditLink(data){
 function setBtnDisabled(){
   $('#p_button').attr("disabled", true);
   $('#p_button').attr("class", "button button-flat.disabled");
-  //$('.popup_btn').attr("disabled", true);
-  //$('.popup_btn').attr("class", "popup_btn_disabled");
 }

@@ -2,9 +2,13 @@ class Article < ActiveRecord::Base
 	has_many :user_articles, :dependent => :destroy
 	has_many :summaries, :dependent => :destroy
 
-	def isRead(user,article)
+	def getMarkedUser
+		return self.user_articles.count
+	end
+
+	def isRead(user)
 		unless user == nil then
-			userArticleForIsRead = article.user_articles.find_by(:user_id => user.id)
+			userArticleForIsRead = self.user_articles.find_by(:user_id => user.id)
 			unless  userArticleForIsRead == nil then
 				
 				if userArticleForIsRead.read_flg == true then
@@ -26,13 +30,13 @@ class Article < ActiveRecord::Base
 		return isRead
 	end
 
-	def getSortedSummaryList(user,article)
+	def getSortedSummaryList(user)
 		#create array for calcration 
 		scoreItem = Struct.new(:summary,:goodSummaryPoint)
 		scoreList = Array.new 
 		isGoodCompleted = Array.new
 
-		article.summaries.each_with_index do |summary,i|  
+		self.summaries.each_with_index do |summary,i|  
 
 			#calcurate goodSummaryPoint 
 			goodSummaryPoint = summary.good_summaries.count

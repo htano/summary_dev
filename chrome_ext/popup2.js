@@ -12,7 +12,8 @@ $(document).ready( function(){
         $("img.a_load").attr("style", "visibility:hidden;");
         if(data && data.length != 0){
           for(var i in data){
-            $('tbody').append('<tr><td>'+data[i].content+'</td></tr>');
+            data_replace = data[i].content.replace(/\n|\r\n/g,"<br>");
+            $('tbody').append('<tr><td>'+data_replace+'</td></tr>');
           }
         }　else {
           $('tbody').append('<tr><td>この記事に対する要約は登録されていません。</td></tr>');

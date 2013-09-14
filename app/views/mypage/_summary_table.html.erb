@@ -4,7 +4,7 @@
     <div>
       <div class="article-checkbox">
       <% if @is_login_user %>
-        <%= check_box 'check_article', i, {:id => "summary-checkbox", :onclick => clickSummaryCheckBox}, table_data[:article].id, false %>
+        <%= check_box 'check_article', i, {:id => "summary-checkbox", :onclick => click_checkbox}, table_data[:article].id, false %>
       <% else %>
         <%= check_box 'check_article', i, {:id => "article-check", :onclick => "clickCheckBoxForClip('#{@user.name}')"}, table_data[:article].id, false %>
       <% end %>
