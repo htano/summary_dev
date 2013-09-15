@@ -16,6 +16,8 @@
     <% if e.getTopRatedSummary %>
 
       <div class="row entry_box_with_summary">
+        Strength[<%= sprintf("%d", e.getCurrentStrength*100) %>], 
+        LastAddedTime[<%= e.last_added_at %>]
         <div class="col-md-12 entry_box">
 
           <div class="row">
@@ -98,6 +100,13 @@
                   </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-3 col-md-offset-8" style="margin-top:5px;">
+                  <% if getLoginUser %>
+                    <a href="<%= url_for :controller => 'summary', :action => 'edit', :article_id => e.id %>">edit summary</a>
+                  <% end %>
+                </div>
+              </div>
             </div>
 
             <div class="col-md-3 entry_box_right">
@@ -110,8 +119,8 @@
                 <div class="col-md-1 col-md-offset-1">
                   <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
                 </div>
-                <div class="col-md-7">
-                  <cite>
+                <div class="col-md-8">
+                  <cite style="word-wrap: break-word;">
                     <%= URI(e.url).host %>
                   </cite>
                 </div>
@@ -124,6 +133,8 @@
 
     <% else %>
       <div class="row entry_box_no_summary">
+        Strength[<%= sprintf("%d", e.getCurrentStrength*100) %>], 
+        LastAddedTime[<%= e.last_added_at %>]
         <div class="col-md-12 entry_box_no_sum">
           <div class="row entry_box_top">
             <div class="col-md-8 entry_title">
@@ -165,14 +176,21 @@
             <div class="col-md-9 entry_box_left">
               <div class="row">
                 <div class="col-md-4 col-md-offset-1 entry_contents_prev_label">
-                  <label>Contents Preview</label>
+                  <label>Contents Preview</label></br>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-9 col-md-offset-1">
                   <div class="entry_contents_prev">
                     <p><%= e.contents_preview %></p>
                   </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 col-md-offset-8" style="margin-top:5px;">
+                  <% if getLoginUser %>
+                    <a href="<%= url_for :controller => 'summary', :action => 'edit', :article_id => e.id %>">edit summary</a>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -187,8 +205,8 @@
                 <div class="col-md-1 col-md-offset-1">
                   <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
                 </div>
-                <div class="col-md-7">
-                  <cite>
+                <div class="col-md-8">
+                  <cite style="word-wrap: break-word;">
                     <%= URI(e.url).host %>
                   </cite>
                 </div>
