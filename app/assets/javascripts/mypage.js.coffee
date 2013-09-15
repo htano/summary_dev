@@ -2,17 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 disableButton = (elem) ->
-  $(elem).css("background-color" : "#ddd")
+  $(elem).css("background-color", "#ddd")
   $(elem).unwrap()
-
-unwrapAll = (class_name) ->
-    $(".#{class_name}>a>#mark-as-read-btn").unwrap()
-    $(".#{class_name}>a>#mark-as-unread-btn").unwrap()
-    $(".#{class_name}>a>#edit-summary-btn").unwrap()
-    $(".#{class_name}>a>#mark-as-favorite-btn").unwrap()
-    $(".#{class_name}>a>#mark-off-favorite-btn").unwrap()
-    $(".#{class_name}>a>#delete-btn").unwrap()
-    $(".#{class_name}>a>#delete-summary-btn").unwrap()
 
 wrapAll = (class_name, params, checked_num, article_ids) ->
   $(".#{class_name}>#mark-as-read-btn").wrap("<a href=/mypage/mark_as_read?#{params}></a>")
@@ -47,21 +38,9 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
   console.debug "checked num : #{checked_num}"
 
   if checked_num is 0
-    disableButton(".#{class_name}>a>#mark-as-read-btn")
-    disableButton(".#{class_name}>a>#mark-as-unread-btn")
-    disableButton(".#{class_name}>a>#edit-summary-btn")
-    disableButton(".#{class_name}>a>#mark-as-favorite-btn")
-    disableButton(".#{class_name}>a>#mark-off-favorite-btn")
-    disableButton(".#{class_name}>a>#delete-btn")
-    disableButton(".#{class_name}>a>#delete-summary-btn")
+    disableButton(".#{class_name}>a>div")
   else if checked_num is 1
-    $(".#{class_name}>#mark-as-read-btn").css("background-color", "white")
-    $(".#{class_name}>#mark-as-unread-btn").css("background-color", "white")
-    $(".#{class_name}>#edit-summary-btn").css("background-color", "white")
-    $(".#{class_name}>#mark-as-favorite-btn").css("background-color", "white")
-    $(".#{class_name}>#mark-off-favorite-btn").css("background-color", "white")
-    $(".#{class_name}>#delete-btn").css("background-color", "white")
-    $(".#{class_name}>#delete-summary-btn").css("background-color", "white")
+    $(".#{class_name}>div").css("background-color", "white")
   else if checked_num is 2
     disableButton(".#{class_name}>a>#edit-summary-btn")
 
@@ -74,7 +53,7 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
       i++
 #    console.debug params
 
-    unwrapAll(class_name)
+    $(".#{class_name}>a>div").unwrap()
     wrapAll(class_name, params, checked_num, article_ids)
 
 @clickCheckBoxForClip = (name) ->
