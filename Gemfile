@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'ruby-openid'
 
-gem 'rmagick'
+#gem 'rmagick'
 #gem 'paperclip'
 
 group :doc do

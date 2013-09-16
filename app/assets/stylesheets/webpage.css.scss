@@ -1,3 +1,89 @@
 // Place all the styles related to the webpage controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.comment_box {
+  padding: 20px 26px 0 30px;
+  height: 150px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#text_url {
+  padding: 6px 10px 6px 10px;
+  height: 30px;
+  width: 30px;
+  text-decoration: none;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  text-align: center;
+  color: white;
+  background-color: gray;
+}
+
+.add_url {
+  padding: 20px;
+  margin: auto;
+  height: 69px;
+  width: 680px;
+  color: white;
+  background-color: #e6e6e6;
+  border: 1px solid gray;
+}
+
+.input_url_text {
+  margin-left: 30px;
+  margin-top: 20px;
+  width: 480px;
+}
+
+
+.confirm_url {
+  padding: 20px 26px 0 30px;
+  margin: auto;
+  height: 345px;
+  width: 680px;
+  //color: white;
+  background-color: #e6e6e6;
+  border: 1px solid gray;	
+}
+
+.url_title {
+  font-size: 18px;
+  font-weight: bold;
+  padding:0 3px 0 18px;
+  background: transparent left 2px no-repeat;
+}
+
+.url_link {
+  font-size: 10px;
+  padding:0 3px 0 18px;
+  background: transparent left 2px no-repeat;
+}
+
+.url_box {
+}
+
+#add_msg {
+	color: #ff9b9b;
+}
+
+#summary_num {
+  padding:0 3px 0 18px;
+  	font-size: 10px;
+}
+
+#comment_area {
+  padding:0 3px 0 18px;
+  textarea {
+
+  }
+}
+
+#submit_area {
+  padding:0 3px 0 18px;
+}
+
+#submit {
+  width: 75px;
+  height: 25px;	
+}

@@ -29,7 +29,9 @@ SummaryDev::Application.routes.draw do
   get 'webpage/get_current_user_name_for_chrome_extension' => 'webpage#get_current_user_name_for_chrome_extension'
   get 'webpage/add_for_chrome_extension' => 'webpage#add_for_chrome_extension'
   #for webpage
-  post 'webpage/add' => 'webpage#add'
+  get 'webpage/add' => 'webpage#add'
+  post 'webpage/add_confirm' => 'webpage#add_confirm'
+  post 'webpage/add_complete' => 'webpage#add_complete'
   post 'webpage/get_title' => 'webpage#get_title'
 
   #for webpage

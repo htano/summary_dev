@@ -1,3 +1,4 @@
+<!--
 <script>
 function checkURL(){
 	if(!$("#url").val().length){
@@ -10,7 +11,7 @@ function checkURL(){
 	}
 }
 </script>
-
+-->
 <%= form_tag({:controller => 'webpage', :action => 'add'}, {:method => 'POST', :remote => 'true'}) do %>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
@@ -20,11 +21,16 @@ function checkURL(){
           <ul class="nav pull-right">
 
           <% if signed_in? %>
+          <!--
             <li>
               <input class="nav_text" type="text" name="url" id="url">
             </li>
             <li>
               <input type="submit" class="button button-flat:hover" value="book!" onclick="return checkURL()">
+            </li>
+            -->
+            <li>
+              <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" class="add">add</a>
             </li>
           <% end %>
 

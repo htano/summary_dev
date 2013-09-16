@@ -17,6 +17,31 @@ class WebpageController < ApplicationController
   WIDTH  = 80
   HEIGHT = 80
 
+  def add
+    if signed_in?
+      @user_id = "#{params[:id]}";
+    else
+      redirect_to :controller => "consumer", :action => "index";
+    end
+  end
+  
+  def add_confirm
+    if signed_in?
+      @user_id = "#{params[:id]}";
+      @url = "#{params[:url]}";
+      @title = returnTitle(@url)
+      article = Article.find_by_url(@url);
+ 
+      if article != nil then
+        @summary_num = article.summaries.count(:all)
+        @article_id = article.id
+      end
+
+    else
+      redirect_to :controller => "consumer", :action => "index";
+    end
+  end
+
   #TODO 画面からURL直打ちの回避
   def get_add_history_for_chrome_extension
     if signed_in?
@@ -76,21 +101,7 @@ class WebpageController < ApplicationController
       else
 
         thumbnail = getThumbnailfromURL(@url);
-
-        contents_preview = ""
-        open(@url) do |io|
-          html = io.read
-          begin
-            html = html.force_encoding("UTF-8")
-            html = html.encode("UTF-8", "UTF-8")
-            contents_preview, title = ExtractContent.analyse(html)
-            # logger.debug("content_preview : #{contents_preview}")
-          rescue => e
-            # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
-            logger.error("error :#{e}")
-          end
-        end
-        #logger.debug("preview : #{contents_preview}}")
+        contents_preview = getContentsPreviewfromURL(@url);
 
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
@@ -109,7 +120,7 @@ class WebpageController < ApplicationController
     end
   end
 
-  def add
+  def add_complete
   	if signed_in?
       user_id = getLoginUser.id;
       @url = "#{params[:url]}";
@@ -134,21 +145,7 @@ class WebpageController < ApplicationController
       else
 
         thumbnail = getThumbnailfromURL(@url);
-
-        contents_preview = ""
-        open(@url) do |io|
-          html = io.read
-          begin
-            html = html.force_encoding("UTF-8")
-            html = html.encode("UTF-8", "UTF-8")
-            contents_preview, title = ExtractContent.analyse(html)
-            # logger.debug("content_preview : #{contents_preview}")
-          rescue => e
-            # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
-            logger.error("error :#{e}")
-          end
-        end
-        #logger.debug("preview : #{contents_preview}}")
+        contents_preview = getContentsPreviewfromURL(@url);
 
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
@@ -220,9 +217,29 @@ class WebpageController < ApplicationController
         break;
       }
       return BLANK;
-    rescue
-      logger.error("getImgItem.rescue")
+    rescue => e
+      logger.error("error :#{e}")
       return BLANK;
     end
+  end
+
+  #指定されたURLの梵文を抜き出すメソッド
+  def getContentsPreviewfromURL(url)
+    contents_preview = ""
+    open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |io|
+      html = io.read
+      begin
+        html = html.force_encoding("UTF-8")
+        html = html.encode("UTF-8", "UTF-8")
+        contents_preview, title = ExtractContent.analyse(html)
+        return contents_preview
+        # logger.debug("content_preview : #{contents_preview}")
+      rescue => e
+        # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
+        logger.error("error :#{e}")
+        return BLANK
+      end
+    end
+        #logger.debug("preview : #{contents_preview}}")
   end
 end

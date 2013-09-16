@@ -1,0 +1,23 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "webpage" %>
+<% end %>
+
+<div class="comment_box">URLを登録</div>
+<div class="url_box">
+  <form method="POST" action="add_complete" class="confirm_url">
+    <p class="url_title"><%= @title %></p>
+    <p class="url_link"><a href="<%= @url %>"target="_blank"><%= @url %></a></p>
+    <div id="summary_num">
+      <% if @summary_num != nil && @summary_num != 0 then %>
+        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :articleId => @article_id} %>&nbsp;summaries.
+      <% else %>0 summary.<% end %>
+    </div>
+    <div id="comment_area">
+      <textarea name="comment" cols="100" rows="5"></textarea>
+    </div>
+    <div id="submit_area">
+      <input type="submit" id="submit" value="完了" class="button button-flat:hover submit"></div>
+      <input type="hidden" name="url" value="<%= @url %>">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  </form>
+</div>
