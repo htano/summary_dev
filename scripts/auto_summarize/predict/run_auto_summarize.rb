@@ -135,13 +135,21 @@ Article.getHotEntryArtileList.each do |e|
   body  = ""
   title = ""
   doc = nil
-  charset = nil
-  html = open(e.url) do |f|
-    charset = f.charset
-    f.read
+
+  begin
+    charset = nil
+    html = open(e.url) do |f|
+      charset = f.charset
+      f.read
+    end
+    html = html.force_encoding("UTF-8")
+    html = html.encode("UTF-8", "UTF-8")
+  rescue => err
+    p err
+    Rails.logger.error "openuri: " + err.message
+    next
   end
-  html = html.force_encoding("UTF-8")
-  html = html.encode("UTF-8", "UTF-8")
+
   # はてなのアノニマスダイアリみたいに、ExtractContentでエラーなく取得できるけど
   # いい感じに取れないサイトは強制的にnokogiriで取得するようにしたい
   # 強制nokogiriサイトリストを作成して、それを読み込むようにする
@@ -162,6 +170,15 @@ Article.getHotEntryArtileList.each do |e|
     doc.xpath('//p').each do |d|
       body += d.text + "\n"
     end
+  end
+
+  begin
+    title.split("")
+    body.split("")
+  rescue => err
+    Rails.logger.error "A page has invalid encoding: " + err.message
+    p err
+    next
   end
 
   @title_tfidf = {}

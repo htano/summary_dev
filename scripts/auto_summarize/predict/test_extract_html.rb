@@ -11,13 +11,19 @@ doc = nil
 body  = ""
 title = ""
 
-charset = nil
-html = open(@url) do |f|
-  charset = f.charset
-  f.read
+begin
+  charset = nil
+  html = open(@url) do |f|
+    charset = f.charset
+    f.read
+  end
+  html = html.force_encoding("UTF-8")
+  html = html.encode("UTF-8", "UTF-8")
+rescue => e
+  p e
+  exit 1
 end
-html = html.force_encoding("UTF-8")
-html = html.encode("UTF-8", "UTF-8")
+
 if !@force_nokogiri
   begin
     body, title = ExtractContent.analyse(html)
@@ -36,6 +42,20 @@ else
   end
 end
 
+begin
+  title.split("")
+  body.split("")
+rescue => e
+  puts $!
+  puts e.to_yaml
+  p e
+  exit 1
+end
+
 puts @url
 puts title
-puts body
+body.split("\n").each do |p|
+  if p.length > 0
+    puts p
+  end
+end
