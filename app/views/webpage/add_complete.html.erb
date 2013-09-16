@@ -2,6 +2,22 @@
 <%= stylesheet_link_tag "webpage" %>
 <% end %>
 
-<div class="comment_box">登録完了</div>
-    <span id="msg"><%= @msg %></span>
+<div class="comment_box">
+	<p>登録完了</p>
+	<span id="msg">
+		<%= @msg %></span>
+</div>
+
+<div id="entry-contents">
+  <div id="user_article_num">
+    <p>
+      <% if @user_article_num != nil && @user_article_num != 0 then %>
+        <%= @user_article_num %>
+      <% else %>0<% end %>
+    </p>
+    <span>users.</span>
+  </div>
+  <div id="url_title">
+    <p><%= @title %></p>
+  </div>
 </div>

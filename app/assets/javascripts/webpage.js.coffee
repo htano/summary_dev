@@ -13,6 +13,8 @@ BLANK = ''
 @check_url = ->
 	url = document.getElementById('url').value
 	if url.length is 0
+		document.getElementById('add_msg').innerHTML = BLANK
+		document.getElementById('submit').disabled = ''
 		return
 	else
 		check = url.match(/(http):\/\/.+/i)

@@ -69,7 +69,7 @@
 
 #summary_num {
   padding:0 3px 0 18px;
-  	font-size: 10px;
+  font-size: 10px;
 }
 
 #comment_area {
@@ -86,4 +86,37 @@
 #submit {
   width: 75px;
   height: 25px;	
+}
+
+#entry-contents{
+  margin: auto;
+  padding: 18px 25px 0 25px;
+  position: relative;
+  border: 1px solid #ECECEC;
+  border-top: 4px solid #ECECEC;
+  z-index: 1;
+  width: 600px;
+  height: 345px;
+}
+
+#user_article_num {
+  float: left;
+  //border: 1px solid #ECECEC;
+  width: 150px;  
+  height: 100px;
+  text-align: center;
+  p {
+    font-size: 30px;
+  }
+}
+
+#url_title {
+  float: left;
+  padding: 0 10px 0 10px;
+  //border: 1px solid #ECECEC;
+  width: 400px;
+  height: 100px;
+  p {
+    font-size: 20px;  
+  }
 }

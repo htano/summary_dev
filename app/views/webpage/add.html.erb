@@ -7,8 +7,8 @@
   <form method="POST" action="add_confirm" class="add_url" onsubmit="return blank_check()">
     <span id="text_url">URL</span>
     <input type="text" id="url" name="url" class="input_url_text" onKeyUp="check_url()">
-    <input type="submit" id="submit" value="次へ" class="button button-flat:hover" style="width: 75px; height: 25px">
-    <span id="add_msg"></span>
+    <input type="submit" id="submit" value="次へ" class="button button-flat:hover" style="width: 75px; height: 25px"><br>
+    <span id="add_msg"><%= @msg %></span>
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   </form>
 </div>

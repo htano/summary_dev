@@ -20,6 +20,7 @@ class WebpageController < ApplicationController
   def add
     if signed_in?
       @user_id = "#{params[:id]}";
+      @msg = "#{params[:msg]}";
     else
       redirect_to :controller => "consumer", :action => "index";
     end
@@ -105,7 +106,6 @@ class WebpageController < ApplicationController
 
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        #article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001");
         article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :thumbnail => thumbnail);
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
@@ -124,22 +124,25 @@ class WebpageController < ApplicationController
   	if signed_in?
       user_id = getLoginUser.id;
       @url = "#{params[:url]}";
-      title = returnTitle(@url);
-      if title == nil
-        @msg = "指定されたURLは存在しません。URLを確認して下さい。" and return
+      @title = returnTitle(@url);
+      if @title == nil
+        @msg = "Please check URL."
+        redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
       end
       article = Article.find_by_url(@url);
       if article != nil then
         user_article = article.user_articles.find_by_user_id(user_id);
         if user_article != nil then 
           #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
-          @msg = "登録済みです。"  and return
+          @user_article_num = article.user_articles.count(:all)
+          @msg = "Already registered."  and return
         else
           #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
-          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
+          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
             article.addStrength
-            @msg = "登録が完了しました。" and return
+            @user_article_num = article.user_articles.count(:all)
+            @msg = "Completed." and return
           end
         end
       else
@@ -149,13 +152,13 @@ class WebpageController < ApplicationController
 
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        #article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :img => file);
-        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :thumbnail => thumbnail);
+        article = Article.new(:url => params[:url], :title => @title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :thumbnail => thumbnail);
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
               article.addStrength
-              @msg = "登録が完了しました。" and return
+              @user_article_num = article.user_articles.count(:all)
+              @msg = "Completed." and return
           end
         end
       end
@@ -164,22 +167,6 @@ class WebpageController < ApplicationController
     end
   end
   
-=begin
-  def get_title
-    if signed_in?
-      @url = "#{params[:url]}";
-      title = returnTitle(@url);
-      if title == nil
-        render :text => BLANK and return
-      else
-        render :text => title and return
-      end
-    else
-      redirect_to :controller => "consumer", :action => "index";
-    end
-  end
-=end
-
   #指定されたurlのタイトルを返却するメソッド
   def returnTitle(url)
     begin
@@ -195,7 +182,8 @@ class WebpageController < ApplicationController
       	#タイトルが取得出来ない時はホスト名をタイトルに設定する
         return URI.parse(url).host
       end
-    rescue
+    rescue => e
+      logger.error("error :#{e}")
       return nil;
     end
   end
@@ -223,7 +211,7 @@ class WebpageController < ApplicationController
     end
   end
 
-  #指定されたURLの梵文を抜き出すメソッド
+  #指定されたURLの本文を抜き出すメソッド
   def getContentsPreviewfromURL(url)
     contents_preview = ""
     open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |io|
