@@ -135,16 +135,21 @@ Article.getHotEntryArtileList.each do |e|
   doc = nil
   body  = ""
   title = ""
-  open(e.url) do |io|
-    html = io.read
-    begin
-      html = html.force_encoding("UTF-8")
-      html = html.encode("UTF-8", "UTF-8")
-      body, title = ExtractContent.analyse(html)
-    rescue => e
-      Rails.logger.error("error :#{e}")
-    end
+
+  charset = nil
+  html = open(e.url) do |f|
+    charset = f.charset
+    f.read
   end
+  html = html.force_encoding("UTF-8")
+  html = html.encode("UTF-8", "UTF-8")
+  #body, title = ExtractContent.analyse(html)
+  doc = Nokogiri::HTML.parse(html)
+  title = doc.title
+  doc.xpath('//p').each do |d|
+    body += d.text + "\n"
+  end
+
   @title_tfidf = {}
   title.ngram(2).each do |k|
     if @title_tfidf[k]
