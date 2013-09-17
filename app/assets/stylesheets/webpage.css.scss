@@ -55,7 +55,7 @@
 }
 
 .url_link {
-  font-size: 10px;
+  font-size: 12px;
   padding:0 3px 0 18px;
   background: transparent left 2px no-repeat;
 }
@@ -69,13 +69,14 @@
 
 #summary_num {
   padding:0 3px 0 18px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 #comment_area {
   padding:0 3px 0 18px;
   textarea {
-
+    width: 650px;
+    font-size: 12px;
   }
 }
 
@@ -118,5 +119,21 @@
   height: 100px;
   p {
     font-size: 20px;  
+  }
+}
+
+#tag_area {
+  padding:0 3px 10px 18px;
+  font-size: 12px;
+  #recommend-tags {
+    .tag {
+      padding: 4px 7px 2px 3px;
+      background: gray;
+      color: white;
+    }
+    #tag_plus {
+      margin: 0 0 -4px 2px;
+      padding: 0 1px 0 1px;
+    }
   }
 }
