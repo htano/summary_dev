@@ -88,6 +88,7 @@ def sentence2liblinear s, label
     else
       @label_s = "-1"
     end
+
     @length_key = 2
     case @s_length
     when 0
@@ -111,6 +112,7 @@ def sentence2liblinear s, label
     else
       @length_key += 9
     end
+
     #puts s
     #p @s_tfidf
     puts @label_s + " 1:" + @sum_idf.to_s + " 2:" + get_cosine_similarity(@s_tfidf, @title_tfidf).to_s + " " + @length_key.to_s + ":1"
@@ -150,7 +152,11 @@ for i in 0..63
         line.split("").each do |p|
           if p.length > 0
             p.split(/。/).each do |s|
-              sentence2liblinear(s, 1)
+              if s =~ /^\([^\)]+\)$/
+                sentence2liblinear(s, -1)
+              else
+                sentence2liblinear(s,  1)
+              end
             end
           end
         end
