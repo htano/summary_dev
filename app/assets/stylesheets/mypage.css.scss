@@ -460,27 +460,35 @@ ul.tab {
   font-weight: normal;
 }
 
-.article-table > .summary-table {
+.main-table {
   display: none;
 }
 
-.article-table > .edited-summary-table {
+.active > .main-table {
+  display: block;
+}
+
+.summary-table {
   display: none;
 }
 
-.article-table > .favorite-table {
+.active > .summary-table {
+  display: block;
+}
+
+.favorite-table {
   display: none;
 }
 
-.article-table > .read-table {
+.active > .favorite-table {
+  display: block;
+}
+
+.read-table {
   display: none;
 }
 
-.article-table > .reserved-table {
-  display: none;
-}
-
-.article-table > .active {
+.active > .read-table {
   display: block;
 }
 

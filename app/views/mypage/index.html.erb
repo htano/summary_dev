@@ -117,7 +117,11 @@
           <%= render :partial => "page_ejection", :locals => {:page => @mpage, :table_size => @main_articles_table.size, :page_param => :mpage, :total_num => @total_main_articles_num} %>
           </div>
           <p class="page_info">
-            <%= (@mpage.to_i - 1)*10 + 1 %>-<%= (@mpage.to_i - 1) * 10 + @main_articles_table.size %><span> of </span><%= @total_main_articles_num %>
+            <% if @total_main_articles_num > 0 %>
+              <%= (@mpage.to_i - 1)*10 + 1 %>-<%= (@mpage.to_i - 1) * 10 + @main_articles_table.size %><span> of </span><%= @total_main_articles_num %>
+            <% else %>
+              0 <span> of </span> 0
+            <% end %>
           </p>
         </div>
         <% if @current_tab == "summary" %>
@@ -135,7 +139,11 @@
           <%= render :partial => "page_ejection", :locals => {:page => @spage, :table_size => @summaries_table.size, :page_param => :spage, :total_num => @total_summaries_num} %>
           </div>
           <p class="page_info">
-            <%= (@spage.to_i - 1)*10 + 1 %>-<%= (@spage.to_i - 1) * 10 + @summaries_table.size %><span> of </span><%= @total_summaries_num %>
+            <% if @total_summaries_num > 0 %>
+              <%= (@spage.to_i - 1)*10 + 1 %>-<%= (@spage.to_i - 1) * 10 + @summaries_table.size %><span> of </span><%= @total_summaries_num %>
+            <% else %>
+              0 <span> of </span> 0
+            <% end %>
           </p>
         </div>
         <% if @current_tab == "favorite" %>
@@ -156,7 +164,11 @@
           <%= render :partial => "page_ejection", :locals => {:page => @fpage, :table_size => @favorite_articles_table.size, :page_param => :fpage, :total_num => @total_favorite_articles_num} %>
           </div>
           <p class="page_info">
-            <%= (@fpage.to_i - 1)*10 + 1 %>-<%= (@fpage.to_i - 1) * 10 + @favorite_articles_table.size %><span> of </span><%= @total_favorite_articles_num %>
+            <% if @total_favorite_articles_num > 0%>
+              <%= (@fpage.to_i - 1)*10 + 1 %>-<%= (@fpage.to_i - 1) * 10 + @favorite_articles_table.size %><span> of </span><%= @total_favorite_articles_num %>
+            <% else %>
+              0 <span> of </span> 0
+            <% end %>
           </p>
         </div>
         <% if @current_tab == "read" %>
@@ -180,7 +192,11 @@
           <%= render :partial => "page_ejection", :locals => {:page => @rpage, :table_size => @read_articles_table.size, :page_param => :rpage, :total_num => @total_read_articles_num} %>
           </div>
           <p class="page_info">
-            <%= (@rpage.to_i - 1)*10 + 1 %>-<%= (@rpage.to_i - 1) * 10 + @read_articles_table.size %><span> of </span><%= @total_read_articles_num %>
+            <% if @total_read_articles_num > 0 %>
+              <%= (@rpage.to_i - 1)*10 + 1 %>-<%= (@rpage.to_i - 1) * 10 + @read_articles_table.size %><span> of </span><%= @total_read_articles_num %>
+            <% else %>
+              0 <span> of </span> 0
+            <% end %>
           </p>
         </div>
         <% else  # is_login_user %>
@@ -251,88 +267,88 @@
       <% if @is_login_user || @user.public_flg %>
       <div class="article-table">
         <% if @current_tab == "main" %>
-        <table class="summary-table active main">
+        <form id="main-check-form" name="main_checkbox" class="main active">
         <% else %>
-        <table class="summary-table main">
+        <form id="main-check-form" name="main_checkbox" class="main">
         <% end %>
-          <tr class="table-top">
-            <th id="article-title-top">
-              <div class="article-checkbox">
-                <%= check_box 'check_all', 0, 
-                {:id => "main-check-all", :onclick => "checkAll('main-check-all', 'main-check-form')"}, 0, false %>
-              </div>
-              TITLE
-            </th>
-            <th id="summary-number-top">summary</th>
-          </tr>
-          <% if @main_articles_table %>
-          <form id="main-check-form" name="main_checkbox">
-          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(main_checkbox, 'main')"}, :object => @main_articles_table %>
-          </form>
-          <% end %>
-        </table>
+          <table class="main-table">
+            <tr class="table-top">
+              <th id="article-title-top">
+                <div class="article-checkbox">
+                  <%= check_box 'check_all', 0, 
+                  {:id => "main-check-all", :onclick => "checkAll('main-check-all', 'main-check-form')"}, 0, false %>
+                </div>
+                TITLE
+              </th>
+              <th id="summary-number-top">summary</th>
+            </tr>
+            <% if @main_articles_table %>
+              <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(main_checkbox, 'main')"}, :object => @main_articles_table %>
+            <% end %>
+          </table>
+        </form>
         <% if @current_tab == "summary" %>
-        <table class="summary-table active summary">
+        <form id="summary-check-form" name="summary_checkbox" class="summary active">
         <% else %>
-        <table class="summary-table summary">
+        <form id="summary-check-form" name="summary_checkbox" class="summary">
         <% end %>
-          <tr class="table-top">
-            <th id="article-title-top">
-              <div class="article-checkbox">
-                <%= check_box 'check_all', 0, 
-                {:id => "summary-check-all", :onclick => "checkAll('summary-check-all', 'summary-check-form')"}, 0, false %>
-              </div>
-              TITLE
-            </th>
-            <th id="summary-number-top">summary</th>
-          </tr>
-          <% if @summaries_table %>
-          <form id="summary-check-form" name="summary_checkbox">
-          <%= render :partial => "summary_table", :locals => {:click_checkbox => "clickArticleCheckBox(summary_checkbox, 'summary')"}, :object => @summaries_table %>
-          </form>
-          <% end %>
-        </table>
+          <table class="summary-table summary">
+            <tr class="table-top">
+              <th id="article-title-top">
+                <div class="article-checkbox">
+                  <%= check_box 'check_all', 0, 
+                  {:id => "summary-check-all", :onclick => "checkAll('summary-check-all', 'summary-check-form')"}, 0, false %>
+                </div>
+                TITLE
+              </th>
+              <th id="summary-number-top">summary</th>
+            </tr>
+            <% if @summaries_table %>
+            <%= render :partial => "summary_table", :locals => {:click_checkbox => "clickArticleCheckBox(summary_checkbox, 'summary')"}, :object => @summaries_table %>
+            <% end %>
+          </table>
+        </form>
         <% if @current_tab == "favorite" %>
-        <table class="favorite-table active favorite">
+        <form id="favorite-check-form" name="favorite_checkbox" class="favorite active">
         <% else %>
-        <table class="favorite-table favorite">
+        <form id="favorite-check-form" name="favorite_checkbox" class="favorite">
         <% end %>
-          <tr class="table-top">
-            <th id="article-title-top">
-              <div class="article-checkbox">
-                <%= check_box 'check_all', 0, 
-                {:id => "favorite-check-all", :onclick => "checkAll('favorite-check-all', 'favorite-check-form')"}, 0, false %>
-              </div>
-              TITLE</th>
-            <th id="summary-number-top">summary</th>
-          </tr>
-          <% if @favorite_articles_table %>
-          <form id="favorite-check-form" name="favorite_checkbox">
-          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(favorite_checkbox, 'favorite')"}, :object => @favorite_articles_table %>
-          </form>
-          <% end %>
-        </table>
+          <table class="favorite-table favorite">
+            <tr class="table-top">
+              <th id="article-title-top">
+                <div class="article-checkbox">
+                  <%= check_box 'check_all', 0, 
+                  {:id => "favorite-check-all", :onclick => "checkAll('favorite-check-all', 'favorite-check-form')"}, 0, false %>
+                </div>
+                TITLE</th>
+              <th id="summary-number-top">summary</th>
+            </tr>
+            <% if @favorite_articles_table %>
+            <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(favorite_checkbox, 'favorite')"}, :object => @favorite_articles_table %>
+            <% end %>
+          </table>
+        </form>
         <% if @current_tab == "read" %>
-        <table class="read-table active read">
+        <form id="read-check-form" name="read_checkbox" class="read active">
         <% else %>
-        <table class="read-table read">
+        <form id="read-check-form" name="read_checkbox" class="read">
         <% end %>
-          <tr class="table-top">
-            <th id="article-title-top">
-              <div class="article-checkbox">
-                <%= check_box 'check_all', 0, 
-                {:id => "read-check-all", :onclick => "checkAll('read-check-all', 'read-check-form')"}, 0, false %>
-              </div>
-              TITLE
-            </th>
-            <th id="summary-number-top">summary</th>
-          </tr>
-          <% if @read_articles_table %>
-          <form id="read-check-form" name="read_checkbox">
-          <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(read_checkbox, 'read')"}, :object => @read_articles_table %>
-          </form>
-          <% end %>
-        </table>
+          <table class="read-table read">
+            <tr class="table-top">
+              <th id="article-title-top">
+                <div class="article-checkbox">
+                  <%= check_box 'check_all', 0, 
+                  {:id => "read-check-all", :onclick => "checkAll('read-check-all', 'read-check-form')"}, 0, false %>
+                </div>
+                TITLE
+              </th>
+              <th id="summary-number-top">summary</th>
+            </tr>
+            <% if @read_articles_table %>
+            <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(read_checkbox, 'read')"}, :object => @read_articles_table %>
+            <% end %>
+          </table>
+        </form>
       </div>
       <% else # @is_login_user || @user.public_flg %>
       <p id="private-message">@<%= @user.name%>'s articles are protected. </p>

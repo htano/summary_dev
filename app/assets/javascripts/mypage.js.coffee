@@ -27,7 +27,7 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
 
   checked_num = 0
   article_ids = []
-  i = 0
+  i = 1
   while i < checkbox_num
     if checkbox.elements[i].checked
       checked_num++
@@ -69,7 +69,7 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
   article_ids = []
 
   # main tab
-  i = 0
+  i = 1
   while i < main_checkbox.elements.length
     if main_checkbox.elements[i].checked
       checked_num++
@@ -77,7 +77,7 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
       article_ids.push(article_id)
     i++
   # summary tab
-  i = 0
+  i = 1
   while i < summary_checkbox.elements.length
     if summary_checkbox.elements[i].checked
       checked_num++
@@ -85,7 +85,7 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
       article_ids.push(article_id)
     i++
   # favorite tab
-  i = 0
+  i = 1
   while i < favorite_checkbox.elements.length
     if favorite_checkbox.elements[i].checked
       checked_num++
@@ -93,7 +93,7 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
       article_ids.push(article_id)
     i++
   # read tab
-  i = 0
+  i = 1
   while i < read_checkbox.elements.length
     if read_checkbox.elements[i].checked
       checked_num++
@@ -127,13 +127,13 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
 #  console.debug "form name = #{form.name}, form length = #{form.length}"
   checkbox_num = form.length
 
-  i = 0
+  i = 1
   value = document.getElementById(checker).checked
 #  console.debug "value = #{value}"
   while i < checkbox_num
     form.elements[i].checked = value
     i++
-  form.elements[0].onclick() unless i is 0
+  form.elements[1].onclick() unless i is 1
 
 scrollNavbar = ->
   win = $(window)
