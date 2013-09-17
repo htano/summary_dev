@@ -88,9 +88,32 @@ def sentence2liblinear s, label
     else
       @label_s = "-1"
     end
+    @length_key = 2
+    case @s_length
+    when 0
+      @length_key += 0
+    when 1..5
+      @length_key += 1
+    when 6..10
+      @length_key += 2
+    when 11..20
+      @length_key += 3
+    when 21..25
+      @length_key += 4
+    when 26..30
+      @length_key += 5
+    when 31..40
+      @length_key += 6
+    when 41..50
+      @length_key += 7
+    when 51..60
+      @length_key += 8
+    else
+      @length_key += 9
+    end
     #puts s
     #p @s_tfidf
-    puts @label_s + " 1:" + @sum_idf.to_s + " 2:" + get_cosine_similarity(@s_tfidf, @title_tfidf).to_s + " 3:" + @s_length.to_s
+    puts @label_s + " 1:" + @sum_idf.to_s + " 2:" + get_cosine_similarity(@s_tfidf, @title_tfidf).to_s + " " + @length_key.to_s + ":1"
   end
 end
 

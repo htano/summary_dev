@@ -23,6 +23,17 @@ class String
   end
 end
 
+def read_list filename
+  @read_arr = []
+  open(filename) do |f|
+    f.each do |line|
+      line = line.chomp
+      @read_arr.push(line.to_f)
+    end
+  end
+  return @read_arr
+end
+
 def read_kv filename
   @read_hash = {}
   open(filename) do |f|
@@ -93,21 +104,49 @@ def extract_features s
       end
     end
     @title_cosine = get_cosine_similarity(@s_tfidf, @title_tfidf)
-    return {"sum_idf" => @sum_idf, "title_cosine" => @title_cosine, "s_length" => @s_length}
+
+    @length_key = 2
+    case @s_length
+    when 0
+      @length_key += 0
+    when 1..5
+      @length_key += 1
+    when 6..10
+      @length_key += 2
+    when 11..20
+      @length_key += 3
+    when 21..25
+      @length_key += 4
+    when 26..30
+      @length_key += 5
+    when 31..40
+      @length_key += 6
+    when 41..50
+      @length_key += 7
+    when 51..60
+      @length_key += 8
+    else
+      @length_key += 9
+    end
+
+    return { 1 => @sum_idf, 2 => @title_cosine, @length_key => 1.0}
   else
     return nil
   end
 end
 
-
-@svm_weight = read_kv WEIGHTS_FILE
-@svm_center = read_kv CENTER_FILE
-@svm_scale  = read_kv SCALE_FILE
+@svm_weight = read_list WEIGHTS_FILE
+@svm_center = read_list CENTER_FILE
+@svm_scale  = read_list SCALE_FILE
+p @svm_weight
+p @svm_center
+p @svm_scale
 
 def get_score features
   @score = 0.0
   if features
-    features.each do |k,v|
+    features.each do |k_plus_one, v|
+      k = k_plus_one - 1
       if @svm_scale[k] != 0
         @score += @svm_weight[k] * ((v - @svm_center[k]) / @svm_scale[k])
       end

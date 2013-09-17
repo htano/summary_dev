@@ -1,5 +1,5 @@
 library(LiblineaR); library(e1071); library(SparseM);
-svmdata <- read.matrix.csr("train_data.txt");
+svmdata <- read.matrix.csr("tmp/auto_summarize/learning/train_data_binned.txt");
 tr.num <- 1:700
 y.tr <- as.numeric(svmdata$y[tr.num])
 x.tr <- as.matrix(svmdata$x[tr.num])
@@ -19,3 +19,7 @@ pos.scores <- p$decisionValues[,1][y.te==2]
 neg.scores <- p$decisionValues[,1][y.te==1]
 eval.num <- length(pos.scores)
 auc <- mean(sample(pos.scores,eval.num,replace=T) < sample(neg.scores,eval.num,replace=T))
+
+write(attr(s,"scaled:center"), file="scripts/auto_summarize/predict/params/feature_center.txt", sep="\n")
+write(attr(s,"scaled:scale"), file="scripts/auto_summarize/predict/params/feature_scale.txt", sep="\n")
+write(-m$W, file="scripts/auto_summarize/predict/params/feature_weights.txt", sep="\n")
