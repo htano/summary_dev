@@ -10,9 +10,10 @@
 }
 
 #text_url {
-  padding: 6px 10px 6px 10px;
+  padding: 6px 12px 6px 12px;
   height: 30px;
   width: 30px;
+  border-radius: 0.3em;
   text-decoration: none;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   text-align: center;
@@ -96,29 +97,105 @@
   border: 1px solid #ECECEC;
   border-top: 4px solid #ECECEC;
   z-index: 1;
-  width: 600px;
+  width: 680px;
   height: 345px;
-}
 
-#user_article_num {
-  float: left;
-  //border: 1px solid #ECECEC;
-  width: 150px;  
-  height: 100px;
-  text-align: center;
-  p {
-    font-size: 30px;
+  #thumbnail {
+    padding: 2px 0 0 0;
+    //border: 1px solid gray;
+    float: left;
+    width: 150px;
+    height: 200px;
+    p {
+      font-size: 30px;
+    }
+    img {
+      text-align: center;
+      display: block;
+      margin: auto;
+    }
   }
+
+  #url_title {
+    //border: 1px solid gray;
+    float: left;
+    padding: 0 10px 0 10px;
+    width: 500px;
+    height: 100px;
+    p a {
+      color: black;
+      font-size: 20px;
+    }
+  }
+
+  #contents_preview {
+    border: 1px solid white;
+    float: left;
+    padding: 0 10px 0 10px;
+    width: 500px;
+    height: 100px;
+    p {
+      font-size: 10px;  
+    }  
+  }
+
+  #category {
+    //border: 1px solid gray;
+    float: left;
+    width: 150px;
+    height: 100px;
+    p {
+      font-size: 10px;  
+    }  
+  }
+
+  #tag {
+    //border: 1px solid gray;
+    float: left;
+    padding: 0 10px 0 10px;
+    width: 500px;
+    height: 100px;
+    p {
+      font-size: 10px;  
+    }  
+  }
+
 }
 
-#url_title {
-  float: left;
-  padding: 0 10px 0 10px;
-  //border: 1px solid #ECECEC;
-  width: 400px;
-  height: 100px;
-  p {
-    font-size: 20px;  
+#operation-contents {
+  margin: auto;
+  padding: 15px 25px 0 25px;
+  position: relative;
+  text-align: center;
+  border: 1px solid #ECECEC;
+  border-top: 4px solid #ECECEC;
+  z-index: 1;
+  width: 680px;
+  height: 40px;
+  #prof_image {
+    float: left;
+  }
+  #mypage, #summary_lists, #summary_edit {
+    display: block;
+    border: 2px solid #ddd;
+    background-color: #ddd;
+    border-radius: 0.3em;
+    float: left;
+    margin-left: 7px;
+    margin-bottom: 3px;
+    padding: 0px 10px 0px 0px;
+    width: auto;
+    height: 25px;
+    img {
+      float: left;
+      margin-top: 3px;
+      margin-left: 5px;
+    }
+    p {
+      float: left;
+      margin: 2px 0px 5px 5px;
+      color: #a2a2a2;
+    }
   }
 }
 
@@ -128,6 +205,7 @@
   #recommend-tags {
     .tag {
       padding: 4px 7px 2px 3px;
+      border-radius: 0.3em;
       background: gray;
       color: white;
     }

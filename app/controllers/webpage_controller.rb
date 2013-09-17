@@ -82,6 +82,7 @@ class WebpageController < ApplicationController
   def add_for_chrome_extension
     if signed_in?
       user_id = getLoginUser.id;
+      @prof_image =  getLoginUser.prof_image;
       @url = "#{params[:url]}";
       title = returnTitle(@url);
       if title == nil
@@ -89,6 +90,8 @@ class WebpageController < ApplicationController
       end
       article = Article.find_by_url(@url);
       if article != nil then
+        @thumbnail = article.thumbnail;
+        @contents_preview = article.contents_preview;
       	user_article = article.user_articles.find_by_user_id(user_id);
       	if user_article != nil then
       		render :text => article.id and return
@@ -101,12 +104,12 @@ class WebpageController < ApplicationController
       	end
       else
 
-        thumbnail = getThumbnailfromURL(@url);
-        contents_preview = getContentsPreviewfromURL(@url);
+        @thumbnail = getThumbnailfromURL(@url);
+        @contents_preview = getContentsPreviewfromURL(@url);
 
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:url], :title => title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :thumbnail => thumbnail);
+        article = Article.new(:url => params[:url], :title => title, :contents_preview => @contents_preview[0, 200], :category_id =>"001", :thumbnail => @thumbnail);
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
@@ -123,6 +126,7 @@ class WebpageController < ApplicationController
   def add_complete
   	if signed_in?
       user_id = getLoginUser.id;
+      @prof_image =  getLoginUser.prof_image;
       @url = "#{params[:url]}";
       @title = returnTitle(@url);
       if @title == nil
@@ -131,33 +135,34 @@ class WebpageController < ApplicationController
       end
       article = Article.find_by_url(@url);
       if article != nil then
+        @article_id = article.id;
+        @thumbnail = article.thumbnail;
+        @contents_preview = article.contents_preview;
         user_article = article.user_articles.find_by_user_id(user_id);
         if user_article != nil then 
           #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
-          @user_article_num = article.user_articles.count(:all)
           @msg = "Already registered."  and return
         else
           #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
-          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
+          user_article = UserArticle.new(:user_id => user_id, :article_id => @article_id, :read_flg => false);
           if user_article.save
             article.addStrength
-            @user_article_num = article.user_articles.count(:all)
             @msg = "Completed." and return
           end
         end
       else
 
-        thumbnail = getThumbnailfromURL(@url);
-        contents_preview = getContentsPreviewfromURL(@url);
+        @thumbnail = getThumbnailfromURL(@url);
+        @contents_preview = getContentsPreviewfromURL(@url);
 
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:url], :title => @title, :contents_preview => contents_preview[0, 200], :category_id =>"001", :thumbnail => thumbnail);
+        article = Article.new(:url => params[:url], :title => @title, :contents_preview => @contents_preview[0, 200], :category_id =>"001", :thumbnail => @thumbnail);
         if article.save
-          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
+          @article_id = article.id;
+          user_article = UserArticle.new(:user_id => user_id, :article_id => @article_id, :read_flg => false);
           if user_article.save
               article.addStrength
-              @user_article_num = article.user_articles.count(:all)
               @msg = "Completed." and return
           end
         end

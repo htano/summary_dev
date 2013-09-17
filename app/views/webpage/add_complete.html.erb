@@ -4,20 +4,38 @@
 
 <div class="comment_box">
 	<p>登録完了</p>
-	<span id="msg">
-		<%= @msg %></span>
+	<span id="msg"><%= @msg %></span>
 </div>
 
 <div id="entry-contents">
-  <div id="user_article_num">
-    <p>
-      <% if @user_article_num != nil && @user_article_num != 0 then %>
-        <%= @user_article_num %>
-      <% else %>0<% end %>
-    </p>
-    <span>users</span>
+  <div id="thumbnail">
+  <% if @thumbnail != nil && @thumbnail != "" then %>
+      <%= image_tag(@thumbnail, :size => "120x150") %>
+    <% else %>
+      <%= image_tag("no_image.png", :size => "120x150") %>
+    <% end %>
   </div>
   <div id="url_title">
-    <p><%= @title %></p>
+    <p><a href="<%= @url %>" target="_blank"><%= @title[0, 100] %></a></p>
   </div>
+  <div id="contents_preview">
+    <p><%= @contents_preview[0, 200] %></p>
+  </div>
+  <div id="category">
+  </div>
+  <div id="tag">
+  </div>
+</div>
+
+<div id="operation-contents">
+  <span id="prof_image"><%= image_tag(@prof_image, :size => "30x30") %></span>
+  <span id="mypage">
+    <%= link_to image_tag("icons/glyphicons_003_user.png", :size => "16x16") + content_tag(:p, "mypage") , {:controller => "mypage", :action => "index"} %>
+  </span>
+  <span id="summary_edit">
+    <%= link_to image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") , {:controller => "summary_lists", :action => "index", :articleId => @article_id} %>
+  </span>
+  <span id="summary_lists">
+    <%= link_to image_tag("icons/glyphicons_114_list.png", :size => "16x16") + content_tag(:p, "summary lists") , {:controller => "summary", :action => "edit", :article_id => @article_id} %>
+  </span>
 </div>
