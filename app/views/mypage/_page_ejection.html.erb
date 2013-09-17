@@ -14,7 +14,7 @@
   </li>
   <li class="vertical-boder"></li>
   <li class="page-next">
-  <% unless table_size < 10 %>
+  <% if table_size == 10 && ((page.to_i - 1)*10 + table_size != total_num ) %>
     <% if @is_login_user %>
       <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", page_param => (page.to_i + 1)} %>
     <% else %>

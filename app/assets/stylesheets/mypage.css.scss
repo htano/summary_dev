@@ -234,6 +234,22 @@
       }
     }
   }
+  .page_info {
+    float: right;
+    margin: 5px 0px 0px 0px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #a2a2a2;
+    span {
+      font-weight: normal;
+    }
+  }
+  .none > .page_info {
+    display: none;
+  }
+  .active > .page_info {
+    display: block;
+  }
 }
 
 ul.tab {

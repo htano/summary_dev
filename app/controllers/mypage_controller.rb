@@ -54,26 +54,29 @@ class MypageController < ApplicationController
     offset = (@mpage.to_i - 1) * 10
     user_articles = @user.user_articles.reverse_order.offset(offset).where(:read_flg => false).take(10)
     @main_articles_table = get_table(user_articles, @is_login_user)
+    @total_main_articles_num = @user.user_articles.where(:read_flg => false).size
 
     @favorite_articles_table = []
     @fpage = params[:fpage] ? params[:fpage] : 1
     offset = (@fpage.to_i - 1) * 10
     user_articles = @user.user_articles.reverse_order.offset(offset).where(:favorite_flg => true).take(10)
     @favorite_articles_table = get_table(user_articles, @is_login_user)
+    @total_favorite_articles_num = @user.user_articles.where(:favorite_flg => true).size
 
     @read_articles_table = []
     @rpage = params[:rpage] ? params[:rpage] : 1
     offset = (@rpage.to_i - 1) * 10
     user_articles = @user.user_articles.reverse_order.offset(offset).where(:read_flg => true).take(10)
     @read_articles_table = get_table(user_articles, @is_login_user)
-
+    @total_read_articles_num = @user.user_articles.where(:read_flg => true).size
     # summary tab
     @summaries_table = []
     @spage = params[:spage] ? params[:spage] : 1
     offset = (@spage.to_i - 1) * 10
     summaries = @user.summaries.reverse_order.offset(offset).take(10)
     @summaries_table = get_summary_table(summaries, @is_login_user)
-
+    @total_summaries_num = @user.summaries.size
+    
     if params[:mpage]
       @current_tab = "main"
     elsif params[:spage]
