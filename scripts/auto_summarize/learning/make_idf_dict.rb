@@ -11,16 +11,20 @@ class String
 end
 
 @df_hash = {}
-
-for i in 0..63
-  open("tmp/auto_summarize/learning/url_summary_contents/train_data_" + i.to_s + ".txt") do |f|
-    f.each do |s|
-      @s_ngr = s.ngram(2)
-      @s_ngr.each do |k|
-        if @df_hash[k]
-          @df_hash[k] += 1
-        else
-          @df_hash[k]  = 1
+Dir.glob("tmp/auto_summarize/learning/url_summary_contents/????????/train_data_*.txt").each do |filename|
+  open(filename) do |f|
+    f.each do |l|
+      l = l.chomp
+      l.split("").each do |p|
+        p.split("。").each do |s|
+          @s_ngr = s.ngram(2)
+          @s_ngr.each do |k|
+            if @df_hash[k]
+              @df_hash[k] += 1
+            else
+              @df_hash[k]  = 1
+            end
+          end
         end
       end
     end

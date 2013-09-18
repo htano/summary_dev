@@ -2,6 +2,7 @@
 require 'nokogiri'
 require 'open-uri'
 require 'extractcontent'
+require 'kconv'
 
 @url = ENV["URL"]
 #@force_nokogiri = true
@@ -21,6 +22,8 @@ begin
   html = html.encode("UTF-8", "UTF-8")
 rescue => e
   p e
+  Rails.logger.error "[ERROR] openuri url=" + @url + ", msg=" + e.message
+  puts "[ERROR] openuri url=" + @url + ", msg=" + e.message
   exit 1
 end
 
@@ -59,3 +62,19 @@ body.split("\n").each do |p|
     puts p
   end
 end
+puts "description"
+Nokogiri::HTML.parse(html).xpath('//meta[@name="description"]').each do |d| puts d.attribute("content").value + "\n"; end
+puts "og:description"
+Nokogiri::HTML.parse(html).xpath('//meta[@property="og:description"]').each do |d| puts d.attribute("content").value + "\n"; end
+puts "h1"
+Nokogiri::HTML.parse(html).xpath('//h1').each do |d| puts d.text + "\n"; end
+puts "h2"
+Nokogiri::HTML.parse(html).xpath('//h2').each do |d| puts d.text + "\n"; end
+puts "h3"
+Nokogiri::HTML.parse(html).xpath('//h3').each do |d| puts d.text + "\n"; end
+puts "h4"
+Nokogiri::HTML.parse(html).xpath('//h4').each do |d| puts d.text + "\n"; end
+puts "h5"
+Nokogiri::HTML.parse(html).xpath('//h5').each do |d| puts d.text + "\n"; end
+puts "h6"
+Nokogiri::HTML.parse(html).xpath('//h6').each do |d| puts d.text + "\n"; end

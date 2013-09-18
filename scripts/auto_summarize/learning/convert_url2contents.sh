@@ -1,10 +1,11 @@
 #!/bin/bash
-RAILS_ROOT=/Users/thotta/git/summary_dev
+WORK_DATE=`date +"%Y%m%d"`
+RAILS_ROOT=.
 SCRIPT_DIR=${RAILS_ROOT}/scripts/auto_summarize/learning
 SCRIPT_PATH=${SCRIPT_DIR}/convert_url2contents.rb
 TMP_DIR=${RAILS_ROOT}/tmp/auto_summarize/learning
 INPUT_DIR=${TMP_DIR}/url_summary
-OUTPUT_DIR=${TMP_DIR}/url_summary_contents
+OUTPUT_DIR=${TMP_DIR}/url_summary_contents/${WORK_DATE}
 
 mkdir -p $OUTPUT_DIR
 cd $RAILS_ROOT

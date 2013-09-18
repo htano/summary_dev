@@ -1,5 +1,5 @@
 #!/bin/bash
-RAILS_ROOT=/Users/thotta/git/summary_dev
+RAILS_ROOT=.
 SCRIPT_DIR=${RAILS_ROOT}/scripts/auto_summarize/learning
 SCRIPT_PATH=${SCRIPT_DIR}/make_url_summary.rb
 TMP_DIR=${RAILS_ROOT}/tmp/auto_summarize/learning

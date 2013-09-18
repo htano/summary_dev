@@ -1,9 +1,9 @@
 # encoding: utf-8
-
-ROOT_DIR = "/Users/thotta/git/summary_dev"
+ROOT_DIR = "."
 TMP_DIR = ROOT_DIR + "/tmp/auto_summarize/learning"
 DF_FILE = TMP_DIR + "/dict/idf_dict.txt"
 INPUT_DIR = TMP_DIR + "/url_summary_contents"
+
 class String
   def ngram n
     characters = self.split(//u)
@@ -119,9 +119,11 @@ def sentence2liblinear s, label
   end
 end
 
-for i in 0..63
-#for i in [7]
-  open(INPUT_DIR + "/train_data_" + i.to_s + ".txt") do |f|
+
+#for i in 0..63
+  #open(INPUT_DIR + "/train_data_" + i.to_s + ".txt") do |f|
+Dir.glob(INPUT_DIR + "/????????/train_data_*.txt").each do |filename|
+  open(filename) do |f|
     @line_idx = 0
     @title_tfidf = {}
     f.each do |line|
@@ -155,7 +157,11 @@ for i in 0..63
               if s =~ /^\([^\)]+\)$/
                 sentence2liblinear(s, -1)
               else
-                sentence2liblinear(s,  1)
+                if s.length < 6
+                  sentence2liblinear(s, -1)
+                else
+                  sentence2liblinear(s,  1)
+                end
               end
             end
           end

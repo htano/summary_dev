@@ -1,7 +1,7 @@
 library(LiblineaR); library(e1071); library(SparseM);
-svmdata <- read.matrix.csr("tmp/auto_summarize/learning/train_data_binned.txt"); # some labels were changed manualy.
-#svmdata <- read.matrix.csr("tmp/auto_summarize/learning/train_data_20130918.txt"); # auto labeling by make_liblinear
-tr.num <- 1:1200
+#svmdata <- read.matrix.csr("tmp/auto_summarize/learning/train_data_binned.txt"); # some labels were changed manualy.
+svmdata <- read.matrix.csr("tmp/auto_summarize/learning/train_data_20130918.txt"); # auto labeling by make_liblinear
+tr.num <- 1:2500
 y.tr <- as.numeric(svmdata$y[tr.num])
 x.tr <- as.matrix(svmdata$x[tr.num])
 s=scale(x.tr,center=TRUE,scale=TRUE)
