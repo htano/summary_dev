@@ -7,6 +7,7 @@ require 'kconv'
 require 'uri'
 require 'bundler/setup'
 require 'extractcontent'
+require 'RMagick'
 
 class WebpageController < ApplicationController
 
@@ -31,6 +32,10 @@ class WebpageController < ApplicationController
       @user_id = "#{params[:id]}";
       @url = "#{params[:url]}";
       @title = returnTitle(@url)
+      if @title == nil
+        @msg = "Please check URL."
+        redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+      end
       article = Article.find_by_url(@url);
  
       if article != nil then
@@ -128,11 +133,7 @@ class WebpageController < ApplicationController
       user_id = getLoginUser.id;
       @prof_image =  getLoginUser.prof_image;
       @url = "#{params[:url]}";
-      @title = returnTitle(@url);
-      if @title == nil
-        @msg = "Please check URL."
-        redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
-      end
+      @title = "#{params[:title]}";
       article = Article.find_by_url(@url);
       if article != nil then
         @article_id = article.id;
@@ -175,12 +176,16 @@ class WebpageController < ApplicationController
   #指定されたurlのタイトルを返却するメソッド
   def returnTitle(url)
     begin
+=begin
       charset = nil;
       html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
         charset = f.charset;
         f.read;
       end
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
+=end
+
+      doc = Nokogiri::HTML.parse(open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE));
       if doc.title != nil && doc.title != BLANK
         return doc.title;
       else
@@ -197,42 +202,48 @@ class WebpageController < ApplicationController
   #TODO 大きさのみで判定している
   def getThumbnailfromURL(url)
     begin
+=begin
       charset = nil;
-      
       html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
         charset = f.charset;
         f.read;
       end
-
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
-      doc.xpath("//img[starts-with(@src, 'http://')][@height >= 80 and @width >= 80]").each{|img|
-        return img['src']
-        break;
+=end
+      doc = Nokogiri::HTML.parse(open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE));
+      doc.xpath("//img[starts-with(@src, 'http://')]").each{|img|
+        image = Magick::ImageList.new(img['src'])
+        columns = image.columns 
+        rows = image.rows
+        #閾値を超える最初の画像を象徴的な画像として返却する
+        if columns.to_i > THRESHOLD_SIDE and rows.to_i > THRESHOLD_SIDE and (columns.to_i*rows.to_i) > THRESHOLD_ALL
+          return img['src']
+            break;
+        end
       }
-      return BLANK;
+      return "no_image.png"
     rescue => e
       logger.error("error :#{e}")
-      return BLANK;
+      return "no_image.png"
     end
   end
 
   #指定されたURLの本文を抜き出すメソッド
   def getContentsPreviewfromURL(url)
-    contents_preview = ""
-    open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |io|
-      html = io.read
-      begin
+    begin
+      contents_preview = ""
+      html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
+        f.read;
+      end
         html = html.force_encoding("UTF-8")
         html = html.encode("UTF-8", "UTF-8")
         contents_preview, title = ExtractContent.analyse(html)
         return contents_preview
         # logger.debug("content_preview : #{contents_preview}")
-      rescue => e
-        # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
-        logger.error("error :#{e}")
-        return BLANK
-      end
+    rescue => e
+      # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
+      logger.error("error :#{e}")
+      return "本文が取得出来ませんでした。"
     end
-        #logger.debug("preview : #{contents_preview}}")
   end
 end

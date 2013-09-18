@@ -29,8 +29,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'ruby-openid'
 
-#gem 'rmagick'
-#gem 'paperclip'
+gem 'rmagick'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

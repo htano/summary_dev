@@ -9,11 +9,7 @@
 
 <div id="entry-contents">
   <div id="thumbnail">
-  <% if @thumbnail != nil && @thumbnail != "" then %>
-      <%= image_tag(@thumbnail, :size => "120x150") %>
-    <% else %>
-      <%= image_tag("no_image.png", :size => "120x150") %>
-    <% end %>
+    <%= image_tag(@thumbnail, :size => "120x150") %>
   </div>
   <div id="url_title">
     <p><a href="<%= @url %>" target="_blank"><%= @title[0, 100] %></a></p>
@@ -33,9 +29,9 @@
     <%= link_to image_tag("icons/glyphicons_003_user.png", :size => "16x16") + content_tag(:p, "mypage") , {:controller => "mypage", :action => "index"} %>
   </span>
   <span id="summary_edit">
-    <%= link_to image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") , {:controller => "summary_lists", :action => "index", :articleId => @article_id} %>
+    <%= link_to image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") , {:controller => "summary", :action => "edit", :article_id => @article_id} %>
   </span>
   <span id="summary_lists">
-    <%= link_to image_tag("icons/glyphicons_114_list.png", :size => "16x16") + content_tag(:p, "summary lists") , {:controller => "summary", :action => "edit", :article_id => @article_id} %>
+    <%= link_to image_tag("icons/glyphicons_114_list.png", :size => "16x16") + content_tag(:p, "summary lists") , {:controller => "summary_lists", :action => "index", :articleId => @article_id} %>
   </span>
 </div>
