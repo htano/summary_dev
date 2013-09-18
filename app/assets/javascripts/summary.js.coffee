@@ -5,10 +5,15 @@
 overFlag = false
 BLANK = ''
 
+$(document).ready ->
+	if firstEditFlag.value.length > 0
+		document.getElementById('content').style.color = 'gray'
+
 @clearContent = ->
 	firstEditFlag = document.getElementById('firstEditFlag')
 	if firstEditFlag.value.length > 0
 		document.getElementById('content').value = BLANK
+		document.getElementById('content').style.color = 'black'
 		document.getElementById('firstEditFlag').value = BLANK
 
 @clickClearButton = ->
