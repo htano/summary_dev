@@ -49,7 +49,7 @@ end
 IDF_DICT = {}
 @df = read_kv(DF_FILE)
 @df.each do |df_i|
-  IDF_DICT[df_i[0]] = Math.log(400/(df_i[1]+1.0))
+  IDF_DICT[df_i[0]] = Math.log(800/(df_i[1]+1.0))
 end
 
 def idf term
@@ -251,14 +251,14 @@ Article.getHotEntryArtileList.each do |e|
   summary_sentence = []
   sum_length = 0
   sentences_with_score.sort{|a,b| b[:score]<=>a[:score]}.each do |s_score|
-    if sum_length + (s_score[:sen]+"。\n").length <= 300
+    if sum_length + (s_score[:sen]+"。 ").length <= 300
       summary_sentence.push(s_score)
-      sum_length += (s_score[:sen]+"。\n").length
+      sum_length += (s_score[:sen]+"。 ").length
     end
   end
   @summary_contents = ""
   summary_sentence.sort{|a,b| a[:order]<=>b[:order]}.each do |s_line|
-    @summary_contents += s_line[:sen] + "。\n"
+    @summary_contents += s_line[:sen] + "。 "
   end
 
   Summary.create( content:@summary_contents, user_id:@user.id, article_id:e.id )
