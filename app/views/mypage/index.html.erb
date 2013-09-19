@@ -114,14 +114,10 @@
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
-          <%= render :partial => "page_ejection", :locals => {:page => @mpage, :table_size => @main_articles_table.size, :page_param => :mpage, :total_num => @total_main_articles_num} %>
+            <%= render_page_ejection(@mpage, @main_articles_table, :mpage, @total_main_articles_num) %>
           </div>
           <p class="page_info">
-            <% if @total_main_articles_num > 0 %>
-              <%= (@mpage.to_i - 1)*10 + 1 %>-<%= (@mpage.to_i - 1) * 10 + @main_articles_table.size %><span> of </span><%= @total_main_articles_num %>
-            <% else %>
-              0 <span> of </span> 0
-            <% end %>
+            <%= raw get_page_position(@mpage, @main_articles_table, @total_main_articles_num) %>
           </p>
         </div>
         <% if @current_tab == "summary" %>
@@ -136,14 +132,10 @@
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
-          <%= render :partial => "page_ejection", :locals => {:page => @spage, :table_size => @summaries_table.size, :page_param => :spage, :total_num => @total_summaries_num} %>
+            <%= render_page_ejection(@spage, @summaries_table, :spage, @total_summaries_num) %>
           </div>
           <p class="page_info">
-            <% if @total_summaries_num > 0 %>
-              <%= (@spage.to_i - 1)*10 + 1 %>-<%= (@spage.to_i - 1) * 10 + @summaries_table.size %><span> of </span><%= @total_summaries_num %>
-            <% else %>
-              0 <span> of </span> 0
-            <% end %>
+            <%= raw get_page_position(@spage, @summaries_table, @total_summaries_num) %>
           </p>
         </div>
         <% if @current_tab == "favorite" %>
@@ -161,14 +153,10 @@
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
-          <%= render :partial => "page_ejection", :locals => {:page => @fpage, :table_size => @favorite_articles_table.size, :page_param => :fpage, :total_num => @total_favorite_articles_num} %>
+            <%= render_page_ejection(@fpage, @favorite_articles_table, :fpage, @total_favorite_articles_num) %>
           </div>
           <p class="page_info">
-            <% if @total_favorite_articles_num > 0%>
-              <%= (@fpage.to_i - 1)*10 + 1 %>-<%= (@fpage.to_i - 1) * 10 + @favorite_articles_table.size %><span> of </span><%= @total_favorite_articles_num %>
-            <% else %>
-              0 <span> of </span> 0
-            <% end %>
+            <%= raw get_page_position(@fpage, @favorite_articles_table, @total_favorite_articles_num) %>
           </p>
         </div>
         <% if @current_tab == "read" %>
@@ -189,14 +177,10 @@
             <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
           </div>
           <div class="page-ejection">
-          <%= render :partial => "page_ejection", :locals => {:page => @rpage, :table_size => @read_articles_table.size, :page_param => :rpage, :total_num => @total_read_articles_num} %>
+            <%= render_page_ejection(@rpage, @read_articles_table, :rpage, @total_read_articles_num) %>
           </div>
           <p class="page_info">
-            <% if @total_read_articles_num > 0 %>
-              <%= (@rpage.to_i - 1)*10 + 1 %>-<%= (@rpage.to_i - 1) * 10 + @read_articles_table.size %><span> of </span><%= @total_read_articles_num %>
-            <% else %>
-              0 <span> of </span> 0
-            <% end %>
+            <%= raw get_page_position(@rpage, @read_articles_table, @total_read_articles_num) %>
           </p>
         </div>
         <% else  # is_login_user %>
@@ -210,10 +194,10 @@
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
           <div class="page-ejection">
-          <%= render :partial => "page_ejection", :locals => {:page => @mpage, :table_size => @main_articles_table.size, :page_param => :mpage, :total_num => @total_main_articles_num} %>
+            <%= render_page_ejection(@mpage, @main_articles_table, :mpage, @total_main_articles_num) %>
           </div>
           <p class="page_info">
-            <%= (@mpage.to_i - 1)*10 + 1 %>-<%= (@mpage.to_i - 1) * 10 + @main_articles_table.size %><span> of </span><%= @total_main_articles_num %>
+            <%= raw get_page_position(@mpage, @main_articles_table, @total_main_articles_num) %>
           </p>
         </div>
         <% if @current_tab == "summary" %>
@@ -225,10 +209,10 @@
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
           <div class="page-ejection">
-          <%= render :partial => "page_ejection", :locals => {:page => @spage, :table_size => @summaries_table.size, :page_param => :spage, :total_num => @total_summaries_num} %>
+            <%= render_page_ejection(@spage, @summaries_table, :spage, @total_summaries_num) %>
           </div>
           <p class="page_info">
-            <%= (@spage.to_i - 1)*10 + 1 %>-<%= (@spage.to_i - 1) * 10 + @summaries_table.size %><span> of </span><%= @total_summaries_num %>
+            <%= raw get_page_position(@spage, @summaries_table, @total_summaries_num) %>
           </p>
         </div>
         <% if @current_tab == "favorite" %>
@@ -240,10 +224,10 @@
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
           <div class="page-ejection">
-          <%= render :partial => "page_ejection", :locals => {:page => @fpage, :table_size => @favorite_articles_table.size, :page_param => :fpage, :total_num => @total_favorite_articles_num} %>
+            <%= render_page_ejection(@fpage, @favorite_articles_table, :fpage, @total_favorite_articles_num) %>
           </div>
           <p class="page_info">
-            <%= (@fpage.to_i - 1)*10 + 1 %>-<%= (@fpage.to_i - 1) * 10 + @favorite_articles_table.size %><span> of </span><%= @total_favorite_articles_num %>
+            <%= raw get_page_position(@fpage, @favorite_articles_table, @total_favorite_articles_num) %>
           </p>
         </div>
         <% if @current_tab == "read" %>
@@ -255,10 +239,10 @@
             <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
           </div>
           <div class="page-ejection">
-          <%= render :partial => "page_ejection", :locals => {:page => @rpage, :table_size => @read_articles_table.size, :page_param => :rpage, :total_num => @total_read_articles_num} %>
+            <%= render_page_ejection(@rpage, @read_articles_table, :rpage, @total_read_articles_num) %>
           </div>
           <p class="page_info">
-            <%= (@rpage.to_i - 1)*10 + 1 %>-<%= (@rpage.to_i - 1) * 10 + @read_articles_table.size %><span> of </span><%= @total_read_articles_num %>
+            <%= raw get_page_position(@rpage, @read_articles_table, @total_read_articles_num) %>
           </p>
         </div>
         <% end # @user.public_flg %>
@@ -282,9 +266,7 @@
               </th>
               <th id="summary-number-top">summary</th>
             </tr>
-            <% if @main_articles_table %>
-              <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(main_checkbox, 'main')"}, :object => @main_articles_table %>
-            <% end %>
+            <%= render_article_table('main', @main_articles_table) %>
           </table>
         </form>
         <% if @current_tab == "summary" %>
@@ -303,9 +285,7 @@
               </th>
               <th id="summary-number-top">summary</th>
             </tr>
-            <% if @summaries_table %>
-            <%= render :partial => "summary_table", :locals => {:click_checkbox => "clickArticleCheckBox(summary_checkbox, 'summary')"}, :object => @summaries_table %>
-            <% end %>
+            <%= render_summary_table = render_summary_table('summary', @summaries_table) %>
           </table>
         </form>
         <% if @current_tab == "favorite" %>
@@ -323,9 +303,7 @@
                 TITLE</th>
               <th id="summary-number-top">summary</th>
             </tr>
-            <% if @favorite_articles_table %>
-            <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(favorite_checkbox, 'favorite')"}, :object => @favorite_articles_table %>
-            <% end %>
+            <%= render_favorite_table = render_article_table('favorite', @favorite_articles_table) %>
           </table>
         </form>
         <% if @current_tab == "read" %>
@@ -344,9 +322,7 @@
               </th>
               <th id="summary-number-top">summary</th>
             </tr>
-            <% if @read_articles_table %>
-            <%= render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(read_checkbox, 'read')"}, :object => @read_articles_table %>
-            <% end %>
+            <%= render_read_table = render_article_table('read', @read_articles_table) %>
           </table>
         </form>
       </div>
