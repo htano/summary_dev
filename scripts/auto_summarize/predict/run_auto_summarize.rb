@@ -94,6 +94,7 @@ def extract_features s
     @sum_idf = 0.0 # sum of idf score normalized by length
     @title_cosine = 0.0 # cosine similarity with title ngram.
     @s_length = s.length.to_f # length of this sentence.
+    @s_prob  = 0.0 # probability of this sentence conditioned by the document.
     @s_tfidf = {}
     s.ngram(2).each do |term|
       @sum_idf += idf(term) / @s_length
@@ -102,7 +103,9 @@ def extract_features s
       else
         @s_tfidf[term]  = idf(term)
       end
+      @s_prob += Math.log( get_tf(term, @tf_of_doc).to_f / @sum_tf_of_doc )
     end
+    @s_prob = @s_prob / s.length
     @title_cosine = get_cosine_similarity(@s_tfidf, @title_tfidf)
 
     @length_key = 2
@@ -129,7 +132,7 @@ def extract_features s
       @length_key += 9
     end
 
-    return { 1 => @sum_idf, 2 => @title_cosine, @length_key => 1.0}
+    return { 1 => @sum_idf, 2 => @title_cosine, @length_key => 1.0, 12 => @s_prob}
   else
     return nil
   end
@@ -156,6 +159,17 @@ def get_score features
     return nil
   end
 end
+
+def get_tf k, tf_hash
+  if tf_hash[k]
+    return tf_hash[k] + 1
+  else
+    return 1
+  end
+end
+
+@tf_of_doc = {}
+@sum_tf_of_doc = 0
 
 @title_tfidf = nil
 Article.getHotEntryArtileList.each do |e|
@@ -221,13 +235,37 @@ Article.getHotEntryArtileList.each do |e|
   end
 
   @title_tfidf = {}
+  @tf_of_doc = {}
+  @sum_tf_of_doc = 0
   title.ngram(2).each do |k|
     if @title_tfidf[k]
       @title_tfidf[k] += idf(k)
     else
       @title_tfidf[k]  = idf(k)
     end
+    @sum_tf_of_doc += 1
+    if @tf_of_doc[k]
+      @tf_of_doc[k] += 1
+    else
+      @tf_of_doc[k]  = 1
+    end
   end
+  body.split("\n").each do |p|
+    if p.length > 0
+      p.split(/。/).each do |s|
+        s.ngram(2).each do |k|
+          @sum_tf_of_doc += 1
+          if @tf_of_doc[k]
+            @tf_of_doc[k] += 1
+          else
+            @tf_of_doc[k]  = 1
+          end
+        end
+      end
+    end
+  end
+  @sum_tf_of_doc += @tf_of_doc.length
+
   puts "[URL] " + e.url
   puts "[Title] " + title
   sentences_with_score = []

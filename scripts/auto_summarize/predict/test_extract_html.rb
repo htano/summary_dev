@@ -31,6 +31,7 @@ if !@force_nokogiri
   begin
     body, title = ExtractContent.analyse(html)
   rescue
+    puts "Error at ExtractContent."
     doc = Nokogiri::HTML.parse(html)
     title = doc.title
     doc.xpath('//p').each do |d|

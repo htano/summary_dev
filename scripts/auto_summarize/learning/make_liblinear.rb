@@ -74,6 +74,7 @@ def sentence2liblinear s, label
     @sum_idf = 0.0 # sum of idf score normalized by length
     @title_cosine = 0.0 # cosine similarity with title ngram.
     @s_length = s.length # length of this sentence.
+    @s_prob  = 0.0 # probability of this sentence conditioned by the document.
     @s_tfidf = {}
     s.ngram(2).each do |term|
       @sum_idf += idf(term) / @s_length
@@ -82,7 +83,9 @@ def sentence2liblinear s, label
       else
         @s_tfidf[term]  = idf(term)
       end
+      @s_prob += Math.log( get_tf(term, @tf_of_doc).to_f / @sum_tf_of_doc )
     end
+    @s_prob = @s_prob / s.length
     if label > 0
       @label_s = "+1"
     else
@@ -113,16 +116,48 @@ def sentence2liblinear s, label
       @length_key += 9
     end
 
-    #puts s
-    #p @s_tfidf
-    puts @label_s + " 1:" + @sum_idf.to_s + " 2:" + get_cosine_similarity(@s_tfidf, @title_tfidf).to_s + " " + @length_key.to_s + ":1"
+    puts @label_s + " 1:" + @sum_idf.to_s + " 2:" + get_cosine_similarity(@s_tfidf, @title_tfidf).to_s + " " + @length_key.to_s + ":1" + " 12:" +  @s_prob.to_s
+    #puts @label_s + " 1:" + @sum_idf.to_s + " 2:" + get_cosine_similarity(@s_tfidf, @title_tfidf).to_s + " " + @length_key.to_s + ":1" + " 12:" +  @s_prob.to_s + "\t" + s
   end
 end
 
+def get_tf k, tf_hash
+  if tf_hash[k]
+    return tf_hash[k] + 1
+  else
+    return 1
+  end
+end
+
+@tf_of_doc = {}
+@sum_tf_of_doc = 0
 
 #for i in 0..63
   #open(INPUT_DIR + "/train_data_" + i.to_s + ".txt") do |f|
 Dir.glob(INPUT_DIR + "/????????/train_data_*.txt").each do |filename|
+  @tf_of_doc = {}
+  @sum_tf_of_doc = 0
+  open(filename) do |f|
+    f.each do |line|
+      line = line.chomp
+      line.split("").each do |p|
+        if p.length > 0
+          p.split(/。/).each do |s|
+            s.ngram(2).each do |k|
+              @sum_tf_of_doc += 1
+              if @tf_of_doc[k]
+                @tf_of_doc[k] += 1
+              else
+                @tf_of_doc[k]  = 1
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  @sum_tf_of_doc += @tf_of_doc.length
+
   open(filename) do |f|
     @line_idx = 0
     @title_tfidf = {}
