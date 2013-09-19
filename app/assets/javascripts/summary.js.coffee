@@ -6,7 +6,8 @@ overFlag = false
 BLANK = ''
 
 $(document).ready ->
-	if firstEditFlag.value.length > 0
+	firstEditFlag = document.getElementById('firstEditFlag')
+	if firstEditFlag != null and firstEditFlag.value.length > 0
 		document.getElementById('content').style.color = 'gray'
 
 @clearContent = ->

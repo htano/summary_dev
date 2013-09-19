@@ -20,47 +20,46 @@ class WebpageController < ApplicationController
 
   def add
     if signed_in?
-      @user_id = "#{params[:id]}";
-      @msg = "#{params[:msg]}";
+      @user_id = "#{params[:id]}"
+      @msg = "#{params[:msg]}"
     else
-      redirect_to :controller => "consumer", :action => "index";
+      redirect_to :controller => "consumer", :action => "index"
     end
   end
   
   def add_confirm
     if signed_in?
-      @user_id = "#{params[:id]}";
-      @url = "#{params[:url]}";
-      @title = returnTitle(@url)
-      if @title == nil
+      @user_id = "#{params[:id]}"
+      @url = "#{params[:url]}"
+      h = getArticleElement(@url, true, false, false)
+      if h == nil
         @msg = "Please check URL."
         redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
       end
-      article = Article.find_by_url(@url);
+
+      @title = h["title"]
+
+      article = Article.find_by_url(@url)
  
-      if article != nil then
+      if article != nil
         @summary_num = article.summaries.count(:all)
         @article_id = article.id
       end
 
     else
-      redirect_to :controller => "consumer", :action => "index";
+      redirect_to :controller => "consumer", :action => "index"
     end
   end
 
   #TODO 画面からURL直打ちの回避
   def get_add_history_for_chrome_extension
     if signed_in?
-      user_id = getLoginUser.id;
-      @url = "#{params[:url]}";
-      title = returnTitle(@url);
-      if title == nil
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
-      end
-      article = Article.find_by_url(@url);
-      if article != nil then
-        user_article = article.user_articles.find_by_user_id(user_id);
-        if user_article != nil then 
+      user_id = getLoginUser.id
+      @url = "#{params[:url]}"
+      article = Article.find_by_url(@url)
+      if article != nil
+        user_article = article.user_articles.find_by_user_id(user_id)
+        if user_article != nil 
           #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、article.idを返却する
           render :text => article.id and return
         else
@@ -70,7 +69,7 @@ class WebpageController < ApplicationController
         render :text => BLANK and return
       end
     else
-      redirect_to :controller => "consumer", :action => "index";
+      redirect_to :controller => "consumer", :action => "index"
     end
   end
 
@@ -86,22 +85,21 @@ class WebpageController < ApplicationController
   #TODO 画面からURL直打ちの回避
   def add_for_chrome_extension
     if signed_in?
-      user_id = getLoginUser.id;
-      @prof_image =  getLoginUser.prof_image;
-      @url = "#{params[:url]}";
-      title = returnTitle(@url);
+      user_id = getLoginUser.id
+      @prof_image =  getLoginUser.prof_image
+      @url = "#{params[:url]}"
       if title == nil
         render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
       end
-      article = Article.find_by_url(@url);
-      if article != nil then
-        @thumbnail = article.thumbnail;
-        @contents_preview = article.contents_preview;
-      	user_article = article.user_articles.find_by_user_id(user_id);
-      	if user_article != nil then
+      article = Article.find_by_url(@url)
+      if article != nil
+        @contents_preview = article.contents_preview
+        @thumbnail = article.thumbnail
+      	user_article = article.user_articles.find_by_user_id(user_id)
+      	if user_article != nil
       		render :text => article.id and return
       	else
-      		user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
+      		user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false)
       		if user_article.save
             article.addStrength
       			render :text => article.id and return
@@ -109,14 +107,20 @@ class WebpageController < ApplicationController
       	end
       else
 
-        @thumbnail = getThumbnailfromURL(@url);
-        @contents_preview = getContentsPreviewfromURL(@url);
+        h = getArticleElement(@url)
+        if h == nil
+          @msg = "Please check URL."
+          redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+        end
+        @title = h["title"]
+        @contents_preview = h["contentsPreview"]
+        @thumbnail = h["thumbnail"]
 
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:url], :title => title, :contents_preview => @contents_preview[0, 200], :category_id =>"001", :thumbnail => @thumbnail);
+        article = Article.new(:url => params[:url], :title => title, :contents_preview => @contents_preview[0, 200], :category_id =>"001", :thumbnail => @thumbnail)
         if article.save
-          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
+          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false)
           if user_article.save
             article.addStrength
             render :text => article.id and return
@@ -124,28 +128,28 @@ class WebpageController < ApplicationController
         end
       end
     else
-      redirect_to :controller => "consumer", :action => "index";
+      redirect_to :controller => "consumer", :action => "index"
     end
   end
 
   def add_complete
   	if signed_in?
-      user_id = getLoginUser.id;
-      @prof_image =  getLoginUser.prof_image;
-      @url = "#{params[:url]}";
-      @title = "#{params[:title]}";
-      article = Article.find_by_url(@url);
-      if article != nil then
-        @article_id = article.id;
-        @thumbnail = article.thumbnail;
-        @contents_preview = article.contents_preview;
-        user_article = article.user_articles.find_by_user_id(user_id);
-        if user_article != nil then 
+      user_id = getLoginUser.id
+      @prof_image =  getLoginUser.prof_image
+      @url = "#{params[:url]}"
+      article = Article.find_by_url(@url)
+      if article != nil
+        @article_id = article.id
+        @title = article.title
+        @contents_preview = article.contents_preview
+        @thumbnail = article.thumbnail
+        user_article = article.user_articles.find_by_user_id(user_id)
+        if user_article != nil 
           #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
           @msg = "Already registered."  and return
         else
           #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
-          user_article = UserArticle.new(:user_id => user_id, :article_id => @article_id, :read_flg => false);
+          user_article = UserArticle.new(:user_id => user_id, :article_id => @article_id, :read_flg => false)
           if user_article.save
             article.addStrength
             @msg = "Completed." and return
@@ -153,15 +157,20 @@ class WebpageController < ApplicationController
         end
       else
 
-        @thumbnail = getThumbnailfromURL(@url);
-        @contents_preview = getContentsPreviewfromURL(@url);
-
+        h = getArticleElement(@url)
+        if h == nil
+          @msg = "Please check URL."
+          redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+        end
+        @title = h["title"]
+        @contents_preview = h["contentsPreview"]
+        @thumbnail = h["thumbnail"]
         #同じURLの情報がない場合、a010とr010両方にinsertする
         #カテゴリはペンディング事項
-        article = Article.new(:url => params[:url], :title => @title, :contents_preview => @contents_preview[0, 200], :category_id =>"001", :thumbnail => @thumbnail);
+        article = Article.new(:url => params[:url], :title => @title, :contents_preview => @contents_preview[0, 200], :category_id =>"001", :thumbnail => @thumbnail)
         if article.save
-          @article_id = article.id;
-          user_article = UserArticle.new(:user_id => user_id, :article_id => @article_id, :read_flg => false);
+          @article_id = article.id
+          user_article = UserArticle.new(:user_id => user_id, :article_id => @article_id, :read_flg => false)
           if user_article.save
               article.addStrength
               @msg = "Completed." and return
@@ -169,76 +178,69 @@ class WebpageController < ApplicationController
         end
       end
     else
-      redirect_to :controller => "consumer", :action => "index";
+      redirect_to :controller => "consumer", :action => "index"
     end
   end
-  
-  #指定されたurlのタイトルを返却するメソッド
-  def returnTitle(url)
-    begin
-=begin
-      charset = nil;
-      html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
-        charset = f.charset;
-        f.read;
-      end
-      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
-=end
 
-      doc = Nokogiri::HTML.parse(open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE));
+  def getArticleElement(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
+    begin
+      html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
+        f.read
+      end
+      title = title_flg ? getArticleTitle(html) : nil
+      contentsPreview = contentsPreview_flg ? getArticleContentsPreview(html) : nil
+      thumbnail = thumbnail_flg ? getArticleThumbnail(html) : nil
+      h = {"title" => title, "thumbnail" => thumbnail, "contentsPreview" => contentsPreview}
+      return h
+    rescue
+      return nil
+    end
+  end
+
+  #URLを取得するメソッド
+  def getArticleTitle(html)
+    begin
+      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
       if doc.title != nil && doc.title != BLANK
-        return doc.title;
+        return doc.title
       else
-      	#タイトルが取得出来ない時はホスト名をタイトルに設定する
+        #タイトルが取得出来ない時はホスト名をタイトルに設定する
         return URI.parse(url).host
       end
     rescue => e
       logger.error("error :#{e}")
-      return nil;
+      return BLANK
     end
   end
 
-  #指定されたURLで使用されている画像を抜き出すメソッド
-  #TODO 大きさのみで判定している
-  def getThumbnailfromURL(url)
+  #サムネイルを取得するメソッド
+  def getArticleThumbnail(html)
     begin
-=begin
-      charset = nil;
-      html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
-        charset = f.charset;
-        f.read;
-      end
-      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8");
-=end
-      doc = Nokogiri::HTML.parse(open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE));
-      doc.xpath("//img[starts-with(@src, 'http://')]").each{|img|
+      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
+      doc.xpath("//img[starts-with(@src, 'http://')]").each do |img|
         image = Magick::ImageList.new(img['src'])
         columns = image.columns 
         rows = image.rows
         #閾値を超える最初の画像を象徴的な画像として返却する
         if columns.to_i > THRESHOLD_SIDE and rows.to_i > THRESHOLD_SIDE and (columns.to_i*rows.to_i) > THRESHOLD_ALL
           return img['src']
-            break;
         end
-      }
+      end
       return "no_image.png"
     rescue => e
-      logger.error("error :#{e}")
-      return "no_image.png"
+        logger.error("error :#{e}")
+        return "no_image.png"
     end
   end
 
-  #指定されたURLの本文を抜き出すメソッド
-  def getContentsPreviewfromURL(url)
+  #プレビューを取得するメソッド(ExtractContent)
+  def getArticleContentsPreview(html)
     begin
-      contents_preview = ""
-      html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
-        f.read;
-      end
-        html = html.force_encoding("UTF-8")
-        html = html.encode("UTF-8", "UTF-8")
-        contents_preview, title = ExtractContent.analyse(html)
-        return contents_preview
+      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
+      html = html.force_encoding("UTF-8")
+      html = html.encode("UTF-8", "UTF-8")
+      contents_preview, title = ExtractContent.analyse(html)
+      return contents_preview
         # logger.debug("content_preview : #{contents_preview}")
     rescue => e
       # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
@@ -246,4 +248,38 @@ class WebpageController < ApplicationController
       return "本文が取得出来ませんでした。"
     end
   end
+
+  #プレビューを取得するメソッド(Nokogiriのみ)
+  def getArticleContentsPreview_N(html)
+    begin
+      contents_preview = ""
+      Nokogiri::HTML.parse(html).xpath('//p').each do |p|
+        if p.text?
+          contents_preview += p.text
+        end
+        p.children.each do |child|
+          contents_preview += child.text
+        end
+      end
+      return contents_preview
+        # logger.debug("content_preview : #{contents_preview}")
+    rescue => e
+      # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
+      logger.error("error :#{e}")
+      return "本文が取得出来ませんでした。"
+    end
+  end
+
+  #自身とその子ノードからテキストを取得するメソッド
+  #自メソッドを再帰呼び出しすため危険なので、要修正
+  def setContentsPreview(contents_preview, node)
+    if node.text?
+      contents_preview += node.text
+    end
+    node.children.each do |child|
+      setContentsPreview(contents_preview, child)
+    end
+    return contents_preview
+  end
+
 end
