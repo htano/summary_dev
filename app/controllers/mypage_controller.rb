@@ -52,23 +52,24 @@ class MypageController < ApplicationController
     @main_articles_table = []
     @mpage = params[:mpage] ? params[:mpage] : 1
     offset = (@mpage.to_i - 1) * 10
-    user_articles = @user.user_articles.reverse_order.offset(offset).where(:read_flg => false).take(10)
+    user_articles = @user.user_articles.reverse_order.offset(offset).unread.take(10)
     @main_articles_table = get_table(user_articles, @is_login_user)
-    @total_main_articles_num = @user.user_articles.where(:read_flg => false).size
+    @total_main_articles_num = @user.user_articles.unread.size
 
     @favorite_articles_table = []
     @fpage = params[:fpage] ? params[:fpage] : 1
     offset = (@fpage.to_i - 1) * 10
-    user_articles = @user.user_articles.reverse_order.offset(offset).where(:favorite_flg => true).take(10)
+    user_articles = @user.user_articles.reverse_order.offset(offset).favorite.take(10)
     @favorite_articles_table = get_table(user_articles, @is_login_user)
-    @total_favorite_articles_num = @user.user_articles.where(:favorite_flg => true).size
+    @total_favorite_articles_num = @user.user_articles.favorite.size
 
     @read_articles_table = []
     @rpage = params[:rpage] ? params[:rpage] : 1
     offset = (@rpage.to_i - 1) * 10
-    user_articles = @user.user_articles.reverse_order.offset(offset).where(:read_flg => true).take(10)
+    user_articles = @user.user_articles.reverse_order.offset(offset).read.take(10)
     @read_articles_table = get_table(user_articles, @is_login_user)
-    @total_read_articles_num = @user.user_articles.where(:read_flg => true).size
+    @total_read_articles_num = @user.user_articles.read.size
+    
     # summary tab
     @summaries_table = []
     @spage = params[:spage] ? params[:spage] : 1
