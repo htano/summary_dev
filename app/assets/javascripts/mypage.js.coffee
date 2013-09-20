@@ -2,8 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 disableButton = (elem) ->
-  $(elem).css("background-color", "#ddd")
-  $(elem).unwrap()
+  $(elem).css("background-color", "#ddd").unwrap()
 
 wrapAll = (class_name, params, checked_num, article_ids) ->
   $(".#{class_name}>#mark-as-read-btn").wrap("<a href=/mypage/mark_as_read?#{params}></a>")
@@ -16,14 +15,8 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
   $(".#{class_name}>#delete-summary-btn").wrap("<a href=/mypage/delete_summary?#{params}></a>")
 
 @clickArticleCheckBox = (form_name, class_name) ->
-  console.debug form_name
-  console.debug form_name.id
-  console.debug form_name.name
-  console.debug class_name
-
   checkbox = document.getElementsByName(form_name.name).item(0)
   checkbox_num = checkbox.length
-  console.debug "checkbox num : #{checkbox_num}"
 
   checked_num = 0
   article_ids = []
@@ -34,8 +27,6 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
       article_id = checkbox.elements[i].value
       article_ids.push(article_id)
     i++
-
-  console.debug "checked num : #{checked_num}"
 
   if checked_num is 0
     disableButton(".#{class_name}>a>div")
@@ -51,7 +42,6 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
     while i < article_ids.length
       params += "article_ids[]=" + "#{article_ids[i]}&"
       i++
-#    console.debug params
 
     $(".#{class_name}>a>div").unwrap()
     wrapAll(class_name, params, checked_num, article_ids)
