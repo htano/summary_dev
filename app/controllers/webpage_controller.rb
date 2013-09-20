@@ -95,16 +95,16 @@ class WebpageController < ApplicationController
       if article != nil
         @contents_preview = article.contents_preview
         @thumbnail = article.thumbnail
-      	user_article = article.user_articles.find_by_user_id(user_id)
-      	if user_article != nil
-      		render :text => article.id and return
-      	else
-      		user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false)
-      		if user_article.save
+        user_article = article.user_articles.find_by_user_id(user_id)
+        if user_article != nil
+          render :text => article.id and return
+        else
+          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false)
+          if user_article.save
             article.addStrength
-      			render :text => article.id and return
-      		end
-      	end
+            render :text => article.id and return
+          end
+        end
       else
 
         h = getArticleElement(@url)
@@ -133,7 +133,7 @@ class WebpageController < ApplicationController
   end
 
   def add_complete
-  	if signed_in?
+    if signed_in?
       user_id = getLoginUser.id
       @prof_image =  getLoginUser.prof_image
       @url = "#{params[:url]}"
@@ -182,22 +182,31 @@ class WebpageController < ApplicationController
     end
   end
 
+  #TODO livedoorのサイトでエラーが発生する。
   def getArticleElement(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
     begin
       html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
         f.read
       end
+=begin
+
+      doc = Nokogiri::HTML.parse(open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE)).to
+      title = title_flg ? getArticleTitle(doc) : nil
+      contentsPreview = contentsPreview_flg ? getArticleContentsPreview(doc) : nil
+      thumbnail = thumbnail_flg ? getArticleThumbnail(doc) : nil
+=end
       title = title_flg ? getArticleTitle(html) : nil
       contentsPreview = contentsPreview_flg ? getArticleContentsPreview(html) : nil
       thumbnail = thumbnail_flg ? getArticleThumbnail(html) : nil
       h = {"title" => title, "thumbnail" => thumbnail, "contentsPreview" => contentsPreview}
       return h
-    rescue
+    rescue => e
+      logger.error("error :#{e}")
       return nil
     end
   end
 
-  #URLを取得するメソッド
+  #タイトルを取得するメソッド
   def getArticleTitle(html)
     begin
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
@@ -205,7 +214,7 @@ class WebpageController < ApplicationController
         return doc.title
       else
         #タイトルが取得出来ない時はホスト名をタイトルに設定する
-        return URI.parse(url).host
+        return URI.parse("#{params[:url]}").host
       end
     rescue => e
       logger.error("error :#{e}")
@@ -233,19 +242,29 @@ class WebpageController < ApplicationController
     end
   end
 
-  #プレビューを取得するメソッド(ExtractContent)
+  #プレビューを取得するメソッド
   def getArticleContentsPreview(html)
     begin
-      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
       html = html.force_encoding("UTF-8")
       html = html.encode("UTF-8", "UTF-8")
       contents_preview, title = ExtractContent.analyse(html)
       return contents_preview
-        # logger.debug("content_preview : #{contents_preview}")
+       # logger.debug("content_preview : #{contents_preview}")
     rescue => e
-      # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
       logger.error("error :#{e}")
-      return "本文が取得出来ませんでした。"
+      begin
+      	text = ""
+        Nokogiri::HTML.parse(html).xpath('//p').each do |p|
+          if p.inner_text != nil and p.inner_text != BLANK
+            text += p.inner_text + "\n"
+           end
+        end
+        return text
+        # logger.debug("content_preview : #{contents_preview}")
+      rescue => e
+        logger.error("error :#{e}")
+        return "プレビューは取得出来ませんでした。"
+      end
     end
   end
 

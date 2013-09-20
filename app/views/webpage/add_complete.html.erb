@@ -15,7 +15,7 @@
     <p><a href="<%= @url %>" target="_blank"><%= @title[0, 100] %></a></p>
   </div>
   <div id="contents_preview">
-    <p><%= @contents_preview[0, 200] %></p>
+    <p><%= simple_format(@contents_preview[0, 200]) %></p>
   </div>
   <div id="category">
   </div>
