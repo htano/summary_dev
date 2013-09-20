@@ -87,9 +87,9 @@ class Article < ActiveRecord::Base
     # まず７日(ZERO_ZERO_ONE_DAYS)以内に「あとで読む登録」された記事のうち、
     # 最終登録時の「勢い(strength)」でソートした上位１００件くらいを取ってくる
     # 1. getCandidateHotentries
-    @candidate_entries = where("last_added_at > ?", Time.now - ZERO_ZERO_ONE_DAYS.days).order('strength desc').limit(100)
+    @candidate_entries = where("last_added_at > ?", Time.now - ZERO_ZERO_ONE_DAYS.days).order('strength desc, last_added_at desc').limit(100)
     # 2. sort by current strength
-    return @candidate_entries.sort{|a,b| (-1)*(a.getCurrentStrength <=> b.getCurrentStrength)}
+    return @candidate_entries.sort{|a,b| (-1)*(a.getCurrentStrength <=> b.getCurrentStrength)}.first(20)
   end
 
   # Instance Method
