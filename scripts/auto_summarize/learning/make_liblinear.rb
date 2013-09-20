@@ -20,23 +20,17 @@ def read_kv filename
     f.each do |line|
       line = line.chomp
       @kv = line.split("\t")
-      @read_hash[@kv[0]] = @kv[1]
+      @read_hash[@kv[0]] = @kv[1].to_f
     end
   end
   return @read_hash
-end
-
-IDF_DICT = {}
-@df = read_kv(DF_FILE)
-@df.each do |df_i|
-  IDF_DICT[df_i[0]] = Math.log(400/(df_i[1].to_f+1.0))
 end
 
 def idf term
   if IDF_DICT[term]
     return IDF_DICT[term]
   else
-    return 0.0
+    return Math.log(@df_max.to_f / 1.0)
   end
 end
 
@@ -129,11 +123,19 @@ def get_tf k, tf_hash
   end
 end
 
+def replace_str str
+  return str.gsub(/。/, "")
+end
+
+IDF_DICT = {}
+@df = read_kv(DF_FILE)
+@df_max = @df.max{ |x, y| x[1] <=> y[1] }[1]
+@df.each do |df_i|
+  IDF_DICT[df_i[0]] = Math.log(@df_max.to_f / (df_i[1]+1.0))
+end
+
 @tf_of_doc = {}
 @sum_tf_of_doc = 0
-
-#for i in 0..63
-  #open(INPUT_DIR + "/train_data_" + i.to_s + ".txt") do |f|
 Dir.glob(INPUT_DIR + "/????????/train_data_*.txt").each do |filename|
   @tf_of_doc = {}
   @sum_tf_of_doc = 0
@@ -141,6 +143,7 @@ Dir.glob(INPUT_DIR + "/????????/train_data_*.txt").each do |filename|
     f.each do |line|
       line = line.chomp
       line.split("").each do |p|
+        p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/。/, "") }
         if p.length > 0
           p.split(/。/).each do |s|
             s.ngram(2).each do |k|
@@ -177,6 +180,7 @@ Dir.glob(INPUT_DIR + "/????????/train_data_*.txt").each do |filename|
       when 1
         #body
         line.split("").each do |p|
+          p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/。/, "") }
           if p.length > 0
             p.split(/。/).each do |s|
               sentence2liblinear(s, -1)
@@ -187,6 +191,7 @@ Dir.glob(INPUT_DIR + "/????????/train_data_*.txt").each do |filename|
       when 2
         #summary
         line.split("").each do |p|
+          p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/。/, "") }
           if p.length > 0
             p.split(/。/).each do |s|
               if s =~ /^\([^\)]+\)$/

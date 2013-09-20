@@ -46,17 +46,11 @@ def read_kv filename
   return @read_hash
 end
 
-IDF_DICT = {}
-@df = read_kv(DF_FILE)
-@df.each do |df_i|
-  IDF_DICT[df_i[0]] = Math.log(800/(df_i[1]+1.0))
-end
-
 def idf term
   if IDF_DICT[term]
     return IDF_DICT[term]
   else
-    return Math.log(400.0/10.0)
+    return Math.log(@df_max.to_f / 1.0)
   end
 end
 
@@ -138,13 +132,6 @@ def extract_features s
   end
 end
 
-@svm_weight = read_list WEIGHTS_FILE
-@svm_center = read_list CENTER_FILE
-@svm_scale  = read_list SCALE_FILE
-p @svm_weight
-p @svm_center
-p @svm_scale
-
 def get_score features
   @score = 0.0
   if features
@@ -168,9 +155,22 @@ def get_tf k, tf_hash
   end
 end
 
+IDF_DICT = {}
+@df = read_kv(DF_FILE)
+@df_max = @df.max{ |x, y| x[1] <=> y[1] }[1]
+@df.each do |df_i|
+  IDF_DICT[df_i[0]] = Math.log(@df_max.to_f / (df_i[1]+1.0))
+end
+
+@svm_weight = read_list WEIGHTS_FILE
+@svm_center = read_list CENTER_FILE
+@svm_scale  = read_list SCALE_FILE
+p @svm_weight
+p @svm_center
+p @svm_scale
+
 @tf_of_doc = {}
 @sum_tf_of_doc = 0
-
 @title_tfidf = nil
 Article.getHotEntryArtileList.each do |e|
   @user = User.find_by_name("system001")
@@ -251,6 +251,7 @@ Article.getHotEntryArtileList.each do |e|
     end
   end
   body.split("\n").each do |p|
+    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/。/, "") }
     if p.length > 0
       p.split(/。/).each do |s|
         s.ngram(2).each do |k|
@@ -266,11 +267,10 @@ Article.getHotEntryArtileList.each do |e|
   end
   @sum_tf_of_doc += @tf_of_doc.length
 
-  puts "[URL] " + e.url
-  puts "[Title] " + title
   sentences_with_score = []
   idx = 0
   body.split("\n").each do |p|
+    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/。/, "") }
     if p.length > 0
       p.split(/。/).each do |s|
         @s_features = extract_features(s)
@@ -289,19 +289,20 @@ Article.getHotEntryArtileList.each do |e|
   summary_sentence = []
   sum_length = 0
   sentences_with_score.sort{|a,b| b[:score]<=>a[:score]}.each do |s_score|
-    if sum_length + (s_score[:sen]+"。 ").length <= 300
+    s_score[:sen] = s_score[:sen].gsub(//, "。") + "。"
+    if sum_length + s_score[:sen].length <= 300
       summary_sentence.push(s_score)
-      sum_length += (s_score[:sen]+"。 ").length
+      sum_length += s_score[:sen].length
     end
   end
   @summary_contents = ""
   summary_sentence.sort{|a,b| a[:order]<=>b[:order]}.each do |s_line|
-    @summary_contents += s_line[:sen] + "。 "
+    @summary_contents += s_line[:sen]
   end
 
   Summary.create( content:@summary_contents, user_id:@user.id, article_id:e.id )
+  puts "[URL] " + e.url
+  puts "[Title] " + title
   puts @summary_contents
   puts "\n"
-
-
 end

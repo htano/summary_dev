@@ -16,6 +16,7 @@ Dir.glob("tmp/auto_summarize/learning/url_summary_contents/????????/train_data_*
     f.each do |l|
       l = l.chomp
       l.split("").each do |p|
+        p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/。/, "") }
         p.split("。").each do |s|
           @s_ngr = s.ngram(2)
           @s_ngr.each do |k|
