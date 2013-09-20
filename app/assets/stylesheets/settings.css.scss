@@ -2,6 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.setting-container {
+  width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+}
+
 .setting-contents {
   float: right;
   width: 715px;
@@ -92,7 +99,7 @@
   border-top: 1px solid #ccc;
   border-bottom-left-radius: 1px;
   border-bottom-right-radius: 1px;
-  color: #666;
+  color: #a2a2a2;
   font-size: 13px;
 
   dl {
