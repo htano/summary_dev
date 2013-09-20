@@ -197,9 +197,7 @@ class MypageController < ApplicationController
 
     login_user = getLoginUser
     params[:article_ids].each do |article_id|
-      unless login_user.user_articles.exists?(:user_id => getLoginUser.id, :article_id => article_id)
-        UserArticle.create(:user_id => getLoginUser.id, :article_id => article_id)
-      end
+      login_user.user_articles.find_or_create_by(:user_id => getLoginUser.id, :article_id => article_id)
     end
 
     redirect_to :action => "index", :name => params[:name]
