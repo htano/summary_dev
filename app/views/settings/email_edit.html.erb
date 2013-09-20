@@ -5,10 +5,10 @@
 <div class="setting_container">
   <%= render :partial => "settings/partials/navilist", :locals => {:user => @user} %>
 
-  <div class="setting_contents">
+  <div class="setting-contents">
     <h3>Mail Setting(Edit)</h3>
     <form method="post" accept-charset="UTF-8" action="<%= url_for :action => 'email_edit_complete'%>">
-    <div class="setting_inner">
+    <div class="setting-inner">
 
       <dl>
         <dt>
@@ -35,7 +35,7 @@
       </dl>
 
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <input type="submit" class="profile_btn" value="send"></input>
+      <input type="submit" class="button button-flat:hover" value="send"></input>
     </div>
   </form>
   </div>
