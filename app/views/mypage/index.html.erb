@@ -12,19 +12,19 @@
           <% if @is_login_user %>
           <div></div>
           <% else %>
-          <% unless @is_already_following %>
-          <div id="follow-toggle">
-            <%= link_to "follow", 
-            {:action => "follow", :follow_user_id => @user.id, :remote => true}, 
-            {:id => "follow-button", :class => "button button-rounded button-flat-primary"} %>
-          </div>
-          <% else %>
-          <div id="follow-toggle">
-            <%= link_to "unfollow", 
-            {:action => "unfollow", :unfollow_user_id => @user.id, :remote => true}, 
-            {:id => "unfollow-button", :class => "button button-rounded button-flat-primary"} %>
-          </div>
-          <% end %>
+            <% unless @is_already_following %>
+            <div id="follow-toggle">
+              <%= link_to "follow", 
+              {:action => "follow", :follow_user_id => @user.id, :remote => true}, 
+              {:id => "follow-button", :class => "button button-rounded button-flat-primary"} %>
+            </div>
+            <% else %>
+            <div id="follow-toggle">
+              <%= link_to "unfollow", 
+              {:action => "unfollow", :unfollow_user_id => @user.id, :remote => true}, 
+              {:id => "unfollow-button", :class => "button button-rounded button-flat-primary"} %>
+            </div>
+            <% end %>
           <% end %>
           <hr/>
           <p>profile</p>
