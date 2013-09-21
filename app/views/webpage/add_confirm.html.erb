@@ -2,7 +2,7 @@
   <%= stylesheet_link_tag "webpage" %>
 <% end %>
 
-<div class="comment_box">URLを登録</div>
+<div class="comment_box">Comfirm.</div>
 <div class="url_box">
   <form method="POST" action="add_complete" class="confirm_url">
     <p class="url_title"><%= @title[0, 100] %></p>
@@ -12,26 +12,42 @@
         <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :articleId => @article_id} %>&nbsp;summaries
       <% else %>0 summary<% end %>
     </div>
+<!--
     <div id="comment_area">
       <textarea name="comment" rows="5"></textarea>
     </div>
+-->
     <div id="tag_area">
-      <div id="recommend-tags">
-        <label><span class="tag"><input type="checkbox" value="ruby">ruby</span></label>
-        <label><span class="tag"><input type="checkbox" value="rails">rails</span></label>
-        <label><span class="tag"><input type="checkbox" value="etc.">etc.</span></label>
-        <label><span class="tag"><input type="checkbox" value="ruby">ruby</span></label>
-        <label><span class="tag"><input type="checkbox" value="rails">rails</span></label>
-        <label><span class="tag"><input type="checkbox" value="etc.">etc.</span></label>
-        <label><span class="tag"><input type="checkbox" value="ruby">ruby</span></label>
-        <label><span class="tag"><input type="checkbox" value="rails">rails</span></label>
-        <label><span class="tag"><input type="checkbox" value="etc.">etc.</span></label>
-        <label><span class="tag"><input type="checkbox" value="etc.">etc.</span></label>
+      <input type="checkbox" id="tag_checkbox">Hide Tag Area.</input><br>
+
+      <div id="recommend-tags">recommend tags for this article.<br>
+        <label><span class="recommend-tag"><input type="checkbox" value="ruby">ruby</span></label>
+        <label><span class="recommend-tag"><input type="checkbox" value="rails">rails</span></label>
+        <label><span class="recommend-tag"><input type="checkbox" value="etc.">etc.</span></label>
+        <label><span class="recommend-tag"><input type="checkbox" value="ruby">ruby</span></label>
+        <label><span class="recommend-tag"><input type="checkbox" value="rails">rails</span></label>
+        <label><span class="recommend-tag"><input type="checkbox" value="etc.">etc.</span></label>
+        <label><span class="recommend-tag"><input type="checkbox" value="ruby">ruby</span></label>
+        <label><span class="recommend-tag"><input type="checkbox" value="rails">rails</span></label>
+        <label><span class="recommend-tag"><input type="checkbox" value="etc.">etc.</span></label>
+        <label><span class="recommend-tag"><input type="checkbox" value="etc.">etc.</span></label>
         <%= image_tag("icons/glyphicons_190_circle_plus.png", :size => "16x16", :id => "tag_plus") %>
+      </div>
+      <div id="my-tags">your tags for this article.<br>
+        <input type="text" class="tag_text" name="tag_text_1">
+        <input type="text" class="tag_text" name="tag_text_2">
+        <input type="text" class="tag_text" name="tag_text_3">
+        <input type="text" class="tag_text" name="tag_text_4">
+        <input type="text" class="tag_text" name="tag_text_5">
+        <input type="text" class="tag_text" name="tag_text_6">
+        <input type="text" class="tag_text" name="tag_text_7">
+        <input type="text" class="tag_text" name="tag_text_8">
+        <input type="text" class="tag_text" name="tag_text_9">
+        <input type="text" class="tag_text" name="tag_text_10">
       </div>
     </div>
     <div id="submit_area">
-      <input type="submit" id="submit" value="完了" class="button button-flat:hover submit">
+      <input type="submit" id="submit" value="add" class="button button-flat:hover submit">
     </div>
 
       <input type="hidden" name="url" value="<%= @url %>">
