@@ -4,11 +4,14 @@
 
 overFlag = false
 BLANK = ''
+oldContent = ''
 
-$(document).ready ->
+@loadEditForm = ->
 	firstEditFlag = document.getElementById('firstEditFlag')
 	if firstEditFlag != null and firstEditFlag.value.length > 0
 		document.getElementById('content').style.color = 'gray'
+	else
+		oldContent = document.getElementById('content').value
 
 @clearContent = ->
 	firstEditFlag = document.getElementById('firstEditFlag')
@@ -18,8 +21,9 @@ $(document).ready ->
 		document.getElementById('firstEditFlag').value = BLANK
 
 @clickClearButton = ->
-	if confirm "Clear?"
+	if confirm "clear summary?"
 		document.getElementById('content').value = 'Please edit summary within 300 characters.'
+		document.getElementById('content').style.color = 'gray'
 		document.getElementById('count').innerHTML = '0'
 		document.getElementById('count').setAttribute('class', 'count');
 		document.getElementById('firstEditFlag').value = 'true'
@@ -35,20 +39,15 @@ $(document).ready ->
 		alert 'Please edit summary.'
 		return false
 	else
-		document.getElementById('edit').disabled = 'true'
-		document.getElementById('clear').disabled = 'true'
-		document.getElementById('submit').disabled = BLANK
-		document.getElementById('back').disabled = BLANK
-		document.getElementById('content').readOnly = 'true'
-		document.getElementById('content').setAttribute('class', 'content_disabled'); 
+		form = $('.edit_form')
+		form.submit()
 
-@clickBackButton = ->
-	document.getElementById('edit').disabled = BLANK
-	document.getElementById('clear').disabled = BLANK
-	document.getElementById('submit').disabled = 'true'
-	document.getElementById('back').disabled = 'true'
-	content.readOnly = BLANK
-	content.setAttribute('class', 'content'); 
+@clickRestoreButton = ->
+	if confirm "restore summary?"
+		document.getElementById('content').value = oldContent
+		countContentCharacters()
+	else
+		return false
 
 @countContentCharacters = ->
 	max = 300
