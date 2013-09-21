@@ -34,6 +34,7 @@
                   <div class="row">
                     <div class="col-md-4 entry_count_num"">
                       <% if getLoginUser %>
+                        <%= image_tag "ajax-loader.gif", :id => "add_page_loader" + e.id.to_s, :style => "display:none; margin-top: 35px;" %>
                         <% if e.user_articles.where(:user_id => getLoginUser.id).first %>
                           <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' >Cancel</button>
                         <% else %>

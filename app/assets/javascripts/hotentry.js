@@ -35,6 +35,8 @@ function clickGoodSummary(summary_id) {
 
 function clickReadItLater(btn, url, aid) {
   if(url.length) {
+    btn.style.display = "none";
+    $("#add_page_loader" + aid).show();
     if(btn.className == "read_it_cancel") {
       $.ajax({
         url: '/webpage/delete',
@@ -46,6 +48,8 @@ function clickReadItLater(btn, url, aid) {
           btn.innerHTML="Read later";
           var reading_num = $('#reading_counter'+aid).text();
           $('#reading_counter'+aid).text(parseInt(reading_num) - 1);
+          btn.style.display = "inline";
+          $("#add_page_loader" + aid).hide();
         }
       });
     } else {
@@ -59,6 +63,8 @@ function clickReadItLater(btn, url, aid) {
           btn.innerHTML="Cancel";
           var reading_num = $('#reading_counter'+aid).text();
           $('#reading_counter'+aid).text(parseInt(reading_num) + 1);
+          btn.style.display = "inline";
+          $("#add_page_loader" + aid).hide();
         }
       });
     }
