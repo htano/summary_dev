@@ -50,6 +50,7 @@ function clickReadItLater(btn, url, aid) {
           $('#reading_counter'+aid).text(parseInt(reading_num) - 1);
           btn.style.display = "inline";
           $("#add_page_loader" + aid).hide();
+          $("#mark_as_read_btn" + aid).attr('style', "visibility:hidden;");
         }
       });
     } else {
@@ -65,8 +66,34 @@ function clickReadItLater(btn, url, aid) {
           $('#reading_counter'+aid).text(parseInt(reading_num) + 1);
           btn.style.display = "inline";
           $("#add_page_loader" + aid).hide();
+          $("#mark_as_read_btn" + aid).attr('style', "visibility:visible;");
+          $("#mark_as_read_btn" + aid).attr('class', "mark_as_read");
+          $("#mark_as_read_btn" + aid).text("Mark as read");
         }
       });
     }
   }
+}
+
+function clickMarkAsRead(btn, aid) {
+  btn.style.display = "none";
+  $("#mark_read_loader" + aid).show();
+  $.ajax({
+    url: '/webpage/mark_as_read',
+    type: 'GET',
+    data: 'article_id=' + aid,
+    dataType: 'text',
+    success: function(data) {
+      btn.style.display = "inline";
+      $("#mark_read_loader" + aid).hide();
+      if(data == "mark_as_read") {
+        btn.className="mark_as_unread";
+        btn.innerHTML="Unread";
+      } else {
+        btn.className="mark_as_read";
+        btn.innerHTML="Mark as read";
+      }
+    }
+  });
+
 }

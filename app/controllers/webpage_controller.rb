@@ -122,6 +122,27 @@ class WebpageController < ApplicationController
     end
   end
 
+  def mark_as_read
+    @msg = "NG"
+    @aid = params[:article_id]
+    @user_article = getLoginUser.user_articles.find_by_article_id(@aid)
+    if @user_article
+      if @user_article.read_flg
+        @user_article.read_flg = false
+      else
+        @user_article.read_flg = true
+      end
+      if @user_article.save
+        if @user_article.read_flg
+          @msg = "mark_as_read"
+        else
+          @msg = "mark_as_unread"
+        end
+      end
+    end
+    render :text => @msg
+  end
+
   def add
   	if signed_in?
       user_id = getLoginUser.id;

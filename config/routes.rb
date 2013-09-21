@@ -32,6 +32,7 @@ SummaryDev::Application.routes.draw do
   post 'webpage/add' => 'webpage#add'
   post 'webpage/get_title' => 'webpage#get_title'
   get 'webpage/delete' => 'webpage#delete'
+  get 'webpage/mark_as_read' => 'webpage#mark_as_read'
 
   #for webpage
   get 'summary/:article_id/edit' => 'summary#edit'

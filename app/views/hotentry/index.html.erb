@@ -32,12 +32,19 @@
                 </div>
                 <div class="col-md-4">
                   <div class="row">
-                    <div class="col-md-4 entry_count_num"">
+                    <div class="col-md-4 entry_count_num">
                       <% if getLoginUser %>
+                        <%= image_tag "ajax-loader.gif", :id => "mark_read_loader" + e.id.to_s, :style => "display:none;"%>
                         <%= image_tag "ajax-loader.gif", :id => "add_page_loader" + e.id.to_s, :style => "display:none; margin-top: 35px;" %>
                         <% if e.user_articles.where(:user_id => getLoginUser.id).first %>
+                          <% if e.user_articles.where(:user_id => getLoginUser.id).first.read_flg %>
+                            <button id="mark_as_read_btn<%= e.id %>" class="mark_as_unread" onClick='clickMarkAsRead(this, "<%= e.id %>")' >Unread</button>
+                          <% else %>
+                            <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' >Mark as read</button>
+                          <% end %>
                           <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' >Cancel</button>
                         <% else %>
+                          <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' style="visibility:hidden;">Mark as read</button>
                           <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>Read later</button>
                         <% end %>
                       <% else %>
@@ -145,9 +152,17 @@
               <div class="row">
                 <div class="col-md-4 entry_count_num">
                   <% if getLoginUser %>
+                    <%= image_tag "ajax-loader.gif", :id => "mark_read_loader" + e.id.to_s, :style => "display:none;"%>
+                    <%= image_tag "ajax-loader.gif", :id => "add_page_loader" + e.id.to_s, :style => "display:none; margin-top: 35px;" %>
                     <% if e.user_articles.where(:user_id => getLoginUser.id).first %>
+                      <% if e.user_articles.where(:user_id => getLoginUser.id).first.read_flg %>
+                        <button id="mark_as_read_btn<%= e.id %>" class="mark_as_unread" onClick='clickMarkAsRead(this, "<%= e.id %>")' >Unread</button>
+                      <% else %>
+                        <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' >Mark as read</button>
+                      <% end %>
                       <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' >Cancel</button>
                     <% else %>
+                      <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' style="visibility:hidden;">Mark as read</button>
                       <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>Read later</button>
                     <% end %>
                   <% else %>
