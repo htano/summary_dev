@@ -35,7 +35,7 @@
                     <div class="col-md-4 entry_count_num"">
                       <% if getLoginUser %>
                         <% if e.user_articles.where(:user_id => getLoginUser.id).first %>
-                          <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' disabled>reading</button>
+                          <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' >Cancel</button>
                         <% else %>
                           <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>Read later</button>
                         <% end %>
@@ -145,7 +145,7 @@
                 <div class="col-md-4 entry_count_num">
                   <% if getLoginUser %>
                     <% if e.user_articles.where(:user_id => getLoginUser.id).first %>
-                      <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' disabled>reading</button>
+                      <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' >Cancel</button>
                     <% else %>
                       <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>Read later</button>
                     <% end %>

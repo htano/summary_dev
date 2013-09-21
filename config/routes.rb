@@ -31,6 +31,7 @@ SummaryDev::Application.routes.draw do
   #for webpage
   post 'webpage/add' => 'webpage#add'
   post 'webpage/get_title' => 'webpage#get_title'
+  get 'webpage/delete' => 'webpage#delete'
 
   #for webpage
   get 'summary/:article_id/edit' => 'summary#edit'

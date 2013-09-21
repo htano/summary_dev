@@ -110,6 +110,18 @@ class WebpageController < ApplicationController
     end
   end
 
+  def delete
+    @aid = params[:article_id]
+    user_article = getLoginUser.user_articles.find_by_article_id(@aid)
+    if user_article
+      Article.find(@aid).remove_strength(getLoginUser.id)
+      user_article.destroy
+      render :text => "OK"
+    else
+      render :text => "NG"
+    end
+  end
+
   def add
   	if signed_in?
       user_id = getLoginUser.id;

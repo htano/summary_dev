@@ -100,6 +100,7 @@ class MypageController < ApplicationController
     params[:article_ids].each do |article_id|
       article = login_user.user_articles.find_by_article_id(article_id)
       unless article == nil
+        Article.find(article_id).remove_strength(getLoginUser.id)
         article.destroy
       end
     end

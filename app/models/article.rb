@@ -104,6 +104,20 @@ class Article < ActiveRecord::Base
     return self.save
   end
 
+  def remove_strength uid
+    @user_article = self.user_articles.find_by_user_id(uid)
+    if @user_article && self.strength && self.last_added_at
+      @user_added_at = @user_article.created_at
+      @hours_from_last_add = ((Time.now - self.last_added_at) / 1.hours).to_i
+      @hours_from_user_add = ((Time.now - @user_added_at) / 1.hours).to_i
+      self.strength = self.strength * (DECAY_DELTA**@hours_from_last_add) - 1.0 * (DECAY_DELTA**@hours_from_user_add)
+      self.last_added_at = Time.now
+      return self.save
+    else
+      return false
+    end
+  end
+
   def getCurrentStrength
     @current_strength = 0
     if self.last_added_at && self.strength
