@@ -11,6 +11,7 @@
  *= require_self
  *= require navbar.css
  *= require buttons.css
+ *= require bootstrap/bootstrap.css
  */
 .error {
   color: red;

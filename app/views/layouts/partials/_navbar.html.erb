@@ -10,6 +10,10 @@ function checkURL(){
 	}
 }
 </script>
+<% content_for :head do %>
+  　<%= stylesheet_link_tag "bootstrap/bootstrap.min.css" %>
+<% end %> 
+
 
 <%= form_tag({:controller => 'webpage', :action => 'add'}, {:method => 'POST', :remote => 'true'}) do %>
   <div class="navbar navbar-fixed-top">
