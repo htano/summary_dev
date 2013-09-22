@@ -14,15 +14,15 @@
           <% else %>
             <% unless @is_already_following %>
             <div id="follow-toggle">
-              <%= link_to "follow", 
-              {:action => "follow", :follow_user_id => @user.id, :remote => true}, 
-              {:id => "follow-button", :class => "button button-rounded button-flat-primary"} %>
+              <%= button_to "follow", 
+              {:action => "follow", :follow_user_id => @user.id}, 
+              {:id => "follow-button", :class => "btn btn-info btn-xs", :remote => true} %>
             </div>
             <% else %>
             <div id="follow-toggle">
-              <%= link_to "unfollow", 
-              {:action => "unfollow", :unfollow_user_id => @user.id, :remote => true}, 
-              {:id => "unfollow-button", :class => "button button-rounded button-flat-primary"} %>
+              <%= button_to "unfollow", 
+              {:action => "unfollow", :unfollow_user_id => @user.id}, 
+              {:id => "unfollow-button", :class => "btn btn-danger btn-xs", :remote => true} %>
             </div>
             <% end %>
           <% end %>
