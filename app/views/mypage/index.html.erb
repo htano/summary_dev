@@ -4,7 +4,7 @@
 
 <div class="container">
   <div class="myrow">
-    <div class="span3">
+    <div class="profile">
       <div id="user-profile">
         <%= image_tag(@user.prof_image, :size => "100x100") %>
         <div id="prof-user-name">
@@ -66,19 +66,19 @@
       <div id="user-info">
         <div id="prof-tab-following" class="active">
           <% if @favorite_users %>
-          <% @favorite_users.each do |favorite_user| %>
-          <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.name),
-          {:action => "index", :name => favorite_user.name} %>
-          <% end %>
+            <% @favorite_users.each do |favorite_user| %>
+            <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.name),
+            {:action => "index", :name => favorite_user.name} %>
+            <% end %>
           <% end %>
         </div>
         <div id="prof-tab-followers">
           <% if @followers %>
-          <% @followers.each do |follower| %>
-          <%= link_to image_tag(follower.prof_image, :size => "32x32", :title => follower.name),
-          {:action => "index", :name => follower.name},
-          {:id => "follower-id-"+ follower.id.to_s } %>
-          <% end %>
+            <% @followers.each do |follower| %>
+            <%= link_to image_tag(follower.prof_image, :size => "32x32", :title => follower.name),
+            {:action => "index", :name => follower.name},
+            {:id => "follower-id-"+ follower.id.to_s } %>
+            <% end %>
           <% end %>
         </div>
         <div id="prof-tab-summary">
