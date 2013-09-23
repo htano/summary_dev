@@ -17,7 +17,6 @@
 	//----------------------------------------
 	#summary_lists{
 		margin: 0 auto;
-		width: 1000px;
 		color: #a2a2a2;
 
 		//----------------------------------------	
@@ -25,13 +24,15 @@
 		//----------------------------------------
 		.main{
 			border: 2px solid #ddd;
-			width: 750px;
+			min-width: 750px;
+			max-width: 750px;
 			padding: 10px;
 		}
 
 		.status{
 			border: 2px solid #ddd;
-			width: 150px;
+			min-width: 150px;
+			max-width: 150px;
 			padding: 10px;
 		}
 		//----------------------------------------	
@@ -42,6 +43,9 @@
 			font-size: 24px;
 			background: #c6c6c6;
 			color: #FFFFFF;
+			text-overflow: ellipsis;
+			white-spce: nowrap;
+			overflow:hidden;
 			a.summary_list_link{ color: #FFFFFF }
 		}
 
