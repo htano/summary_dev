@@ -1,5 +1,6 @@
 <%= content_for :head do %>
-  <%= stylesheet_link_tag "summary_lists" %>
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <%= stylesheet_link_tag "summary_lists", "buttons" %>
 <% end %>
 
 <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
@@ -19,25 +20,21 @@
 				<div id ="article_read_mark">
 					<% unless @isReadArticle then %>
 						<div id="unreadBottun">
-						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_153_unchecked.png">
-						<%= link_to "unread",{:action => "isRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
-					    </div>
+
+						<%= link_to sanitize('<i class="glyphicon glyphicon-unchecked"></i>') + ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
+						</div>
 						<div id="alreadyReadBottun" style="display:none">
-						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_152_check.png">
-						<%= link_to "already read",{:action => "cancelIsRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
-					</div>
-					   
+							<%= link_to sanitize('<i class="glyphicon glyphicon-check"></i>') + ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
+						</div>
+
 					<% else %>
-
 						<div id="unreadBottun" style="display:none">
-						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_153_unchecked.png">
-						<%= link_to "unread",{:action => "isRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
-					    </div>
 
+						<%= link_to sanitize('<i class="glyphicon glyphicon-unchecked"></i>') + ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
+						</div>
 						<div id="alreadyReadBottun">
-						<img id="check_bottun_icon" width="16" height="16" src="/assets/icons/glyphicons_152_check.png">
-						<%= link_to "already read",{:action => "cancelIsRead", :articleId => @article.id, :remote => true}, { :id => "read_link" }%>
-					    </div>
+							<%= link_to sanitize('<i class="glyphicon glyphicon-check"></i>') + ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
+						</div>
 					<% end %>
 				</div>
 
@@ -53,17 +50,43 @@
 		</tr> 
 
 
-		<!-- ここで、自分我要約してればその結果、してなければ要約への導線をだす -->
+		<!-- 自分で要約してればその結果、してなければ要約への導線をだす -->
 		<tr>
+			<% unless @summaryByMe == nil then %>
+			<td id="my_summary_detail" class ="main">	
+				<%= simple_format_2(@summaryByMe.content) %>	
+			</td>
+			<td id="my_summary_auther" class ="status">	
+				あなたの要約です
+				<div id="auther_button" >
+					<%= link_to sanitize('<i class="glyphicon glyphicon-pencil"></i>') + ' edit', {:action => "isRead", :articleId => @article.id, :remote => true}%>
+				</div>
+
+				<div id="last_update_time">
+					LastUpdate:<br><%= @summaryByMe.updated_at.strftime("%Y/%m/%d %H:%M") %>
+				</div>
+
+			</td>
+
+			<% else %>
+			
 			<td class="main"> あなたも要約をして、誰かの時間を節約しませんか？
 			<td class="status">
+			
+			<% end %>
+
 		</tr>
-
-
 
 		<!-- summary lists -->
 		<% unless @summaryList.blank? %>
 			<% @summaryList.each_with_index do |summaryItem,index| %>
+
+				<!-- 自分の要約した文言は別で一番先頭で表示するので、リストでは見せない -->
+				<% if summaryItem.summary == @summaryByMe then %>
+			    	<% next %>
+				<% end %>	
+
+				<!-- 各要約内容、要約者の情報を表示していく -->
 				<tr>
 					<td id="summary_detail" class ="main">	
 						<%= simple_format_2(summaryItem.summary.content) %>	
@@ -86,10 +109,6 @@
 						<div id="last_update_time">
 							LastUpdate:<br><%= summaryItem.summary.updated_at.strftime("%Y/%m/%d %H:%M") %>
 						</div>
-
-
-
-
 
 
 									<hr>

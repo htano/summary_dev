@@ -26,20 +26,20 @@
 			border: 2px solid #ddd;
 			min-width: 750px;
 			max-width: 750px;
-			padding: 10px;
+			padding: 5px;
 		}
 
 		.status{
 			border: 2px solid #ddd;
-			min-width: 150px;
-			max-width: 150px;
-			padding: 10px;
+			min-width: 200px;
+			max-width: 240px;
+			padding: 5px;
 		}
 		//----------------------------------------	
 		//  article 
 		//----------------------------------------
 		#article_title{
-			height: 60px;
+			height: 70px;
 			font-size: 24px;
 			background: #c6c6c6;
 			color: #FFFFFF;
@@ -50,13 +50,14 @@
 		}
 
 		#article_status{
-			height: 60px;
+			height: 70px;
 			text-align: center;
 			vertical-align: top;
 			a.summary_list_link{ color: #a2a2a2 }
 
 			hr{
-				border: 0.5px solid #ddd;
+				margin: 5px 0px 5px 0px;
+				border: 1px solid #ddd;
 			}
 			//-------------------------------------------
 			//  read bottun
@@ -64,19 +65,13 @@
 
 			#article_read_mark{
 				margin: 0 auto;
-				border: 0.5px solid #ddd;
+				padding: 1px 1px 1px 5px;
+				text-align: left;
+				border: 1px solid #ddd;
 				border-radius: 5px;
-				width:  140px;
-				height: 22px;
+				width:  120px;
+				height: 25px;
 			}	
-
-			#check_bottun_icon{
-				float: left;
-				padding: 3px 0px 0px 6px;				
-			}
-			#read_link{
-				padding: 3px 0px 0px 0px;				
-			}
 
 			//-------------------------------------------
 			//  read bottun
@@ -87,8 +82,38 @@
 		} 
 
 		//----------------------------------------	
+		//  my_summary 
+		//----------------------------------------
+		#my_summary_detail{
+			height: 150px;
+			font-size: 20px;
+			vertical-align: top;
+			background: #FFFFEE;
+		}
+
+		#my_summary_auther{
+			height: 150px;
+			vertical-align: top;
+			background: #FFFFEE;
+
+			#auther_button{
+				margin: 5px 0px 5px 0px;
+				padding: 1px 1px 1px 5px;
+				text-align: left;
+				width:  120px;
+				height: 25px;
+			}
+			
+			hr{
+				border: 1px solid #ddd;
+				margin: 5px 0px 5px 0px;
+			}
+		}
+
+		//----------------------------------------	
 		//  summary 
 		//----------------------------------------
+
 		#summary_detail{
 			height: 150px;
 			font-size: 20px;
@@ -100,7 +125,8 @@
 
 			hr{
 				clear:both;
-				border: 0.5px solid #ddd;
+				border: 1px solid #ddd;
+				margin: 5px 0px 5px 0px;
 			}
 
 			//-------------------------------------------
@@ -123,7 +149,7 @@
 			#follow_mark{
 				margin: 2px 2px 2px 62px;
 				padding: 2px;				
-				border: 0.5px solid #ddd;
+				border: 1px solid #ddd;
 				border-radius: 5px;
 				width:  70px;
 				text-align: center;

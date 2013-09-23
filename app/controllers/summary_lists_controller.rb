@@ -37,7 +37,7 @@ class SummaryListsController < ApplicationController
 		@summaryList = @article.getSortedSummaryList(@user)
 		@isReadArticle = @article.isRead(@user)
 		@numOfMarkUsers = @article.getMarkedUser
-		@isSummarizedByMe = @article.summaries.find_by user_id: @user 
+		@summaryByMe = @article.summaries.find_by user_id: @user 
 	end
 
 	def goodSummary 
