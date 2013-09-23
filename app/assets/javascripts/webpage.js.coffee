@@ -27,11 +27,15 @@ BLANK = ''
 			return
 
 $ ->
-  $("#tag_checkbox").click ->
-    isChecked = $("#tag_checkbox:checked").val()
-    if isChecked
-      $("#recommend-tags").hide()
-      $("#my-tags").hide()
-    else
-      $("#recommend-tags").show()
-      $("#my-tags").show()
+	$("#tag_checkbox").click ->
+		isChecked = $("#tag_checkbox:checked").val()
+		if isChecked
+			$("#recommend-tags").hide()
+			$("#my-tags").hide()
+		else
+			$("#recommend-tags").show()
+			$("#my-tags").show()
+$ ->
+  $("#tag_plus").click ->
+		for i , index in $("#recommend-tags input")
+			alert "tag_plus"
