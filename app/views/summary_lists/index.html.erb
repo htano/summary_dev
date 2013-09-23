@@ -43,23 +43,25 @@
 				<div id ="mark_article">
 					<div id ="mark_user">
 						mark users
-						<%= @numOfMarkUsers %>
+						<b><%= @numOfMarkUsers %></b>
 					</div>
 				</div>
 			</td>
 		</tr> 
 
 
-		<!-- 自分で要約してればその結果、してなければ要約への導線をだす -->
+		<!-- 自分で要約してればその結果と要約編集への導線、してなければ要約追加への導線をだす -->
 		<tr>
 			<% unless @summaryByMe == nil then %>
 			<td id="my_summary_detail" class ="main">	
 				<%= simple_format_2(@summaryByMe.content) %>	
 			</td>
 			<td id="my_summary_auther" class ="status">	
-				あなたの要約です
+				あなたの要約です<br>
+				今 <b><%= @summaryByMe.good_summaries.count %>人</b> が <i class="glyphicon glyphicon-thumbs-up"></i> しています！ 	
+				
 				<div id="auther_button" >
-					<%= link_to sanitize('<i class="glyphicon glyphicon-pencil"></i>') + ' edit', {:action => "isRead", :articleId => @article.id, :remote => true}%>
+					<%= link_to sanitize('<i class="glyphicon glyphicon-pencil"></i>') + ' edit', {:controller => "summary", :action => "edit", :article_id => @article.id}%>
 				</div>
 
 				<div id="last_update_time">
@@ -71,8 +73,10 @@
 			<% else %>
 			
 			<td class="main"> あなたも要約をして、誰かの時間を節約しませんか？
-			<td class="status">
-			
+			</td>
+				<td class="status">
+					<%= link_to sanitize('<i class="glyphicon glyphicon-pencil"></i>') + ' add your summary ! ', {:controller => "summary", :action => "edit", :article_id => @article.id}%>
+				</td>
 			<% end %>
 
 		</tr>
@@ -95,7 +99,7 @@
 						<%= link_to image_tag(summaryItem.user.prof_image, :size => "50x50", :title => summaryItem.user.name, :id =>"auther_photo"),
 							{:controller => 'mypage',:action => "index", :name => summaryItem.user.name} %>
 							<div id ="auther_name">
-								<%= link_to summaryItem.user.name,
+								<%= link_to sanitize('<i class="glyphicon glyphicon-user"></i> ') + summaryItem.user.name,
 									{:controller => 'mypage',
 										:action => "index", 
 										:name => summaryItem.user.name} %>
