@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130914143856) do
+ActiveRecord::Schema.define(version: 20130925083026) do
 
   create_table "articles", force: true do |t|
     t.string   "url"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 20130914143856) do
   end
 
   add_index "summaries", ["user_id", "article_id"], name: "index_summaries_on_user_id_and_article_id", unique: true
+
+  create_table "user_article_tags", force: true do |t|
+    t.integer  "user_article_id"
+    t.string   "tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_article_tags", ["user_article_id", "tag"], name: "index_user_article_tags_on_user_article_id_and_tag", unique: true
 
   create_table "user_articles", force: true do |t|
     t.integer  "user_id"

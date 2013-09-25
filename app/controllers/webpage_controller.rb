@@ -44,6 +44,14 @@ class WebpageController < ApplicationController
       if article != nil
         @summary_num = article.summaries.count(:all)
         @article_id = article.id
+        #当該記事に設定されているタグの取得
+        #TODO 当該記事に設定されているタグの取得条件を修正する必要がある
+        @tags = []
+        article.user_articles(:all).each do |user_article|
+          user_article.user_article_tags(:all).each do |user_article_tag|
+            @tags.push(user_article_tag.tag)
+          end
+        end
       end
 
     else
@@ -139,19 +147,16 @@ class WebpageController < ApplicationController
       @url = "#{params[:url]}"
       tag_list = []
       #TODO このコードはイケてない、明日直す
-      tag_list.push(params[:tag_text_1]) if params[:tag_text_1] != BLANK
-      tag_list.push(params[:tag_text_2]) if params[:tag_text_2] != BLANK
-      tag_list.push(params[:tag_text_3]) if params[:tag_text_3] != BLANK
-      tag_list.push(params[:tag_text_4]) if params[:tag_text_4] != BLANK
-      tag_list.push(params[:tag_text_5]) if params[:tag_text_5] != BLANK
-      tag_list.push(params[:tag_text_6]) if params[:tag_text_6] != BLANK
-      tag_list.push(params[:tag_text_7]) if params[:tag_text_7] != BLANK
-      tag_list.push(params[:tag_text_8]) if params[:tag_text_8] != BLANK
-      tag_list.push(params[:tag_text_9]) if params[:tag_text_9] != BLANK
-      tag_list.push(params[:tag_text_10]) if params[:tag_text_10] != BLANK
-      p tag_list
-      p tag_list.length
-      #TODO 画面から設定されたタグを格納する処理
+      tag_list.push(params[:tag_text_1]) if params[:tag_text_1] != BLANK && !tag_list.include?(params[:tag_text_1])
+      tag_list.push(params[:tag_text_2]) if params[:tag_text_2] != BLANK && !tag_list.include?(params[:tag_text_2])
+      tag_list.push(params[:tag_text_3]) if params[:tag_text_3] != BLANK && !tag_list.include?(params[:tag_text_3])
+      tag_list.push(params[:tag_text_4]) if params[:tag_text_4] != BLANK && !tag_list.include?(params[:tag_text_4])
+      tag_list.push(params[:tag_text_5]) if params[:tag_text_5] != BLANK && !tag_list.include?(params[:tag_text_5])
+      tag_list.push(params[:tag_text_6]) if params[:tag_text_6] != BLANK && !tag_list.include?(params[:tag_text_6])
+      tag_list.push(params[:tag_text_7]) if params[:tag_text_7] != BLANK && !tag_list.include?(params[:tag_text_7])
+      tag_list.push(params[:tag_text_8]) if params[:tag_text_8] != BLANK && !tag_list.include?(params[:tag_text_8])
+      tag_list.push(params[:tag_text_9]) if params[:tag_text_9] != BLANK && !tag_list.include?(params[:tag_text_9])
+      tag_list.push(params[:tag_text_10]) if params[:tag_text_10] != BLANK && !tag_list.include?(params[:tag_text_10])
 
 
       article = Article.find_by_url(@url)
@@ -161,13 +166,23 @@ class WebpageController < ApplicationController
         @contents_preview = article.contents_preview
         @thumbnail = article.thumbnail
         user_article = article.user_articles.find_by_user_id(user_id)
-        if user_article != nil 
+        if user_article != nil
           #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
+          UserArticleTag.editTag(user_article.id, tag_list)
+          @tags = []
+          user_article.user_article_tags(:all).each do |user_article_tag|
+            @tags.push(user_article_tag.tag)
+          end
           @msg = "Already registered."  and return
         else
           #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
           user_article = UserArticle.new(:user_id => user_id, :article_id => @article_id, :read_flg => false)
           if user_article.save
+            UserArticleTag.editTag(user_article.id, tag_list)
+            @tags = []
+            user_article.user_article_tags(:all).each do |user_article_tag|
+              @tags.push(user_article_tag.tag)
+            end
             article.addStrength
             @msg = "Completed." and return
           end
@@ -189,8 +204,13 @@ class WebpageController < ApplicationController
           @article_id = article.id
           user_article = UserArticle.new(:user_id => user_id, :article_id => @article_id, :read_flg => false)
           if user_article.save
-              article.addStrength
-              @msg = "Completed." and return
+            UserArticleTag.editTag(user_article.id, tag_list)
+            @tags = []
+            user_article.user_article_tags(:all).each do |user_article_tag|
+              @tags.push(user_article_tag.tag)
+            end
+            article.addStrength
+            @msg = "Completed." and return
           end
         end
       end
@@ -205,13 +225,6 @@ class WebpageController < ApplicationController
       html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
         f.read
       end
-=begin
-
-      doc = Nokogiri::HTML.parse(open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE)).to
-      title = title_flg ? getArticleTitle(doc) : nil
-      contentsPreview = contentsPreview_flg ? getArticleContentsPreview(doc) : nil
-      thumbnail = thumbnail_flg ? getArticleThumbnail(doc) : nil
-=end
       title = title_flg ? getArticleTitle(html) : nil
       contentsPreview = contentsPreview_flg ? getArticleContentsPreview(html) : nil
       thumbnail = thumbnail_flg ? getArticleThumbnail(html) : nil
@@ -305,17 +318,4 @@ class WebpageController < ApplicationController
       return "本文が取得出来ませんでした。"
     end
   end
-
-  #自身とその子ノードからテキストを取得するメソッド
-  #自メソッドを再帰呼び出しすため危険なので、要修正
-  def setContentsPreview(contents_preview, node)
-    if node.text?
-      contents_preview += node.text
-    end
-    node.children.each do |child|
-      setContentsPreview(contents_preview, child)
-    end
-    return contents_preview
-  end
-
 end
