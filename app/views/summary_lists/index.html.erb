@@ -1,10 +1,13 @@
 <%= content_for :head do %>
-	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <%= javascript_include_tag "dedault", "readmore" %>
   <%= stylesheet_link_tag "summary_lists", "buttons" %>
 <% end %>
 
 <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
 
 
 
@@ -54,7 +57,9 @@
 		<tr>
 			<% unless @summaryByMe == nil then %>
 			<td id="my_summary_detail" class ="main">	
-				<%= simple_format_2(@summaryByMe.content) %>	
+				<article>
+					<%= simple_format_2(@summaryByMe.content) %>
+				</article>	
 			</td>
 			<td id="my_summary_auther" class ="status">	
 				あなたの要約です<br>
@@ -93,7 +98,9 @@
 				<!-- 各要約内容、要約者の情報を表示していく -->
 				<tr>
 					<td id="summary_detail" class ="main">	
-						<%= simple_format_2(summaryItem.summary.content) %>	
+						<article>
+							<%= simple_format_2(summaryItem.summary.content) %>
+						</article>	
 					</td>
 					<td id="summary_auther" class ="status">
 						<%= link_to image_tag(summaryItem.user.prof_image, :size => "50x50", :title => summaryItem.user.name, :id =>"auther_photo"),
@@ -193,3 +200,15 @@
 					<% end %>
 				</table>
 			</div>
+
+
+
+			<!-- ここからはJavaScript -->
+
+<script>
+$('article').readmore({
+  speed: 10,
+  maxHeight: 113,
+  moreLink: '<a href="#">続きを読む</a>',
+  lessLink: '<a href="#">閉じる</a>'
+});</script>
