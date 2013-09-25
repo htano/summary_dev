@@ -80,19 +80,26 @@
 
 			}
 		} 
+		//----------------------------------------	
+		//  readmore_char (for readmore.js) 
+		//----------------------------------------
+		.readmore_char{
+			font-size: 14px;
+			text-align: right;
+		}
 
 		//----------------------------------------	
 		//  my_summary 
 		//----------------------------------------
 		#my_summary_detail{
-			height: 150px;
-			font-size: 20px;
+			height: 170px;
+			font-size: 18px;
 			vertical-align: top;
 			background: #FFFFEE;
 		}
 
 		#my_summary_auther{
-			height: 150px;
+			height: 170px;
 			vertical-align: top;
 			background: #FFFFEE;
 
@@ -115,13 +122,14 @@
 		//----------------------------------------
 
 		#summary_detail{
-			height: 150px;
-			font-size: 20px;
+			height: 170px;
+			font-size: 18px;
 			vertical-align: top;
 		}
 
 		#summary_auther{
 			vertical-align: top;
+			height: 170px;
 
 			hr{
 				clear:both;
