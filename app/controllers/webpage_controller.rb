@@ -147,18 +147,11 @@ class WebpageController < ApplicationController
       @prof_image =  getLoginUser.prof_image
       @url = "#{params[:url]}"
       tag_list = []
-      #TODO このコードはイケてない、明日直す
-      tag_list.push(params[:tag_text_1]) if params[:tag_text_1] != BLANK && !tag_list.include?(params[:tag_text_1])
-      tag_list.push(params[:tag_text_2]) if params[:tag_text_2] != BLANK && !tag_list.include?(params[:tag_text_2])
-      tag_list.push(params[:tag_text_3]) if params[:tag_text_3] != BLANK && !tag_list.include?(params[:tag_text_3])
-      tag_list.push(params[:tag_text_4]) if params[:tag_text_4] != BLANK && !tag_list.include?(params[:tag_text_4])
-      tag_list.push(params[:tag_text_5]) if params[:tag_text_5] != BLANK && !tag_list.include?(params[:tag_text_5])
-      tag_list.push(params[:tag_text_6]) if params[:tag_text_6] != BLANK && !tag_list.include?(params[:tag_text_6])
-      tag_list.push(params[:tag_text_7]) if params[:tag_text_7] != BLANK && !tag_list.include?(params[:tag_text_7])
-      tag_list.push(params[:tag_text_8]) if params[:tag_text_8] != BLANK && !tag_list.include?(params[:tag_text_8])
-      tag_list.push(params[:tag_text_9]) if params[:tag_text_9] != BLANK && !tag_list.include?(params[:tag_text_9])
-      tag_list.push(params[:tag_text_10]) if params[:tag_text_10] != BLANK && !tag_list.include?(params[:tag_text_10])
-
+      params.each do |key,value|
+        if key.start_with?('tag_text_')
+          tag_list.push(value) if value != BLANK && !tag_list.include?(value)
+        end
+      end
 
       article = Article.find_by_url(@url)
       if article != nil

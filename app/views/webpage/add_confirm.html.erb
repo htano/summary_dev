@@ -12,15 +12,7 @@
         <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :articleId => @article_id} %>&nbsp;summaries
       <% else %>0 summary<% end %>
     </div>
-<!--
-    <div id="comment_area">
-      <textarea name="comment" rows="5"></textarea>
-    </div>
--->
     <div id="tag_area">
-      <!--
-      <input type="checkbox" id="tag_checkbox">Hide Tag Area.</input><br>
-      -->
       <div id="recommend-tags">recommend tags for this article.<br>
         <input type="checkbox" id="all_check">
         <% @tags.each do |tag| %>
