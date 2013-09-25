@@ -41,17 +41,18 @@ class WebpageController < ApplicationController
 
       article = Article.find_by_url(@url)
  
+      @tags = []
       if article != nil
         @summary_num = article.summaries.count(:all)
         @article_id = article.id
         #当該記事に設定されているタグの取得
         #TODO 当該記事に設定されているタグの取得条件を修正する必要がある
-        @tags = []
         article.user_articles(:all).each do |user_article|
           user_article.user_article_tags(:all).each do |user_article_tag|
             @tags.push(user_article_tag.tag)
           end
         end
+        p @tags
       end
 
     else
