@@ -125,4 +125,8 @@ class Article < ActiveRecord::Base
     return @top_rated_summary
   end
 
+  def self.getListByTag(tag)
+  	p tag
+  end
+
 end

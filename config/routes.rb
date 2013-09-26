@@ -1,4 +1,6 @@
 SummaryDev::Application.routes.draw do
+  get "article_lists/index"
+  get "article_lists/listByTag"
   get "hotentry/index"
   get "settings/profile"
   get "settings/profile_edit"
