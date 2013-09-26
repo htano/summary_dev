@@ -27,7 +27,7 @@ module FollowListsHelper
     if summary_num > 1
       summary_str = "edited " + summary_num.to_s + " summaries"
     else
-      summary_str = "edited " + summary_num.to_s + " summariy"
+      summary_str = "edited " + summary_num.to_s + " summary"
     end
 
     return content_tag(:p, register_str + ", " + summary_str)
