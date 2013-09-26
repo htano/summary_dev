@@ -9,8 +9,6 @@
 
 
 
-
-
 <div id ="sumlist_layout">
 	<table id ="summary_lists">
 		<tr>
@@ -24,19 +22,19 @@
 					<% unless @isReadArticle then %>
 						<div id="unreadBottun">
 
-						<%= link_to sanitize('<i class="glyphicon glyphicon-unchecked"></i>') + ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
+						<%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') + ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
 					</div>
 					<div id="alreadyReadBottun" style="display:none">
-						<%= link_to sanitize('<i class="glyphicon glyphicon-check"></i>') + ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
+						<%= link_to sanitize('<span class="glyphicon glyphicon-check"></span>') + ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
 					</div>
 
 				<% else %>
 						<div id="unreadBottun" style="display:none">
 
-						<%= link_to sanitize('<i class="glyphicon glyphicon-unchecked"></i>') + ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
+						<%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') + ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
 					</div>
 					<div id="alreadyReadBottun">
-						<%= link_to sanitize('<i class="glyphicon glyphicon-check"></i>') + ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
+						<%= link_to sanitize('<span class="glyphicon glyphicon-check"></span>') + ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
 					</div>
 				<% end %>
 				</div>
@@ -46,7 +44,7 @@
 				<div id ="mark_article">
 					<div id ="mark_user">
 						mark users
-						<b><%= @numOfMarkUsers %></b>
+						<span class="bold_char"><%= @numOfMarkUsers %></span>
 					</div>
 				</div>
 			</td>
@@ -63,10 +61,10 @@
 			</td>
 			<td id="my_summary_auther" class ="status">	
 				あなたの要約です<br>
-				今 <b><%= @summaryByMe.good_summaries.count %>人</b> が <i class="glyphicon glyphicon-thumbs-up"></i> しています！ 	
+				今 <span class="bold_char"><%= @summaryByMe.good_summaries.count %>人</span> が <span class="glyphicon glyphicon-thumbs-up"></span> しています！ 	
 
 				<div id="auther_button" >
-					<%= link_to sanitize('<i class="glyphicon glyphicon-pencil"></i>') + ' edit', {:controller => "summary", :action => "edit", :article_id => @article.id}%>
+					<%= link_to sanitize('<span class="glyphicon glyphicon-pencil"></span>') + ' edit', {:controller => "summary", :action => "edit", :article_id => @article.id}%>
 				</div>
 
 				<div id="last_update_time">
@@ -80,7 +78,7 @@
 				<td class="main"> あなたも要約をして、誰かの時間を節約しませんか？
 			</td>
 			<td class="status">
-				<%= link_to sanitize('<i class="glyphicon glyphicon-pencil"></i>') + ' add your summary ! ', {:controller => "summary", :action => "edit", :article_id => @article.id}%>
+				<%= link_to sanitize('<span class="glyphicon glyphicon-pencil"></span>') + ' add your summary ! ', {:controller => "summary", :action => "edit", :article_id => @article.id}%>
 			</td>
 		<% end %>
 
@@ -106,7 +104,7 @@
 				<%= link_to image_tag(summaryItem.user.prof_image, :size => "50x50", :title => summaryItem.user.name, :id =>"auther_photo"),
 					{:controller => 'mypage',:action => "index", :name => summaryItem.user.name} %>
 				<div id ="auther_name">
-						<%= link_to sanitize('<i class="glyphicon glyphicon-user"></i> ') + summaryItem.user.name,
+						<%= link_to sanitize('<span class="glyphicon glyphicon-user"></span> ') + summaryItem.user.name,
 							{:controller => 'mypage',
 		:action => "index", 
 		:name => summaryItem.user.name} %>
