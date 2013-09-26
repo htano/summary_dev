@@ -1,6 +1,6 @@
 <% follow = button_to 'follow', 
               {:action => 'follow', :follow_user_id => @user_id}, 
               {:id => 'follow-button', :class => 'btn btn-info btn-xs', :remote => true} %>
-$('#follow-toggle').html("<%= raw(escape_javascript(follow))  %>")
+$('#follow-<%= @user_id %>').html("<%= raw(escape_javascript(follow))  %>")
 $('#followers-num').html("<%= raw @follower_num %>")
 $("#follower-id-<%= @current_user.id %>").remove()

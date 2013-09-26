@@ -1,4 +1,7 @@
 SummaryDev::Application.routes.draw do
+  get "follow_lists/followers"
+  get "follow_lists/following"
+  get "follow_lists/suggestion"
   get "hotentry/index"
   get "settings/profile"
   get "settings/profile_edit"

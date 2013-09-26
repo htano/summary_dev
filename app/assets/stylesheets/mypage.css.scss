@@ -17,7 +17,7 @@
   color: #a2a2a2;
 
   hr {
-    margin: 5px 0px 5px 0px;
+    margin: 5px auto 5px auto;
   }
 
   // ----------------------
@@ -152,6 +152,13 @@
       margin-left: 1px;
       img {
         margin-top: 3px;
+      }
+      br+a {
+        float: right;
+        color: #a2a2a2;
+        &:hover {
+          color: #5B91FF;
+        }
       }
     }
   }

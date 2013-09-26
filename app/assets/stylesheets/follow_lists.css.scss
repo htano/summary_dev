@@ -1,0 +1,117 @@
+// Place all the styles related to the follow_lists controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.follow-lists-container {
+  width: 700px;
+  margin: 10px auto 0px auto;
+}
+
+ul.tab {
+  margin: 20px 20px 5px 20px;
+  padding: 0;
+  padding-left: 18px;
+  border-bottom: 2px #ddd solid;
+
+
+  li {
+    float: left;
+    margin: 5px 5px 0px 0px;
+    position: relative;
+    bottom: -2px;
+    list-style-type: none;
+    border: 1px #ddd solid;
+    border-bottom: 2px #ddd solid;
+    text-align: center;
+
+    a {
+      color: #000;
+      display: block;
+      padding: 0px 10px 0px;
+      text-decoration: none;
+      background-color: #fff;
+      font-size: 15px;
+      color: rgb(162, 162, 162);
+
+      &:hover {
+        position: relative;
+        background-color: gray;
+        color: white;
+      }
+    }
+    .active {
+      color: white;
+      background-color: #e6e6e6;
+    }
+  }
+}
+
+.clear:after {
+  content: "";
+  display: block;
+}
+
+.clear:after {
+  clear: both;
+}
+
+.clear {
+  zoom: 1;
+}
+
+#user-list {
+  float: left;
+  margin: 0px 0px 0px 40px;
+  width: 90%;
+}
+
+.user-profile {
+  border-bottom: 2px solid #ddd;
+  height: 70px;
+  margin-top: 3px;
+  img {
+    float: left;
+  }
+  div, p {
+    float: left;    
+    margin:  0px 0px 0px 10px;
+    color: #a2a2a2;
+  }
+  img+div {
+    width: 88%;
+  }
+  .user-name {
+    font-size: 14px;
+    margin: 3px 0px 0px 0px;
+    a {
+      color: #a2a2a2;
+    }
+    a:hover {
+      color: #5B91FF;
+    }
+  }
+  .follow-toggle {
+    clear: left;
+    float: right;
+  }
+
+  .information {
+    width: 80%;
+    margin: 0px;
+    font-size: 11px;
+  }
+  .comment {
+    width: 80%;
+    margin-left: 0px;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    word-wrap: break-word;
+  }
+
+  #follow-btn {
+    float: right;
+    margin: 0px;
+  }
+
+}
+

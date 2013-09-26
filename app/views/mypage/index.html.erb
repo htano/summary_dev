@@ -13,7 +13,7 @@
           <div></div>
           <% else %>
             <% unless @is_already_following %>
-            <div id="follow-toggle">
+            <div id="follow-<%= @user.id %>">
               <%= button_to "follow", 
               {:action => "follow", :follow_user_id => @user.id}, 
               {:id => "follow-button", :class => "btn btn-info btn-xs", :remote => true} %>
@@ -66,19 +66,29 @@
       <div id="user-info">
         <div id="prof-tab-following" class="active">
           <% if @favorite_users %>
-            <% @favorite_users.each do |favorite_user| %>
-            <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.name),
-            {:action => "index", :name => favorite_user.name} %>
+            <% @favorite_users.each_with_index do |favorite_user, i| %>
+              <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.name),
+              {:action => "index", :name => favorite_user.name} %>
+              <% if i > 12 %>
+                <% break %>
+              <% end %>
             <% end %>
+            <br>
+            <a href="/follow_lists/following?name=<%= @user.name %>">>> show all</a>
           <% end %>
         </div>
         <div id="prof-tab-followers">
           <% if @followers %>
-            <% @followers.each do |follower| %>
-            <%= link_to image_tag(follower.prof_image, :size => "32x32", :title => follower.name),
-            {:action => "index", :name => follower.name},
-            {:id => "follower-id-"+ follower.id.to_s } %>
+            <% @followers.each_with_index do |follower, i| %>
+              <%= link_to image_tag(follower.prof_image, :size => "32x32", :title => follower.name),
+              {:action => "index", :name => follower.name},
+              {:id => "follower-id-"+ follower.id.to_s } %>
+              <% if i > 12 %>
+                <% break %>
+              <% end %>
             <% end %>
+            <br>
+            <a href="/follow_lists/followers?name=<%= @user.name %>">>> show all</a>
           <% end %>
         </div>
         <div id="prof-tab-summary">
