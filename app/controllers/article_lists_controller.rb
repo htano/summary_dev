@@ -3,7 +3,7 @@ class ArticleListsController < ApplicationController
   end
 
   def listByTag
-  	@tag = "#{params[:tag]}"
-  	@articles = Article.getListByTag(@tag)
+    @tag = "#{params[:tag]}"
+    @articles = Article.getListByTag(@tag)
   end
 end

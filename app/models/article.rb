@@ -1,6 +1,6 @@
 class Article < ActiveRecord::Base
-	has_many :user_articles, :dependent => :destroy
-	has_many :summaries, :dependent => :destroy
+  has_many :user_articles, :dependent => :destroy
+  has_many :summaries, :dependent => :destroy
 
   # This is a decay parameter for article's strength.
   # A 'point' means a people say he is reading the article.
@@ -9,78 +9,78 @@ class Article < ActiveRecord::Base
   ZERO_ZERO_ONE_DAYS = 7
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
 
-	def getMarkedUser
-		return self.user_articles.count
-	end
+  def getMarkedUser
+    return self.user_articles.count
+  end
 
-	def isRead(user)
-		unless user == nil then
-			userArticleForIsRead = self.user_articles.find_by(:user_id => user.id)
-			unless  userArticleForIsRead == nil then
-				
-				if userArticleForIsRead.read_flg == true then
-				
+  def isRead(user)
+    unless user == nil then
+      userArticleForIsRead = self.user_articles.find_by(:user_id => user.id)
+      unless  userArticleForIsRead == nil then
+        
+        if userArticleForIsRead.read_flg == true then
+        
                 isRead = true
 
-				else
-			    	
-				isRead = false
+        else
+            
+        isRead = false
 
-				end
+        end
 
-			else
-				isRead = false 
-			end
-		else
-			isRead = false 
-		end	
-		return isRead
-	end
+      else
+        isRead = false 
+      end
+    else
+      isRead = false 
+    end  
+    return isRead
+  end
 
-	def getSortedSummaryList(user)
-		#create array for calcration 
-		scoreItem = Struct.new(:summary,:goodSummaryPoint)
-		scoreList = Array.new 
-		isGoodCompleted = Array.new
+  def getSortedSummaryList(user)
+    #create array for calcration 
+    scoreItem = Struct.new(:summary,:goodSummaryPoint)
+    scoreList = Array.new 
+    isGoodCompleted = Array.new
 
-		self.summaries.each_with_index do |summary,i|  
+    self.summaries.each_with_index do |summary,i|  
 
-			#calcurate goodSummaryPoint 
-			goodSummaryPoint = summary.good_summaries.count
+      #calcurate goodSummaryPoint 
+      goodSummaryPoint = summary.good_summaries.count
 
-			#scoreItem
-			scoreList[i] = scoreItem.new(summary, goodSummaryPoint)
-		end 
+      #scoreItem
+      scoreList[i] = scoreItem.new(summary, goodSummaryPoint)
+    end 
 
 
-		#sort summary list
-		#
-		#
-		#Under Construction
-		scoreList_sorted = scoreList.sort{|i,j|
-				j.goodSummaryPoint<=>i.goodSummaryPoint								 
-		}
-		#
-		#
+    #sort summary list
+    #
+    #
+    #Under Construction
+    scoreList_sorted = scoreList.sort{|i,j|
+        j.goodSummaryPoint<=>i.goodSummaryPoint                 
+    }
+    #
+    #
 
-		summaryItem = Struct.new(:summary, :user, :summaryPoint, :isGoodCompleted) 
-		summaryList = Array.new
-		#insert to each params  
-		scoreList_sorted.each_with_index do |scoreItem, i| 				
-			unless user == nil then
-				unless scoreItem.summary.good_summaries.find_by(:user_id => user.id) == nil then 
-					isGoodCompleted = true
-				else
-					isGoodCompleted = false 
-				end
-			else
-				isGoodCompleted = false 
-			end	
-			summaryList[i] = summaryItem.new(scoreItem.summary, scoreItem.summary.user,scoreItem.goodSummaryPoint,isGoodCompleted)  
-		end
+    summaryItem = Struct.new(:summary, :user, :summaryPoint, :isGoodCompleted) 
+    summaryList = Array.new
+    #insert to each params  
+    scoreList_sorted.each_with_index do |scoreItem, i|         
+      unless user == nil then
+        unless scoreItem.summary.good_summaries.find_by(:user_id => user.id) == nil then 
+          isGoodCompleted = true
+        else
+          isGoodCompleted = false 
+        end
+      else
+        isGoodCompleted = false 
+      end  
+      summaryList[i] = summaryItem.new(scoreItem.summary, scoreItem.summary.user,scoreItem.goodSummaryPoint,isGoodCompleted)  
+    end
 
-		return summaryList
-	end
+    return summaryList
+  end
 
   # Class Method
   def self.getHotEntryArtileList
@@ -126,21 +126,21 @@ class Article < ActiveRecord::Base
   end
 
   def self.getTopRatedTag(url)
-  	#最初の要素番号
-  	first_index = 0
-  	#最後の要素番号
-  	last_index = 9
-  	#指定されたurlに対して登録されている数が多い順にタグを取得する
+    #最初の要素番号
+    first_index = 0
+    #最後の要素番号
+    last_index = 9
+    #指定されたurlに対して登録されている数が多い順にタグを取得する
     top_rated_tags = joins(:user_articles => :user_article_tags).where('url' => url).group('tag').order('count_tag desc').count('tag').keys
     return top_rated_tags[first_index..last_index]
   end
 
   def self.getRecentTag(user_id)
-  	#最初の要素番号
-  	first_index = 0
-  	#最後の要素番号
-  	last_index = 9
-  	#指定されたurlに対して登録されている数が多い順にタグを取得する
+    #最初の要素番号
+    first_index = 0
+    #最後の要素番号
+    last_index = 9
+    #指定されたurlに対して登録されている数が多い順にタグを取得する
     recent_tags = joins(:user_articles => :user_article_tags).where('user_articles.user_id' => user_id).group('tag').order('user_article_tags.created_at desc').count('tag').keys
     return recent_tags[first_index..last_index]
   end

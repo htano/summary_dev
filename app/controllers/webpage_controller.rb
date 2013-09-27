@@ -274,11 +274,11 @@ class WebpageController < ApplicationController
     rescue => e
       logger.error("error :#{e}")
       begin
-      	text = ""
+        text = ""
         Nokogiri::HTML.parse(html).xpath('//p').each do |p|
           if p.inner_text != nil and p.inner_text != BLANK
             text += p.inner_text + "\n"
-           end
+          end
         end
         return text
         # logger.debug("content_preview : #{contents_preview}")

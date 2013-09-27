@@ -18,7 +18,7 @@ class SummaryController < ApplicationController
       redirect_to :controller => "consumer", :action => "index"
     end
   end
-
+  
   def edit
     if signed_in?
       @article_id = "#{params[:article_id]}"
