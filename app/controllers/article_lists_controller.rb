@@ -1,9 +1,6 @@
 class ArticleListsController < ApplicationController
-  def index
-  end
-
-  def listByTag
+  def list_by_tag
     @tag = "#{params[:tag]}"
-    @articles = Article.getListByTag(@tag)
+    @articles = Article.get_list_by_tag(@tag)
   end
 end

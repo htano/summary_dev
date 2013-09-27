@@ -35,12 +35,16 @@ oldContent = ''
   content = document.getElementById('content').value
   content_num = content.replace(/\n|\r\n/g,"").length
   firstEditFlag = document.getElementById('firstEditFlag')
-  if content_num is 0 or firstEditFlag.value.length > 0
-    alert 'Please edit summary.'
+  if overFlag
+    alert 'Please edit summary within 300 characters.'
     return false
   else
-    form = $('.edit_form')
-    form.submit()
+    if content_num is 0 or firstEditFlag.value.length > 0
+      alert 'Please edit summary.'
+      return false
+    else
+      form = $('.edit_form')
+      form.submit()
 
 @clickRestoreButton = ->
   if confirm "restore summary?"
@@ -69,7 +73,6 @@ oldContent = ''
     content_num　= 300 - content_num
     if !overFlag
       document.getElementById('count').setAttribute('class', 'count_over');
-      document.getElementById('edit').disabled = 'true'
       overFlag = true
   else if content_num <= max and overFlag
     document.getElementById('count').setAttribute('class', 'count');

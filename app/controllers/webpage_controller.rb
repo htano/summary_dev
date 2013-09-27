@@ -31,7 +31,7 @@ class WebpageController < ApplicationController
     if signed_in?
       @user_id = getLoginUser.id
       @url = "#{params[:url]}"
-      h = getArticleElement(@url, true, false, false)
+      h = get_article_element(@url, true, false, false)
       if h == nil
         @msg = "Please check URL."
         redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
@@ -41,15 +41,13 @@ class WebpageController < ApplicationController
 
       article = Article.find_by_url(@url)
 
-      #ユーザーが最近登録したタグの取得
-      @recent_tags = Article.getRecentTag(@user_id)
+      @recent_tags = Article.get_recent_tag(@user_id)
  
       @top_rated_tags = []
-      if article != nil
+      unless article == nil
         @summary_num = article.summaries.count(:all)
         @article_id = article.id
-        #当該記事に設定されているタグの取得
-        @top_rated_tags = Article.getTopRatedTag(@url)
+        @top_rated_tags = Article.get_top_rated_tag(@url)
       end
 
     else
@@ -63,16 +61,15 @@ class WebpageController < ApplicationController
       user_id = getLoginUser.id
       @url = "#{params[:url]}"
       article = Article.find_by_url(@url)
-      if article != nil
-        user_article = article.user_articles.find_by_user_id(user_id)
-        if user_article != nil 
-          #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、article.idを返却する
-          render :text => article.id and return
-        else
-          render :text => BLANK and return
-        end
-      else
+      if article == nil
         render :text => BLANK and return
+      else
+        user_article = article.user_articles.find_by_user_id(user_id)
+        if user_article == nil
+          render :text => BLANK and return
+        else
+          render :text => article.id and return
+        end
       end
     else
       redirect_to :controller => "consumer", :action => "index"
@@ -98,22 +95,8 @@ class WebpageController < ApplicationController
         render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
       end
       article = Article.find_by_url(@url)
-      if article != nil
-        @contents_preview = article.contents_preview
-        @thumbnail = article.thumbnail
-        user_article = article.user_articles.find_by_user_id(user_id)
-        if user_article != nil
-          render :text => article.id and return
-        else
-          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false)
-          if user_article.save
-            article.addStrength
-            render :text => article.id and return
-          end
-        end
-      else
-
-        h = getArticleElement(@url)
+      if article == nil
+        h = get_article_element(@url)
         if h == nil
           @msg = "Please check URL."
           redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
@@ -122,8 +105,6 @@ class WebpageController < ApplicationController
         @contents_preview = h["contentsPreview"]
         @thumbnail = h["thumbnail"]
 
-        #同じURLの情報がない場合、a010とr010両方にinsertする
-        #カテゴリはペンディング事項
         article = Article.new(:url => params[:url], :title => title, :contents_preview => @contents_preview[0, 200], :category_id =>"001", :thumbnail => @thumbnail)
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false)
@@ -131,6 +112,19 @@ class WebpageController < ApplicationController
             article.addStrength
             render :text => article.id and return
           end
+        end
+      else
+        @contents_preview = article.contents_preview
+        @thumbnail = article.thumbnail
+        user_article = article.user_articles.find_by_user_id(user_id)
+        if user_article == nil
+          user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false)
+          if user_article.save
+            article.addStrength
+            render :text => article.id and return
+          end
+        else
+          render :text => article.id and return
         end
       end
     else
@@ -146,30 +140,26 @@ class WebpageController < ApplicationController
       tag_list = []
       params.each do |key,value|
         if key.start_with?('tag_text_')
-          tag_list.push(value) if value != BLANK && !tag_list.include?(value)
+          tag_list.push(value) unless value == BLANK || tag_list.include?(value)
         end
       end
 
       article = Article.find_by_url(@url)
-      if article != nil
-        @article_id = article.id
-        @title = article.title
-        @contents_preview = article.contents_preview
-        @thumbnail = article.thumbnail
-        user_article = article.user_articles.find_by_user_id(user_id)
-        if user_article != nil
-          #同じURLの情報は存在するかつ、ユーザーがすでに登録している場合、エラーメッセージを表示する
-          UserArticleTag.editTag(user_article.id, tag_list)
-          @tags = []
-          user_article.user_article_tags(:all).each do |user_article_tag|
-            @tags.push(user_article_tag.tag)
-          end
-          @msg = "Already registered."  and return
-        else
-          #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
+      if article == nil
+        h = get_article_element(@url)
+        if h == nil
+          @msg = "Please check URL."
+          redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+        end
+        @title = h["title"]
+        @contents_preview = h["contentsPreview"]
+        @thumbnail = h["thumbnail"]
+        article = Article.new(:url => params[:url], :title => @title, :contents_preview => @contents_preview[0, 200], :category_id =>"001", :thumbnail => @thumbnail)
+        if article.save
+          @article_id = article.id
           user_article = UserArticle.new(:user_id => user_id, :article_id => @article_id, :read_flg => false)
           if user_article.save
-            UserArticleTag.editTag(user_article.id, tag_list)
+            UserArticleTag.edit_tag(user_article.id, tag_list)
             @tags = []
             user_article.user_article_tags(:all).each do |user_article_tag|
               @tags.push(user_article_tag.tag)
@@ -179,23 +169,15 @@ class WebpageController < ApplicationController
           end
         end
       else
-
-        h = getArticleElement(@url)
-        if h == nil
-          @msg = "Please check URL."
-          redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
-        end
-        @title = h["title"]
-        @contents_preview = h["contentsPreview"]
-        @thumbnail = h["thumbnail"]
-        #同じURLの情報がない場合、a010とr010両方にinsertする
-        #カテゴリはペンディング事項
-        article = Article.new(:url => params[:url], :title => @title, :contents_preview => @contents_preview[0, 200], :category_id =>"001", :thumbnail => @thumbnail)
-        if article.save
-          @article_id = article.id
+        @article_id = article.id
+        @title = article.title
+        @contents_preview = article.contents_preview
+        @thumbnail = article.thumbnail
+        user_article = article.user_articles.find_by_user_id(user_id)
+        if user_article == nil
           user_article = UserArticle.new(:user_id => user_id, :article_id => @article_id, :read_flg => false)
           if user_article.save
-            UserArticleTag.editTag(user_article.id, tag_list)
+            UserArticleTag.edit_tag(user_article.id, tag_list)
             @tags = []
             user_article.user_article_tags(:all).each do |user_article_tag|
               @tags.push(user_article_tag.tag)
@@ -203,6 +185,13 @@ class WebpageController < ApplicationController
             article.addStrength
             @msg = "Completed." and return
           end
+        else
+          UserArticleTag.edit_tag(user_article.id, tag_list)
+          @tags = []
+          user_article.user_article_tags(:all).each do |user_article_tag|
+            @tags.push(user_article_tag.tag)
+          end
+          @msg = "Already registered."  and return
         end
       end
     else
@@ -211,14 +200,14 @@ class WebpageController < ApplicationController
   end
 
   #TODO livedoorのサイトでエラーが発生する。
-  def getArticleElement(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
+  def get_article_element(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
     begin
       html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
         f.read
       end
-      title = title_flg ? getArticleTitle(html) : nil
-      contentsPreview = contentsPreview_flg ? getArticleContentsPreview(html) : nil
-      thumbnail = thumbnail_flg ? getArticleThumbnail(html) : nil
+      title = title_flg ? get_article_title(html) : nil
+      contentsPreview = contentsPreview_flg ? get_article_contents_preview(html) : nil
+      thumbnail = thumbnail_flg ? get_article_thumbnail(html) : nil
       h = {"title" => title, "thumbnail" => thumbnail, "contentsPreview" => contentsPreview}
       return h
     rescue => e
@@ -228,14 +217,13 @@ class WebpageController < ApplicationController
   end
 
   #タイトルを取得するメソッド
-  def getArticleTitle(html)
+  def get_article_title(html)
     begin
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
-      if doc.title != nil && doc.title != BLANK
-        return doc.title
-      else
-        #タイトルが取得出来ない時はホスト名をタイトルに設定する
+      if doc.title == nil || doc.title == BLANK
         return URI.parse("#{params[:url]}").host
+      else
+        return doc.title
       end
     rescue => e
       logger.error("error :#{e}")
@@ -244,15 +232,14 @@ class WebpageController < ApplicationController
   end
 
   #サムネイルを取得するメソッド
-  def getArticleThumbnail(html)
+  def get_article_thumbnail(html)
     begin
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
       doc.xpath("//img[starts-with(@src, 'http://')]").each do |img|
         image = Magick::ImageList.new(img['src'])
         columns = image.columns 
         rows = image.rows
-        #閾値を超える最初の画像を象徴的な画像として返却する
-        if columns.to_i > THRESHOLD_SIDE and rows.to_i > THRESHOLD_SIDE and (columns.to_i*rows.to_i) > THRESHOLD_ALL
+        if columns.to_i > THRESHOLD_SIDE && rows.to_i > THRESHOLD_SIDE && (columns.to_i*rows.to_i) > THRESHOLD_ALL
           return img['src']
         end
       end
@@ -264,49 +251,26 @@ class WebpageController < ApplicationController
   end
 
   #プレビューを取得するメソッド
-  def getArticleContentsPreview(html)
+  def get_article_contents_preview(html)
     begin
       html = html.force_encoding("UTF-8")
       html = html.encode("UTF-8", "UTF-8")
       contents_preview, title = ExtractContent.analyse(html)
       return contents_preview
-       # logger.debug("content_preview : #{contents_preview}")
     rescue => e
       logger.error("error :#{e}")
       begin
         text = ""
         Nokogiri::HTML.parse(html).xpath('//p').each do |p|
-          if p.inner_text != nil and p.inner_text != BLANK
+          unless p.inner_text == nil || p.inner_text == BLANK
             text += p.inner_text + "\n"
           end
         end
         return text
-        # logger.debug("content_preview : #{contents_preview}")
       rescue => e
         logger.error("error :#{e}")
         return "プレビューは取得出来ませんでした。"
       end
-    end
-  end
-
-  #プレビューを取得するメソッド(Nokogiriのみ)
-  def getArticleContentsPreview_N(html)
-    begin
-      contents_preview = ""
-      Nokogiri::HTML.parse(html).xpath('//p').each do |p|
-        if p.text?
-          contents_preview += p.text
-        end
-        p.children.each do |child|
-          contents_preview += child.text
-        end
-      end
-      return contents_preview
-        # logger.debug("content_preview : #{contents_preview}")
-    rescue => e
-      # TODO : enable to handle "ArgumentError - invalid byte sequence in UTF-8:"
-      logger.error("error :#{e}")
-      return "本文が取得出来ませんでした。"
     end
   end
 end

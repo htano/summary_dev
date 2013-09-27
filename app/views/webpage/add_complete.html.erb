@@ -23,7 +23,7 @@
   <% if @tags != nil && @tags.length != 0 %>
     <div id="tag">your tags for this article.<br>
       <% @tags.each do |tag| %>
-        <label><span class="edited-tag"><%= link_to tag ,{:controller => "article_lists", :action => "listByTag", :tag => tag } %></span></label>
+        <label><span class="edited-tag"><%= link_to tag ,{:controller => "article_lists", :action => "list_by_tag", :tag => tag } %></span></label>
       <% end %>
     </div>
   <% else %>
