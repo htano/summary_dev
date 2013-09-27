@@ -4,17 +4,17 @@
 disableButton = (elem) ->
   $(elem).css("background-color", "#ddd").unwrap()
 
-wrapAll = (class_name, params, checked_num, article_ids) ->
-  $(".#{class_name}>#mark-as-read-btn").wrap("<a href=/mypage/mark_as_read?#{params}></a>")
-  $(".#{class_name}>#mark-as-unread-btn").wrap("<a href=/mypage/mark_as_unread?#{params}></a>")
+wrapAll = (class_name, params, checked_num, article_ids, page) ->
+  $(".#{class_name}>#mark-as-read-btn").wrap("<a href=/mypage/mark_as_read?#{params}#{page}></a>")
+  $(".#{class_name}>#mark-as-unread-btn").wrap("<a href=/mypage/mark_as_unread?#{params}#{page}></a>")
   if checked_num == 1
     $(".#{class_name}>#edit-summary-btn").wrap("<a href='/summary/#{article_ids}/edit'}></a>")
-  $(".#{class_name}>#mark-as-favorite-btn").wrap("<a href=/mypage/mark_as_favorite?#{params}></a>")
-  $(".#{class_name}>#mark-off-favorite-btn").wrap("<a href=/mypage/mark_off_favorite?#{params}></a>")
-  $(".#{class_name}>#delete-btn").wrap("<a href=/mypage/delete_article?#{params}></a>")
-  $(".#{class_name}>#delete-summary-btn").wrap("<a href=/mypage/delete_summary?#{params}></a>")
+  $(".#{class_name}>#mark-as-favorite-btn").wrap("<a href=/mypage/mark_as_favorite?#{params}#{page}></a>")
+  $(".#{class_name}>#mark-off-favorite-btn").wrap("<a href=/mypage/mark_off_favorite?#{params}#{page}></a>")
+  $(".#{class_name}>#delete-btn").wrap("<a href=/mypage/delete_article?#{params}#{page}></a>")
+  $(".#{class_name}>#delete-summary-btn").wrap("<a href=/mypage/delete_summary?#{params}#{page}></a>")
 
-@clickArticleCheckBox = (form_name, class_name) ->
+@clickArticleCheckBox = (form_name, class_name, page) ->
   checkbox = document.getElementsByName(form_name.name).item(0)
   checkbox_num = checkbox.length
 
@@ -44,7 +44,7 @@ wrapAll = (class_name, params, checked_num, article_ids) ->
       i++
 
     $(".#{class_name}>a>div").unwrap()
-    wrapAll(class_name, params, checked_num, article_ids)
+    wrapAll(class_name, params, checked_num, article_ids, page)
 
 @clickCheckBoxForClip = (name) ->
   main_checkbox     = document.main_checkbox

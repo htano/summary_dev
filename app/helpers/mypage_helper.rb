@@ -11,15 +11,15 @@ module MypageHelper
     end
   end
 
-  def render_article_table(tab, table)
+  def render_article_table(tab, table, page)
     if table
-      render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(#{tab}_checkbox, '#{tab}')"}, :object => table
+      render :partial => "article_table", :locals => {:click_checkbox => "clickArticleCheckBox(#{tab}_checkbox, '#{tab}', '#{page}')"}, :object => table
     end
   end
 
-  def render_summary_table(tab, table)
+  def render_summary_table(tab, table, page)
     if table
-      render :partial => "summary_table", :locals => {:click_checkbox => "clickArticleCheckBox(#{tab}_checkbox, '#{tab}')"}, :object => table
+      render :partial => "summary_table", :locals => {:click_checkbox => "clickArticleCheckBox(#{tab}_checkbox, '#{tab}', '#{page}')"}, :object => table
     end
   end
 end

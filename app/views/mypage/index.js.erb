@@ -6,7 +6,7 @@
   <% page_position = get_page_position(@mpage, @main_articles_table, @total_main_articles_num) %>
   $(".main>.page_info").html("<%= raw page_position %>");
   $("#main-check-all").attr("checked", false);
-  <% render_main_table = render_article_table('main', @main_articles_table) %>
+  <% render_main_table = render_article_table('main', @main_articles_table, 'mpage=' + @mpage.to_s) %>
   $(".main-table .table-top").nextAll().remove();
   $(".main-table tbody").append("<%= escape_javascript(render_main_table) %>");
 <% elsif @current_tab == "summary" %>
@@ -17,7 +17,7 @@
   <% page_position = get_page_position(@spage, @summaries_table, @total_summaries_num) %>
   $(".summary>.page_info").html("<%= raw page_position %>");
   $("#summary-check-all").attr("checked", false);
-  <% render_summary_table = render_summary_table('summary', @summaries_table) %>
+  <% render_summary_table = render_summary_table('summary', @summaries_table, 'spage=' + @spage.to_s) %>
   $(".summary-table .table-top").nextAll().remove();
   $(".summary-table tbody").append("<%= escape_javascript(render_summary_table) %>");
 <% elsif @current_tab == "favorite" %>
@@ -28,7 +28,7 @@
   <% page_position = get_page_position(@fpage, @favorite_articles_table, @total_favorite_articles_num) %>
   $(".favorite>.page_info").html("<%= raw page_position %>");
   $("#favorite-check-all").attr("checked", false);
-  <% render_favorite_table = render_article_table('favorite', @favorite_articles_table) %>
+  <% render_favorite_table = render_article_table('favorite', @favorite_articles_table, 'fpage=' + @fpage.to_s) %>
   $(".favorite-table .table-top").nextAll().remove();
   $(".favorite-table tbody").append("<%= escape_javascript(render_favorite_table) %>");
 <% elsif @current_tab == "read" %>
@@ -39,7 +39,7 @@
   <% page_position = get_page_position(@rpage, @read_articles_table, @total_read_articles_num) %>
   $(".read>.page_info").html("<%= raw page_position %>");
   $("#read-check-all").attr("checked", false);
-  <% render_read_table = render_article_table('read', @read_articles_table) %>
+  <% render_read_table = render_article_table('read', @read_articles_table, 'rpage=' + @rpage.to_s) %>
   $(".read-table .table-top").nextAll().remove();
   $(".read-table tbody").append("<%= escape_javascript(render_read_table) %>");
 <% end %>
