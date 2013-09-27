@@ -125,8 +125,30 @@ class Article < ActiveRecord::Base
     return @top_rated_summary
   end
 
+  def self.getTopRatedTag(url)
+  	#最初の要素番号
+  	first_index = 0
+  	#最後の要素番号
+  	last_index = 9
+  	#指定されたurlに対して登録されている数が多い順にタグを取得する
+    top_rated_tags = joins(:user_articles => :user_article_tags).where('url' => url).group('tag').order('count_tag desc').count('tag').keys
+    return top_rated_tags[first_index..last_index]
+  end
+
+  def self.getRecentTag(user_id)
+  	#最初の要素番号
+  	first_index = 0
+  	#最後の要素番号
+  	last_index = 9
+  	#指定されたurlに対して登録されている数が多い順にタグを取得する
+    recent_tags = joins(:user_articles => :user_article_tags).where('user_articles.user_id' => user_id).group('tag').order('user_article_tags.created_at desc').count('tag').keys
+    return recent_tags[first_index..last_index]
+  end
+
+
   def self.getListByTag(tag)
-  	p tag
+    articles = joins(:user_articles => :user_article_tags).where('user_article_tags.tag' => tag).order('created_at desc')
+    return articles
   end
 
 end

@@ -29,7 +29,7 @@ class WebpageController < ApplicationController
   
   def add_confirm
     if signed_in?
-      @user_id = "#{params[:id]}"
+      @user_id = getLoginUser.id
       @url = "#{params[:url]}"
       h = getArticleElement(@url, true, false, false)
       if h == nil
@@ -40,19 +40,16 @@ class WebpageController < ApplicationController
       @title = h["title"]
 
       article = Article.find_by_url(@url)
+
+      #ユーザーが最近登録したタグの取得
+      @recent_tags = Article.getRecentTag(@user_id)
  
-      @tags = []
+      @top_rated_tags = []
       if article != nil
         @summary_num = article.summaries.count(:all)
         @article_id = article.id
         #当該記事に設定されているタグの取得
-        #TODO 当該記事に設定されているタグの取得条件を修正する必要がある
-        article.user_articles(:all).each do |user_article|
-          user_article.user_article_tags(:all).each do |user_article_tag|
-            @tags.push(user_article_tag.tag)
-          end
-        end
-        p @tags
+        @top_rated_tags = Article.getTopRatedTag(@url)
       end
 
     else

@@ -9,7 +9,7 @@
 
 <div id="entry-contents">
   <div id="thumbnail">
-    <%= image_tag(@thumbnail, :size => "120x150") %>
+    <%= image_tag(@thumbnail) %>
   </div>
   <div id="url_title">
     <p><a href="<%= @url %>" target="_blank"><%= @title[0, 100] %></a></p>
@@ -20,12 +20,15 @@
   </div>
   <div id="category">
   </div>
-  <div id="tag">your tags for this article.<br>
-    <% @tags.each do |tag| %>
-      p tag
-      <label><span class="edited-tag"><%= link_to tag ,{:controller => "article_lists", :action => "listByTag", :tag => tag } %></span></label>
-    <% end %>
-  </div>
+  <% if @tags != nil && @tags.length != 0 %>
+    <div id="tag">your tags for this article.<br>
+      <% @tags.each do |tag| %>
+        <label><span class="edited-tag"><%= link_to tag ,{:controller => "article_lists", :action => "listByTag", :tag => tag } %></span></label>
+      <% end %>
+    </div>
+  <% else %>
+    <div id="tag">no tags for this article.<br></div>    
+  <% end %>
 </div>
 
 <div id="operation-contents">

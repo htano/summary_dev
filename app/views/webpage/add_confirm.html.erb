@@ -13,14 +13,32 @@
       <% else %>0 summary<% end %>
     </div>
     <div id="tag_area">
-      <div id="recommend-tags">recommend tags for this article.<br>
-        <input type="checkbox" id="all_check">
-        <% @tags.each do |tag| %>
-          <label><span class="recommend-tag"><input type="checkbox" value="<%= tag %>"><%= tag %></span></label>
-        <% end %>
-        <%= image_tag("icons/glyphicons_190_circle_plus.png", :size => "16x16", :id => "tag_plus") %>
-      </div>
-      <div id="my-tags">your tags for this article.<br>
+      <% if @top_rated_tags != nil && @top_rated_tags.length != 0 %>
+        <div id="recommend-tags">recommend tags for this article.<br>
+          <input type="checkbox" id="recommend_check">
+          <% @top_rated_tags.each do |top_rated_tag| %>
+            <label><span class="recommend-tag"><input type="checkbox" value="<%= top_rated_tag %>"><%= top_rated_tag %></span></label>
+          <% end %>
+          <%= image_tag("icons/glyphicons_190_circle_plus.png", :size => "16x16", :id => "recommend_plus") %>
+        </div>
+      <% else %>
+        <div id="recommend-tags">No one tags for this article.<br></div>        
+      <% end %>
+
+      <% if @recent_tags != nil && @recent_tags.length != 0 %>
+        <div id="recent-tags">recent tags.<br>
+          <input type="checkbox" id="recent_check">
+          <% @recent_tags.each do |recent_tag| %>
+            <label><span class="recent-tag"><input type="checkbox" value="<%= recent_tag %>"><%= recent_tag %></span></label>
+          <% end %>
+          <%= image_tag("icons/glyphicons_190_circle_plus.png", :size => "16x16", :id => "recent_plus") %>
+        </div>
+      <% else %>
+        <div id="recent_tags">you used no tags.<br></div>        
+      <% end %>
+
+
+      <div id="my-tags">tags for this article.<br>
         <% for num in 1..10 do %>
           <input type="text" class="tag_text" name="tag_text_<%= num %>" id="tag_text_<%= num %>">
         <% end %>

@@ -38,7 +38,7 @@ BLANK = ''
 
 
 $ ->
-	$("#tag_plus").click ->
+	$("#recommend_plus").click ->
 		checked_list = []
 		text_list = []
 		for i in [1...11]
@@ -62,9 +62,41 @@ $ ->
 				alert "Please set tags within 10."
 
 $ ->
-	$("#all_check").click ->
-		isChecked = $("#all_check:checked").val()
+	$("#recent_plus").click ->
+		checked_list = []
+		text_list = []
+		for i in [1...11]
+			text_list.push(document.getElementById('tag_text_' + i).value)
+
+		for obj , index in $("#recent-tags input")
+			if obj.checked
+				if text_list.indexOf(obj.value) == -1 and obj.value != 'on'
+					checked_list.push(obj.value)
+
+		if checked_list.length != 0
+				
+			for i in [1...11]
+				text = text_list[i-1]
+				if text == BLANK and checked_list.length != 0
+					value = checked_list.shift()
+					document.getElementById('tag_text_' + i).value = value
+					continue
+
+			if checked_list.length != 0
+				alert "Please set tags within 10."
+
+$ ->
+	$("#recommend_check").click ->
+		isChecked = $("#recommend_check:checked").val()
 		if isChecked
 			$(".recommend-tag input").prop('checked', 'checked');  	
 		else
 			$(".recommend-tag input").removeAttr "checked"
+
+$ ->
+	$("#recent_check").click ->
+		isChecked = $("#recent_check:checked").val()
+		if isChecked
+			$(".recent-tag input").prop('checked', 'checked');  	
+		else
+			$(".recent-tag input").removeAttr "checked"

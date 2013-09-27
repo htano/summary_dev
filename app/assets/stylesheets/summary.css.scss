@@ -12,6 +12,7 @@
 }
 
 @mixin content_style {
+  border: 1px solid #ccc;
   width: $contentWidth;
   height: $contentHeigth; 
 }
