@@ -7,7 +7,7 @@
   <span id="msg"><%= @msg %></span>
 </div>
 
-<div id="entry-contents">
+<div id="article_contents">
   <div id="thumbnail">
     <%= image_tag(@thumbnail) %>
   </div>
@@ -15,23 +15,22 @@
     <p><a href="<%= @url %>" target="_blank"><%= @title[0, 100] %></a></p>
   </div>
   <div id="contents_preview">
-    <!--<p><%= simple_format(@contents_preview[0, 200]) %></p>-->
     <p><%= @contents_preview[0, 200] %></p>
   </div>
   <div id="category">
   </div>
-  <% if @tags != nil && @tags.length != 0 %>
+  <% if @tags == nil || @tags.length == 0 %>
+    <div id="tag">no tags for this article.<br></div>
+  <% else %>
     <div id="tag">your tags for this article.<br>
       <% @tags.each do |tag| %>
-        <label><span class="edited-tag"><%= link_to tag ,{:controller => "article_lists", :action => "list_by_tag", :tag => tag } %></span></label>
+        <label><span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search_by_tag", :searchtext => tag} %></span></label>
       <% end %>
     </div>
-  <% else %>
-    <div id="tag">no tags for this article.<br></div>    
   <% end %>
 </div>
 
-<div id="operation-contents">
+<div id="operation_contents">
   <span id="prof_image"><%= image_tag(@prof_image, :size => "30x30") %></span>
   <span id="mypage">
     <%= link_to image_tag("icons/glyphicons_003_user.png", :size => "16x16") + content_tag(:p, "mypage") , {:controller => "mypage", :action => "index"} %>

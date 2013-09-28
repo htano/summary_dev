@@ -143,7 +143,7 @@ class Article < ActiveRecord::Base
 
 
   #指定されたタグ情報ももつ記事を取得する
-  def self.get_list_by_tag(tag)
+  def self.search_by_tag(tag)
     articles = joins(:user_articles => :user_article_tags).where('user_article_tags.tag' => tag).order('created_at desc')
     return articles
   end

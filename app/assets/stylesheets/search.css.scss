@@ -1,0 +1,125 @@
+// Place all the styles related to the search controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#search_main {
+}
+
+#operation_area {
+  border-bottom: 1px solid #ECECEC;
+  width: 100%;
+  #operation {
+    width: 700px;
+    margin: 25px auto 25px auto;
+    #submit {
+      width: 100px;
+      height: 25px;
+    }
+  }
+}
+
+#option_area {
+  border-right: 1px solid #ECECEC;
+  width: 14%;
+  height: 500px;
+  float: left;
+  #target, #sort, #focus {
+    text-align: center;
+    height: 100px;
+    border-bottom: 1px solid #ECECEC;
+    .select_area {
+      //background-color: #ECECEC;
+      color: #ECECEC;
+    }
+  }
+}
+
+#result_area {
+  //border: 1px solid gray;
+  float: left;
+  height: 100%;
+  width: 85%;
+  #message {
+    padding: 18px 25px 0 25px;
+    height: 25px;
+  }
+  #article_contents{
+    margin: auto;
+    padding: 18px 25px 0 25px;
+    position: relative;
+    //border: 1px solid #ECECEC;
+    border-top: 4px solid #ECECEC;
+    z-index: 1;
+    width: 800px;
+    height: 280px;
+    #thumbnail {
+      padding: 2px 0 0 0;
+      //border: 1px solid gray;
+      float: left;
+      p {
+        font-size: 30px;
+      }
+      img {
+        max-height: 200px;
+        max-width: 150px;
+        height: 100px;
+        width: 100px;
+        display: block;
+        margin: auto;
+      }
+    }
+    #url_title {
+      //border: 1px solid gray;
+      float: left;
+      padding: 0 10px 0 10px;
+      width: 500px;
+      height: 100px;
+      p a {
+        color: black;
+        font-size: 20px;
+      }
+    }
+    #contents_preview {
+      border: 1px solid white;
+      float: left;
+      padding: 0 10px 0 10px;
+      max-width: 680px;
+      width: 500px;
+      height: 100px;
+      p {
+        font-size: 10px;  
+      }  
+    }
+    #category {
+      //border: 1px solid gray;
+      float: left;
+      width: 150px;
+      height: 60px;
+      p {
+        font-size: 10px;  
+      }  
+    }
+    #tag {
+      //border: 1px solid gray;
+      float: left;
+      padding: 0 10px 0 10px;
+      width: 500px;
+      height: 60px;
+      line-height: 25px;
+      p {
+        font-size: 10px;  
+      }
+      .edited_tag {
+        padding: 1px 2px 1px 2px;
+        border-radius: 0.3em;
+        background: gray;
+        cursor:pointer;
+        cursor:hand;
+        a {
+          color: white;
+        }
+      }
+    }
+  }
+}
+

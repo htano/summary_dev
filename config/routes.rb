@@ -1,5 +1,8 @@
 SummaryDev::Application.routes.draw do
-  get "article_lists/list_by_tag" => "article_lists#list_by_tag"
+  get "search/index"
+  get "search/search_by_tag"
+  get "search/search_by_content"
+  get "search/search_by_title"
   get "hotentry/index"
   get "settings/profile"
   get "settings/profile_edit"

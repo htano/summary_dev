@@ -1,0 +1,73 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag "search" %>
+<% end %>
+
+<form action="search_by_tag">
+  <div id="search_main">
+    <div id="operation_area">
+      <div id="operation">
+        <input type="text" name="searchtext" id="searchtext"value="<%= @searchtext %>">
+        <input type="submit" id="submit" value="search" class="button button-flat:hover submit">
+      </div>
+    </div>
+    <div id="option_area">
+      <div id="target">
+        <span>target</span>
+        <div class="select_area">
+           <span style="color:#ff9b9b">tag</span><br>
+           <span>content</span><br>
+           <span>title</span><br>
+        </div>
+      </div>
+      <div id="sort">
+        sort
+        <div class="select_area">
+           <span style="color:#ff9b9b">popular</span><br>
+           <span>recent</span><br>
+        </div>
+      </div>
+      <div id="focus">
+        focus
+        <div class="select_area">
+           <span style="color:#ff9b9b">over 1 summary</span><br>
+           <span>over 10 summary</span><br>
+           <span>over 100 summary</span><br>
+        </div>
+      </div>
+    </div>
+    <div id="result_area">
+      <% if @articles == nil || @articles.length == 0 %>
+        <%= @searchtext %> のタグ検索結果 0 件
+      <% else %>
+        <div id="message">
+          <%= @searchtext %> のタグ検索結果 <%= @articles.length %> 件
+        </div>
+        <% @articles.each do |article| %>
+          <div id="article_contents">
+            <div id="thumbnail">
+              <%= image_tag(article.thumbnail) %>
+            </div>
+            <div id="url_title">
+              <p><a href="<%= @url %>" target="_blank"><%= article.title[0, 100] %></a></p>
+            </div>
+            <div id="contents_preview">
+              <p><%= article.contents_preview[0, 200] %></p>
+            </div>
+            <div id="category">
+            </div>
+            <% tags = Article.get_top_rated_tag(article.url) %>
+            <% if tags == nil || tags.length == 0 %>
+              <div id="tag">no tags for this article.<br></div>    
+            <% else %>
+              <div id="tag">tags for this article.<br>
+                <% tags.each do |tag| %>
+                  <label><span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search_by_tag", :searchtext => tag} %></span></label>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</form>

@@ -26,77 +26,61 @@ BLANK = ''
       document.getElementById('submit').disabled = ''
       return
 
-#$ ->
-#  $("#tag_checkbox").click ->
-#    isChecked = $("#tag_checkbox:checked").val()
-#    if isChecked
-#      $("#recommend-tags").hide()
-#      $("#my-tags").hide()
-#    else
-#      $("#recommend-tags").show()
-#      $("#my-tags").show()
-
-
 $ ->
-  $("#recommend_plus").click ->
-    checked_list = []
+  $("#tag_clear").click ->
+    for i in [1...11]
+      document.getElementById('tag_text_' + i).value = BLANK
+    $("#recommend_tags").find("span").removeClass('recommend_tag_pushed')
+    $("#recommend_tags").find("span").addClass('recommend_tag')
+    $("#recent_tags").find("span").removeClass('recent_tag_pushed')
+    $("#recent_tags").find("span").addClass('recent_tag')
+
+@clickRecommendTag = (value) ->
+  tag_class = document.getElementById('recommend_tag_' + value).getAttribute('class')
+  if tag_class == 'recommend_tag'
     text_list = []
     for i in [1...11]
       text_list.push(document.getElementById('tag_text_' + i).value)
 
-    for obj , index in $("#recommend-tags input")
-      if obj.checked
-        if text_list.indexOf(obj.value) == -1 and obj.value != 'on'
-          checked_list.push(obj.value)
+    unless text_list.indexOf(value) == -1
+      document.getElementById('recommend_tag_' + value).setAttribute('class', 'recommend_tag_pushed')
+      return
 
-    if checked_list.length != 0
-        
-      for i in [1...11]
-        text = text_list[i-1]
-        if text == BLANK and checked_list.length != 0
-          value = checked_list.shift()
-          document.getElementById('tag_text_' + i).value = value
-          continue
+    for i in [1...11]
+      if document.getElementById('tag_text_' + i).value == BLANK
+        document.getElementById('tag_text_' + i).value = value
+        document.getElementById('recommend_tag_' + value).setAttribute('class', 'recommend_tag_pushed')
+        return
+    alert "Please set tags within 10."
 
-      if checked_list.length != 0
-        alert "Please set tags within 10."
+  else
+    for i in [1...11]
+      if document.getElementById('tag_text_' + i).value == value
+        document.getElementById('tag_text_' + i).value = BLANK
+        document.getElementById('recommend_tag_' + value).setAttribute('class', 'recommend_tag')
+        return
 
-$ ->
-  $("#recent_plus").click ->
-    checked_list = []
+@clickRecentTag = (value) ->
+  tag_class = document.getElementById('recent_tag_' + value).getAttribute('class')
+  if tag_class == 'recent_tag'
     text_list = []
     for i in [1...11]
       text_list.push(document.getElementById('tag_text_' + i).value)
 
-    for obj , index in $("#recent-tags input")
-      if obj.checked
-        if text_list.indexOf(obj.value) == -1 and obj.value != 'on'
-          checked_list.push(obj.value)
+    unless text_list.indexOf(value) == -1
+      document.getElementById('recent_tag_' + value).setAttribute('class', 'recent_tag_pushed')
+      return
 
-    if checked_list.length != 0
-        
-      for i in [1...11]
-        text = text_list[i-1]
-        if text == BLANK and checked_list.length != 0
-          value = checked_list.shift()
-          document.getElementById('tag_text_' + i).value = value
-          continue
+    for i in [1...11]
+      if document.getElementById('tag_text_' + i).value == BLANK
+        document.getElementById('tag_text_' + i).value = value
+        document.getElementById('recent_tag_' + value).setAttribute('class', 'recent_tag_pushed')
+        return
+    alert "Please set tags within 10."
 
-      if checked_list.length != 0
-        alert "Please set tags within 10."
-
-$ ->
-  $("#recommend_check").click ->
-    isChecked = $("#recommend_check:checked").val()
-    if isChecked
-      $(".recommend-tag input").prop('checked', 'checked');    
-    else
-      $(".recommend-tag input").removeAttr "checked"
-
-$ ->
-  $("#recent_check").click ->
-    isChecked = $("#recent_check:checked").val()
-    if isChecked
-      $(".recent-tag input").prop('checked', 'checked');    
-    else
-      $(".recent-tag input").removeAttr "checked"
+  else
+    for i in [1...11]
+      if document.getElementById('tag_text_' + i).value == value
+        document.getElementById('tag_text_' + i).value = BLANK
+        document.getElementById('recent_tag_' + value).setAttribute('class', 'recent_tag')
+        return

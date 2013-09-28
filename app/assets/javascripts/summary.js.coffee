@@ -25,7 +25,7 @@ oldContent = ''
     document.getElementById('content').value = 'Please edit summary within 300 characters.'
     document.getElementById('content').style.color = 'gray'
     document.getElementById('count').innerHTML = '0'
-    document.getElementById('count').setAttribute('class', 'count');
+    document.getElementById('count').setAttribute('class', 'count')
     document.getElementById('firstEditFlag').value = 'true'
   else
     return false
@@ -72,10 +72,10 @@ oldContent = ''
   if content_num > max
     content_num　= 300 - content_num
     if !overFlag
-      document.getElementById('count').setAttribute('class', 'count_over');
+      document.getElementById('count').setAttribute('class', 'count_over')
       overFlag = true
   else if content_num <= max and overFlag
-    document.getElementById('count').setAttribute('class', 'count');
+    document.getElementById('count').setAttribute('class', 'count')
     document.getElementById('edit').disabled = BLANK
     overFlag = false
 

@@ -40,11 +40,15 @@ class WebpageController < ApplicationController
       @title = h["title"]
 
       article = Article.find_by_url(@url)
-
       @recent_tags = Article.get_recent_tag(@user_id)
  
       @top_rated_tags = []
       unless article == nil
+        user_article = article.user_articles.find_by_user_id(@user_id)
+         unless user_article == nil
+          @msg = "you already registered."
+          redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+        end
         @summary_num = article.summaries.count(:all)
         @article_id = article.id
         @top_rated_tags = Article.get_top_rated_tag(@url)
@@ -186,12 +190,8 @@ class WebpageController < ApplicationController
             @msg = "Completed." and return
           end
         else
-          UserArticleTag.edit_tag(user_article.id, tag_list)
-          @tags = []
-          user_article.user_article_tags(:all).each do |user_article_tag|
-            @tags.push(user_article_tag.tag)
-          end
-          @msg = "Already registered."  and return
+          @msg = "you already registered."
+          redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
         end
       end
     else
