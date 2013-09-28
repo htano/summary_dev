@@ -1,3 +1,7 @@
+# encoding: utf-8
+
+require "ransack"
+
 class Article < ActiveRecord::Base
   has_many :user_articles, :dependent => :destroy
   has_many :summaries, :dependent => :destroy
@@ -129,7 +133,7 @@ class Article < ActiveRecord::Base
   def self.get_top_rated_tag(url)
     first_index = 0
     last_index = 9
-    top_rated_tags = joins(:user_articles => :user_article_tags).where('url' => url).group('tag').order('count_tag desc').count('tag').keys
+    top_rated_tags = joins(:user_articles => :user_article_tags).where("url" => url).group("tag").order("count_tag desc").count("tag").keys
     return top_rated_tags[first_index..last_index]
   end
 
@@ -137,14 +141,21 @@ class Article < ActiveRecord::Base
   def self.get_recent_tag(user_id)
     first_index = 0
     last_index = 9
-    recent_tags = joins(:user_articles => :user_article_tags).where('user_articles.user_id' => user_id).group('tag').order('user_article_tags.created_at desc').count('tag').keys
+    recent_tags = joins(:user_articles => :user_article_tags).where("user_articles.user_id" => user_id).group("tag").order("user_article_tags.created_at desc").count("tag").keys
     return recent_tags[first_index..last_index]
   end
 
 
   #指定されたタグ情報ももつ記事を取得する
   def self.search_by_tag(tag)
-    articles = joins(:user_articles => :user_article_tags).where('user_article_tags.tag' => tag).order('created_at desc')
+    articles = joins(:user_articles => :user_article_tags).where(["user_article_tags.tag LIKE ?", "%"+tag+"%"]).order("created_at desc")
     return articles
+  end
+
+  def self.get_popular_tag
+    first_index = 0
+    last_index = 14
+    popular_tags = joins(:user_articles => :user_article_tags).group("tag").order("count_tag desc").count("tag").keys
+    return popular_tags[first_index..last_index]    
   end
 end

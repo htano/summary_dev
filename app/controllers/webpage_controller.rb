@@ -235,7 +235,7 @@ class WebpageController < ApplicationController
   def get_article_thumbnail(html)
     begin
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
-      doc.xpath("//img[starts-with(@src, "http://")]").each do |img|
+      doc.xpath("//img[starts-with(@src, 'http://')]").each do |img|
         image = Magick::ImageList.new(img["src"])
         columns = image.columns 
         rows = image.rows
