@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require "ransack"
+#require "ransack"
 
 class Article < ActiveRecord::Base
   has_many :user_articles, :dependent => :destroy
