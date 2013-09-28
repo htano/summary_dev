@@ -1,13 +1,13 @@
 # encoding: utf-8
 
-require 'nokogiri'
-require 'openssl'
-require 'open-uri'
-require 'kconv'
-require 'uri'
-require 'bundler/setup'
-require 'extractcontent'
-require 'RMagick'
+require "nokogiri"
+require "openssl"
+require "open-uri"
+require "kconv"
+require "uri"
+require "bundler/setup"
+require "extractcontent"
+require "RMagick"
 
 class WebpageController < ApplicationController
 
@@ -96,7 +96,7 @@ class WebpageController < ApplicationController
       @prof_image =  getLoginUser.prof_image
       @url = "#{params[:url]}"
       if title == nil
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => "text/html" and return
       end
       article = Article.find_by_url(@url)
       if article == nil
@@ -143,7 +143,7 @@ class WebpageController < ApplicationController
       @url = "#{params[:url]}"
       tag_list = []
       params.each do |key,value|
-        if key.start_with?('tag_text_')
+        if key.start_with?("tag_text_")
           tag_list.push(value) unless value == BLANK || tag_list.include?(value)
         end
       end
@@ -235,12 +235,12 @@ class WebpageController < ApplicationController
   def get_article_thumbnail(html)
     begin
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
-      doc.xpath("//img[starts-with(@src, 'http://')]").each do |img|
-        image = Magick::ImageList.new(img['src'])
+      doc.xpath("//img[starts-with(@src, "http://")]").each do |img|
+        image = Magick::ImageList.new(img["src"])
         columns = image.columns 
         rows = image.rows
         if columns.to_i > THRESHOLD_SIDE && rows.to_i > THRESHOLD_SIDE && (columns.to_i*rows.to_i) > THRESHOLD_ALL
-          return img['src']
+          return img["src"]
         end
       end
       return "no_image.png"
@@ -261,7 +261,7 @@ class WebpageController < ApplicationController
       logger.error("error :#{e}")
       begin
         text = ""
-        Nokogiri::HTML.parse(html).xpath('//p').each do |p|
+        Nokogiri::HTML.parse(html).xpath("//p").each do |p|
           unless p.inner_text == nil || p.inner_text == BLANK
             text += p.inner_text + "\n"
           end

@@ -23,7 +23,7 @@ class SummaryController < ApplicationController
       @article_id = "#{params[:article_id]}"
       article = Article.find_by id: @article_id
       if article == nil
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => "text/html" and return
       end
       @url = article.url
       @title = article.title
@@ -49,7 +49,7 @@ class SummaryController < ApplicationController
       @article_id = "#{params[:article_id]}"
       article = Article.find_by id: @article_id
       if article == nil
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html' and return
+        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => "text/html" and return
       end
       summary = Summary.find_by_user_id_and_article_id(user_id, @article_id)
       if summary == nil
