@@ -13,10 +13,10 @@
 
   <% @entries.each do |e| %>
     <li>
-    <% if e.getTopRatedSummary %>
+    <% if e.get_top_rated_summary %>
 
       <div class="row entry_box_with_summary">
-        Strength[<%= sprintf("%d", e.getCurrentStrength*100) %>], 
+        Strength[<%= sprintf("%d", e.get_current_strength * 100) %>], 
         LastAddedTime[<%= e.last_added_at %>]
         <div class="col-md-12 entry_box">
 
@@ -78,26 +78,26 @@
                   <label style="position: absolute; top: 20%;">Top rated summary</label>
                 </div>
                 <div class="col-md-3 col-md-offset-2">
-                  <a href="<%= url_for :controller => 'mypage', :action => 'index', :name => e.getTopRatedSummary.user.name %>">
-                    <%= image_tag e.getTopRatedSummary.user.prof_image, :class => "summarist_icon", :size => "26x26" %>
-                    <span><%= e.getTopRatedSummary.user.name %></span>
+                  <a href="<%= url_for :controller => 'mypage', :action => 'index', :name => e.get_top_rated_summary.user.name %>">
+                    <%= image_tag e.get_top_rated_summary.user.prof_image, :class => "summarist_icon", :size => "26x26" %>
+                    <span><%= e.get_top_rated_summary.user.name %></span>
                   </a>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-9 col-md-offset-1 entry_top_summary">
-                  <textarea disabled="disabled"><%= e.getTopRatedSummary.content %></textarea>
+                  <textarea disabled="disabled"><%= e.get_top_rated_summary.content %></textarea>
                 </div>
                 <div class="col-md-2 entry_top_like">
                   <div class="entry_like_num">
-                    <div id="good_summary_count<%= e.getTopRatedSummary.id %>"><%= e.getTopRatedSummary.good_summaries.count %></div>
+                    <div id="good_summary_count<%= e.get_top_rated_summary.id %>"><%= e.get_top_rated_summary.good_summaries.count %></div>
                   </div>
-                  <a onclick="clickGoodSummary(<%= e.getTopRatedSummary.id %>)">
-                    <% if getLoginUser && e.getTopRatedSummary.good_summaries.where(:user_id => getLoginUser.id).first %>
-                      <%= image_tag("icons/MunchCancel.png", :size => "48x48", :id => 'good_summary_img'+e.getTopRatedSummary.id.to_s, :style => "cursor:pointer;")%>
+                  <a onclick="clickGoodSummary(<%= e.get_top_rated_summary.id %>)">
+                    <% if getLoginUser && e.get_top_rated_summary.good_summaries.where(:user_id => getLoginUser.id).first %>
+                      <%= image_tag("icons/MunchCancel.png", :size => "48x48", :id => 'good_summary_img'+e.get_top_rated_summary.id.to_s, :style => "cursor:pointer;")%>
                     <% else %>
-                      <%= image_tag("icons/MunchLike.png", :size => "48x48", :id => 'good_summary_img'+e.getTopRatedSummary.id.to_s, :style => "cursor:pointer;")%>
+                      <%= image_tag("icons/MunchLike.png", :size => "48x48", :id => 'good_summary_img'+e.get_top_rated_summary.id.to_s, :style => "cursor:pointer;")%>
                     <% end %>
                   </a>
                   <div class="entry_top_like_label">
@@ -139,7 +139,7 @@
 
     <% else %>
       <div class="row entry_box_no_summary">
-        Strength[<%= sprintf("%d", e.getCurrentStrength*100) %>], 
+        Strength[<%= sprintf("%d", e.get_current_strength * 100) %>], 
         LastAddedTime[<%= e.last_added_at %>]
         <div class="col-md-12 entry_box_no_sum">
           <div class="row entry_box_top">

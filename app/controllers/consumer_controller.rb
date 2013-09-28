@@ -17,10 +17,10 @@ class ConsumerController < ApplicationController
       @uname = getLoginUser.name
       flash[:success] = "Hello " + @uname + ". Login processing was successful."
       @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
-      if getLoginUser.updateLastLogin
+      if getLoginUser.update_last_login
         if env['omniauth.params']['keep_login'] == "on"
+          getLoginUser.update_keep_login(@remote_ip)
           cookies[:keep_login_token] = { :value => getLoginUser.keep_login_token, :expires => Time.now + 3.days }
-          getLoginUser.updateKeepLogin(@remote_ip)
         end
       else
         #TODO Error handling
@@ -148,10 +148,10 @@ class ConsumerController < ApplicationController
         @uname = getLoginUser.name
         flash[:success] = "Hello " + @uname + ". Login processing was successful."
         @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
-        if getLoginUser.updateLastLogin
+        if getLoginUser.update_last_login
           if params[:keep_login] == "on"
+            getLoginUser.update_keep_login(@remote_ip)
             cookies[:keep_login_token] = { :value => getLoginUser.keep_login_token, :expires => Time.now + 3.days }
-            getLoginUser.updateKeepLogin(@remote_ip)
           end
         else
         end
@@ -173,7 +173,7 @@ class ConsumerController < ApplicationController
   end
 
   def sign_out
-    getLoginUser.execSignOut
+    getLoginUser.exec_sign_out
     session[:openid_url] = nil
     flash[:success] = "LogOut Complete."
     if params[:fromUrl]
@@ -197,7 +197,7 @@ class ConsumerController < ApplicationController
       @error_message = User.regist(@creating_user_id, session[:openid_url])
       if !@error_message
         if params[:image]
-          getLoginUser.updateImagePath(params[:image])
+          getLoginUser.update_image_path(params[:image])
         end
         flash[:success] = "Hello " + @creating_user_id + ". SignUp was successfully completed."
         if @edit_profile_flg
@@ -219,9 +219,9 @@ class ConsumerController < ApplicationController
     end
   end
 
-  def getUserExisting
+  def get_user_existing
     @uname = params[:creating_user_name]
-    if User.is_exists?(@uname)
+    if User.exists?(@uname)
       render :text => "EXISTS"
     else
       render :text => "NONE"

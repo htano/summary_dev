@@ -19,7 +19,7 @@ class MypageController < ApplicationController
 
     if @is_login_user
       @user = User.find_by_name(get_current_user_name)
-      @user.updateMypageAccess
+      @user.update_mypage_access
     else
       @user = User.find_by_name(params[:name])
       if @user

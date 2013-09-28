@@ -28,12 +28,12 @@ class ApplicationController < ActionController::Base
 
   def getLoginUser
     #if not login, return 'nil'
-    @user_obj = User.getUserObj(session[:openid_url])
+    @user_obj = User.get_user_by_openid(session[:openid_url])
     if @user_obj
       return @user_obj
     else
       @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
-      @user_obj_by_token = User.getUserObjByLoginToken(cookies[:keep_login_token], @remote_ip)
+      @user_obj_by_token = User.get_user_by_login_token(cookies[:keep_login_token], @remote_ip)
       if @user_obj_by_token
         return @user_obj_by_token
       else
@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   end
 
   def getNotifyingObjects
-    return getLoginUser.getNotifyingArticles
+    return getLoginUser.get_notifying_articles
   end
 
   private
@@ -59,6 +59,6 @@ class ApplicationController < ActionController::Base
       u == 'summary.dev' && Digest::MD5.hexdigest(p) == "7fd9244849e93ace721ae1c569a939aa"
     end
   end
-  before_filter :exec_authenticate
 
+  before_filter :exec_authenticate
 end

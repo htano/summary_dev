@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 class SettingsController < ApplicationController
-
   def profile
     @action_type = 'profile'
     if getLoginUser
@@ -131,7 +130,7 @@ class SettingsController < ApplicationController
     if getLoginUser
       if @mail_change
         if @new_mail_address == @confirm_mail_address
-          if getLoginUser.updateMailAddr(@new_mail_address)
+          if getLoginUser.update_mail_address(@new_mail_address)
             @mail_auth_url = url_for :action => 'email_auth', :token_uuid => getLoginUser.token_uuid
             Message.change_mail_addr(getLoginUser.name, getLoginUser.mail_addr, @mail_auth_url).deliver
           else
@@ -159,7 +158,7 @@ class SettingsController < ApplicationController
   def email_auth
     @url_token_uuid = params[:token_uuid]
     if getLoginUser
-      if getLoginUser.authenticateUpdateMailAddr(@url_token_uuid)
+      if getLoginUser.authenticate_updating_mailaddr(@url_token_uuid)
         flash[:success] = "MailAddress change has been authentificated."
         redirect_to :action => 'email'
       else

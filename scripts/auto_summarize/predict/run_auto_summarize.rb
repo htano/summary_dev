@@ -172,7 +172,7 @@ p @svm_scale
 @tf_of_doc = {}
 @sum_tf_of_doc = 0
 @title_tfidf = nil
-Article.getHotEntryArtileList.each do |e|
+Article.get_hotentry_articles.each do |e|
   @user = User.find_by_name("system001")
   if @user
     @summary_model = e.summaries.find_by_user_id(User.find_by_name("system001").id)

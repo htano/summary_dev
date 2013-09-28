@@ -70,7 +70,7 @@ class WebpageController < ApplicationController
       	else
       		user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
       		if user_article.save
-            article.addStrength
+            article.add_strength
       			render :text => article.id and return
       		end
       	end
@@ -100,7 +100,7 @@ class WebpageController < ApplicationController
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
-            article.addStrength
+            article.add_strength
             render :text => article.id and return
           end
         end
@@ -161,7 +161,7 @@ class WebpageController < ApplicationController
           #同じURLの情報は存在するが、ユーザーが登録していない場合、r010のみinsertする
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id,:read_flg => false);
           if user_article.save
-            article.addStrength
+            article.add_strength
             @msg = "登録が完了しました。" and return
           end
         end
@@ -191,7 +191,7 @@ class WebpageController < ApplicationController
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false);
           if user_article.save
-              article.addStrength
+              article.add_strength
               @msg = "登録が完了しました。" and return
           end
         end
