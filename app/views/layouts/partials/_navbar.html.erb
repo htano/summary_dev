@@ -1,17 +1,3 @@
-<!--
-<script>
-function checkURL(){
-	if(!$("#url").val().length){
-		alert("URLを入力して下さい。")
-		return false;
-	} else {
-		if(!confirm($("#url").val()+'を登録して宜しいですか？')){
-			return false;
-		}
-	}
-}
-</script>
--->
 <%= form_tag({:controller => 'webpage', :action => 'add'}, {:method => 'POST', :remote => 'true'}) do %>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
@@ -30,7 +16,11 @@ function checkURL(){
             </li>
             -->
             <li>
-              <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" class="add">add</a>
+              <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" >add</a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="<%= url_for :controller => 'search', :action => 'index' %>" >search</a>
             </li>
           <% end %>
 

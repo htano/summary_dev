@@ -13,10 +13,8 @@ class WebpageController < ApplicationController
 
   #定数定義
   BLANK = ""
-  THRESHOLD_ALL = 20000
-  THRESHOLD_SIDE = 100
-  WIDTH  = 80
-  HEIGHT = 80
+  THRESHOLD_ALL = 10000
+  THRESHOLD_SIDE = 120
 
   def add
     if signed_in?
@@ -239,7 +237,8 @@ class WebpageController < ApplicationController
         image = Magick::ImageList.new(img["src"])
         columns = image.columns 
         rows = image.rows
-        if columns.to_i > THRESHOLD_SIDE && rows.to_i > THRESHOLD_SIDE && (columns.to_i*rows.to_i) > THRESHOLD_ALL
+        #if columns.to_i > THRESHOLD_SIDE && rows.to_i > THRESHOLD_SIDE && (columns.to_i*rows.to_i) > THRESHOLD_ALL
+        if columns.to_i > THRESHOLD_SIDE && rows.to_i > THRESHOLD_SIDE
           return img["src"]
         end
       end
