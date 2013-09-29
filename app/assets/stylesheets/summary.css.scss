@@ -21,6 +21,7 @@
   /*border-bottom: 2px solid #e5e5e5;*/
   font-size: 13px;
   font-weight: normal;
+  text-align: center;
   p {
     margin: 0px;
   }
@@ -73,15 +74,18 @@
   table {
     width: 800px;
     border: 1px solid #ccc;
-
+    border-collapse: separate;
+    border-spacing: 2px 2px;
     .table_top {
       border: 1px solid #e5e5e5;
       color: white;
       background-color: #e6e6e6;
 
       #title_top, #summary_top {
+        text-align: center;
         width: 700px;
         padding: 4px 0px 0px 0px;
+        margin-top: 10px;
       }
     }
   }
@@ -127,6 +131,10 @@
   padding: 3px;
   border-radius: 3px;
   margin: 0 0 15px 0;
+}
+
+.edit_table th {
+    text-align: center;
 }
 
 .count {

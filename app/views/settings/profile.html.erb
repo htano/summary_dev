@@ -2,12 +2,12 @@
   　<%= stylesheet_link_tag "consumer", "social-buttons/zocial.css", "settings" %>
 <% end %> 
 
-<div class="setting_container">
+<div class="setting-container">
   <%= render :partial => "settings/partials/navilist", :locals => {:user => @user} %>
 
-  <div class="setting_contents">
+  <div class="setting-contents">
     <h3>User Profile</h3>
-    <div class="setting_inner">
+    <div class="setting-inner">
 
       <dl>
         <dt>
@@ -59,7 +59,7 @@
       </dl>
 
       <a href="<%= url_for :action => 'profile_edit' %>">
-        <button class="profile_btn">edit</button>
+        <button class="button button-flat:hover">edit</button>
       </a>
 
     </div>

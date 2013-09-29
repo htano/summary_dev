@@ -95,17 +95,15 @@ class Article < ActiveRecord::Base
   end
 
   # Class Method
-  def self.getHotEntryArtileList
-    # まず７日(ZERO_ZERO_ONE_DAYS)以内に「あとで読む登録」された記事のうち、
-    # 最終登録時の「勢い(strength)」でソートした上位１００件くらいを取ってくる
+  def self.get_hotentry_articles
     # 1. getCandidateHotentries
-    @candidate_entries = where("last_added_at > ?", Time.now - ZERO_ZERO_ONE_DAYS.days).order('strength desc').limit(100)
+    @candidate_entries = where("last_added_at > ?", Time.now - ZERO_ZERO_ONE_DAYS.days).order('strength desc, last_added_at desc').limit(100)
     # 2. sort by current strength
-    return @candidate_entries.sort{|a,b| (-1)*(a.getCurrentStrength <=> b.getCurrentStrength)}
+    return @candidate_entries.sort{|a,b| (-1)*(a.get_current_strength <=> b.get_current_strength)}.first(20)
   end
 
   # Instance Method
-  def addStrength
+  def add_strength
     if self.last_added_at && self.strength
       @diff_hours = ((Time.now - self.last_added_at) / 1.hours).to_i
       self.strength = self.strength * (DECAY_DELTA**@diff_hours) + 1
@@ -116,7 +114,21 @@ class Article < ActiveRecord::Base
     return self.save
   end
 
-  def getCurrentStrength
+  def remove_strength(uid)
+    @user_article = self.user_articles.find_by_user_id(uid)
+    if @user_article && self.strength && self.last_added_at
+      @user_added_at = @user_article.created_at
+      @hours_from_last_add = ((Time.now - self.last_added_at) / 1.hours).to_i
+      @hours_from_user_add = ((Time.now - @user_added_at) / 1.hours).to_i
+      self.strength = self.strength * (DECAY_DELTA**@hours_from_last_add) - 1.0 * (DECAY_DELTA**@hours_from_user_add)
+      self.last_added_at = Time.now
+      return self.save
+    else
+      return false
+    end
+  end
+
+  def get_current_strength
     @current_strength = 0
     if self.last_added_at && self.strength
       @diff_hours = ((Time.now - self.last_added_at) / 1.hours).to_i
@@ -125,7 +137,7 @@ class Article < ActiveRecord::Base
     return @current_strength
   end
 
-  def getTopRatedSummary
+  def get_top_rated_summary
     @top_rated_summary = nil
     @top_rate = -1
     self.summaries.order('created_at desc').each do |summary|

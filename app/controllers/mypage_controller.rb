@@ -19,7 +19,7 @@ class MypageController < ApplicationController
 
     if @is_login_user
       @user = User.find_by_name(get_current_user_name)
-      @user.updateMypageAccess
+      @user.update_mypage_access
     else
       @user = User.find_by_name(params[:name])
       if @user
@@ -51,29 +51,53 @@ class MypageController < ApplicationController
     # main tab & favorite tab & read tab
     @main_articles_table = []
     @mpage = params[:mpage] ? params[:mpage] : 1
+    @mpage = @mpage.to_i > 1 ? @mpage : 1
     offset = (@mpage.to_i - 1) * 10
-    user_articles = @user.user_articles.reverse_order.offset(offset).where(:read_flg => false).take(10)
+    user_articles = @user.user_articles.reverse_order.offset(offset).unread.take(10)
+    if user_articles.size == 0
+      user_articles = @user.user_articles.reverse_order.offset(0).unread.take(10)
+      @mpage = 1
+    end
     @main_articles_table = get_table(user_articles, @is_login_user)
+    @total_main_articles_num = @user.user_articles.unread.size
 
     @favorite_articles_table = []
     @fpage = params[:fpage] ? params[:fpage] : 1
+    @fpage = @fpage.to_i > 1 ? @fpage : 1
     offset = (@fpage.to_i - 1) * 10
-    user_articles = @user.user_articles.reverse_order.offset(offset).where(:favorite_flg => true).take(10)
+    user_articles = @user.user_articles.reverse_order.offset(offset).favorite.take(10)
+    if user_articles.size == 0
+      user_articles = @user.user_articles.reverse_order.offset(0).favorite.take(10)
+      @fpage = 1
+    end
     @favorite_articles_table = get_table(user_articles, @is_login_user)
+    @total_favorite_articles_num = @user.user_articles.favorite.size
 
     @read_articles_table = []
     @rpage = params[:rpage] ? params[:rpage] : 1
+    @rpage = @rpage.to_i > 1 ? @rpage : 1
     offset = (@rpage.to_i - 1) * 10
-    user_articles = @user.user_articles.reverse_order.offset(offset).where(:read_flg => true).take(10)
+    user_articles = @user.user_articles.reverse_order.offset(offset).read.take(10)
+    if user_articles.size == 0
+      user_articles = @user.user_articles.reverse_order.offset(0).read.take(10)
+      @rpage = 1
+    end
     @read_articles_table = get_table(user_articles, @is_login_user)
-
+    @total_read_articles_num = @user.user_articles.read.size
+    
     # summary tab
     @summaries_table = []
     @spage = params[:spage] ? params[:spage] : 1
+    @spage = @spage.to_i > 1 ? @spage : 1
     offset = (@spage.to_i - 1) * 10
     summaries = @user.summaries.reverse_order.offset(offset).take(10)
+    if summaries.size == 0
+      summaries = @user.summaries.reverse_order.offset(0).take(10)
+      @spage = 1
+    end
     @summaries_table = get_summary_table(summaries, @is_login_user)
-
+    @total_summaries_num = @user.summaries.size
+    
     if params[:mpage]
       @current_tab = "main"
     elsif params[:spage]
@@ -100,11 +124,12 @@ class MypageController < ApplicationController
     params[:article_ids].each do |article_id|
       article = login_user.user_articles.find_by_article_id(article_id)
       unless article == nil
+        Article.find(article_id).remove_strength(getLoginUser.id)
         article.destroy
       end
     end
 
-    redirect_to :action => "index"
+    render_tab(params)
   end
 
   def delete_summary
@@ -116,7 +141,7 @@ class MypageController < ApplicationController
       end
     end
 
-    redirect_to :action => "index"
+    render_tab(params)
   end
 
   def mark_as_read
@@ -132,7 +157,7 @@ class MypageController < ApplicationController
       end
     end
 
-    redirect_to :action => "index"
+    render_tab(params)
   end
 
   def mark_as_unread
@@ -148,7 +173,7 @@ class MypageController < ApplicationController
       end
     end
 
-    redirect_to :action => "index"
+    render_tab(params)
   end
 
   def mark_as_favorite
@@ -165,7 +190,7 @@ class MypageController < ApplicationController
       end
     end
 
-    redirect_to :action => "index"
+    render_tab(params)
   end
 
   def mark_off_favorite
@@ -182,7 +207,7 @@ class MypageController < ApplicationController
       end
     end
 
-    redirect_to :action => "index"
+    render_tab(params)
   end
 
   def clip
@@ -194,9 +219,7 @@ class MypageController < ApplicationController
 
     login_user = getLoginUser
     params[:article_ids].each do |article_id|
-      unless login_user.user_articles.exists?(:user_id => getLoginUser.id, :article_id => article_id)
-        UserArticle.create(:user_id => getLoginUser.id, :article_id => article_id)
-      end
+      login_user.user_articles.find_or_create_by(:user_id => getLoginUser.id, :article_id => article_id)
     end
 
     redirect_to :action => "index", :name => params[:name]
@@ -311,5 +334,20 @@ private
       table.push(table_data)
     end
     return table
+  end
+
+  def render_tab(params)
+    if params[:mpage]
+      redirect_to :action => "index", :mpage => params[:mpage]
+    end
+    if params[:spage]
+      redirect_to :action => "index", :spage => params[:spage]
+    end
+    if params[:fpage]
+      redirect_to :action => "index", :fpage => params[:fpage]
+    end
+    if params[:rpage]
+      redirect_to :action => "index", :rpage => params[:rpage]
+    end
   end
 end

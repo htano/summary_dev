@@ -3,21 +3,23 @@ class User < ActiveRecord::Base
   MAIL_STATUS_PROVISIONAL = 1
   MAIL_STATUS_DEFINITIVE  = 2
   MAIL_STATUS_ERROR       = 3
+
   validates :name, :uniqueness => true
   validates :open_id,   :uniqueness => true
   #validates :mail_addr, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create }
   validates :mail_addr_status, inclusion: { in: [MAIL_STATUS_UNDEFINED, MAIL_STATUS_PROVISIONAL, MAIL_STATUS_DEFINITIVE, MAIL_STATUS_ERROR] }
+
   has_many :favorite_users, :dependent => :destroy
   has_many :user_articles, :dependent => :destroy
   has_many :summaries, :dependent => :destroy
   has_many :good_summaries, :dependent => :destroy
 
   # Class method
-  def self.getUserObj(openid)
+  def self.get_user_by_openid(openid)
     return where(["open_id = ? and yuko_flg = ?", openid, true]).first
   end
 
-  def self.getUserObjByLoginToken(login_token, ip_address)
+  def self.get_user_by_login_token(login_token, ip_address)
     return where(["keep_login_token = ? and yuko_flg = ? and keep_login_expire > ? and keep_login_ip = ?", login_token, true, Time.now, ip_address]).first
   end
 
@@ -39,7 +41,7 @@ class User < ActiveRecord::Base
     return @error_message
   end
 
-  def self.is_exists?(uname)
+  def self.exists?(uname)
     if where(["name = ?", uname]).first
       return true
     else
@@ -48,24 +50,24 @@ class User < ActiveRecord::Base
   end
 
   # Instance Method
-  def updateMypageAccess
+  def update_mypage_access
     self.last_mypage_access = Time.now
     return self.save
   end
 
-  def updateLastLogin
+  def update_last_login
     self.last_login = Time.now
     return self.save
   end
 
-  def updateKeepLogin(ip_address)
+  def update_keep_login(ip_address)
     self.keep_login_token = SecureRandom.uuid
     self.keep_login_ip = ip_address
     self.keep_login_expire = Time.now + 3.days
     return self.save
   end
 
-  def updateMailAddr(email)
+  def update_mail_address(email)
     self.mail_addr = email
     self.mail_addr_status = MAIL_STATUS_PROVISIONAL
     self.token_uuid = SecureRandom.uuid
@@ -73,7 +75,7 @@ class User < ActiveRecord::Base
     return self.save
   end
 
-  def authenticateUpdateMailAddr(url_token_uuid)
+  def authenticate_updating_mailaddr(url_token_uuid)
     if url_token_uuid == self.token_uuid
       if self.token_expire > Time.now
         self.mail_addr_status = MAIL_STATUS_DEFINITIVE
@@ -83,16 +85,16 @@ class User < ActiveRecord::Base
     return false
   end
 
-  def updateImagePath(img_path)
+  def update_image_path(img_path)
     self.prof_image = img_path
     return self.save
   end
 
-  def getNotifyingArticles
+  def get_notifying_articles
     @new_articles = Hash.new
     self.user_articles.where(read_flg: false).each do |user_article|
       Summary.where(["article_id = ? and user_id != ? and updated_at > ?", user_article.article_id, user_article.user_id, self.last_mypage_access]).each do |summary|
-        if !@new_articles[user_article.article_id]
+        unless @new_articles[user_article.article_id]
           @new_articles[user_article.article_id] = Article.find(user_article.article_id)
         end
       end
@@ -100,11 +102,10 @@ class User < ActiveRecord::Base
     return @new_articles
   end
 
-  def execSignOut
+  def exec_sign_out
     self.keep_login_token = nil
     self.keep_login_expire = nil
     self.keep_login_ip = nil
     return self.save
   end
-
 end

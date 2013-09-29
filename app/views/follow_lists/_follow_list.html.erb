@@ -1,0 +1,22 @@
+<% users.each do |follow_user| %>
+<div class="user-profile">
+  <%= image_tag(follow_user.prof_image, :size => "64x64") %>
+  <div>
+    <div class="user-name">
+      <%= link_to follow_user.name, {:controller => "mypage", :action => "index", :name => follow_user.name} %>
+    </div>
+    <div id="follow-btn">
+      <div id="follow-<%= follow_user.id %>">
+        <%= render_follow_status(follow_user) %>
+      </div>
+    </div>
+  </div>
+  <div class="information">
+    <%= render_user_information(follow_user) %>
+  </div>
+  <div class="comment">
+    <p class="comment"><%= follow_user.comment %></p>
+  </div>
+</div>
+<% end %>
+

@@ -13,9 +13,11 @@
 
   <% @entries.each do |e| %>
     <li>
-    <% if e.getTopRatedSummary %>
+    <% if e.get_top_rated_summary %>
 
       <div class="row entry_box_with_summary">
+        Strength[<%= sprintf("%d", e.get_current_strength * 100) %>], 
+        LastAddedTime[<%= e.last_added_at %>]
         <div class="col-md-12 entry_box">
 
           <div class="row">
@@ -30,18 +32,26 @@
                 </div>
                 <div class="col-md-4">
                   <div class="row">
-                    <div class="col-md-4 entry_count_num"">
+                    <div class="col-md-4 entry_count_num">
                       <% if getLoginUser %>
+                        <%= image_tag "ajax-loader.gif", :id => "mark_read_loader" + e.id.to_s, :style => "display:none;"%>
+                        <%= image_tag "ajax-loader.gif", :id => "add_page_loader" + e.id.to_s, :style => "display:none; margin-top: 35px;" %>
                         <% if e.user_articles.where(:user_id => getLoginUser.id).first %>
-                          <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' disabled>reading</button>
+                          <% if e.user_articles.where(:user_id => getLoginUser.id).first.read_flg %>
+                            <button id="mark_as_read_btn<%= e.id %>" class="mark_as_unread" onClick='clickMarkAsRead(this, "<%= e.id %>")' >Unread</button>
+                          <% else %>
+                            <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' >Mark as read</button>
+                          <% end %>
+                          <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' >Cancel</button>
                         <% else %>
-                          <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>ReadItLater</button>
+                          <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' style="visibility:hidden;">Mark as read</button>
+                          <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>Read later</button>
                         <% end %>
                       <% else %>
                       <% end %>
                     </div>
                     <div class="col-md-4 entry_count_num">
-                      <span class="entry_count_label">Read User</span>
+                      <span class="entry_count_label">Readers</span>
                       </br>
                       </br>
                       <span id="reading_counter<%= e.id %>" class="entry_count_num"><%= e.user_articles.count %></span>
@@ -65,32 +75,29 @@
 
               <div class="row">
                 <div class="col-md-4 col-md-offset-1 entry_summary_label">
-                  <label>Top rated summary</label>
+                  <label style="position: absolute; top: 20%;">Top rated summary</label>
                 </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-4 col-md-offset-1">
-                  <a href="<%= url_for :controller => 'mypage', :action => 'index', :name => e.getTopRatedSummary.user.name %>">
-                    <%= image_tag e.getTopRatedSummary.user.prof_image, :class => "summarist_icon", :size => "26x26" %>
-                    <span><%= e.getTopRatedSummary.user.name %></span>
+                <div class="col-md-3 col-md-offset-2">
+                  <a href="<%= url_for :controller => 'mypage', :action => 'index', :name => e.get_top_rated_summary.user.name %>">
+                    <%= image_tag e.get_top_rated_summary.user.prof_image, :class => "summarist_icon", :size => "26x26" %>
+                    <span><%= e.get_top_rated_summary.user.name %></span>
                   </a>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-9 col-md-offset-1 entry_top_summary">
-                  <textarea disabled="disabled"><%= e.getTopRatedSummary.content %></textarea>
+                  <textarea disabled="disabled"><%= e.get_top_rated_summary.content %></textarea>
                 </div>
                 <div class="col-md-2 entry_top_like">
                   <div class="entry_like_num">
-                    <div id="good_summary_count<%= e.getTopRatedSummary.id %>"><%= e.getTopRatedSummary.good_summaries.count %></div>
+                    <div id="good_summary_count<%= e.get_top_rated_summary.id %>"><%= e.get_top_rated_summary.good_summaries.count %></div>
                   </div>
-                  <a onclick="clickGoodSummary(<%= e.getTopRatedSummary.id %>)">
-                    <% if getLoginUser && e.getTopRatedSummary.good_summaries.where(:user_id => getLoginUser.id).first %>
-                      <%= image_tag("icons/MunchCancel.png", :size => "48x48", :id => 'good_summary_img'+e.getTopRatedSummary.id.to_s, :style => "cursor:pointer;")%>
+                  <a onclick="clickGoodSummary(<%= e.get_top_rated_summary.id %>)">
+                    <% if getLoginUser && e.get_top_rated_summary.good_summaries.where(:user_id => getLoginUser.id).first %>
+                      <%= image_tag("icons/MunchCancel.png", :size => "48x48", :id => 'good_summary_img'+e.get_top_rated_summary.id.to_s, :style => "cursor:pointer;")%>
                     <% else %>
-                      <%= image_tag("icons/MunchLike.png", :size => "48x48", :id => 'good_summary_img'+e.getTopRatedSummary.id.to_s, :style => "cursor:pointer;")%>
+                      <%= image_tag("icons/MunchLike.png", :size => "48x48", :id => 'good_summary_img'+e.get_top_rated_summary.id.to_s, :style => "cursor:pointer;")%>
                     <% end %>
                   </a>
                   <div class="entry_top_like_label">
@@ -99,19 +106,42 @@
                 </div>
               </div>
 
+              <div class="row">
+                <div class="col-md-3 col-md-offset-8">
+                  <% if getLoginUser %>
+                    <a href="<%= url_for :controller => 'summary', :action => 'edit', :article_id => e.id %>">edit summary</a>
+                  <% end %>
+                </div>
+              </div>
             </div>
 
-            <div class="col-md-2 entry_box_right">
-              <%= image_tag "icons/good_summary.jpg", :size => "128x160" %>
+            <div class="col-md-3 entry_box_right">
+              <div class="row" style="margin-top:30px;">
+                <div class="col-md-8 col-md-offset-2">
+                  <%= image_tag "icons/good_summary.jpg", :size => "128x160" %>
+                </div>
+              </div>
+              <div class="row" style="margin: 10px 0;">
+                <div class="col-md-1 col-md-offset-1">
+                  <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
+                </div>
+                <div class="col-md-8">
+                  <cite style="word-wrap: break-word;">
+                    <%= URI(e.url).host %>
+                  </cite>
+                </div>
+              </div>
             </div>
+
           </div>
-
         </div>
       </div>
 
     <% else %>
       <div class="row entry_box_no_summary">
-        <div class="col-md-12 entry_box">
+        Strength[<%= sprintf("%d", e.get_current_strength * 100) %>], 
+        LastAddedTime[<%= e.last_added_at %>]
+        <div class="col-md-12 entry_box_no_sum">
           <div class="row entry_box_top">
             <div class="col-md-8 entry_title">
               <a href="<%= e.url %>" target="_blank">
@@ -122,10 +152,18 @@
               <div class="row">
                 <div class="col-md-4 entry_count_num">
                   <% if getLoginUser %>
+                    <%= image_tag "ajax-loader.gif", :id => "mark_read_loader" + e.id.to_s, :style => "display:none;"%>
+                    <%= image_tag "ajax-loader.gif", :id => "add_page_loader" + e.id.to_s, :style => "display:none; margin-top: 35px;" %>
                     <% if e.user_articles.where(:user_id => getLoginUser.id).first %>
-                      <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' disabled>reading</button>
+                      <% if e.user_articles.where(:user_id => getLoginUser.id).first.read_flg %>
+                        <button id="mark_as_read_btn<%= e.id %>" class="mark_as_unread" onClick='clickMarkAsRead(this, "<%= e.id %>")' >Unread</button>
+                      <% else %>
+                        <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' >Mark as read</button>
+                      <% end %>
+                      <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' >Cancel</button>
                     <% else %>
-                      <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>ReadItLater</button>
+                      <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' style="visibility:hidden;">Mark as read</button>
+                      <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>Read later</button>
                     <% end %>
                   <% else %>
                   <% end %>
@@ -152,20 +190,43 @@
             <div class="col-md-9 entry_box_left">
               <div class="row">
                 <div class="col-md-4 col-md-offset-1 entry_contents_prev_label">
-                  <label>Contents Preview</label>
+                  <label>Contents Preview</label></br>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-9 col-md-offset-1">
                   <div class="entry_contents_prev">
-                    <p>aiueo</p>
-                  </p>
+                    <p><%= e.contents_preview %></p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 col-md-offset-8" style="margin-top:5px;">
+                  <% if getLoginUser %>
+                    <a href="<%= url_for :controller => 'summary', :action => 'edit', :article_id => e.id %>">edit summary</a>
+                  <% end %>
                 </div>
               </div>
             </div>
-            <div class="col-md-2 entry_box_right">
+
+            <div class="col-md-3 entry_box_right">
+              <div class="row" style="margin-top:10px;">
+                <div class="col-md-8 col-md-offset-2">
+                  <%= image_tag "icons/good_summary.jpg", :size => "128x160" %>
+                </div>
+              </div>
+              <div class="row" style="margin: 10px 0;">
+                <div class="col-md-1 col-md-offset-1">
+                  <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
+                </div>
+                <div class="col-md-8">
+                  <cite style="word-wrap: break-word;">
+                    <%= URI(e.url).host %>
+                  </cite>
+                </div>
+              </div>
             </div>
-          </div>
+
         </div>
       </div>
     <% end %>

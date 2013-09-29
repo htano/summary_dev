@@ -77,7 +77,7 @@
             <% else %>
               <div id="tag">tags for this article.<br>
                 <% tags.each do |tag| %>
-                  <label><span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search_by_tag", :searchtext => tag} %></span></label>
+                  <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search_by_tag", :searchtext => tag} %></span>
                 <% end %>
               </div>
             <% end %>

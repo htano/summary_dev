@@ -20,11 +20,11 @@
   <div id="category">
   </div>
   <% if @tags == nil || @tags.length == 0 %>
-    <div id="tag">no tags for this article.<br></div>
+    <div id="tag_area">no tags for this article.<br></div>
   <% else %>
-    <div id="tag">your tags for this article.<br>
+    <div id="tag_area">your tags for this article.<br>
       <% @tags.each do |tag| %>
-        <label><span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search_by_tag", :searchtext => tag} %></span></label>
+        <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search_by_tag", :searchtext => tag} %></span>
       <% end %>
     </div>
   <% end %>

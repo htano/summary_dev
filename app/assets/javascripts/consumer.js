@@ -46,7 +46,7 @@ function check_uid() {
       // Wait for multiple inputs.
       if(p_num == 0){
         $.ajax({
-          url: '/session/consumer/getUserExisting',
+          url: '/session/consumer/get_user_existing',
           type: 'GET',
           data: 'creating_user_name=' + user_name,
           dataType: 'text',
