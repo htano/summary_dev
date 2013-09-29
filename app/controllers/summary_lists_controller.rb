@@ -27,7 +27,7 @@ class SummaryListsController < ApplicationController
   end
 
   def index
-    logger.info("summary_list controller:index start")
+    logger.info("index start")
 
     #check current loginuser
     @article = Article.find_by id: params[:articleId]
@@ -52,7 +52,11 @@ class SummaryListsController < ApplicationController
 
     if goodSummary.save
       @listIndex = params[:listIndex]
-      render
+    end
+
+    respond_to do |format|
+      format.html { redirect_to :action => "index" }
+      format.js
     end
   end
 
@@ -79,14 +83,21 @@ class SummaryListsController < ApplicationController
   end
 
   def cancelGoodSummary 
+    logger.debug("cancel good summary")
     if getLoginUser == nil then
       redirect_to :controller => "consumer", :action => "index"
       return	
     end
 
-    GoodSummary.where(:user_id => getLoginUser.id).where(:summary_id =>params[:summaryId]).delete_all 
+    GoodSummary.where(:user_id => getLoginUser.id).
+      where(:summary_id =>params[:summaryId]).delete_all 
+    
     @listIndex = params[:listIndex]
-    render
+
+    respond_to do |format|
+      format.html { redirect_to :action => "index" }
+      format.js
+    end
   end
 
   def isRead 
@@ -94,18 +105,26 @@ class SummaryListsController < ApplicationController
       redirect_to :controller => "consumer", :action => "index"
       return	
     end
-    userArticleForIsRead=UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId]).first
+    userArticleForIsRead=UserArticle.
+      where(:user_id=>getLoginUser.id).
+      where(:article_id=>params[:articleId]).first
 
     unless userArticleForIsRead == nil then
       userArticleForIsRead.read_flg = true	
     else
-      userArticleForIsRead=UserArticle.new(:user_id=>getLoginUser.id,:article_id=>params[:articleId],:read_flg=>true)
+      userArticleForIsRead=UserArticle.
+        new(:user_id=>getLoginUser.id,:article_id=>params[:articleId],:read_flg=>true)
     end
 
     if userArticleForIsRead.save
-      render
-
+      logger.debug("Success set reading mark")
     else
+      logger.error("ERROR set reading mark")
+    end
+
+    respond_to do |format|
+      format.html { redirect_to :action => "index" }
+      format.js
     end
   end
 
@@ -116,7 +135,8 @@ class SummaryListsController < ApplicationController
     end
 
     userArticleForIsRead=
-      UserArticle.where(:user_id=>getLoginUser.id).where(:article_id=>params[:articleId]).first
+      UserArticle.where(:user_id=>getLoginUser.id).
+        where(:article_id=>params[:articleId]).first
 
     unless userArticleForIsRead == nil then
       userArticleForIsRead.read_flg = false
@@ -128,9 +148,14 @@ class SummaryListsController < ApplicationController
     end
 
     if userArticleForIsRead.save
-      render
+      logger.debug("Success cancel reading mark!")
     else
-
+      logger.error("ERROR cancel reading mark!")
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to :action => "index" }
+      format.js
     end
 
   end
@@ -139,21 +164,22 @@ class SummaryListsController < ApplicationController
   def follow
     logger.debug("follow")
 
-    unless signed_in?
-      # TODO : ログインしてなかった時
+    if getLoginUser == nil then
+      redirect_to :controller => "consumer", :action => "index"
+      return	
     end
+    
+    @listIndex = params[:listIndex]
 
-    current_user = getLoginUser
-
-    if current_user
-      # TODO : error handle
-      FavoriteUser.create(:user_id => current_user.id, :favorite_user_id => params[:follow_user_id])
+    if FavoriteUser.create(:user_id => getLoginUser.id, 
+                        :favorite_user_id => params[:follow_user_id])
+      logger.debug("Success follow")
+    else
+      logger.error("ERROR follow")
     end
 
     user_id = params[:follow_user_id]
     # for renewing followers number on profile view
-    follower_num = "followers" + "<br>" + 
-      FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]}).to_s
 
     respond_to do |format|
       format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
@@ -164,16 +190,23 @@ class SummaryListsController < ApplicationController
   def unfollow
     logger.debug("unfollow")
 
-    current_user = getLoginUser
-
-    if current_user && current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id])
-      current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
+    if getLoginUser == nil then
+      logger.fatal("ERROR nil user push unfollow!")
+      redirect_to :controller => "consumer", :action => "index"
+      return	
     end
 
-    user_id = params[:unfollow_user_id]
+    @listIndex = params[:listIndex]
+
+    current_user = getLoginUser
+
+    if current_user && current_user.favorite_users.exists?(:favorite_user_id => params[:follow_user_id])
+      current_user.favorite_users.find_by_favorite_user_id(params[:follow_user_id]).destroy
+
+    end
 
     respond_to do |format|
-      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.html { redirect_to :action => "index" }
       format.js
     end
   end

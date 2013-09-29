@@ -28,22 +28,30 @@
             <div id="unreadBottun">
 
               <%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') +
-                ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
+                ' mark read', {:action => "isRead", 
+                               :articleId => @article.id, 
+                               :remote => true}%>
           </div>
           <div id="alreadyReadBottun" style="display:none">
             <%= link_to sanitize('<span class="glyphicon glyphicon-check"></span>') + 
-              ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
+              ' unmark read', {:action => "cancelIsRead", 
+                               :articleId => @article.id, 
+                               :remote => true}%>
           </div>
 
         <% else %>
             <div id="unreadBottun" style="display:none">
 
               <%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') + 
-                ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
+                ' mark read', {:action => "isRead", 
+                               :articleId => @article.id, 
+                               :remote => true}%>
           </div>
           <div id="alreadyReadBottun">
             <%= link_to sanitize('<span class="glyphicon glyphicon-check"></span>') + 
-              ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
+              ' unmark read', {:action => "cancelIsRead", 
+                               :articleId => @article.id, 
+                               :remote => true}%>
           </div>
         <% end %>
         </div>
@@ -70,7 +78,7 @@
         </td>
         <td id="my_summary_auther" class ="status">	
 
-          あなたの要約です
+          あなたの要約です <br>
           今 <span class="bold_char"><%= @summaryByMe.good_summaries.count %>人</span> が
           <span class="glyphicon glyphicon-thumbs-up"></span> しています！ 	
 
@@ -84,8 +92,6 @@
             <%= @summaryByMe.updated_at.strftime("%Y/%m/%d %H:%M") %>
           </div>
           
-          <hr>
-
         </td>
 
       <% else %>
@@ -95,7 +101,8 @@
 
         </td>
         <td class="status">
-          <%= link_to sanitize('<span class="glyphicon glyphicon-pencil"></span>') + ' add your summary ! ',
+          <%= link_to sanitize('<span class="glyphicon glyphicon-pencil"></span>') +
+            ' add your summary ! ',
             {:controller => "summary", :action => "edit", :article_id => @article.id}%>
         </td>
       <% end %>
@@ -124,16 +131,51 @@
                               :title => summaryItem.user.name, :id =>"auther_photo"),
           {:controller => 'mypage',:action => "index", :name => summaryItem.user.name} %>
         <div id ="auther_name">
-          <%= link_to sanitize('<span class="glyphicon glyphicon-user"></span> ') + summaryItem.user.name,
+          <%= link_to sanitize('<span class="glyphicon glyphicon-user"></span> ') +
+            summaryItem.user.name,
             {:controller => 'mypage',
              :action => "index", 
              :name => summaryItem.user.name} %>
 
-          <div id="follow_mark">
-            follow
-          </div>
 
+           <!-- follow button-->
+          <div id="follow_mark">
+
+            <% unless @user.favorite_users.exists?(:favorite_user_id => summaryItem.user.id) %>
+
+
+
+              <span id="follow<%=index%>">
+                <%= link_to "follow", :action => "follow",
+                  :listIndex =>index,
+                  :follow_user_id => summaryItem.user.id,
+                  :remote => true  %>
+              </span>
+              <span id="unfollow<%=index%>" style="display:none">
+                <%= link_to "unfollow", :action => "unfollow",
+                  :listIndex =>index,
+                  :follow_user_id => summaryItem.user.id,
+                  :remote => true %>
+              </span>
+
+            <% else %>
+
+              <span id="follow<%=index%>" style="display:none">
+                <%= link_to "follow", :action => "follow",
+                  :listIndex =>index,
+                  :follow_user_id => summaryItem.user.id,
+                  :remote => true  %>
+              </span>
+              <span id="unfollow<%=index%>"> 
+                <%= link_to "unfollow", :action => "unfollow",
+                  :listIndex =>index,
+                  :follow_user_id => summaryItem.user.id,
+                  :remote => true %>
+              </span>
+
+            <% end %>
           </div>
+        </div>
 
           <div id="last_update_time">
             LastUpdate: <br>
@@ -160,13 +202,14 @@
 
             <div id = "alreadyGoodSummary<%=index%>" class="iiyo" style="display:none"	>
               <%= link_to image_tag("icons/glyphicons_343_thumbs_up_gray.png", 
-                                    { :border => '0', 
-                                      :alt => 'あなたは既にいい要約だねをしています', :id => "cmpBottun"} ),
-                                      {	:action => "cancelGoodSummary",
-                                        :listIndex =>index,
-                                        :summaryId =>summaryItem.summary.id, 
-                                        :articleId => @article.id,
-                                        :remote => true, } %>
+                                  { :border => '0', 
+                                    :alt => 'あなたは既にいい要約だねをしています', 
+                                    :id => "cmpBottun"} ),
+                                    {	:action => "cancelGoodSummary",
+                                      :listIndex =>index,
+                                      :summaryId =>summaryItem.summary.id, 
+                                      :articleId => @article.id,
+                                      :remote => true, } %>
               <div id="count">
                   <%= summaryItem.summaryPoint + 1 %> 
               </div>
@@ -188,7 +231,8 @@
             <div id = "alreadyGoodSummary<%=index%>" class="iiyo">
               <%= link_to image_tag("icons/glyphicons_343_thumbs_up_gray.png", 
                                     { :border => '0', 
-                                      :alt => 'あなたは既にいい要約だねをしています',:id => "cmpBottun"}),
+                                      :alt => 'あなたは既にいい要約だねをしています',
+                                      :id => "cmpBottun"}),
                                       {	:action => "cancelGoodSummary",
                                         :listIndex =>index,
                                         :summaryId =>summaryItem.summary.id, 
@@ -222,7 +266,7 @@
 <script>
   $('article').readmore({
     speed: 10,
-    maxHeight: 170,
+    maxHeight: 150,
     moreLink: '<a href="#" class="readmore_char">続きを読む</a>',
     lessLink: '<a href="#" class="readmore_char">閉じる</a>'
     });
