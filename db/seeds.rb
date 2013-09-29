@@ -9,7 +9,7 @@
 
 # User
 User.create(name: "summary", mail_addr: "summary.dev@gmail.com",
-  open_id: "https://www.google.com/accounts/o8/id?id=AItOawlDmHFynj5HotAc7FisQwAD3kZC_jeaMTE",
+  open_id: "https://www.google.com/accounts/o8/id?id=AItOawn4ayi4TWTPrWFO_XzWCp_uX5J_pZ6TVVU",
   prof_image: "account_pictures/usertile44.bmp", yuko_flg: true, public_flg: true)
 User.create(name: "shingo0809", mail_addr: "shingo0809@gmail.com", open_id:"openid",
   prof_image: "account_pictures/usertile15.bmp", public_flg: true)
@@ -49,6 +49,7 @@ User.create(name: "pogn", mail_addr: "pogn@gmail.com", open_id:"openid17",
   prof_image: "account_pictures/usertile27.bmp")
 User.create(name: "prima", mail_addr: "prima@gmail.com", open_id:"openid18",
   prof_image: "account_pictures/usertile28.bmp", public_flg: true)
+User.create(name: "system001", mail_addr: "system001@gmail.com", open_id:"openid001", public_flg: true)
 
 # FavoriteUser
 FavoriteUser.create(user_id: 1, favorite_user_id: 2)

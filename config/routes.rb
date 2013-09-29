@@ -34,6 +34,8 @@ SummaryDev::Application.routes.draw do
   #for webpage
   post 'webpage/add' => 'webpage#add'
   post 'webpage/get_title' => 'webpage#get_title'
+  get 'webpage/delete' => 'webpage#delete'
+  get 'webpage/mark_as_read' => 'webpage#mark_as_read'
 
   #for webpage
   get 'summary/:article_id/edit' => 'summary#edit'
@@ -47,10 +49,12 @@ SummaryDev::Application.routes.draw do
   #for webpage
   get 'summary_lists/goodSummaryAjax' => 'summary_lists#goodSummaryAjax'
   get 'summary_lists/:articleId' => 'summary_lists#index'
-  get 'summary_lists/goodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#goodSummary'
-  get 'summary_lists/cancelGoodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#cancelGoodSummary'
-  get 'summary_lists/isRead/:articleId' => 'summary_lists#isRead'
-  get 'summary_lists/cancelIsRead/:articleId' => 'summary_lists#cancelIsRead'
+  post 'summary_lists/goodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#goodSummary'
+  post 'summary_lists/cancelGoodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#cancelGoodSummary'
+  post 'summary_lists/isRead/:articleId' => 'summary_lists#isRead'
+  post 'summary_lists/cancelIsRead/:articleId' => 'summary_lists#cancelIsRead'
+  post 'summary_lists/follow/:listIndex/:follow_user_id' => 'summary_lists#follow'
+  post 'summary_lists/unfollow/:listIndex/:unfollow_user_id' => 'summary_lists#unfollow'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

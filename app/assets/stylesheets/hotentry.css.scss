@@ -9,17 +9,16 @@
 
 div.hotentry_container {
   margin: auto;
-  margin-top: 20px;
-  width: 945px;
+  width: 900px;
 }
 
 h1.hotentry a{
-  margin-left: 0;
+  //margin-left: 0;
   color: #999;
 }
 
 ul.entry_container {
-  margin: 20px 0px;
+  //margin: 0px 0px;
 }
 
 ul.entry_container li {
@@ -33,6 +32,16 @@ div.entry_box {
   //width: 945px;
   border: solid 2px #eee;
   border-top: solid 3px #F5AC0F;
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+}
+
+div.entry_box_no_sum {
+  margin: auto;
+  //width: 945px;
+  border: solid 2px #eee;
+  border-top: solid 3px #0FC7F5;
   border-radius:5px;
   -webkit-border-radius:5px;
   -moz-border-radius:5px;
@@ -78,7 +87,7 @@ div.entry_count_num {
 
 span.entry_count_label {
   //text-decoration: underline;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 span.entry_count_num {
@@ -117,10 +126,11 @@ div.entry_top_icon {
 }
 
 div.entry_contents_prev {
+  font-size: 14px;
   margin-top: 5px;
   border: solid 1px #eee;
-  padding-left: 10px;
-  height: 100px;
+  padding: 0 10px;
+  height: 150px;
 }
 
 div.entry_contents_prev_label {
@@ -130,7 +140,8 @@ div.entry_contents_prev_label {
 }
 
 div.entry_summary_label {
-  margin-bottom: 5px;
+  height: 26px;
+  position: relative;
 }
 
 div.entry_summary_label label {
@@ -141,7 +152,7 @@ div.entry_summary_label label {
 
 div.entry_top_summary {
   //padding: 5px;
-  height: 200px;
+  height: 170px;
   //width: 600px;
   //float: left;
 }
@@ -159,12 +170,12 @@ div.entry_top_summary textarea {
   resize: none;
   margin-top: 7px;
   width: 100%;
-  height: 184px;
+  height: 154px;
   font-size: 14px;
 }
 
 div.entry_top_like {
-  padding-top: 60px;
+  padding-top: 30px;
   padding-left: 0px;
   height: 140px;
   //width: 113px;
@@ -210,13 +221,14 @@ div.entry_like_num div {
 }
 
 button.read_it_later {
+  font-size: 12px;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #60b044;
   background-repeat: repeat-x;
   border-color: #5ca941;
   width: 80px;
-  height: 34px;
+  height: 30px;
   outline: none;
   border-radius: 5px;  /* CSS3草案 */
   -webkit-border-radius: 5px;  /* Safari,Google Chrome用 */
@@ -225,18 +237,19 @@ button.read_it_later {
   background-image: -webkit-linear-gradient(#8add6d, #60b044);
   background-image: linear-gradient(#8add6d, #60b044);
   //margin-bottom: 1em;
-  margin-top: 25px;
+  margin-top: 5px;
   border: 1px solid #d8d8d8;
 }
 
 button.read_it_cancel {
+  font-size: 12px;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #999;
   background-repeat: repeat-x;
   border-color: #999;
   width: 80px;
-  height: 34px;
+  height: 30px;
   outline: none;
   border-radius: 5px;  /* CSS3草案 */
   -webkit-border-radius: 5px;  /* Safari,Google Chrome用 */
@@ -245,7 +258,46 @@ button.read_it_cancel {
   background-image: -webkit-linear-gradient(#aaa, #999);
   background-image: linear-gradient(#aaa, #999);
   //margin-bottom: 1em;
-  margin-top: 25px;
+  margin-top: 5px;
+  border: 1px solid #d8d8d8;
+}
+
+button.mark_as_read {
+  font-size: 10px;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  background-color: #60b044;
+  background-repeat: repeat-x;
+  border-color: #5ca941;
+  width: 80px;
+  height: 30px;
+  outline: none;
+  border-radius: 5px;  /* CSS3草案 */
+  -webkit-border-radius: 5px;  /* Safari,Google Chrome用 */
+  -moz-border-radius: 5px; /* Firefox用 */
+  background-image: -moz-linear-gradient(#8add6d, #60b044);
+  background-image: -webkit-linear-gradient(#8add6d, #60b044);
+  background-image: linear-gradient(#8add6d, #60b044);
+  //margin-bottom: 1em;
+  border: 1px solid #d8d8d8;
+}
+
+button.mark_as_unread {
+  font-size: 12px;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  background-color: #999;
+  background-repeat: repeat-x;
+  border-color: #999;
+  width: 80px;
+  height: 30px;
+  outline: none;
+  border-radius: 5px;  /* CSS3草案 */
+  -webkit-border-radius: 5px;  /* Safari,Google Chrome用 */
+  -moz-border-radius: 5px; /* Firefox用 */
+  background-image: -moz-linear-gradient(#aaa, #999);
+  background-image: -webkit-linear-gradient(#aaa, #999);
+  background-image: linear-gradient(#aaa, #999);
   border: 1px solid #d8d8d8;
 }
 

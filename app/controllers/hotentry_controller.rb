@@ -1,5 +1,5 @@
 class HotentryController < ApplicationController
   def index
-    @entries = Article.getHotEntryArtileList
+    @entries = Article.get_hotentry_articles
   end
 end
