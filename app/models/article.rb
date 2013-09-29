@@ -12,6 +12,14 @@ class Article < ActiveRecord::Base
   # This parameter means that '1' point will decay to '0.01' point until some days after.
   ZERO_ZERO_ONE_DAYS = 7
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
+  BLANK = ""
+
+  #指定されたタグ情報ももつ記事を取得する
+  def self.search_by_tag(tag)
+    return nil if tag == nil || tag == BLANK
+    articles = joins(:user_articles => :user_article_tags).where(["user_article_tags.tag LIKE ?", "%"+tag+"%"]).order("created_at desc")
+    return articles
+  end
 
   def getMarkedUser
     return self.user_articles.count
@@ -129,33 +137,10 @@ class Article < ActiveRecord::Base
     return @top_rated_summary
   end
 
-  #指定されたURLに対して登録数が多いタグ情報を取得するメソッド
-  def self.get_top_rated_tag(url)
+  #記事に設定されたタグ情報を登録順に取得するメソッド
+  def get_top_rated_tag
     first_index = 0
     last_index = 9
-    top_rated_tags = joins(:user_articles => :user_article_tags).where("url" => url).group("tag").order("count_tag desc").count("tag").keys
-    return top_rated_tags[first_index..last_index]
-  end
-
-  #ユーザーが最近登録したタグ情報を取得するメソッド
-  def self.get_recent_tag(user_id)
-    first_index = 0
-    last_index = 9
-    recent_tags = joins(:user_articles => :user_article_tags).where("user_articles.user_id" => user_id).group("tag").order("user_article_tags.created_at desc").count("tag").keys
-    return recent_tags[first_index..last_index]
-  end
-
-
-  #指定されたタグ情報ももつ記事を取得する
-  def self.search_by_tag(tag)
-    articles = joins(:user_articles => :user_article_tags).where(["user_article_tags.tag LIKE ?", "%"+tag+"%"]).order("created_at desc")
-    return articles
-  end
-
-  def self.get_popular_tag
-    first_index = 0
-    last_index = 14
-    popular_tags = joins(:user_articles => :user_article_tags).group("tag").order("count_tag desc").count("tag").keys
-    return popular_tags[first_index..last_index]    
+    return Article.joins(:user_articles => :user_article_tags).where("url" => self.url).group("tag").order("count_tag desc").count("tag").keys[first_index..last_index]
   end
 end
