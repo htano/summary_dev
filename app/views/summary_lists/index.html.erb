@@ -5,7 +5,12 @@
 <% end %>
 
 <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<script>!function(d,s,id)
+  {var js,fjs=d.getElementsByTagName(s)[0],
+    p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id))
+    {js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}
+  }(document, 'script', 'twitter-wjs');
+</script>
 
 
 
@@ -22,19 +27,23 @@
           <% unless @isReadArticle then %>
             <div id="unreadBottun">
 
-            <%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') + ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
+              <%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') +
+                ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
           </div>
           <div id="alreadyReadBottun" style="display:none">
-            <%= link_to sanitize('<span class="glyphicon glyphicon-check"></span>') + ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
+            <%= link_to sanitize('<span class="glyphicon glyphicon-check"></span>') + 
+              ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
           </div>
 
         <% else %>
             <div id="unreadBottun" style="display:none">
 
-            <%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') + ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
+              <%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') + 
+                ' mark read', {:action => "isRead", :articleId => @article.id, :remote => true}%>
           </div>
           <div id="alreadyReadBottun">
-            <%= link_to sanitize('<span class="glyphicon glyphicon-check"></span>') + ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
+            <%= link_to sanitize('<span class="glyphicon glyphicon-check"></span>') + 
+              ' unmark read', {:action => "cancelIsRead", :articleId => @article.id, :remote => true}%>
           </div>
         <% end %>
         </div>
@@ -62,10 +71,12 @@
         <td id="my_summary_auther" class ="status">	
 
           あなたの要約です
-          今 <span class="bold_char"><%= @summaryByMe.good_summaries.count %>人</span> が <span class="glyphicon glyphicon-thumbs-up"></span> しています！ 	
+          今 <span class="bold_char"><%= @summaryByMe.good_summaries.count %>人</span> が
+          <span class="glyphicon glyphicon-thumbs-up"></span> しています！ 	
 
           <div id="auther_button" >
-            <%= link_to sanitize('<span class="glyphicon glyphicon-pencil"></span>') + ' edit', {:controller => "summary", :action => "edit", :article_id => @article.id}%>
+            <%= link_to sanitize('<span class="glyphicon glyphicon-pencil"></span>') + ' edit',
+              {:controller => "summary", :action => "edit", :article_id => @article.id}%>
           </div>
 
           <div id="last_update_time">
@@ -84,7 +95,8 @@
 
         </td>
         <td class="status">
-          <%= link_to sanitize('<span class="glyphicon glyphicon-pencil"></span>') + ' add your summary ! ', {:controller => "summary", :action => "edit", :article_id => @article.id}%>
+          <%= link_to sanitize('<span class="glyphicon glyphicon-pencil"></span>') + ' add your summary ! ',
+            {:controller => "summary", :action => "edit", :article_id => @article.id}%>
         </td>
       <% end %>
 
