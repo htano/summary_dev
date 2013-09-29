@@ -1,6 +1,6 @@
 module FollowListsHelper
   def render_follow_status(user)
-    current_user = getLoginUser
+    current_user = get_login_user
 
     if current_user.favorite_users.exists?(:favorite_user_id => user.id)
       return button_to "unfollow", 

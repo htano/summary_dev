@@ -13,7 +13,7 @@
         <dt>
           <label>Your Name</label>
         </dt>
-        <input type="text" name="user_full_name" value="<%= getLoginUser.full_name %>" style="width:97%;" disabled="disabled"/>
+        <input type="text" name="user_full_name" value="<%= get_login_user.full_name %>" style="width:97%;" disabled="disabled"/>
       </dl>
 
       <dl>
@@ -22,7 +22,7 @@
         </dt>
         <dd>
         <% begin %>
-          <%= image_tag(getLoginUser.prof_image, :size => "128x128") %>
+          <%= image_tag(get_login_user.prof_image, :size => "128x128") %>
         <% rescue %>
           Error Image.
         <% end %>
@@ -33,14 +33,14 @@
         <dt>
           <label>Self Introduction</label>
         </dt>
-        <textarea name="user_comment" style="width:97%; height: 100px;" disabled="disabled"><%= getLoginUser.comment %></textarea>
+        <textarea name="user_comment" style="width:97%; height: 100px;" disabled="disabled"><%= get_login_user.comment %></textarea>
       </dl>
 
       <dl>
         <dt>
           <label>Your Site</label>
         </dt>
-        <input type="text" name="user_site_url" value="<%= getLoginUser.site_url %>" style="width:97%;" disabled="disabled"/>
+        <input type="text" name="user_site_url" value="<%= get_login_user.site_url %>" style="width:97%;" disabled="disabled"/>
       </dl>
 
       <dl>
@@ -48,7 +48,7 @@
           <label>Public Setting</label>
         </dt>
         <dd>
-        <% if getLoginUser.public_flg %>
+        <% if get_login_user.public_flg %>
           <input type="radio" name="user_public_flg" value="FALSE" disabled="disabled" >Private　
           <input type="radio" name="user_public_flg" value="TRUE" disabled="disabled" checked>Public
         <% else %>

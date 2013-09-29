@@ -119,12 +119,12 @@ class MypageController < ApplicationController
   end
 
   def delete_article
-    login_user = getLoginUser
+    login_user = get_login_user
 
     params[:article_ids].each do |article_id|
       article = login_user.user_articles.find_by_article_id(article_id)
       unless article == nil
-        Article.find(article_id).remove_strength(getLoginUser.id)
+        Article.find(article_id).remove_strength(get_login_user.id)
         article.destroy
       end
     end
@@ -133,7 +133,7 @@ class MypageController < ApplicationController
   end
 
   def delete_summary
-    login_user = getLoginUser
+    login_user = get_login_user
     params[:article_ids].each do |article_id|
       summary = login_user.summaries.find_by_article_id(article_id)
       unless summary == nil
@@ -145,7 +145,7 @@ class MypageController < ApplicationController
   end
 
   def mark_as_read
-    login_user = getLoginUser
+    login_user = get_login_user
 
     params[:article_ids].each do |article_id|
       logger.debug("#{article_id}")
@@ -161,7 +161,7 @@ class MypageController < ApplicationController
   end
 
   def mark_as_unread
-    login_user = getLoginUser
+    login_user = get_login_user
 
     params[:article_ids].each do |article_id|
       logger.debug("#{article_id}")
@@ -178,7 +178,7 @@ class MypageController < ApplicationController
 
   def mark_as_favorite
     logger.debug("mark as favorite")
-    login_user = getLoginUser
+    login_user = get_login_user
 
     params[:article_ids].each do |article_id|
       logger.debug("#{article_id}")
@@ -195,7 +195,7 @@ class MypageController < ApplicationController
 
   def mark_off_favorite
     logger.debug("mark off favorite")
-    login_user = getLoginUser
+    login_user = get_login_user
 
     params[:article_ids].each do |article_id|
       logger.debug("#{article_id}")
@@ -217,9 +217,9 @@ class MypageController < ApplicationController
       redirect_to :controller => 'consumer', :action => 'index' and return
     end
 
-    login_user = getLoginUser
+    login_user = get_login_user
     params[:article_ids].each do |article_id|
-      login_user.user_articles.find_or_create_by(:user_id => getLoginUser.id, :article_id => article_id)
+      login_user.user_articles.find_or_create_by(:user_id => get_login_user.id, :article_id => article_id)
     end
 
     redirect_to :action => "index", :name => params[:name]
@@ -232,7 +232,7 @@ class MypageController < ApplicationController
       # TODO : ログインしてなかった時
     end
     
-    @current_user = getLoginUser
+    @current_user = get_login_user
 
     if @current_user
       # TODO : error handle
@@ -253,7 +253,7 @@ class MypageController < ApplicationController
   def unfollow
     logger.debug("unfollow")
 
-    @current_user = getLoginUser
+    @current_user = get_login_user
 
     if @current_user && @current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id])
       @current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
@@ -298,9 +298,9 @@ private
       is_registered = false
       is_already_read = false
       if signed_in? && is_login_user == false
-        if getLoginUser.user_articles.exists?(:article_id => user_article.article_id)
+        if get_login_user.user_articles.exists?(:article_id => user_article.article_id)
           is_registered = true
-          is_already_read = getLoginUser.user_articles.find_by_article_id(user_article.article_id).read_flg
+          is_already_read = get_login_user.user_articles.find_by_article_id(user_article.article_id).read_flg
         end
       end
 
@@ -323,9 +323,9 @@ private
       is_registered = false
       is_already_read = false
       if signed_in? && is_login_user == false
-        if getLoginUser.user_articles.exists?(:article_id => summary.article_id)
+        if get_login_user.user_articles.exists?(:article_id => summary.article_id)
           is_registered = true
-          is_already_read = getLoginUser.user_articles.find_by_article_id(summary.article_id).read_flg
+          is_already_read = get_login_user.user_articles.find_by_article_id(summary.article_id).read_flg
         end
       end
 

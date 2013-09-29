@@ -62,8 +62,8 @@
               <p><%= article.contents_preview[0, 200] %></p>
             </div>
             <div id="article_operation">
-              <% if getLoginUser %>
-                  <% if article.user_articles.where(:user_id => getLoginUser.id).first %>
+              <% if get_login_user %>
+                  <% if article.user_articles.where(:user_id => get_login_user.id).first %>
                     <button class="read_it_cancel" disabled>reading</button>
                   <% else %>
                     <button class="read_it_later" >add</button>

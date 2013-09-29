@@ -13,15 +13,15 @@ class ConsumerController < ApplicationController
     @image_url = env['omniauth.auth'].info.image
     session[:openid_url] = @oauth_url
     @redirect_url = url_for(:controller => 'mypage', :action => 'index')
-    if getLoginUser
-      @uname = getLoginUser.name
+    if get_login_user
+      @uname = get_login_user.name
       flash[:success] = "Hello " + @uname + ". Login processing was successful."
       @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
-      if getLoginUser.update_last_login
+      if get_login_user.update_last_login
         if env['omniauth.params']['keep_login'] == "on"
-          getLoginUser.update_keep_login(@remote_ip)
+          get_login_user.update_keep_login(@remote_ip)
           cookies[:keep_login_token] = {
-            :value => getLoginUser.keep_login_token,
+            :value => get_login_user.keep_login_token,
             :expires => Time.now + 3.days
           }
         end
@@ -101,15 +101,15 @@ class ConsumerController < ApplicationController
       flash[:success] = ("Verification of #{oidresp.display_identifier}"\
                          " succeeded.")
       session[:openid_url] = oidresp.display_identifier
-      if getLoginUser
-        @uname = getLoginUser.name
+      if get_login_user
+        @uname = get_login_user.name
         flash[:success] = "Hello " + @uname + ". Login processing was successful."
         @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
-        if getLoginUser.update_last_login
+        if get_login_user.update_last_login
           if params[:keep_login] == "on"
-            getLoginUser.update_keep_login(@remote_ip)
+            get_login_user.update_keep_login(@remote_ip)
             cookies[:keep_login_token] = {
-              :value => getLoginUser.keep_login_token,
+              :value => get_login_user.keep_login_token,
               :expires => Time.now + 3.days
             }
           end
@@ -133,7 +133,7 @@ class ConsumerController < ApplicationController
   end
 
   def sign_out
-    getLoginUser.exec_sign_out
+    get_login_user.exec_sign_out
     session[:openid_url] = nil
     flash[:success] = "LogOut Complete."
     if params[:fromUrl]
@@ -145,7 +145,7 @@ class ConsumerController < ApplicationController
 
   def signup
     if session[:openid_url]
-      if getLoginUser
+      if get_login_user
         redirect_to(:controller => 'mypage', :action => 'index')
       end
     else
@@ -156,7 +156,7 @@ class ConsumerController < ApplicationController
 
   def signup_complete
     if session[:openid_url]
-      if getLoginUser
+      if get_login_user
         redirect_to(:controller => 'mypage', :action => 'index')
       else
         @creating_user_id = "#{params[:creating_user_id]}";
@@ -164,7 +164,7 @@ class ConsumerController < ApplicationController
         @error_message = User.regist(@creating_user_id, session[:openid_url])
         if !@error_message
           if params[:image]
-            getLoginUser.update_image_path(params[:image])
+            get_login_user.update_image_path(params[:image])
           end
           flash[:success] = "Hello " + @creating_user_id +
             ". SignUp was successfully completed."

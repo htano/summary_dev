@@ -3,7 +3,7 @@
 class SummaryController < ApplicationController
   def delete
     if signed_in?
-      user_id = getLoginUser.id
+      user_id = get_login_user.id
       @article_id = "#{params[:article_id]}"
       summary = Summary.find_by_user_id_and_article_id(user_id, @article_id)
       if summary == nil
@@ -28,7 +28,7 @@ class SummaryController < ApplicationController
       @url = article.url
       @title = article.title
       @summary_num = article.summaries.count(:all)
-      user_id = getLoginUser.id
+      user_id = get_login_user.id
       summary = Summary.find_by_user_id_and_article_id(user_id, @article_id)
       if summary == nil
         @content = "Please edit summary within 300 characters."
@@ -45,7 +45,7 @@ class SummaryController < ApplicationController
 
   def edit_complete
     if signed_in?
-      user_id = getLoginUser.id
+      user_id = get_login_user.id
       @article_id = "#{params[:article_id]}"
       article = Article.find_by id: @article_id
       if article == nil

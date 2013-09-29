@@ -36,7 +36,7 @@ class SummaryListsController < ApplicationController
       redirect_to :controller => "mypage", :action => "index" 
       return
     end
-    @user = getLoginUser
+    @user = get_login_user
     @summaryList = @article.getSortedSummaryList(@user)
     @isReadArticle = @article.isRead(@user)
     @numOfMarkUsers = @article.getMarkedUser
@@ -44,11 +44,11 @@ class SummaryListsController < ApplicationController
   end
 
   def goodSummary 
-    if getLoginUser == nil then
+    if get_login_user == nil then
       redirect_to :controller => "consumer", :action => "index"
       return	
     end
-    goodSummary = GoodSummary.new(:user_id => getLoginUser.id, :summary_id =>params[:summaryId]) 
+    goodSummary = GoodSummary.new(:user_id => get_login_user.id, :summary_id =>params[:summaryId]) 
 
     if goodSummary.save
       @listIndex = params[:listIndex]
@@ -61,10 +61,10 @@ class SummaryListsController < ApplicationController
   end
 
   def goodSummaryAjax
-    if !getLoginUser
+    if !get_login_user
       render :text => 'To submit good summary, you should login.'
     else
-      good_summary_pre = GoodSummary.where(['user_id = ? and summary_id = ?', getLoginUser.id, params[:summaryId]])
+      good_summary_pre = GoodSummary.where(['user_id = ? and summary_id = ?', get_login_user.id, params[:summaryId]])
       if good_summary_pre.count > 0
         if good_summary_pre.delete_all > 0
           render :text => 'cancel'
@@ -72,7 +72,7 @@ class SummaryListsController < ApplicationController
           render :text => "Can't delete. Server Error has occured."
         end
       else
-        good_summary_new = GoodSummary.new(:user_id => getLoginUser.id, :summary_id =>params[:summaryId])
+        good_summary_new = GoodSummary.new(:user_id => get_login_user.id, :summary_id =>params[:summaryId])
         if good_summary_new.save
           render :text => 'good'
         else
@@ -84,12 +84,12 @@ class SummaryListsController < ApplicationController
 
   def cancelGoodSummary 
     logger.debug("cancel good summary")
-    if getLoginUser == nil then
+    if get_login_user == nil then
       redirect_to :controller => "consumer", :action => "index"
       return	
     end
 
-    GoodSummary.where(:user_id => getLoginUser.id).
+    GoodSummary.where(:user_id => get_login_user.id).
       where(:summary_id =>params[:summaryId]).delete_all 
     
     @listIndex = params[:listIndex]
@@ -101,19 +101,19 @@ class SummaryListsController < ApplicationController
   end
 
   def isRead 
-    if getLoginUser == nil then
+    if get_login_user == nil then
       redirect_to :controller => "consumer", :action => "index"
       return	
     end
     userArticleForIsRead=UserArticle.
-      where(:user_id=>getLoginUser.id).
+      where(:user_id=>get_login_user.id).
       where(:article_id=>params[:articleId]).first
 
     unless userArticleForIsRead == nil then
       userArticleForIsRead.read_flg = true	
     else
       userArticleForIsRead=UserArticle.
-        new(:user_id=>getLoginUser.id,:article_id=>params[:articleId],:read_flg=>true)
+        new(:user_id=>get_login_user.id,:article_id=>params[:articleId],:read_flg=>true)
     end
 
     if userArticleForIsRead.save
@@ -129,20 +129,20 @@ class SummaryListsController < ApplicationController
   end
 
   def cancelIsRead 
-    if getLoginUser == nil then
+    if get_login_user == nil then
       redirect_to :controller => "consumer", :action => "index"
       return	
     end
 
     userArticleForIsRead=
-      UserArticle.where(:user_id=>getLoginUser.id).
+      UserArticle.where(:user_id=>get_login_user.id).
         where(:article_id=>params[:articleId]).first
 
     unless userArticleForIsRead == nil then
       userArticleForIsRead.read_flg = false
     else
       userArticleForIsRead=
-        UserArticle.new(:user_id=>getLoginUser.id,
+        UserArticle.new(:user_id=>get_login_user.id,
                         :article_id=>params[:articleId],
                         :read_flg=>false)
     end
@@ -164,14 +164,14 @@ class SummaryListsController < ApplicationController
   def follow
     logger.debug("follow")
 
-    if getLoginUser == nil then
+    if get_login_user == nil then
       redirect_to :controller => "consumer", :action => "index"
       return	
     end
     
     @listIndex = params[:listIndex]
 
-    if FavoriteUser.create(:user_id => getLoginUser.id, 
+    if FavoriteUser.create(:user_id => get_login_user.id, 
                         :favorite_user_id => params[:follow_user_id])
       logger.debug("Success follow")
     else
@@ -190,7 +190,7 @@ class SummaryListsController < ApplicationController
   def unfollow
     logger.debug("unfollow")
 
-    if getLoginUser == nil then
+    if get_login_user == nil then
       logger.fatal("ERROR nil user push unfollow!")
       redirect_to :controller => "consumer", :action => "index"
       return	
@@ -198,7 +198,7 @@ class SummaryListsController < ApplicationController
 
     @listIndex = params[:listIndex]
 
-    current_user = getLoginUser
+    current_user = get_login_user
 
     if current_user && current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id])
       current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy

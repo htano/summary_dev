@@ -27,7 +27,7 @@ class WebpageController < ApplicationController
   
   def add_confirm
     if signed_in?
-      @user_id = getLoginUser.id
+      @user_id = get_login_user.id
       @url = "#{params[:url]}"
       h = get_article_element(@url, true, false, false)
       if h == nil
@@ -59,7 +59,7 @@ class WebpageController < ApplicationController
   #TODO 画面からURL直打ちの回避
   def get_add_history_for_chrome_extension
     if signed_in?
-      user_id = getLoginUser.id
+      user_id = get_login_user.id
       @url = "#{params[:url]}"
       article = Article.find_by_url(@url)
       if article == nil
@@ -89,8 +89,8 @@ class WebpageController < ApplicationController
   #TODO 画面からURL直打ちの回避
   def add_for_chrome_extension
     if signed_in?
-      user_id = getLoginUser.id
-      @prof_image =  getLoginUser.prof_image
+      user_id = get_login_user.id
+      @prof_image =  get_login_user.prof_image
       @url = "#{params[:url]}"
       if title == nil
         render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => "text/html" and return
@@ -135,8 +135,8 @@ class WebpageController < ApplicationController
 
   def add_complete
     if signed_in?
-      user_id = getLoginUser.id
-      @prof_image =  getLoginUser.prof_image
+      user_id = get_login_user.id
+      @prof_image =  get_login_user.prof_image
       @url = "#{params[:url]}"
       tag_list = []
       params.each do |key,value|
@@ -274,9 +274,9 @@ class WebpageController < ApplicationController
 
   def delete
     @aid = params[:article_id]
-    user_article = getLoginUser.user_articles.find_by_article_id(@aid)
+    user_article = get_login_user.user_articles.find_by_article_id(@aid)
     if user_article
-      Article.find(@aid).remove_strength(getLoginUser.id)
+      Article.find(@aid).remove_strength(get_login_user.id)
       user_article.destroy
       render :text => "OK"
     else
@@ -287,7 +287,7 @@ class WebpageController < ApplicationController
   def mark_as_read
     @msg = "NG"
     @aid = params[:article_id]
-    @user_article = getLoginUser.user_articles.find_by_article_id(@aid)
+    @user_article = get_login_user.user_articles.find_by_article_id(@aid)
     if @user_article
       if @user_article.read_flg
         @user_article.read_flg = false

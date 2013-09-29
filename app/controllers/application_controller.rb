@@ -2,31 +2,31 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  helper_method :signed_in?, :get_current_user_name, :getLoginUser, :getNotifyingObjects
+  helper_method :signed_in?, :get_current_user_name, :get_login_user, :getNotifyingObjects
 
   def get_current_user_name
-    if getLoginUser
-      return getLoginUser.name
+    if get_login_user
+      return get_login_user.name
     else
       return nil
     end
   end
 
   def signed_in?
-    return (getLoginUser != nil)
+    return (get_login_user != nil)
   end
 
   def isLoginUser?(user_name)
     @result = false
-    if getLoginUser
-      if getLoginUser.name == user_name
+    if get_login_user
+      if get_login_user.name == user_name
         @result = true
       end
     end
     return @result
   end
 
-  def getLoginUser
+  def get_login_user
     #if not login, return 'nil'
     @user_obj = User.get_user_by_openid(session[:openid_url])
     if @user_obj
@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   end
 
   def getNotifyingObjects
-    return getLoginUser.get_notifying_articles
+    return get_login_user.get_notifying_articles
   end
 
   private

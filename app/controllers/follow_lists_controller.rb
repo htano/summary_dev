@@ -16,7 +16,7 @@ class FollowListsController < ApplicationController
     @followers = []
     follower_users.each do |follower_user|
       follower = follower_user.user
-      if follower != getLoginUser
+      if follower != get_login_user
         @followers.push(follower)
       end
     end
@@ -36,7 +36,7 @@ class FollowListsController < ApplicationController
     @following_users = []
     user.favorite_users.offset(offset).take(DISPLAY_USER_NUM).each do |favorite_user|
       following_user = User.find(favorite_user.favorite_user_id)
-      if following_user != getLoginUser
+      if following_user != get_login_user
         @following_users.push(following_user)
       end
     end
@@ -46,14 +46,14 @@ class FollowListsController < ApplicationController
     # FIXME
     @user_name = get_user_name(params[:name])
     user = User.find_by_name(@user_name)
-    current_user = getLoginUser
+    current_user = get_login_user
 
     @candidate_users = []
     user.favorite_users.each do |favorite_user|
       User.find(favorite_user.favorite_user_id).favorite_users.each do |candidate|
         candidate_user = User.find(candidate.favorite_user_id)
         if current_user.favorite_users.exists?(:favorite_user_id => candidate_user.id) == nil ||
-            current_user != getLoginUser
+            current_user != get_login_user
           @candidate_users.push(candidate_user)
         end
       end

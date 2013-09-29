@@ -3,7 +3,7 @@
 class SettingsController < ApplicationController
   def profile
     @action_type = 'profile'
-    if getLoginUser
+    if get_login_user
     else
       flash[:error] = "To show the profile page, you have to login."
       redirect_to(:controller => 'consumer', :action => 'index')
@@ -24,7 +24,7 @@ class SettingsController < ApplicationController
     @edit_flg = false
     @edit_error = false
     @error_message = ""
-    @login_user = getLoginUser
+    @login_user = get_login_user
     if @login_user
       if @user_full_name && @user_full_name != @login_user.full_name
         logger.debug @user_full_name
@@ -87,14 +87,14 @@ class SettingsController < ApplicationController
 
   def email
     @action_type = 'email'
-    if getLoginUser
-      case getLoginUser.mail_addr_status
+    if get_login_user
+      case get_login_user.mail_addr_status
       when User::MAIL_STATUS_UNDEFINED
         @email_status = "　"
       when User::MAIL_STATUS_PROVISIONAL
         @email_status = "(provisional registration)"
-        if(getLoginUser.token_expire && 
-           getLoginUser.token_expire < Time.now)
+        if(get_login_user.token_expire && 
+           get_login_user.token_expire < Time.now)
           @email_status = "(provisional registration has been expired.)"
         end
       when User::MAIL_STATUS_DEFINITIVE
@@ -104,7 +104,7 @@ class SettingsController < ApplicationController
       else
         @email_status = "(unknown status)"
       end
-      @email = getLoginUser.mail_addr
+      @email = get_login_user.mail_addr
       if @email == nil
         @email = "(undefined)"
       else
@@ -126,14 +126,14 @@ class SettingsController < ApplicationController
     @redirect_url = url_for(:action => 'email')
     @session_error = false
     @edit_error = false
-    if getLoginUser
+    if get_login_user
       if @mail_change
         if @new_mail_address == @confirm_mail_address
-          if getLoginUser.update_mail_address(@new_mail_address)
+          if get_login_user.update_mail_address(@new_mail_address)
             @mail_auth_url = url_for(:action => 'email_auth', 
-                                     :token_uuid => getLoginUser.token_uuid)
-            Message.change_mail_addr(getLoginUser.name, 
-                                     getLoginUser.mail_addr, 
+                                     :token_uuid => get_login_user.token_uuid)
+            Message.change_mail_addr(get_login_user.name, 
+                                     get_login_user.mail_addr, 
                                      @mail_auth_url).deliver
           else
             logger.debug("Fail to update email address: " + @new_mail_address)
@@ -158,8 +158,8 @@ class SettingsController < ApplicationController
 
   def email_auth
     @url_token_uuid = params[:token_uuid]
-    if getLoginUser
-      if getLoginUser.authenticate_updating_mailaddr(@url_token_uuid)
+    if get_login_user
+      if get_login_user.authenticate_updating_mailaddr(@url_token_uuid)
         flash[:success] = "MailAddress change has been authentificated."
         redirect_to(:action => 'email')
       else
