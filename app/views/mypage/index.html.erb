@@ -19,7 +19,7 @@
               {:id => "follow-button", :class => "btn btn-info btn-xs", :remote => true} %>
             </div>
             <% else %>
-            <div id="follow-toggle">
+            <div id="follow-<%= @user.id %>">
               <%= button_to "unfollow", 
               {:action => "unfollow", :unfollow_user_id => @user.id}, 
               {:id => "unfollow-button", :class => "btn btn-danger btn-xs", :remote => true} %>
