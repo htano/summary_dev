@@ -10,5 +10,8 @@
       <li><a href="suggestion?name=<%= @user_name %>">suggestion</a></li>
     </ul>
   </div>
-  <%= render :partial => "follow_list", :locals => {:name => @user_name, :users => @followers} %>
+  <div id="user-list">
+    <%= render :partial => "follow_list", :locals => {:name => @user_name, :users => @followers} %>
+  </div>
+  <div id="loading-image"></div>
 </div>

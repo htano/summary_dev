@@ -1,9 +1,18 @@
 class FollowListsController < ApplicationController
+  DISPLAY_USER_NUM = 20
+
   def followers
     @user_name = get_user_name(params[:name])
     user = User.find_by_name(@user_name)
 
-    follower_users = FavoriteUser.where(:favorite_user_id => user.id)
+    number = 0
+    if params[:number]
+      number = params[:number].to_i
+    end
+    logger.debug("number : #{number}")
+    offset = DISPLAY_USER_NUM * number
+
+    follower_users = FavoriteUser.where(:favorite_user_id => user.id).offset(offset).take(DISPLAY_USER_NUM)
     @followers = []
     follower_users.each do |follower_user|
       follower = follower_user.user
@@ -17,8 +26,15 @@ class FollowListsController < ApplicationController
     @user_name = get_user_name(params[:name])
     user = User.find_by_name(@user_name)
 
+    number = 0
+    if params[:number]
+      number = params[:number].to_i
+    end
+    logger.debug("number : #{number}")
+    offset = DISPLAY_USER_NUM * number
+
     @following_users = []
-    user.favorite_users.each do |favorite_user|
+    user.favorite_users.offset(offset).take(DISPLAY_USER_NUM).each do |favorite_user|
       following_user = User.find(favorite_user.favorite_user_id)
       if following_user != getLoginUser
         @following_users.push(following_user)
@@ -27,6 +43,7 @@ class FollowListsController < ApplicationController
   end
 
   def suggestion
+    # FIXME
     @user_name = get_user_name(params[:name])
     user = User.find_by_name(@user_name)
     current_user = getLoginUser
@@ -42,6 +59,7 @@ class FollowListsController < ApplicationController
       end
     end
     @candidate_users = @candidate_users.uniq
+
   end
 
 private
