@@ -24,36 +24,29 @@
       </th>
       <td id ="article_status" class ="status">
         <div id ="article_read_mark">
-          <% unless @isReadArticle then %>
-            <div id="unreadBottun">
-
-              <%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') +
-                ' mark read', {:action => "isRead", 
-                               :articleId => @article.id, 
-                               :remote => true}%>
+          <div id="unreadBottun" 
+            <% if @isReadArticle then %>
+              style="display:none"
+            <% end %>
+          >
+            <%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') +
+              ' mark read', {:action => "isRead", 
+                             :articleId => @article.id, 
+                             :remote => true},
+                             {:method => :post} %>
           </div>
-          <div id="alreadyReadBottun" style="display:none">
+          <div id="alreadyReadBottun" 
+              <% unless @isReadArticle then %>
+                style="display:none"
+              <% end %>
+            >
             <%= link_to sanitize('<span class="glyphicon glyphicon-check"></span>') + 
               ' unmark read', {:action => "cancelIsRead", 
                                :articleId => @article.id, 
-                               :remote => true}%>
+                               :remote => true},
+                               {:method => :post}%>
           </div>
 
-        <% else %>
-            <div id="unreadBottun" style="display:none">
-
-              <%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') + 
-                ' mark read', {:action => "isRead", 
-                               :articleId => @article.id, 
-                               :remote => true}%>
-          </div>
-          <div id="alreadyReadBottun">
-            <%= link_to sanitize('<span class="glyphicon glyphicon-check"></span>') + 
-              ' unmark read', {:action => "cancelIsRead", 
-                               :articleId => @article.id, 
-                               :remote => true}%>
-          </div>
-        <% end %>
         </div>
 
         <hr>
@@ -141,39 +134,31 @@
            <!-- follow button-->
           <div id="follow_mark">
 
-            <% unless @user.favorite_users.exists?(:favorite_user_id => summaryItem.user.id) %>
-
-
-
-              <span id="follow<%=index%>">
-                <%= link_to "follow", :action => "follow",
+              <span id="follow<%=index%>"
+                <% if @user.favorite_users.exists?(:favorite_user_id => summaryItem.user.id) %>
+                  style="display:none"
+                <% end %>
+              >
+                <%= link_to "follow", 
+                  {:action => "follow",
                   :listIndex =>index,
                   :follow_user_id => summaryItem.user.id,
-                  :remote => true  %>
+                  :remote => true } ,
+                  {:method => :post} %>
               </span>
-              <span id="unfollow<%=index%>" style="display:none">
-                <%= link_to "unfollow", :action => "unfollow",
-                  :listIndex =>index,
-                  :follow_user_id => summaryItem.user.id,
-                  :remote => true %>
-              </span>
-
-            <% else %>
-
-              <span id="follow<%=index%>" style="display:none">
-                <%= link_to "follow", :action => "follow",
-                  :listIndex =>index,
-                  :follow_user_id => summaryItem.user.id,
-                  :remote => true  %>
-              </span>
-              <span id="unfollow<%=index%>"> 
-                <%= link_to "unfollow", :action => "unfollow",
-                  :listIndex =>index,
-                  :follow_user_id => summaryItem.user.id,
-                  :remote => true %>
+              <span id="unfollow<%=index%>" 
+                <% unless @user.favorite_users.exists?(:favorite_user_id => summaryItem.user.id) %>
+                  style="display:none"
+                <% end %>
+              >  
+                <%= link_to "unfollow", 
+                  { :action => "unfollow",
+                    :listIndex =>index,
+                    :unfollow_user_id => summaryItem.user.id,
+                    :remote => true }, 
+                    {:method => :post} %>
               </span>
 
-            <% end %>
           </div>
         </div>
 
@@ -183,9 +168,12 @@
           </div>
 
           <hr>
-
-          <% unless summaryItem.isGoodCompleted then %>
-            <div id = "yetGoodSummary<%=index%>" class="iiyo">
+          <!-- good dummary button -->
+            <div id = "yetGoodSummary<%=index%>" class="iiyo"
+              <% if summaryItem.isGoodCompleted then %>
+                style="display:none"
+              <% end %>
+            >
               <%= link_to image_tag("icons/glyphicons_343_thumbs_up.png",
                                     { :border => '0', 
                                       :alt => 'いい要約だね！', 
@@ -194,13 +182,25 @@
                                         :listIndex =>index,
                                         :summaryId =>summaryItem.summary.id, 
                                         :articleId => @article.id,
-                                        :remote => true, } %>
-              <div id="count">
-                <%= summaryItem.summaryPoint %> 
-              </div>
+                                        :remote => true, },
+                                      { :method => :post } %>
+              <% if summaryItem.isGoodCompleted then %>
+                <div id="count">
+                  <%= summaryItem.summaryPoint - 1 %> 
+                </div>
+              <% else %>
+                <div id="count">
+                  <%= summaryItem.summaryPoint %> 
+                </div>
+              <% end %>
+              
             </div>
 
-            <div id = "alreadyGoodSummary<%=index%>" class="iiyo" style="display:none"	>
+            <div id = "alreadyGoodSummary<%=index%>" class="iiyo"
+              <% unless  summaryItem.isGoodCompleted then %>
+                style="display:none"
+              <% end %>
+            >
               <%= link_to image_tag("icons/glyphicons_343_thumbs_up_gray.png", 
                                   { :border => '0', 
                                     :alt => 'あなたは既にいい要約だねをしています', 
@@ -209,41 +209,18 @@
                                       :listIndex =>index,
                                       :summaryId =>summaryItem.summary.id, 
                                       :articleId => @article.id,
-                                      :remote => true, } %>
-              <div id="count">
+                                      :remote => true, },
+                                    { :method=> :post }  %>
+              <% unless summaryItem.isGoodCompleted then %>
+                <div id="count">
                   <%= summaryItem.summaryPoint + 1 %> 
-              </div>
+                </div>
+              <% else %>
+                <div id="count">
+                  <%= summaryItem.summaryPoint %> 
+                </div>
+              <% end %>
             </div>
-          <% else %>
-            <div id = "yetGoodSummary<%=index%>" class="iiyo" style="display:none">
-            <%= link_to image_tag("icons/glyphicons_343_thumbs_up.png",
-                                  { :border => '0', :alt => 'いい要約だね！', :id => "bottun"}),
-                                  {	:action => "goodSummary",
-                                    :listIndex =>index,
-                                    :summaryId =>summaryItem.summary.id, 
-                                    :articleId => @article.id,
-                                    :remote => true, } %>
-            <div id="count">
-                <%= summaryItem.summaryPoint - 1%> 
-              </div>
-            </div>
-
-            <div id = "alreadyGoodSummary<%=index%>" class="iiyo">
-              <%= link_to image_tag("icons/glyphicons_343_thumbs_up_gray.png", 
-                                    { :border => '0', 
-                                      :alt => 'あなたは既にいい要約だねをしています',
-                                      :id => "cmpBottun"}),
-                                      {	:action => "cancelGoodSummary",
-                                        :listIndex =>index,
-                                        :summaryId =>summaryItem.summary.id, 
-                                        :articleId => @article.id,
-                                        :remote => true, } %>
-              <div id="count">
-                  <%= summaryItem.summaryPoint  %> 
-              </div>
-            </div>
-          <% end %>
-
 
         <% end %>
         </td>

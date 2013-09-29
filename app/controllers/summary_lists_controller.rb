@@ -200,8 +200,8 @@ class SummaryListsController < ApplicationController
 
     current_user = getLoginUser
 
-    if current_user && current_user.favorite_users.exists?(:favorite_user_id => params[:follow_user_id])
-      current_user.favorite_users.find_by_favorite_user_id(params[:follow_user_id]).destroy
+    if current_user && current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id])
+      current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
 
     end
 
