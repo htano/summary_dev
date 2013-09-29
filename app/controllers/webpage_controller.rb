@@ -92,9 +92,6 @@ class WebpageController < ApplicationController
       user_id = get_login_user.id
       @prof_image =  get_login_user.prof_image
       @url = "#{params[:url]}"
-      if title == nil
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => "text/html" and return
-      end
       article = Article.find_by_url(@url)
       if article == nil
         h = get_article_element(@url)
@@ -106,7 +103,7 @@ class WebpageController < ApplicationController
         @contents_preview = h["contentsPreview"]
         @thumbnail = h["thumbnail"]
 
-        article = Article.new(:url => params[:url], :title => title, :contents_preview => @contents_preview[0, 200], :category_id =>"001", :thumbnail => @thumbnail)
+        article = Article.new(:url => params[:url], :title => @title, :contents_preview => @contents_preview[0, 200], :category_id =>"001", :thumbnail => @thumbnail)
         if article.save
           user_article = UserArticle.new(:user_id => user_id, :article_id => article.id, :read_flg => false)
           if user_article.save
