@@ -32,7 +32,7 @@ class SummaryListsController < ApplicationController
     #check current loginuser
     @article = Article.find_by id: params[:articleId]
     if @article == nil then
-      logger.warning("article is null, pass to mypage");
+      logger.warn("article is null, pass to mypage");
       redirect_to :controller => "mypage", :action => "index" 
       return
     end
