@@ -12,7 +12,7 @@ $(function(){
 function clickGoodSummary(summary_id) {
   $.ajax({
     url: '/summary_lists/goodSummaryAjax',
-    type: 'GET',
+    type: 'POST',
     data: 'summaryId=' + summary_id,
     dataType: 'text',
     success: function(data) {
@@ -40,7 +40,7 @@ function clickReadItLater(btn, url, aid) {
     if(btn.className == "read_it_cancel") {
       $.ajax({
         url: '/webpage/delete',
-        type: 'GET',
+        type: 'POST',
         data: 'article_id=' + aid,
         dataType: 'text',
         success: function(data) {
@@ -56,7 +56,7 @@ function clickReadItLater(btn, url, aid) {
     } else {
       $.ajax({
         url: '/webpage/add_for_chrome_extension',
-        type: 'GET',
+        type: 'POST',
         data: 'url=' + escape(url),
         dataType: 'text',
         success: function(data) {
@@ -80,7 +80,7 @@ function clickMarkAsRead(btn, aid) {
   $("#mark_read_loader" + aid).show();
   $.ajax({
     url: '/webpage/mark_as_read',
-    type: 'GET',
+    type: 'POST',
     data: 'article_id=' + aid,
     dataType: 'text',
     success: function(data) {

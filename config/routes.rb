@@ -35,13 +35,14 @@ SummaryDev::Application.routes.draw do
   get 'webpage/get_add_history_for_chrome_extension' => 'webpage#get_add_history_for_chrome_extension'
   get 'webpage/get_current_user_name_for_chrome_extension' => 'webpage#get_current_user_name_for_chrome_extension'
   get 'webpage/add_for_chrome_extension' => 'webpage#add_for_chrome_extension'
+  post 'webpage/add_for_chrome_extension' => 'webpage#add_for_chrome_extension'
   #for webpage
   get 'webpage/add' => 'webpage#add'
   post 'webpage/add_confirm' => 'webpage#add_confirm'
   post 'webpage/add_complete' => 'webpage#add_complete'
   post 'webpage/get_title' => 'webpage#get_title'
-  get 'webpage/delete' => 'webpage#delete'
-  get 'webpage/mark_as_read' => 'webpage#mark_as_read'
+  post 'webpage/delete' => 'webpage#delete'
+  post 'webpage/mark_as_read' => 'webpage#mark_as_read'
 
   #for webpage
   get 'summary/:article_id/edit' => 'summary#edit'
@@ -53,7 +54,7 @@ SummaryDev::Application.routes.draw do
   get 'summary_lists/get_summary_num_for_chrome_extension' => 'summary_lists#get_summary_num_for_chrome_extension'
   get 'summary_lists/get_summary_list_for_chrome_extension' => 'summary_lists#get_summary_list_for_chrome_extension'
   #for webpage
-  get 'summary_lists/goodSummaryAjax' => 'summary_lists#goodSummaryAjax'
+  post 'summary_lists/goodSummaryAjax' => 'summary_lists#goodSummaryAjax'
   get 'summary_lists/:articleId' => 'summary_lists#index'
   post 'summary_lists/goodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#goodSummary'
   post 'summary_lists/cancelGoodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#cancelGoodSummary'
