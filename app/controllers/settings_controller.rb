@@ -3,8 +3,7 @@
 class SettingsController < ApplicationController
   def profile
     @action_type = 'profile'
-    if get_login_user
-    else
+    unless get_login_user
       flash[:error] = "To show the profile page, you have to login."
       redirect_to(:controller => 'consumer', :action => 'index')
     end
