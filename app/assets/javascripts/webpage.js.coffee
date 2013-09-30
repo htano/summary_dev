@@ -84,3 +84,6 @@ $ ->
         document.getElementById('tag_text_' + i).value = BLANK
         document.getElementById('recent_tag_' + value).setAttribute('class', 'recent_tag')
         return
+
+@ckick_submit_button = ->
+  document.getElementById('submit').disabled = 'true'
