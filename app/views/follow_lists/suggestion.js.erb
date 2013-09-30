@@ -1,4 +1,3 @@
 <% render_user = render :partial => "follow_list", :locals => {:name => @user_name, :users => @candidate_users} %>
 
-// FIXME
-// $('#user-list:last').append("<%= raw(escape_javascript(render_user)) %>")
+$('#user-list:last').append("<%= raw(escape_javascript(render_user)) %>")

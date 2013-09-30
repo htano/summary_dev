@@ -6,4 +6,6 @@
               {:id => 'follower-id-' + @current_user.id.to_s } %>
 $('#follow-<%= @user_id %>').html("<%= raw(escape_javascript(unfollow))  %>")
 $('#followers-num').html("<%= raw @follower_num %>")
-$('#prof-tab-followers').append("<%= raw(escape_javascript(image))%>")
+<% if @num < 15 %>
+  $('#prof-tab-followers #insert-image').after("<%= raw(escape_javascript(image))%>")
+<% end %>

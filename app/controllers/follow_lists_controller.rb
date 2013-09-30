@@ -9,10 +9,10 @@ class FollowListsController < ApplicationController
     if params[:number]
       number = params[:number].to_i
     end
-    logger.debug("number : #{number}")
     offset = DISPLAY_USER_NUM * number
 
-    follower_users = FavoriteUser.where(:favorite_user_id => user.id).offset(offset).take(DISPLAY_USER_NUM)
+    follower_users = 
+      FavoriteUser.where(:favorite_user_id => user.id).offset(offset).take(DISPLAY_USER_NUM)
     @followers = []
     follower_users.each do |follower_user|
       follower = follower_user.user
@@ -30,7 +30,6 @@ class FollowListsController < ApplicationController
     if params[:number]
       number = params[:number].to_i
     end
-    logger.debug("number : #{number}")
     offset = DISPLAY_USER_NUM * number
 
     @following_users = []
@@ -43,23 +42,38 @@ class FollowListsController < ApplicationController
   end
 
   def suggestion
-    # FIXME
     @user_name = get_user_name(params[:name])
     user = User.find_by_name(@user_name)
     current_user = get_login_user
 
-    @candidate_users = []
+    favorite_user_ids = []
     user.favorite_users.each do |favorite_user|
-      User.find(favorite_user.favorite_user_id).favorite_users.each do |candidate|
-        candidate_user = User.find(candidate.favorite_user_id)
-        if current_user.favorite_users.exists?(:favorite_user_id => candidate_user.id) == nil ||
-            current_user != get_login_user
-          @candidate_users.push(candidate_user)
+      id = favorite_user.favorite_user_id
+      favorite_user_ids.push(id)
+    end
+
+    favorite_users = User.find(favorite_user_ids)
+    candidate_user_ids = []
+    favorite_users.each do |favorite_user|
+      favorite_user.favorite_users.each do |candidate|
+        id = candidate.favorite_user_id
+        if current_user && 
+          current_user.favorite_users.exists?(:favorite_user_id => id) == nil &&
+          current_user.id != id
+          candidate_user_ids.push(id)
         end
       end
     end
-    @candidate_users = @candidate_users.uniq
+    candidate_user_ids = candidate_user_ids.uniq
 
+    number = 0
+    if params[:number]
+      number = params[:number].to_i
+    end
+    offset = DISPLAY_USER_NUM * number
+
+    @candidate_users = 
+      User.where(:id => candidate_user_ids).offset(offset).take(DISPLAY_USER_NUM)
   end
 
 private

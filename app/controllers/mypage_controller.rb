@@ -226,10 +226,12 @@ class MypageController < ApplicationController
   end
 
   def follow
-    logger.debug("follow")
-
     unless signed_in?
-      # TODO : ログインしてなかった時
+      logger.debug("error case")
+      respond_to do |format|
+        format.html { redirect_to :controller => 'consumer', :action => 'index' and return }
+        format.js { render 'login_page' and return }
+      end
     end
     
     @current_user = get_login_user
@@ -241,8 +243,9 @@ class MypageController < ApplicationController
 
     @user_id = params[:follow_user_id]
     # for renewing followers number on profile view
-    @follower_num = "followers" + "<br>" + 
-                    FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]}).to_s
+    @num = FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]})
+    @follower_num = "followers" + "<br>" + @num.to_s
+                    
 
     respond_to do |format|
       format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
