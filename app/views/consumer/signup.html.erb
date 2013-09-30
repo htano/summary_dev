@@ -2,22 +2,6 @@
   　<%= stylesheet_link_tag "consumer", "social-buttons/zocial.css"%>
 <% end %> 
 
-<% if flash[:alert] %>
-  <div class='alert'>
-   <%= h(flash[:alert]) %>
-  </div>
-<% end %>
-<% if flash[:error] %>
-  <div class='login_error'>
-   <%= h(flash[:error]) %>
-  </div>
-<% end %>
-<% if flash[:success] %>
-  <div class='success'>
-   <%= h(flash[:success]) %>
-  </div>
-<% end %>
-
 <form method="post" accept-charset="UTF-8" action="<%= url_for :action => 'signup_complete'%>">
 
 <div class="setting_container">
