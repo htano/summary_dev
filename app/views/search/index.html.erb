@@ -2,7 +2,7 @@
 <%= stylesheet_link_tag "search" %>
 <% end %>
 
-<form action="search_by_tag">
+<form id="search_form" action="search">
   <div id="search_main">
     <div id="operation_area">
       <div id="operation">
@@ -11,27 +11,30 @@
       </div>
     </div>
     <div id="option_area">
-      <div id="condition">
+      <div class="condition">
         <p>condition</p>
         <div class="select_area">
-           <span class="selected" id="condition_tag">tag</span><br>
-           <span class="no_selected"  id="condition_title">title</span><br>
-           <span class="no_selected"  id="condition_content">content</span><br>
+          <span class="selected" id="condition_tag">tag</span><br>
+          <span class="no_selected"  id="condition_title">title</span><br>
+          <span class="no_selected"  id="condition_content">content</span><br>
+          <input type="hidden" name="condition" id="condition" value="<%= @condition %>">
         </div>
       </div>
-      <div id="sort">
+      <div class="sort">
         <p>sort</p>
         <div class="select_area">
-           <span class="selected" id="sort_recent" style="color:#ff9b9b">recent</span><br>
-           <span class="no_selected" id="sort_summary_num">summary num</span><br>
+          <span class="selected" id="sort_recent">recent</span><br>
+          <span class="no_selected" id="sort_summary_num">summary num</span><br>
+          <input type="hidden" name="sort" id="sort" value="<%= @sort %>">
         </div>
       </div>
-      <div id="focus">
+      <div class="focus">
         <p>focus</p>
         <div class="select_area">
-           <span class="selected" id="focus_all" style="color:#ff9b9b">all</span><br>
-           <span class="no_selected" id="focus_added_only">added only</span><br>
-           <span class="no_selected" id="focus_without_added">without added</span><br>
+          <span class="selected" id="focus_all">all</span><br>
+          <span class="no_selected" id="focus_added_only">added only</span><br>
+          <span class="no_selected" id="focus_without_added">without added</span><br>
+          <input type="hidden" name="focus" id="focus" value="<%= @focus %>">
         </div>
       </div>
     </div>

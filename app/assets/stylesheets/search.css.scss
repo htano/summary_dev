@@ -51,10 +51,18 @@
   width: 14%;
   height: 500px;
   float: left;
-  #condition, #sort, #focus {
+  .condition, .sort, .focus {
     text-align: center;
-    height: 100px;
+    height: 120px;
     border-bottom: 1px solid #ECECEC;
+    .select_area {
+      span:hover {
+        border-radius: 2px;
+        background: #ff9b9b;
+        color:white;
+        font-size: 15px;
+      }
+    }
     p {
       color: gray;
       font-size: 20px;

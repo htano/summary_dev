@@ -14,10 +14,24 @@ class Article < ActiveRecord::Base
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   BLANK = ""
 
-  #指定されたタグ情報ももつ記事を取得する
+  #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag)
     return nil if tag == nil || tag == BLANK
     articles = joins(:user_articles => :user_article_tags).where(["user_article_tags.tag LIKE ?", "%"+tag+"%"]).order("created_at desc")
+    return articles
+  end
+
+  #指定されたタイトルを持つ記事を取得する
+  def self.search_by_title(title)
+    return nil if title == nil || title == BLANK
+    articles = where(["title LIKE ?", "%"+title+"%"]).order("created_at desc")
+    return articles
+  end
+
+  #指定された本文を持つ記事を取得する
+  def self.search_by_content(content)
+    return nil if content == nil || content == BLANK
+    articles = where(["contents_preview LIKE ?", "%"+content+"%"]).order("created_at desc")
     return articles
   end
 

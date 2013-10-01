@@ -1,5 +1,6 @@
 SummaryDev::Application.routes.draw do
   get "search/index"
+  get "search/search"
   get "search/search_by_tag"
   get "search/search_by_content"
   get "search/search_by_title"
