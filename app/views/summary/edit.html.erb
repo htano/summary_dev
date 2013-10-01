@@ -1,6 +1,7 @@
 <% content_for :head do %>
 　<%= stylesheet_link_tag "summary" %>
 <% end %>
+
 <script>
 $(document).ready(function() {
   loadEditForm()
@@ -24,7 +25,7 @@ $(document).ready(function() {
           <th id="title_top">characters</th>
         </tr>
         <tr>
-          <th><textarea id="content" name="content" onfocus="clearContent()" onKeyUp="countContentCharacters()"><%= @content %></textarea></th>
+          <th><textarea id="content" name="content"  placeholder="Please edit summary within 300 characters." onKeyUp="countContentCharacters()"><%= @content %></textarea></th>
           <th><span id="count" class="count"><%= @content_num %></span></th>
         </tr>
       </table>
@@ -36,7 +37,7 @@ $(document).ready(function() {
       <span id="clear" onclick="clickClearButton()">
         <%= image_tag("icons/brightness.png", :size => "16x16") + content_tag(:p, "clear") %>
       </span>
-      <% unless @firstEditFlag then %>
+      <% if @content %>
         <span id="restore" onclick="clickRestoreButton()">
           <%= image_tag("icons/restore.png", :size => "16x16") + content_tag(:p, "restore") %>
         </span>
@@ -47,6 +48,5 @@ $(document).ready(function() {
       <span id="help"><a href="/help.html" target="_blank"><%= image_tag("icons/glyphicons_194_circle_question_mark.png", :size => "16x16") %></a></span>
     </div>
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <input type="hidden" id="firstEditFlag" value="<%= @firstEditFlag %>">
   </div>
 </form>

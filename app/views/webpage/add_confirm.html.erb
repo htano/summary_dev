@@ -2,7 +2,7 @@
   <%= stylesheet_link_tag "webpage" %>
 <% end %>
 
-<div class="comment_box">Comfirm.</div>
+<div class="comment_box">Confirm.</div>
 <div class="url_box">
   <form method="POST" action="add_complete" class="confirm_url">
     <p class="url_title"><%= @title[0, 100] %></p>
@@ -43,7 +43,7 @@
       </div>
     </div>
     <div id="submit_area">
-      <input type="submit" id="submit" value="add" class="button button-flat:hover submit">
+      <input type="submit" id="submit" value="add" class="button button-flat:hover submit" onclick="ckick_submit_button">
     </div>
       <input type="hidden" name="url" value="<%= @url %>">
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">

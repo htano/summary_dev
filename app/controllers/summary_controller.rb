@@ -31,9 +31,7 @@ class SummaryController < ApplicationController
       user_id = get_login_user.id
       summary = Summary.find_by_user_id_and_article_id(user_id, @article_id)
       if summary == nil
-        @content = "Please edit summary within 300 characters."
         @content_num = 0
-        @firstEditFlag = true
       else
         @content = summary.content
         @content_num = summary.content.gsub(/\r\n|\r|\n/, "").length

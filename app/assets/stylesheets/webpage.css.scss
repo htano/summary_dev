@@ -24,7 +24,7 @@
 .add_url {
   padding: 20px;
   margin: auto;
-  height: 69px;
+  height: 90px;
   width: 680px;
   color: white;
   background-color: #e6e6e6;
@@ -32,9 +32,9 @@
 }
 
 .input_url_text {
-  margin-left: 30px;
-  margin-top: 20px;
-  width: 480px;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 450px;
 }
 
 
@@ -97,20 +97,22 @@
   border-top: 4px solid #ECECEC;
   z-index: 1;
   width: 680px;
-  height: 345px;
+  height: 300px;
 
   #thumbnail {
     padding: 2px 0 0 0;
     //border: 1px solid gray;
+    height: 200px;
+    width: 100px;
     float: left;
     p {
       font-size: 30px;
     }
-    img {      
+    img {
       max-height: 200px;
-      max-width: 150px;
-      height: 100px;
-      width: 100px;
+      max-width: 100px;
+      //height: 100px;
+      //width: 100px;
       display: block;
       margin: auto;
     }
@@ -143,8 +145,8 @@
   #category {
     //border: 1px solid gray;
     float: left;
-    width: 150px;
-    height: 100px;
+    width: 100px;
+    height: 60px;
     p {
       font-size: 10px;  
     }  
@@ -155,7 +157,7 @@
     float: left;
     padding: 0 10px 0 10px;
     width: 500px;
-    height: 100px;
+    height: 60px;
     //line-height: 25px;
     p {
       font-size: 10px;  
@@ -183,7 +185,7 @@
   border-top: 4px solid #ECECEC;
   z-index: 1;
   width: 680px;
-  height: 40px;
+  height: 60px;
   #prof_image {
     float: left;
   }
