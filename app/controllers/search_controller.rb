@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+#TODO flashのスタイル等々微妙なので調整が必要
 class SearchController < ApplicationController
   #初期表示
   def index
@@ -13,6 +14,9 @@ class SearchController < ApplicationController
     @condition = "#{params[:condition]}"
     @sort = "#{params[:sort]}"
     @focus = "#{params[:focus]}"
+    p @condition
+    p @sort
+    p @focus
     @articles = []
     case @condition
     when "1"
@@ -22,8 +26,11 @@ class SearchController < ApplicationController
     when "3"
       @articles = Article.search_by_content(@searchtext)
     else
-      redirect_to :controller => "search", :action => "index"
+      flash[:error] = "Please check search conditions."
+      redirect_to :action => "index" and return
     end
+
+    redirect_to :action => "index" and return unless @articles
 
     case @focus
     when "1"
@@ -33,7 +40,8 @@ class SearchController < ApplicationController
     when "3"
       @articles = @articles.where.not("user_articles.user_id", get_login_user.id)
     else      
-      redirect_to :controller => "search", :action => "index"
+      flash[:error] = "Please check search conditions."
+      redirect_to :action => "index" and return
     end
 
     case @sort
@@ -42,7 +50,8 @@ class SearchController < ApplicationController
     when "2"
       @articles = @articles.order("summaries_count DESC")
     else
-      redirect_to :controller => "search", :action => "index"
+      flash[:error] = "Please check search conditions."
+      redirect_to :action => "index" and return
     end
 
     render :template => "search/index"

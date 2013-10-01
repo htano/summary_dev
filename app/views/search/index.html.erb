@@ -8,12 +8,14 @@ $(document).ready(function() {
 });
 </script>
 
+<!--TODO flashのスタイル等々微妙なので調整が必要-->
 <form id="search_form" action="search" onLoad="set_option_area">
   <div id="search_main">
     <div id="operation_area">
       <div id="operation">
         <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="Please input the words you want.">
-        <input type="submit" id="submit" value="search" class="button button-flat:hover submit">
+        <input type="submit" id="submit" value="search" class="button button-flat:hover submit"><br>
+        <%= flash[:error] %>
       </div>
     </div>
     <div id="option_area">
