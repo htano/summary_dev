@@ -2,7 +2,13 @@
 <%= stylesheet_link_tag "search" %>
 <% end %>
 
-<form id="search_form" action="search">
+<script>
+$(document).ready(function() {
+  set_option_area()
+});
+</script>
+
+<form id="search_form" action="search" onLoad="set_option_area">
   <div id="search_main">
     <div id="operation_area">
       <div id="operation">
@@ -80,7 +86,8 @@
             <% else %>
               <div id="tag">tags for this article.<br>
                 <% tags.each do |tag| %>
-                  <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search_by_tag", :searchtext => tag} %></span>
+                  <!--<span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag} %></span>-->
+                  <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :condition => "1", :sort => "1", :focus => "1"} %></span>
                 <% end %>
               </div>
             <% end %>

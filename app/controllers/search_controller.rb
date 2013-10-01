@@ -12,36 +12,39 @@ class SearchController < ApplicationController
     @searchtext = "#{params[:searchtext]}"
     @condition = "#{params[:condition]}"
     @sort = "#{params[:sort]}"
-    @focus = "#{params[:sort]}"
-    p @condition
+    @focus = "#{params[:focus]}"
+    @articles = []
     case @condition
     when "1"
-      search_by_tag(@searchtext)
+      @articles = Article.search_by_tag(@searchtext)
     when "2"
-      search_by_title(@searchtext)
+      @articles = Article.search_by_title(@searchtext)
     when "3"
-      search_by_content(@searchtext)
+      @articles = Article.search_by_content(@searchtext)
     else
       redirect_to :controller => "search", :action => "index"
-    end    
-  end
+    end
 
-  #タグで検索
-  #TODO 複数タグを指定された時の挙動
-  def search_by_tag(searchtext)
-    @articles = Article.search_by_tag(searchtext)
-    render :template => "search/index"
-  end
+    case @focus
+    when "1"
+      @articles = @articles
+    when "2"
+      @articles = @articles.where("user_articles.user_id", get_login_user.id)
+    when "3"
+      @articles = @articles.where.not("user_articles.user_id", get_login_user.id)
+    else      
+      redirect_to :controller => "search", :action => "index"
+    end
 
-  #タイトルで検索
-  def search_by_title(searchtext)
-    @articles = Article.search_by_title(searchtext)
-    render :template => "search/index"
-  end
+    case @sort
+    when "1"
+      @articles = @articles.order("created_at desc")
+    when "2"
+      @articles = @articles.order("summaries_count DESC")
+    else
+      redirect_to :controller => "search", :action => "index"
+    end
 
-  #本文で検索
-  def search_by_content(searchtext)
-    @articles = Article.search_by_content(searchtext)
     render :template => "search/index"
   end
 end

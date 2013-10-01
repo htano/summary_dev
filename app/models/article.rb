@@ -17,21 +17,21 @@ class Article < ActiveRecord::Base
   #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag)
     return nil if tag == nil || tag == BLANK
-    articles = joins(:user_articles => :user_article_tags).where(["user_article_tags.tag LIKE ?", "%"+tag+"%"]).order("created_at desc")
+    articles = joins(:user_articles => :user_article_tags).where(["user_article_tags.tag LIKE ?", "%"+tag+"%"]).group("id")
     return articles
   end
 
   #指定されたタイトルを持つ記事を取得する
   def self.search_by_title(title)
     return nil if title == nil || title == BLANK
-    articles = where(["title LIKE ?", "%"+title+"%"]).order("created_at desc")
+    articles = joins(:user_articles => :user_article_tags).where(["title LIKE ?", "%"+title+"%"]).group("id")
     return articles
   end
 
   #指定された本文を持つ記事を取得する
   def self.search_by_content(content)
     return nil if content == nil || content == BLANK
-    articles = where(["contents_preview LIKE ?", "%"+content+"%"]).order("created_at desc")
+    articles = joins(:user_articles => :user_article_tags).where(["contents_preview LIKE ?", "%"+content+"%"]).group("id")
     return articles
   end
 

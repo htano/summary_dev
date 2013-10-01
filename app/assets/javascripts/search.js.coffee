@@ -2,6 +2,32 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+@set_option_area = ->
+  condition = $("#condition").val()
+  sort = $("#sort").val()
+  focus = $("#focus").val()
+  switch condition
+    when "1"
+      $("#condition_tag").click()
+    when "2"
+　　   $("#condition_title").click()
+    when "3"
+      $("#condition_content").click()
+
+  switch sort
+    when "1"
+      $("#sort_recent").click()
+    when "2"
+      $("#sort_summary_num").click()
+
+  switch focus
+    when "1"
+      $("#focus_all").click()
+    when "2"
+      $("#focus_added_only").click()
+    when "3"
+      $("#focus_without_added").click()
+
 $ ->
   $("#condition_tag").click ->
     $("#condition_tag").removeClass()
