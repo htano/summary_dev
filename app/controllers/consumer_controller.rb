@@ -15,7 +15,6 @@ class ConsumerController < ApplicationController
     @redirect_url = url_for(:controller => 'mypage', :action => 'index')
     if get_login_user
       @uname = get_login_user.name
-      flash[:success] = "Hello " + @uname + ". Login processing was successful."
       @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
       if get_login_user.update_last_login
         if env['omniauth.params']['keep_login'] == "on"
@@ -101,12 +100,9 @@ class ConsumerController < ApplicationController
     when OpenID::Consumer::CANCEL
       flash[:alert] = "OpenID transaction cancelled."
     when OpenID::Consumer::SUCCESS
-      flash[:success] = ("Verification of #{oidresp.display_identifier}"\
-                         " succeeded.")
       session[:openid_url] = oidresp.display_identifier
       if get_login_user
         @uname = get_login_user.name
-        flash[:success] = "Hello " + @uname + ". Login processing was successful."
         @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
         if get_login_user.update_last_login
           if params[:keep_login] == "on"
@@ -142,7 +138,6 @@ class ConsumerController < ApplicationController
     get_login_user.reset_keep_login_info
     cookies.delete(:keep_login_token)
     session[:openid_url] = nil
-    flash[:success] = "LogOut Complete."
     if params[:fromUrl]
       redirect_to(:action => 'index', :fromUrl => params[:fromUrl])
     else
