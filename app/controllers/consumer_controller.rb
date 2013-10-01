@@ -24,6 +24,9 @@ class ConsumerController < ApplicationController
             :value => get_login_user.keep_login_token,
             :expires => Time.now + 3.days
           }
+        else
+          get_login_user.reset_keep_login_info
+          cookies.delete(:keep_login_token)
         end
       else
         #TODO Error handling
@@ -112,6 +115,9 @@ class ConsumerController < ApplicationController
               :value => get_login_user.keep_login_token,
               :expires => Time.now + 3.days
             }
+          else
+            get_login_user.reset_keep_login_info
+            cookies.delete(:keep_login_token)
           end
         end
         if params[:fromUrl]
@@ -133,7 +139,8 @@ class ConsumerController < ApplicationController
   end
 
   def sign_out
-    get_login_user.exec_sign_out
+    get_login_user.reset_keep_login_info
+    cookies.delete(:keep_login_token)
     session[:openid_url] = nil
     flash[:success] = "LogOut Complete."
     if params[:fromUrl]

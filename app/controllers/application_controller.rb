@@ -26,21 +26,26 @@ class ApplicationController < ActionController::Base
     return @result
   end
 
+  #if not login, return 'nil'
   def get_login_user
-    #if not login, return 'nil'
+    @return_obj = nil
     @user_obj = User.get_user_by_openid(session[:openid_url])
+    @user_obj_by_token = nil
     if @user_obj
-      return @user_obj
+      @return_obj = @user_obj
     else
       @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
-      @user_obj_by_token = User.get_user_by_login_token(cookies[:keep_login_token], @remote_ip)
-      if @user_obj_by_token
-        return @user_obj_by_token
-      else
-        cookies.delete :keep_login_token
-        return nil
+      if cookies[:keep_login_token]
+        @user_obj_by_token = User.get_user_by_login_token(
+          cookies[:keep_login_token], 
+          @remote_ip
+        )
+        if @user_obj_by_token
+          @return_obj = @user_obj_by_token
+        end
       end
     end
+    return @return_obj
   end
 
   def get_notifying_objects
