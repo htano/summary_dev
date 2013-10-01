@@ -13,7 +13,6 @@ ul.tab {
   padding-left: 18px;
   border-bottom: 2px #ddd solid;
 
-
   li {
     float: left;
     margin: 5px 5px 0px 0px;
@@ -25,6 +24,7 @@ ul.tab {
     text-align: center;
 
     a {
+      height: 100%;
       color: #000;
       display: block;
       padding: 0px 10px 0px;
