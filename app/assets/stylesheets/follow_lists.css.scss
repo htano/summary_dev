@@ -66,11 +66,10 @@ ul.tab {
 }
 
 .user-profile {
-  border-bottom: 2px solid #ddd;
-  height: 70px;
   margin-top: 3px;
   img {
     float: left;
+    margin-bottom: 5px;
   }
   div, p {
     float: left;    
@@ -82,7 +81,7 @@ ul.tab {
   }
   .user-name {
     font-size: 14px;
-    margin: 3px 0px 0px 0px;
+    margin: 0px;
     a {
       color: #a2a2a2;
     }
@@ -101,17 +100,28 @@ ul.tab {
     font-size: 11px;
   }
   .comment {
-    width: 80%;
+    width: 89%;
     margin-left: 0px;
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     word-wrap: break-word;
+    p {
+      float: left;
+      width: 100%;
+      margin:  0px 0px 0px 10px;
+      color: #a2a2a2;
+    }
   }
 
   #follow-btn {
     float: right;
     margin: 0px;
   }
+}
+
+.user-profile+hr {
+  clear: left;
+  margin: 0px;
 }
 
 #loading-image {
