@@ -19,6 +19,8 @@
       $("#sort_recent").click()
     when "2"
       $("#sort_summary_num").click()
+    when "3"
+      $("#sort_user_num").click()
       
   switch focus
     when "1"
@@ -62,17 +64,31 @@ $ ->
   $("#sort_recent").click ->
     $("#sort_recent").removeClass()
     $("#sort_summary_num").removeClass()
+    $("#sort_user_num").removeClass()
     $("#sort_recent").addClass("selected")
     $("#sort_summary_num").addClass("no_selected")
+    $("#sort_user_num").addClass("no_selected")
     $("#sort").val(1)
 
 $ ->
   $("#sort_summary_num").click ->
     $("#sort_recent").removeClass()
     $("#sort_summary_num").removeClass()
+    $("#sort_user_num").removeClass()
     $("#sort_recent").addClass("no_selected")
     $("#sort_summary_num").addClass("selected")
+    $("#sort_user_num").addClass("no_selected")
     $("#sort").val(2)
+
+$ ->
+  $("#sort_user_num").click ->
+    $("#sort_recent").removeClass()
+    $("#sort_summary_num").removeClass()
+    $("#sort_user_num").removeClass()
+    $("#sort_recent").addClass("no_selected")
+    $("#sort_summary_num").addClass("no_selected")
+    $("#sort_user_num").addClass("selected")
+    $("#sort").val(3)
 
 $ ->
   $("#focus_all").click ->

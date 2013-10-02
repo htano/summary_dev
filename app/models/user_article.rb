@@ -1,6 +1,6 @@
 class UserArticle < ActiveRecord::Base
   belongs_to :user
-  belongs_to :article
+  belongs_to :article, :counter_cache => true
   has_many :user_article_tags, :dependent => :destroy
   scope :read, lambda { where(:read_flg => true) }
   scope :unread, lambda { where(:read_flg => false) }

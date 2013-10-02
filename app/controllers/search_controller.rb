@@ -14,9 +14,6 @@ class SearchController < ApplicationController
     @condition = "#{params[:condition]}"
     @sort = "#{params[:sort]}"
     @focus = "#{params[:focus]}"
-    p @condition
-    p @sort
-    p @focus
     @articles = []
     case @condition
     when "1"
@@ -49,6 +46,8 @@ class SearchController < ApplicationController
       @articles = @articles.order("created_at desc")
     when "2"
       @articles = @articles.order("summaries_count desc, created_at desc")
+    when "3"
+      @articles = @articles.order("user_articles_count desc, created_at desc")
     else
       flash[:error] = "Please check search conditions."
       redirect_to :action => "index" and return
