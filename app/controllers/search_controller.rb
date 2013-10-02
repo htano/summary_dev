@@ -48,7 +48,7 @@ class SearchController < ApplicationController
     when "1"
       @articles = @articles.order("created_at desc")
     when "2"
-      @articles = @articles.order("summaries_count DESC")
+      @articles = @articles.order("summaries_count desc, created_at desc")
     else
       flash[:error] = "Please check search conditions."
       redirect_to :action => "index" and return

@@ -10,7 +10,7 @@
     when "1"
       $("#condition_tag").click()
     when "2"
-　　   $("#condition_title").click()
+      $("#condition_title").click()
     when "3"
       $("#condition_content").click()
 
@@ -19,7 +19,7 @@
       $("#sort_recent").click()
     when "2"
       $("#sort_summary_num").click()
-
+      
   switch focus
     when "1"
       $("#focus_all").click()
