@@ -2,6 +2,9 @@
 
 #TODO flashのスタイル等々微妙なので調整が必要
 class SearchController < ApplicationController
+
+  PAGE_PER = 25
+
   #初期表示
   def index
     @condition = 1
@@ -15,6 +18,7 @@ class SearchController < ApplicationController
     @sort = "#{params[:sort]}"
     @focus = "#{params[:focus]}"
     @articles = []
+    @articles_num = 0
     case @condition
     when "1"
       @articles = Article.search_by_tag(@searchtext)
@@ -28,6 +32,7 @@ class SearchController < ApplicationController
     end
 
     redirect_to :action => "index" and return unless @articles
+    @articles_num = @articles.length
 
     case @focus
     when "1"
@@ -52,6 +57,8 @@ class SearchController < ApplicationController
       flash[:error] = "Please check search conditions."
       redirect_to :action => "index" and return
     end
+
+    @articles = @articles.page(params[:page]).per(PAGE_PER)
 
     render :template => "search/index"
   end

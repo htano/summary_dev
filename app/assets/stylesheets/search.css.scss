@@ -5,6 +5,16 @@
 #search_main {
 }
 
+.pagination {
+  span, a {
+    color: gray;
+  }
+  .current {
+    font-size: 18px;
+    color: #ff9b9b;
+  }
+}
+
 #operation_area {
   border-bottom: 1px solid #ECECEC;
   width: 100%;
@@ -60,7 +70,7 @@
         border-radius: 2px;
         background: #ff9b9b;
         color:white;
-        font-size: 15px;
+        font-size: 18px;
       }
     }
     p {
@@ -68,11 +78,11 @@
       font-size: 20px;
     }
     .selected {
-      font-size: 15px;
+      font-size: 18px;
       color: #ff9b9b;
     }
     .no_selected {
-      font-size: 10px;
+      font-size: 12px;
       color: gray;
     }
   }
@@ -144,7 +154,7 @@
       height: 90px;
       #user_article_num {
         p {
-          color: #ff9b9b; 
+          color: #ff9b9b;
         }
       }
       #summary_num {

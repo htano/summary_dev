@@ -1,5 +1,5 @@
 <% content_for :head do %>
-<%= stylesheet_link_tag "search" %>
+<%= stylesheet_link_tag "search", "bootstrap/bootstrap.css"  %>
 <% end %>
 
 <script>
@@ -52,8 +52,11 @@ $(document).ready(function() {
 <!--        <%= @searchtext %> のタグ検索結果 0 件-->
       <% else %>
         <div id="message">
-          <%= @searchtext %> のタグ検索結果 <%= @articles.length %> 件
+          <%= @searchtext %> のタグ検索結果 <%= @articles_num %> 件
         </div>
+        <div style='text-align:center;'>
+          <%= paginate @articles, :window => 4, :outer_window => 2  %>
+        </div>        
         <% @articles.each do |article| %>
           <div id="article_contents">
             <div id="thumbnail">
@@ -99,6 +102,9 @@ $(document).ready(function() {
             </div>
           </div>
         <% end %>
+        <div style='text-align:center;'>
+          <%= paginate @articles, :window => 4, :outer_window => 2  %>
+        </div>        
       <% end %>
     </div>
   </div>
