@@ -251,17 +251,19 @@ class WebpageController < ApplicationController
       html = html.force_encoding("UTF-8")
       html = html.encode("UTF-8", "UTF-8")
       contents_preview, title = ExtractContent.analyse(html)
+      contents_preview.split(BLANK)
       return contents_preview
     rescue => e
       logger.error("error :#{e}")
       begin
-        text = ""
+        contents_preview = BLANK
         Nokogiri::HTML.parse(html).xpath("//p").each do |p|
           unless p.inner_text == nil || p.inner_text == BLANK
-            text += p.inner_text + "\n"
+            contents_preview += p.inner_text + "\n"
           end
         end
-        return text
+        contents_preview.split(BLANK)
+        return contents_preview
       rescue => e
         logger.error("error :#{e}")
         return "プレビューは取得出来ませんでした。"
