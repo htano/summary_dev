@@ -16,46 +16,6 @@ class WebpageController < ApplicationController
   THRESHOLD_ALL = 10000
   THRESHOLD_SIDE = 120
 
-  def add
-    if signed_in?
-      @user_id = "#{params[:id]}"
-      @msg = "#{params[:msg]}"
-    else
-      redirect_to :controller => "consumer", :action => "index"
-    end
-  end
-  
-  def add_confirm
-    if signed_in?
-      @user_id = get_login_user.id
-      @url = "#{params[:url]}"
-      h = get_article_element(@url, true, false, false)
-      if h == nil
-        @msg = "Please check URL."
-        redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
-      end
-
-      @title = h["title"]
-      @recent_tags = UserArticle.get_recent_tag(@user_id)
-      #@top_rated_tags = []
-
-      article = Article.find_by_url(@url) 
-      unless article == nil
-        user_article = article.user_articles.find_by_user_id(@user_id)
-        unless user_article == nil
-          @msg = "you already registered."
-          redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
-        end
-        @summary_num = article.summaries.count(:all)
-        @article_id = article.id
-        @top_rated_tags = article.get_top_rated_tag
-      end
-
-    else
-      redirect_to :controller => "consumer", :action => "index"
-    end
-  end
-
   #TODO 画面からURL直打ちの回避
   def get_add_history_for_chrome_extension
     if signed_in?
@@ -90,12 +50,21 @@ class WebpageController < ApplicationController
   def add_for_chrome_extension
     if signed_in?
       user_id = get_login_user.id
-      @prof_image =  get_login_user.prof_image
+      @prof_image = get_login_user.prof_image
       @url = "#{params[:url]}"
+=begin
+      tag_list = []
+      params.each do |key,value|
+        if key.start_with?("tag_text_")
+          tag_list.push(value) unless value == BLANK || tag_list.include?(value)
+        end
+      end
+=end
       article = Article.find_by_url(@url)
       if article == nil
         h = get_article_element(@url)
         if h == nil
+        #TODO 登録できないサイトをどうするか
           @msg = "Please check URL."
           redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
         end
@@ -125,6 +94,45 @@ class WebpageController < ApplicationController
           render :text => article.id and return
         end
       end
+    else
+      redirect_to :controller => "consumer", :action => "index"
+    end
+  end
+
+  def add
+    if signed_in?
+      @user_id = "#{params[:id]}"
+      @msg = "#{params[:msg]}"
+    else
+      redirect_to :controller => "consumer", :action => "index"
+    end
+  end
+  
+  def add_confirm
+    if signed_in?
+      @user_id = get_login_user.id
+      @url = "#{params[:url]}"
+      h = get_article_element(@url, true, false, false)
+      if h == nil || @url.start_with?("chrome://extensions/")
+        @msg = "Please check URL."
+        redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+      end
+
+      @title = h["title"]
+      @recent_tags = UserArticle.get_recent_tag(@user_id)
+
+      article = Article.find_by_url(@url) 
+      unless article == nil
+        user_article = article.user_articles.find_by_user_id(@user_id)
+        unless user_article == nil
+          @msg = "you already registered."
+          redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+        end
+        @summary_num = article.summaries.count(:all)
+        @article_id = article.id
+        @top_rated_tags = article.get_top_rated_tag
+      end
+
     else
       redirect_to :controller => "consumer", :action => "index"
     end
