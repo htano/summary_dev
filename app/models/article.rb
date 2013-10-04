@@ -149,6 +149,16 @@ class Article < ActiveRecord::Base
     return @top_rated_summary
   end
 
+  def get_contents_preview
+    begin
+      self.contents_preview.split("")
+      return self.contents_preview
+    rescue => err
+      logger.error("This page has invalid encoding: " + err.message)
+      return ""
+    end
+  end
+
   #記事に設定されたタグ情報を登録順に取得するメソッド
   def get_top_rated_tag
     first_index = 0
