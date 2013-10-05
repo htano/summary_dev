@@ -2,60 +2,73 @@
   　<%= stylesheet_link_tag "hotentry", "bootstrap/bootstrap.css" %>
 <% end %> 
 
-<div class="hotentry-container">
-<% @entries.each do |e| %>
-  <div class="row">
-    <div class="col-md-12 hotentry-row">
-
-      <div class="row hotentry-normal-body">
-      <% if e.get_top_rated_summary %>
-        <div class="col-md-2 hotentry-normal-image">
-      <% else %>
-        <div class="col-md-2 hotentry-normal-image-nosum">
-      <% end %>
-          <%= image_tag(e.thumbnail, :width=>"100%", :size=>"120x120") %>
-        </div>
-        <div class="col-md-10">
-          <div class="row">
-            <div class="col-md-12 hotentry-normal-title">
-              <a href="<%= e.url %>" target="_blank">
-                <h5><%=e.title%></h5>
-              </a>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3 hotentry-normal-summaries">
-              <%= e.user_articles.count %> readers,
-              <a href="<%= url_for(:controller => 'summary_lists',
-                                   :action=>'index',
-                                   :articleId => e.id) %>">
-                <%= e.summaries.count %> summaries.
-              </a>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 hotentry-normal-contents">
-              <p style="font-size:9px;">
-                <% if e.get_top_rated_summary %>
-                  <%= e.get_top_rated_summary.content %>
-                <% else %>
-                  <%= e.get_contents_preview %>
-                <% end %>
-              </p>
-            </div>
-          </div>
-        </div>
+<div class="row">
+  <div class="col-md-12 hotentry-container">
+    <div class="row">
+      <div class="col-md-12 hotentry-menu">
+      <a href="<%= url_for(:controller => 'hotentry', :action => 'small') %>">
+        small
+      </a>
+      <a href="<%= url_for(:controller => 'hotentry', :action => 'normal') %>">
+        normal
+      </a>
+      <a href="<%= url_for(:controller => 'hotentry', :action => 'index') %>">
+        large
+      </a>
       </div>
-      <div class="row hotentry-normal-bottom">
-        <div class="col-md-6 hotentry-normal-domain">
-          <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
-          <%= URI(e.url).host %>
+    </div>
+  <% @entries.each do |e| %>
+    <div class="row">
+      <div class="col-md-12 hotentry-row">
+        <div class="row hotentry-normal-body">
+        <% if e.get_top_rated_summary %>
+          <div class="col-md-2 hotentry-normal-image">
+        <% else %>
+          <div class="col-md-2 hotentry-normal-image-nosum">
+        <% end %>
+            <%= image_tag(e.thumbnail, :width=>"100%", :size=>"120x120") %>
+          </div>
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12 hotentry-normal-title">
+                <a href="<%= e.url %>" target="_blank">
+                  <h5><%=e.title%></h5>
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 hotentry-normal-summaries">
+                <%= e.user_articles.count %> readers,
+                <a href="<%= url_for(:controller => 'summary_lists',
+                                     :action=>'index',
+                                     :articleId => e.id) %>">
+                  <%= e.summaries.count %> summaries.
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 hotentry-normal-contents">
+                <p style="font-size:9px;">
+                  <% if e.get_top_rated_summary %>
+                    <%= e.get_top_rated_summary.content %>
+                  <% else %>
+                    <%= e.get_contents_preview %>
+                  <% end %>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-6 hotentry-normal-tags">
+        <div class="row hotentry-normal-bottom">
+          <div class="col-md-6 hotentry-normal-domain">
+            <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
+            <%= URI(e.url).host %>
+          </div>
+          <div class="col-md-6 hotentry-normal-tags">
+          </div>
         </div>
       </div>
     </div>
-
+  <% end %>
   </div>
-<% end %>
 </div>

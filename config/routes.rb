@@ -8,6 +8,7 @@ SummaryDev::Application.routes.draw do
   get "follow_lists/suggestion"
   get "hotentry/index"
   get "hotentry/normal"
+  get "hotentry/small"
   get "settings/profile"
   get "settings/profile_edit"
   post "settings/profile_edit_complete"

@@ -10,6 +10,13 @@
 div.hotentry-container {
   margin: auto;
   width: 800px;
+  border: solid 1px #eee;
+}
+
+div.hotentry-menu {
+  background-color: #eee;
+  height: 37px;
+  margin-bottom: 5px;
 }
 
 div.hotentry-row {
