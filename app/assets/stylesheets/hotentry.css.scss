@@ -14,30 +14,59 @@ div.hotentry-container {
 }
 
 div.hotentry-menu {
-  background-color: #eee;
-  height: 37px;
+  background-color: #e6e6e6;
   margin-bottom: 5px;
+
+  h3 {
+    color: white;
+    margin: 0;
+    font-size: 14px;
+    padding: 10px 10px 11px 10px;
+  }
 }
 
 div.hotentry-row {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
   border-bottom: solid 2px #eee;
 }
 
-div.hotentry-normal-image {
+div.hotentry-small-row {
+  margin-bottom: 2px;
+  border-bottom: solid 2px #eee;
+}
+
+div.hotentry-normal-image, div.hotentry-small-order {
   border-left: solid 3px #F5AC0F;
 }
 
-div.hotentry-normal-image-nosum {
+div.hotentry-normal-image-nosum, div.hotentry-small-order-nosum {
   border-left: solid 3px #0FC7F5;
 }
 
-div.hotentry-normal-title a h5 {
-  color: #999;
-  text-decoration: underline;
+div.hotentry-small-order, div.hotentry-small-order-nosum {
+  font-size: 32px;
 }
 
-div.hotentry-normal-summaries {
+div.hotentry-normal-title, div.hotentry-small-title {
+  h5 {
+    color: #999;
+    text-decoration: underline;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  margin-bottom: 5px;
+}
+
+div.hotentry-small-title {
+  height: 30px;
+}
+
+div.hotentry-normal-summaries, div.hotentry-small-summaries {
+  font-size: 11px;
+}
+
+div.hotentry-normal-domain {
   font-size: 11px;
 }
 
