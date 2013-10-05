@@ -18,14 +18,12 @@
             <li>
               <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" >add</a>
             </li>
-            <li class="divider-vertical"></li>
             <li>
-              <a href="<%= url_for :controller => 'search', :action => 'index' %>" >search</a>
+              <a href="<%= url_for :controller => 'search', :action => 'index' %>" id="search">search</a>
             </li>
           <% end %>
 
-          <li class="divider-vertical"></li>
-
+          <% if false %>
           <% if signed_in? %>
             <li>
               <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#"><%= getNotifyingObjects.size %></a>
@@ -41,32 +39,32 @@
                 </li>
               </ul>
             </li>
-          <% else %>
-            <li>
-              <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#">-</a>
-            </li>
-          <% end%>
+          <% end %>
+          <% end %>
 
-            <li class="divider-vertical"></li>
+            <li>
+              <div id="profile">
+                <%= render_user_name %>
+              </div>
+            </li>
             <li>
               <% if signed_in? %>
-              <a class="dropdown-toggle nav_account" data-toggle="dropdown" href="#"><%= get_current_user_name %></a>
-                <ul class="dropdown-menu">
-                  <li>
-                  <a href="<%= url_for :controller => 'mypage', :action => 'index' %>">MyPage</a>
-                  </li>
-                  <li>
-                  <a href="<%= url_for :controller =>'settings', :action => 'profile'%>">Show Profile</a>
-                  </li>
-                  <li>
-                  <a href="<%= url_for(:controller => 'consumer', :action => 'sign_out', :fromUrl => request.url)%>">LogOut</a>
-                  </li>
-                </ul>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <%= image_tag("icons/glyphicons_136_cogwheel_gray.png", :size => "20x20") %>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="<%= url_for :controller =>'settings', :action => 'profile'%>">account setting</a>
+                </li>
+                <li>
+                  <a href="<%= url_for(:controller => 'consumer', :action => 'sign_out', :fromUrl => request.url)%>">sign out</a>
+                </li>
+              </ul>
               <% else %>
                 <% if request.url =~ %r!^#{url_for(:controller => 'consumer', :action => 'index', :only_path => false)}! %>
-                  <a href="<%= url_for(:controller => 'consumer', :action => 'index')%>">LogIn</a>
+                  <a href="<%= url_for(:controller => 'consumer', :action => 'index')%>">sign in</a>
                 <% else %>
-                  <a href="<%= url_for(:controller => 'consumer', :action => 'index', :fromUrl => request.url)%>">LogIn</a>
+                  <a href="<%= url_for(:controller => 'consumer', :action => 'index', :fromUrl => request.url)%>">sign in</a>
                 <% end %>
               <% end %>
             </li>

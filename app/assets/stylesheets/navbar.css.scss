@@ -1,7 +1,5 @@
-
 body {
   padding-top: 40px;
-  font-size: 13px;
   line-height: 18px;
   color: #333333;
 }
@@ -23,11 +21,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   color: #333333;
   text-rendering: optimizelegibility;
-}
-
-h2 {
-  font-size: 24px;
-  line-height: 36px;
 }
 
 .navbar-fixed-top {
@@ -77,16 +70,20 @@ h2 {
     margin: 0px 10px 0px 0px;
   }
 
-
   .nav > li > a {
     float: none;
-    margin-top: 5px;
+    margin: 7px 5px 0px 5px;
     line-height: 30px;
-    color: #999999;
     text-decoration: none;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     text-align: center;
-    color: white;
+    color: #a2a2a2;
+    &:hover {
+      color: #5B91FF;
+      background-color: #e6e6e6;
+    }
+  }
+  .nav > li > #search {
+    margin-right: 20px;
   }
 
   .nav > li {
@@ -126,13 +123,6 @@ h2 {
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   background-clip: padding-box;
   -webkit-background-clip: padding-box;
-  &>li>a {
-    color: gray;
-  }
-  &>li>a:hover {
-    color: #5B91FF;
-    text-decoration: underline;
-  }
 }
 
 .open {
@@ -175,21 +165,21 @@ ul {
 
 .nav_news {
   width: 30px;
-  background-color: rgb(255, 155, 155);
-}
-
-.nav_account {
-  padding-left: 5px;
-  padding-right: 5px;
-  background-color: gray;
+  height: 28px;
+  // background-color: rgb(255, 155, 155);
 }
 
 .nav > li > a {
+  // font-weight: bolder;
   display: block;
 }
 
 .nav {
   list-style: none;
+  img {
+    margin-left: 5px;
+    margin-bottom: 3px;
+  }
 }
 
 li {
@@ -219,7 +209,19 @@ li {
   clear: both;
 }
 
-.add {
-  padding-left: 10px;
-  font-size: 20px;
+#profile {
+  width: 75px;
+
+  margin: 7px 0px 0px 0px;
+  img {
+    margin-left: 0px;
+  }
+  p {
+    float: right;
+    margin: 0px 5px 0px 0px;
+    color: #a2a2a2;
+    &:hover {
+      color: #5B91FF;
+    }
+  }
 }
