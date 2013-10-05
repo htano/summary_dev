@@ -7,6 +7,33 @@
   color: #999;
 }
 
+div.hotentry-container {
+  margin: auto;
+  width: 800px;
+}
+
+div.hotentry-row {
+  margin-bottom: 10px;
+  border-bottom: solid 2px #eee;
+}
+
+div.hotentry-normal-image {
+  border-left: solid 3px #F5AC0F;
+}
+
+div.hotentry-normal-image-nosum {
+  border-left: solid 3px #0FC7F5;
+}
+
+div.hotentry-normal-title a h5 {
+  color: #999;
+  text-decoration: underline;
+}
+
+div.hotentry-normal-summaries {
+  font-size: 11px;
+}
+
 div.hotentry_container {
   margin: auto;
   width: 900px;
