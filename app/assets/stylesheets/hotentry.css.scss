@@ -33,6 +33,7 @@ div.hotentry-row {
 
 div.hotentry-small-row {
   margin-bottom: 2px;
+  padding-bottom: 5px;
   border-bottom: solid 2px #eee;
 }
 
@@ -77,13 +78,14 @@ div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
     text-decoration: underline;
     margin-top: 5px;
     margin-bottom: 5px;
+    line-height: 20px;
   }
 
   margin-bottom: 5px;
 }
 
 div.hotentry-small-title {
-  height: 30px;
+  min-height: 30px;
 }
 
 div.hotentry-large-title {
