@@ -210,15 +210,13 @@ li {
 }
 
 #profile {
-  width: 75px;
-
-  margin: 7px 0px 0px 0px;
   img {
-    margin-left: 0px;
+    margin: 10px 0px 0px 0px;
+    float: left;
   }
   p {
-    float: right;
-    margin: 0px 5px 0px 0px;
+    float: left;
+    margin: 7px 5px 0px 5px;
     color: #a2a2a2;
     &:hover {
       color: #5B91FF;
