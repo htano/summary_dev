@@ -190,7 +190,7 @@ class ConsumerController < ApplicationController
 
   def get_user_existing
     @uname = params[:creating_user_name]
-    if User.exists?(@uname)
+    if User.exists?(:name => @uname)
       render(:text => "EXISTS")
     else
       render(:text => "NONE")
