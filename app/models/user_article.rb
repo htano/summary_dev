@@ -6,7 +6,19 @@ class UserArticle < ActiveRecord::Base
   scope :unread, lambda { where(:read_flg => false) }
   scope :favorite, lambda { where(:favorite_flg => true) }
 
-   #ユーザーが最近あとで読むした記事に設定したタグ情報を取得するメソッド
+  def self.edit_user_article(user_id, article_id)
+    user_article = UserArticle.find_by_user_id_and_article_id(user_id, article_id)
+    if user_article == nil
+      user_article = UserArticle.new(:user_id => user_id, :article_id => article_id, :read_flg => false)
+      if user_article.save
+        return user_article
+      end
+    else
+      return user_article
+    end
+  end
+
+  #ユーザーが最近あとで読むした記事に設定したタグ情報を取得するメソッド
   def self.get_recent_tag(user_id)
     first_index = 0
     last_index = 9

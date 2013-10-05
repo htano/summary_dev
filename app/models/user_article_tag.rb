@@ -2,7 +2,7 @@ class UserArticleTag < ActiveRecord::Base
   belongs_to :user_atricle
 
   #記事登録時にタグを設定するメソッド
-  def self.edit_tag(user_article_id, tag_list)
+  def self.edit_user_article_tag(user_article_id, tag_list)
     user_article_tag_list = where(:user_article_id => user_article_id)
     if user_article_tag_list.length == 0
       tag_list.each do |tag|

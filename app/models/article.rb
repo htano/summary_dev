@@ -1,5 +1,8 @@
 # encoding: utf-8
 
+require "webpage"
+include Webpage
+
 #require "ransack"
 
 class Article < ActiveRecord::Base
@@ -14,6 +17,22 @@ class Article < ActiveRecord::Base
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   BLANK = ""
 
+  def self.edit_article(url)
+    article = Article.find_by_url(url)
+    if article == nil
+      h = get_webpage_element(url)
+      if h == nil
+        return nil
+      end
+      article = Article.new(:url => url, :title => h["title"], :contents_preview => h["contentsPreview"][0, 200], :category_id =>"001", :thumbnail => h["thumbnail"])
+      if article.save
+        return article
+      end
+    else
+      return article
+    end
+  end
+
   #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag)
     return nil if tag == nil || tag == BLANK
@@ -25,7 +44,7 @@ class Article < ActiveRecord::Base
   def self.search_by_title(title)
     return nil if title == nil || title == BLANK
     #articles = joins(:user_articles => :user_article_tags).where(["title LIKE ?", "%"+title+"%"]).group("url")
-    articles = where(["title LIKE ?", "%"+title+"%"])
+    articles = joins(:user_articles).where(["title LIKE ?", "%"+title+"%"])
     return articles
   end
 
@@ -33,7 +52,7 @@ class Article < ActiveRecord::Base
   def self.search_by_content(content)
     return nil if content == nil || content == BLANK
     #articles = joins(:user_articles => :user_article_tags).where(["contents_preview LIKE ?", "%"+content+"%"]).group("url")
-    articles = where(["contents_preview LIKE ?", "%"+content+"%"])
+    articles = joins(:user_articles).where(["contents_preview LIKE ?", "%"+content+"%"])
     return articles
   end
 

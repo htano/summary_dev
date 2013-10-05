@@ -6,7 +6,7 @@ $(document).ready( function(){
   $("p#p_url").text(bg.current_tab.url);
 
   $.ajax({
-      url: 'http://' + bg.SERVICE_HOSTNAME + '/webpage/get_current_user_name_for_chrome_extension',
+      url: 'http://' + bg.SERVICE_HOSTNAME + '/chrome/get_current_user_name_for_chrome_extension',
       type: 'GET',
       dataType: 'text',
       success: function(data) {
@@ -15,7 +15,7 @@ $(document).ready( function(){
           setBtnDisabled();
         } else {
         	$.ajax({
-        		url: 'http://' + bg.SERVICE_HOSTNAME + '/webpage/get_add_history_for_chrome_extension',
+        		url: 'http://' + bg.SERVICE_HOSTNAME + '/chrome/get_add_history_for_chrome_extension',
         		type: 'GET',
         		data: 'url=' + escape(bg.current_tab.url),
         		dataType: 'text',
@@ -31,10 +31,31 @@ $(document).ready( function(){
       }
   });
 
+  $.ajax({
+      url: 'http://' + bg.SERVICE_HOSTNAME + '/chrome/get_recommand_tag_for_chrome_extension',
+      type: 'GET',
+      data: 'url=' + escape(bg.current_tab.url),
+      dataType: 'text',
+      success: function(data) {
+        //alert(data)
+        $("p#p_recommand_tag").text(data);
+      } 
+  });
+
+  $.ajax({
+      url: 'http://' + bg.SERVICE_HOSTNAME + '/chrome/get_recent_tag_for_chrome_extension',
+      type: 'GET',
+      dataType: 'text',
+      success: function(data) {
+        //alert(data)
+        $("p#p_recent_tag").text(data);
+      } 
+  });
+
   $('#p_button').click(function(){
     $("img.a_load").attr("style", "visibility:visible;");
     $.ajax({
-      url: 'http://' + bg.SERVICE_HOSTNAME + '/webpage/add_for_chrome_extension',
+      url: 'http://' + bg.SERVICE_HOSTNAME + '/chrome/add_for_chrome_extension',
       type: 'GET',
       data: 'url=' + escape(bg.current_tab.url),
       dataType: 'text',
