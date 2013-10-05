@@ -61,7 +61,7 @@ function clickReadItLater(btn, url, aid) {
         dataType: 'text',
         success: function(data) {
           btn.className="read_it_cancel";
-          btn.innerHTML="Cancel";
+          btn.innerHTML="Read cancel";
           var reading_num = $('#reading_counter'+aid).text();
           $('#reading_counter'+aid).text(parseInt(reading_num) + 1);
           btn.style.display = "inline";

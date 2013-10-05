@@ -33,6 +33,7 @@
                 <div class="col-md-4">
                   <div class="row">
                     <div class="col-md-4 entry_count_num">
+
                       <% if get_login_user %>
                         <%= image_tag "ajax-loader.gif", :id => "mark_read_loader" + e.id.to_s, :style => "display:none;"%>
                         <%= image_tag "ajax-loader.gif", :id => "add_page_loader" + e.id.to_s, :style => "display:none; margin-top: 35px;" %>
@@ -49,6 +50,7 @@
                         <% end %>
                       <% else %>
                       <% end %>
+
                     </div>
                     <div class="col-md-4 entry_count_num">
                       <span class="entry_count_label">Readers</span>

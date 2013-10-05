@@ -27,42 +27,98 @@
 
   <% @entries.each do |e| %>
     <div class="row">
-      <div class="col-md-12 hotentry-small-row">
-        <div class="row hotentry-small-body">
-        <% if e.get_top_rated_summary %>
-          <div class="col-md-1 hotentry-small-order">
-        <% else %>
-          <div class="col-md-1 hotentry-small-order-nosum">
-        <% end %>
-          <%= @hash[e.id] %>.
-          </div>
-          <div class="col-md-11">
+    <% if e.get_top_rated_summary %>
+      <div class="col-md-12 hotentry-large-row">
+    <% else %>
+      <div class="col-md-12 hotentry-large-row-nosum">
+    <% end %>
+        <div class="row hotentry-normal-body">
+          <div class="col-md-12">
             <div class="row">
-              <div class="col-md-12 hotentry-small-title">
+              <div class="col-md-10 hotentry-large-title">
                 <a href="<%= e.url %>" target="_blank">
-                  <h5><%=e.title%></h5>
+                  <h4><%=e.title%></h4>
                 </a>
+              </div>
+              <div class="col-md-2">
+
+              <% if get_login_user %>
+                <%= image_tag("ajax-loader.gif", 
+                              :id => "mark_read_loader" + e.id.to_s, 
+                              :style => "display:none;"); %>
+                <%= image_tag("ajax-loader.gif", 
+                              :id => "add_page_loader" + e.id.to_s, 
+                              :style => "display:none; margin-top: 35px;"); %>
+                <% if e.user_articles.where(:user_id => get_login_user.id).first %>
+                  <% if e.user_articles.where(:user_id => get_login_user.id).first.read_flg %>
+                    <button id="mark_as_read_btn<%= e.id %>" class="mark_as_unread" onClick='clickMarkAsRead(this, "<%= e.id %>")' >
+                      Unread
+                    </button>
+                  <% else %>
+                    <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' >
+                      Mark as read
+                    </button>
+                  <% end %>
+                  <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' >
+                    Read cancel
+                  </button>
+                <% else %>
+                  <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' style="visibility:hidden;">
+                    Mark as read
+                  </button>
+                  <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>
+                    Read later
+                  </button>
+                <% end %>
+              <% end %>
+
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 hotentry-small-summaries">
-                <%= e.user_articles.count %> readers,
+              <div class="col-md-6 hotentry-large-summaries">
+                <span id="reading_counter<%= e.id %>">
+                  <%= e.user_articles.count %> 
+                </span>
+                readers,
                 <a href="<%= url_for(:controller => 'summary_lists',
                                      :action=>'index',
                                      :articleId => e.id) %>">
                   <%= e.summaries.count %> summaries.
                 </a>
               </div>
-              <div class="col-md-6 hotentry-normal-domain">
-                <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
-                <%= URI(e.url).host %>
+            </div>
+            <div class="row">
+              <div class="col-md-3 hotentry-large-image">
+                <%= image_tag(e.thumbnail, :width=>"100%", :size=>"180x220") %>
+              </div>
+              <div class="col-md-9 hotentry-large-contents">
+              <% if e.get_top_rated_summary %>
+                Top rated summary
+                <p>
+                <%= e.get_top_rated_summary.content %>
+              <% else %>
+                Contents preview
+                <p>
+                <%= e.get_contents_preview %>
+              <% end %>
+                </p>
+              <% if get_login_user %>
+                <a href="<%= url_for :controller => 'summary', :action => 'edit', :article_id => e.id %>">edit summary</a>
+              <% end %>
               </div>
             </div>
-          </div> 
+          </div>
+        </div>
+        <div class="row hotentry-large-bottom">
+          <div class="col-md-6 hotentry-large-domain">
+            <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
+            <%= URI(e.url).host %>
+          </div>
+          <div class="col-md-6 hotentry-normal-tags">
+          </div>
         </div>
       </div>
     </div>
   <% end %>
-
   </div>
 </div>

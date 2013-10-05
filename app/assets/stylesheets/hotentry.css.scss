@@ -36,6 +36,20 @@ div.hotentry-small-row {
   border-bottom: solid 2px #eee;
 }
 
+div.hotentry-large-row {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: solid 2px #eee;
+  border-left: solid 3px #F5AC0F;
+}
+
+div.hotentry-large-row-nosum {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: solid 2px #eee;
+  border-left: solid 3px #0FC7F5;
+}
+
 div.hotentry-normal-image, div.hotentry-small-order {
   border-left: solid 3px #F5AC0F;
 }
@@ -48,13 +62,23 @@ div.hotentry-small-order, div.hotentry-small-order-nosum {
   font-size: 32px;
 }
 
-div.hotentry-normal-title, div.hotentry-small-title {
+div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
+
+  h4 {
+    color: #999;
+    text-decoration: underline;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    line-height: 24px;
+  }
+
   h5 {
     color: #999;
     text-decoration: underline;
     margin-top: 5px;
     margin-bottom: 5px;
   }
+
   margin-bottom: 5px;
 }
 
@@ -62,8 +86,21 @@ div.hotentry-small-title {
   height: 30px;
 }
 
+div.hotentry-large-title {
+}
+
 div.hotentry-normal-summaries, div.hotentry-small-summaries {
   font-size: 11px;
+}
+
+div.hotentry-large-contents {
+  p {
+    font-size:14px;
+    border: solid 1px #eee;
+    height: 180px;
+    padding: 5px;
+    margin-bottom: 0;
+  }
 }
 
 div.hotentry-normal-domain {
@@ -305,7 +342,7 @@ button.read_it_later {
 }
 
 button.read_it_cancel {
-  font-size: 12px;
+  font-size: 11px;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #999;
