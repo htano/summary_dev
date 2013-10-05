@@ -211,8 +211,7 @@ class MypageController < ApplicationController
   end
 
   def clip
-    logger.debug("clip")
-
+    # TODO : check whether artclie id is valid or not
     unless signed_in?
       redirect_to :controller => 'consumer', :action => 'index' and return
     end
@@ -227,7 +226,6 @@ class MypageController < ApplicationController
 
   def follow
     unless signed_in?
-      logger.debug("error case")
       respond_to do |format|
         format.html { redirect_to :controller => 'consumer', :action => 'index' and return }
         format.js { render 'login_page' and return }
@@ -237,15 +235,22 @@ class MypageController < ApplicationController
     @current_user = get_login_user
 
     if @current_user
-      # TODO : error handle
-      FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
+      logger.debug("follow user id : #{params[:follow_user_id]}")
+      if User.exists?(params[:follow_user_id])
+        FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
+      else
+        respond_to do |format|
+          format.html { render :file => "#{Rails.root}/public/404.html", 
+                        :status => 404, :layout => false, :content_type => 'text/html'}
+          format.js { render '404_error_page' and return }
+        end
+      end
     end
 
     @user_id = params[:follow_user_id]
     # for renewing followers number on profile view
     @num = FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]})
     @follower_num = "followers" + "<br>" + @num.to_s
-                    
 
     respond_to do |format|
       format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
@@ -260,6 +265,12 @@ class MypageController < ApplicationController
 
     if @current_user && @current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id])
       @current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
+    else
+      respond_to do |format|
+        format.html { render :file => "#{Rails.root}/public/404.html", 
+                      :status => 404, :layout => false, :content_type => 'text/html'}
+        format.js { render '404_error_page' and return }
+      end
     end
 
     @user_id = params[:unfollow_user_id]
@@ -293,23 +304,27 @@ private
     table = []
 
     user_articles.each do |user_article|
-      article = user_article.article
-      summary_num = article.summaries.size
-      registered_num = article.user_articles.size
-      registered_date = user_article.created_at
+      if Article.exists?(user_article.article_id)
+        article = user_article.article
+        summary_num = article.summaries.size
+        registered_num = article.user_articles.size
+        registered_date = user_article.created_at
 
-      is_registered = false
-      is_already_read = false
-      if signed_in? && is_login_user == false
-        if get_login_user.user_articles.exists?(:article_id => user_article.article_id)
-          is_registered = true
-          is_already_read = get_login_user.user_articles.find_by_article_id(user_article.article_id).read_flg
+        is_registered = false
+        is_already_read = false
+        if signed_in? && is_login_user == false
+          if get_login_user.user_articles.exists?(:article_id => user_article.article_id)
+            is_registered = true
+            is_already_read = get_login_user.user_articles.find_by_article_id(user_article.article_id).read_flg
+          end
         end
+
+        table_data = {:article => article, :summary_num => summary_num, 
+                      :registered_num => registered_num, :registered_date  => registered_date, 
+                      :is_registered => is_registered, :is_already_read => is_already_read}
+
+        table.push(table_data)
       end
-
-      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :registered_date => registered_date, :is_registered => is_registered, :is_already_read => is_already_read}
-
-      table.push(table_data)
     end
     return table
   end
@@ -317,24 +332,28 @@ private
   def get_summary_table(summaries, is_login_user)
     table = []
     summaries.each do |summary|
-      article = summary.article
-      registered_num = article.user_articles.size
-      last_updated = summary.updated_at
-      like_num = summary.good_summaries.size
-      summary_num = article.summaries.size
+      if Summary.exists?(summary.article_id)
+        article = summary.article
+        registered_num = article.user_articles.size
+        last_updated = summary.updated_at
+        like_num = summary.good_summaries.size
+        summary_num = article.summaries.size
 
-      is_registered = false
-      is_already_read = false
-      if signed_in? && is_login_user == false
-        if get_login_user.user_articles.exists?(:article_id => summary.article_id)
-          is_registered = true
-          is_already_read = get_login_user.user_articles.find_by_article_id(summary.article_id).read_flg
+        is_registered = false
+        is_already_read = false
+        if signed_in? && is_login_user == false
+          if get_login_user.user_articles.exists?(:article_id => summary.article_id)
+            is_registered = true
+            is_already_read = get_login_user.user_articles.find_by_article_id(summary.article_id).read_flg
+          end
         end
+
+        table_data = {:article => article, :summary_num => summary_num, 
+                      :registered_num => registered_num, :last_updated => last_updated, 
+                      :like_num => like_num, :is_registered => is_registered, :is_already_read => is_already_read}
+
+        table.push(table_data)
       end
-
-      table_data = {:article => article, :summary_num => summary_num, :registered_num => registered_num, :last_updated => last_updated, :like_num => like_num, :is_registered => is_registered, :is_already_read => is_already_read}
-
-      table.push(table_data)
     end
     return table
   end
