@@ -211,14 +211,15 @@ class MypageController < ApplicationController
   end
 
   def clip
-    # TODO : check whether artclie id is valid or not
     unless signed_in?
       redirect_to :controller => 'consumer', :action => 'index' and return
     end
 
     login_user = get_login_user
     params[:article_ids].each do |article_id|
-      login_user.user_articles.find_or_create_by(:user_id => get_login_user.id, :article_id => article_id)
+      if Article.exists?(article_id)
+        login_user.user_articles.find_or_create_by(:user_id => get_login_user.id, :article_id => article_id)
+      end
     end
 
     redirect_to :action => "index", :name => params[:name]
