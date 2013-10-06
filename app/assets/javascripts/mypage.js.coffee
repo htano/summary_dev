@@ -4,123 +4,117 @@
 disableButton = (elem) ->
   $(elem).css("background-color", "#ddd").unwrap()
 
-wrapAll = (class_name, params, checked_num, article_ids, page) ->
-  $(".#{class_name}>#mark-as-read-btn").wrap("<a href=/mypage/mark_as_read?#{params}#{page}></a>")
-  $(".#{class_name}>#mark-as-unread-btn").wrap("<a href=/mypage/mark_as_unread?#{params}#{page}></a>")
-  if checked_num == 1
-    $(".#{class_name}>#edit-summary-btn").wrap("<a href='/summary/#{article_ids}/edit'}></a>")
-  $(".#{class_name}>#mark-as-favorite-btn").wrap("<a href=/mypage/mark_as_favorite?#{params}#{page}></a>")
-  $(".#{class_name}>#mark-off-favorite-btn").wrap("<a href=/mypage/mark_off_favorite?#{params}#{page}></a>")
-  $(".#{class_name}>#delete-btn").wrap("<a href=/mypage/delete_article?#{params}#{page}></a>")
-  $(".#{class_name}>#delete-summary-btn").wrap("<a href=/mypage/delete_summary?#{params}#{page}></a>")
+wrapAll = (className, params, checkedNum, articleID, page) ->
+  $(".#{className}>#mark-as-read-btn").wrap("<a href=/mypage/mark_as_read?#{params}#{page}></a>")
+  $(".#{className}>#mark-as-unread-btn").wrap("<a href=/mypage/mark_as_unread?#{params}#{page}></a>")
+  if checkedNum == 1
+    $(".#{className}>#edit-summary-btn").wrap("<a href='/summary/#{articleID}/edit'}></a>")
+  $(".#{className}>#mark-as-favorite-btn").wrap("<a href=/mypage/mark_as_favorite?#{params}#{page}></a>")
+  $(".#{className}>#mark-off-favorite-btn").wrap("<a href=/mypage/mark_off_favorite?#{params}#{page}></a>")
+  $(".#{className}>#delete-btn").wrap("<a href=/mypage/delete_article?#{params}#{page}></a>")
+  $(".#{className}>#delete-summary-btn").wrap("<a href=/mypage/delete_summary?#{params}#{page}></a>")
 
-@clickArticleCheckBox = (form_name, class_name, page) ->
-  checkbox = document.getElementsByName(form_name.name).item(0)
-  checkbox_num = checkbox.length
+@clickArticleCheckBox = (formName, className, page) ->
+  checkbox = document.getElementsByName(formName.name).item(0)
+  checkboxNum = checkbox.length
 
-  checked_num = 0
-  article_ids = []
+  checkedNum = 0
+  articleIDs = []
   i = 1
-  while i < checkbox_num
+  while i < checkboxNum
     if checkbox.elements[i].checked
-      checked_num++
-      article_id = checkbox.elements[i].value
-      article_ids.push(article_id)
+      checkedNum++
+      articleID = checkbox.elements[i].value
+      articleIDs.push(articleID)
     i++
 
-  if checked_num is 0
-    disableButton(".#{class_name}>a>div")
-  else if checked_num is 1
-    $(".#{class_name}>div").css("background-color", "white")
-  else if checked_num is 2
-    disableButton(".#{class_name}>a>#edit-summary-btn")
+  if checkedNum is 0
+    disableButton(".#{className}>a>div")
+  else if checkedNum is 1
+    $(".#{className}>div").css("background-color", "white")
+  else if checkedNum is 2
+    disableButton(".#{className}>a>#edit-summary-btn")
 
-  if checked_num > 0
-    # create parameters
+  if checkedNum > 0
     i = 0
     params = ""
-    while i < article_ids.length
-      params += "article_ids[]=" + "#{article_ids[i]}&"
+    while i < articleIDs.length
+      params += "article_ids[]=" + "#{articleIDs[i]}&"
       i++
 
-    $(".#{class_name}>a>div").unwrap()
-    wrapAll(class_name, params, checked_num, article_ids, page)
+    $(".#{className}>a>div").unwrap()
+    wrapAll(className, params, checkedNum, articleIDs, page)
 
 @clickCheckBoxForClip = (name) ->
-  main_checkbox     = document.main_checkbox
-  summary_checkbox  = document.summary_checkbox
-  # TODO : add favorite checkbox
-  favorite_checkbox = document.favorite_checkbox
-  read_checkbox     = document.read_checkbox
+  mainCheckbox     = document.main_checkbox
+  summaryCheckbox  = document.summary_checkbox
+  favoriteCheckbox = document.favorite_checkbox
+  readCheckbox     = document.read_checkbox
 
-  checkbox_num = main_checkbox.elements.length + summary_checkbox.elements.length + read_checkbox.elements.length + favorite_checkbox.elements.length
+  checkboxNum = mainCheckbox.elements.length + summaryCheckbox.elements.length + readCheckbox.elements.length + favoriteCheckbox.elements.length
 
-  checked_num = 0
-  article_ids = []
+  checkedNum = 0
+  articleIDs = []
 
   # main tab
   i = 1
-  while i < main_checkbox.elements.length
-    if main_checkbox.elements[i].checked
-      checked_num++
-      article_id = main_checkbox.elements[i].value
-      article_ids.push(article_id)
+  while i < mainCheckbox.elements.length
+    if mainCheckbox.elements[i].checked
+      checkedNum++
+      articleID = mainCheckbox.elements[i].value
+      articleIDs.push(articleID)
     i++
   # summary tab
   i = 1
-  while i < summary_checkbox.elements.length
-    if summary_checkbox.elements[i].checked
-      checked_num++
-      article_id = summary_checkbox.elements[i].value
-      article_ids.push(article_id)
+  while i < summaryCheckbox.elements.length
+    if summaryCheckbox.elements[i].checked
+      checkedNum++
+      articleID = summaryCheckbox.elements[i].value
+      articleIDs.push(articleID)
     i++
   # favorite tab
   i = 1
-  while i < favorite_checkbox.elements.length
-    if favorite_checkbox.elements[i].checked
-      checked_num++
-      article_id = favorite_checkbox.elements[i].value
-      article_ids.push(article_id)
+  while i < favoriteCheckbox.elements.length
+    if favoriteCheckbox.elements[i].checked
+      checkedNum++
+      articleID = favoriteCheckbox.elements[i].value
+      articleIDs.push(articleID)
     i++
   # read tab
   i = 1
-  while i < read_checkbox.elements.length
-    if read_checkbox.elements[i].checked
-      checked_num++
-      article_id = read_checkbox.elements[i].value
-      article_ids.push(article_id)
+  while i < readCheckbox.elements.length
+    if readCheckbox.elements[i].checked
+      checkedNum++
+      articleID = readCheckbox.elements[i].value
+      articleIDs.push(articleID)
     i++
 
-#  console.debug ("checked num = #{checked_num}")
-  clip_btn = document.getElementById('clip-btn')
+  clipBtn = document.getElementById('clip-btn')
 
-  if checked_num is 0
-    clip_btn.style.backgroundColor = "#ddd"
+  if checkedNum is 0
+    clipBtn.style.backgroundColor = "#ddd"
     $("a>#clip-btn").unwrap()
   else
-    clip_btn.style.backgroundColor = "white"
+    clipBtn.style.backgroundColor = "white"
 
   # create link
-  if checked_num > 0
+  if checkedNum > 0
     i = 0
     params = ""
-    while i < article_ids.length
-      params += "article_ids[]=" + "#{article_ids[i]}&"
+    while i < articleIDs.length
+      params += "article_ids[]=" + "#{articleIDs[i]}&"
       i++
-#    console.debug params
 
     $("a>#clip-btn").unwrap()
     $("div>#clip-btn").wrap("<a href='/mypage/clip?name=#{name}&#{params}'></a>")
 
-@checkAll = (checker, form_name) ->
-  form = document.getElementById(form_name)
-#  console.debug "form name = #{form.name}, form length = #{form.length}"
-  checkbox_num = form.length
+@checkAll = (checker, formName) ->
+  form = document.getElementById(formName)
+  checkboxNum = form.length
 
   i = 1
   value = document.getElementById(checker).checked
-#  console.debug "value = #{value}"
-  while i < checkbox_num
+  while i < checkboxNum
     form.elements[i].checked = value
     i++
   form.elements[1].onclick() unless i is 1
