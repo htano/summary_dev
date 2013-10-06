@@ -7,23 +7,35 @@
     <div class="row">
       <div class="col-md-12 hotentry-menu">
         <div class="row">
-          <div class="col-md-5">
+          <div class="col-md-7">
             <h3>Hot Entry</h3>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <input type="checkbox" id="only_summarized" style="font-size: 16px;">
               Summarized only. 
             </input>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <a href="<%= url_for(:controller => 'hotentry', :action => 'small') %>">
-              small
+              <% if controller.action_name == 'small' %>
+                <%= image_tag("icons/small_listing_selected.png", :size=>"24x24") %>
+              <% else %>
+                <%= image_tag("icons/small_listing.png", :size=>"24x24") %>
+              <% end %>
             </a>
             <a href="<%= url_for(:controller => 'hotentry', :action => 'normal') %>">
-              normal
+              <% if controller.action_name == 'normal' %>
+                <%= image_tag("icons/normal_listing_selected.png", :size=>"24x24") %>
+              <% else %>
+                <%= image_tag("icons/normal_listing.png", :size=>"24x24") %>
+              <% end %>
             </a>
             <a href="<%= url_for(:controller => 'hotentry', :action => 'large') %>">
-              large
+              <% if controller.action_name == 'large' %>
+                <%= image_tag("icons/large_listing_selected.png", :size=>"24x24") %>
+              <% else %>
+                <%= image_tag("icons/large_listing.png", :size=>"24x24") %>
+              <% end %>
             </a>
           </div>
         </div>
@@ -50,7 +62,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-3 hotentry-normal-summaries">
+              <div class="col-md-6 hotentry-normal-summaries">
                 <%= e.user_articles.count %> readers,
                 <a href="<%= url_for(:controller => 'summary_lists',
                                      :action=>'index',
