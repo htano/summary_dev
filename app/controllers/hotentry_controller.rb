@@ -1,13 +1,22 @@
 class HotentryController < ApplicationController
   def index
-    @entries = Article.get_hotentry_articles
+    case cookies[:hotentry_view_type]
+    when 'small'
+      redirect_to(:action => 'small')
+    when 'large'
+      redirect_to(:action => 'large')
+    else
+      redirect_to(:action => 'normal')
+    end
   end
 
   def normal
+    cookies[:hotentry_view_type] = { :value => 'normal' }
     @entries = Article.get_hotentry_articles
   end
 
   def small
+    cookies[:hotentry_view_type] = { :value => 'small' }
     @order = 1
     @hash = {}
     @entries = Article.get_hotentry_articles
@@ -18,6 +27,7 @@ class HotentryController < ApplicationController
   end
 
   def large
+    cookies[:hotentry_view_type] = { :value => 'large' }
     @entries = Article.get_hotentry_articles
   end
 end
