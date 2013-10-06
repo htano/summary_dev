@@ -7,8 +7,13 @@
     <div class="row">
       <div class="col-md-12 hotentry-menu">
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-md-5">
             <h3>Hot Entry</h3>
+          </div>
+          <div class="col-md-4">
+            <input type="checkbox" id="only_summarized" style="font-size: 16px;">
+              Summarized only. 
+            </input>
           </div>
           <div class="col-md-3">
             <a href="<%= url_for(:controller => 'hotentry', :action => 'small') %>">
@@ -28,9 +33,9 @@
   <% @entries.each do |e| %>
     <div class="row">
     <% if e.get_top_rated_summary %>
-      <div class="col-md-12 hotentry-large-row">
+      <div class="col-md-12 hotentry-large-row hotentry-row-with-summary">
     <% else %>
-      <div class="col-md-12 hotentry-large-row-nosum">
+      <div class="col-md-12 hotentry-large-row-nosum hotentry-row-no-summary">
     <% end %>
         <div class="row hotentry-normal-body">
           <div class="col-md-12">
@@ -43,14 +48,22 @@
               <div class="col-md-2">
 
               <% if get_login_user %>
-                <%= image_tag("ajax-loader.gif", 
-                              :id => "mark_read_loader" + e.id.to_s, 
-                              :style => "display:none;"); %>
-                <%= image_tag("ajax-loader.gif", 
-                              :id => "add_page_loader" + e.id.to_s, 
-                              :style => "display:none; margin-top: 35px;"); %>
-                <% if e.user_articles.where(:user_id => get_login_user.id).first %>
-                  <% if e.user_articles.where(:user_id => get_login_user.id).first.read_flg %>
+                <%= image_tag(
+                  "ajax-loader.gif", 
+                  :id => "mark_read_loader" + e.id.to_s, 
+                  :style => "display:none;"
+                ) %>
+                <%= image_tag(
+                  "ajax-loader.gif", 
+                  :id => "add_page_loader" + e.id.to_s, 
+                  :style => "display:none; margin-top: 35px;"
+                ) %>
+                <% if(e.user_articles.where(
+                  :user_id => get_login_user.id
+                ).first) %>
+                  <% if(e.user_articles.where(
+                    :user_id => get_login_user.id).first.read_flg
+                  ) %>
                     <button id="mark_as_read_btn<%= e.id %>" class="mark_as_unread" onClick='clickMarkAsRead(this, "<%= e.id %>")' >
                       Unread
                     </button>
@@ -89,32 +102,103 @@
             </div>
             <div class="row">
               <div class="col-md-3 hotentry-large-image">
-                <%= image_tag(e.thumbnail, :width=>"100%", :size=>"180x220") %>
+                <%= image_tag(e.thumbnail, :width=>"100%", :style=>"max-width:200px;") %>
               </div>
               <div class="col-md-9 hotentry-large-contents">
-              <% if e.get_top_rated_summary %>
-                Top rated summary
-                <p>
-                <%= e.get_top_rated_summary.content %>
-              <% else %>
-                Contents preview
-                <p>
-                <%= e.get_contents_preview %>
-              <% end %>
-                </p>
-              <% if get_login_user %>
-                <a href="<%= url_for :controller => 'summary', :action => 'edit', :article_id => e.id %>">edit summary</a>
-              <% end %>
+
+                <div class="row hotentry-large-contents-header">
+                  <% if e.get_top_rated_summary %>
+                   <div class="col-md-8">
+                     Top rated summary
+                   </div>
+                   <div class="col-md-4">
+                     <a href="<%= url_for(
+                       :controller => 'mypage', 
+                       :action => 'index', 
+                       :name => e.get_top_rated_summary.user.name
+                     ) %>">
+                       <%= image_tag(
+                         e.get_top_rated_summary.user.prof_image,
+                         :class => "summarist_icon",
+                         :size => "26x26"
+                       ) %>
+                       <span>
+                         <%= e.get_top_rated_summary.user.name %>
+                       </span>
+                     </a>
+                   </div>
+                  <% else %>
+                   <div class="col-md-6">
+                     Contents preview
+                   </div>
+                  <% end %>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                  <% if e.get_top_rated_summary %>
+                    <p>
+                      <%= e.get_top_rated_summary.content %>
+                    </p>
+                  <% else %>
+                    <p>
+                      <%= e.get_contents_preview %>
+                    </p>
+                  <% end %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-9">
+                    <a href="<%= url_for(
+                      :controller => 'summary', 
+                      :action => 'edit', 
+                      :article_id => e.id
+                    ) %>">
+                      edit summary
+                    </a>
+                  </div>
+                  <div class="col-md-3 hotentry-large-goodsummary">
+                  <% if e.get_top_rated_summary %>
+                    <a onclick="clickGoodSummary(<%= e.get_top_rated_summary.id %>)">
+                      <% if(
+                        get_login_user && 
+                        e.get_top_rated_summary.good_summaries.where(
+                          :user_id => get_login_user.id
+                        ).first
+                      ) %>
+                        <%= image_tag(
+                          "icons/MunchCancel.png", 
+                          :size => "26x26", 
+                          :id => 'good_summary_img'+e.get_top_rated_summary.id.to_s, 
+                          :style => "cursor:pointer;"
+                        )%>
+                      <% else %>
+                        <%= image_tag(
+                          "icons/MunchLike.png", 
+                          :size => "26x26", 
+                          :id => 'good_summary_img'+e.get_top_rated_summary.id.to_s, 
+                          :style => "cursor:pointer;"
+                        )%>
+                      <% end %>
+                    </a>
+                    <span id="good_summary_count<%= e.get_top_rated_summary.id %>">
+                      <%= e.get_top_rated_summary.good_summaries.count %>
+                    </span>
+                    likes.
+                  <% end %>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
         <div class="row hotentry-large-bottom">
           <div class="col-md-6 hotentry-large-domain">
-            <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
+            <%= image_tag("http://favicon.hatena.ne.jp/?url=" + e.url) %>
             <%= URI(e.url).host %>
           </div>
-          <div class="col-md-6 hotentry-normal-tags">
+          <div class="col-md-6 hotentry-large-tags">
           </div>
         </div>
       </div>

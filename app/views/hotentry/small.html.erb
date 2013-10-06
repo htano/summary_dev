@@ -7,8 +7,13 @@
     <div class="row">
       <div class="col-md-12 hotentry-menu">
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-md-5">
             <h3>Hot Entry</h3>
+          </div>
+          <div class="col-md-4">
+            <input type="checkbox" id="only_summarized" style="font-size: 16px;">
+              Summarized only. 
+            </input>
           </div>
           <div class="col-md-3">
             <a href="<%= url_for(:controller => 'hotentry', :action => 'small') %>">
@@ -27,14 +32,14 @@
 
   <% @entries.each do |e| %>
     <div class="row">
-      <div class="col-md-12 hotentry-small-row">
+    <% if e.get_top_rated_summary %>
+      <div class="col-md-12 hotentry-small-row hotentry-row-with-summary">
+    <% else %>
+      <div class="col-md-12 hotentry-small-row hotentry-row-no-summary">
+    <% end %>
         <div class="row hotentry-small-body">
-        <% if e.get_top_rated_summary %>
           <div class="col-md-1 hotentry-small-order">
-        <% else %>
-          <div class="col-md-1 hotentry-small-order-nosum">
-        <% end %>
-          <%= @hash[e.id] %>.
+            <%= @hash[e.id] %>.
           </div>
           <div class="col-md-11">
             <div class="row">
@@ -54,7 +59,7 @@
                 </a>
               </div>
               <div class="col-md-6 hotentry-normal-domain">
-                <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
+                <%= image_tag("http://favicon.hatena.ne.jp/?url=" + e.url) %>
                 <%= URI(e.url).host %>
               </div>
             </div>

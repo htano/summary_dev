@@ -7,8 +7,13 @@
     <div class="row">
       <div class="col-md-12 hotentry-menu">
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-md-5">
             <h3>Hot Entry</h3>
+          </div>
+          <div class="col-md-4">
+            <input type="checkbox" id="only_summarized" style="font-size: 16px;">
+              Summarized only. 
+            </input>
           </div>
           <div class="col-md-3">
             <a href="<%= url_for(:controller => 'hotentry', :action => 'small') %>">
@@ -27,14 +32,14 @@
 
   <% @entries.each do |e| %>
     <div class="row">
-      <div class="col-md-12 hotentry-row">
+    <% if e.get_top_rated_summary %>
+      <div class="col-md-12 hotentry-row hotentry-row-with-summary">
+    <% else %>
+      <div class="col-md-12 hotentry-row hotentry-row-no-summary">
+    <% end %>
         <div class="row hotentry-normal-body">
-        <% if e.get_top_rated_summary %>
           <div class="col-md-2 hotentry-normal-image">
-        <% else %>
-          <div class="col-md-2 hotentry-normal-image-nosum">
-        <% end %>
-            <%= image_tag(e.thumbnail, :width=>"100%", :size=>"120x140") %>
+            <%= image_tag(e.thumbnail, :width=>"100%", :style=>"max-width:100px;") %>
           </div>
           <div class="col-md-10">
             <div class="row">

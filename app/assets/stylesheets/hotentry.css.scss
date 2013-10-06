@@ -9,7 +9,8 @@
 
 div.hotentry-container {
   margin: auto;
-  width: 800px;
+  min-width: 620px;
+  width: 60%;
   border: solid 1px #eee;
 }
 
@@ -29,6 +30,15 @@ div.hotentry-row {
   margin-bottom: 5px;
   padding-bottom: 5px;
   border-bottom: solid 2px #eee;
+  border-left: solid 3px #F5AC0F;
+}
+
+div.hotentry-row-with-summary {
+  border-left: solid 3px #F5AC0F;
+}
+
+div.hotentry-row-no-summary {
+  border-left: solid 3px #0FC7F5;
 }
 
 div.hotentry-small-row {
@@ -41,22 +51,12 @@ div.hotentry-large-row {
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: solid 2px #eee;
-  border-left: solid 3px #F5AC0F;
 }
 
-div.hotentry-large-row-nosum {
+div.hotentry-large-row-nosum,  {
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: solid 2px #eee;
-  border-left: solid 3px #0FC7F5;
-}
-
-div.hotentry-normal-image, div.hotentry-small-order {
-  border-left: solid 3px #F5AC0F;
-}
-
-div.hotentry-normal-image-nosum, div.hotentry-small-order-nosum {
-  border-left: solid 3px #0FC7F5;
 }
 
 div.hotentry-small-order, div.hotentry-small-order-nosum {
@@ -89,6 +89,8 @@ div.hotentry-small-title {
 }
 
 div.hotentry-large-title {
+  border-bottom: solid 1px #eee;
+  min-height: 65px;
 }
 
 div.hotentry-normal-summaries, div.hotentry-small-summaries {
@@ -102,6 +104,7 @@ div.hotentry-large-contents {
     height: 180px;
     padding: 5px;
     margin-bottom: 0;
+    margin-top: 3px;
   }
 }
 
