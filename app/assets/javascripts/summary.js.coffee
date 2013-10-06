@@ -7,26 +7,16 @@ BLANK = ''
 oldContent = ''
 
 @loadEditForm = ->
-  firstEditFlag = document.getElementById('firstEditFlag')
-  if firstEditFlag != null and firstEditFlag.value.length > 0
-    document.getElementById('content').style.color = 'gray'
-  else
-    oldContent = document.getElementById('content').value
+  oldContent = document.getElementById('content').value
 
 @clearContent = ->
-  firstEditFlag = document.getElementById('firstEditFlag')
-  if firstEditFlag.value.length > 0
-    document.getElementById('content').value = BLANK
-    document.getElementById('content').style.color = 'black'
-    document.getElementById('firstEditFlag').value = BLANK
+  document.getElementById('content').value = BLANK
 
 @clickClearButton = ->
   if confirm "clear summary?"
-    document.getElementById('content').value = 'Please edit summary within 300 characters.'
-    document.getElementById('content').style.color = 'gray'
+    document.getElementById('content').value = BLANK
     document.getElementById('count').innerHTML = '0'
     document.getElementById('count').setAttribute('class', 'count')
-    document.getElementById('firstEditFlag').value = 'true'
   else
     return false
 
@@ -34,12 +24,11 @@ oldContent = ''
 @clickEditButton = ->
   content = document.getElementById('content').value
   content_num = content.replace(/\n|\r\n/g,"").length
-  firstEditFlag = document.getElementById('firstEditFlag')
   if overFlag
     alert 'Please edit summary within 300 characters.'
     return false
   else
-    if content_num is 0 or firstEditFlag.value.length > 0
+    if content_num is 0
       alert 'Please edit summary.'
       return false
     else
