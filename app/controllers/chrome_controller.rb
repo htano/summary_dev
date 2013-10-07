@@ -27,7 +27,7 @@ class ChromeController < ApplicationController
   #TODO 画面からURL直打ちの回避
   def get_current_user_name
     if signed_in?
-      render :text => get_current_user_name and return
+      render :text => get_login_user.id and return
     else
       render :text => BLANK and return
     end
