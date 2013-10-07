@@ -35,7 +35,7 @@ SummaryDev::Application.routes.draw do
   #for chrome extension
   get "chrome/get_summary_num"
   get "chrome/get_summary_list"
-  get "chrome/get_recommand_tag"
+  get "chrome/get_recommend_tag"
   get "chrome/get_recent_tag"
   get "chrome/get_add_history"
   get "chrome/get_current_user_name"

@@ -2,10 +2,35 @@
   width: 100%;
 }
 
+.tag_text{
+  width: 70px;
+}
+
+.recommend_tag, .recent_tag {
+  margin: 2px 2px 0 2px;
+  padding: 2px 2px 0 2px;
+  border:solid 1px gray;
+  border-radius: 0.3em;
+  background: gray;
+  color: white;
+  cursor:pointer;
+  cursor:hand;
+}
+.recommend_tag_pushed, .recent_tag_pushed {
+  margin: 2px 2px 0 2px;
+  padding: 2px 2px 0 2px;
+  border:solid 1px gray;
+  border-radius: 0.3em;
+  background: white;
+  color: gray;
+  cursor:pointer;
+  cursor:hand;
+}
+
 body{
   margin:0px;
   padding:0px 10px 10px;
-  width: 600px;
+  width: 460px;
   font-size: 11pt;
 }
 

@@ -33,7 +33,7 @@ class ChromeController < ApplicationController
     end
   end
 
-  def get_recommand_tag
+  def get_recommend_tag
     @url = "#{params[:url]}"
     article = Article.find_by_url(@url)
     if article == nil
