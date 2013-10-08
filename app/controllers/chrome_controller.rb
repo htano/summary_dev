@@ -37,7 +37,7 @@ class ChromeController < ApplicationController
     @url = "#{params[:url]}"
     article = Article.find_by_url(@url)
     if article == nil
-      render :text => nil and return
+      render :text => BLANK and return
     else
       top_rated_tag = article.get_top_rated_tag
       render :text => top_rated_tag and return

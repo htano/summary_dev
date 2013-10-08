@@ -1,4 +1,4 @@
-BLANK = ''
+BLANK = ""
 
 /*TODO ホストの書き方*/
 $(document).ready( function(){
@@ -39,40 +39,57 @@ $(document).ready( function(){
       data: "url=" + escape(bg.current_tab.url),
       dataType: "text",
       success: function(data) {
-        data = removeMark(data);
-        var tags = data.split(",");
-        var i=0;
-        var objBody = document.getElementById("recommend_tag");
-        while(tags.length>i){
-          var element = document.createElement("span"); 
-          element.id = "recommend_tag_"+(i+1);
-          element.innerHTML = tags[i];
-          objBody.appendChild(element);
-          i++;
+        if(data){
+          data = removeMark(data);
+          var tags = data.split(",");
+          var i=1;
+          var objBody = document.getElementById("recommend_tag");
+          while(tags.length>=i){
+            var element = document.createElement("span"); 
+            element.id = "recommend_tag_"+(i);
+            element.innerHTML = tags[i-1].trim();
+            objBody.appendChild(element);
+            //$("#recommend_tag_"+(i+1)).click(clickRecommendTag);
+            //$("#recommend_tag_"+(i+1)).click(clickRecommendTag(tags[i].trim()));
+            i++;
+          }
+          $("#recommend_tag").find("span").addClass("recommend_tag");
+          //$("#recommend_tag").on("click", {class:"recommend_tag"}, clickRecommendTag());
+          //$(".recommend_tag").click(clickRecommendTag("test"));
         }
-        $("#recommend_tag").find("span").addClass("recommend_tag");
-//        $("#recommend_tag").on("click", {class:"recommend_tag"}, clickRecommendTag());
-      } 
+      }
   });
 
   $.ajax({
       url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_recent_tag",
       type: "GET",
-        dataType: "text",
+      dataType: "text",
       success: function(data) {
-        data = removeMark(data);
-        var tags = data.split(",");
-        var i=0;
-        var objBody = document.getElementById("recent_tag");
-        while(tags.length>i){
-          var element = document.createElement("span"); 
-          element.id = "recent_tag_"+(i+1);
-          element.innerHTML = tags[i];
-          objBody.appendChild(element);
-          i++;
+        if(data){
+          data = removeMark(data);
+          var tags = data.split(",");
+          var i=1;
+          var objBody = document.getElementById("recent_tag");
+          console.log(tags.length);
+          while(tags.length>=i){
+            console.log(i);
+            var tag = tags[i-1].trim();
+            var element = document.createElement("span"); 
+            element.id = "recent_tag_"+(i);
+            element.innerHTML = tag;
+            //element.onclick = function(){clickRecentTag(tag)};
+            //element.onclick = function(tag){ return clickRecentTag(tag) };
+            //element.onclick = clickRecentTag(tags[i].trim());
+            //element.setAttribute("onclick",clickRecentTag);
+            objBody.appendChild(element);
+            $("#recent_tag_"+(i)).click(function(){clickRecentTag(i)});
+            //$(element.id).click(clickRecentTag());
+            i++;
+          }
+          $("#recent_tag").find("span").addClass("recent_tag");
+          //$(".recent_tag").click(clickRecentTag($(this)));
         }
-        $("#recent_tag").find("span").addClass("recent_tag");
-      } 
+      }
   });
 
   $("#p_button").click(function(){
@@ -95,7 +112,6 @@ $(document).ready( function(){
 function removeMark(str){
   str = str.replace("[", "");
   str = str.replace("]", "");
-  str = str.replace(" ", "");
   str = str.replace(new RegExp("\"", "g"), "");
   return str;
 }
@@ -118,7 +134,45 @@ function setBtnDisabled(){
   $("#p_button").attr("disabled", true);
   $("#p_button").attr("class", "button button-flat.disabled");
 }
-
+/*
 function clickRecommendTag(){
   alert("OK");
+}
+*/
+function clickRecentTag(id){
+  //document.getElementById("tag_text_1").value = value;
+  console.log("!!!!!");
+  console.log(id);
+  console.log("!!!!!");
+  value = document.getElementById("recent_tag_" + id).value();
+  tag_class = document.getElementById("recent_tag_" + id).getAttribute("class")
+  if (tag_class == "recent_tag"){
+    var text_list = new Array();
+    for (var i=1 ; i<=10 ; i++){
+      text_list.push(document.getElementById("tag_text_" + i).value());
+    }
+
+    if(text_list.indexOf(value) != -1){
+      document.getElementById("recent_tag_" + id).setAttribute("class", "recent_tag_pushed");
+      return;
+    }
+
+    for (var i=1 ; i<=10 ; i++){
+      if (document.getElementById("tag_text_" + i).value() == BLANK){
+        document.getElementById("tag_text_" + i).value() = value;
+        document.getElementById("recent_tag_" + id).setAttribute("class", "recent_tag_pushed");
+        return;
+      }
+      alert("Please set tags within 10.");
+    }
+
+  } else {
+    for (var i=1 ; i<=10 ; i++){
+      if (document.getElementById("tag_text_" + i).value() == value){
+        document.getElementById("tag_text_" + i).value() = BLANK;
+        document.getElementById("recent_tag_" + id).setAttribute("class", "recent_tag");
+        return;
+      }
+    }
+  }
 }
