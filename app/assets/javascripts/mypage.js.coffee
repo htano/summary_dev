@@ -119,6 +119,41 @@ wrapAll = (className, params, checkedNum, articleID, page) ->
     i++
   form.elements[1].onclick() unless i is 1
 
+currentTab = "main"
+getPage = (tab) ->
+  page = "mpage"
+  switch tab
+    when "main"
+      page = "mpage"
+    when "summary"
+      page = "spage"
+    when "favorite"
+      page = "fpage"
+    when "read"
+      page = "rpage"
+    else
+  page
+
+replaceRef = (tab, num) ->
+  currentPage = getPage(currentTab)
+  replacePage = getPage(tab)
+  i = 1
+  while i < num+1
+    replaceURL = $("#sort#{i} a").attr("href").replace(currentPage, replacePage)
+    $("#sort#{i} a").attr("href", "#{replaceURL}")
+    i++
+
+changeSortRef = (tab, sortNum) ->
+  replaceRef(tab, sortNum)
+
+@setCurrentTab = (tab, sortNum) ->
+  if currentTab != tab
+    changeSortRef(tab, sortNum)
+    currentTab = tab
+
+@getCurrentTab = ->
+  currentTab
+
 scrollNavbar = ->
   win = $(window)
   overwriteLeft = ->

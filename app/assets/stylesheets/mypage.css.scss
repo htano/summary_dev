@@ -320,6 +320,36 @@ ul.tab {
   color: white;
 }
 
+.sort-split-btn {
+  float: right;
+  margin-top: -60px;
+  margin-right: 50px;
+  button {
+    font-size: 15px;
+    .caret {
+      margin-left: 5px;
+    }
+  }
+  ul > li > a {
+    color: #a2a2a2;
+  }
+  #asc-registered, #desc-registered {
+    float: left;
+    margin-left: -10px;
+    margin-right: 5px;
+    width: 14px;
+    height: 17px;
+  }
+}
+
+.btn-group > button {
+   height: 34px;
+}
+
+.btn-group > .btn:first-child {
+  color: #a2a2a2;
+}
+
 .article-table {
   clear: left;
   width: 800px;
@@ -385,7 +415,6 @@ ul.tab {
     }
     p {
       margin-top: 0px;
-  //    margin-left: -25px;
       font-size: 11px;
       color: rgb(162, 162, 162);
     }

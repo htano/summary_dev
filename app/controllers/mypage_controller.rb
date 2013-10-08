@@ -1,4 +1,6 @@
 class MypageController < ApplicationController
+  TABLE_ROW_NUM = 10
+
   def index
     logger.debug("action index")
 
@@ -35,7 +37,6 @@ class MypageController < ApplicationController
     # follow user information
     @favorite_users = []
     @user.favorite_users.each do |favorite_user|
-#      logger.debug("favorite_user_id : #{favorite_user.favorite_user_id}")
       user = User.find(favorite_user.favorite_user_id)
       @favorite_users.push(user)
     end
@@ -48,14 +49,22 @@ class MypageController < ApplicationController
       @followers.push(user)
     end
 
+    renew_sort_type(cookies, params[:direction], params[:sort])
+    sort_info = get_sort_info(cookies)
+    @sort_menu_title = sort_info[:menu_title]
+    sort_order_condition = sort_info[:condition]
+    # logger.debug("title : #{sort_info[:menu_title]}, condition : #{sort_info[:condition]}")
+
     # main tab & favorite tab & read tab
     @main_articles_table = []
     @mpage = params[:mpage] ? params[:mpage] : 1
     @mpage = @mpage.to_i > 1 ? @mpage : 1
-    offset = (@mpage.to_i - 1) * 10
-    user_articles = @user.user_articles.reverse_order.offset(offset).unread.take(10)
+    offset = (@mpage.to_i - 1) * TABLE_ROW_NUM
+    user_articles = 
+      @user.user_articles.order(sort_order_condition).offset(offset).unread.take(TABLE_ROW_NUM)
     if user_articles.size == 0
-      user_articles = @user.user_articles.reverse_order.offset(0).unread.take(10)
+      user_articles = 
+        @user.user_articles.order(sort_order_condition).offset(0).unread.take(TABLE_ROW_NUM)
       @mpage = 1
     end
     @main_articles_table = get_table(user_articles, @is_login_user)
@@ -64,10 +73,12 @@ class MypageController < ApplicationController
     @favorite_articles_table = []
     @fpage = params[:fpage] ? params[:fpage] : 1
     @fpage = @fpage.to_i > 1 ? @fpage : 1
-    offset = (@fpage.to_i - 1) * 10
-    user_articles = @user.user_articles.reverse_order.offset(offset).favorite.take(10)
+    offset = (@fpage.to_i - 1) * TABLE_ROW_NUM
+    user_articles = 
+      @user.user_articles.order(sort_order_condition).offset(offset).favorite.take(TABLE_ROW_NUM)
     if user_articles.size == 0
-      user_articles = @user.user_articles.reverse_order.offset(0).favorite.take(10)
+      user_articles = 
+        @user.user_articles.order(sort_order_condition).offset(0).favorite.take(TABLE_ROW_NUM)
       @fpage = 1
     end
     @favorite_articles_table = get_table(user_articles, @is_login_user)
@@ -76,10 +87,12 @@ class MypageController < ApplicationController
     @read_articles_table = []
     @rpage = params[:rpage] ? params[:rpage] : 1
     @rpage = @rpage.to_i > 1 ? @rpage : 1
-    offset = (@rpage.to_i - 1) * 10
-    user_articles = @user.user_articles.reverse_order.offset(offset).read.take(10)
+    offset = (@rpage.to_i - 1) * TABLE_ROW_NUM
+    user_articles = 
+      @user.user_articles.order(sort_order_condition).offset(offset).read.take(TABLE_ROW_NUM)
     if user_articles.size == 0
-      user_articles = @user.user_articles.reverse_order.offset(0).read.take(10)
+      user_articles = 
+        @user.user_articles.order(sort_order_condition).offset(0).read.take(TABLE_ROW_NUM)
       @rpage = 1
     end
     @read_articles_table = get_table(user_articles, @is_login_user)
@@ -89,10 +102,12 @@ class MypageController < ApplicationController
     @summaries_table = []
     @spage = params[:spage] ? params[:spage] : 1
     @spage = @spage.to_i > 1 ? @spage : 1
-    offset = (@spage.to_i - 1) * 10
-    summaries = @user.summaries.reverse_order.offset(offset).take(10)
+    offset = (@spage.to_i - 1) * TABLE_ROW_NUM
+    summaries = 
+      @user.summaries.order(sort_order_condition).offset(offset).take(TABLE_ROW_NUM)
     if summaries.size == 0
-      summaries = @user.summaries.reverse_order.offset(0).take(10)
+      summaries = 
+        @user.summaries.order(sort_order_condition).offset(0).take(TABLE_ROW_NUM)
       @spage = 1
     end
     @summaries_table = get_summary_table(summaries, @is_login_user)
@@ -373,4 +388,28 @@ private
       redirect_to :action => "index", :rpage => params[:rpage]
     end
   end
+
+  def renew_sort_type(cookies, direction, sort)
+    if direction
+      cookies[:direction] = {:value => direction, :expires => 7.days.from_now }
+    end
+    if sort
+      cookies[:sort] = {:value => sort, :expires => 7.days.from_now }
+    end
+  end
+
+  def get_sort_info(cookies)
+    case cookies[:sort]
+    when "registered"
+      if cookies[:direction] == "asc"
+        return {:menu_title => "Oldest", :condition => "created_at ASC"}
+      else
+        return {:menu_title => "Newest", :condition => "created_at DESC"}
+      end
+    else
+      #default
+      return {:menu_title => "Newest", :condition => "created_at DESC"}
+    end
+  end
+
 end
