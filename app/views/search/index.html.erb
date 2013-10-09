@@ -49,7 +49,7 @@ $(document).ready(function() {
     </div>
     <div id="result_area">
       <% if @articles == nil || @articles.length == 0 %>
-<!--        <%= @searchtext %> のタグ検索結果 0 件-->
+        <%= @searchtext %> の検索結果 0 件
       <% else %>
         <div id="message">
           <%= @searchtext %> の検索結果 <%= @articles_num %> 件
