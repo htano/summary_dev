@@ -31,20 +31,20 @@ class SearchController < ApplicationController
       redirect_to :action => "index" and return
     end
 
-    redirect_to :action => "index" and return unless @articles
-    @articles_num = @articles.length
-
     case @focus
     when "1"
-      @articles = @articles
+      @articles = @articles.joins(:user_articles)
     when "2"
-      @articles = @articles.where("user_articles.user_id", get_login_user.id)
+      @articles = @articles.joins(:user_articles).where("user_articles.user_id" => get_login_user.id)
     when "3"
-      @articles = @articles.where.not("user_articles.user_id", get_login_user.id)
+      @articles = @articles.joins(:user_articles).where.not("user_articles.user_id" => get_login_user.id)
     else      
       flash[:error] = "Please check search conditions."
       redirect_to :action => "index" and return
     end
+
+    redirect_to :action => "index" and return unless @articles
+    @articles_num = @articles.length
 
     case @sort
     when "1"

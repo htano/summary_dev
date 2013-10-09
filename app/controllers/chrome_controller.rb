@@ -46,7 +46,8 @@ class ChromeController < ApplicationController
 
   def get_recent_tag
     if signed_in?
-      render :text => UserArticle.get_recent_tag(get_login_user.id) and return
+      recent_tag = UserArticle.get_recent_tag(get_login_user.id)
+      render :text => recent_tag unless recent_tag.length == 0
     else
       render :text => BLANK and return
     end

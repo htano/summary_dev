@@ -52,7 +52,7 @@ $(document).ready(function() {
 <!--        <%= @searchtext %> のタグ検索結果 0 件-->
       <% else %>
         <div id="message">
-          <%= @searchtext %> のタグ検索結果 <%= @articles_num %> 件
+          <%= @searchtext %> の検索結果 <%= @articles_num %> 件
         </div>
         <div style='text-align:center;'>
           <%= paginate @articles, :window => 4, :outer_window => 2  %>

@@ -44,7 +44,8 @@ class Article < ActiveRecord::Base
   def self.search_by_title(title)
     return nil if title == nil || title == BLANK
     #articles = joins(:user_articles => :user_article_tags).where(["title LIKE ?", "%"+title+"%"]).group("url")
-    articles = joins(:user_articles).where(["title LIKE ?", "%"+title+"%"])
+    #articles = joins(:user_articles).where(["title LIKE ?", "%"+title+"%"])
+    articles = where(["title LIKE ?", "%"+title+"%"])
     return articles
   end
 
@@ -52,7 +53,8 @@ class Article < ActiveRecord::Base
   def self.search_by_content(content)
     return nil if content == nil || content == BLANK
     #articles = joins(:user_articles => :user_article_tags).where(["contents_preview LIKE ?", "%"+content+"%"]).group("url")
-    articles = joins(:user_articles).where(["contents_preview LIKE ?", "%"+content+"%"])
+    #articles = joins(:user_articles).where(["contents_preview LIKE ?", "%"+content+"%"])
+    articles = where(["contents_preview LIKE ?", "%"+content+"%"])
     return articles
   end
 
