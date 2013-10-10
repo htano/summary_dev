@@ -1,0 +1,37 @@
+<script type="text/javascript">
+var number = 1;
+
+$(function() {
+  $(window).bottom({
+    proximity: 0.05
+  });
+  return $(window).on("bottom", function() {
+    var obj = $(this);
+    if (!obj.data("loading")) {
+      obj.data("loading", true);
+      $('#loading-image').html("<img src='/images/loader.gif' />");
+      return setTimeout((function() {
+        var url;
+        $('#loading-image').html("");
+        // console.debug("number : " + number);
+        url = $(location).attr('href');
+        $.ajax({
+          url: url,
+          type: "GET",
+          data: "number=" + number,
+          dataType: "script",
+          success: function(data) {
+            // console.debug("success");
+            return number++;
+          },
+          error: function(data) {
+            return console.error("error");
+          }
+        });
+        return obj.data("loading", false);
+      }), 2000);
+    }
+  });
+});
+
+</script>
