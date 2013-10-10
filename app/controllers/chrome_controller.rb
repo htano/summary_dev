@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+require "json"
 require "webpage"
 include Webpage
 
@@ -47,7 +48,11 @@ class ChromeController < ApplicationController
   def get_recent_tag
     if signed_in?
       recent_tag = UserArticle.get_recent_tag(get_login_user.id)
-      render :text => recent_tag unless recent_tag.length == 0
+      if recent_tag.length == 0
+        render :text => BLANK and return
+      else
+        render :text => recent_tag and return
+      end
     else
       render :text => BLANK and return
     end
@@ -57,35 +62,24 @@ class ChromeController < ApplicationController
   #TODO 画面からURL直打ちの回避
   def add
     if signed_in?
-      @prof_image = get_login_user.prof_image
-      @url = "#{params[:url]}"
+      url = "#{params[:url]}"
       tag_list = []
       params.each do |key,value|
         if key.start_with?("tag_text_")
           tag_list.push(value) unless value == BLANK || tag_list.include?(value)
         end
       end
-      article = Article.edit_article(@url)
+      article = Article.edit_article(url)
       if article == nil
-        @msg = "Please check URL."
-        redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+        result = {"article_id" => BLANK, "msg" => "登録出来ませんでした。"}
+        render :json => result and return
       end
+
       user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
-=begin
       UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
-=end
       article.add_strength
-=begin
-      @article_id = article.id
-      @title = article.title
-      @contents_preview = article.contents_preview
-      @thumbnail = article.thumbnail
-      @tags = []
-      user_article.user_article_tags(:all).each do |user_article_tag|
-        @tags.push(user_article_tag.tag)
-      end
-=end
-      render :text => article.id and return
+      result = {"article_id" => article.id, "msg" => "登録出来ました。"}
+      render :json => result and return
     else
       redirect_to :controller => "consumer", :action => "index"
     end

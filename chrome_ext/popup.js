@@ -86,13 +86,29 @@ $(document).ready( function(){
     $.ajax({
       url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/add",
       type: "GET",
-      data: "url=" + escape(bg.current_tab.url),
-      dataType: "text",
+      data: {
+        url: bg.current_tab.url,
+        tag_text_1: document.getElementById("tag_text_1").value,
+        tag_text_2: document.getElementById("tag_text_2").value,
+        tag_text_3: document.getElementById("tag_text_3").value,
+        tag_text_4: document.getElementById("tag_text_4").value,
+        tag_text_5: document.getElementById("tag_text_5").value,
+        tag_text_6: document.getElementById("tag_text_6").value,
+        tag_text_7: document.getElementById("tag_text_7").value,
+        tag_text_8: document.getElementById("tag_text_8").value,
+        tag_text_9: document.getElementById("tag_text_9").value,
+        tag_text_10: document.getElementById("tag_text_10").value
+      },
+      dataType: "json",
       success: function(data) {
         $("img.a_load").attr("style", "visibility:hidden;");
-        setCommentComplete();
-        setBtnDisabled();
-        setSummaryEditLink(data);
+        if (data.article_id != BLANK){
+          setComment(data.msg);
+          setBtnDisabled();
+          setSummaryEditLink(data.article_id);          
+        } else {
+          setComment(data.msg);
+        }
       }
     });
   });
@@ -106,22 +122,30 @@ function removeMark(str){
 }
 
 //コメントを設定する
-function setCommentComplete(){
-  $("p#p_comment").text("登録済みです。");
+function setComment(msg){
+  $("p#p_comment").text(msg);
   $("p#p_comment").attr("style", "visibility:visible;");
 }
 
 //要約編集画面へのリンクを設定する
-function setSummaryEditLink(data){
+function setSummaryEditLink(article_id){
   var bg = window.chrome.extension.getBackgroundPage();
   $("#a_link_to_summary_edit").attr("style", "visibility:visible;");
-  $("#a_link_to_summary_edit").attr("href", "http://" + bg.SERVICE_HOSTNAME + "/summary/"+data+"/edit");
+  $("#a_link_to_summary_edit").attr("href", "http://" + bg.SERVICE_HOSTNAME + "/summary/"+article_id+"/edit");
 }
 
 //登録ボタンを非活性にする。ついでにクラスも変更する。
 function setBtnDisabled(){
   $("#p_button").attr("disabled", true);
   $("#p_button").attr("class", "button button-flat.disabled");
+}
+
+function getTagText(){
+  var text_list = new Array();
+  for (var i=1 ; i<=10 ; i++){
+    text_list.push(document.getElementById("tag_text_" + i).value);
+  }
+  return text_list;
 }
 
 
