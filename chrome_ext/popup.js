@@ -140,15 +140,6 @@ function setBtnDisabled(){
   $("#p_button").attr("class", "button button-flat.disabled");
 }
 
-function getTagText(){
-  var text_list = new Array();
-  for (var i=1 ; i<=10 ; i++){
-    text_list.push(document.getElementById("tag_text_" + i).value);
-  }
-  return text_list;
-}
-
-
 function clickRecommendTag(obj){
   value = obj.innerHTML
   if (obj.className == "recommend_tag"){
