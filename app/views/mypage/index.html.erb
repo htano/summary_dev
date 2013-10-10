@@ -74,7 +74,9 @@
               <% end %>
             <% end %>
             <br>
-            <a href="/follow_lists/following?name=<%= @user.name %>">>> show more</a>
+            <a href="/follow_lists/following?name=<%= @user.name %>">
+              <span class="glyphicon glyphicon-th-list"></span> show more
+            </a>
           <% end %>
         </div>
         <div id="prof-tab-followers">
@@ -89,7 +91,9 @@
             <% end %>
             <div id="insert-image"></div>
             <br>
-            <a href="/follow_lists/followers?name=<%= @user.name %>">>> show more</a>
+            <a href="/follow_lists/followers?name=<%= @user.name %>">
+              <span class="glyphicon glyphicon-th-list"></span> show more
+            </a>
           <% end %>
         </div>
         <div id="prof-tab-summary">
