@@ -4,7 +4,7 @@ BLANK = ""
 $(document).ready( function(){
   var bg = window.chrome.extension.getBackgroundPage();
   $("p#p_title").text(bg.current_tab.title);
-  $("p#p_url").text(bg.current_tab.url);
+  /*$("p#p_url").text(bg.current_tab.url);*/
 
   $.ajax({
       url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_current_user_name",
@@ -22,7 +22,7 @@ $(document).ready( function(){
         		dataType: "text",
         		success: function(data) {
         			if(data){
-        				setCommentComplete();
+        				setComment("登録済みです。");
         				setBtnDisabled();
         				setSummaryEditLink(data);
         			}
