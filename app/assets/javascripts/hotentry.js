@@ -55,7 +55,7 @@ function clickReadItLater(btn, url, aid) {
       });
     } else {
       $.ajax({
-        url: '/webpage/add_for_chrome_extension',
+        url: '/chrome/add',
         type: 'GET',
         data: 'url=' + escape(url),
         dataType: 'text',
