@@ -30,6 +30,7 @@ class SearchController < ApplicationController
       flash[:error] = "Please check search conditions."
       redirect_to :action => "index" and return
     end
+    redirect_to :action => "index" and return unless @articles
 
     case @focus
     when "1"
@@ -42,8 +43,6 @@ class SearchController < ApplicationController
       flash[:error] = "Please check search conditions."
       redirect_to :action => "index" and return
     end
-
-    redirect_to :action => "index" and return unless @articles
     @articles_num = @articles.length
 
     case @sort

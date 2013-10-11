@@ -11,10 +11,11 @@ require "RMagick"
 
 module Webpage
 
-  #定数定義
+  #TODO 定数定義は外出しにしたい
   BLANK = ""
-  THRESHOLD_ALL = 10000
-  THRESHOLD_SIDE = 120
+  #THRESHOLD_ALL = 10000
+  THRESHOLD_SIDE = 150
+  advertisementList = ["amazon","rakuten", "banner", "dmm", "google", "facebook", "twitter", "games.yahoo", "auctions.yahoo", "bookstore.yahoo"]
 
   #TODO livedoorのサイトでエラーが発生する。
   def get_webpage_element(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
@@ -40,7 +41,6 @@ module Webpage
       if doc.title == nil || doc.title == BLANK
         return URI.parse("#{params[:url]}").host
       else
-        p doc.title
         return doc.title
       end
     rescue => e
@@ -54,10 +54,11 @@ module Webpage
     begin
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
       doc.xpath("//img[starts-with(@src, 'http://')]").each do |img|
+        p img["src"]
+        next if isAdvertisement?(img["src"])
         image = Magick::ImageList.new(img["src"])
         columns = image.columns 
         rows = image.rows
-        #if columns.to_i > THRESHOLD_SIDE && rows.to_i > THRESHOLD_SIDE && (columns.to_i*rows.to_i) > THRESHOLD_ALL
         if columns.to_i > THRESHOLD_SIDE && rows.to_i > THRESHOLD_SIDE
           return img["src"]
         end
@@ -91,6 +92,14 @@ module Webpage
       rescue => e
         logger.error("error :#{e}")
         return "プレビューは取得出来ませんでした。"
+      end
+    end
+  end
+
+  def isAdvertisement?(url)
+    advertisementList.each do |advertisement|
+      if url.include?(advertisement)
+        return true
       end
     end
   end
