@@ -17,7 +17,7 @@ $(document).ready(function() {
         </tr>
         <tr>
           <th class="article_title"><a href="<%= @url %>" target="_blank"><%= @title %></a></th>
-          <th class="summary_num"><%= link_to @summary_num , {:controller => "summary_lists", :action => "index", :articleId => @article_id} %></th>
+          <th class="summary_num"><%= link_to @summary_num , {:controller => "summary_lists", :action => "index", :article_id => @article_id} %></th>
         </tr>
         <tr class="table_top">
           <th id="title_top">content</th>

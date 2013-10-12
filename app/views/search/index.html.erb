@@ -55,7 +55,7 @@
                 <p><%= article.user_articles.length %> users.</p>
               </div>
               <div id="summary_num">
-                <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :articleId => article.id} %>summaries.
+                <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :article_id => article.id} %>summaries.
               </div>
             </div>
             <div id="contents_preview">

@@ -43,7 +43,7 @@
     </div>
   </th>
   <th class="num-column">
-  <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :articleId => table_data[:article].id) do %>
+  <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :article_id => table_data[:article].id) do %>
     <p><%= table_data[:summary_num] %></p>
     <% unless table_data[:summary_num] > 1 %>
     <span>

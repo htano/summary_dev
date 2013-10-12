@@ -55,12 +55,12 @@ class SummaryController < ApplicationController
       if summary == nil
         summary = Summary.new(:content => params[:content],:user_id => user_id,:article_id => @article_id)
         if summary.save
-          redirect_to :controller => "summary_lists", :action => "index", :articleId => @article_id
+          redirect_to :controller => "summary_lists", :action => "index", :article_id => @article_id
         end
       else
         summary.update_attribute(:content, params[:content])
         if summary.save
-          redirect_to :controller => "summary_lists", :action => "index", :articleId => @article_id
+          redirect_to :controller => "summary_lists", :action => "index", :article_id => @article_id
         end
       end 
     else
