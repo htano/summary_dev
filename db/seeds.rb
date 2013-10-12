@@ -9,7 +9,7 @@
 
 # User
 User.create(name: "summary", mail_addr: "summary.dev@gmail.com",
-  open_id: "https://www.google.com/accounts/o8/id?id=AItOawn4ayi4TWTPrWFO_XzWCp_uX5J_pZ6TVVU",
+  open_id: "https://www.google.com/accounts/o8/id?id=AItOawlDmHFynj5HotAc7FisQwAD3kZC_jeaMTE",
   prof_image: "account_pictures/usertile44.bmp", yuko_flg: true, public_flg: true)
 User.create(name: "shingo0809", mail_addr: "shingo0809@gmail.com", open_id:"openid",
   prof_image: "account_pictures/usertile15.bmp", public_flg: true)
