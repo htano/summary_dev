@@ -23,6 +23,7 @@
         <% end %>
       </th>
       <td id ="article_status" class ="status">
+        <% if @user %>
         <div id ="article_read_mark">
           <div id="unreadBottun" 
             <% if @is_read_article then %>
@@ -50,6 +51,7 @@
         </div>
 
         <hr>
+        <% end %>
 
         <div id ="mark_article">
           <div id ="mark_user">
