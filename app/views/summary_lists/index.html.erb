@@ -171,8 +171,9 @@
             <%= summary_item.summary.updated_at.strftime("%Y/%m/%d %H:%M") %>
           </div>
 
-          <hr>
           <!-- good dummary button -->
+          <% if @user %>
+            <hr>
             <div id="yet_good_summary<%=index%>" class="iiyo"
               <% if summary_item.is_good_completed then %>
                 style="display:none"
@@ -225,7 +226,7 @@
                 </div>
               <% end %>
             </div>
-
+          <% end %>
         <% end %>
         </td>
       </tr>

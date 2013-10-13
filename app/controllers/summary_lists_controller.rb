@@ -45,9 +45,9 @@ class SummaryListsController < ApplicationController
 
   def good_summary 
     logger.debug("start good_summary")
-    if get_login_user == nil then
+    unless get_login_user then
       redirect_to :controller => "consumer", :action => "index"
-      logger.debug("")
+      logger.debug("end good_summary, pass to entrance")
       return	
     end
     good_summary = GoodSummary.new(:user_id => get_login_user.id, :summary_id =>params[:summary_id]) 
@@ -90,8 +90,9 @@ class SummaryListsController < ApplicationController
 
   def cancel_good_summary 
     logger.debug("start cancel_good_summary")
-    if get_login_user == nil then
+    unless get_login_user then
       redirect_to :controller => "consumer", :action => "index"
+      logger.debug("end cancel_good_summary, pass to entrance")
       return	
     end
 
