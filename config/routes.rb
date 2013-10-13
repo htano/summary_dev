@@ -58,13 +58,14 @@ SummaryDev::Application.routes.draw do
   get 'summary_lists/get_summary_list_for_chrome_extension' => 'summary_lists#get_summary_list_for_chrome_extension'
   #for webpage
   post 'summary_lists/goodSummaryAjax' => 'summary_lists#goodSummaryAjax'
-  get 'summary_lists/:articleId' => 'summary_lists#index'
-  post 'summary_lists/goodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#goodSummary'
-  post 'summary_lists/cancelGoodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#cancelGoodSummary'
-  post 'summary_lists/isRead/:articleId' => 'summary_lists#isRead'
-  post 'summary_lists/cancelIsRead/:articleId' => 'summary_lists#cancelIsRead'
-  post 'summary_lists/follow/:listIndex/:follow_user_id' => 'summary_lists#follow'
-  post 'summary_lists/unfollow/:listIndex/:unfollow_user_id' => 'summary_lists#unfollow'
+  #for summary lists
+  get 'summary_lists/:article_id' => 'summary_lists#index'
+  post 'summary_lists/good_summary/:list_index/:summary_id/:article_id' => 'summary_lists#good_summary'
+  post 'summary_lists/cancel_good_summary/:list_index/:summary_id/:article_id' => 'summary_lists#cancel_good_summary'
+  post 'summary_lists/read/:article_id' => 'summary_lists#read'
+  post 'summary_lists/cancel_read/:article_id' => 'summary_lists#cancel_read'
+  post 'summary_lists/follow/:list_index/:follow_user_id' => 'summary_lists#follow'
+  post 'summary_lists/unfollow/:list_index/:unfollow_user_id' => 'summary_lists#unfollow'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

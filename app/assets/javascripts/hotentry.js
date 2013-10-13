@@ -13,7 +13,7 @@ function clickGoodSummary(summary_id) {
   $.ajax({
     url: '/summary_lists/goodSummaryAjax',
     type: 'POST',
-    data: 'summaryId=' + summary_id,
+    data: 'summary_id=' + summary_id,
     dataType: 'text',
     success: function(data) {
       if(data == "good") {

@@ -23,26 +23,27 @@
         <% end %>
       </th>
       <td id ="article_status" class ="status">
+        <% if @user %>
         <div id ="article_read_mark">
           <div id="unreadBottun" 
-            <% if @isReadArticle then %>
+            <% if @is_read_article then %>
               style="display:none"
             <% end %>
           >
             <%= link_to sanitize('<span class="glyphicon glyphicon-unchecked"></span>') +
-              ' mark read', {:action => "isRead", 
-                             :articleId => @article.id, 
+              ' mark read', {:action => "read", 
+                             :article_id => @article.id, 
                              :remote => true},
                              {:method => :post} %>
           </div>
           <div id="alreadyReadBottun" 
-              <% unless @isReadArticle then %>
+              <% unless @is_read_article then %>
                 style="display:none"
               <% end %>
             >
             <%= link_to sanitize('<span class="glyphicon glyphicon-check"></span>') + 
-              ' unmark read', {:action => "cancelIsRead", 
-                               :articleId => @article.id, 
+              ' unmark read', {:action => "cancel_read", 
+                               :article_id => @article.id, 
                                :remote => true},
                                {:method => :post}%>
           </div>
@@ -50,11 +51,12 @@
         </div>
 
         <hr>
+        <% end %>
 
         <div id ="mark_article">
           <div id ="mark_user">
             mark users
-            <span class="bold_char"><%= @numOfMarkUsers %></span>
+            <span class="bold_char"><%= @num_of_mark_users %></span>
           </div>
         </div>
       </td>
@@ -63,16 +65,16 @@
 
     <!-- 自分で要約してればその結果と要約編集への導線、してなければ要約追加への導線をだす -->
     <tr>
-      <% if @summaryByMe then %>
+      <% if @summary_by_me then %>
         <td id="my_summary_detail" class ="main">	
           <article>
-            <%= simple_format_2(@summaryByMe.content) %>
+            <%= simple_format_2(@summary_by_me.content) %>
           </article>	
         </td>
         <td id="my_summary_auther" class ="status">	
 
           あなたの要約です <br>
-          今 <span class="bold_char"><%= @summaryByMe.good_summaries.count %>人</span> が
+          今 <span class="bold_char"><%= @summary_by_me.good_summaries.count %>人</span> が
           <span class="glyphicon glyphicon-thumbs-up"></span> しています！ 	
 
           <div id="auther_button" >
@@ -82,7 +84,7 @@
 
           <div id="last_update_time">
             LastUpdate: <br> 
-            <%= @summaryByMe.updated_at.strftime("%Y/%m/%d %H:%M") %>
+            <%= @summary_by_me.updated_at.strftime("%Y/%m/%d %H:%M") %>
           </div>
           
         </td>
@@ -103,11 +105,11 @@
     </tr>
 
     <!-- summary lists -->
-    <% unless @summaryList.blank? %>
-      <% @summaryList.each_with_index do |summaryItem,index| %>
+    <% unless @summary_list.blank? %>
+      <% @summary_list.each_with_index do |summary_item,index| %>
 
       <!-- 自分の要約した文言は別で一番先頭で表示するので、リストでは見せない -->
-      <% if summaryItem.summary == @summaryByMe then %>
+      <% if summary_item.summary == @summary_by_me then %>
         <% next %>
     <% end %>	
 
@@ -115,62 +117,65 @@
     <tr>
       <td id="summary_detail" class ="main">	
         <article>
-          <%= simple_format_2(summaryItem.summary.content) %>
+          <%= simple_format_2(summary_item.summary.content) %>
         </article>	
       </td>
 
       <td id="summary_auther" class ="status">
-        <%= link_to image_tag(summaryItem.user.prof_image, :size => "50x50", 
-                              :title => summaryItem.user.name, :id =>"auther_photo"),
-          {:controller => 'mypage',:action => "index", :name => summaryItem.user.name} %>
+        <%= link_to image_tag(summary_item.user.prof_image, :size => "50x50", 
+                              :title => summary_item.user.name, :id =>"auther_photo"),
+          {:controller => 'mypage',:action => "index", :name => summary_item.user.name} %>
         <div id ="auther_name">
           <%= link_to sanitize('<span class="glyphicon glyphicon-user"></span> ') +
-            summaryItem.user.name,
+            summary_item.user.name,
             {:controller => 'mypage',
              :action => "index", 
-             :name => summaryItem.user.name} %>
+             :name => summary_item.user.name} %>
 
 
-           <!-- follow button-->
-          <div id="follow_mark">
+          <!-- follow button-->
+          <% if @user %> 
+            <div id="follow_mark">
 
-              <span id="follow<%=index%>"
-                <% if @user.favorite_users.exists?(:favorite_user_id => summaryItem.user.id) %>
-                  style="display:none"
-                <% end %>
-              >
-                <%= link_to "follow", 
-                  {:action => "follow",
-                  :listIndex =>index,
-                  :follow_user_id => summaryItem.user.id,
-                  :remote => true } ,
-                  {:method => :post} %>
-              </span>
-              <span id="unfollow<%=index%>" 
-                <% unless @user.favorite_users.exists?(:favorite_user_id => summaryItem.user.id) %>
-                  style="display:none"
-                <% end %>
-              >  
-                <%= link_to "unfollow", 
-                  { :action => "unfollow",
-                    :listIndex =>index,
-                    :unfollow_user_id => summaryItem.user.id,
-                    :remote => true }, 
+                <span id="follow<%=index%>"
+                  <% if @user.favorite_users.exists?(:favorite_user_id => summary_item.user.id) %>
+                    style="display:none"
+                  <% end %>
+                >
+                  <%= link_to "follow", 
+                    {:action => "follow",
+                    :list_index =>index,
+                    :follow_user_id => summary_item.user.id,
+                    :remote => true } ,
                     {:method => :post} %>
-              </span>
+                </span>
+                <span id="unfollow<%=index%>" 
+                  <% unless @user.favorite_users.exists?(:favorite_user_id => summary_item.user.id) %>
+                    style="display:none"
+                  <% end %>
+                >  
+                  <%= link_to "unfollow", 
+                    { :action => "unfollow",
+                      :list_index =>index,
+                      :unfollow_user_id => summary_item.user.id,
+                      :remote => true }, 
+                      {:method => :post} %>
+                </span>
 
-          </div>
+              <% end %>
+            </div>
         </div>
 
           <div id="last_update_time">
             LastUpdate: <br>
-            <%= summaryItem.summary.updated_at.strftime("%Y/%m/%d %H:%M") %>
+            <%= summary_item.summary.updated_at.strftime("%Y/%m/%d %H:%M") %>
           </div>
 
-          <hr>
           <!-- good dummary button -->
-            <div id = "yetGoodSummary<%=index%>" class="iiyo"
-              <% if summaryItem.isGoodCompleted then %>
+          <% if @user %>
+            <hr>
+            <div id="yet_good_summary<%=index%>" class="iiyo"
+              <% if summary_item.is_good_completed then %>
                 style="display:none"
               <% end %>
             >
@@ -178,26 +183,26 @@
                                     { :border => '0', 
                                       :alt => 'いい要約だね！', 
                                       :id => "bottun"}),
-                                      {	:action => "goodSummary",
-                                        :listIndex =>index,
-                                        :summaryId =>summaryItem.summary.id, 
-                                        :articleId => @article.id,
+                                      {	:action => "good_summary",
+                                        :list_index =>index,
+                                        :summary_id =>summary_item.summary.id, 
+                                        :article_id => @article.id,
                                         :remote => true, },
                                       { :method => :post } %>
-              <% if summaryItem.isGoodCompleted then %>
+              <% if summary_item.is_good_completed then %>
                 <div id="count">
-                  <%= summaryItem.summaryPoint - 1 %> 
+                  <%= summary_item.summary_point - 1 %> 
                 </div>
               <% else %>
                 <div id="count">
-                  <%= summaryItem.summaryPoint %> 
+                  <%= summary_item.summary_point %> 
                 </div>
               <% end %>
               
             </div>
 
-            <div id = "alreadyGoodSummary<%=index%>" class="iiyo"
-              <% unless  summaryItem.isGoodCompleted then %>
+            <div id="already_good_summary<%=index%>" class="iiyo"
+              <% unless  summary_item.is_good_completed then %>
                 style="display:none"
               <% end %>
             >
@@ -205,23 +210,23 @@
                                   { :border => '0', 
                                     :alt => 'あなたは既にいい要約だねをしています', 
                                     :id => "cmpBottun"} ),
-                                    {	:action => "cancelGoodSummary",
-                                      :listIndex =>index,
-                                      :summaryId =>summaryItem.summary.id, 
-                                      :articleId => @article.id,
+                                    {	:action => "cancel_good_summary",
+                                      :list_index =>index,
+                                      :summary_id =>summary_item.summary.id, 
+                                      :article_id => @article.id,
                                       :remote => true, },
                                     { :method=> :post }  %>
-              <% unless summaryItem.isGoodCompleted then %>
+              <% unless summary_item.is_good_completed then %>
                 <div id="count">
-                  <%= summaryItem.summaryPoint + 1 %> 
+                  <%= summary_item.summary_point + 1 %> 
                 </div>
               <% else %>
                 <div id="count">
-                  <%= summaryItem.summaryPoint %> 
+                  <%= summary_item.summary_point %> 
                 </div>
               <% end %>
             </div>
-
+          <% end %>
         <% end %>
         </td>
       </tr>

@@ -11,7 +11,7 @@
       <% if @summary_num == nil || @summary_num == 0 then %>
         0 summary
       <% else %>
-        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :articleId => @article_id} %>&nbsp;summaries
+        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %>&nbsp;summaries
       <% end %>
     </div>
     <div id="tag_area">
