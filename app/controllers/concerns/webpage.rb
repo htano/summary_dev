@@ -13,9 +13,8 @@ module Webpage
 
   #TODO 定数定義は外出しにしたい
   BLANK = ""
-  #THRESHOLD_ALL = 10000
-  THRESHOLD_SIDE = 150
-  advertisementList = ["amazon","rakuten", "banner", "dmm", "google", "facebook", "twitter", "games.yahoo", "auctions.yahoo", "bookstore.yahoo"]
+  THRESHOLD_SIDE = 100
+  ADVERTISEMENTLIST = ["amazon","rakuten"]
 
   #TODO livedoorのサイトでエラーが発生する。
   def get_webpage_element(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
@@ -55,7 +54,7 @@ module Webpage
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
       doc.xpath("//img[starts-with(@src, 'http://')]").each do |img|
         p img["src"]
-        next if isAdvertisement?(img["src"])
+        next if ADVERTISEMENTLIST.include?(img["src"])
         image = Magick::ImageList.new(img["src"])
         columns = image.columns 
         rows = image.rows
@@ -92,14 +91,6 @@ module Webpage
       rescue => e
         logger.error("error :#{e}")
         return "プレビューは取得出来ませんでした。"
-      end
-    end
-  end
-
-  def isAdvertisement?(url)
-    advertisementList.each do |advertisement|
-      if url.include?(advertisement)
-        return true
       end
     end
   end
