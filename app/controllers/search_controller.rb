@@ -33,7 +33,7 @@ class SearchController < ApplicationController
     redirect_to :action => "index" and return unless @articles
 
     case @focus
-    when "1"
+    when "1", ""
       @articles = @articles.joins(:user_articles)
     when "2"
       @articles = @articles.joins(:user_articles).where("user_articles.user_id" => get_login_user.id)

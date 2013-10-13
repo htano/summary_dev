@@ -37,15 +37,17 @@ $(document).ready(function() {
           <input type="hidden" name="sort" id="sort" value="<%= @sort %>">
         </div>
       </div>
-      <div class="focus">
-        <p>focus</p>
-        <div class="select_area">
-          <span class="selected" id="focus_all">all</span><br>
-          <span class="no_selected" id="focus_added_only">added only</span><br>
-          <span class="no_selected" id="focus_without_added">without added</span><br>
-          <input type="hidden" name="focus" id="focus" value="<%= @focus %>">
+      <% if signed_in? %>
+        <div class="focus">
+          <p>focus</p>
+          <div class="select_area">
+            <span class="selected" id="focus_all">all</span><br>
+            <span class="no_selected" id="focus_added_only">added only</span><br>
+            <span class="no_selected" id="focus_without_added">without added</span><br>
+            <input type="hidden" name="focus" id="focus" value="<%= @focus %>">
+          </di>
         </div>
-      </div>
+      <% end %>
     </div>
     <div id="result_area">
       <% if @articles == nil || @articles.length == 0 %>
@@ -77,7 +79,7 @@ $(document).ready(function() {
               <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= article.contents_preview[0, 200] %></p>
             </div>
             <div id="article_operation">
-              <% if get_login_user %>
+              <% if signed_in? %>
                   <% if article.user_articles.where(:user_id => get_login_user.id).first %>
                     <button class="read_it_cancel" disabled>reading</button>
                   <% else %>
