@@ -1,5 +1,6 @@
 SummaryDev::Application.routes.draw do
   get "search/index"
+  get "search/search"
   get "search/search_by_tag"
   get "search/search_by_content"
   get "search/search_by_title"
@@ -7,6 +8,9 @@ SummaryDev::Application.routes.draw do
   get "follow_lists/following"
   get "follow_lists/suggestion"
   get "hotentry/index"
+  get "hotentry/small"
+  get "hotentry/normal"
+  get "hotentry/large"
   get "settings/profile"
   get "settings/profile_edit"
   post "settings/profile_edit_complete"
@@ -32,35 +36,36 @@ SummaryDev::Application.routes.draw do
   get "mypage/destroy"
 
   #for chrome extension
-  get 'webpage/get_add_history_for_chrome_extension' => 'webpage#get_add_history_for_chrome_extension'
-  get 'webpage/get_current_user_name_for_chrome_extension' => 'webpage#get_current_user_name_for_chrome_extension'
-  get 'webpage/add_for_chrome_extension' => 'webpage#add_for_chrome_extension'
+  get "chrome/get_summary_num"
+  get "chrome/get_summary_list"
+  get "chrome/get_recommend_tag"
+  get "chrome/get_recent_tag"
+  get "chrome/get_add_history"
+  get "chrome/get_current_user_name"
+  get "chrome/add"
   #for webpage
-  get 'webpage/add' => 'webpage#add'
-  post 'webpage/add_confirm' => 'webpage#add_confirm'
-  post 'webpage/add_complete' => 'webpage#add_complete'
-  post 'webpage/get_title' => 'webpage#get_title'
-  get 'webpage/delete' => 'webpage#delete'
-  get 'webpage/mark_as_read' => 'webpage#mark_as_read'
+  get "webpage/add" => "webpage#add"
+  post "webpage/add_confirm" => "webpage#add_confirm"
+  post "webpage/add_complete" => "webpage#add_complete"
+  post "webpage/delete" => "webpage#delete"
+  post "webpage/mark_as_read" => "webpage#mark_as_read"
 
   #for webpage
-  get 'summary/:article_id/edit' => 'summary#edit'
-  post 'summary/:article_id/edit_complete' => 'summary#edit_complete'
-  post 'summary/:article_id/delete' => 'summary#delete'
-  get 'summary/:article_id/get_article_image' => 'summary#get_article_image'
+  get "summary/:article_id/edit" => "summary#edit"
+  post "summary/:article_id/edit_complete" => "summary#edit_complete"
+  post "summary/:article_id/delete" => "summary#delete"
+  get "summary/:article_id/get_article_image" => "summary#get_article_image"
   
-  #for chrome extension
-  get 'summary_lists/get_summary_num_for_chrome_extension' => 'summary_lists#get_summary_num_for_chrome_extension'
-  get 'summary_lists/get_summary_list_for_chrome_extension' => 'summary_lists#get_summary_list_for_chrome_extension'
   #for webpage
-  get 'summary_lists/goodSummaryAjax' => 'summary_lists#goodSummaryAjax'
-  get 'summary_lists/:articleId' => 'summary_lists#index'
-  post 'summary_lists/goodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#goodSummary'
-  post 'summary_lists/cancelGoodSummary/:listIndex/:summaryId/:articleId' => 'summary_lists#cancelGoodSummary'
-  post 'summary_lists/isRead/:articleId' => 'summary_lists#isRead'
-  post 'summary_lists/cancelIsRead/:articleId' => 'summary_lists#cancelIsRead'
-  post 'summary_lists/follow/:listIndex/:follow_user_id' => 'summary_lists#follow'
-  post 'summary_lists/unfollow/:listIndex/:unfollow_user_id' => 'summary_lists#unfollow'
+  post 'summary_lists/goodSummaryAjax' => 'summary_lists#goodSummaryAjax'
+  #for summary lists
+  get 'summary_lists/:article_id' => 'summary_lists#index'
+  post 'summary_lists/good_summary/:list_index/:summary_id/:article_id' => 'summary_lists#good_summary'
+  post 'summary_lists/cancel_good_summary/:list_index/:summary_id/:article_id' => 'summary_lists#cancel_good_summary'
+  post 'summary_lists/read/:article_id' => 'summary_lists#read'
+  post 'summary_lists/cancel_read/:article_id' => 'summary_lists#cancel_read'
+  post 'summary_lists/follow/:list_index/:follow_user_id' => 'summary_lists#follow'
+  post 'summary_lists/unfollow/:list_index/:unfollow_user_id' => 'summary_lists#unfollow'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

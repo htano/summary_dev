@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <script type="text/javascript" src="lib/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="lib/bootstrap.js"></script>
     <script type="text/javascript" src="popup.js"></script>
@@ -17,25 +17,57 @@
     </ul>
 
     <div class="table">
-     <table class="table-bordered">
-       <tbody>
-         <tr>
-           <th>title</th>
-         </tr>
-         <tr>
-           <td><p id='p_title'>(default)</p></td>
-         </tr>
-         <tr>
-           <th>url</th>
-         </tr>
-         <tr>
-           <td><p id='p_url'>(default)</p></td>
-         </tr>
-       </tbody>
-     </table>
+      <table class="table-bordered">
+        <tbody>
+          <tr>
+            <th>title</th>
+          </tr>
+          <tr>
+            <td><p id="p_title">(default)</p></td>
+          </tr>
+<!--
+          <tr>
+            <th>url</th>
+          </tr>
+          <tr>
+            <td><p id="p_url">(default)</p></td>
+          </tr>
+-->
+          <tr>
+            <th>recommend tags for this article.</th>
+          </tr>
+          <tr>
+            <td id="recommend_tag"></td>
+          </tr>
+          <tr>
+            <th>recent tags.</th>
+          </tr>
+          <tr>
+            <td id="recent_tag"></td>
+          </tr>
+          <tr>
+            <th>input yousr tags.<!--<span =id="test"><img src="glyphicons_016_bin.png" width="10" height="10" id="tag_clear"/></span>--></th>
+          </tr>
+          <tr>
+            <td>
+              <div id="my_tags">
+                <input type="text" class="tag_text" name="tag_text_1" id="tag_text_1">
+                <input type="text" class="tag_text" name="tag_text_2" id="tag_text_2">
+                <input type="text" class="tag_text" name="tag_text_3" id="tag_text_3">
+                <input type="text" class="tag_text" name="tag_text_4" id="tag_text_4">
+                <input type="text" class="tag_text" name="tag_text_5" id="tag_text_5"><br>
+                <input type="text" class="tag_text" name="tag_text_6" id="tag_text_6">
+                <input type="text" class="tag_text" name="tag_text_7" id="tag_text_7">
+                <input type="text" class="tag_text" name="tag_text_8" id="tag_text_8">
+                <input type="text" class="tag_text" name="tag_text_9" id="tag_text_9">
+                <input type="text" class="tag_text" name="tag_text_10" id="tag_text_10">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
  
-    <!--<button class="popup_btn">book!</button>-->
     <button id="p_button"class="button button-flat:hover">book!</button>
     <p id="p_comment" style="visibility:hidden;">(default)</p>
     <a id="a_link_to_login" style="visibility:hidden;" href="http://localhost:3000/session/consumer/index" target="_blank">login</a><br>

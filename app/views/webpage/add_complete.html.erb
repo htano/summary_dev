@@ -15,7 +15,7 @@
     <p><a href="<%= @url %>" target="_blank"><%= @title[0, 100] %></a></p>
   </div>
   <div id="contents_preview">
-    <p><%= @contents_preview[0, 200] %></p>
+    <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><%= @contents_preview[0, 200] %></p>
   </div>
   <div id="category">
   </div>
@@ -24,7 +24,7 @@
   <% else %>
     <div id="tag_area">your tags for this article.<br>
       <% @tags.each do |tag| %>
-        <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search_by_tag", :searchtext => tag} %></span>
+        <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :condition => "1", :sort => "1", :focus => "1"} %></span>
       <% end %>
     </div>
   <% end %>
@@ -39,6 +39,6 @@
     <%= link_to image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") , {:controller => "summary", :action => "edit", :article_id => @article_id} %>
   </span>
   <span id="summary_lists">
-    <%= link_to image_tag("icons/glyphicons_114_list.png", :size => "16x16") + content_tag(:p, "summary lists") , {:controller => "summary_lists", :action => "index", :articleId => @article_id} %>
+    <%= link_to image_tag("icons/glyphicons_114_list.png", :size => "16x16") + content_tag(:p, "summary lists") , {:controller => "summary_lists", :action => "index", :article_id => @article_id} %>
   </span>
 </div>

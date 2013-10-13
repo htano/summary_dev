@@ -6,7 +6,7 @@ class MypageController < ApplicationController
 
     # check wheter user accessed to this action is signed in user or not
     if params[:name]
-      if isLoginUser?(params[:name])
+      if login_user?(params[:name])
         @is_login_user = true
       else
         @is_login_user = false

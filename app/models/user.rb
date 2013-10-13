@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
     return @new_articles
   end
 
-  def exec_sign_out
+  def reset_keep_login_info
     self.keep_login_token = nil
     self.keep_login_expire = nil
     self.keep_login_ip = nil

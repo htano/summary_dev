@@ -13,6 +13,23 @@
  *= require buttons.css
  *= require bootstrap/bootstrap.css
  */
+
+.alert {
+  padding-left: 30px;
+  border: 1px solid #e7dc2b;
+  background: #fff888;
+}
+.login_error {
+  padding-left: 30px;
+  border: 1px solid #ff0000;
+  background: #ffaaaa;
+}
+.success {
+  padding-left: 30px;
+  border: 1px solid #00ff00;
+  background: #aaffaa;
+}
+
 .error {
   color: red;
 }

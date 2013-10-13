@@ -5,6 +5,16 @@
 #search_main {
 }
 
+.pagination {
+  span, a {
+    color: gray;
+  }
+  .current {
+    font-size: 18px;
+    color: #ff9b9b;
+  }
+}
+
 #operation_area {
   border-bottom: 1px solid #ECECEC;
   width: 100%;
@@ -51,20 +61,28 @@
   width: 14%;
   height: 500px;
   float: left;
-  #condition, #sort, #focus {
+  .condition, .sort, .focus {
     text-align: center;
-    height: 100px;
+    height: 120px;
     border-bottom: 1px solid #ECECEC;
+    .select_area {
+      span:hover {
+        border-radius: 2px;
+        background: #ff9b9b;
+        color:white;
+        font-size: 18px;
+      }
+    }
     p {
       color: gray;
       font-size: 20px;
     }
     .selected {
-      font-size: 15px;
+      font-size: 18px;
       color: #ff9b9b;
     }
     .no_selected {
-      font-size: 10px;
+      font-size: 12px;
       color: gray;
     }
   }
@@ -136,7 +154,7 @@
       height: 90px;
       #user_article_num {
         p {
-          color: #ff9b9b; 
+          color: #ff9b9b;
         }
       }
       #summary_num {

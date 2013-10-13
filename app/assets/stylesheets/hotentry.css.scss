@@ -7,6 +7,116 @@
   color: #999;
 }
 
+div.hotentry-container {
+  margin: auto;
+  width: 60%;
+  border: solid 1px #eee;
+}
+
+div.hotentry-menu {
+  background-color: #e6e6e6;
+  margin-bottom: 5px;
+
+  h3 {
+    color: white;
+    margin: 0;
+    font-size: 18px;
+    padding: 10px 10px 11px 10px;
+  }
+
+}
+
+div.hotentry-row {
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  border-bottom: solid 2px #eee;
+  border-left: solid 3px #F5AC0F;
+}
+
+div.hotentry-row-with-summary {
+  border-left: solid 3px #F5AC0F;
+}
+
+div.hotentry-row-no-summary {
+  border-left: solid 3px #0FC7F5;
+}
+
+div.hotentry-small-row {
+  margin-bottom: 2px;
+  padding-bottom: 5px;
+  border-bottom: solid 2px #eee;
+}
+
+div.hotentry-large-row {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: solid 2px #eee;
+}
+
+div.hotentry-large-row-nosum,  {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: solid 2px #eee;
+}
+
+div.hotentry-small-order, div.hotentry-small-order-nosum {
+  font-size: 32px;
+}
+
+div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
+
+  h4 {
+    color: #999;
+    text-decoration: underline;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    line-height: 24px;
+  }
+
+  h5 {
+    color: #999;
+    text-decoration: underline;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    line-height: 20px;
+  }
+
+  margin-bottom: 5px;
+}
+
+div.hotentry-small-title {
+  min-height: 30px;
+}
+
+div.hotentry-large-title {
+  border-bottom: solid 1px #eee;
+  min-height: 65px;
+}
+
+div.hotentry-normal-summaries, div.hotentry-small-summaries {
+  font-size: 11px;
+}
+
+div.hotentry-large-contents {
+  p {
+    font-size:14px;
+    border: solid 1px #eee;
+    height: 180px;
+    padding: 5px;
+    margin-bottom: 3px;
+    margin-top: 3px;
+    overflow: auto;
+  }
+}
+
+div.hotentry-large-image {
+  margin-top: 23px;
+}
+
+div.hotentry-normal-domain {
+  font-size: 11px;
+}
+
 div.hotentry_container {
   margin: auto;
   width: 900px;
@@ -129,7 +239,7 @@ div.entry_contents_prev {
   font-size: 14px;
   margin-top: 5px;
   border: solid 1px #eee;
-  padding: 0 10px;
+  padding: 10px;
   height: 150px;
 }
 
@@ -242,7 +352,7 @@ button.read_it_later {
 }
 
 button.read_it_cancel {
-  font-size: 12px;
+  font-size: 11px;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #999;

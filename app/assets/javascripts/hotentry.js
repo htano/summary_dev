@@ -2,9 +2,9 @@ $(function(){
   $('#only_summarized').click(function(){
     var isChecked = $('#only_summarized:checked').val();
     if(isChecked){
-      $('.entry_box_no_summary').hide(10);
+      $('.hotentry-row-no-summary').hide(10);
     } else {
-      $('.entry_box_no_summary').show(10);
+      $('.hotentry-row-no-summary').show(10);
     }
   });
 });
@@ -12,8 +12,8 @@ $(function(){
 function clickGoodSummary(summary_id) {
   $.ajax({
     url: '/summary_lists/goodSummaryAjax',
-    type: 'GET',
-    data: 'summaryId=' + summary_id,
+    type: 'POST',
+    data: 'summary_id=' + summary_id,
     dataType: 'text',
     success: function(data) {
       if(data == "good") {
@@ -40,7 +40,7 @@ function clickReadItLater(btn, url, aid) {
     if(btn.className == "read_it_cancel") {
       $.ajax({
         url: '/webpage/delete',
-        type: 'GET',
+        type: 'POST',
         data: 'article_id=' + aid,
         dataType: 'text',
         success: function(data) {
@@ -55,13 +55,13 @@ function clickReadItLater(btn, url, aid) {
       });
     } else {
       $.ajax({
-        url: '/webpage/add_for_chrome_extension',
+        url: '/chrome/add',
         type: 'GET',
         data: 'url=' + escape(url),
         dataType: 'text',
         success: function(data) {
           btn.className="read_it_cancel";
-          btn.innerHTML="Cancel";
+          btn.innerHTML="Read cancel";
           var reading_num = $('#reading_counter'+aid).text();
           $('#reading_counter'+aid).text(parseInt(reading_num) + 1);
           btn.style.display = "inline";
@@ -80,7 +80,7 @@ function clickMarkAsRead(btn, aid) {
   $("#mark_read_loader" + aid).show();
   $.ajax({
     url: '/webpage/mark_as_read',
-    type: 'GET',
+    type: 'POST',
     data: 'article_id=' + aid,
     dataType: 'text',
     success: function(data) {
