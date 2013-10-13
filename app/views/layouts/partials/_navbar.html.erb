@@ -1,3 +1,4 @@
+
 <%= form_tag({:controller => 'webpage', :action => 'add'}, {:method => 'POST', :remote => 'true'}) do %>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
@@ -28,7 +29,7 @@
 
           <% if signed_in? %>
             <li>
-              <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#"><%= getNotifyingObjects.size %></a>
+              <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#"><%= get_notifying_objects.size %></a>
               <ul class="dropdown-menu">
                 <li>
                   <a href="#">action</a>
@@ -74,6 +75,24 @@
         </div>
       </div>
     </div>
+
+<% if flash[:alert] %>
+  <div class='alert'>
+   <%= h(flash[:alert]) %>
+  </div>
+<% end %>
+<% if flash[:error] %>
+  <div class='login_error'>
+   <%= h(flash[:error]) %>
+  </div>
+<% end %>
+<% if flash[:success] %>
+  <div class='success'>
+   <%= h(flash[:success]) %>
+  </div>
+<% end %>
+
   </div>
 <% end %>
 <!--</form>-->
+

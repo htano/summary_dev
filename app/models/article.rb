@@ -54,47 +54,38 @@ class Article < ActiveRecord::Base
     return articles
   end
 
-  def getMarkedUser
+  def get_marked_user
     return self.user_articles.count
   end
 
-  def isRead(user)
+  def read?(user)
     unless user == nil then
-      userArticleForIsRead = self.user_articles.find_by(:user_id => user.id)
-      unless  userArticleForIsRead == nil then
-        
-        if userArticleForIsRead.read_flg == true then
-        
-                isRead = true
-
+      user_article = self.user_articles.find_by(:user_id => user.id)
+      unless  user_article == nil then
+        if user_article.read_flg == true then
+          is_read = true
         else
-            
-        isRead = false
-
+          is_read = false
         end
-
       else
-        isRead = false 
+        is_read = false 
       end
     else
-      isRead = false 
+      is_read = false 
     end  
-    return isRead
+    return is_read
   end
 
-  def getSortedSummaryList(user)
-    #create array for calcration 
-    scoreItem = Struct.new(:summary,:goodSummaryPoint)
-    scoreList = Array.new 
-    isGoodCompleted = Array.new
+  def get_good_score_sorted_summary_list(user)
+    score_item = Struct.new(:summary,:good_summary_point)
+    score_list = Array.new 
+    is_good_completed = Array.new
 
     self.summaries.each_with_index do |summary,i|  
 
-      #calcurate goodSummaryPoint 
-      goodSummaryPoint = summary.good_summaries.count
+      good_summary_point = summary.good_summaries.count
 
-      #scoreItem
-      scoreList[i] = scoreItem.new(summary, goodSummaryPoint)
+      score_list[i] = score_item.new(summary, good_summary_point)
     end 
 
 
@@ -102,29 +93,29 @@ class Article < ActiveRecord::Base
     #
     #
     #Under Construction
-    scoreList_sorted = scoreList.sort{|i,j|
-        j.goodSummaryPoint<=>i.goodSummaryPoint                 
+    score_list_sorted = score_list.sort{|i,j|
+        j.good_summary_point<=>i.good_summary_point                 
     }
     #
     #
 
-    summaryItem = Struct.new(:summary, :user, :summaryPoint, :isGoodCompleted) 
-    summaryList = Array.new
+    summary_item = Struct.new(:summary, :user, :summary_point, :is_good_completed) 
+    summary_list = Array.new
     #insert to each params  
-    scoreList_sorted.each_with_index do |scoreItem, i|         
+    score_list_sorted.each_with_index do |score_item, i|         
       unless user == nil then
-        unless scoreItem.summary.good_summaries.find_by(:user_id => user.id) == nil then 
-          isGoodCompleted = true
+        unless score_item.summary.good_summaries.find_by(:user_id => user.id) == nil then 
+          is_good_completed = true
         else
-          isGoodCompleted = false 
+          is_good_completed = false 
         end
       else
-        isGoodCompleted = false 
+        is_good_completed = false 
       end  
-      summaryList[i] = summaryItem.new(scoreItem.summary, scoreItem.summary.user,scoreItem.goodSummaryPoint,isGoodCompleted)  
+      summary_list[i] = summary_item.new(score_item.summary, score_item.summary.user,score_item.good_summary_point,is_good_completed)  
     end
 
-    return summaryList
+    return summary_list
   end
 
   # Class Method
@@ -180,6 +171,16 @@ class Article < ActiveRecord::Base
       end
     end
     return @top_rated_summary
+  end
+
+  def get_contents_preview
+    begin
+      self.contents_preview.split("")
+      return self.contents_preview
+    rescue => err
+      logger.error("This page has invalid encoding: " + err.message)
+      return ""
+    end
   end
 
   #記事に設定されたタグ情報を登録順に取得するメソッド

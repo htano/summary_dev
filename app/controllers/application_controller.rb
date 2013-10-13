@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  helper_method :signed_in?, :get_current_user_name, :get_login_user, :getNotifyingObjects
+  helper_method :signed_in?, :get_current_user_name, :get_login_user, :get_notifying_objects
 
   def get_current_user_name
     if get_login_user
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     return (get_login_user != nil)
   end
 
-  def isLoginUser?(user_name)
+  def login_user?(user_name)
     @result = false
     if get_login_user
       if get_login_user.name == user_name
@@ -26,24 +26,29 @@ class ApplicationController < ActionController::Base
     return @result
   end
 
+  #if not login, return 'nil'
   def get_login_user
-    #if not login, return 'nil'
+    @return_obj = nil
     @user_obj = User.get_user_by_openid(session[:openid_url])
+    @user_obj_by_token = nil
     if @user_obj
-      return @user_obj
+      @return_obj = @user_obj
     else
       @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
-      @user_obj_by_token = User.get_user_by_login_token(cookies[:keep_login_token], @remote_ip)
-      if @user_obj_by_token
-        return @user_obj_by_token
-      else
-        cookies.delete :keep_login_token
-        return nil
+      if cookies[:keep_login_token]
+        @user_obj_by_token = User.get_user_by_login_token(
+          cookies[:keep_login_token], 
+          @remote_ip
+        )
+        if @user_obj_by_token
+          @return_obj = @user_obj_by_token
+        end
       end
     end
+    return @return_obj
   end
 
-  def getNotifyingObjects
+  def get_notifying_objects
     return get_login_user.get_notifying_articles
   end
 
