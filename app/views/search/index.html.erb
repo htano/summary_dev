@@ -42,8 +42,8 @@ $(document).ready(function() {
         <div class="select_area">
           <span class="selected" id="focus_all">all</span><br>
           <% if signed_in? %>
-          <span class="no_selected" id="focus_added_only">added only</span><br>
-          <span class="no_selected" id="focus_without_added">without added</span><br>
+            <span class="no_selected" id="focus_added_only">added only</span><br>
+            <span class="no_selected" id="focus_without_added">without added</span><br>
           <% end %>
           <input type="hidden" name="focus" id="focus" value="<%= @focus %>">
         </div>
@@ -60,50 +60,54 @@ $(document).ready(function() {
           <%= paginate @articles, :window => 4, :outer_window => 2  %>
         </div>        
         <% @articles.each do |article| %>
-          <div id="article_contents">
-            <div id="thumbnail">
-              <%= image_tag(article.thumbnail) %>
-            </div>
-            <div id="url_title">
-              <p><a href="<%= article.url %>" target="_blank"><%= article.title[0, 100] %></a></p>
-            </div>
-            <div id="article_infomation">
-              <div id="user_article_num">
-                <p><%= article.user_articles.length %> users.</p>
+          <% if get_login_user && article.user_articles.where(:user_id => get_login_user.id).first %>
+            <div class="article_contents">
+          <% else %>
+            <div class="article_contents_not_read">
+          <% end %>
+              <div id="thumbnail">
+                <%= image_tag(article.thumbnail) %>
               </div>
-              <div id="summary_num">
-                <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :article_id => article.id} %>summaries.
+              <div id="url_title">
+                <p><a href="<%= article.url %>" target="_blank"><%= article.title[0, 100] %></a></p>
               </div>
-            </div>
-            <div id="contents_preview">
-              <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= article.contents_preview[0, 200] %></p>
-            </div>
-            <div id="article_operation">
-              <% if get_login_user %>
-                  <% if article.user_articles.where(:user_id => get_login_user.id).first %>
-                    <button class="read_it_cancel" disabled>reading</button>
-                  <% else %>
-                    <button class="read_it_later" >add</button>
-                  <% end %>
+              <div id="article_infomation">
+                <div id="user_article_num">
+                  <p><%= article.user_articles.length %> users.</p>
+                </div>
+                <div id="summary_num">
+                  <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :article_id => article.id} %>summaries.
+                </div>
+              </div>
+              <div id="contents_preview">
+                <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= article.contents_preview[0, 200] %></p>
+              </div>
+              <div id="article_operation">
+                <% if get_login_user %>
+                    <% if article.user_articles.where(:user_id => get_login_user.id).first %>
+                      <button class="read_it_cancel" disabled>reading</button>
+                    <% else %>
+                      <button class="read_it_later" >add</button>
+                    <% end %>
                 <% else %>
-              <% end %>
-            </div>
-            <% tags = article.get_top_rated_tag %>
-            <% if tags == nil || tags.length == 0 %>
-              <div id="tag">no tags for this article.<br></div>    
-            <% else %>
-              <div id="tag">tags for this article.<br>
-                <% tags.each do |tag| %>
-                  <!--<span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag} %></span>-->
-                  <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :condition => "1", :sort => "1", :focus => "1"} %></span>
                 <% end %>
               </div>
-            <% end %>
-            <div id="category">
-              category
+              <% tags = article.get_top_rated_tag %>
+              <% if tags == nil || tags.length == 0 %>
+                <div id="tag">no tags for this article.<br></div>    
+              <% else %>
+                <div id="tag">tags for this article.<br>
+                  <% tags.each do |tag| %>
+                    <!--<span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag} %></span>-->
+                    <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :condition => "1", :sort => "1", :focus => "1"} %></span>
+                  <% end %>
+                </div>
+              <% end %>
+              <div id="category">
+                category
+              </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
         <div style='text-align:center;'>
           <%= paginate @articles, :window => 4, :outer_window => 2  %>
         </div>        

@@ -26,8 +26,10 @@
     when "1"
       set_focus_all_selected()
     when "2"
+      $(".article_contents_not_read").hide(10)
       set_focus_added_selected()
     when "3"
+      $(".article_contents").hide(10)
       set_focus_without_added_selected()
 
 $ ->
@@ -62,18 +64,24 @@ $ ->
 
 $ ->
   $("#focus_all").click ->
+    $(".article_contents").show(10)
+    $(".article_contents_not_read").show(10)
+    set_focus_all_selected()
     $("#focus").val(1)
-    $("#search_form").submit()
 
 $ ->
   $("#focus_added_only").click ->
+    $(".article_contents").show(10)
+    $(".article_contents_not_read").hide(10)
+    set_focus_added_selected()
     $("#focus").val(2)
-    $("#search_form").submit()
 
 $ ->
   $("#focus_without_added").click ->
+    $(".article_contents").hide(10)
+    $(".article_contents_not_read").show(10)
+    set_focus_without_added_selected()
     $("#focus").val(3)
-    $("#search_form").submit()
 
 @set_condition_tag_selected = ->
   $("#condition_tag").removeClass()
