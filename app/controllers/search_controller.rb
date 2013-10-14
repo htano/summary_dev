@@ -32,7 +32,7 @@ class SearchController < ApplicationController
     end
     #redirect_to :action => "index", :condition => @condition, :sort => @sort, :focus => @focus and return unless @articles
     render :template => "search/index" and return unless @articles
-=begin
+
     case @focus
     when "1", ""
       @articles = @articles.joins(:user_articles)
@@ -44,9 +44,8 @@ class SearchController < ApplicationController
       flash[:error] = "Please check search conditions."
       redirect_to :action => "index" and return
     end
-=end
-    @articles_num = @articles.length
-#    render :template => "search/index" and return unless @articles
+
+    render :template => "search/index" and return unless @articles
 
     case @sort
     when "1"
@@ -60,6 +59,7 @@ class SearchController < ApplicationController
       redirect_to :action => "index" and return
     end
 
+    @articles_num = @articles.length
     @articles = @articles.page(params[:page]).per(PAGE_PER)
 
     render :template => "search/index"

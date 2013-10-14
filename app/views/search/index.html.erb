@@ -22,28 +22,28 @@ $(document).ready(function() {
       <div class="condition">
         <p>condition</p>
         <div class="select_area">
-          <span class="selected" id="condition_tag">tag</span><br>
-          <span class="no_selected"  id="condition_title">title</span><br>
-          <span class="no_selected"  id="condition_content">content</span><br>
+          <span id="condition_tag">tag</span><br>
+          <span id="condition_title">title</span><br>
+          <span id="condition_content">content</span><br>
           <input type="hidden" name="condition" id="condition" value="<%= @condition %>">
         </div>
       </div>
       <div class="sort">
         <p>sort</p>
         <div class="select_area">
-          <span class="selected" id="sort_recent">recent</span><br>
-          <span class="no_selected" id="sort_summary_num">summary num</span><br>
-          <span class="no_selected" id="sort_user_num">user num</span><br>
+          <span id="sort_Newest">Newest</span><br>
+          <span id="sort_summary_num">summary num</span><br>
+          <span id="sort_user_num">user num</span><br>
           <input type="hidden" name="sort" id="sort" value="<%= @sort %>">
         </div>
       </div>
       <div class="focus">
         <p>focus</p>
         <div class="select_area">
-          <span class="selected" id="focus_all">all</span><br>
+          <span id="focus_all">all</span><br>
           <% if signed_in? %>
-            <span class="no_selected" id="focus_added_only">added only</span><br>
-            <span class="no_selected" id="focus_without_added">without added</span><br>
+            <span id="focus_reading">reading</span><br>
+            <span id="focus_not_reading">not reading</span><br>
           <% end %>
           <input type="hidden" name="focus" id="focus" value="<%= @focus %>">
         </div>
