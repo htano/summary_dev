@@ -94,7 +94,13 @@ div.hotentry-large-title {
 }
 
 div.hotentry-normal-summaries, div.hotentry-small-summaries {
-  font-size: 11px;
+  font-size: 12px;
+}
+
+div.hotentry-normal-contents {
+  p {
+    font-size: 11px;
+  }
 }
 
 div.hotentry-large-contents {
