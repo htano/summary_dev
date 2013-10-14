@@ -15,7 +15,10 @@
     <% end %>
         <div class="row hotentry-normal-body">
           <div class="col-md-2 hotentry-normal-image">
-            <%= image_tag(e.thumbnail, :width=>"100%", :style=>"max-width:100px;") %>
+            <%= image_tag(
+              e.thumbnail,
+              :class => "hotentry-normal-image-imgtag",
+            ) %>
           </div>
           <div class="col-md-10">
             <div class="row">

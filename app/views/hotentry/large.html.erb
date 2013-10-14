@@ -11,7 +11,8 @@
     <% if e.get_top_rated_summary %>
       <div class="col-md-12 hotentry-large-row hotentry-row-with-summary">
     <% else %>
-      <div class="col-md-12 hotentry-large-row-nosum hotentry-row-no-summary">
+      <div class="col-md-12 
+        hotentry-large-row-nosum hotentry-row-no-summary">
     <% end %>
         <div class="row hotentry-normal-body">
           <div class="col-md-12">
@@ -78,7 +79,10 @@
             </div>
             <div class="row">
               <div class="col-md-3 hotentry-large-image">
-                <%= image_tag(e.thumbnail, :width=>"100%", :style=>"max-width:200px;") %>
+                <%= image_tag(
+                  e.thumbnail,
+                  :class => "hotentry-large-image-imgtag",
+                ) %>
               </div>
               <div class="col-md-9 hotentry-large-contents">
 
