@@ -69,7 +69,7 @@ $(document).ready(function() {
                 <%= image_tag(article.thumbnail) %>
               </div>
               <div id="url_title">
-                <p><a href="<%= article.url %>" target="_blank"><%= article.title[0, 100] %></a></p>
+                <p><a href="<%= article.url %>" target="_blank"><%= article.title[0, 200] %></a></p>
               </div>
               <div id="article_infomation">
                 <div id="user_article_num">
@@ -80,7 +80,7 @@ $(document).ready(function() {
                 </div>
               </div>
               <div id="contents_preview">
-                <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= article.contents_preview[0, 200] %></p>
+                <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= article.contents_preview[0, 100] %></p>
               </div>
               <div id="article_operation">
                 <% if get_login_user %>
