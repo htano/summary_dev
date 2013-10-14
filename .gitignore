@@ -30,4 +30,4 @@
 
 # Ignore application configuration
 #/config/application.yml
-/config/application.yml.prod
+#/config/application.yml.prod
