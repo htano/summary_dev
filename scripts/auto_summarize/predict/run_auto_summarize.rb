@@ -101,7 +101,6 @@ def extract_features s
     end
     @s_prob = @s_prob / s.length
     @title_cosine = get_cosine_similarity(@s_tfidf, @title_tfidf)
-
     @length_key = 2
     case @s_length
     when 0
@@ -125,7 +124,6 @@ def extract_features s
     else
       @length_key += 9
     end
-
     return { 1 => @sum_idf, 2 => @title_cosine, @length_key => 1.0, 12 => @s_prob}
   else
     return nil
@@ -188,7 +186,6 @@ Article.get_hotentry_articles.each do |e|
   body  = ""
   title = ""
   doc = nil
-
   begin
     charset = nil
     html = open(e.url) do |f|
@@ -251,9 +248,9 @@ Article.get_hotentry_articles.each do |e|
     end
   end
   body.split("\n").each do |p|
-    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/。/, "") }
+    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/[。．.]/, "") }
     if p.length > 0
-      p.split(/。/).each do |s|
+      p.split(/[。．.]/).each do |s|
         s.ngram(2).each do |k|
           @sum_tf_of_doc += 1
           if @tf_of_doc[k]
@@ -270,9 +267,10 @@ Article.get_hotentry_articles.each do |e|
   sentences_with_score = []
   idx = 0
   body.split("\n").each do |p|
-    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/。/, "") }
+    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/[。．.]/, "") }
     if p.length > 0
-      p.split(/。/).each do |s|
+      p.split(/[。．.]/).each do |s|
+        #puts s
         @s_features = extract_features(s)
         if @s_features
           #@s_score = @s_features[:title_cosine]
