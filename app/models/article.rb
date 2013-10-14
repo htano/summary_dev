@@ -6,8 +6,9 @@ include Webpage
 #require "ransack"
 
 class Article < ActiveRecord::Base
-  has_many :user_articles, :dependent => :destroy
-  has_many :summaries, :dependent => :destroy
+  has_many(:user_articles, :dependent => :destroy)
+  has_many(:summaries, :dependent => :destroy)
+  validates(:url, :uniqueness=>true)
 
   # This is a decay parameter for article's strength.
   # A 'point' means a people say he is reading the article.
