@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131014122923) do
+ActiveRecord::Schema.define(version: 20131014131303) do
 
   create_table "articles", force: true do |t|
     t.string   "url"
@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 20131014122923) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "good_summaries", ["user_id", "summary_id"], name: "idx_good_summaries_on_user_id_and_summary_id", unique: true
 
   create_table "summaries", force: true do |t|
     t.text     "content"
