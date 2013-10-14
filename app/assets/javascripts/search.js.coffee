@@ -8,114 +8,141 @@
   focus = $("#focus").val()
   switch condition
     when "1"
-      $("#condition_tag").click()
+      set_condition_tag_selected()
     when "2"
-      $("#condition_title").click()
+      set_condition_title_selected()
     when "3"
-      $("#condition_content").click()
+      set_condition_content_selected()
 
   switch sort
     when "1"
-      $("#sort_recent").click()
+      set_sort_recent_selected()
     when "2"
-      $("#sort_summary_num").click()
+      set_sort_summary_num_selected()
     when "3"
-      $("#sort_user_num").click()
+      set_sort_user_num_selected()
       
   switch focus
     when "1"
-      $("#focus_all").click()
+      set_focus_all_selected()
     when "2"
-      $("#focus_added_only").click()
+      set_focus_added_selected()
     when "3"
-      $("#focus_without_added").click()
+      set_focus_without_added_selected()
 
 $ ->
   $("#condition_tag").click ->
-    $("#condition_tag").removeClass()
-    $("#condition_title").removeClass()
-    $("#condition_content").removeClass()
-    $("#condition_tag").addClass("selected")
-    $("#condition_title").addClass("no_selected")
-    $("#condition_content").addClass("no_selected")
     $("#condition").val(1)
+    $("#search_form").submit()
 
 $ ->
   $("#condition_title").click ->
-    $("#condition_tag").removeClass()
-    $("#condition_title").removeClass()
-    $("#condition_content").removeClass()
-    $("#condition_tag").addClass("no_selected")
-    $("#condition_title").addClass("selected")
-    $("#condition_content").addClass("no_selected")
     $("#condition").val(2)
+    $("#search_form").submit()
 
 $ ->
   $("#condition_content").click ->
-    $("#condition_tag").removeClass()
-    $("#condition_title").removeClass()
-    $("#condition_content").removeClass()
-    $("#condition_tag").addClass("no_selected")
-    $("#condition_title").addClass("no_selected")
-    $("#condition_content").addClass("selected")
     $("#condition").val(3)
+    $("#search_form").submit()
 
 $ ->
   $("#sort_recent").click ->
-    $("#sort_recent").removeClass()
-    $("#sort_summary_num").removeClass()
-    $("#sort_user_num").removeClass()
-    $("#sort_recent").addClass("selected")
-    $("#sort_summary_num").addClass("no_selected")
-    $("#sort_user_num").addClass("no_selected")
     $("#sort").val(1)
+    $("#search_form").submit()
 
 $ ->
   $("#sort_summary_num").click ->
-    $("#sort_recent").removeClass()
-    $("#sort_summary_num").removeClass()
-    $("#sort_user_num").removeClass()
-    $("#sort_recent").addClass("no_selected")
-    $("#sort_summary_num").addClass("selected")
-    $("#sort_user_num").addClass("no_selected")
     $("#sort").val(2)
+    $("#search_form").submit()
 
 $ ->
   $("#sort_user_num").click ->
-    $("#sort_recent").removeClass()
-    $("#sort_summary_num").removeClass()
-    $("#sort_user_num").removeClass()
-    $("#sort_recent").addClass("no_selected")
-    $("#sort_summary_num").addClass("no_selected")
-    $("#sort_user_num").addClass("selected")
     $("#sort").val(3)
+    $("#search_form").submit()
 
 $ ->
   $("#focus_all").click ->
-    $("#focus_all").removeClass()
-    $("#focus_added_only").removeClass()
-    $("#focus_without_added").removeClass()
-    $("#focus_all").addClass("selected")
-    $("#focus_added_only").addClass("no_selected")
-    $("#focus_without_added").addClass("no_selected")
     $("#focus").val(1)
+    $("#search_form").submit()
 
 $ ->
   $("#focus_added_only").click ->
-    $("#focus_all").removeClass()
-    $("#focus_added_only").removeClass()
-    $("#focus_without_added").removeClass()
-    $("#focus_all").addClass("no_selected")
-    $("#focus_added_only").addClass("selected")
-    $("#focus_without_added").addClass("no_selected")
     $("#focus").val(2)
+    $("#search_form").submit()
 
 $ ->
   $("#focus_without_added").click ->
-    $("#focus_all").removeClass()
-    $("#focus_added_only").removeClass()
-    $("#focus_without_added").removeClass()
-    $("#focus_all").addClass("no_selected")
-    $("#focus_added_only").addClass("no_selected")
-    $("#focus_without_added").addClass("selected")
     $("#focus").val(3)
+    $("#search_form").submit()
+
+@set_condition_tag_selected = ->
+  $("#condition_tag").removeClass()
+  $("#condition_title").removeClass()
+  $("#condition_content").removeClass()
+  $("#condition_tag").addClass("selected")
+  $("#condition_title").addClass("no_selected")
+  $("#condition_content").addClass("no_selected")
+
+@set_condition_title_selected = ->
+  $("#condition_tag").removeClass()
+  $("#condition_title").removeClass()
+  $("#condition_content").removeClass()
+  $("#condition_tag").addClass("no_selected")
+  $("#condition_title").addClass("selected")
+  $("#condition_content").addClass("no_selected")
+
+@set_condition_content_selected = ->
+  $("#condition_tag").removeClass()
+  $("#condition_title").removeClass()
+  $("#condition_content").removeClass()
+  $("#condition_tag").addClass("no_selected")
+  $("#condition_title").addClass("no_selected")
+  $("#condition_content").addClass("selected")
+
+@set_sort_recent_selected = ->
+  $("#sort_recent").removeClass()
+  $("#sort_summary_num").removeClass()
+  $("#sort_user_num").removeClass()
+  $("#sort_recent").addClass("selected")
+  $("#sort_summary_num").addClass("no_selected")
+  $("#sort_user_num").addClass("no_selected")
+
+@set_sort_summary_num_selected = ->
+  $("#sort_recent").removeClass()
+  $("#sort_summary_num").removeClass()
+  $("#sort_user_num").removeClass()
+  $("#sort_recent").addClass("no_selected")
+  $("#sort_summary_num").addClass("selected")
+  $("#sort_user_num").addClass("no_selected")
+
+@set_sort_user_num_selected = ->
+  $("#sort_recent").removeClass()
+  $("#sort_summary_num").removeClass()
+  $("#sort_user_num").removeClass()
+  $("#sort_recent").addClass("no_selected")
+  $("#sort_summary_num").addClass("no_selected")
+  $("#sort_user_num").addClass("selected")
+
+@set_focus_all_selected = ->
+  $("#focus_all").removeClass()
+  $("#focus_added_only").removeClass()
+  $("#focus_without_added").removeClass()
+  $("#focus_all").addClass("selected")
+  $("#focus_added_only").addClass("no_selected")
+  $("#focus_without_added").addClass("no_selected")
+
+@set_focus_added_selected = ->
+  $("#focus_all").removeClass()
+  $("#focus_added_only").removeClass()
+  $("#focus_without_added").removeClass()
+  $("#focus_all").addClass("no_selected")
+  $("#focus_added_only").addClass("selected")
+  $("#focus_without_added").addClass("no_selected")
+
+@set_focus_without_added_selected = ->
+  $("#focus_all").removeClass()
+  $("#focus_added_only").removeClass()
+  $("#focus_without_added").removeClass()
+  $("#focus_all").addClass("no_selected")
+  $("#focus_added_only").addClass("no_selected")
+  $("#focus_without_added").addClass("selected")
