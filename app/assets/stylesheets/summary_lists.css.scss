@@ -2,13 +2,102 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
 //---------------------------------------
-// common layout
+// Page Color Define
 //---------------------------------------
 
-.bold_char{
-  font-weight: bold;
+#color_scheme{
+  //BaseBackGroundColor
+  color: #FEE5E5;
+  //BaseTextColor
+  color: #4C4545;
+
+  //HighSaturationColor
+  color: #FF9B9B;
 }
+
+//---------------------------------------
+// whole layout
+//---------------------------------------
+
+#summary_list{
+
+  hr {
+    margin: 5px 0px 10px 0px;
+    height:2px;
+    border:0;
+    background:linear-gradient(left, #f5f5f5, #999, #f5f5f5);
+    background:-webkit-linear-gradient(left, #f5f5f5, #999, #f5f5f5);
+    background:-moz-linear-gradient(left, #f5f5f5, #999, #f5f5f5);
+  }
+
+  #article{
+    #article_header{
+      padding-top: 5px;
+
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+
+      background: #FEE5E5;
+
+      #article_readers_num{
+
+        vertical-align: text-bottom;
+        color: #E88100;
+        font-weight: bold;
+        font-size: 20px;
+      }
+
+      #article_readers_char{
+        color: #E88100;
+      }
+    }
+
+    #hr_area
+    {
+      background: #FEE5E5;
+    }
+
+    #article_body{
+      background: #FEE5E5;
+
+      #article_title{
+        font-weight: bold;
+        font-size: 20px;
+        overflow:hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        -moz-text-overflow:ellipsis; /* Firefox */
+        -o-text-overflow: ellipsis; /* Opera */
+      }
+
+      #article_preview{
+      
+      }
+    }
+
+    #article_footer{
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+
+      background: #FEE5E5;
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //---------------------------------------
@@ -67,7 +156,7 @@
         border: 1px solid #ddd;
       }
       //-------------------------------------------
-      //  read bottun
+      //  read button
       //-------------------------------------------
 
       #article_read_mark{
@@ -81,7 +170,7 @@
       }	
 
       //-------------------------------------------
-      //  read bottun
+      //  read button
       //-------------------------------------------
       #mark_user_count{
 
@@ -177,7 +266,7 @@
         margin: 0 auto;
         width:  140px;
         height: 21px;
-        #bottun{
+        #button{
           margin: 0px 10px 0px 0px;				
           float: left;
           background: white;

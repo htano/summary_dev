@@ -13,6 +13,90 @@
 </script>
 
 
+<div class="container">
+  <div class="row">
+    <!-- summary list -->
+    <div id="summary_list" class="col-md-9">
+
+      <div id="article">
+        <div id="article_header" class="row">
+          <div class="col-md-2">
+            <span id="article_readers_num"><%= @num_of_mark_users %></span>
+            <span id="article_readers_char"> readers</span>
+          </div>
+          <div class="col-md-3 col-md-offset-7">
+            (既読ボタン) 
+          </div>
+        </div><!--end article_header-->
+        <div id="hr_area" class="row">
+          <div class="col-md-12">
+            <hr>
+          </div>
+        </div><!--end hr_area-->
+        
+        
+        <div id="article_body" class="row">
+          <div class="col-md-3 entry_box_right">
+            <%= image_tag(@article.thumbnail, :size => "128x160") %>
+          </div>
+          <div class="col-md-9">
+            <div id="article_title">
+              <% if @article.title %>
+                <%= link_to(@article.title,@article.url,:target=>["_blank"]) %>	
+              <% end %>
+            </div>
+            <div id="article_preview">
+              <p><%= @article.get_contents_preview %></p>
+            </div>
+          </div>
+        </div>
+        <div id="article_body" class="row">
+          <div class="col-md-12">
+            <%= image_tag "http://favicon.hatena.ne.jp/?url=" + @article.url %>
+            <cite style="word-wrap: break-word;">
+              <%= URI(@article.url).host %>
+            </cite>
+          </div>
+        </div><!--end article_body-->
+
+        <div id="article_footer" class="row">
+          <div class="col-md-3">
+          </div>
+          <div class="col-md-9">
+            登録日:
+          </div>
+
+        </div><!--end article_footer-->
+        
+      </div>
+
+
+
+    </div>
+
+    <!-- pass to other side-->
+    <div class="col-md-3">
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- before renew code -->
+
+
+
 
 <div id ="sumlist_layout">
   <table id ="summary_lists">
@@ -182,7 +266,7 @@
               <%= link_to image_tag("icons/glyphicons_343_thumbs_up.png",
                                     { :border => '0', 
                                       :alt => 'いい要約だね！', 
-                                      :id => "bottun"}),
+                                      :id => "button"}),
                                       {	:action => "good_summary",
                                         :list_index =>index,
                                         :summary_id =>summary_item.summary.id, 
