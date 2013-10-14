@@ -168,8 +168,6 @@ class ConsumerController < ApplicationController
           if params[:image]
             get_login_user.update_image_path(params[:image])
           end
-          flash[:success] = "Hello " + @creating_user_id +
-            ". SignUp was successfully completed."
           if @edit_profile_flg
             redirect_to(:controller => 'settings', :action => 'profile_edit')
           else

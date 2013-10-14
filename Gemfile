@@ -69,3 +69,5 @@ group :development do
 end
 
 gem 'extractcontent', :git => 'http://github.com/mono0x/extractcontent.git'
+
+gem 'figaro'
