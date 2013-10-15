@@ -53,7 +53,9 @@ module Webpage
     begin
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
       doc.xpath("//img[starts-with(@src, 'http://')]").each do |img|
-        p img["src"]
+      #doc.xpath("//img").each do |img|
+        p img["width"]
+        p img["heigth"]
         next if ADVERTISEMENTLIST.include?(img["src"])
         image = Magick::ImageList.new(img["src"])
         columns = image.columns 
