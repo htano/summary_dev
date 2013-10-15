@@ -1,23 +1,11 @@
 class MypageController < ApplicationController
   TABLE_ROW_NUM = 10
 
-  def index
-    logger.debug("action index")
+  before_filter :require_login_with_name, :only => [:index]
+  before_filter :require_login, :except => [:index]
 
-    # check wheter user accessed to this action is signed in user or not
-    if params[:name]
-      if login_user?(params[:name])
-        @is_login_user = true
-      else
-        @is_login_user = false
-      end
-    else
-      if signed_in?
-        @is_login_user = true
-      else
-        redirect_to :controller => 'consumer', :action => 'index' and return
-      end
-    end
+  def index
+    @is_login_user = params[:name] ? login_user?(params[:name]) : true
 
     if @is_login_user
       @user = User.find_by_name(get_current_user_name)
@@ -226,10 +214,6 @@ class MypageController < ApplicationController
   end
 
   def clip
-    unless signed_in?
-      redirect_to :controller => 'consumer', :action => 'index' and return
-    end
-
     login_user = get_login_user
     params[:article_ids].each do |article_id|
       if Article.exists?(article_id)
@@ -241,13 +225,6 @@ class MypageController < ApplicationController
   end
 
   def follow
-    unless signed_in?
-      respond_to do |format|
-        format.html { redirect_to :controller => 'consumer', :action => 'index' and return }
-        format.js { render 'login_page' and return }
-      end
-    end
-    
     @current_user = get_login_user
 
     if @current_user
@@ -275,8 +252,6 @@ class MypageController < ApplicationController
   end
 
   def unfollow
-    logger.debug("unfollow")
-
     @current_user = get_login_user
 
     if @current_user && @current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id])
@@ -305,6 +280,25 @@ class MypageController < ApplicationController
   end
 
 private
+  def require_login_with_name
+    if signed_in? == false && params[:name] == nil
+      redirect_to :controller => 'consumer', :action => 'index'
+    end
+  end
+
+  def require_login
+    unless signed_in?
+      respond_to do |format|
+        format.html { redirect_to :controller => 'consumer', :action => 'index' and return }
+        format.js { render 'login_page' and return }
+      end
+    end
+  end
+
+
+
+
+
   def is_already_following(user)
     is_already_following = false
     signed_user = User.find_by_name(get_current_user_name)
