@@ -115,6 +115,22 @@ div.hotentry-large-contents {
   }
 }
 
+span.hotentry-top-summary, span.hotentry-contents-preview {
+  font-size: 14px;
+}
+
+div.hotentry-top-summary, div.hotentry-contents-preview {
+  font-size: 18px;
+}
+
+.hotentry-top-summary {
+  color: #F5AC0F;
+}
+
+.hotentry-contents-preview {
+  color: #0FC7F5;
+}
+
 div.hotentry-large-image {
   margin-top: 23px;
 }

@@ -29,24 +29,32 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 hotentry-normal-summaries">
-                <%= e.user_articles.count %> readers,
-                <a href="<%= url_for(:controller => 'summary_lists',
-                                     :action=>'index',
-                                     :article_id => e.id) %>">
-                  <%= e.summaries.count %> summaries.
-                </a>
+              <div class="col-md-12 hotentry-normal-contents">
+                <% if e.get_top_rated_summary %>
+                  <span class="hotentry-top-summary">
+                    Top rated summary
+                  </span>
+                  <p>
+                    <%= e.get_top_rated_summary.content %>
+                  </p>
+                <% else %>
+                  <span class="hotentry-contents-preview">
+                    Contents preview
+                  </span>
+                  <p>
+                    <%= e.get_contents_preview %>
+                  </p>
+                <% end %>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12 hotentry-normal-contents">
-                <p>
-                  <% if e.get_top_rated_summary %>
-                    <%= e.get_top_rated_summary.content %>
-                  <% else %>
-                    <%= e.get_contents_preview %>
-                  <% end %>
-                </p>
+              <div class="col-md-6 hotentry-normal-summaries">
+                <%= e.user_articles.count %> readers,
+                <a href="<%= url_for(:controller=>'summary_lists',
+                                     :action=>'index',
+                                     :article_id=>e.id) %>">
+                  <%= e.summaries.count %> summaries.
+                </a>
               </div>
             </div>
           </div>
