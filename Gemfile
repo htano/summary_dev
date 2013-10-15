@@ -34,6 +34,9 @@ gem 'rmagick'
 #A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Rails 3
 gem 'kaminari'
 
+#measure image size(GIF, PNG, JPEG ,,, etc)
+gem 'imagesize'
+
 #Object-based searching.
 #gem "ransack"
 
