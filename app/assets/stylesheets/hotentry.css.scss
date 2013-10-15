@@ -26,6 +26,12 @@ div.hotentry-menu {
 
 }
 
+div.hotentry-menu-icons {
+  a {
+    text-decoration: none;
+  }
+}
+
 div.hotentry-row {
   margin-bottom: 5px;
   padding-bottom: 5px;
@@ -147,6 +153,12 @@ img.hotentry-large-image-imgtag {
 img.hotentry-normal-image-imgtag {
   max-width: 100px;
   max-height: 100px;
+}
+
+div.hotentry-large-goodsummary {
+  a {
+    text-decoration: none;
+  }
 }
 
 div.hotentry-normal-domain {
