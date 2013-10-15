@@ -248,9 +248,9 @@ Article.get_hotentry_articles.each do |e|
     end
   end
   body.split("\n").each do |p|
-    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/[。．.]/, "") }
+    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/[。．]/, "") }
     if p.length > 0
-      p.split(/[。．.]/).each do |s|
+      p.split(/[。．]/).each do |s|
         s.ngram(2).each do |k|
           @sum_tf_of_doc += 1
           if @tf_of_doc[k]
@@ -267,9 +267,9 @@ Article.get_hotentry_articles.each do |e|
   sentences_with_score = []
   idx = 0
   body.split("\n").each do |p|
-    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/[。．.]/, "") }
+    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/[。．]/, "") }
     if p.length > 0
-      p.split(/[。．.]/).each do |s|
+      p.split(/[。．]/).each do |s|
         #puts s
         @s_features = extract_features(s)
         if @s_features
