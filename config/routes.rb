@@ -40,8 +40,8 @@ SummaryDev::Application.routes.draw do
   get "chrome/get_summary_list"
   get "chrome/get_recommend_tag"
   get "chrome/get_recent_tag"
-  get "chrome/get_add_history"
-  get "chrome/get_current_user_name"
+  get "chrome/get_article_data"
+  get "chrome/get_login_user_id"
   get "chrome/add"
   #for webpage
   get "webpage/add" => "webpage#add"

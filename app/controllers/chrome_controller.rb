@@ -5,19 +5,26 @@ require "webpage"
 include Webpage
 
 class ChromeController < ApplicationController
-  def get_add_history
+  def get_article_data
     if signed_in?
       user_id = get_login_user.id
       @url = "#{params[:url]}"
+      unless @url.start_with?("http")
+        result = {"article_id" => BLANK, "msg" => "この記事は登録出来ません。"}
+        render :json => result and return
+      end
       article = Article.find_by_url(@url)
       if article == nil
-        render :text => BLANK and return
+        result = {"article_id" => BLANK, "msg" => BLANK}
+        render :json => result and return
       else
         user_article = article.user_articles.find_by_user_id(user_id)
         if user_article == nil
-          render :text => BLANK and return
+          result = {"article_id" => BLANK, "msg" => BLANK}
+          render :json => result and return
         else
-          render :text => article.id and return
+          result = {"article_id" => article.id, "msg" => "登録済みです。"}
+          render :json => result and return
         end
       end
     else
@@ -26,7 +33,7 @@ class ChromeController < ApplicationController
   end
 
   #TODO 画面からURL直打ちの回避
-  def get_current_user_name
+  def get_login_user_id
     if signed_in?
       render :text => get_login_user.id and return
     else
@@ -41,7 +48,11 @@ class ChromeController < ApplicationController
       render :text => BLANK and return
     else
       top_rated_tag = article.get_top_rated_tag
-      render :text => top_rated_tag and return
+      if top_rated_tag.length == 0
+        render :text => BLANK and return
+      else
+        render :text => top_rated_tag and return
+      end
     end
   end
 

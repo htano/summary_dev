@@ -7,7 +7,7 @@ $(document).ready( function(){
   /*$("p#p_url").text(bg.current_tab.url);*/
 
   $.ajax({
-      url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_current_user_name",
+      url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_login_user_id",
       type: "GET",
       dataType: "text",
       success: function(data) {
@@ -16,16 +16,18 @@ $(document).ready( function(){
           setBtnDisabled();
         } else {
         	$.ajax({
-        		url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_add_history",
+        		url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_article_data",
         		type: "GET",
         		data: "url=" + escape(bg.current_tab.url),
-        		dataType: "text",
+        		dataType: "json",
         		success: function(data) {
-        			if(data){
-        				setComment("登録済みです。");
-        				setBtnDisabled();
-        				setSummaryEditLink(data);
-        			}
+        			if(data.msg){
+                setComment(data.msg);
+                setBtnDisabled();
+                if(data.article_id){
+                  setSummaryEditLink(data.article_id);
+                }
+              }
         		}
         	});
         }
