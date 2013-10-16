@@ -50,35 +50,30 @@ module Webpage
 
   #サムネイルを取得するメソッド
   def get_webpage_thumbnail(url, html)
-    img_src = nil
+    img_url = nil
     begin
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
       doc.xpath("//img").each do |img|
-        img_src = img["src"]
-        next if img_src == nil
-        #next if isAdvertisement?(img_src)
-        unless img_src.start_with?("http")
-          img_src = URI.join(url, img_src).to_s
-        end
-        p img_src
+        img_url = img["src"]
+        next if img_url == nil
+        next if isAdvertisement?(url, img_url)
+        img_url = URI.join(url, img_url).to_s unless img_url.start_with?("http")
         begin
-          open(img_src, "rb"){|f|
-            file = ImageSize.new(f.read)
-            unless file.get_width == nil || file.get_height == nil
-              if file.get_width > THRESHOLD_SIDE && file.get_height > THRESHOLD_SIDE
-                return img_src
-              end
+          file = ImageSize.new(open(img_url, "rb").read)
+          unless file.get_width == nil || file.get_height == nil
+            if file.get_width > THRESHOLD_SIDE && file.get_height > THRESHOLD_SIDE
+              return img_url
+            else
+              next
             end
-          }
+          end
         rescue => e
           logger.error("error :#{e}")
           next
         end
-        image = Magick::ImageList.new(img_src)
-        columns = image.columns 
-        rows = image.rows
-        if columns.to_i > THRESHOLD_SIDE && rows.to_i > THRESHOLD_SIDE
-          return img_src
+        image = Magick::ImageList.new(img_url)
+        if image.columns.to_i > THRESHOLD_SIDE && image.rows.to_i > THRESHOLD_SIDE
+          return img_url
         end
       end
       return "no_image.png"
@@ -114,12 +109,15 @@ module Webpage
     end
   end
 
-  def isAdvertisement?(url)
-    ADVERTISEMENTLIST.each{|advertisement|
-      p url.include?(advertisement) 
-      if url.include?(advertisement)
+  #広告画像を排除する
+  #画像URLにamazon, rakutenが入っている場合は広告と判断する
+  #登録しようとしているURLにamazon, rakutenが入っている場合は何もしない
+  def isAdvertisement?(url, img_url)
+    ADVERTISEMENTLIST.each do |advertisement|
+      if !(url.include?(advertisement)) && img_url.include?(advertisement)
         return true
       end
-    }
+    end
+    return false
   end
 end
