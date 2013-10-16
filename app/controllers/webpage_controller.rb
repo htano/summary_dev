@@ -6,8 +6,8 @@ include Webpage
 class WebpageController < ApplicationController
   def add
     if signed_in?
-      @user_id = "#{params[:id]}"
-      @msg = "#{params[:msg]}"
+      @user_id = params[:id]
+      @msg = params[:msg]
     else
       redirect_to :controller => "consumer", :action => "index"
     end
@@ -16,7 +16,7 @@ class WebpageController < ApplicationController
   def add_confirm
     if signed_in?
       @user_id = get_login_user.id
-      @url = "#{params[:url]}"
+      @url = params[:url]
       h =   get_webpage_element(@url, true, false, false)
       if h == nil || @url.start_with?("chrome://extensions/")
         @msg = "Please check URL."
@@ -46,7 +46,7 @@ class WebpageController < ApplicationController
   def add_complete
     if signed_in?
       @prof_image =  get_login_user.prof_image
-      @url = "#{params[:url]}"
+      @url = params[:url]
       tag_list = []
       params.each do |key,value|
         if key.start_with?("tag_text_")

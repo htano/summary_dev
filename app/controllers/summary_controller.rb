@@ -4,7 +4,7 @@ class SummaryController < ApplicationController
   def delete
     if signed_in?
       user_id = get_login_user.id
-      @article_id = "#{params[:article_id]}"
+      @article_id = params[:article_id]
       summary = Summary.find_by_user_id_and_article_id(user_id, @article_id)
       if summary == nil
         redirect_to :controller => "mypage", :action => "index"
@@ -20,7 +20,7 @@ class SummaryController < ApplicationController
   
   def edit
     if signed_in?
-      @article_id = "#{params[:article_id]}"
+      @article_id = params[:article_id]
       article = Article.find_by id: @article_id
       if article == nil
         render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => "text/html" and return
@@ -44,7 +44,7 @@ class SummaryController < ApplicationController
   def edit_complete
     if signed_in?
       user_id = get_login_user.id
-      @article_id = "#{params[:article_id]}"
+      @article_id = params[:article_id]
       article = Article.find_by id: @article_id
       if article == nil
         render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => "text/html" and return

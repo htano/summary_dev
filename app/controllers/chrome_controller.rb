@@ -8,7 +8,7 @@ class ChromeController < ApplicationController
   def get_article_data
     if signed_in?
       user_id = get_login_user.id
-      @url = "#{params[:url]}"
+      @url = params[:url]
       unless @url.start_with?("http")
         result = {"article_id" => BLANK, "msg" => "この記事は登録出来ません。"}
         render :json => result and return
@@ -42,7 +42,7 @@ class ChromeController < ApplicationController
   end
 
   def get_recommend_tag
-    @url = "#{params[:url]}"
+    @url = params[:url]
     article = Article.find_by_url(@url)
     if article == nil
       render :text => BLANK and return
@@ -73,7 +73,7 @@ class ChromeController < ApplicationController
   #TODO 画面からURL直打ちの回避
   def add
     if signed_in?
-      url = "#{params[:url]}"
+      url = params[:url]
       tag_list = []
       params.each do |key,value|
         if key.start_with?("tag_text_")
@@ -98,7 +98,7 @@ class ChromeController < ApplicationController
 
   #TODO 画面からURL直打ちの回避
   def get_summary_num
-    @url = "#{params[:url]}"
+    @url = params[:url]
     article = Article.find_by_url(@url);
     if article == nil then
       render :text => 0 and return
@@ -108,7 +108,7 @@ class ChromeController < ApplicationController
   end
 
   def get_summary_list
-    @url = "#{params[:url]}"
+    @url = params[:url]
     article = Article.find_by_url(@url);
     if article == nil then
       render :json => nil and return

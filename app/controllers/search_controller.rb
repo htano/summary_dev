@@ -13,10 +13,10 @@ class SearchController < ApplicationController
   end
 
   def search
-    @searchtext = "#{params[:searchtext]}"
-    @condition = "#{params[:condition]}"
-    @sort = "#{params[:sort]}"
-    @focus = "#{params[:focus]}"
+    @searchtext = params[:searchtext]
+    @condition = params[:condition]
+    @sort = params[:sort]
+    @focus = params[:focus]
     @articles = []
     @articles_num = 0
     case @condition
