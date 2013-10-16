@@ -63,6 +63,9 @@ hr {
   #hr_summary_list_header
   {
     background: #FEE5E5;
+      #read_button{
+        font-weight: bold;
+      }
   }
 
   #summary_list_body{
@@ -93,7 +96,6 @@ hr {
       #summary_box_left{
         padding: 0px;
         #summary_auther_img{
-          text-align: center; 
         }
       }
 
@@ -106,10 +108,15 @@ hr {
           }
 
           #follow_button{
+            margin-top: 5px;
             font-weight: bold;
             width: 80px;
           }
 
+          #good_button{
+            font-weight: bold;
+            width: 80px;
+          }
         }
         #summary_box_body{
           font-size: 18px;

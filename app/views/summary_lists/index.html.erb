@@ -22,8 +22,44 @@
           <span id="article_readers_num"><%= @num_of_mark_users %></span>
           <span id="article_readers_char"> readers</span>
         </div>
-        <div class="col-md-2 col-md-offset-8">
-          (既読ボタン) 
+        <div class="col-md-2 col-md-offset-6">
+          あとで読む登録
+        </div>
+        <div class="col-md-2">
+          <% if @user %>
+            <div id ="article_read_mark">
+            <div id="unreadBottun" 
+              <% if @is_read_article then %>
+                style="display:none"
+            <% end %>
+              >
+              <%= link_to raw("<span class='glyphicon glyphicon-unchecked'></span>既読にする") ,
+                   {:action => "read", 
+                   :article_id => @article.id, 
+                   :remote => true},
+                   {:type => "button",
+                    :id => "read_button",
+                    :class=>"btn btn-info btn-xs", 
+                   :method => :post} %>
+             </div>
+                             <div id="alreadyReadBottun" 
+                               <% unless @is_read_article then %>
+                                 style="display:none"
+                             <% end %>
+                               >
+                 <%= link_to raw("<span class='glyphicon glyphicon-check'></span>未読に戻す"), 
+                              {:action => "cancel_read", 
+                              :article_id => @article.id, 
+                              :remote => true},
+                   {:type => "button",
+                    :id => "read_button",
+                    :class=>"btn btn-default btn-xs", 
+                   :method => :post} %>
+                                              </div>
+
+                                              </div>
+
+          <% end %>
         </div>
       </div><!--end article_header-->
       <div id="hr_summary_list_header" class="row">
@@ -52,8 +88,13 @@
               <%= link_to(@article.title,@article.url,:target=>["_blank"]) %>	
             <% end %>
           </div>
-          <div>
-            preview
+          <div class="row">
+            <div class="col-md-6">
+              元記事のプレビューを見る 
+            </div>
+            <div class="col-md-6">
+              要約への導線or自分の要約を表示するかどうか 
+            </div>
           </div>
 
           <!-- summary loop-->
@@ -81,14 +122,12 @@
               </div>
               <div id="summary_box_right" class="col-md-11">
                 <div id="summary_box_header" class="row">
-                  <div id="summary_auther" class="col-md-3">
+                  <div id="summary_auther" class="col-md-4">
                     <%= link_to sanitize('<span class="glyphicon glyphicon-user"></span> ') +
                       summary_item.user.name,
                       {:controller => 'mypage',
                        :action => "index", 
                        :name => summary_item.user.name} %>
-                  </div>
-                  <div id="summary_auther" class="col-md-2">
                     <!-- follow button-->
                     <% if @user %> 
                       <div id="follow_mark">
@@ -130,8 +169,62 @@
                     要約日: 
                     <%= summary_item.summary.updated_at.strftime("%Y年%m月%d日 %H時%M分") %>
                   </div>
-                  <div id="summary_good" class="col-md-2">
-                    good  
+                  <div id="summary_good" class="col-md-3">
+                  <!-- good dummary button -->
+                  <% if @user %>
+                    <div id="yet_good_summary<%=index%>" class="iiyo"
+                      <% if summary_item.is_good_completed then %>
+                        style="display:none"
+                      <% end %>
+                    >
+                       <%= link_to raw("<span class='glyphicon glyphicon-thumbs-up'></span>グッド"), 
+                         { :action => "good_summary",
+                           :list_index =>index,
+                           :summary_id =>summary_item.summary.id, 
+                           :article_id => @article.id,
+                           :remote => true }, 
+                           {:type => "button",
+                            :id => "good_button",
+                            :class=>"btn btn-success btn-xs", 
+                            :method => :post} %>
+                     <% if summary_item.is_good_completed then %>
+                       <span id="count">
+                         <%= summary_item.summary_point - 1 %> 
+                       </span>
+                     <% else %>
+                       <span id="count">
+                         <%= summary_item.summary_point %> 
+                       </span>
+                     <% end %>
+
+                     </div>
+
+                     <div id="already_good_summary<%=index%>" class="iiyo"
+                       <% unless  summary_item.is_good_completed then %>
+                         style="display:none"
+                     <% end %>
+                     >
+                     <%= link_to raw("<span class='glyphicon glyphicon-thumbs-up'></span>グッド済"), 
+                         { :action => "cancel_good_summary",
+                           :list_index =>index,
+                           :summary_id =>summary_item.summary.id, 
+                           :article_id => @article.id,
+                           :remote => true }, 
+                           {:type => "button",
+                            :id => "good_button",
+                            :class=>"btn btn-default btn-xs", 
+                            :method => :post} %>
+                         <% unless summary_item.is_good_completed then %>
+                           <span id="count">
+                             <%= summary_item.summary_point + 1 %> 
+                           </span>
+                         <% else %>
+                           <span id="count">
+                             <%= summary_item.summary_point %> 
+                           </span>
+                         <% end %>
+                       </div>
+                     <% end %>
                   </div>
                 </div>
                 <div id="hr_summary_box_header" class="row">
