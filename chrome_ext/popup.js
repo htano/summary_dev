@@ -4,32 +4,33 @@ BLANK = ""
 $(document).ready( function(){
   var bg = window.chrome.extension.getBackgroundPage();
   $("p#p_title").text(bg.current_tab.title);
-  /*$("p#p_url").text(bg.current_tab.url);*/
 
   $.ajax({
       url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_login_user_id",
       type: "GET",
       dataType: "text",
       success: function(data) {
-        if(!data){
-          $("#a_link_to_login").attr("style", "visibility:visible;");
-          setBtnDisabled();
-        } else {
-        	$.ajax({
-        		url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_article_data",
-        		type: "GET",
-        		data: "url=" + escape(bg.current_tab.url),
-        		dataType: "json",
-        		success: function(data) {
-        			if(data.msg){
+        if(data){
+          $.ajax({
+            url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_article_data",
+            type: "GET",
+            data: "url=" + escape(bg.current_tab.url),
+            dataType: "json",
+            success: function(data) {
+              if(data.msg){
                 setComment(data.msg);
                 setBtnDisabled();
                 if(data.article_id){
                   setSummaryEditLink(data.article_id);
                 }
               }
-        		}
-        	});
+            }
+          });
+        } else {
+          $("#a_link_to_login").attr("style", "visibility:visible;");
+          setComment("ログインして下さい。");
+          hiddenBtnDisabled();
+          hiddenTagArea();
         }
       }
   });
@@ -116,6 +117,15 @@ $(document).ready( function(){
   });
 });
 
+function hiddenTagArea(){
+  $("#recommend_tag_title").hide();
+  $("#recommend_tag_data").hide();
+  $("#recent_tag_title").hide();
+  $("#recent_tag_data").hide();
+  $("#my_tag_title").hide();
+  $("#my_tag_data").hide();
+}
+
 function removeMark(str){
   str = str.replace("[", "");
   str = str.replace("]", "");
@@ -134,6 +144,11 @@ function setSummaryEditLink(article_id){
   var bg = window.chrome.extension.getBackgroundPage();
   $("#a_link_to_summary_edit").attr("style", "visibility:visible;");
   $("#a_link_to_summary_edit").attr("href", "http://" + bg.SERVICE_HOSTNAME + "/summary/"+article_id+"/edit");
+}
+
+//登録ボタンを隠す
+function hiddenBtnDisabled(){
+  $("#p_button").hide();
 }
 
 //登録ボタンを非活性にする。ついでにクラスも変更する。
