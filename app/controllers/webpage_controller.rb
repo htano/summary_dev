@@ -25,17 +25,15 @@ class WebpageController < ApplicationController
 
       @title = h["title"]
       @recent_tags = UserArticle.get_recent_tag(@user_id)
+      @set_tags = []
 
-      article = Article.find_by_url(@url) 
+      article = Article.find_by_url(@url)
       unless article == nil
         user_article = article.user_articles.find_by_user_id(@user_id)
-        unless user_article == nil
-          @msg = "you already registered."
-          redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
-        end
-        @summary_num = article.summaries.count(:all)
+        @summary_num = article.summaries_count
         @article_id = article.id
         @top_rated_tags = article.get_top_rated_tag
+        @set_tags = user_article.get_set_tag
       end
 
     else

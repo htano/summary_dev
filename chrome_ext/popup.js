@@ -82,8 +82,46 @@ $(document).ready( function(){
         }
       }
   });
+
+  $.ajax({
+      url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_set_tag",
+      type: "GET",
+      data: "url=" + escape(bg.current_tab.url),
+      dataType: "text",
+      success: function(data) {
+        if(data){
+          data = removeMark(data);
+          var tags = data.split(",");
+          var i=1;
+          while(tags.length>=i){
+            var tag = tags[i-1].trim();
+            for (var j=1 ; j<=10 ; j++){
+              if (document.getElementById("tag_text_"+j).value == BLANK) {
+                document.getElementById("tag_text_"+j).value = tag
+                break;
+              }
+            }
+
+            for (var j=1 ; j<=10 ; j++){
+              if (document.getElementById("recommend_tag_"+j).innerHTML == tag) {
+                document.getElementById("recommend_tag_"+j).className = "recommend_tag_pushed";
+                break;
+              }
+            }
+
+            for (var j=1 ; j<=10 ; j++){
+              if (document.getElementById("recent_tag_"+j).innerHTML == tag) {
+                document.getElementById("recent_tag_"+j).className = "recent_tag_pushed";
+                break;
+              }
+            }
+            i++;
+          }
+          $("#recent_tag").find("span").addClass("recent_tag");
+        }
+      }
+  });
   
-  //TODO タグ情報を送信してChromeからでもタグ有で登録出来るようにする
   $("#p_button").click(function(){
     $("img.a_load").show();
     $.ajax({
@@ -182,7 +220,14 @@ function clickRecommendTag(obj){
       if (document.getElementById("tag_text_" + i).value == BLANK){
         document.getElementById("tag_text_" + i).value = value;
         obj.className = "recommend_tag_pushed";
-        return;
+        break;
+      }
+    }
+
+    for (var i=1 ; i<=10 ; i++){
+      if (document.getElementById("recent_tag_" + i).innerHTML == value){
+        document.getElementById("recent_tag_" + i).className = "recent_tag_pushed";
+        break;
       }
     }
 
@@ -191,7 +236,14 @@ function clickRecommendTag(obj){
       if (document.getElementById("tag_text_" + i).value == value){
         document.getElementById("tag_text_" + i).value = BLANK;
         obj.className = "recommend_tag";
-        return;
+        break;
+      }
+    }
+
+    for (var i=1 ; i<=10 ; i++){
+      if (document.getElementById("recent_tag_" + i).innerHTML == value){
+        document.getElementById("recent_tag_" + i).className = "recent_tag";
+        break;
       }
     }
   }
@@ -215,16 +267,29 @@ function clickRecentTag(obj){
       if (document.getElementById("tag_text_" + i).value == BLANK){
         document.getElementById("tag_text_" + i).value = value;
         obj.className = "recent_tag_pushed";
-        return;
+        break;
       }
     }
 
+    for (var i=1 ; i<=10 ; i++){
+      if (document.getElementById("recommend_tag_" + i).innerHTML == value){
+        document.getElementById("recommend_tag_" + i).className = "recommend_tag_pushed";
+        break;
+      }
+    }
   } else {
     for (var i=1 ; i<=10 ; i++){
       if (document.getElementById("tag_text_" + i).value == value){
         document.getElementById("tag_text_" + i).value = BLANK;
         obj.className = "recent_tag";
-        return;
+        break;
+      }
+    }
+
+    for (var i=1 ; i<=10 ; i++){
+      if (document.getElementById("recommend_tag_" + i).innerHTML == value){
+        document.getElementById("recommend_tag_" + i).className = "recommend_tag";
+        break;
       }
     }
   }

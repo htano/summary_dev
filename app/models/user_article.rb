@@ -25,4 +25,13 @@ class UserArticle < ActiveRecord::Base
     recent_tags = joins(:user_article_tags).where("user_id" => user_id).group("tag").order("user_article_tags.created_at desc").count("tag").keys
     return recent_tags[first_index..last_index]
   end
+
+  #前回登録時に設定したタグ情報を取得するメソッド
+  def get_set_tag()
+    first_index = 0
+    last_index = 9
+    set_tags = self.user_article_tags.group("tag").order("user_article_tags.created_at desc").count("tag").keys
+    p set_tags
+    return set_tags[first_index..last_index]
+  end
 end

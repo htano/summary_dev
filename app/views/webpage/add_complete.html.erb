@@ -2,6 +2,12 @@
 <%= stylesheet_link_tag "webpage" %>
 <% end %>
 
+<script>
+$(document).ready(function() {
+  loadEditForm()
+});
+</script>
+
 <div class="comment_box">
   <p>Register Complete.</p>
   <span id="msg"><%= @msg %></span>

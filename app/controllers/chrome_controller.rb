@@ -41,6 +41,20 @@ class ChromeController < ApplicationController
     end
   end
 
+  def get_set_tag
+    @url = params[:url]
+    article = Article.find_by_url(@url)
+    unless article == nil
+      user_article = article.user_articles.find_by_user_id(get_login_user.id)
+      set_tags = user_article.get_set_tag
+      if set_tags.length == 0
+        render :text => BLANK and return
+      else
+        render :text => set_tags and return
+      end
+    end
+  end
+
   def get_recommend_tag
     @url = params[:url]
     article = Article.find_by_url(@url)
