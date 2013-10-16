@@ -3,7 +3,7 @@ BLANK = ""
 /*TODO ホストの書き方*/
 $(document).ready( function(){
   var bg = window.chrome.extension.getBackgroundPage();
-  $("p#p_title").text(bg.current_tab.title);
+  init(bg);
 
   $.ajax({
       url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_login_user_id",
@@ -27,7 +27,7 @@ $(document).ready( function(){
             }
           });
         } else {
-          $("#a_link_to_login").attr("style", "visibility:visible;");
+          $("#a_link_to_login").show();
           setComment("ログインして下さい。");
           hiddenBtnDisabled();
           hiddenTagArea();
@@ -85,7 +85,7 @@ $(document).ready( function(){
   
   //TODO タグ情報を送信してChromeからでもタグ有で登録出来るようにする
   $("#p_button").click(function(){
-    $("img.a_load").attr("style", "visibility:visible;");
+    $("img.a_load").show();
     $.ajax({
       url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/add",
       type: "GET",
@@ -104,7 +104,7 @@ $(document).ready( function(){
       },
       dataType: "json",
       success: function(data) {
-        $("img.a_load").attr("style", "visibility:hidden;");
+        $("img.a_load").hide();
         if (data.article_id != BLANK){
           setComment(data.msg);
           setBtnDisabled();
@@ -116,6 +116,14 @@ $(document).ready( function(){
     });
   });
 });
+
+function init(baclgroundpage){
+  $("#p_title").text(baclgroundpage.current_tab.title);
+  $("#p_comment").hide();
+  $("#a_link_to_login").hide();
+  $("#a_link_to_summary_edit").hide();
+  $("img.a_load").hide();
+}
 
 function hiddenTagArea(){
   $("#recommend_tag_title").hide();
@@ -135,14 +143,14 @@ function removeMark(str){
 
 //コメントを設定する
 function setComment(msg){
-  $("p#p_comment").text(msg);
-  $("p#p_comment").attr("style", "visibility:visible;");
+  $("#p_comment").text(msg);
+  $("#p_comment").show();
 }
 
 //要約編集画面へのリンクを設定する
 function setSummaryEditLink(article_id){
   var bg = window.chrome.extension.getBackgroundPage();
-  $("#a_link_to_summary_edit").attr("style", "visibility:visible;");
+  $("#a_link_to_summary_edit").show();
   $("#a_link_to_summary_edit").attr("href", "http://" + bg.SERVICE_HOSTNAME + "/summary/"+article_id+"/edit");
 }
 
