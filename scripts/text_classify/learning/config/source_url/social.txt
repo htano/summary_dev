@@ -1,0 +1,2 @@
+source_url	paging_rule	xpath	exclude_string
+http://b.hatena.ne.jp/entrylist/social?of=___PAGE_FROM___	0,20	//h3[@class="hb-entry-link-container"]/a	
