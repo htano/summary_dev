@@ -47,7 +47,7 @@
           <li class="prof-tab-elem none">
             <a href="#prof-tab-followers" data-toggle="tab" id="followers-num">
               followers<br>
-              <%= @followers.size %>
+              <%= @followers_info[:num] %>
             </a>
             <div id="info-tab-marker"></div>
           </li>
@@ -55,8 +55,7 @@
           <li class="prof-tab-elem none">
             <a href="#prof-tab-summary" data-toggle="tab">
               summary<br>
-              <% # 動的に取る、そもそもsummaryでよいかも考える %>
-              10
+              <%= @total_summaries_num %>
             </a>
             <div id="info-tab-marker"></div>
           </li>
@@ -77,14 +76,11 @@
           <% end %>
         </div>
         <div id="prof-tab-followers">
-          <% if @followers %>
-            <% @followers.each_with_index do |follower, i| %>
+          <% if @followers_info[:lists] %>
+            <% @followers_info[:lists].each do |follower| %>
               <%= link_to image_tag(follower.prof_image, :size => "32x32", :title => follower.name),
               {:action => "index", :name => follower.name},
               {:id => "follower-id-"+ follower.id.to_s } %>
-              <% if i > 12 %>
-                <% break %>
-              <% end %>
             <% end %>
             <div id="insert-image"></div>
             <br>

@@ -1,5 +1,7 @@
 class MypageController < ApplicationController
-  RENDER_FAVORITE_USER_NUM = 13
+  RENDER_USERS_NUM = 13
+  RENDER_FAVORITE_USERS_NUM = RENDER_USERS_NUM
+  RENDER_FOLLOWERS_NUM = RENDER_USERS_NUM
   TABLE_ROW_NUM = 10
 
   before_filter :require_login_with_name, :only => [:index]
@@ -18,15 +20,18 @@ class MypageController < ApplicationController
 
     favorite_users = get_favorite_users(@user)
     @favorite_users_info = {:num => favorite_users.length ,
-                            :lists => favorite_users[0..RENDER_FAVORITE_USER_NUM]}
+                            :lists => favorite_users[0..RENDER_FAVORITE_USERS_NUM]}
 
-    # followers 
-    followers_favorite_users = FavoriteUser.where(:favorite_user_id => @user.id)
-    @followers = []
-    followers_favorite_users.each do |follower_favorite_user|
-      user = follower_favorite_user.user
-      @followers.push(user)
-    end
+    followers = get_followers(@user)
+    @followers_info = {:num => followers.length,
+                        :lists => followers[0..RENDER_FOLLOWERS_NUM]}
+
+
+
+
+
+
+
 
     renew_sort_type(cookies, params[:direction], params[:sort])
     sort_info = get_sort_info(cookies)
@@ -307,6 +312,15 @@ private
     favorite_user_ids = user.favorite_users.select(:favorite_user_id)
     return User.where(:id => favorite_user_ids)
   end
+
+  def get_followers(user)
+    follower_ids = FavoriteUser.where(:favorite_user_id => user.id).select(:user_id)
+    return User.where(:id => follower_ids)
+  end
+
+
+
+
 
 
 
