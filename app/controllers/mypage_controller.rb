@@ -1,4 +1,5 @@
 class MypageController < ApplicationController
+  RENDER_FAVORITE_USER_NUM = 13
   TABLE_ROW_NUM = 10
 
   before_filter :require_login_with_name, :only => [:index]
@@ -8,26 +9,16 @@ class MypageController < ApplicationController
     @is_login_user = params[:name] ? login_user?(params[:name]) : true
 
     if @is_login_user
-      @user = User.find_by_name(get_current_user_name)
+      @user = get_login_user
       @user.update_mypage_access
     else
       @user = User.find_by_name(params[:name])
-      if @user
-        # check whether already follows or not
-        @is_already_following = is_already_following(@user)
-      else
-        # error account doesn't exist
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
-        return
-      end
+      @is_already_following = is_already_following?(@user.id)
     end
 
-    # follow user information
-    @favorite_users = []
-    @user.favorite_users.each do |favorite_user|
-      user = User.find(favorite_user.favorite_user_id)
-      @favorite_users.push(user)
-    end
+    favorite_users = get_favorite_users(@user)
+    @favorite_users_info = {:num => favorite_users.length ,
+                            :lists => favorite_users[0..RENDER_FAVORITE_USER_NUM]}
 
     # followers 
     followers_favorite_users = FavoriteUser.where(:favorite_user_id => @user.id)
@@ -281,8 +272,15 @@ class MypageController < ApplicationController
 
 private
   def require_login_with_name
-    if signed_in? == false && params[:name] == nil
-      redirect_to :controller => 'consumer', :action => 'index'
+    if params[:name]
+      unless User.exists?(:name => params[:name])
+        render :file => "#{Rails.root}/public/404.html", 
+               :status => 404, :layout => false, :content_type => 'text/html'
+      end
+    else
+      unless signed_in?
+        redirect_to :controller => 'consumer', :action => 'index'
+      end
     end
   end
 
@@ -295,20 +293,25 @@ private
     end
   end
 
-
-
-
-
-  def is_already_following(user)
-    is_already_following = false
-    signed_user = User.find_by_name(get_current_user_name)
-    if signed_user && signed_user.favorite_users.exists?(:favorite_user_id => user.id)
-      is_already_following = true
-    else
-      is_already_following = false
+  def is_already_following?(user_id)
+    is_already_following = false;
+    if signed_in?
+      if get_login_user.favorite_users.exists?(:favorite_user_id => user_id)
+        is_already_following = true
+      end
     end
     return is_already_following
   end
+
+  def get_favorite_users(user)
+    favorite_user_ids = user.favorite_users.select(:favorite_user_id)
+    return User.where(:id => favorite_user_ids)
+  end
+
+
+
+
+
 
   def get_table(user_articles, is_login_user)
     table = []

@@ -39,7 +39,7 @@
           <li class="prof-tab-elem none active">
             <a href="#prof-tab-following" data-toggle="tab">
               following<br>
-              <%= @favorite_users.size %>
+              <%= @favorite_users_info[:num] %>
             </a>
             <div id="info-tab-marker"></div>
           </li>
@@ -65,13 +65,10 @@
       <hr/>
       <div id="user-info">
         <div id="prof-tab-following" class="active">
-          <% if @favorite_users %>
-            <% @favorite_users.each_with_index do |favorite_user, i| %>
+          <% if @favorite_users_info[:lists] %>
+            <% @favorite_users_info[:lists].each do |favorite_user| %>
               <%= link_to image_tag(favorite_user.prof_image, :size => "32x32", :title => favorite_user.name),
               {:action => "index", :name => favorite_user.name} %>
-              <% if i > 12 %>
-                <% break %>
-              <% end %>
             <% end %>
             <br>
             <a href="/follow_lists/following?name=<%= @user.name %>">
