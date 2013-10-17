@@ -2,12 +2,13 @@ class MypageController < ApplicationController
   RENDER_USERS_NUM = 13
   RENDER_FAVORITE_USERS_NUM = RENDER_USERS_NUM
   RENDER_FOLLOWERS_NUM = RENDER_USERS_NUM
-  TABLE_ROW_NUM = 10
+  TABLE_ROW_NUM = 20
 
   before_filter :require_login_with_name, :only => [:index]
   before_filter :require_login, :except => [:index]
 
   def index
+    @table_row_num = TABLE_ROW_NUM
     @is_login_user = params[:name] ? login_user?(params[:name]) : true
 
     if @is_login_user
@@ -96,6 +97,7 @@ class MypageController < ApplicationController
     end
     @summaries_table = get_summary_table(summaries, @is_login_user)
     @total_summaries_num = @user.summaries.size
+    logger.debug("summary num : #{@total_summaries_num}")
     
     if params[:mpage]
       @current_tab = "main"

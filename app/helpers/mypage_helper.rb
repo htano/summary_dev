@@ -9,8 +9,8 @@ module MypageHelper
     page_position = ""
 
     if total_num > 0
-      page_position = ((page.to_i - 1)*10 + 1).to_s + "-" + 
-                      ((page.to_i - 1) * 10 + table.size).to_s + 
+      page_position = ((page.to_i - 1) * MypageController::TABLE_ROW_NUM + 1).to_s + "-" + 
+                      ((page.to_i - 1) * MypageController::TABLE_ROW_NUM + table.size).to_s + 
                       "<span> of </span>" + total_num.to_s 
     else
       page_position = "0 <span> of </span> 0"
