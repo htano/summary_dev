@@ -1,3 +1,5 @@
+include FollowManager
+
 class MypageController < ApplicationController
   RENDER_USERS_NUM = 13
   RENDER_FAVORITE_USERS_NUM = RENDER_USERS_NUM
@@ -26,6 +28,8 @@ class MypageController < ApplicationController
     followers = get_followers(@user)
     @followers_info = {:num => followers.length,
                         :lists => followers[0..RENDER_FOLLOWERS_NUM]}
+
+
 
 
 
@@ -149,7 +153,6 @@ class MypageController < ApplicationController
     login_user = get_login_user
 
     params[:article_ids].each do |article_id|
-      logger.debug("#{article_id}")
       article = login_user.user_articles.find_by_article_id(article_id)
 
       if article && article.read_flg != true
@@ -226,7 +229,6 @@ class MypageController < ApplicationController
     @current_user = get_login_user
 
     if @current_user
-      logger.debug("follow user id : #{params[:follow_user_id]}")
       if User.exists?(params[:follow_user_id])
         FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
       else
@@ -277,6 +279,9 @@ class MypageController < ApplicationController
     render :nothing => true
   end
 
+
+
+
 private
   def require_login_with_name
     if params[:name]
@@ -310,14 +315,27 @@ private
     return is_already_following
   end
 
-  def get_favorite_users(user)
-    favorite_user_ids = user.favorite_users.select(:favorite_user_id)
-    return User.where(:id => favorite_user_ids)
+  def renew_sort_type(cookies, direction, sort)
+    if direction
+      cookies[:direction] = {:value => direction, :expires => 7.days.from_now }
+    end
+    if sort
+      cookies[:sort] = {:value => sort, :expires => 7.days.from_now }
+    end
   end
 
-  def get_followers(user)
-    follower_ids = FavoriteUser.where(:favorite_user_id => user.id).select(:user_id)
-    return User.where(:id => follower_ids)
+  def get_sort_info(cookies)
+    case cookies[:sort]
+    when "registered"
+      if cookies[:direction] == "asc"
+        return {:menu_title => "Oldest", :condition => "created_at ASC"}
+      else
+        return {:menu_title => "Newest", :condition => "created_at DESC"}
+      end
+    else
+      #default
+      return {:menu_title => "Newest", :condition => "created_at DESC"}
+    end
   end
 
 
@@ -399,29 +417,6 @@ private
     end
     if params[:rpage]
       redirect_to :action => "index", :rpage => params[:rpage]
-    end
-  end
-
-  def renew_sort_type(cookies, direction, sort)
-    if direction
-      cookies[:direction] = {:value => direction, :expires => 7.days.from_now }
-    end
-    if sort
-      cookies[:sort] = {:value => sort, :expires => 7.days.from_now }
-    end
-  end
-
-  def get_sort_info(cookies)
-    case cookies[:sort]
-    when "registered"
-      if cookies[:direction] == "asc"
-        return {:menu_title => "Oldest", :condition => "created_at ASC"}
-      else
-        return {:menu_title => "Newest", :condition => "created_at DESC"}
-      end
-    else
-      #default
-      return {:menu_title => "Newest", :condition => "created_at DESC"}
     end
   end
 
