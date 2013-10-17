@@ -23,7 +23,7 @@
             <th>title</th>
           </tr>
           <tr>
-            <td><p id="p_title">(default)</p></td>
+            <td><p id="title">(default)</p></td>
           </tr>
           <tr id="recommend_tag_title">
             <th>recommend tags for this article.</th>
@@ -32,27 +32,27 @@
             <td id="recommend_tag"></td>
           </tr>
           <tr id="recent_tag_title">
-            <th>recent tags.</th>
+            <th>your recent tags.</th>
           </tr>
           <tr id="recent_tag_data">
             <td id="recent_tag"></td>
           </tr>
           <tr id="my_tag_title">
-            <th>input yousr tags.<!--<span =id="test"><img src="glyphicons_016_bin.png" width="10" height="10" id="tag_clear"/></span>--></th>
+            <th>input your tags.<!--<span =id="test"><img src="glyphicons_016_bin.png" width="10" height="10" id="tag_clear"/></span>--></th>
           </tr>
           <tr id="my_tag_data">
             <td>
               <div id="my_tag">
-                <input type="text" class="tag_text" name="tag_text_1" id="tag_text_1">
-                <input type="text" class="tag_text" name="tag_text_2" id="tag_text_2">
-                <input type="text" class="tag_text" name="tag_text_3" id="tag_text_3">
-                <input type="text" class="tag_text" name="tag_text_4" id="tag_text_4">
-                <input type="text" class="tag_text" name="tag_text_5" id="tag_text_5"><br>
-                <input type="text" class="tag_text" name="tag_text_6" id="tag_text_6">
-                <input type="text" class="tag_text" name="tag_text_7" id="tag_text_7">
-                <input type="text" class="tag_text" name="tag_text_8" id="tag_text_8">
-                <input type="text" class="tag_text" name="tag_text_9" id="tag_text_9">
-                <input type="text" class="tag_text" name="tag_text_10" id="tag_text_10">
+                <input type="text" class="tag_text" name="tag_text_1" id="tag_text_1" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_2" id="tag_text_2" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_3" id="tag_text_3" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_4" id="tag_text_4" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_5" id="tag_text_5" maxlength="10"><br>
+                <input type="text" class="tag_text" name="tag_text_6" id="tag_text_6" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_7" id="tag_text_7" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_8" id="tag_text_8" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_9" id="tag_text_9" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_10" id="tag_text_10" maxlength="10">
               </div>
             </td>
           </tr>
@@ -60,10 +60,19 @@
       </table>
     </div>
  
-    <button id="p_button"class="button button-flat:hover">book!</button>
-    <p id="p_comment">(default)</p>
-    <a id="a_link_to_login" href="http://localhost:3000/session/consumer/index" target="_blank">login</a><br>
-    <a id="a_link_to_summary_edit" target="_blank">edit summary</a><br>
-    <img class="a_load" src="ajax-loader.gif"/>
+    <button id="button_read_later"class="button button-flat:hover">Read later</button>
+    <p id="comment">(default)</p>
+    <a id="link_to_login" href="http://localhost:3000/session/consumer/index" target="_blank">login</a>
+    <span id="edit_summary">
+      <img src="glyphicons_030_pencil_gray.png" width="16" height="16"><a id="link_to_edit_summary" target="_blank">edit summary</a>
+    </span>
+    <span id="edit_tag">
+      <img src="glyphicons_030_pencil_gray.png" width="16" height="16"><a id="link_to_edit_tag" target="_blank">edit tag</a>
+    </span>
+<!--
+    <a id="link_to_edit_summary" target="_blank">edit summary</a>
+    <a id="link_to_edit_tag" target="_blank">edit tag</a>
+-->
+    <img id="load" src="ajax-loader.gif"/>
   </body>
 </html>

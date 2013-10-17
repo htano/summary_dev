@@ -5,20 +5,38 @@ require "webpage"
 include Webpage
 
 class ChromeController < ApplicationController
+  def edit_tag
+    if signed_in?
+      url = params[:url]
+      tag_list = []
+      params.each do |key,value|
+        if key.start_with?("tag_text_")
+          tag_list.push(value) unless value == BLANK || tag_list.include?(value)
+        end
+      end
+      article = Article.find_by_url(url)
+      UserArticleTag.edit_user_article_tag(article.user_articles.find_by_user_id(get_login_user.id).id, tag_list)
+      article.add_strength
+      result = {"article_id" => article.id, "msg" => "タグ編集が完了しました。"}
+      render :json => result and return
+    else
+      redirect_to :controller => "consumer", :action => "index"
+    end
+  end
+
   def get_article_data
     if signed_in?
-      user_id = get_login_user.id
-      @url = params[:url]
-      unless @url.start_with?("http")
+      url = params[:url]
+      unless url.start_with?("http")
         result = {"article_id" => BLANK, "msg" => "この記事は登録出来ません。"}
         render :json => result and return
       end
-      article = Article.find_by_url(@url)
+      article = Article.find_by_url(url)
       if article == nil
         result = {"article_id" => BLANK, "msg" => BLANK}
         render :json => result and return
       else
-        user_article = article.user_articles.find_by_user_id(user_id)
+        user_article = article.user_articles.find_by_user_id(get_login_user.id)
         if user_article == nil
           result = {"article_id" => BLANK, "msg" => BLANK}
           render :json => result and return
@@ -42,8 +60,8 @@ class ChromeController < ApplicationController
   end
 
   def get_set_tag
-    @url = params[:url]
-    article = Article.find_by_url(@url)
+    url = params[:url]
+    article = Article.find_by_url(url)
     unless article == nil
       user_article = article.user_articles.find_by_user_id(get_login_user.id)
       set_tags = user_article.get_set_tag
@@ -56,8 +74,8 @@ class ChromeController < ApplicationController
   end
 
   def get_recommend_tag
-    @url = params[:url]
-    article = Article.find_by_url(@url)
+    url = params[:url]
+    article = Article.find_by_url(url)
     if article == nil
       render :text => BLANK and return
     else
@@ -111,19 +129,27 @@ class ChromeController < ApplicationController
   end
 
   #TODO 画面からURL直打ちの回避
-  def get_summary_num
-    @url = params[:url]
-    article = Article.find_by_url(@url);
+  def get_background_info
+    url = params[:url]
+    result = []
+    article = Article.find_by_url(url);
     if article == nil then
-      render :text => 0 and return
+      result = {"summary_num" => 0, "user_article_id" => BLANK}
     else
-      render :text => article.summaries.size and return
+      user_article = article.user_articles.find_by_user_id(get_login_user.id)
+      if user_article == nil then
+        result = {"summary_num" => article.summaries.size, "user_article_id" => BLANK}
+      else
+        result = {"summary_num" => article.summaries.size, "user_article_id" => user_article.id}
+      end
     end
+    p result
+    render :json => result and return
   end
 
   def get_summary_list
-    @url = params[:url]
-    article = Article.find_by_url(@url);
+    url = params[:url]
+    article = Article.find_by_url(url);
     if article == nil then
       render :json => nil and return
     else

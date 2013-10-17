@@ -19,17 +19,20 @@ $(document).ready( function(){
             success: function(data) {
               if(data.msg){
                 setComment(data.msg);
-                setBtnDisabled();
                 if(data.article_id){
-                  setSummaryEditLink(data.article_id);
+                  setEditTag();
+                  setEditSummary(data.article_id);
+                  hiddenReadLater();
+                } else {
+                  hiddenReadLater();
                 }
               }
             }
           });
         } else {
-          $("#a_link_to_login").show();
+          $("#link_to_login").show();
           setComment("ログインして下さい。");
-          hiddenBtnDisabled();
+          hiddenReadLater();
           hiddenTagArea();
         }
       }
@@ -117,13 +120,12 @@ $(document).ready( function(){
             }
             i++;
           }
-          $("#recent_tag").find("span").addClass("recent_tag");
         }
       }
   });
   
-  $("#p_button").click(function(){
-    $("img.a_load").show();
+  $("#button_read_later").click(function(){
+    $("#load").show();
     $.ajax({
       url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/add",
       type: "GET",
@@ -142,25 +144,53 @@ $(document).ready( function(){
       },
       dataType: "json",
       success: function(data) {
-        $("img.a_load").hide();
+        $("#load").hide();
         if (data.article_id != BLANK){
           setComment(data.msg);
-          setBtnDisabled();
-          setSummaryEditLink(data.article_id);          
+          setEditSummary(data.article_id);
+          setEditTag();
+          hiddenReadLater();
         } else {
           setComment(data.msg);
         }
       }
     });
   });
+  
+  $("#link_to_edit_tag").click(function(){
+    $("#load").show();
+    $.ajax({
+      url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/edit_tag",
+      type: "GET",
+      data: {
+        url: bg.current_tab.url,
+        tag_text_1: document.getElementById("tag_text_1").value,
+        tag_text_2: document.getElementById("tag_text_2").value,
+        tag_text_3: document.getElementById("tag_text_3").value,
+        tag_text_4: document.getElementById("tag_text_4").value,
+        tag_text_5: document.getElementById("tag_text_5").value,
+        tag_text_6: document.getElementById("tag_text_6").value,
+        tag_text_7: document.getElementById("tag_text_7").value,
+        tag_text_8: document.getElementById("tag_text_8").value,
+        tag_text_9: document.getElementById("tag_text_9").value,
+        tag_text_10: document.getElementById("tag_text_10").value
+      },
+      dataType: "json",
+      success: function(data) {
+        $("#load").hide();
+        setComment(data.msg);
+      }
+    });    
+  });
 });
 
 function init(baclgroundpage){
-  $("#p_title").text(baclgroundpage.current_tab.title);
-  $("#p_comment").hide();
-  $("#a_link_to_login").hide();
-  $("#a_link_to_summary_edit").hide();
-  $("img.a_load").hide();
+  $("#title").text(baclgroundpage.current_tab.title);
+  $("#comment").hide();
+  $("#link_to_login").hide();
+  $("#edit_tag").hide();
+  $("#edit_summary").hide();
+  $("#load").hide();
 }
 
 function hiddenTagArea(){
@@ -181,26 +211,24 @@ function removeMark(str){
 
 //コメントを設定する
 function setComment(msg){
-  $("#p_comment").text(msg);
-  $("#p_comment").show();
+  $("#comment").text(msg);
+  $("#comment").show();
+}
+
+function setEditTag(){
+  $("#edit_tag").show();
 }
 
 //要約編集画面へのリンクを設定する
-function setSummaryEditLink(article_id){
+function setEditSummary(article_id){
   var bg = window.chrome.extension.getBackgroundPage();
-  $("#a_link_to_summary_edit").show();
-  $("#a_link_to_summary_edit").attr("href", "http://" + bg.SERVICE_HOSTNAME + "/summary/"+article_id+"/edit");
-}
-
-//登録ボタンを隠す
-function hiddenBtnDisabled(){
-  $("#p_button").hide();
+  $("#edit_summary").show();
+  $("#link_to_edit_summary").attr("href", "http://" + bg.SERVICE_HOSTNAME + "/summary/"+article_id+"/edit");
 }
 
 //登録ボタンを非活性にする。ついでにクラスも変更する。
-function setBtnDisabled(){
-  $("#p_button").attr("disabled", true);
-  $("#p_button").attr("class", "button button-flat.disabled");
+function hiddenReadLater(){
+  $("#button_read_later").hide();
 }
 
 function clickRecommendTag(obj){

@@ -36,7 +36,7 @@ SummaryDev::Application.routes.draw do
   get "mypage/destroy"
 
   #for chrome extension
-  get "chrome/get_summary_num"
+  get "chrome/get_background_info"
   get "chrome/get_summary_list"
   get "chrome/get_recommend_tag"
   get "chrome/get_recent_tag"
@@ -44,6 +44,7 @@ SummaryDev::Application.routes.draw do
   get "chrome/get_article_data"
   get "chrome/get_login_user_id"
   get "chrome/add"
+  get "chrome/edit_tag"
   #for webpage
   get "webpage/add" => "webpage#add"
   post "webpage/add_confirm" => "webpage#add_confirm"
