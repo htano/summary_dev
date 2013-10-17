@@ -15,6 +15,7 @@ open(@url) do |io|
   end
 end
 
-doc.xpath('//h3[@class="hb-entry-link-container"]/a').each do |a|
+#doc.xpath('//h3[@class="hb-entry-link-container"]/a').each do |a|
+doc.xpath('//div[@class="box-wrap box4 top"]//h3[@class="hb-entry-link-container"]/a').each do |a|
   puts a.attribute("title").value
 end

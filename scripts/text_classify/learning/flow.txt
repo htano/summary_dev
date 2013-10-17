@@ -1,0 +1,2 @@
+$ mkdir -p tmp/text_classify/learning/`date "+%Y%m%d"`
+$ rails runner scripts/text_classify/learning/get_titles_with_class.rb > tmp/text_classify/learning/`date "+%Y%m%d"`/title_with_class.txt
