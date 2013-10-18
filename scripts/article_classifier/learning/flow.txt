@@ -1,0 +1,8 @@
+# 2. カテゴリとタイトルのリストを作成
+$ mkdir -p tmp/article_classifier/learning/`date "+%Y%m%d"`
+$ rails runner scripts/article_classifier/learning/get_titles_with_class.rb > tmp/article_classifier/learning/`date "+%Y%m%d"`/title_with_class.txt
+$ sort -u tmp/article_classifier/learning/????????/title_with_class.txt > tmp/article_classifier/learning/title_with_class.txt
+
+# 3. ngramでパースした結果をスペース区切りにして出力する
+$ rails runner scripts/article_classifier/learning/title_to_ngrams.rb > tmp/article_classifier/learning/ngrams_with_class.txt
+

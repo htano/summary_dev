@@ -2,9 +2,9 @@
 require 'open-uri'
 require "nokogiri"
 ROOT_DIR = "."
-LEARNING_DIR = ROOT_DIR + "/scripts/text_classify/learning"
+LEARNING_DIR = ROOT_DIR + "/scripts/article_classifier/learning"
 CONFIG_DIR = LEARNING_DIR + "/config/source_url"
-TMP_DIR = ROOT_DIR + "/tmp/text_classify/learning"
+TMP_DIR = ROOT_DIR + "/tmp/article_classifier/learning"
 OUTPUT_DIR = TMP_DIR + "/title_with_class"
 
 class String
