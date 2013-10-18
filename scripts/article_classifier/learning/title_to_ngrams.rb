@@ -8,6 +8,7 @@ open(CLASS_TITLE_DATA) do |file|
   file.each do |line|
     line.chomp!
     @class, @title = line.split("\t")
+    @title.force_encoding("UTF-8")
     puts @class + "\t" + 
       ArticleClassifier::get_joined_ngrams(@title)
   end
