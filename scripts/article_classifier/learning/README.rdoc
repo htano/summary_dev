@@ -1,7 +1,7 @@
-##### 1. データ抽出元ページの設定をする
+==== 1. データ抽出元ページの設定をする
   $ vim scripts/article_classifier/learning/config/source_url/
 
-##### 2. カテゴリとタイトルのリストを作成
+==== 2. カテゴリとタイトルのリストを作成
   $ mkdir -p tmp/article_classifier/learning/`date "+%Y%m%d"`
   $ rails runner scripts/article_classifier/learning/get_titles_with_class.rb > \
   tmp/article_classifier/learning/`date "+%Y%m%d"`/title_with_class.txt
@@ -9,14 +9,14 @@
   $ sort -u tmp/article_classifier/learning/????????/title_with_class.txt > \
   tmp/article_classifier/learning/title_with_class.txt
 
-##### 3. 辞書を作成しながらtfidfも計算し、libsvm形式に変換する
+==== 3. 辞書を作成しながらtfidfも計算し、libsvm形式に変換する
   $ rails runner scripts/article_classifier/learning/svm_data_creator.rb
 
-##### 4. cross validationでsvm-cを決定する(本当はスクリプトにしたい)
+==== 4. cross validationでsvm-cを決定する(本当はスクリプトにしたい)
   $ ./scripts/article_classifier/learning/liblinear/train -c 0.001 -s 3 -v 10 \
   tmp/article_classifier/learning/libsvm.txt
 
-##### 5. liblinearで学習する
+==== 5. liblinearで学習する
   $ ./scripts/article_classifier/learning/liblinear/train -c 0.001 -s 3 \
   tmp/article_classifier/learning/libsvm.txt \
   lib/article_classifier/model/liblinear.model
