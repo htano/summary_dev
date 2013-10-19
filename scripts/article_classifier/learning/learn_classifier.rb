@@ -9,8 +9,9 @@ CLASSIFIER_STORAGE_PATH = TMP_DIR + "/ArticleClassifier.cls"
 
 #store = StuffClassifier::FileStorage.new(CLASSIFIER_STORAGE_PATH)
 #StuffClassifier::Base.storage = store
-cls = StuffClassifier::Bayes.new("ArticleClassifier",
+cls = StuffClassifier::TfIdf.new("ArticleClassifier",
                                  :stemming => false)
+
 open(TRAIN_DATA) do |file|
   file.each do |line|
     line.chomp!

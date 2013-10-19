@@ -3,6 +3,10 @@ $ mkdir -p tmp/article_classifier/learning/`date "+%Y%m%d"`
 $ rails runner scripts/article_classifier/learning/get_titles_with_class.rb > tmp/article_classifier/learning/`date "+%Y%m%d"`/title_with_class.txt
 $ sort -u tmp/article_classifier/learning/????????/title_with_class.txt > tmp/article_classifier/learning/title_with_class.txt
 
-# 3. ngramでパースした結果をスペース区切りにして出力する
-$ rails runner scripts/article_classifier/learning/title_to_ngrams.rb > tmp/article_classifier/learning/ngrams_with_class.txt
+# 3. 辞書を作成しながらtfidfも計算し、libsvm形式に変換する
+$ rails runner scripts/article_classifier/learning/svm_data_creator.rb
 
+# 4. liblinearで学習する
+$ ./scripts/article_classifier/learning/liblinear/train -c 0.001 -s 3 \
+tmp/article_classifier/learning/20131017/libsvm.txt \
+tmp/article_classifier/learning/model/liblinear.model
