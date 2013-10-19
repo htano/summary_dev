@@ -8,7 +8,7 @@ class ArticleClassifier
   LIBLINEAR_MODEL_FILE = MODEL_DIR + "/liblinear.model"
   GRAM_SIZE = 2
   DOCUMENT_SIZE = 2000
-  THRESHOLD = -1.0
+  THRESHOLD = -0.5
 
   # TODO: 変えたいけど、まだ使っているから変えたらダメよ
   def self.idf(df_dict, ngram)
