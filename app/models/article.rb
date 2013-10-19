@@ -8,6 +8,7 @@ include Webpage
 class Article < ActiveRecord::Base
   has_many(:user_articles, :dependent => :destroy)
   has_many(:summaries, :dependent => :destroy)
+  belongs_to(:category)
   validates(:url, :uniqueness=>true)
 
   # This is a decay parameter for article's strength.

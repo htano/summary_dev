@@ -1,0 +1,6 @@
+# 1. マスタデータの登録
+$ rails runner db/master.rb
+
+# 2. 登録済みのすべての記事のカテゴリを予測し、登録する 
+$ rails runner scripts/article_classifier/predict/predict_category.rb 
+
