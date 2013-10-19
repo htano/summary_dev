@@ -9,8 +9,39 @@
 
 div.hotentry-container {
   margin: auto;
-  width: 60%;
-  border: solid 1px #eee;
+  width: 80%;
+  //border: solid 1px #eee;
+}
+
+div.hotentry-tab {
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      -webkit-margin-before: 0px;
+      -webkit-margin-after: 0px;
+      li {
+        border-radius: 2px;
+        border: 1px solid #d8d8d8;
+        a {
+          color: #a2a2a2;
+          text-decoration: none;
+          display: block;
+          padding: 8px 10px 8px 8px;
+          text-shadow: 0 1px 0 #fff;
+          border-left: 2px solid #fafafb;
+          background: #fafafb;
+        }
+        a.selected {
+          background: #fff;
+          border-left: 2px solid #5B91FF;
+          font-weight: bold;
+          color: gray;
+          cursor: default;
+          box-shadow: inset 0 0px 1px rgba(0,0,0,0.1);
+        }
+      }
+    }
 }
 
 div.hotentry-menu {
@@ -146,7 +177,7 @@ div.hotentry-normal-image {
 }
 
 img.hotentry-large-image-imgtag {
-  max-width: 190px;
+  max-width: 160px;
   max-height: 190px;
 }
 

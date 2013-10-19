@@ -121,11 +121,26 @@ class Article < ActiveRecord::Base
   end
 
   # Class Method
-  def self.get_hotentry_articles
-    # 1. getCandidateHotentries
-    @candidate_entries = where("last_added_at > ?", Time.now - ZERO_ZERO_ONE_DAYS.days).order('strength desc, last_added_at desc').limit(100)
-    # 2. sort by current strength
-    return @candidate_entries.sort{|a,b| (-1)*(a.get_current_strength <=> b.get_current_strength)}.first(20)
+  def self.get_hotentry_articles(category_name = 'all')
+    if category_name == 'all'
+      candidate_entries = 
+        where( "last_added_at > ?", 
+               Time.now - ZERO_ZERO_ONE_DAYS.days
+             ).order(
+               'last_added_at desc, strength desc'
+             ).limit(100)
+    else
+      candidate_entries = 
+        where( ["last_added_at > ? and category_id = ?", 
+                Time.now - ZERO_ZERO_ONE_DAYS.days,
+                Category.find_by_name(category_name)]
+             ).order(
+                'last_added_at desc, strength desc'
+             ).limit(100)
+    end
+    return candidate_entries.sort{|a,b| 
+      (-1)*(a.get_current_strength <=> b.get_current_strength)
+    }.first(40)
   end
 
   # Instance Method
