@@ -103,8 +103,7 @@ class MypageController < ApplicationController
         article.destroy
       end
     end
-
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def delete_summary
@@ -116,7 +115,7 @@ class MypageController < ApplicationController
       end
     end
 
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def mark_as_read
@@ -131,7 +130,7 @@ class MypageController < ApplicationController
       end
     end
 
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def mark_as_unread
@@ -147,7 +146,7 @@ class MypageController < ApplicationController
       end
     end
 
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def mark_as_favorite
@@ -164,7 +163,7 @@ class MypageController < ApplicationController
       end
     end
 
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def mark_off_favorite
@@ -181,7 +180,7 @@ class MypageController < ApplicationController
       end
     end
 
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def clip
@@ -192,7 +191,7 @@ class MypageController < ApplicationController
       end
     end
 
-    redirect_to :action => "index", :name => params[:name]
+    redirect_to :action => "index", :params => params
   end
 
   def follow
@@ -429,21 +428,6 @@ private
     end
 
     return table_data
-  end
-
-  def render_tab(params)
-    if params[:mpage]
-      redirect_to :action => "index", :mpage => params[:mpage]
-    end
-    if params[:spage]
-      redirect_to :action => "index", :spage => params[:spage]
-    end
-    if params[:fpage]
-      redirect_to :action => "index", :fpage => params[:fpage]
-    end
-    if params[:rpage]
-      redirect_to :action => "index", :rpage => params[:rpage]
-    end
   end
 
 end
