@@ -58,20 +58,25 @@ class Article < ActiveRecord::Base
     return self.user_articles.count
   end
 
+  def read_later?(user)
+    is_read_later = false
+    if user then
+      if self.user_articles.exists?(:user_id => user.id) then
+        is_read_later = true
+      end
+    end
+    return is_read_later
+  end
+
   def read?(user)
-    unless user == nil then
+    is_read = false
+    if user then
       user_article = self.user_articles.find_by(:user_id => user.id)
-      unless  user_article == nil then
+      if user_article then
         if user_article.read_flg == true then
           is_read = true
-        else
-          is_read = false
         end
-      else
-        is_read = false 
       end
-    else
-      is_read = false 
     end  
     return is_read
   end

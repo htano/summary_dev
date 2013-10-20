@@ -32,20 +32,30 @@ hr {
 }
 
 #summary_list{
+    border: solid;
+    border-color: #FEE5E5; 
+    border-top-color: #FF9B9B; 
   #summary_list_header{
     padding-top: 5px;
 
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
 
-    background: #FEE5E5;
+    #summarize{
+      padding-top: 5px;
+    }
 
     #article_readers_num{
-
       vertical-align: text-bottom;
       color: #E88100;
-      font-weight: bold;
       font-size: 20px;
+    }
+    #read_button{
+      font-weight: bold;
+    }
+
+    #article_read_later{
+    }
+
+    #article_read_mark{
     }
 
     #article_readers_char{
@@ -53,36 +63,41 @@ hr {
     }
   }
   #summary_list_footer{
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
 
-    background: #FEE5E5;
 
   }
 
   #hr_summary_list_header
-  {
-    background: #FEE5E5;
-      #read_button{
-        font-weight: bold;
-      }
+  { 
+    
   }
+  #summary_list_body{ 
 
-  #summary_list_body{
-    background: #FEE5E5;
-
-    #article_entrydate{
-      text-align: right;
+    #article_entrydate{ 
+      text-align: right; 
     }
 
-    #article_title{
-      font-weight: bold;
-      font-size: 28px;
-      overflow:hidden;
+    #article_title{ font-weight: bold; 
+      font-size: 28px; 
+      overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       -moz-text-overflow:ellipsis; /* Firefox */
       -o-text-overflow: ellipsis; /* Opera */
+    }
+    #display_preview{
+      cursor: pointer;
+    }
+
+    #hide_preview{
+      cursor: pointer;
+    }
+
+    #preview{
+      padding-top: 10px;
+      padding-right: 10px;
+      padding-bottom: 10px;
+      margin: 0px 5px 15px 0px;
     }
 
 
@@ -134,7 +149,6 @@ hr {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 
-    background: #FEE5E5;
   }
 }
 
@@ -146,203 +160,4 @@ hr {
   padding-right: 30px;
   font-size: 14px;
   text-align: right;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-//---------------------------------------
-// whole layout
-//---------------------------------------
-
-#sumlist_layout{
-
-  margin: 20px 0px 0px 10px;
-
-  //----------------------------------------	
-  // summary_lists
-  //----------------------------------------
-  #summary_lists{
-    margin: 0 auto;
-    color: #a2a2a2;
-
-    //----------------------------------------	
-    //  class 
-    //----------------------------------------
-    .main{
-      border: 2px solid #ddd;
-      min-width: 750px;
-      max-width: 750px;
-      padding: 5px;
-    }
-
-    .status{
-      border: 2px solid #ddd;
-      min-width: 200px;
-      max-width: 240px;
-      padding: 5px;
-    }
-    //----------------------------------------	
-    //  article 
-    //----------------------------------------
-    #article_title{
-      height: 70px;
-      font-size: 24px;
-      background: #c6c6c6;
-      color: #FFFFFF;
-      text-overflow: ellipsis;
-      white-spce: nowrap;
-      overflow:hidden;
-      a.summary_list_link{ color: #FFFFFF }
-    }
-
-    #article_status{
-      height: 70px;
-      text-align: center;
-      vertical-align: top;
-      a.summary_list_link{ color: #a2a2a2 }
-
-      hr{
-        margin: 5px 0px 5px 0px;
-        border: 1px solid #ddd;
-      }
-      //-------------------------------------------
-      //  read button
-      //-------------------------------------------
-
-      #article_read_mark{
-        margin: 0 auto;
-        padding: 1px 1px 1px 5px;
-        text-align: left;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        width:  120px;
-        height: 25px;
-      }	
-
-      //-------------------------------------------
-      //  read button
-      //-------------------------------------------
-      #mark_user_count{
-
-      }
-    } 
-    //----------------------------------------	
-    //  readmore_char (for readmore.js) 
-    //----------------------------------------
-    .readmore_char{
-      font-size: 14px;
-      text-align: right;
-    }
-
-    //----------------------------------------	
-    //  my_summary 
-    //----------------------------------------
-    #my_summary_detail{
-      height: 170px;
-      font-size: 18px;
-      vertical-align: top;
-      background: #FFFFEE;
-    }
-
-    #my_summary_auther{
-      height: 170px;
-      vertical-align: top;
-      background: #FFFFEE;
-
-      #auther_button{
-        margin: 5px 0px 5px 0px;
-        padding: 1px 1px 1px 5px;
-        text-align: left;
-        width:  120px;
-        height: 25px;
-      }
-
-      hr{
-        border: 1px solid #ddd;
-        margin: 5px 0px 5px 0px;
-      }
-    }
-
-    //----------------------------------------	
-    //  summary 
-    //----------------------------------------
-
-    #summary_detail{
-      height: 170px;
-      font-size: 18px;
-      vertical-align: top;
-    }
-
-    #summary_auther{
-      vertical-align: top;
-      height: 170px;
-
-      hr{
-        clear:both;
-        border: 1px solid #ddd;
-        margin: 5px 0px 5px 0px;
-      }
-
-      //-------------------------------------------
-      //  auther
-      //-------------------------------------------
-      #last_update_time{
-        margin: 8px 10px 0px 10px;				
-        clear: both;
-      }
-      #auther_name{
-        margin: 8px 0px 0px 0px;				
-      }
-
-      #auther_photo{
-        margin: 8px 8px 8px 8px;				
-        float: left;
-      }
-
-      #follow_mark{
-        margin: 2px 2px 2px 62px;
-        padding: 2px;				
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        width:  70px;
-        text-align: center;
-        vertical-align: middle;
-      }	
-
-      //-------------------------------------------
-      //  iiyo 
-      //-------------------------------------------
-      .iiyo{
-        margin: 0 auto;
-        width:  140px;
-        height: 21px;
-        #button{
-          margin: 0px 10px 0px 0px;				
-          float: left;
-          background: white;
-        }
-
-        #cmpBottun{
-          margin: 0px 10px 0px 0px;				
-          float: left;
-          background: gray;
-        }
-
-        #count{
-          padding: 3px 0px 0px 0px;				
-        }
-      }
-    } 
-
-}
 }

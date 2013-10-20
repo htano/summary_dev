@@ -64,6 +64,8 @@ SummaryDev::Application.routes.draw do
   post 'summary_lists/cancel_good_summary/:list_index/:summary_id/:article_id' => 'summary_lists#cancel_good_summary'
   post 'summary_lists/read/:article_id' => 'summary_lists#read'
   post 'summary_lists/cancel_read/:article_id' => 'summary_lists#cancel_read'
+  post 'summary_lists/read_later/:article_id' => 'summary_lists#read_later'
+  post 'summary_lists/cancel_read_later/:article_id' => 'summary_lists#cancel_read_later'
   post 'summary_lists/follow/:list_index/:follow_user_id' => 'summary_lists#follow'
   post 'summary_lists/unfollow/:list_index/:unfollow_user_id' => 'summary_lists#unfollow'
   # The priority is based upon order of creation: first created -> highest priority.
