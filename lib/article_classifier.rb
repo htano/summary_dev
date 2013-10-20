@@ -41,7 +41,6 @@ class ArticleClassifier
   def predict(text)
     pred_class = 'other'
     pred_score = THRESHOLD
-
     unless @is_trained
       Rails.logger.error("[ArticleClassifier] predict method " +
                          "was called when the trained models " +
@@ -90,7 +89,9 @@ class ArticleClassifier
             unless @model[class_name]
               @model[class_name] = Hash.new()
             end
-            @model[class_name][feature_name] = weight.to_f
+            if weight.to_f != 0
+              @model[class_name][feature_name] = weight.to_f
+            end
           end
         end
         if line =~ /^w$/
@@ -100,5 +101,3 @@ class ArticleClassifier
     end
   end
 end
-
-

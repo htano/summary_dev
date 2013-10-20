@@ -1,7 +1,7 @@
 # coding: utf-8
 require './lib/article_classifier.rb'
 
-TMP_DIR = "tmp/article_classifier/learning"
+TMP_DIR = Rails.root.to_s + "/tmp/article_classifier/learning"
 TRAIN_DATA = TMP_DIR + "/title_with_class.txt"
 TRAIN_LIBSVM = TMP_DIR + "/libsvm.txt"
 
@@ -12,12 +12,12 @@ class_dict = Hash.new()
 open(TRAIN_DATA) do |file|
   file.each do |line|
     line.chomp!
-    @class, @title = line.split("\t")
-    @title.force_encoding("UTF-8")
-    @ng_ary = NgramsParser::ngram(@title,
+    class_name, title = line.split("\t")
+    title.force_encoding("UTF-8")
+    @ng_ary = NgramsParser::ngram(title,
                                   ArticleClassifier::GRAM_SIZE)
-    unless class_dict[@class]
-      class_dict[@class] = class_dict.length
+    unless class_dict[class_name]
+      class_dict[class_name] = class_dict.length
     end
     tf = Hash.new(0)
     @ng_ary.each do |ng|
@@ -41,9 +41,9 @@ open(TRAIN_LIBSVM, "w") do |outfile|
     file.each do |line|
       @liblinear = Hash.new(0)
       line.chomp!
-      @class, @title = line.split("\t")
-      @title.force_encoding("UTF-8")
-      @ng_ary = NgramsParser::ngram(@title, 
+      class_name, title = line.split("\t")
+      title.force_encoding("UTF-8")
+      @ng_ary = NgramsParser::ngram(title, 
                                     ArticleClassifier::GRAM_SIZE)
       @ng_ary.each do |ng|
         if feature_dict[ng]
@@ -51,7 +51,7 @@ open(TRAIN_LIBSVM, "w") do |outfile|
             ArticleClassifier::idf(df,ng)
         end
       end
-      outfile.write(class_dict[@class])
+      outfile.write(class_dict[class_name])
       @liblinear.sort.each do |k,v|
         outfile.write(" " + k.to_s + ":" + v.to_s)
       end
