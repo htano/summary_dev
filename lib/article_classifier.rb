@@ -5,7 +5,7 @@ require 'singleton'
 class ArticleClassifier
   include Singleton
 
-  MODEL_DIR = "./lib/article_classifier/model"
+  MODEL_DIR = Rails.root.to_s + "/lib/article_classifier/model"
   DF_FILE = MODEL_DIR + "/df.txt"
   FEATURE_DICT_FILE = MODEL_DIR + "/feature_dict.txt"
   CLASS_DICT_FILE = MODEL_DIR + "/class_dict.txt"

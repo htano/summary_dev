@@ -151,7 +151,7 @@ class Article < ActiveRecord::Base
     end
     return candidate_entries.sort{|a,b| 
       (-1)*(a.get_current_strength <=> b.get_current_strength)
-    }.first(40)
+    }.first(20)
   end
 
   # Instance Method
