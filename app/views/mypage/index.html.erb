@@ -106,16 +106,34 @@
           <%= @sort_menu_title %><span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
-            <!-- <li id="sort1" onclick="selectSortType('desc-registered')"> -->
             <li id="sort1">
               <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=desc&sort=registered">
                 <%= raw is_selected_sort_type(@sort_menu_title, "Newest", "desc-registered") %>
               </a>
             </li>
-            <!-- <li id="sort2" onclick="selectSortType('asc-registered')"> -->
             <li id="sort2">
               <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=asc&sort=registered">
                 <%= raw is_selected_sort_type(@sort_menu_title, "Oldest", "asc-registered") %>
+              </a>
+            </li>
+            <li id="sort3">
+              <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=desc&sort=summaries">
+                <%= raw is_selected_sort_type(@sort_menu_title, "Most summarized", "asc-registered") %>
+              </a>
+            </li>
+            <li id="sort4">
+              <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=asc&sort=summaries">
+                <%= raw is_selected_sort_type(@sort_menu_title, "Least summarized", "asc-registered") %>
+              </a>
+            </li>
+            <li id="sort5">
+              <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=desc&sort=reader">
+                <%= raw is_selected_sort_type(@sort_menu_title, "Most read", "asc-registered") %>
+              </a>
+            </li>
+            <li id="sort6">
+              <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=asc&sort=reader">
+                <%= raw is_selected_sort_type(@sort_menu_title, "Least read", "asc-registered") %>
               </a>
             </li>
             <!--
