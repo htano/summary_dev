@@ -5,54 +5,27 @@ TMP_DIR = Rails.root.to_s + "/tmp/article_classifier/learning"
 TRAIN_DATA = TMP_DIR + "/title_with_class.txt"
 TRAIN_LIBSVM = TMP_DIR + "/libsvm.txt"
 
+ac_inst = ArticleClassifier.instance
 # make feature, class and df dictionary
-df = Hash.new(1)
-feature_dict = Hash.new()
-class_dict = Hash.new()
 open(TRAIN_DATA) do |file|
   file.each do |line|
     line.chomp!
     class_name, title = line.split("\t")
-    title.force_encoding("UTF-8")
-    @ng_ary = NgramsParser::ngram(title,
-                                  ArticleClassifier::GRAM_SIZE)
-    unless class_dict[class_name]
-      class_dict[class_name] = class_dict.length
-    end
-    tf = Hash.new(0)
-    @ng_ary.each do |ng|
-      unless feature_dict[ng]
-        feature_dict[ng] = feature_dict.length + 1
-      end
-      tf[ng] += 1
-    end
-    tf.keys.each do |ng|
-      df[ng] += 1
-    end
+    ac_inst.add_train_data(class_name, title)
   end
 end
-df.write_dict(ArticleClassifier::DF_FILE)
-feature_dict.write_dict(ArticleClassifier::FEATURE_DICT_FILE)
-class_dict.write_dict(ArticleClassifier::CLASS_DICT_FILE)
+ac_inst.save_dict_files
 
 # make libsvm file
 open(TRAIN_LIBSVM, "w") do |outfile|
   open(TRAIN_DATA) do |file|
     file.each do |line|
-      @liblinear = Hash.new(0)
       line.chomp!
       class_name, title = line.split("\t")
-      title.force_encoding("UTF-8")
-      @ng_ary = NgramsParser::ngram(title, 
-                                    ArticleClassifier::GRAM_SIZE)
-      @ng_ary.each do |ng|
-        if feature_dict[ng]
-          @liblinear[feature_dict[ng]] += 
-            ArticleClassifier::idf(df,ng)
-        end
-      end
-      outfile.write(class_dict[class_name])
-      @liblinear.sort.each do |k,v|
+      class_label = ac_inst.get_libsvm_label(class_name)
+      libsvm_hash = ac_inst.get_libsvm_hash(title)
+      outfile.write(class_label)
+      libsvm_hash.sort.each do |k,v|
         outfile.write(" " + k.to_s + ":" + v.to_s)
       end
       outfile.write("\n")

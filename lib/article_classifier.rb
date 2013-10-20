@@ -11,23 +11,54 @@ class ArticleClassifier
   CLASS_DICT_FILE = MODEL_DIR + "/class_dict.txt"
   LIBLINEAR_MODEL_FILE = MODEL_DIR + "/liblinear.model"
   GRAM_SIZE = 2
-  DOCUMENT_SIZE = 2000
+  DOCUMENT_SIZE = 3000
   THRESHOLD = -0.5
-
-  # TODO: 変えたいけど、まだ使っているから変えたらダメよ
-  def self.idf(df_dict, ngram)
-    if df_dict[ngram]
-      return Math.log(DOCUMENT_SIZE / df_dict[ngram])
-    else
-      return Math.log(DOCUMENT_SIZE)
-    end
-  end
 
   def initialize
     @df = Hash.new(1)
     @feature_dict = Hash.new()
     @class_dict = Hash.new()
     @is_trained = false
+  end
+
+  def add_train_data(class_name, text)
+    text.force_encoding("UTF-8")
+    unless @class_dict[class_name]
+      @class_dict[class_name] = @class_dict.length
+    end
+    ng_ary = NgramsParser::ngram(text,GRAM_SIZE)
+    tf = Hash.new(0)
+    ng_ary.each do |ng|
+      unless @feature_dict[ng]
+        @feature_dict[ng] = @feature_dict.length + 1
+      end
+      tf[ng] += 1
+    end
+    tf.keys.each do |ng|
+      @df[ng] += 1
+    end
+  end
+
+  def save_dict_files
+    @df.write_dict(DF_FILE)
+    @feature_dict.write_dict(FEATURE_DICT_FILE)
+    @class_dict.write_dict(CLASS_DICT_FILE)
+  end
+
+  def get_libsvm_label(class_name)
+    return @class_dict[class_name]
+  end
+
+  def get_libsvm_hash(text)
+    libsvm = Hash.new(0)
+    text.force_encoding("UTF-8")
+    ng_ary = NgramsParser::ngram(text,GRAM_SIZE)
+    ng_ary.each do |ng|
+      if @feature_dict[ng]
+        libsvm[@feature_dict[ng]] += idf(ng)
+      end
+    end
+    return libsvm
   end
 
   def read_models
