@@ -68,7 +68,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6 hotentry-large-summaries">
+                  <div class="col-md-3 hotentry-large-summaries">
                     <span id="reading_counter<%= e.id %>">
                       <%= e.user_articles.count %> 
                     </span>
@@ -78,6 +78,14 @@
                                          :article_id => e.id) %>">
                       <%= e.summaries.count %> summaries.
                     </a>
+                  </div>
+                  <div class="col-md-3">
+                    <% if e.get_top_rated_summary %>
+                      <%= link_to("View all summaries", 
+                                  :controller => 'summary_lists',
+                                  :action => 'index',
+                                  :article_id => e.id) %>
+                    <% end %>
                   </div>
                 </div>
                 <div class="row">

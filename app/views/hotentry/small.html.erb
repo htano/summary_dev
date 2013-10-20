@@ -31,7 +31,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6 hotentry-small-summaries">
+                  <div class="col-md-3 hotentry-small-summaries">
                     <%= e.user_articles.count %> readers,
                     <a href="<%= url_for(:controller => 'summary_lists',
                                          :action=>'index',
@@ -39,7 +39,20 @@
                       <%= e.summaries.count %> summaries.
                     </a>
                   </div>
-                  <div class="col-md-6 hotentry-normal-domain">
+                  <div class="col-md-5 hotentry-small-summaries">
+                    <% if e.get_top_rated_summary %>
+                      <%= link_to("View all summaries", 
+                                  :controller => 'summary_lists',
+                                  :action => 'index',
+                                  :article_id => e.id) %>
+                    <% else %>
+                      <%= link_to("Edit summary", 
+                                  :controller => 'summary',
+                                  :action => 'edit',
+                                  :article_id => e.id) %>
+                    <% end %>
+                  </div>
+                  <div class="col-md-4 hotentry-normal-domain">
                     <%= image_tag("http://favicon.hatena.ne.jp/?url=" + e.url) %>
                     <%= URI(e.url).host %>
                   </div>
