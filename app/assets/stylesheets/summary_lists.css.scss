@@ -129,8 +129,17 @@ hr {
           }
 
           #good_button{
+            vertical-align: top;
             font-weight: bold;
             width: 80px;
+          }
+
+          #count{
+            border-radius: 10px;
+            padding: 2px 10px 2px 10px;
+            background-color: #FEE5E5;
+            font-weight: bold;
+            font-size: 20px;
           }
         }
         #summary_box_body{
