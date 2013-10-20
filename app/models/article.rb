@@ -1,11 +1,13 @@
 # encoding: utf-8
 
+require './lib/article_classifier.rb'
 require "webpage"
 include Webpage
 
 #require "ransack"
 
 class Article < ActiveRecord::Base
+  ArticleClassifier.instance.read_models
   has_many(:user_articles, :dependent => :destroy)
   has_many(:summaries, :dependent => :destroy)
   belongs_to(:category)
@@ -26,7 +28,16 @@ class Article < ActiveRecord::Base
       if h == nil
         return nil
       end
-      article = Article.new(:url => url, :title => h["title"], :contents_preview => h["contentsPreview"][0, 200], :category_id =>"001", :thumbnail => h["thumbnail"])
+      ac_inst = ArticleClassifier.instance
+      category_name = ac_inst.predict(h["title"])
+      category_id = Category.find_by_name(category_name).id
+      article = Article.new(
+        :url => url, 
+        :title => h["title"], 
+        :contents_preview => h["contentsPreview"][0, 200], 
+        :category_id => category_id, 
+        :thumbnail => h["thumbnail"]
+      )
       if article.save
         return article
       end

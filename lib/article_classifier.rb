@@ -1,6 +1,10 @@
 # coding: utf-8
 require 'article_classifier/hash_extended'
+require 'singleton'
+
 class ArticleClassifier
+  include Singleton
+
   MODEL_DIR = "./lib/article_classifier/model"
   DF_FILE = MODEL_DIR + "/df.txt"
   FEATURE_DICT_FILE = MODEL_DIR + "/feature_dict.txt"
@@ -19,22 +23,31 @@ class ArticleClassifier
     end
   end
 
-  def self.open(name)
-    inst = self.new(name)
-    inst.read_trained_objects
-    return inst
-  end
-
-  def initialize(name)
-    @name = name
+  def initialize
     @df = Hash.new(1)
     @feature_dict = Hash.new()
     @class_dict = Hash.new()
+    @is_trained = false
+  end
+
+  def read_models
+    @df.read_kv(DF_FILE)
+    @feature_dict.read_name_id(FEATURE_DICT_FILE)
+    @class_dict.read_name_id(CLASS_DICT_FILE)
+    read_liblinear_model(LIBLINEAR_MODEL_FILE)
+    @is_trained = true
   end
 
   def predict(text)
     pred_class = 'other'
     pred_score = THRESHOLD
+
+    unless @is_trained
+      Rails.logger.error("[ArticleClassifier] predict method " +
+                         "was called when the trained models " +
+                         "were not read.")
+      return pred_class
+    end
     text.force_encoding("UTF-8")
     ngram_array = NgramsParser::ngram(text,GRAM_SIZE)
     @model.each do |class_name, weight_vector|
@@ -50,13 +63,6 @@ class ArticleClassifier
       end
     end
     return pred_class
-  end
-
-  def read_trained_objects
-    @df.read_kv(DF_FILE)
-    @feature_dict.read_name_id(FEATURE_DICT_FILE)
-    @class_dict.read_name_id(CLASS_DICT_FILE)
-    read_liblinear_model(LIBLINEAR_MODEL_FILE)
   end
 
   private
