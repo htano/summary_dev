@@ -136,14 +136,14 @@ class Article < ActiveRecord::Base
     if category_name == 'all'
       candidate_entries = 
         where( "last_added_at > ?", 
-               Time.now - ZERO_ZERO_ONE_DAYS.days
+               Time.now.beginning_of_hour - ZERO_ZERO_ONE_DAYS.days
              ).order(
                'last_added_at desc, strength desc'
              ).limit(100)
     else
       candidate_entries = 
         where( ["last_added_at > ? and category_id = ?", 
-                Time.now - ZERO_ZERO_ONE_DAYS.days,
+                Time.now.beginning_of_hour - ZERO_ZERO_ONE_DAYS.days,
                 Category.find_by_name(category_name)]
              ).order(
                 'last_added_at desc, strength desc'
