@@ -14,7 +14,8 @@ module Webpage
 
   #TODO 定数定義は外出しにしたい
   BLANK = ""
-  THRESHOLD_SIDE = 100  
+  THRESHOLD_FILE = 100  
+  THRESHOLD_IMAGE = 200  
   ADVERTISEMENTLIST = ["amazon","rakuten"]
 
   def get_webpage_element(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
@@ -61,7 +62,7 @@ module Webpage
         begin
           file = ImageSize.new(open(img_url, "rb").read)
           unless file.get_width == nil || file.get_height == nil
-            if file.get_width > THRESHOLD_SIDE && file.get_height > THRESHOLD_SIDE
+            if file.get_width > THRESHOLD_FILE && file.get_height > THRESHOLD_FILE
               return img_url
             else
               next
@@ -72,7 +73,7 @@ module Webpage
           next
         end
         image = Magick::ImageList.new(img_url)
-        if image.columns.to_i > THRESHOLD_SIDE && image.rows.to_i > THRESHOLD_SIDE
+        if image.columns.to_i > THRESHOLD_IMAGE && image.rows.to_i > THRESHOLD_IMAGE
           return img_url
         end
       end
