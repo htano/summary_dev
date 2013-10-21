@@ -36,7 +36,7 @@ class Article < ActiveRecord::Base
   #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag)
     return nil if tag == nil || tag == BLANK
-    articles = joins(:user_articles => :user_article_tags).where(["user_article_tags.tag LIKE ?", "%"+tag+"%"]).group("url")
+    articles = joins(:user_articles => :user_article_tags).where("user_article_tags.tag" => tag).group("url")
     return articles
   end
 
