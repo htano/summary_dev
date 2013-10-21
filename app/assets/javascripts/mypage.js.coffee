@@ -7,8 +7,6 @@ disableButton = (elem) ->
 wrapAll = (className, params, checkedNum, articleID, page) ->
   $(".#{className}>#mark-as-read-btn").wrap("<a href=/mypage/mark_as_read?#{params}#{page}></a>")
   $(".#{className}>#mark-as-unread-btn").wrap("<a href=/mypage/mark_as_unread?#{params}#{page}></a>")
-  if checkedNum == 1
-    $(".#{className}>#edit-summary-btn").wrap("<a href='/summary/#{articleID}/edit'}></a>")
   $(".#{className}>#mark-as-favorite-btn").wrap("<a href=/mypage/mark_as_favorite?#{params}#{page}></a>")
   $(".#{className}>#mark-off-favorite-btn").wrap("<a href=/mypage/mark_off_favorite?#{params}#{page}></a>")
   $(".#{className}>#delete-btn").wrap("<a href=/mypage/delete_article?#{params}#{page}></a>")
@@ -32,8 +30,6 @@ wrapAll = (className, params, checkedNum, articleID, page) ->
     disableButton(".#{className}>a>div")
   else if checkedNum is 1
     $(".#{className}>div").css("background-color", "white")
-  else if checkedNum is 2
-    disableButton(".#{className}>a>#edit-summary-btn")
 
   if checkedNum > 0
     i = 0

@@ -12,15 +12,6 @@
       <div class="title">
         <a href="<%= table_data[:article].url %>" target="_blank">
         <%= table_data[:article].title %>
-        <% if @is_login_user != true && table_data[:is_registered] %>
-          <span>
-          <% if table_data[:is_already_read] %>
-          << you already read
-          <% else %>
-          << you also register
-          <% end %>
-          </span>
-        <% end %>
           <p>
           <%= table_data[:registered_num] %> registered, 
           <%= table_data[:like_num] %>
@@ -37,6 +28,24 @@
           <% end %>
           </p>
         </a>
+      </div>
+      <div>
+      <% if @is_login_user %>
+        <%= link_to image_tag("icons/glyphicons_030_pencil_gray.png", :size => "12x12") +
+            content_tag(:p, "summarize"),
+            {:controller => "summary", :action => "edit", :article_id => table_data[:article].id},
+            {:class => "btn btn-default btn-xs"} %>
+      <% else %>
+      <% if @is_login_user != true && table_data[:is_registered] %>
+        <span>
+        <% if table_data[:is_already_read] %>
+        << you already read
+        <% else %>
+        << you also register
+        <% end %>
+        </span>
+      <% end %>
+      <% end %>
       </div>
     </div>
   </th>

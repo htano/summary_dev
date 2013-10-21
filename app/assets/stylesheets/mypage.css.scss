@@ -180,7 +180,7 @@
 
 #article-controller {
 //  border: 2px solid #ddd;
-  width: 800px;
+  width: 790px;
 
   float: left;
   margin-top: -15px;
@@ -375,7 +375,7 @@ ul.tab {
 }
 
 #article-title-top {
-  width: 700px;
+  width: 711px;
   padding: 4px 0px 0px 0px;
   text-align: center;
 }
@@ -392,23 +392,15 @@ ul.tab {
 }
 
 .title {
-  width: 630px;
+  width: 545px;
   float: left;
   margin-top: 1px;
   margin-left: 10px;
   text-align: left;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: normal;
-
   a {
     color: gray;
-
-    span {
-      float: right;
-      color: #F9ACAC;
-      font-size: 10px;
-    }
-
     &:hover {
       color: #5B91FF;
       text-decoration: underline;
@@ -420,6 +412,26 @@ ul.tab {
       margin-top: 0px;
       font-size: 11px;
       color: rgb(162, 162, 162);
+    }
+  }
+  &+div {
+    width: 88px;
+    height: 22px;
+    float: right;
+    img {
+      float: left;
+      margin: 3px 0 0 0;
+    }
+    p {
+      float: right;
+      font-size: 11px;
+      font-weight: normal;
+      margin: 2px 0 0 5px;
+    }
+    span {
+      float: right;
+      color: #F9ACAC;
+      font-size: 10px;
     }
   }
 }
