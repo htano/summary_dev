@@ -2,6 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+BLANK = ''
+
 @set_option_area = ->
   condition = $("#condition").val()
   sort = $("#sort").val()
@@ -33,47 +35,65 @@
 $ ->
   $("#condition_tag").click ->
     $("#condition").val(1)
-    $("#search_form").submit()
+    set_condition_tag_selected()
+    unless $("#searchtext").val() == BLANK
+      $("#search_form").submit()
 
 $ ->
   $("#condition_title").click ->
     $("#condition").val(2)
-    $("#search_form").submit()
+    set_condition_title_selected()
+    unless $("#searchtext").val() == BLANK
+      $("#search_form").submit()
 
 $ ->
   $("#condition_content").click ->
     $("#condition").val(3)
-    $("#search_form").submit()
+    set_condition_content_selected()
+    unless $("#searchtext").val() == BLANK
+      $("#search_form").submit()
 
 $ ->
   $("#sort_Newest").click ->
     $("#sort").val(1)
-    $("#search_form").submit()
+    set_sort_Newest_selected()
+    unless $("#searchtext").val() == BLANK
+      $("#search_form").submit()
 
 $ ->
   $("#sort_summary_num").click ->
     $("#sort").val(2)
-    $("#search_form").submit()
+    set_sort_summary_num_selected()
+    unless $("#searchtext").val() == BLANK
+      $("#search_form").submit()
 
 $ ->
   $("#sort_user_num").click ->
     $("#sort").val(3)
-    $("#search_form").submit()
+    set_sort_user_num_selected()
+    unless $("#searchtext").val() == BLANK
+      $("#search_form").submit()
 
 $ ->
   $("#focus_all").click ->
     $("#focus").val(1)
-    $("#search_form").submit()
+    set_focus_all_selected()
+    unless $("#searchtext").val() == BLANK
+      $("#search_form").submit()
 
 $ ->
   $("#focus_reading").click ->
     $("#focus").val(2)
-    $("#search_form").submit()
+    set_focus_reading_selected()
+    unless $("#searchtext").val() == BLANK
+      $("#search_form").submit()
 
 $ ->
   $("#focus_not_reading").click ->
     $("#focus").val(3)
-    $("#search_form").submit()
+    set_focus_not_reading_selected()
+    unless $("#searchtext").val() == BLANK
+      $("#search_form").submit()
 
 @set_condition_tag_selected = ->
   $("#condition_tag").removeClass()
