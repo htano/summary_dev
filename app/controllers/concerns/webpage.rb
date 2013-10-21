@@ -15,8 +15,9 @@ module Webpage
   #TODO 定数定義は外出しにしたい
   BLANK = ""
   THRESHOLD_FILE = 100  
-  THRESHOLD_IMAGE = 200  
-  ADVERTISEMENTLIST = ["amazon","rakuten"]
+  THRESHOLD_IMAGE = 150
+  ADVERTISEMENT_LIST = ["amazon","rakuten"]
+  EXCEPTION_PAGE_LIST = ["http://g-ec2.images-amazon.com/images/G/09/gno/beacon/BeaconSprite-JP-02._V393500380_.png"]
 
   def get_webpage_element(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
     begin
@@ -58,6 +59,7 @@ module Webpage
         img_url = img["src"]
         next if img_url == nil
         next if isAdvertisement?(url, img_url)
+        next if isExceptionPage?(img_url)
         img_url = URI.join(url, img_url).to_s unless img_url.start_with?("http")
         begin
           file = ImageSize.new(open(img_url, "rb").read)
@@ -114,8 +116,17 @@ module Webpage
   #画像URLにamazon, rakutenが入っている場合は広告と判断する
   #登録しようとしているURLにamazon, rakutenが入っている場合は何もしない
   def isAdvertisement?(url, img_url)
-    ADVERTISEMENTLIST.each do |advertisement|
+    ADVERTISEMENT_LIST.each do |advertisement|
       if !(url.include?(advertisement)) && img_url.include?(advertisement)
+        return true
+      end
+    end
+    return false
+  end
+
+  def isExceptionPage?(img_url)
+    EXCEPTION_PAGE_LIST.each do |exception_page|
+      if img_url == exception_page
         return true
       end
     end
