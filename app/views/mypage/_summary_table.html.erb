@@ -10,9 +10,12 @@
       <% end %>
       </div>
       <div class="title">
-        <a href="<%= table_data[:article].url %>" target="_blank">
-        <%= table_data[:article].title %>
-          <p>
+        <div class="title-prop">
+          <a href="<%= table_data[:article].url %>" target="_blank">
+          <%= table_data[:article].title %>
+          </a>
+        </div>
+        <p>
           <%= table_data[:registered_num] %> registered, 
           <%= table_data[:like_num] %>
           <% unless table_data[:like_num] > 1 %>
@@ -26,8 +29,7 @@
           <% else %>
           summaries
           <% end %>
-          </p>
-        </a>
+        </p>
       </div>
       <div>
       <% if @is_login_user %>
