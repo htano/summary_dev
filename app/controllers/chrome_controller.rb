@@ -62,7 +62,9 @@ class ChromeController < ApplicationController
   def get_set_tag
     url = params[:url]
     article = Article.find_by_url(url)
-    unless article == nil
+    if article == nil
+      render :text => BLANK and return
+    else
       user_article = article.user_articles.find_by_user_id(get_login_user.id)
       set_tags = user_article.get_set_tag
       if set_tags.length == 0
@@ -114,7 +116,7 @@ class ChromeController < ApplicationController
       end
       article = Article.edit_article(url)
       if article == nil
-        result = {"article_id" => BLANK, "msg" => "登録出来ませんでした。"}
+        result = {"article_id" => BLANK, "msg" => "この記事は登録出来ません。"}
         render :json => result and return
       end
 

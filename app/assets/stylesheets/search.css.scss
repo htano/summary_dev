@@ -28,7 +28,8 @@ a {
     #searchtext {
       width: 500px;
     }
-    #submit {
+    #search {
+      margin-top: 0px;
       width: 100px;
       height: 25px;
     }
@@ -65,10 +66,13 @@ a {
   width: 14%;
   height: 500px;
   float: left;
-  .condition, .sort, .focus {
+  .target, .type {
     text-align: center;
-    height: 120px;
+    height: 135px;
     border-bottom: 1px solid #ECECEC;
+    .type_area {
+
+    }
     .select_area {
       span:hover {
         border-radius: 2px;
@@ -97,10 +101,19 @@ a {
   float: left;
   height: 100%;
   width: 85%;
+  #article_operation {
+    padding: 5px 0px 5px 0px;
+    margin: auto;
+    position: relative;
+    width: 900px;
+  }
   #message {
-    padding: 0px 25px 0 25px;
+    padding: 0px 300px 0 20px;
     margin: 4px 10px 0 25px;
-    height: 25px;
+  }
+  #sort {
+    margin-left: auto;
+    width: 65px;
   }
   .article_contents, .article_contents_not_read {
     margin: auto;

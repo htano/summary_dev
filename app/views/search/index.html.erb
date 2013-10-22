@@ -5,6 +5,7 @@
 <script>
 $(document).ready(function() {
   set_option_area()
+  hide_navbar_text()
 });
 </script>
 
@@ -15,50 +16,53 @@ $(document).ready(function() {
       <div id="operation">
         <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="Please input the words you want.">
         <input type="submit" id="search" value="search" class="button button-flat:hover submit"><br>
-        <%= flash[:error] %>
       </div>
     </div>
     <div id="option_area">
-      <div class="condition">
-        <p>condition</p>
+<!--
+      <div class="type">
+        <p>type</p>
         <div class="select_area">
-          <span id="condition_tag">tag</span><br>
-          <span id="condition_title">title</span><br>
-          <span id="condition_content">content</span><br>
-          <input type="hidden" name="condition" id="condition" value="<%= @condition %>">
+          <span id="type_article">article</span><br>
+          <span id="type_user">user</span><br>
+          <input type="hidden" name="type" id="type" value="<%= @type %>">
         </div>
       </div>
-      <div class="sort">
-        <p>sort</p>
+-->
+      <div class="target">
+        <p>target</p>
         <div class="select_area">
-          <span id="sort_Newest">Newest</span><br>
-          <span id="sort_summary_num">summary num</span><br>
-          <span id="sort_user_num">user num</span><br>
-          <input type="hidden" name="sort" id="sort" value="<%= @sort %>">
-        </div>
-      </div>
-      <div class="focus">
-        <p>focus</p>
-        <div class="select_area">
-          <span id="focus_all">all</span><br>
-          <% if signed_in? %>
-            <span id="focus_reading">reading</span><br>
-            <span id="focus_not_reading">not reading</span><br>
-          <% end %>
-          <input type="hidden" name="focus" id="focus" value="<%= @focus %>">
+          <span id="target_content">content</span><br>
+          <span id="target_tag">tag</span><br>
+          <span id="target_domain">domain</span><br>
+          <input type="hidden" name="target" id="target" value="<%= @target %>">
         </div>
       </div>
     </div>
     <div id="result_area">
       <% if @articles == nil || @articles.length == 0 %>
-       <!-- <%= @searchtext %> の検索結果 0 件 -->
+        <!-- <%= @searchtext %> の検索結果 0 件 -->
       <% else %>
-        <div id="message">
-          <%= @searchtext %> の検索結果 <%= @articles_num %> 件
+        <div id="article_operation">
+          <span id="message">
+            <%= @searchtext %> の <%= @target_text %> 検索結果 <%= @articles_num %> 件
+          </span>
+          <% if get_login_user %>
+            <span>
+                <input type="checkbox" id="not_read_only"> Not Read only.
+            </span>
+          <% end %>
+          <span id="sort">
+            <div class="btn-group">
+              <button class="btn dropdown-toggle" data-toggle="dropdown">sort <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "Newest" ,{:controller => "search", :action => "search", :searchtext => @searchtext, :target => @target, :sort => "1"} %></li>
+                  <li><%= link_to "Summary num" ,{:controller => "search", :action => "search", :searchtext => @searchtext, :target => @target, :sort => "2"} %></li>
+                  <li><%= link_to "Reader num" ,{:controller => "search", :action => "search", :searchtext => @searchtext, :target => @target, :sort => "3"} %></li>
+                </ul>
+            </div>          
+          </span>
         </div>
-        <div style='text-align:center;'>
-          <%= paginate @articles, :window => 4, :outer_window => 2  %>
-        </div>        
         <% @articles.each do |article| %>
           <% if get_login_user && article.user_articles.where(:user_id => get_login_user.id).first %>
             <div class="article_contents">
@@ -80,11 +84,12 @@ $(document).ready(function() {
                 <%= image_tag(article.thumbnail) %>
               </div>
               <div id="contents_preview">
-                <p><%= article.contents_preview[0, 100] %></p>
+                <p><%= article.contents_preview[0, 200] %></p>
               </div>
 
               <div id="url_host">
-                <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><a href="<%= URI(article.url).host %>" target="_blank"><%= URI(article.url).host %></a></p>
+                <!--<p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><a href="<%= URI(article.url).host %>" target="_blank"><%= URI(article.url).host %></a></p>-->
+                <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host , {:controller => "search", :action => "search", :searchtext => URI(article.url).host, :target => "3", :sort => "1"} %></p>
               </div>
 
               <div id="article_operation">
@@ -104,7 +109,7 @@ $(document).ready(function() {
                 <div id="tag">
                   <% tags.each do |tag| %>
                     <!--<span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag} %></span>-->
-                    <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :condition => "1", :sort => "1", :focus => "1"} %></span>
+                    <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :target => "3", :sort => "1"} %></span>
                   <% end %>
                 </div>
               <% end %>

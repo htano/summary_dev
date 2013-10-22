@@ -39,18 +39,25 @@ class Article < ActiveRecord::Base
     articles = joins(:user_articles => :user_article_tags).where("user_article_tags.tag" => tag).group("url")
     return articles
   end
-
+=begin
   #指定されたタイトルを持つ記事を取得する
   def self.search_by_title(title)
     return nil if title == nil || title == BLANK
     articles = where(["title LIKE ?", "%"+title+"%"])
     return articles
   end
-
+=end
   #指定された本文を持つ記事を取得する
   def self.search_by_content(content)
     return nil if content == nil || content == BLANK
-    articles = where(["contents_preview LIKE ?", "%"+content+"%"])
+    articles = where(["contents_preview LIKE ? or title LIKE ?", "%"+content+"%", "%"+content+"%"])
+    return articles
+  end
+
+  #指定されたドメインがURLに含まれる記事を取得する
+  def self.search_by_domain(domain)
+    return nil if domain == nil || domain == BLANK
+    articles = where(["url LIKE ? or url LIKE ? ", "http://"+domain+"%", "https://"+domain+"%"])
     return articles
   end
 
