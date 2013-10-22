@@ -6,17 +6,14 @@ MODEL_DIR = Rails.root.to_s + "/lib/article_classifier/model"
 DF_FILE = MODEL_DIR + "/df.txt"
 DOCUMENT_SIZE = 10000
 GRAM_SIZE = 2
+MAX_TERM_NUM = 20
 
 df = Hash.new(1)
 df.read_kv(DF_FILE)
 
 def idf(ngram, df)
   if df[ngram]
-    if df[ngram] > 200
-      return 0.0
-    else
-      return Math.log(DOCUMENT_SIZE / df[ngram])
-    end
+    return Math.log(DOCUMENT_SIZE / df[ngram])
   else 
     return Math.log(DOCUMENT_SIZE)
   end
@@ -32,10 +29,16 @@ open(TITLE_WITH_CLASS) do |file|
       tfidf_hash[ngram] += idf(ngram, df)
     end
     print(title)
-    tfidf_hash.each do |ng,tfidf|
-      if tfidf > 0.0
-        print("\t", ng, "\t", tfidf)
+    i = 0
+    tfidf_hash.sort_by{|key, value| 
+      -value
+    }.each do |ng,tfidf|
+      if i < MAX_TERM_NUM
+        if tfidf > 0.0
+          print("\t", ng, "\t", tfidf)
+        end
       end
+      i += 1
     end
     print("\n")
   end
