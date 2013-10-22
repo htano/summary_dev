@@ -11,7 +11,7 @@ class ArticleClassifier
   CLASS_DICT_FILE = MODEL_DIR + "/class_dict.txt"
   LIBLINEAR_MODEL_FILE = MODEL_DIR + "/liblinear.model"
   GRAM_SIZE = 2
-  DOCUMENT_SIZE = 3000
+  DOCUMENT_SIZE = 10000
   THRESHOLD = -0.5
 
   def initialize
