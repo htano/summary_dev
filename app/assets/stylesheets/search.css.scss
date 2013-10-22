@@ -12,21 +12,13 @@ a {
 .sort-split-btn {
 //  float: right;
   button {
-    font-size: 15px;
-    color: #a2a2a2;
+    color: gray;
     .caret {
       margin-left: 5px;
     }
   }
   ul > li > a {
-    color: #a2a2a2;
-  }
-  #asc-registered, #desc-registered {
-    float: left;
-    margin-left: -10px;
-    margin-right: 5px;
-    width: 14px;
-    height: 17px;
+    color: gray;
   }
 }
 
