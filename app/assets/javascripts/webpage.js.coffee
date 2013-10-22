@@ -14,13 +14,18 @@ BLANK = ''
     unless document.getElementById('recent_tag_' + text_value) == null
       document.getElementById('recent_tag_' + text_value).setAttribute('class', 'recent_tag_pushed')
 
-@blank_check = ->
+@check_url = ->
   url = document.getElementById('url').value
   if url.length is 0
     document.getElementById('add_msg').innerHTML = 'Please input URL.'
     return false
+  else
+    check = url.match(/(http):\/\/.+/i)
+    if !check
+      document.getElementById('add_msg').innerHTML = 'Please input URL format.'
+      return false
 
-@check_url = ->
+@check_format = ->
   url = document.getElementById('url').value
   if url.length is 0
     document.getElementById('add_msg').innerHTML = BLANK
