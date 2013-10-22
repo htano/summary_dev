@@ -52,6 +52,17 @@ $(document).ready(function() {
             </span>
           <% end %>
           <span id="sort">
+            <div class="btn-group sort-split-btn">
+              <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+              <%= @sort_menu_title %><span class="caret"></span>
+              </button>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "Newest" ,{:controller => "search", :action => "search", :searchtext => @searchtext, :target => @target, :sort => "1"} %></li>
+                  <li><%= link_to "Summary num" ,{:controller => "search", :action => "search", :searchtext => @searchtext, :target => @target, :sort => "2"} %></li>
+                  <li><%= link_to "Reader num" ,{:controller => "search", :action => "search", :searchtext => @searchtext, :target => @target, :sort => "3"} %></li>
+                </ul>
+            </div>
+<!--
             <div class="btn-group">
               <button class="btn dropdown-toggle" data-toggle="dropdown">sort <span class="caret"></span></button>
                 <ul class="dropdown-menu">
@@ -60,6 +71,7 @@ $(document).ready(function() {
                   <li><%= link_to "Reader num" ,{:controller => "search", :action => "search", :searchtext => @searchtext, :target => @target, :sort => "3"} %></li>
                 </ul>
             </div>          
+-->
           </span>
         </div>
         <% @articles.each do |article| %>
@@ -73,7 +85,7 @@ $(document).ready(function() {
               </div>
               <div id="article_infomation">
                 <div id="summary_num">
-                  <% if article.summaries.length == 1 %>
+                  <% if article.summaries_count == 1 %>
                     <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :article_id => article.id} %>summary
                   <% else %>
                     <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :article_id => article.id} %>summaries
@@ -81,9 +93,9 @@ $(document).ready(function() {
                 </div>
                 <div id="user_article_num">
                   <% if article.user_articles.length == 1 %>
-                    <p><%= article.user_articles.length %> user</p>
+                    <p><%= article.user_articles.length %> reader</p>
                   <% else %>
-                    <p><%= article.user_articles.length %> users</p>
+                    <p><%= article.user_articles.length %> readers</p>
                   <% end %>
                 </div>
               </div>
