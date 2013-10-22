@@ -12,7 +12,7 @@ df.read_kv(DF_FILE)
 
 def idf(ngram, df)
   if df[ngram]
-    if df[ngram] > 1000
+    if df[ngram] > 200
       return 0.0
     else
       return Math.log(DOCUMENT_SIZE / df[ngram])
