@@ -2,6 +2,10 @@
   <%= stylesheet_link_tag "mypage" %>
 <% end %>
 
+<script type="text/javascript">
+  toggleFollowBtn();
+</script>
+
 <div class="container">
   <div class="myrow">
     <div class="profile">
@@ -20,9 +24,9 @@
             </div>
             <% else %>
             <div id="follow-<%= @user.id %>">
-              <%= button_to "unfollow", 
+              <%= button_to "following", 
               {:action => "unfollow", :unfollow_user_id => @user.id}, 
-              {:id => "unfollow-button", :class => "btn btn-danger btn-xs", :remote => true} %>
+              {:id => "unfollow-button", :class => "btn btn-primary btn-xs", :remote => true} %>
             </div>
             <% end %>
           <% end %>

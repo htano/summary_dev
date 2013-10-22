@@ -382,9 +382,6 @@ private
       article_ids = user.summaries.select(:article_id)
       articles = Article.where(:id => article_ids).order(order_condition).offset(offset).limit(num)
     end
-    articles.each do |article|
-      logger.debug("title : #{article.title}")
-    end
 
     return articles
   end
@@ -396,10 +393,9 @@ private
         article.summaries_count ? article.summaries_count : 0
       registered_num = 
         article.user_articles_count ? article.user_articles_count : 0
-      registered_date = 
-        user.user_articles.find_by_article_id(article.id).created_at
-
-      last_updated = 
+      registered_date = user.user_articles.size > 0 ?
+          user.user_articles.find_by_article_id(article.id).created_at : nil
+      last_updated =
         is_summary ? user.summaries.find_by_article_id(article.id).updated_at : nil
       like_num = 
         is_summary ? user.summaries.find_by_article_id(article.id).good_summaries.size : nil

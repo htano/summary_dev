@@ -1,11 +1,13 @@
-<% unfollow = button_to 'unfollow', 
+<% unfollow = button_to 'following', 
               {:action => 'unfollow', :unfollow_user_id => @user_id}, 
-              {:id => 'unfollow-button', :class => 'btn btn-danger btn-xs', :remote => true} %>
+              {:id => 'unfollow-button', :class => 'btn btn-primary btn-xs', :remote => true} %>
 <% image = link_to image_tag(@current_user.prof_image, :size => '32x32', :title => @current_user.name),
               {:action => 'index', :name => @current_user.name},
               {:id => 'follower-id-' + @current_user.id.to_s } %>
+
 $('#follow-<%= @user_id %>').html("<%= raw(escape_javascript(unfollow))  %>")
 $('#followers-num').html("<%= raw @follower_num %>")
 <% if @num < 15 %>
   $('#prof-tab-followers #insert-image').after("<%= raw(escape_javascript(image))%>")
 <% end %>
+toggleFollowBtn();

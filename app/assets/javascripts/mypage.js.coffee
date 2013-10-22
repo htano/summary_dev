@@ -150,6 +150,15 @@ changeSortRef = (tab, sortNum) ->
 @getCurrentTab = ->
   currentTab
 
+@toggleFollowBtn = ->
+  $(document).ready ->
+    $("#unfollow-button").hover (->
+      $(this).val "unfollow"
+      $(this).removeClass("btn-primary").addClass("btn-danger");
+    ), ->
+      $(this).val "following"
+      $(this).removeClass("btn-danger").addClass("btn-primary")
+
 scrollNavbar = ->
   win = $(window)
   overwriteLeft = ->
