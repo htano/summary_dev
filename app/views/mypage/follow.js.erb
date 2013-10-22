@@ -10,4 +10,4 @@ $('#followers-num').html("<%= raw @follower_num %>")
 <% if @num < 15 %>
   $('#prof-tab-followers #insert-image').after("<%= raw(escape_javascript(image))%>")
 <% end %>
-toggleFollowBtn();
+toggleUnfollowBtn();

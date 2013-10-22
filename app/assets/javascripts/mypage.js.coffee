@@ -150,7 +150,7 @@ changeSortRef = (tab, sortNum) ->
 @getCurrentTab = ->
   currentTab
 
-@toggleFollowBtn = ->
+@toggleUnfollowBtn = ->
   $(document).ready ->
     $("#unfollow-button").hover (->
       $(this).val "unfollow"
