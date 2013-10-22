@@ -7,7 +7,6 @@ class WebpageController < ApplicationController
   def add
     if signed_in?
       @user_id = params[:id]
-      @msg = params[:msg]
     else
       redirect_to :controller => "consumer", :action => "index"
     end
@@ -19,8 +18,8 @@ class WebpageController < ApplicationController
       @url = params[:url]
       h =   get_webpage_element(@url, true, false, false)
       if h == nil || @url.start_with?("chrome://extensions/")
-        @msg = "Please check URL."
-        redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+        flash[:error] = "Please check URL."
+        redirect_to :controller => "webpage", :action => "add" and return
       end
 
       @title = h["title"]
@@ -54,8 +53,8 @@ class WebpageController < ApplicationController
       end
       article = Article.edit_article(@url)
       if article == nil
-        @msg = "Please check URL."
-        redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+        flash[:error] = "Please check URL."
+        redirect_to :controller => "webpage", :action => "add" and return
       end
       user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
       UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
