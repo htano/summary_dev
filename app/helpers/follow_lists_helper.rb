@@ -3,9 +3,9 @@ module FollowListsHelper
     current_user = get_login_user
 
     if current_user && current_user.favorite_users.exists?(:favorite_user_id => user.id)
-      return button_to "unfollow", 
+      return button_to "following", 
             {:action => "unfollow", :controller => "mypage", :unfollow_user_id => user.id}, 
-            {:id => "unfollow-button", :class => "btn btn-danger btn-xs", :remote => true}
+            {:id => "unfollow-button", :class => "btn btn-primary btn-xs", :remote => true}
     else
       return button_to "follow", 
               {:action => "follow", :controller => "mypage", :follow_user_id => user.id}, 
