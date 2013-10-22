@@ -30,6 +30,7 @@ class SearchController < ApplicationController
       flash[:error] = "Please check search targets."
       redirect_to :action => "index" and return
     end
+    @articles_num = @articles.length
     redirect_to :action => "index", :target => @target, :sort => @sort and return unless @articles
     render :template => "search/index" and return unless @articles
 
@@ -45,7 +46,6 @@ class SearchController < ApplicationController
       redirect_to :action => "index" and return
     end
 
-    @articles_num = @articles.length
     @articles = @articles.page(params[:page]).per(PAGE_PER)
 
     render :template => "search/index"

@@ -9,7 +9,6 @@ $(document).ready(function() {
 });
 </script>
 
-<!--TODO flashのスタイル等々微妙なので調整が必要-->
 <form id="search_form" action="search" onLoad="set_option_area">
   <div id="search_main">
     <div id="operation_area">
@@ -41,7 +40,7 @@ $(document).ready(function() {
     </div>
     <div id="result_area">
       <% if @articles == nil || @articles.length == 0 %>
-        <!-- <%= @searchtext %> の検索結果 0 件 -->
+      　　<%= @searchtext %> の <%= @target_text %> 検索結果 <%= @articles_num %> 件
       <% else %>
         <div id="article_operation">
           <span id="message">
@@ -74,10 +73,18 @@ $(document).ready(function() {
               </div>
               <div id="article_infomation">
                 <div id="summary_num">
-                  <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :article_id => article.id} %>summaries.
+                  <% if article.summaries.length == 1 %>
+                    <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :article_id => article.id} %>summary
+                  <% else %>
+                    <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :article_id => article.id} %>summaries
+                  <% end %>
                 </div>
                 <div id="user_article_num">
-                  <p><%= article.user_articles.length %> users.</p>
+                  <% if article.user_articles.length == 1 %>
+                    <p><%= article.user_articles.length %> user</p>
+                  <% else %>
+                    <p><%= article.user_articles.length %> users</p>
+                  <% end %>
                 </div>
               </div>
               <div id="thumbnail">
@@ -109,7 +116,7 @@ $(document).ready(function() {
                 <div id="tag">
                   <% tags.each do |tag| %>
                     <!--<span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag} %></span>-->
-                    <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :target => "3", :sort => "1"} %></span>
+                    <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :target => "2", :sort => "1"} %></span>
                   <% end %>
                 </div>
               <% end %>

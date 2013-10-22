@@ -30,7 +30,7 @@ $(document).ready(function() {
   <% else %>
     <div id="tag_area">your tags for this article.<br>
       <% @tags.each do |tag| %>
-        <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :condition => "2", :sort => "1"} %></span>
+        <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :target => "2", :sort => "1"} %></span>
       <% end %>
     </div>
   <% end %>
