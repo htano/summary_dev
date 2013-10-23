@@ -26,7 +26,7 @@ open(TITLE_WITH_CLASS) do |file|
     ngram_array = NgramsParser::ngram(title, GRAM_SIZE)
     tfidf_hash = Hash.new(0)
     ngram_array.each do |ngram|
-      tfidf_hash[ngram] += idf(ngram, df)
+      tfidf_hash[ngram] += idf(ngram, df) / ngram_array.length
     end
     print(title)
     i = 0

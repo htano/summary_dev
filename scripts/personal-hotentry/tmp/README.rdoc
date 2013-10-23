@@ -1,10 +1,13 @@
-### 1. 手順
+### 1. クラスタ学習データ作成
   $ rails runner scripts/personal-hotentry/tmp/bayon-data-creator.rb > | \
   tmp/personal-hotentry/tmp/bayon-train.txt
-  
-  $ bayon -n 300 tmp/personal-hotentry/tmp/bayon-train.txt -c | \
-  tmp/personal-hotentry/tmp/bayon-cluster.txt > | \
+
+### 2. bayonで学習
+  $ bayon -n 300 tmp/personal-hotentry/tmp/bayon-train.txt -c \
+  tmp/personal-hotentry/tmp/bayon-cluster.txt | \
+  perl -pe "s/\n/\n\n====\n/" | perl -pe "s/\t/\n/g" > \
   tmp/personal-hotentry/tmp/bayon-result.txt
-  
-  $ cat tmp/personal-hotentry/tmp/bayon-result.txt | \
-  perl -pe "s/\n/\n\n====\n/" | perl -pe "s/\t/\n/g" | less
+
+### 3. DB内記事のクラスタ予測
+  $ rails runner scripts/personal-hotentry/tmp/predict-db-articles.rb | \
+  sort -n > tmp/personal-hotentry/tmp/predicted-db-articles.txt
