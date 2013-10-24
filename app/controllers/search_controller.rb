@@ -3,19 +3,23 @@
 class SearchController < ApplicationController
 
   PAGE_PER = 25
+  BLANK = ""
 
   #初期表示
   def index
+    @target = 1
     @type = 1
     @sort = 1
   end
 
-  def search
+  def search_article
     @searchtext = params[:searchtext]
-    @type = params[:type] == "" || params[:type] == nil ? "1" : params[:type]
-    @sort = params[:sort] == "" || params[:sort] == nil ? "1" : params[:sort]
+    @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
+    p @target
+    @type = params[:type] == BLANK || params[:type] == nil ? "1" : params[:type]
+    @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @articles = []
-    @articles_num = 0
+    @article_num = 0
     case @type
     when "1"
       @articles = Article.search_by_content(@searchtext)
@@ -30,7 +34,7 @@ class SearchController < ApplicationController
       flash[:error] = "Please check search types."
       redirect_to :action => "index" and return
     end
-    @articles_num = @articles.length
+    @article_num = @articles.length
     redirect_to :action => "index", :type => @type, :sort => @sort and return unless @articles
     render :template => "search/index" and return unless @articles
 
@@ -50,6 +54,19 @@ class SearchController < ApplicationController
     end
 
     @articles = @articles.page(params[:page]).per(PAGE_PER)
+
+    render :template => "search/index"
+  end
+
+  def search_user
+    @searchtext = params[:searchtext]
+    @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
+    @type = params[:type] == BLANK || params[:type] == nil ? "1" : params[:type]
+    @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
+    @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"])
+    @users.find_by_public_flg_and_yuko_flg(true,true)
+    @user_num = @users == BLANK || @users == nil ? 0 : @users.length
+    @users = @users.page(params[:page]).per(PAGE_PER)
 
     render :template => "search/index"
   end

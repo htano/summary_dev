@@ -9,7 +9,7 @@ $(document).ready(function() {
 });
 </script>
 
-<form id="search_form" action="search" onLoad="set_option_area">
+<form id="search_form" action="search_article" onLoad="set_option_area">
   <div id="search_main">
     <div id="operation_area">
       <div id="operation">
@@ -18,114 +18,30 @@ $(document).ready(function() {
       </div>
     </div>
     <div id="option_area">
-      <div class="target">
+      <div class="target_area">
         <p>target</p>
         <div class="select_area">
           <span id="target_article">article</span><br>
           <span id="target_user">user</span><br>
-          <input type="hidden" name="target" id="target" value="<%= @target %>">
         </div>
       </div>
-      <div class="type">
+      <div class="type_area">
         <p>type</p>
         <div class="select_area">
           <span id="type_content">content</span><br>
           <span id="type_tag">tag</span><br>
           <span id="type_domain">domain</span><br>
-          <input type="hidden" name="type" id="type" value="<%= @type %>">
         </div>
       </div>
+    <input type="hidden" name="target" id="target" value="<%= @target %>">
+    <input type="hidden" name="type" id="type" value="<%= @type %>">
     </div>
     <div id="result_area">
-      <% if @articles == nil || @articles.length == 0 %>
-      　　<%= @searchtext %> の <%= @type_text %> 検索結果 <%= @articles_num %> 件
+      <% if @target == "1" %>
+        <%= render :template => "/search/_result_article" %>
+      <% elsif @target == "2" %>
+        <%= render :template => "/search/_result_user" %>
       <% else %>
-        <div id="article_operation">
-          <span id="message">
-            <%= @searchtext %> の <%= @type_text %> 検索結果 <%= @articles_num %> 件
-          </span>
-          <% if get_login_user %>
-            <span>
-                <input type="checkbox" id="not_read_only"> Not Read only.
-            </span>
-          <% end %>
-          <span id="sort">
-            <div class="btn-group sort-split-btn">
-              <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-              <%= @sort_menu_title %><span class="caret"></span>
-              </button>
-                <ul class="dropdown-menu">
-                  <li><%= link_to "Newest" ,{:controller => "search", :action => "search", :searchtext => @searchtext, :type => @type, :sort => "1"} %></li>
-                  <li><%= link_to "Summary num" ,{:controller => "search", :action => "search", :searchtext => @searchtext, :type => @type, :sort => "2"} %></li>
-                  <li><%= link_to "Reader num" ,{:controller => "search", :action => "search", :searchtext => @searchtext, :type => @type, :sort => "3"} %></li>
-                </ul>
-            </div>
-          </span>
-        </div>
-        <% @articles.each do |article| %>
-          <% if get_login_user && article.user_articles.where(:user_id => get_login_user.id).first %>
-            <div class="article_contents">
-          <% else %>
-            <div class="article_contents_not_read">
-          <% end %>
-              <div id="url_title">
-                <p><a href="<%= article.url %>" target="_blank"><%= article.title[0, 200] %></a></p>
-              </div>
-              <div id="article_infomation">
-                <div id="summary_num">
-                  <% if article.summaries_count == 1 %>
-                    <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :article_id => article.id} %>summary
-                  <% else %>
-                    <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :article_id => article.id} %>summaries
-                  <% end %>
-                </div>
-                <div id="user_article_num">
-                  <% if article.user_articles.length == 1 %>
-                    <p><%= article.user_articles.length %> reader</p>
-                  <% else %>
-                    <p><%= article.user_articles.length %> readers</p>
-                  <% end %>
-                </div>
-              </div>
-              <div id="thumbnail">
-                <%= image_tag(article.thumbnail) %>
-              </div>
-              <div id="contents_preview">
-                <p><%= article.contents_preview[0, 200] %></p>
-              </div>
-
-              <div id="url_host">
-                <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host , {:controller => "search", :action => "search", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
-              </div>
-
-              <div id="article_operation">
-                <% if get_login_user %>
-                    <% if article.user_articles.where(:user_id => get_login_user.id).first %>
-                      <button class="read_it_cancel" disabled>reading</button>
-                    <% else %>
-                      <button class="read_it_later" >add</button>
-                    <% end %>
-                <% else %>
-                <% end %>
-              </div>
-              <% tags = article.get_top_rated_tag %>
-              <% if tags == nil || tags.length == 0 %>
-                <div id="tag">no tags for this article.<br></div>
-              <% else %>
-                <div id="tag">
-                  <% tags.each do |tag| %>
-                    <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :type => "2", :sort => "1"} %></span>
-                  <% end %>
-                </div>
-              <% end %>
-              <div id="category">
-                category
-              </div>
-            </div>
-          <% end %>
-        <div style='text-align:center;'>
-          <%= paginate @articles, :window => 4, :outer_window => 2  %>
-        </div>
       <% end %>
     </div>
   </div>

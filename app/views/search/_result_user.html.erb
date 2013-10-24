@@ -1,0 +1,8 @@
+<% if @user_num == 0 %>
+  <%= @searchtext %> の 検索結果 <%= @user_num %> 件
+<% else %>
+  <%= @searchtext %>の 検索結果 <%= @user_num %> 件
+  <% @users.each do |user| %>
+    <%= user.name %>
+  <% end %>
+<% end %>

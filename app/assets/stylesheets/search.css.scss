@@ -79,13 +79,10 @@ a {
   width: 14%;
   height: 500px;
   float: left;
-  .type, .target {
+  .type_area, .target_area {
     text-align: center;
     height: 135px;
     border-bottom: 1px solid #ECECEC;
-    .target_area {
-
-    }
     .select_area {
       span:hover {
         border-radius: 2px;
@@ -122,7 +119,7 @@ a {
     color: gray;
   }
   #message {
-    padding: 0px 300px 0 20px;
+    padding: 0px 250px 0 20px;
     margin: 4px 10px 0 25px;
   }
   #sort {

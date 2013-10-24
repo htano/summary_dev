@@ -9,9 +9,15 @@ BLANK = ''
   $("#search").hide 10
 
 @set_option_area = ->
+  target = $("#target").val()
   type = $("#type").val()
-  sort = $("#sort").val()
-  focus = $("#focus").val()
+  switch target
+    when "1"
+      set_target_article_selected()
+    when "2"
+      $("#target_user").click()
+      set_target_user_selected()
+
   switch type
     when "1"
       set_type_content_selected()
@@ -19,15 +25,21 @@ BLANK = ''
       set_type_tag_selected()
     when "3"
       set_type_domain_selected()
-###
-  switch sort
-    when "1"
-      set_sort_Newest_selected()
-    when "2"
-      set_sort_summary_num_selected()
-    when "3"
-      set_sort_user_num_selected()
-###
+
+$ ->
+  $("#target_article").click ->
+    $("#search_form").attr("action","search_article");
+    set_target_article_selected()
+    $(".type_area").show 10
+    $("#target").val(1)
+
+$ ->
+  $("#target_user").click ->
+    $("#search_form").attr("action","search_user");
+    set_target_user_selected()
+    $(".type_area").hide 10
+    $("#target").val(2)
+
 $ ->
   $("#type_content").click ->
     $("#type").val(1)
@@ -56,6 +68,18 @@ $ ->
       $(".article_contents").hide 10
     else
       $(".article_contents").show 10
+
+@set_target_article_selected = ->
+  $("#target_article").removeClass()
+  $("#target_user").removeClass()
+  $("#target_article").addClass("selected")
+  $("#target_user").addClass("no_selected")
+
+@set_target_user_selected = ->
+  $("#target_article").removeClass()
+  $("#target_user").removeClass()
+  $("#target_article").addClass("no_selected")
+  $("#target_user").addClass("selected")
 
 @set_type_content_selected = ->
   $("#type_content").removeClass()

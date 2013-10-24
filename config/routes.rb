@@ -1,9 +1,7 @@
 SummaryDev::Application.routes.draw do
   get "search/index"
-  get "search/search"
-  get "search/search_by_tag"
-  get "search/search_by_content"
-  get "search/search_by_title"
+  get "search/search_article"
+  get "search/search_user"
   get "follow_lists/followers"
   get "follow_lists/following"
   get "follow_lists/suggestion"
