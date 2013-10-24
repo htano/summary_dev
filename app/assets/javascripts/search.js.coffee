@@ -9,16 +9,16 @@ BLANK = ''
   $("#search").hide 10
 
 @set_option_area = ->
-  target = $("#target").val()
+  type = $("#type").val()
   sort = $("#sort").val()
   focus = $("#focus").val()
-  switch target
+  switch type
     when "1"
-      set_target_content_selected()
+      set_type_content_selected()
     when "2"
-      set_target_tag_selected()
+      set_type_tag_selected()
     when "3"
-      set_target_domain_selected()
+      set_type_domain_selected()
 ###
   switch sort
     when "1"
@@ -29,23 +29,23 @@ BLANK = ''
       set_sort_user_num_selected()
 ###
 $ ->
-  $("#target_content").click ->
-    $("#target").val(1)
-    set_target_content_selected()
+  $("#type_content").click ->
+    $("#type").val(1)
+    set_type_content_selected()
     unless $("#searchtext").val() == BLANK
       $("#search_form").submit()
 
 $ ->
-  $("#target_tag").click ->
-    $("#target").val(2)
-    set_target_tag_selected()
+  $("#type_tag").click ->
+    $("#type").val(2)
+    set_type_tag_selected()
     unless $("#searchtext").val() == BLANK
       $("#search_form").submit()
 
 $ ->
-  $("#target_domain").click ->
-    $("#target").val(3)
-    set_target_domain_selected()
+  $("#type_domain").click ->
+    $("#type").val(3)
+    set_type_domain_selected()
     unless $("#searchtext").val() == BLANK
       $("#search_form").submit()
 
@@ -57,26 +57,26 @@ $ ->
     else
       $(".article_contents").show 10
 
-@set_target_content_selected = ->
-  $("#target_content").removeClass()
-  $("#target_tag").removeClass()
-  $("#target_domain").removeClass()
-  $("#target_content").addClass("selected")
-  $("#target_tag").addClass("no_selected")
-  $("#target_domain").addClass("no_selected")
+@set_type_content_selected = ->
+  $("#type_content").removeClass()
+  $("#type_tag").removeClass()
+  $("#type_domain").removeClass()
+  $("#type_content").addClass("selected")
+  $("#type_tag").addClass("no_selected")
+  $("#type_domain").addClass("no_selected")
 
-@set_target_tag_selected = ->
-  $("#target_content").removeClass()
-  $("#target_tag").removeClass()
-  $("#target_domain").removeClass()
-  $("#target_content").addClass("no_selected")
-  $("#target_tag").addClass("selected")
-  $("#target_domain").addClass("no_selected")
+@set_type_tag_selected = ->
+  $("#type_content").removeClass()
+  $("#type_tag").removeClass()
+  $("#type_domain").removeClass()
+  $("#type_content").addClass("no_selected")
+  $("#type_tag").addClass("selected")
+  $("#type_domain").addClass("no_selected")
 
-@set_target_domain_selected = ->
-  $("#target_content").removeClass()
-  $("#target_tag").removeClass()
-  $("#target_domain").removeClass()
-  $("#target_content").addClass("no_selected")
-  $("#target_tag").addClass("no_selected")
-  $("#target_domain").addClass("selected")
+@set_type_domain_selected = ->
+  $("#type_content").removeClass()
+  $("#type_tag").removeClass()
+  $("#type_domain").removeClass()
+  $("#type_content").addClass("no_selected")
+  $("#type_tag").addClass("no_selected")
+  $("#type_domain").addClass("selected")

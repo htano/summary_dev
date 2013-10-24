@@ -6,32 +6,32 @@ class SearchController < ApplicationController
 
   #初期表示
   def index
-    @target = 1
+    @type = 1
     @sort = 1
   end
 
   def search
     @searchtext = params[:searchtext]
-    @target = params[:target] == "" || params[:target] == nil ? "1" : params[:target]
+    @type = params[:type] == "" || params[:type] == nil ? "1" : params[:type]
     @sort = params[:sort] == "" || params[:sort] == nil ? "1" : params[:sort]
     @articles = []
     @articles_num = 0
-    case @target
+    case @type
     when "1"
       @articles = Article.search_by_content(@searchtext)
-      @target_text = "タイトル＆本文"
+      @type_text = "タイトル＆本文"
     when "2"
       @articles = Article.search_by_tag(@searchtext)
-      @target_text = "タグ"
+      @type_text = "タグ"
     when "3"
       @articles = Article.search_by_domain(@searchtext)
-      @target_text = "ドメイン"
+      @type_text = "ドメイン"
     else
-      flash[:error] = "Please check search targets."
+      flash[:error] = "Please check search types."
       redirect_to :action => "index" and return
     end
     @articles_num = @articles.length
-    redirect_to :action => "index", :target => @target, :sort => @sort and return unless @articles
+    redirect_to :action => "index", :type => @type, :sort => @sort and return unless @articles
     render :template => "search/index" and return unless @articles
 
     case @sort
