@@ -66,6 +66,7 @@ class PersonalHotentry
   end
 
   def get_tfidf_hash(text)
+    text.force_encoding("UTF-8")
     ngram_array = NgramsParser::ngram(text, GRAM_SIZE)
     tfidf_hash = Hash.new(0)
     ngram_array.each do |ngram|

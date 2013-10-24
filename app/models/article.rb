@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require './lib/article_classifier.rb'
+require './lib/personal-hotentry.rb'
 require "webpage"
 include Webpage
 
@@ -8,6 +9,7 @@ include Webpage
 
 class Article < ActiveRecord::Base
   ArticleClassifier.instance.read_models
+  PersonalHotentry.instance
   has_many(:user_articles, :dependent => :destroy)
   has_many(:summaries, :dependent => :destroy)
   belongs_to(:category)
@@ -17,7 +19,7 @@ class Article < ActiveRecord::Base
   # A 'point' means a people say he is reading the article.
   # And the points are decaying by time spending.
   # This parameter means that '1' point will decay to '0.01' point until some days after.
-  ZERO_ZERO_ONE_DAYS = 7
+  ZERO_ZERO_ONE_DAYS = 28
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   BLANK = ""
 
@@ -28,6 +30,8 @@ class Article < ActiveRecord::Base
       if h == nil
         return nil
       end
+      ph_inst = PersonalHotentry.instance
+      cluster_id = ph_inst.predict_max_cluster_id(h["title"])
       ac_inst = ArticleClassifier.instance
       category_name = ac_inst.predict(h["title"])
       category_id = Category.find_by_name(category_name).id
@@ -36,6 +40,7 @@ class Article < ActiveRecord::Base
         :title => h["title"], 
         :contents_preview => h["contentsPreview"][0, 200], 
         :category_id => category_id, 
+        :cluster_id => cluster_id,
         :thumbnail => h["thumbnail"]
       )
       if article.save
