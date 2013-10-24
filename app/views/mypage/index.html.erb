@@ -156,13 +156,19 @@
         <div class="none main">
         <% end %>
           <div id="mark-as-read-btn">
-            <%= image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16", :class => "inner") + content_tag(:p, "mark as read", :class => "inner") %>
+            <%= link_to image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16") +
+              content_tag(:p, "mark as read"),
+              {:action => "mark_as_read"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div id="mark-as-favorite-btn">
-            <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark as favorite") %>
+            <%= link_to image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") +
+              content_tag(:p, "mark as favorite"),
+              {:action => "mark_as_favorite"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div id="delete-btn">
-            <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
+            <%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") +
+              content_tag(:p, "delete"),
+              {:action => "delete_article"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
             <%= render_page_ejection(@mpage, @main_articles_table, :mpage, @total_main_articles_num) %>
@@ -177,7 +183,9 @@
         <div class="none summary">
         <% end %>
           <div id="delete-summary-btn">
-            <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
+            <%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") +
+              content_tag(:p, "delete"),
+              {:action => "delete_summary"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
             <%= render_page_ejection(@spage, @summaries_table, :spage, @total_summaries_num) %>
@@ -192,10 +200,14 @@
         <div class="none favorite">
         <% end %>
           <div id="mark-off-favorite-btn">
-            <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark off favorite") %>
+            <%= link_to image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") +
+              content_tag(:p, "mark off favorite"),
+              {:action => "mark_off_favorite"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div id="delete-btn">
-            <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
+            <%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") +
+              content_tag(:p, "delete"),
+              {:action => "delete_article"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
             <%= render_page_ejection(@fpage, @favorite_articles_table, :fpage, @total_favorite_articles_num) %>
@@ -210,13 +222,19 @@
         <div class="none read">
         <% end %>
           <div id="mark-as-unread-btn">
-            <%= image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16", :class => "inner") + content_tag(:p, "mark as unread", :class => "inner") %>
+            <%= link_to image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16") +
+              content_tag(:p, "mark as unread"),
+              {:action => "mark_as_unread"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div id="mark-as-favorite-btn">
-            <%= image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") + content_tag(:p, "mark as favorite") %>
+            <%= link_to image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") +
+              content_tag(:p, "mark as favorite"),
+              {:action => "mark_as_favorite"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div id="delete-btn">
-            <%= image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") + content_tag(:p, "delete") %>
+            <%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") +
+              content_tag(:p, "delete"),
+              {:action => "delete_article"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
             <%= render_page_ejection(@rpage, @read_articles_table, :rpage, @total_read_articles_num) %>
@@ -233,7 +251,9 @@
         <div class="none main">
         <% end %>
           <div id="clip-btn">
-            <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
+            <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
+              content_tag(:p, "clip"),
+              {:action => "clip"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
             <%= render_page_ejection(@mpage, @main_articles_table, :mpage, @total_main_articles_num) %>
@@ -248,7 +268,9 @@
         <div class="none summary">
         <% end %>
           <div id="clip-btn">
-            <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
+            <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
+              content_tag(:p, "clip"),
+              {:action => "clip"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
             <%= render_page_ejection(@spage, @summaries_table, :spage, @total_summaries_num) %>
@@ -263,7 +285,9 @@
         <div class="none favorite">
         <% end %>
           <div id="clip-btn">
-            <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
+            <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
+              content_tag(:p, "clip"),
+              {:action => "clip"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
             <%= render_page_ejection(@fpage, @favorite_articles_table, :fpage, @total_favorite_articles_num) %>
@@ -278,7 +302,9 @@
         <div class="none read">
         <% end %>
           <div id="clip-btn">
-            <%= image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") + content_tag(:p, "clip") %>
+            <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
+              content_tag(:p, "clip"),
+              {:action => "clip"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
             <%= render_page_ejection(@rpage, @read_articles_table, :rpage, @total_read_articles_num) %>

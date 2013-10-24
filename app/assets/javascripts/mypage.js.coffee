@@ -1,16 +1,35 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-disableButton = (elem) ->
-  $(elem).css("background-color", "#ddd").unwrap()
 
-wrapAll = (className, params, checkedNum, articleID, page) ->
-  $(".#{className}>#mark-as-read-btn").wrap("<a href=/mypage/mark_as_read?#{params}#{page}></a>")
-  $(".#{className}>#mark-as-unread-btn").wrap("<a href=/mypage/mark_as_unread?#{params}#{page}></a>")
-  $(".#{className}>#mark-as-favorite-btn").wrap("<a href=/mypage/mark_as_favorite?#{params}#{page}></a>")
-  $(".#{className}>#mark-off-favorite-btn").wrap("<a href=/mypage/mark_off_favorite?#{params}#{page}></a>")
-  $(".#{className}>#delete-btn").wrap("<a href=/mypage/delete_article?#{params}#{page}></a>")
-  $(".#{className}>#delete-summary-btn").wrap("<a href=/mypage/delete_summary?#{params}#{page}></a>")
+#wrapAll = (className, params, checkedNum, articleID, page) ->
+  # $(".#{className}>#mark-as-unread-btn").wrap("<a href=/mypage/mark_as_unread?#{params}#{page}></a>")
+  # $(".#{className}>#mark-off-favorite-btn").wrap("<a href=/mypage/mark_off_favorite?#{params}#{page}></a>")
+  # $(".#{className}>#delete-btn").wrap("<a href=/mypage/delete_article?#{params}#{page}></a>")
+  # $(".#{className}>#delete-summary-btn").wrap("<a href=/mypage/delete_summary?#{params}#{page}></a>")
+disableControlButton = (className) ->
+    $(".#{className}>#mark-as-read-btn>a").addClass("disabled").css("background-color", "#ddd")
+    $(".#{className}>#mark-as-unread-btn>a").addClass("disabled").css("background-color", "#ddd")
+    $(".#{className}>#mark-as-favorite-btn>a").addClass("disabled").css("background-color", "#ddd")
+    $(".#{className}>#mark-off-favorite-btn>a").addClass("disabled").css("background-color", "#ddd")
+    $(".#{className}>#delete-btn>a").addClass("disabled").css("background-color", "#ddd")
+    $(".#{className}>#delete-summary-btn>a").addClass("disabled").css("background-color", "#ddd")
+
+enableControlButton = (className) ->
+  $(".#{className}>#mark-as-read-btn>a").removeClass("disabled").css("background-color", "white")
+  $(".#{className}>#mark-as-unread-btn>a").removeClass("disabled").css("background-color", "white")
+  $(".#{className}>#mark-as-favorite-btn>a").removeClass("disabled").css("background-color", "white")
+  $(".#{className}>#mark-off-favorite-btn>a").removeClass("disabled").css("background-color", "white")
+  $(".#{className}>#delete-btn>a").removeClass("disabled").css("background-color", "white")
+  $(".#{className}>#delete-summary-btn>a").removeClass("disabled").css("background-color", "white")
+
+renewControlIssue = (className, params, page) ->
+  $(".#{className}>#mark-as-read-btn>a").attr("href", "/mypage/mark_as_read?#{params}#{page}")
+  $(".#{className}>#mark-as-unread-btn>a").attr("href", "/mypage/mark_as_unread?#{params}#{page}")
+  $(".#{className}>#mark-as-favorite-btn>a").attr("href", "/mypage/mark_as_favorite?#{params}#{page}")
+  $(".#{className}>#mark-off-favorite-btn>a").attr("href", "/mypage/mark_off_favorite?#{params}#{page}")
+  $(".#{className}>#delete-btn>a").attr("href", "/mypage/delete_article?#{params}#{page}")
+  $(".#{className}>#delete-summary-btn>a").attr("href", "/mypage/delete_summary?#{params}#{page}")
 
 @clickArticleCheckBox = (formName, className, page) ->
   checkbox = document.getElementsByName(formName.name).item(0)
@@ -27,9 +46,9 @@ wrapAll = (className, params, checkedNum, articleID, page) ->
     i++
 
   if checkedNum is 0
-    disableButton(".#{className}>a>div")
-  else if checkedNum is 1
-    $(".#{className}>div").css("background-color", "white")
+    disableControlButton(className)
+  else
+    enableControlButton(className)
 
   if checkedNum > 0
     i = 0
@@ -37,9 +56,7 @@ wrapAll = (className, params, checkedNum, articleID, page) ->
     while i < articleIDs.length
       params += "article_ids[]=" + "#{articleIDs[i]}&"
       i++
-
-    $(".#{className}>a>div").unwrap()
-    wrapAll(className, params, checkedNum, articleIDs, page)
+    renewControlIssue(className, params, page)
 
 @clickCheckBoxForClip = (name) ->
   mainCheckbox     = document.main_checkbox
@@ -85,13 +102,10 @@ wrapAll = (className, params, checkedNum, articleID, page) ->
       articleIDs.push(articleID)
     i++
 
-  clipBtn = document.getElementById('clip-btn')
-
   if checkedNum is 0
-    clipBtn.style.backgroundColor = "#ddd"
-    $("a>#clip-btn").unwrap()
+    $("#clip-btn>a").addClass("disabled").css("background-color", "#ddd")
   else
-    clipBtn.style.backgroundColor = "white"
+    $("#clip-btn>a").removeClass("disabled").css("background-color", "white")
 
   # create link
   if checkedNum > 0
@@ -101,8 +115,7 @@ wrapAll = (className, params, checkedNum, articleID, page) ->
       params += "article_ids[]=" + "#{articleIDs[i]}&"
       i++
 
-    $("a>#clip-btn").unwrap()
-    $("div>#clip-btn").wrap("<a href='/mypage/clip?name=#{name}&#{params}'></a>")
+    $("#clip-btn>a").attr("href", "/mypage/clip?name=#{name}&#{params}")
 
 @checkAll = (checker, formName) ->
   form = document.getElementById(formName)
