@@ -45,7 +45,7 @@
           <%= user.site_url %>
         </div>
         <div id="user_info">
-          フォロワー数：<%= user.favorite_users.count %>
+          フォロワー数：<%= user.get_followers_count %>
           要約数：<%= user.summaries.count %>
         </div>
         <div id="follow_info">

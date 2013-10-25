@@ -67,7 +67,9 @@ class SearchController < ApplicationController
 
     case @sort
     when "1"
+      #TODO
       @users = @users.order("favorite_users_count desc, created_at desc")
+      #FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]})
       @sort_menu_title = "Follower num"
     when "2"
       @users = @users.order("summaries_count desc, created_at desc")
