@@ -67,9 +67,7 @@ class SearchController < ApplicationController
 
     case @sort
     when "1"
-      #TODO
-      @users = @users.order("favorite_users_count desc, created_at desc")
-      #FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]})
+      @users = @users.sort_by! {|user| user.get_followers_count }.reverse
       @sort_menu_title = "Follower num"
     when "2"
       @users = @users.order("summaries_count desc, created_at desc")
@@ -79,7 +77,7 @@ class SearchController < ApplicationController
       redirect_to :action => "index" and return
     end
 
-    @users = @users.page(params[:page]).per(PAGE_PER)
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(PAGE_PER)
 
     render :template => "search/index"
   end
