@@ -74,13 +74,13 @@ $ ->
   $("#target_article").removeClass()
   $("#target_user").removeClass()
   $("#target_article").addClass("selected")
-  $("#target_user").addClass("no_selected")
+  $("#target_user").addClass("not_selected")
   $("#search_form").attr("action","search_article");
 
 @set_target_user_selected = ->
   $("#target_article").removeClass()
   $("#target_user").removeClass()
-  $("#target_article").addClass("no_selected")
+  $("#target_article").addClass("not_selected")
   $("#target_user").addClass("selected")
   $("#search_form").attr("action","search_user");
 
@@ -89,21 +89,21 @@ $ ->
   $("#type_tag").removeClass()
   $("#type_domain").removeClass()
   $("#type_content").addClass("selected")
-  $("#type_tag").addClass("no_selected")
-  $("#type_domain").addClass("no_selected")
+  $("#type_tag").addClass("not_selected")
+  $("#type_domain").addClass("not_selected")
 
 @set_type_tag_selected = ->
   $("#type_content").removeClass()
   $("#type_tag").removeClass()
   $("#type_domain").removeClass()
-  $("#type_content").addClass("no_selected")
+  $("#type_content").addClass("not_selected")
   $("#type_tag").addClass("selected")
-  $("#type_domain").addClass("no_selected")
+  $("#type_domain").addClass("not_selected")
 
 @set_type_domain_selected = ->
   $("#type_content").removeClass()
   $("#type_tag").removeClass()
   $("#type_domain").removeClass()
-  $("#type_content").addClass("no_selected")
-  $("#type_tag").addClass("no_selected")
+  $("#type_content").addClass("not_selected")
+  $("#type_tag").addClass("not_selected")
   $("#type_domain").addClass("selected")
