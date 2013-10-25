@@ -15,7 +15,6 @@ class SearchController < ApplicationController
   def search_article
     @searchtext = params[:searchtext]
     @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
-    p @target
     @type = params[:type] == BLANK || params[:type] == nil ? "1" : params[:type]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @articles = []
@@ -31,7 +30,7 @@ class SearchController < ApplicationController
       @articles = Article.search_by_domain(@searchtext)
       @type_text = "ドメイン"
     else
-      flash[:error] = "Please check search types."
+      flash[:error] = "Please retry."
       redirect_to :action => "index" and return
     end
     @article_num = @articles.length
@@ -61,11 +60,23 @@ class SearchController < ApplicationController
   def search_user
     @searchtext = params[:searchtext]
     @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
-    @type = params[:type] == BLANK || params[:type] == nil ? "1" : params[:type]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"])
     @users.find_by_public_flg_and_yuko_flg(true,true)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
+
+    case @sort
+    when "1"
+      @users = @users.order("favorite_users_count desc, created_at desc")
+      @sort_menu_title = "Follower num"
+    when "2"
+      @users = @users.order("summaries_count desc, created_at desc")
+      @sort_menu_title = "Summary num"
+    else
+      flash[:error] = "Please retry."
+      redirect_to :action => "index" and return
+    end
+
     @users = @users.page(params[:page]).per(PAGE_PER)
 
     render :template => "search/index"

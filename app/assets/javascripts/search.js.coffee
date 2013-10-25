@@ -14,9 +14,10 @@ BLANK = ''
   switch target
     when "1"
       set_target_article_selected()
+      $(".type_area").show 10
     when "2"
-      $("#target_user").click()
       set_target_user_selected()
+      $(".type_area").hide 10
 
   switch type
     when "1"
@@ -28,17 +29,17 @@ BLANK = ''
 
 $ ->
   $("#target_article").click ->
-    $("#search_form").attr("action","search_article");
     set_target_article_selected()
-    $(".type_area").show 10
     $("#target").val(1)
+    unless $("#searchtext").val() == BLANK
+      $("#search_form").submit()
 
 $ ->
   $("#target_user").click ->
-    $("#search_form").attr("action","search_user");
     set_target_user_selected()
-    $(".type_area").hide 10
     $("#target").val(2)
+    unless $("#searchtext").val() == BLANK
+      $("#search_form").submit()
 
 $ ->
   $("#type_content").click ->
@@ -74,12 +75,14 @@ $ ->
   $("#target_user").removeClass()
   $("#target_article").addClass("selected")
   $("#target_user").addClass("no_selected")
+  $("#search_form").attr("action","search_article");
 
 @set_target_user_selected = ->
   $("#target_article").removeClass()
   $("#target_user").removeClass()
   $("#target_article").addClass("no_selected")
   $("#target_user").addClass("selected")
+  $("#search_form").attr("action","search_user");
 
 @set_type_content_selected = ->
   $("#type_content").removeClass()

@@ -2,8 +2,7 @@
   <%= @searchtext %> の <%= @type_text %> 検索結果 <%= @article_num %> 件
 <% else %>
   <div id="article_operation">
-    <span id="message">
-      <%= @searchtext %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
+    <span id="message"><%= @searchtext %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
     <% if get_login_user %>
     <span>
       <input type="checkbox" id="not_read_only">Not Read only.</span>
@@ -13,13 +12,13 @@
         <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><%= @sort_menu_title %><span class="caret"></span></button>
         <ul class="dropdown-menu">
           <li>
-            <%= link_to "Newest" ,{:controller =>"search", :action => "search_article", :searchtext => @searchtext, :type => @type, :sort => "1"} %>
+            <%= link_to "Newest" ,{:controller =>"search", :action => "search_article", :searchtext => @searchtext,:target => @target, :type => @type, :sort => "1"} %>
           </li>
           <li>
-            <%= link_to "Summary num" ,{:controller =>"search", :action => "search_article", :searchtext => @searchtext, :type => @type, :sort => "2"} %>
+            <%= link_to "Summary num" ,{:controller =>"search", :action => "search_article", :searchtext => @searchtext,:target => @target, :type => @type, :sort => "2"} %>
           </li>
           <li>
-            <%= link_to "Reader num" ,{:controller =>"search", :action => "search_article", :searchtext => @searchtext, :type => @type, :sort => "3"} %>
+            <%= link_to "Reader num" ,{:controller =>"search", :action => "search_article", :searchtext => @searchtext,:target => @target, :type => @type, :sort => "3"} %>
           </li>
         </ul>
       </div>

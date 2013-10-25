@@ -111,7 +111,66 @@ a {
   float: left;
   height: 100%;
   width: 85%;
-  #article_operation {
+  .user_contents_follow, .user_contents_not_follow {
+    margin: auto;
+    padding: 2px 0px 2px 0px;
+    position: relative;
+    //border: 1px solid #ECECEC;
+    border-top: 4px solid #ECECEC;
+    z-index: 1;
+    width: 760px;
+    height: 100px;
+    #user_prof_image {
+      height: 90px;
+      width: 90px;
+      float: left;
+      img {
+        max-height: 90px;
+        max-width: 90px;
+        height: 90px;
+        width: 90px;
+        display: block;
+        margin: auto;
+      }
+    }
+    #user_name {
+      border: 1px solid #ECECEC;
+      height: 45px;
+      width: 150px;
+      float: left;
+    }
+    #user_full_name {
+      border: 1px solid #ECECEC;
+      height: 45px;
+      width: 250px;
+      float: left;
+    }
+    #user_mail_addr {
+      border: 1px solid #ECECEC;
+      height: 25px;
+      width: 250px;
+      float: left;
+    }
+    #follow_info {
+      border: 1px solid #ECECEC;
+      height: 45px;
+      width: 90px;
+      float: left;
+    }
+    #user_info {
+      border: 1px solid #ECECEC;
+      height: 45px;
+      width: 400px;
+      float: left;
+    }
+    #user_site {
+      border: 1px solid #ECECEC;
+      height: 20px;
+      width: 250px;
+      float: left;
+    }
+  }
+  #article_operation, #user_operation {
     padding: 5px 0px 5px 0px;
     margin: auto;
     position: relative;

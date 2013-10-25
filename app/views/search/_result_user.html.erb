@@ -1,8 +1,59 @@
 <% if @user_num == 0 %>
   <%= @searchtext %> の 検索結果 <%= @user_num %> 件
 <% else %>
-  <%= @searchtext %>の 検索結果 <%= @user_num %> 件
+  <div id="user_operation">
+    <span id="message"><%= @searchtext %>の 検索結果 <%= @user_num %> 件</span>
+    <% if get_login_user %>
+    <span>
+      <input type="checkbox" id="not_follow_only">Not Follow only.</span>
+    <% end %>
+    <span id="sort">
+      <div class="btn-group sort-split-btn">
+        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><%= @sort_menu_title %><span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li>
+            <%= link_to "Follower num" ,{:controller =>"search", :action => "search_user", :searchtext => @searchtext, :target => @target, :sort => "1"} %>
+          </li>
+          <li>
+            <%= link_to "Summary num" ,{:controller =>"search", :action => "search_user", :searchtext => @searchtext, :target => @target, :sort => "2"} %>
+          </li>
+        </ul>
+      </div>
+    </span>
+  </div>
   <% @users.each do |user| %>
-    <%= user.name %>
+    <% if get_login_user && (user.id == get_login_user.id || get_login_user.favorite_users.exists?(:favorite_user_id => user.id)) %>
+      <div class="user_contents_follow">
+    <% else %>
+      <div class="user_contents_not_follow">
+    <% end %>
+        <div id="user_prof_image">
+          <%= link_to image_tag(user.prof_image) ,{:controller =>"mypage", :action => "index", :name => user.name }%>
+        </div>
+        <div id="user_name">
+          <%= link_to user.name ,{:controller =>"mypage", :action => "index", :name => user.name }%>
+        </div>
+        <div id="user_full_name">
+          <%= user.full_name %>
+        </div>
+        <div id="user_mail_addr">
+        　　<% if user.mail_addr  %>
+            <%= link_to user.mail_addr, "mailto:"+user.mail_addr %>
+          <% end %>
+        </div>
+        <div id="user_site">
+          <%= user.site_url %>
+        </div>
+        <div id="user_info">
+          フォロワー数：<%= user.favorite_users.count %>
+          要約数：<%= user.summaries.count %>
+        </div>
+        <div id="follow_info">
+          follow_info
+        </div>
+      </div>
   <% end %>
+  <div style='text-align:center;'>
+    <%= paginate @users, :window =>4, :outer_window => 2  %>
+  </div>
 <% end %>
