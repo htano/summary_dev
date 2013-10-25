@@ -75,6 +75,7 @@ class ChromeController < ApplicationController
         render :json => result and return
       end
 
+      get_login_user.add_cluster_id(article.cluster_id)
       user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
       UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
       article.add_strength

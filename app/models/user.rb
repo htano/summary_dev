@@ -24,21 +24,21 @@ class User < ActiveRecord::Base
   end
 
   def self.regist(uname, openid)
-    @error_message = nil
+    error_message = nil
     if uname
       #uname = uname.downcase
       if uname =~ /^[A-Za-z0-9_\-]{4,20}$/
-        @created_user = create( name: uname, open_id: openid, yuko_flg: true, last_login: Time.now  )
-        if @created_user.new_record?
-          @error_message = "Error: '" + uname + "' has already existed."
+        created_user = create( name: uname, open_id: openid, yuko_flg: true, last_login: Time.now  )
+        if created_user.new_record?
+          error_message = "Error: '" + uname + "' has already existed."
         end
       else
-        @error_message = "Error: User name's characters are only allowed 'a-z', '0-9', '_', '-'. And the name length is allowed from 4 to 32 characters."
+        error_message = "Error: User name's characters are only allowed 'a-z', '0-9', '_', '-'. And the name length is allowed from 4 to 32 characters."
       end
     else
-      @error_message = "Fatal Error: Internal Server Error."
+      error_message = "Fatal Error: Internal Server Error."
     end
-    return @error_message
+    return error_message
   end
 
   # Instance Method
@@ -83,15 +83,15 @@ class User < ActiveRecord::Base
   end
 
   def get_notifying_articles
-    @new_articles = Hash.new
+    new_articles = Hash.new
     self.user_articles.where(read_flg: false).each do |user_article|
       Summary.where(["article_id = ? and user_id != ? and updated_at > ?", user_article.article_id, user_article.user_id, self.last_mypage_access]).each do |summary|
-        unless @new_articles[user_article.article_id]
-          @new_articles[user_article.article_id] = Article.find(user_article.article_id)
+        unless new_articles[user_article.article_id]
+          new_articles[user_article.article_id] = Article.find(user_article.article_id)
         end
       end
     end
-    return @new_articles
+    return new_articles
   end
 
   def reset_keep_login_info
@@ -99,5 +99,22 @@ class User < ActiveRecord::Base
     self.keep_login_expire = nil
     self.keep_login_ip = nil
     return self.save
+  end
+
+  def add_cluster_id(adding_cluster_id)
+    cluster_hash = Hash.new(0)
+    new_cluster_array = Array.new
+    if self.cluster_vector
+      self.cluster_vector.split(",").each do |elem|
+        cluster_id, value = elem.split(":")
+        cluster_hash[cluster_id.to_i] = value.to_f * 0.9
+      end
+    end
+    cluster_hash[adding_cluster_id] += 1.0
+    cluster_hash.each do |cluster_id, value|
+      new_cluster_array.push(cluster_id.to_s + ":" + value.to_s)
+    end
+    self.cluster_vector = new_cluster_array.join(",")
+    self.save
   end
 end

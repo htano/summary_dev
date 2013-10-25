@@ -20,7 +20,11 @@ class HotentryController < ApplicationController
       @category_name = 'all'
     end
     cookies[:hotentry_view_type] = { :value => 'normal' }
-    @entries = Article.get_hotentry_articles(@category_name)
+    if @category_name == 'personal'
+      @entries = Article.get_personal_hotentry(get_login_user)
+    else
+      @entries = Article.get_hotentry_articles(@category_name)
+    end
   end
 
   def small
@@ -32,7 +36,11 @@ class HotentryController < ApplicationController
     cookies[:hotentry_view_type] = { :value => 'small' }
     @order = 1
     @hash = {}
-    @entries = Article.get_hotentry_articles(@category_name)
+    if @category_name == 'personal'
+      @entries = Article.get_personal_hotentry(get_login_user)
+    else
+      @entries = Article.get_hotentry_articles(@category_name)
+    end
     @entries.each do |e|
       @hash[e.id] = @order
       @order += 1
@@ -46,6 +54,10 @@ class HotentryController < ApplicationController
       @category_name = 'all'
     end
     cookies[:hotentry_view_type] = { :value => 'large' }
-    @entries = Article.get_hotentry_articles(@category_name)
+    if @category_name == 'personal'
+      @entries = Article.get_personal_hotentry(get_login_user)
+    else
+      @entries = Article.get_hotentry_articles(@category_name)
+    end
   end
 end

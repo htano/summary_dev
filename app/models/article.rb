@@ -21,6 +21,8 @@ class Article < ActiveRecord::Base
   # This parameter means that '1' point will decay to '0.01' point until some days after.
   ZERO_ZERO_ONE_DAYS = 28
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
+  CANDIDATE_NUM = 100
+  HOTENTRY_DISPLAY_NUM = 20
   BLANK = ""
 
   def self.edit_article(url)
@@ -138,13 +140,15 @@ class Article < ActiveRecord::Base
 
   # Class Method
   def self.get_hotentry_articles(category_name = 'all')
+    # query = User.find(1).user_articles.select(:article_id)
+    # Article.where.not(id:query)
     if category_name == 'all'
       candidate_entries = 
         where( "last_added_at > ?", 
                Time.now.beginning_of_hour - ZERO_ZERO_ONE_DAYS.days
              ).order(
                'last_added_at desc, strength desc'
-             ).limit(100)
+             ).limit(CANDIDATE_NUM)
     else
       candidate_entries = 
         where( ["last_added_at > ? and category_id = ?", 
@@ -152,11 +156,55 @@ class Article < ActiveRecord::Base
                 Category.find_by_name(category_name)]
              ).order(
                 'last_added_at desc, strength desc'
-             ).limit(100)
+             ).limit(CANDIDATE_NUM)
     end
     return candidate_entries.sort{|a,b| 
       (-1)*(a.get_current_strength <=> b.get_current_strength)
-    }.first(20)
+    }.first(HOTENTRY_DISPLAY_NUM)
+  end
+
+  def self.get_personal_hotentry(user)
+    query = user.user_articles.select(:article_id)
+    if user.cluster_vector
+      cluster_hash = Hash.new(0)
+      user.cluster_vector.split(",").each do |elem|
+        cid, val = elem.split(":")
+        cluster_hash[cid.to_i] = val.to_f
+      end
+      top_cluster_hash = Hash.new(0)
+      cluster_count = 0
+      cluster_norm = 0
+      cluster_hash.sort_by{|cid, val| 
+        -val
+      }.each do |cid, val|
+        if cluster_count < 10
+          top_cluster_hash[cid] = val
+          cluster_norm += val
+        end
+        cluster_count += 1
+      end
+      candidate_entries = Array.new
+      top_cluster_hash.each do |cid, val|
+        val = val / cluster_norm
+        candidate_entries +=
+          where.not(id:query).where("last_added_at > ? and " +
+                                    "cluster_id = ?",
+                                    Time.now.beginning_of_hour - 
+                                    ZERO_ZERO_ONE_DAYS.days,
+                                    cid
+                                   ).order(
+                                      'last_added_at desc, ' +
+                                      'strength desc'
+                                   ).limit(
+                                      (CANDIDATE_NUM * val).to_i
+                                   )
+      end
+      return candidate_entries.sort{|a,b| 
+        (-1)*(a.get_current_strength <=> b.get_current_strength)
+      }.first(HOTENTRY_DISPLAY_NUM)
+    else
+      return nil
+    end
   end
 
   # Instance Method
