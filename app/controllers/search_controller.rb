@@ -61,8 +61,7 @@ class SearchController < ApplicationController
     @searchtext = params[:searchtext]
     @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
-    @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"])
-    @users.find_by_public_flg_and_yuko_flg(true,true)
+    @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"]).where("public_flg" => true, "yuko_flg" => true)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
 
     case @sort
