@@ -80,7 +80,9 @@ class WebpageController < ApplicationController
     @aid = params[:article_id]
     user_article = get_login_user.user_articles.find_by_article_id(@aid)
     if user_article
-      Article.find(@aid).remove_strength(get_login_user.id)
+      article = Article.find(@aid)
+      article.remove_strength(get_login_user.id)
+      get_login_user.delete_cluster_id(article.cluster_id)
       user_article.destroy
       render :text => "OK"
     else

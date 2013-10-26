@@ -103,7 +103,7 @@ class User < ActiveRecord::Base
   end
 
   def add_cluster_id(adding_cluster_id)
-    cluster_hash = Hash.new(0)
+    cluster_hash = Hash.new(0.0)
     new_cluster_array = Array.new
     if self.cluster_vector
       self.cluster_vector.split(",").each do |elem|
@@ -115,6 +115,25 @@ class User < ActiveRecord::Base
     cluster_hash[adding_cluster_id] += 1.0
     cluster_hash.each do |cluster_id, value|
       new_cluster_array.push(cluster_id.to_s + ":" + value.to_s)
+    end
+    self.cluster_vector = new_cluster_array.join(",")
+    self.save
+  end
+
+  def delete_cluster_id(target_cluster_id)
+    cluster_hash = Hash.new(0.0)
+    if self.cluster_vector
+      self.cluster_vector.split(",").each do |elem|
+        cluster_id, value = elem.split(":")
+        cluster_hash[cluster_id.to_i] = value.to_f
+      end
+    end
+    cluster_hash[target_cluster_id] -= 1.0
+    new_cluster_array = Array.new
+    cluster_hash.each do |cluster_id, value|
+      if value > 0.0
+        new_cluster_array.push(cluster_id.to_s + ":" + value.to_s)
+      end
     end
     self.cluster_vector = new_cluster_array.join(",")
     self.save
