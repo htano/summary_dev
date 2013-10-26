@@ -1,5 +1,5 @@
 === 1. クラスタ学習データ作成
-  $ rails runner scripts/personal-hotentry/tmp/bayon-data-creator.rb > | \
+  $ rails runner scripts/personal-hotentry/tmp/bayon-data-creator.rb > \
   tmp/personal-hotentry/tmp/bayon-train.txt
 
 === 2. bayonで学習
