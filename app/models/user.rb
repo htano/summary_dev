@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   MAIL_STATUS_PROVISIONAL = 1
   MAIL_STATUS_DEFINITIVE  = 2
   MAIL_STATUS_ERROR       = 3
+  CLUSTER_DECAY_DELTA = 0.9
 
   validates :name, :uniqueness => true
   validates :open_id,   :uniqueness => true
@@ -107,7 +108,8 @@ class User < ActiveRecord::Base
     if self.cluster_vector
       self.cluster_vector.split(",").each do |elem|
         cluster_id, value = elem.split(":")
-        cluster_hash[cluster_id.to_i] = value.to_f * 0.9
+        cluster_hash[cluster_id.to_i] = 
+          value.to_f * CLUSTER_DECAY_DELTA
       end
     end
     cluster_hash[adding_cluster_id] += 1.0

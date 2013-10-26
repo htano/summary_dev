@@ -18,11 +18,14 @@ class Article < ActiveRecord::Base
   # This is a decay parameter for article's strength.
   # A 'point' means a people say he is reading the article.
   # And the points are decaying by time spending.
-  # This parameter means that '1' point will decay to '0.01' point until some days after.
+  # This parameter means that '1' point will decay 
+  # to '0.01' point until some days after.
   ZERO_ZERO_ONE_DAYS = 28
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
-  CANDIDATE_NUM = 100
+  HOTENTRY_CANDIDATE_NUM = 200
+  PERSONAL_HOTENTRY_CANDIDATE_NUM = 40
   HOTENTRY_DISPLAY_NUM = 20
+  HOTENTRY_MAX_CLUSTER_NUM = 5
   BLANK = ""
 
   def self.edit_article(url)
@@ -148,7 +151,7 @@ class Article < ActiveRecord::Base
                Time.now.beginning_of_hour - ZERO_ZERO_ONE_DAYS.days
              ).order(
                'last_added_at desc, strength desc'
-             ).limit(CANDIDATE_NUM)
+             ).limit(HOTENTRY_CANDIDATE_NUM)
     else
       candidate_entries = 
         where( ["last_added_at > ? and category_id = ?", 
@@ -156,7 +159,7 @@ class Article < ActiveRecord::Base
                 Category.find_by_name(category_name)]
              ).order(
                 'last_added_at desc, strength desc'
-             ).limit(CANDIDATE_NUM)
+             ).limit(HOTENTRY_CANDIDATE_NUM)
     end
     return candidate_entries.sort{|a,b| 
       (-1)*(a.get_current_strength <=> b.get_current_strength)
@@ -177,7 +180,7 @@ class Article < ActiveRecord::Base
       cluster_hash.sort_by{|cid, val| 
         -val
       }.each do |cid, val|
-        if cluster_count < 10
+        if cluster_count < HOTENTRY_MAX_CLUSTER_NUM
           top_cluster_hash[cid] = val
           cluster_norm += val
         end
@@ -196,7 +199,7 @@ class Article < ActiveRecord::Base
                                       'last_added_at desc, ' +
                                       'strength desc'
                                    ).limit(
-                                      (CANDIDATE_NUM * val).to_i
+                                      (PERSONAL_HOTENTRY_CANDIDATE_NUM * val).to_i
                                    )
       end
       return candidate_entries.sort{|a,b| 
