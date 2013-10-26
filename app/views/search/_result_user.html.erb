@@ -2,9 +2,9 @@
   <%= @searchtext %> の 検索結果 <%= @user_num %> 件
 <% else %>
   <div id="user_operation">
-    <span id="message"><%= @searchtext %>の 検索結果 <%= @user_num %> 件</span>
+    <span id="message"><%= @searchtext[0,10] %>の 検索結果 <%= @user_num %> 件</span>
     <% if get_login_user %>
-    <span>
+    <span id="checkbox">
       <input type="checkbox" id="not_follow_only">Not Follow only.</span>
     <% end %>
     <span id="sort">

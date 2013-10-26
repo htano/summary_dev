@@ -2,7 +2,7 @@
   <%= @searchtext %> の <%= @type_text %> 検索結果 <%= @article_num %> 件
 <% else %>
   <div id="article_operation">
-    <span id="message"><%= @searchtext %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
+    <span id="message"><%= @searchtext[0,10] %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
     <% if get_login_user %>
     <span>
       <input type="checkbox" id="not_read_only">Not Read only.</span>

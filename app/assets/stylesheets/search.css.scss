@@ -174,11 +174,14 @@ a {
     padding: 5px 0px 5px 0px;
     margin: auto;
     position: relative;
-    width: 900px;
+    width: 760px;
     color: gray;
   }
+  #checkbox {
+    padding: 0 0 0 70px;
+  }
   #message {
-    padding: 0px 250px 0 20px;
+    padding: 0px 150px 0 20px;
     margin: 4px 10px 0 25px;
   }
   #sort {
