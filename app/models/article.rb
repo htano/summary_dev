@@ -206,7 +206,7 @@ class Article < ActiveRecord::Base
         (-1)*(a.get_current_strength <=> b.get_current_strength)
       }.first(HOTENTRY_DISPLAY_NUM)
     else
-      return nil
+      return Array.new
     end
   end
 

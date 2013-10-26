@@ -9,7 +9,7 @@ class PersonalHotentry
   DF_FILE = MODEL_DIR + "/df.txt"
   DOCUMENT_SIZE = 10000
   GRAM_SIZE = 2
-  MAX_TERM_NUM = 20
+  MAX_TERM_NUM = 60
   CLUSTER_FILE = Rails.root.to_s + "/lib/personal-hotentry/model/bayon-cluster.txt"
 
   def initialize
@@ -67,6 +67,7 @@ class PersonalHotentry
 
   def get_tfidf_hash(text)
     text.force_encoding("UTF-8")
+    text.gsub(/\r?\n/, " ")
     ngram_array = NgramsParser::ngram(text, GRAM_SIZE)
     tfidf_hash = Hash.new(0)
     ngram_array.each do |ngram|
