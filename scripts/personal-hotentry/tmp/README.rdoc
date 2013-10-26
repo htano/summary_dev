@@ -10,7 +10,11 @@
 
 === 3. テスト用の記事をたくさん登録する
   # titleとurlのリストを作成
-  $ rails runner scripts/personal-hotentry/tmp/get_title_url.rb
+  $ rails runner scripts/personal-hotentry/tmp/get_title_url.rb > \
+  tmp/personal-hotentry/tmp/title-url-`date "+%Y%m%d"`.txt 
+  $ sort -u tmp/personal-hotentry/tmp/title-url-????????.txt > \
+  tmp/personal-hotentry/tmp/title-url.txt
+
 
   # リストにある記事をDBに登録する
   $ rails runner scripts/personal-hotentry/tmp/add-articles-by-list.rb
