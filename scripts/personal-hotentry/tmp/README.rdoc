@@ -1,12 +1,22 @@
-### 1. クラスタ学習データ作成
+=== 1. クラスタ学習データ作成
   $ rails runner scripts/personal-hotentry/tmp/bayon-data-creator.rb > | \
   tmp/personal-hotentry/tmp/bayon-train.txt
 
-### 2. bayonで学習
+=== 2. bayonで学習
   $ bayon -n 300 tmp/personal-hotentry/tmp/bayon-train.txt -c \
   lib/personal-hotentry/model/bayon-cluster.txt | \
   perl -pe "s/\n/\n\n====\n/" | perl -pe "s/\t/\n/g" > \
   tmp/personal-hotentry/tmp/bayon-result.txt
 
-### 3. DB内記事のクラスタ予測
+=== 3. テスト用の記事をたくさん登録する
+  # titleとurlのリストを作成
+  $ rails runner scripts/personal-hotentry/tmp/get_title_url.rb
+
+  # リストにある記事をDBに登録する
+  $ rails runner scripts/personal-hotentry/tmp/add-articles-by-list.rb
+
+=== 4. DB内記事のクラスタ予測
   $ rails runner scripts/personal-hotentry/tmp/predict-db-articles.rb | sort -n > tmp/personal-hotentry/tmp/predicted-db-articles.txt
+
+=== 5. すでにユーザが登録している記事から、ユーザの興味情報を登録する
+  $ rails runner scripts/personal-hotentry/tmp/adding-user-articles.rb
