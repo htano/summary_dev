@@ -5,8 +5,8 @@
 BLANK = ''
 
 @hide_navbar_text = ->
-  $("#searchtext").hide 10
-  $("#search").hide 10
+  $("#searchtext_nav").hide 10
+  $("#search_nav").hide 10
 
 @set_option_area = ->
   target = $("#target").val()

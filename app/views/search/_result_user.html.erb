@@ -48,11 +48,15 @@
           Follower：<%= user.get_followers_count %>
           Summary：<%= user.summaries.count %>
         </div>
-        <div id="follow_info">
-          <div>
-            <input class="btn btn-info btn-xs" id="follow-button" type="submit" value="follow"><input name="authenticity_token" type="hidden" value="UK39bp1kOlBAHhcBW8T/hd8hmy2C7vbX+7hNiFupGgQ=">
+        <% if get_login_user && user.id != get_login_user.id %>
+          <div id="follow_info">
+            <% if get_login_user.favorite_users.exists?(:favorite_user_id => user.id) %>
+              <input class="btn btn-danger btn-xs" id="follow-button" type="button" value="unfollow">
+            <% else %>
+              <input class="btn btn-info btn-xs" id="follow-button" type="button" value="follow">
+            <% end %>
           </div>
-        </div>
+        <% end %>
       </div>
   <% end %>
   <div style='text-align:center;'>
