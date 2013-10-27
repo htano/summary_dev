@@ -51,9 +51,9 @@
         <% if get_login_user && user.id != get_login_user.id %>
           <div id="follow_info">
             <% if get_login_user.favorite_users.exists?(:favorite_user_id => user.id) %>
-              <input class="btn btn-danger btn-xs" id="follow-button" type="button" value="unfollow">
+              <input class="btn btn-danger btn-xs" id="follow_button" type="button" value="unfollow">
             <% else %>
-              <input class="btn btn-info btn-xs" id="follow-button" type="button" value="follow">
+              <input class="btn btn-info btn-xs" id="follow_button" type="button" value="follow">
             <% end %>
           </div>
         <% end %>

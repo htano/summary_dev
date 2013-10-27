@@ -28,6 +28,17 @@ BLANK = ''
       set_type_domain_selected()
 
 $ ->
+  $("#follow_button").click ->
+    if $("#follow_button").attr("class") == "btn btn-danger btn-xs"
+      $("#follow_button").removeClass()
+      $("#follow_button").addClass("btn btn-info btn-xs")
+      $("#follow_button").attr("value", "follow")
+    else
+      $("#follow_button").removeClass()
+      $("#follow_button").addClass("btn btn-danger btn-xs")
+      $("#follow_button").attr("value", "unfollow")
+
+$ ->
   $("#target_article").click ->
     set_target_article_selected()
     $("#target").val(1)
