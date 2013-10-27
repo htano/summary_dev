@@ -45,11 +45,13 @@
           <%= user.site_url %>
         </div>
         <div id="user_info">
-          フォロワー数：<%= user.get_followers_count %>
-          要約数：<%= user.summaries.count %>
+          Follower：<%= user.get_followers_count %>
+          Summary：<%= user.summaries.count %>
         </div>
         <div id="follow_info">
-          follow_info
+          <div>
+            <input class="btn btn-info btn-xs" id="follow-button" type="submit" value="follow"><input name="authenticity_token" type="hidden" value="UK39bp1kOlBAHhcBW8T/hd8hmy2C7vbX+7hNiFupGgQ=">
+          </div>
         </div>
       </div>
   <% end %>

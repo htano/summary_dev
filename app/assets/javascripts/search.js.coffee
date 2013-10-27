@@ -70,6 +70,14 @@ $ ->
     else
       $(".article_contents").show 10
 
+$ ->
+  $("#not_follow_only").click ->
+    isChecked = $("#not_follow_only:checked").val()
+    if isChecked
+      $(".user_contents_follow").hide 10
+    else
+      $(".user_contents_follow").show 10
+
 @set_target_article_selected = ->
   $("#target_article").removeClass()
   $("#target_user").removeClass()
