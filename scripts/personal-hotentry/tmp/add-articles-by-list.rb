@@ -15,7 +15,7 @@ open(TITLE_URL_FILE) do |file|
       url: url,
       title: title,
       last_added_at: Time.now,
-      strength: max_score,
+      strength: 0.1,
       cluster_id: max_cluster_id
     )
   end
