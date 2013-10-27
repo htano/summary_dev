@@ -5,7 +5,9 @@ User.all.each do |u|
   u.user_articles.order(
     'created_at'
   ).each do |ua|
-    puts u.name + " : " + ua.article.title
-    u.add_cluster_id(ua.article.cluster_id)
+    if ua.article.cluster_id != 0
+      puts u.name + " : " + ua.article.title
+      u.add_cluster_id(ua.article.cluster_id)
+    end
   end
 end

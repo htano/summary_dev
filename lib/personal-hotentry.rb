@@ -9,8 +9,9 @@ class PersonalHotentry
   DF_FILE = MODEL_DIR + "/df.txt"
   DOCUMENT_SIZE = 10000
   GRAM_SIZE = 2
-  MAX_TERM_NUM = 60
+  MAX_TERM_NUM = 1000
   CLUSTER_FILE = Rails.root.to_s + "/lib/personal-hotentry/model/bayon-cluster.txt"
+  CLUSTER_SCORE_THRESHOLD = 0.07
 
   def initialize
     @df = Hash.new(1)
@@ -20,7 +21,7 @@ class PersonalHotentry
   end
 
   def predict_max_cluster_id(text)
-    max_cosine = 0.0
+    max_cosine = CLUSTER_SCORE_THRESHOLD
     max_cluster_id = 0
     tfidf_hash = get_tfidf_hash(text)
     @cluster.each do |cluster_id, cluster_center|
@@ -39,7 +40,7 @@ class PersonalHotentry
         max_cosine = cosine
       end
     end
-    return max_cluster_id
+    return max_cluster_id, max_cosine
   end
 
   private

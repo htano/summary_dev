@@ -24,7 +24,7 @@ class Article < ActiveRecord::Base
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   HOTENTRY_CANDIDATE_NUM = 200
   PERSONAL_HOTENTRY_CANDIDATE_NUM = 40
-  HOTENTRY_DISPLAY_NUM = 30
+  HOTENTRY_DISPLAY_NUM = 20
   HOTENTRY_MAX_CLUSTER_NUM = 5
   BLANK = ""
 
@@ -36,7 +36,8 @@ class Article < ActiveRecord::Base
         return nil
       end
       ph_inst = PersonalHotentry.instance
-      cluster_id = ph_inst.predict_max_cluster_id(h["title"])
+      cluster_id, cluster_score = 
+        ph_inst.predict_max_cluster_id(h["title"])
       ac_inst = ArticleClassifier.instance
       category_name = ac_inst.predict(h["title"])
       category_id = Category.find_by_name(category_name).id
@@ -167,6 +168,9 @@ class Article < ActiveRecord::Base
   end
 
   def self.get_personal_hotentry(user)
+    unless user
+      return Array.new
+    end
     query = user.user_articles.select(:article_id)
     if user.cluster_vector
       cluster_hash = Hash.new(0)

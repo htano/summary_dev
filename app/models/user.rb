@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   MAIL_STATUS_PROVISIONAL = 1
   MAIL_STATUS_DEFINITIVE  = 2
   MAIL_STATUS_ERROR       = 3
-  CLUSTER_DECAY_DELTA = 0.9
+  CLUSTER_DECAY_DELTA = 0.95
 
   validates :name, :uniqueness => true
   validates :open_id,   :uniqueness => true
@@ -103,21 +103,23 @@ class User < ActiveRecord::Base
   end
 
   def add_cluster_id(adding_cluster_id)
-    cluster_hash = Hash.new(0.0)
-    new_cluster_array = Array.new
-    if self.cluster_vector
-      self.cluster_vector.split(",").each do |elem|
-        cluster_id, value = elem.split(":")
-        cluster_hash[cluster_id.to_i] = 
-          value.to_f * CLUSTER_DECAY_DELTA
+    if adding_cluster_id != 0
+      cluster_hash = Hash.new(0.0)
+      new_cluster_array = Array.new
+      if self.cluster_vector
+        self.cluster_vector.split(",").each do |elem|
+          cluster_id, value = elem.split(":")
+          cluster_hash[cluster_id.to_i] = 
+            value.to_f * CLUSTER_DECAY_DELTA
+        end
       end
+      cluster_hash[adding_cluster_id] += 1.0
+      cluster_hash.each do |cluster_id, value|
+        new_cluster_array.push(cluster_id.to_s + ":" + value.to_s)
+      end
+      self.cluster_vector = new_cluster_array.join(",")
+      self.save
     end
-    cluster_hash[adding_cluster_id] += 1.0
-    cluster_hash.each do |cluster_id, value|
-      new_cluster_array.push(cluster_id.to_s + ":" + value.to_s)
-    end
-    self.cluster_vector = new_cluster_array.join(",")
-    self.save
   end
 
   def delete_cluster_id(target_cluster_id)
