@@ -49,12 +49,10 @@
           Summary：<%= user.summaries.count %>
         </div>
         <% if get_login_user && user.id != get_login_user.id %>
-          <div id="follow_info">
-            <% if get_login_user.favorite_users.exists?(:favorite_user_id => user.id) %>
-              <input class="btn btn-danger btn-xs" id="follow_button" type="button" value="unfollow">
-            <% else %>
-              <input class="btn btn-info btn-xs" id="follow_button" type="button" value="follow">
-            <% end %>
+          <div id="follow-btn">
+            <div id="follow-<%= user.id %>">
+              <%= render_follow_status(user) %>
+            </div>
           </div>
         <% end %>
       </div>

@@ -36,13 +36,13 @@ $(document).ready(function() {
     <input type="hidden" name="target" id="target" value="<%= @target %>">
     <input type="hidden" name="type" id="type" value="<%= @type %>">
     </div>
-    <div id="result_area">
-      <% if @target == "1" %>
-        <%= render :template => "/search/_result_article" %>
-      <% elsif @target == "2" %>
-        <%= render :template => "/search/_result_user" %>
-      <% else %>
-      <% end %>
-    </div>
   </div>
 </form>
+<div id="result_area">
+  <% if @target == "1" %>
+    <%= render :template => "/search/_result_article" %>
+  <% elsif @target == "2" %>
+    <%= render :template => "/search/_result_user" %>
+  <% else %>
+  <% end %>
+</div>
