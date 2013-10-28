@@ -11,7 +11,7 @@
   tmp/personal-hotentry/tmp/bayon-train.txt
 
 === 2. bayonで学習
-  $ bayon -l 4.0 --idf --vector-size=100 --clvector-size=300 \
+  $ bayon -l 2.5 --idf --vector-size=100 --clvector-size=300 \
   tmp/personal-hotentry/tmp/bayon-train.txt -c \
   lib/personal-hotentry/model/bayon-cluster.txt | \
   perl -pe "s/\n/\n\n====\n/" | perl -pe "s/\t/\n/g" > \
