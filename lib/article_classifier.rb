@@ -12,7 +12,7 @@ class ArticleClassifier
   LIBLINEAR_MODEL_FILE = MODEL_DIR + "/liblinear.model"
   GRAM_SIZE = 2
   DOCUMENT_SIZE = 10000
-  THRESHOLD = -0.5
+  THRESHOLD = 0.0
 
   def initialize
     @df = Hash.new(1)
