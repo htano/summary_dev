@@ -27,13 +27,11 @@ BLANK = ''
     when "3"
       set_type_domain_selected()
 
-$ ->
-  $(".btn-info").click ->
+jQuery(document).on "click", ".btn-info", ->
     $(this).parent().parent().parent().parent().parent().removeClass()
     $(this).parent().parent().parent().parent().parent().addClass("user_contents_follow")
 
-$ ->
-  $(".btn-danger").click ->
+jQuery(document).on "click", ".btn-danger", ->
     $(this).parent().parent().parent().parent().parent().removeClass()
     $(this).parent().parent().parent().parent().parent().addClass("user_contents_not_follow")
 
