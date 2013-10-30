@@ -37,53 +37,43 @@ module Webpage
 
   #タイトルを取得するメソッド
   def get_webpage_title(url, html)
-    begin
-      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
-      if doc.title == nil || doc.title == BLANK
-        return URI.parse(url).host
-      else
-        return doc.title
-      end
-    rescue => e
-      logger.error("error :#{e}")
-      return BLANK
+    doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
+    if doc.title == nil || doc.title == BLANK
+      return URI.parse(url).host
+    else
+      return doc.title
     end
   end
 
   #サムネイルを取得するメソッド
   def get_webpage_thumbnail(url, html)
     img_url = nil
-    begin
-      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
-      doc.xpath("//img").each do |img|
-        img_url = img["src"]
-        next if img_url == nil
-        next if isAdvertisement?(url, img_url)
-        next if isExceptionPage?(img_url)
-        img_url = URI.join(url, img_url).to_s unless img_url.start_with?("http")
-        begin
-          file = ImageSize.new(open(img_url, "rb").read)
-          unless file.get_width == nil || file.get_height == nil
-            if file.get_width > THRESHOLD_FILE && file.get_height > THRESHOLD_FILE
-              return img_url
-            else
-              next
-            end
+    doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
+    doc.xpath("//img").each do |img|
+      img_url = img["src"]
+      next if img_url == nil
+      next if isAdvertisement?(url, img_url)
+      next if isExceptionPage?(img_url)
+      img_url = URI.join(url, img_url).to_s unless img_url.start_with?("http")
+      begin
+        file = ImageSize.new(open(img_url, "rb").read)
+        unless file.get_width == nil || file.get_height == nil
+          if file.get_width > THRESHOLD_FILE && file.get_height > THRESHOLD_FILE
+            return img_url
+          else
+            next
           end
-        rescue => e
-          logger.error("error :#{e}")
-          next
         end
-        image = Magick::ImageList.new(img_url)
-        if image.columns.to_i > THRESHOLD_IMAGE && image.rows.to_i > THRESHOLD_IMAGE
-          return img_url
-        end
+      rescue => e
+        logger.info("info :#{e}")
+        next
       end
-      return "no_image.png"
-    rescue => e
-        logger.error("error :#{e}")
-        return "no_image.png"
+      image = Magick::ImageList.new(img_url)
+      if image.columns.to_i > THRESHOLD_IMAGE && image.rows.to_i > THRESHOLD_IMAGE
+        return img_url
+      end
     end
+    return "no_image.png"
   end
 
   #プレビューを取得するメソッド
@@ -95,7 +85,7 @@ module Webpage
       contents_preview.split(BLANK)
       return contents_preview
     rescue => e
-      logger.error("error :#{e}")
+      logger.info("info :#{e}")
       begin
         contents_preview = BLANK
         Nokogiri::HTML.parse(html).xpath("//p").each do |p|
@@ -106,7 +96,7 @@ module Webpage
         contents_preview.split(BLANK)
         return contents_preview
       rescue => e
-        logger.error("error :#{e}")
+        logger.info("info :#{e}")
         return "プレビューは取得出来ませんでした。"
       end
     end
