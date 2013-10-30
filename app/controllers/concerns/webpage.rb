@@ -14,10 +14,31 @@ module Webpage
 
   #TODO 定数定義は外出しにしたい
   BLANK = ""
-  THRESHOLD_FILE = 100  
+  THRESHOLD_FILE = 100
   THRESHOLD_IMAGE = 150
   ADVERTISEMENT_LIST = ["amazon","rakuten"]
   EXCEPTION_PAGE_LIST = ["http://g-ec2.images-amazon.com/images/G/09/gno/beacon/BeaconSprite-JP-02._V393500380_.png"]
+
+  def add_webpage(url, tag_list = [])
+    article = Article.find_by_url(url)
+    if article == nil
+      h = get_webpage_element(url)
+      if h == nil
+        return nil
+      end
+      article = Article.new(:url => url, :title => h["title"], :contents_preview => h["contentsPreview"][0, 200], :category_id =>"001", :thumbnail => h["thumbnail"])
+      if article.save
+        article.add_strength
+      end
+    else
+      article.add_strength
+    end
+#    article = Article.edit_article(url)
+ #   return article if article == nil
+    user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
+    UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
+    return article
+  end
 
   def get_webpage_element(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
     begin

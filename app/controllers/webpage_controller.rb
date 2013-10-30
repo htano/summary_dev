@@ -51,6 +51,13 @@ class WebpageController < ApplicationController
           tag_list.push(value) unless value == BLANK || tag_list.include?(value)
         end
       end
+      article = add_webpage(@url, tag_list)
+      if article == nil
+        flash[:error] = "Please check URL."
+        redirect_to :controller => "webpage", :action => "add" and return
+      end
+#途中
+=begin
       article = Article.edit_article(@url)
       if article == nil
         flash[:error] = "Please check URL."
@@ -59,11 +66,13 @@ class WebpageController < ApplicationController
       user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
       UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
       article.add_strength
+=end
       @article_id = article.id
       @title = article.title
       @contents_preview = article.contents_preview
       @thumbnail = article.thumbnail
       @tags = []
+      user_article = article.user_articles.find_by_user_id(get_login_user.id)
       user_article.user_article_tags(:all).each do |user_article_tag|
         @tags.push(user_article_tag.tag)
       end

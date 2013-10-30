@@ -16,7 +16,7 @@ class Article < ActiveRecord::Base
   ZERO_ZERO_ONE_DAYS = 7
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   BLANK = ""
-
+=begin
   def self.edit_article(url)
     article = Article.find_by_url(url)
     if article == nil
@@ -26,27 +26,22 @@ class Article < ActiveRecord::Base
       end
       article = Article.new(:url => url, :title => h["title"], :contents_preview => h["contentsPreview"][0, 200], :category_id =>"001", :thumbnail => h["thumbnail"])
       if article.save
+        article.add_strength
         return article
       end
     else
+      article.add_strength
       return article
     end
   end
-
+=end
   #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag)
     return nil if tag == nil || tag == BLANK
     articles = joins(:user_articles => :user_article_tags).where("user_article_tags.tag" => tag).group("url")
     return articles
   end
-=begin
-  #指定されたタイトルを持つ記事を取得する
-  def self.search_by_title(title)
-    return nil if title == nil || title == BLANK
-    articles = where(["title LIKE ?", "%"+title+"%"])
-    return articles
-  end
-=end
+
   #指定された本文を持つ記事を取得する
   def self.search_by_content(content)
     return nil if content == nil || content == BLANK
