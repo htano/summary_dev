@@ -183,8 +183,8 @@ changeSortRef = (tab, sortNum) ->
   else if $("#article-controller .active").hasClass("read")
     tabBeforeUnload = "read"
   else
-  # console.debug "tabBeforeUnload : " + tabBeforeUnload
-  document.cookie = 'tab=' + tabBeforeUnload
+
+  document.cookie = 'tab=' + encodeURIComponent(tabBeforeUnload)
 
 @getLastStayedTab = ->
   tab = "main"
