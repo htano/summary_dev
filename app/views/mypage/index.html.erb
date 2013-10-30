@@ -12,7 +12,7 @@
   });
   $(window).on('load', function() {
     lastStayedTab = getLastStayedTab();
-    console.debug("tab = " + lastStayedTab);
+    // console.debug("tab = " + lastStayedTab);
     activateTab(lastStayedTab);
   });
 </script>
@@ -323,11 +323,7 @@
       </div>
       <% if @is_login_user || @user.public_flg %>
       <div class="article-table">
-        <% if @current_tab == "main" %>
-        <form id="main-check-form" name="main_checkbox" class="main active">
-        <% else %>
         <form id="main-check-form" name="main_checkbox" class="main">
-        <% end %>
           <table class="main-table">
             <tr class="table-top">
               <th id="article-title-top">
@@ -342,11 +338,7 @@
             <%= render_article_table('main', @main_articles_table, 'mpage=' + @mpage.to_s) %>
           </table>
         </form>
-        <% if @current_tab == "summary" %>
-        <form id="summary-check-form" name="summary_checkbox" class="summary active">
-        <% else %>
         <form id="summary-check-form" name="summary_checkbox" class="summary">
-        <% end %>
           <table class="summary-table summary">
             <tr class="table-top">
               <th id="article-title-top">
@@ -361,11 +353,7 @@
             <%= render_summary_table = render_summary_table('summary', @summaries_table, 'spage=' + @spage.to_s) %>
           </table>
         </form>
-        <% if @current_tab == "favorite" %>
-        <form id="favorite-check-form" name="favorite_checkbox" class="favorite active">
-        <% else %>
         <form id="favorite-check-form" name="favorite_checkbox" class="favorite">
-        <% end %>
           <table class="favorite-table favorite">
             <tr class="table-top">
               <th id="article-title-top">
@@ -379,11 +367,7 @@
             <%= render_favorite_table = render_article_table('favorite', @favorite_articles_table, 'fpage=' + @fpage.to_s) %>
           </table>
         </form>
-        <% if @current_tab == "read" %>
-        <form id="read-check-form" name="read_checkbox" class="read active">
-        <% else %>
         <form id="read-check-form" name="read_checkbox" class="read">
-        <% end %>
           <table class="read-table read">
             <tr class="table-top">
               <th id="article-title-top">
