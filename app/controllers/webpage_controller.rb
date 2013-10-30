@@ -11,7 +11,7 @@ class WebpageController < ApplicationController
       redirect_to :controller => "consumer", :action => "index"
     end
   end
-  
+
   def add_confirm
     if signed_in?
       @user_id = get_login_user.id
