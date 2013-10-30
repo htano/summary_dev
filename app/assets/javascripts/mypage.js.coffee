@@ -167,10 +167,41 @@ changeSortRef = (tab, sortNum) ->
   $(document).ready ->
     $("#unfollow-button").hover (->
       $(this).val "unfollow"
-      $(this).removeClass("btn-primary").addClass("btn-danger");
+      $(this).removeClass("btn-primary").addClass("btn-danger")
     ), ->
       $(this).val "following"
       $(this).removeClass("btn-danger").addClass("btn-primary")
+
+@setTabInfoBeforeUnload = ->
+  tabBeforeUnload = "main"
+  if $("#article-controller .active").hasClass("main")
+    tabBeforeUnload = "main"
+  else if $("#article-controller .active").hasClass("summary")
+    tabBeforeUnload = "summary"
+  else if $("#article-controller .active").hasClass("favorite")
+    tabBeforeUnload = "favorite"
+  else if $("#article-controller .active").hasClass("read")
+    tabBeforeUnload = "read"
+  else
+  # console.debug "tabBeforeUnload : " + tabBeforeUnload
+  document.cookie = 'tab=' + tabBeforeUnload
+
+@getLastStayedTab = ->
+  tab = "main"
+  cookieName = "tab="
+  position = document.cookie.indexOf(cookieName)
+  if position != -1
+    startIndex = position + cookieName.length
+    endIndex = document.cookie.indexOf(";", startIndex)
+    if endIndex == -1
+      endIndex = document.cookie.length
+    tab = decodeURIComponent(document.cookie.substring(startIndex, endIndex))
+  return tab
+
+@activateTab = (tab) ->
+  if tab == null
+    tab = "main"
+  $(".#{tab}").addClass("active")
 
 scrollNavbar = ->
   win = $(window)

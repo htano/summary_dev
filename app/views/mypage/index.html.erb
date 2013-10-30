@@ -5,6 +5,19 @@
 <script type="text/javascript">
   toggleUnfollowBtn();
 </script>
+<% if @is_login_user %>
+<script type="text/javascript">
+  $(window).on('beforeunload', function() {
+    setTabInfoBeforeUnload();
+  });
+  $(window).on('load', function() {
+    lastStayedTab = getLastStayedTab();
+    console.debug("tab = " + lastStayedTab);
+    activateTab(lastStayedTab);
+  });
+</script>
+<% end %>
+
 
 <div class="container">
   <div class="myrow">
@@ -100,10 +113,18 @@
     <div class="span9">
       <div class="div-tag">
         <ul class="tab clear">
-          <%= render :partial => "tab", :locals => {:title => "main"} %>
-          <%= render :partial => "tab", :locals => {:title => "summary"} %>
-          <%= render :partial => "tab", :locals => {:title => "favorite"} %>
-          <%= render :partial => "tab", :locals => {:title => "read"} %>
+          <li class="none main my-overflow" onclick="setCurrentTab('main', 6)">
+            <a href=".main" data-toggle="tab">main</a>
+          </li>
+          <li class="none summary my-overflow" onclick="setCurrentTab('summary', 6)">
+            <a href=".summary" data-toggle="tab">summary</a>
+          </li>
+          <li class="none favorite my-overflow" onclick="setCurrentTab('favorite', 6)">
+            <a href=".favorite" data-toggle="tab">favorite</a>
+          </li>
+          <li class="none read my-overflow" onclick="setCurrentTab('read', 6)">
+            <a href=".read" data-toggle="tab">read</a>
+          </li>
         </ul>
         <div class="btn-group sort-split-btn">
           <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
@@ -150,11 +171,7 @@
       </div>
       <div id="article-controller">
         <% if @is_login_user %>
-        <% if @current_tab == "main" %>
-        <div class="none active main">
-        <% else %>
         <div class="none main">
-        <% end %>
           <div id="mark-as-read-btn">
             <%= link_to image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16") +
               content_tag(:p, "mark as read"),
@@ -177,11 +194,7 @@
             <%= raw get_page_position(@mpage, @main_articles_table, @total_main_articles_num) %>
           </p>
         </div>
-        <% if @current_tab == "summary" %>
-        <div class="none active summary">
-        <% else %>
         <div class="none summary">
-        <% end %>
           <div id="delete-summary-btn">
             <%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") +
               content_tag(:p, "delete"),
@@ -194,11 +207,7 @@
             <%= raw get_page_position(@spage, @summaries_table, @total_summaries_num) %>
           </p>
         </div>
-        <% if @current_tab == "favorite" %>
-        <div class="none active favorite">
-        <% else %>
         <div class="none favorite">
-        <% end %>
           <div id="mark-off-favorite-btn">
             <%= link_to image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") +
               content_tag(:p, "mark off favorite"),
@@ -216,11 +225,7 @@
             <%= raw get_page_position(@fpage, @favorite_articles_table, @total_favorite_articles_num) %>
           </p>
         </div>
-        <% if @current_tab == "read" %>
-        <div class="none active read">
-        <% else %>
         <div class="none read">
-        <% end %>
           <div id="mark-as-unread-btn">
             <%= link_to image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16") +
               content_tag(:p, "mark as unread"),

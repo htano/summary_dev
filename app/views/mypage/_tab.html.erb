@@ -1,9 +1,0 @@
-<% if @current_tab == title %>
-<li class="none active my-overflow" onclick="setCurrentTab('<%= title %>', 2)">
-  <a href=<%= "." + title %> data-toggle="tab"><%= title %></a>
-</li>
-<% else %>
-<li class="none my-overflow" onclick="setCurrentTab('<%= title %>', 2)">
-  <a href=<%= "." + title %> data-toggle="tab"><%= title %></a>
-</li>
-<% end %>
