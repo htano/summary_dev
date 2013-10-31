@@ -172,7 +172,7 @@ changeSortRef = (tab, sortNum) ->
       $(this).val "following"
       $(this).removeClass("btn-danger").addClass("btn-primary")
 
-@setTabInfoBeforeUnload = ->
+@setTabInfoBeforeUnload = (name) ->
   tabBeforeUnload = "main"
   if $("#article-controller .active").hasClass("main")
     tabBeforeUnload = "main"
@@ -183,24 +183,38 @@ changeSortRef = (tab, sortNum) ->
   else if $("#article-controller .active").hasClass("read")
     tabBeforeUnload = "read"
   else
+  if typeof name == "undefined"
+    # console.debug "set my tab cookie : " + tabBeforeUnload
+    document.cookie = 'tab=' + encodeURIComponent(tabBeforeUnload)
+  else
+    # console.debug "set other user tab cookie :" + tabBeforeUnload 
+    document.cookie = 'name=' + encodeURIComponent(name)
+    document.cookie = 'other_tab=' + encodeURIComponent(tabBeforeUnload)
 
-  document.cookie = 'tab=' + encodeURIComponent(tabBeforeUnload)
-
-@getLastStayedTab = ->
-  tab = "main"
-  cookieName = "tab="
-  position = document.cookie.indexOf(cookieName)
+@getCookie = (name, defaultVal) ->
+  result = defaultVal
+  cookieName = name + '='
+  allCookies = document.cookie
+  position = allCookies.indexOf(cookieName)
+  # console.debug "position : " + position
   if position != -1
     startIndex = position + cookieName.length
-    endIndex = document.cookie.indexOf(";", startIndex)
+    endIndex = allCookies.indexOf(';', startIndex)
     if endIndex == -1
-      endIndex = document.cookie.length
-    tab = decodeURIComponent(document.cookie.substring(startIndex, endIndex))
-  return tab
+      endIndex = allCookies.length
+    result = decodeURIComponent(allCookies.substring(startIndex, endIndex))
+  return result
+
+@delCookie = (name) ->
+  # console.debug "called delCookie"
+  cookieName = name + '='
+  date = new Date()
+  date.setYear date.getYear() - 1
+  document.cookie = cookieName + ";expires=" + date.toGMTString()
 
 @activateTab = (tab) ->
-  if tab == null
-    tab = "main"
+  if typeof tab == "undefined" || tab == ''
+    tab = 'main'
   $(".#{tab}").addClass("active")
 
 scrollNavbar = ->

@@ -11,8 +11,26 @@
     setTabInfoBeforeUnload();
   });
   $(window).on('load', function() {
-    lastStayedTab = getLastStayedTab();
-    // console.debug("tab = " + lastStayedTab);
+    delCookie('other_tab');
+    delCookie('name');
+
+    var lastStayedTab = getCookie('tab', 'main');
+    activateTab(lastStayedTab);
+  });
+</script>
+<% else %>
+<script type="text/javascript">
+  $(window).on('beforeunload', function() {
+    setTabInfoBeforeUnload('<%= @user.name %>');
+  });
+  $(window).on('load', function() {
+    delCookie('tab');
+
+    var userNameCookie = getCookie('name', null);
+    var lastStayedTab = 'main';
+    if (userNameCookie == '<%= @user.name %>') {
+      lastStayedTab = getCookie('other_tab', 'main');
+    } 
     activateTab(lastStayedTab);
   });
 </script>
@@ -250,11 +268,7 @@
         </div>
         <% else  # is_login_user %>
         <% if @user.public_flg %>
-        <% if @current_tab == "main" %>
-        <div class="none main active">
-        <% else %>
         <div class="none main">
-        <% end %>
           <div id="clip-btn">
             <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
               content_tag(:p, "clip"),
@@ -267,11 +281,7 @@
             <%= raw get_page_position(@mpage, @main_articles_table, @total_main_articles_num) %>
           </p>
         </div>
-        <% if @current_tab == "summary" %>
-        <div class="none summary active">
-        <% else%>
         <div class="none summary">
-        <% end %>
           <div id="clip-btn">
             <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
               content_tag(:p, "clip"),
@@ -284,11 +294,7 @@
             <%= raw get_page_position(@spage, @summaries_table, @total_summaries_num) %>
           </p>
         </div>
-        <% if @current_tab == "favorite" %>
-        <div class="none favorite active">
-        <% else %>
         <div class="none favorite">
-        <% end %>
           <div id="clip-btn">
             <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
               content_tag(:p, "clip"),
@@ -301,11 +307,7 @@
             <%= raw get_page_position(@fpage, @favorite_articles_table, @total_favorite_articles_num) %>
           </p>
         </div>
-        <% if @current_tab == "read" %>
-        <div class="none read active">
-        <% else %>
         <div class="none read">
-        <% end %>
           <div id="clip-btn">
             <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
               content_tag(:p, "clip"),
