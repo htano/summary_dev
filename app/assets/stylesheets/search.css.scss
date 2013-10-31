@@ -194,6 +194,7 @@
     z-index: 1;
     width: 760px;
     height: 275px;
+    color: gray;
     #thumbnail {
       padding: 2px 0 0 0;
       height: 125px;
@@ -219,7 +220,7 @@
       width: 630px;
       height: 60px;
       p a {
-        color: black;
+        color: gray;
         font-size: 20px;
       }
     }
@@ -230,7 +231,6 @@
       width: 760px;
       height: 15px;
       p a {
-        color: black;
         font-size: 10px;
       }
     }
