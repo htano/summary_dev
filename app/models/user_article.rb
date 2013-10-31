@@ -9,13 +9,9 @@ class UserArticle < ActiveRecord::Base
   def self.edit_user_article(user_id, article_id)
     user_article = UserArticle.find_by_user_id_and_article_id(user_id, article_id)
     if user_article == nil
-      user_article = UserArticle.new(:user_id => user_id, :article_id => article_id, :read_flg => false)
-      if user_article.save
-        return user_article
-      end
-    else
-      return user_article
+      user_article = UserArticle.create(:user_id => user_id, :article_id => article_id, :read_flg => false)
     end
+    return user_article
   end
 
   #ユーザーが最近あとで読むした記事に設定したタグ情報を取得するメソッド

@@ -48,7 +48,7 @@ a {
   height: 430px;
   width: 680px;
   background-color: #e6e6e6;
-  border: 1px solid gray;  
+  border: 1px solid gray;
 }
 
 .url_title {
@@ -66,6 +66,7 @@ a {
 }
 
 .url_box {
+  color :gray;
 }
 
 #add_msg {
@@ -103,7 +104,7 @@ a {
   z-index: 1;
   width: 680px;
   height: 300px;
-
+  color :gray;
   #thumbnail {
     padding: 2px 0 0 0;
     //border: 1px solid gray;
@@ -130,7 +131,7 @@ a {
     width: 500px;
     height: 100px;
     p a {
-      color: black;
+      color: gray;
       font-size: 20px;
     }
   }

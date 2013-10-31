@@ -16,25 +16,17 @@ module Webpage
   BLANK = ""
   THRESHOLD_FILE = 100
   THRESHOLD_IMAGE = 150
-  ADVERTISEMENT_LIST = ["amazon","rakuten"]
+  ADVERTISEMENT_LIST = ["amazon","rakuten","bannar","Bannar"]
   EXCEPTION_PAGE_LIST = ["http://g-ec2.images-amazon.com/images/G/09/gno/beacon/BeaconSprite-JP-02._V393500380_.png"]
 
   def add_webpage(url, tag_list = [])
     article = Article.find_by_url(url)
     if article == nil
       h = get_webpage_element(url)
-      if h == nil
-        return nil
-      end
-      article = Article.new(:url => url, :title => h["title"], :contents_preview => h["contentsPreview"][0, 200], :category_id =>"001", :thumbnail => h["thumbnail"])
-      if article.save
-        article.add_strength
-      end
-    else
-      article.add_strength
+      return nil if h == nil
+      article = Article.create(:url => url, :title => h["title"], :contents_preview => h["contentsPreview"][0, 200], :category_id =>"001", :thumbnail => h["thumbnail"])
     end
-#    article = Article.edit_article(url)
- #   return article if article == nil
+    article.add_strength
     user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
     UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
     return article
@@ -69,32 +61,37 @@ module Webpage
   #サムネイルを取得するメソッド
   def get_webpage_thumbnail(url, html)
     img_url = nil
-    doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
-    doc.xpath("//img").each do |img|
-      img_url = img["src"]
-      next if img_url == nil
-      next if isAdvertisement?(url, img_url)
-      next if isExceptionPage?(img_url)
-      img_url = URI.join(url, img_url).to_s unless img_url.start_with?("http")
-      begin
-        file = ImageSize.new(open(img_url, "rb").read)
-        unless file.get_width == nil || file.get_height == nil
-          if file.get_width > THRESHOLD_FILE && file.get_height > THRESHOLD_FILE
-            return img_url
-          else
-            next
+    begin
+      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
+      doc.xpath("//img").each do |img|
+        img_url = img["src"]
+        next if img_url == nil
+        next if isAdvertisement?(url, img_url)
+        next if isExceptionImage?(img_url)
+        img_url = URI.join(url, img_url).to_s unless img_url.start_with?("http")
+        begin
+          file = ImageSize.new(open(img_url, "rb").read)
+          unless file.get_width == nil || file.get_height == nil
+            if file.get_width > THRESHOLD_FILE && file.get_height > THRESHOLD_FILE
+              return img_url
+            else
+              next
+            end
           end
+        rescue => e
+          logger.info("get_webpage_thumbnail info :#{e}")
+          next
         end
-      rescue => e
-        logger.info("info :#{e}")
-        next
+        image = Magick::ImageList.new(img_url)
+        if image.columns.to_i > THRESHOLD_IMAGE && image.rows.to_i > THRESHOLD_IMAGE
+          return img_url
+        end
       end
-      image = Magick::ImageList.new(img_url)
-      if image.columns.to_i > THRESHOLD_IMAGE && image.rows.to_i > THRESHOLD_IMAGE
-        return img_url
-      end
+      return "no_image.png"
+    rescue => e
+        logger.info("get_webpage_thumbnail info :#{e}")
+        return "no_image.png"
     end
-    return "no_image.png"
   end
 
   #プレビューを取得するメソッド
@@ -106,7 +103,7 @@ module Webpage
       contents_preview.split(BLANK)
       return contents_preview
     rescue => e
-      logger.info("info :#{e}")
+      logger.info("get_webpage_contents_preview info :#{e}")
       begin
         contents_preview = BLANK
         Nokogiri::HTML.parse(html).xpath("//p").each do |p|
@@ -117,17 +114,20 @@ module Webpage
         contents_preview.split(BLANK)
         return contents_preview
       rescue => e
-        logger.info("info :#{e}")
+        logger.info("get_webpage_contents_preview info :#{e}")
         return "プレビューは取得出来ませんでした。"
       end
     end
   end
 
   #広告画像を排除する
-  #画像URLにamazon, rakutenが入っている場合は広告と判断する
-  #登録しようとしているURLにamazon, rakutenが入っている場合は何もしない
+  #画像URLにADVERTISEMENT_LISTが含まれる場合は広告と判断する
+  #登録しようとしているURLにADVERTISEMENT_LISTが含まれる場合は何もしない
   def isAdvertisement?(url, img_url)
     ADVERTISEMENT_LIST.each do |advertisement|
+      p url
+      p img_url
+      p advertisement
       if !(url.include?(advertisement)) && img_url.include?(advertisement)
         return true
       end
@@ -135,7 +135,7 @@ module Webpage
     return false
   end
 
-  def isExceptionPage?(img_url)
+  def isExceptionImage?(img_url)
     EXCEPTION_PAGE_LIST.each do |exception_page|
       if img_url == exception_page
         return true

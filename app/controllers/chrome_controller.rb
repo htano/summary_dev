@@ -114,15 +114,11 @@ class ChromeController < ApplicationController
           tag_list.push(value) unless value == BLANK || tag_list.include?(value)
         end
       end
-      article = Article.edit_article(url)
+      article = add_webpage(url, tag_list)
       if article == nil
         result = {"article_id" => BLANK, "msg" => "この記事は登録出来ません。"}
         render :json => result and return
       end
-
-      user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
-      UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
-      article.add_strength
       result = {"article_id" => article.id, "msg" => "登録出来ました。"}
       render :json => result and return
     else

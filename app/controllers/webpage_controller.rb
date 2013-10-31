@@ -56,17 +56,6 @@ class WebpageController < ApplicationController
         flash[:error] = "Please check URL."
         redirect_to :controller => "webpage", :action => "add" and return
       end
-#途中
-=begin
-      article = Article.edit_article(@url)
-      if article == nil
-        flash[:error] = "Please check URL."
-        redirect_to :controller => "webpage", :action => "add" and return
-      end
-      user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
-      UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
-      article.add_strength
-=end
       @article_id = article.id
       @title = article.title
       @contents_preview = article.contents_preview

@@ -6,8 +6,7 @@ class UserArticleTag < ActiveRecord::Base
     user_article_tag_list = where(:user_article_id => user_article_id)
     if user_article_tag_list.length == 0
       tag_list.each do |tag|
-        user_article_tag = UserArticleTag.new(:user_article_id => user_article_id, :tag => tag)
-        user_article_tag.save
+        user_article_tag = UserArticleTag.create(:user_article_id => user_article_id, :tag => tag)
       end
     else
       user_article_tag_list.each do |user_article_tag|
@@ -19,8 +18,7 @@ class UserArticleTag < ActiveRecord::Base
       end
 
       tag_list.each do |tag|
-        user_article_tag = UserArticleTag.new(:user_article_id => user_article_id, :tag => tag)
-        user_article_tag.save
+        user_article_tag = UserArticleTag.craete(:user_article_id => user_article_id, :tag => tag)
       end
     end
   end
