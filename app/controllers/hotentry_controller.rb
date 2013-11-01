@@ -25,6 +25,9 @@ class HotentryController < ApplicationController
     else
       @entries = Article.get_hotentry_articles(@category_name)
     end
+    @entries = Kaminari.paginate_array(@entries).page(
+      params[:page]
+    ).per(Article::HOTENTRY_DISPLAY_NUM)
   end
 
   def small
@@ -45,6 +48,9 @@ class HotentryController < ApplicationController
       @hash[e.id] = @order
       @order += 1
     end
+    @entries = Kaminari.paginate_array(@entries).page(
+      params[:page]
+    ).per(Article::HOTENTRY_DISPLAY_NUM)
   end
 
   def large
@@ -59,5 +65,8 @@ class HotentryController < ApplicationController
     else
       @entries = Article.get_hotentry_articles(@category_name)
     end
+    @entries = Kaminari.paginate_array(@entries).page(
+      params[:page]
+    ).per(Article::HOTENTRY_DISPLAY_NUM)
   end
 end

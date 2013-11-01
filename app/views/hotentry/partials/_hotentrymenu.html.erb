@@ -12,7 +12,8 @@
       <div class="col-md-2 hotentry-menu-icons" style="margin-top:8px;">
         <a href="<%= url_for(:controller => 'hotentry', 
                              :action => 'small',
-                             :category => params[:category]) %>">
+                             :category => params[:category],
+                             :page => params[:page]) %>">
           <% if controller.action_name == 'small' %>
             <%= image_tag("icons/small_listing_selected.png", :size=>"24x24") %>
           <% else %>
@@ -21,7 +22,8 @@
         </a>
         <a href="<%= url_for(:controller => 'hotentry', 
                              :action => 'normal',
-                             :category => params[:category]) %>">
+                             :category => params[:category],
+                             :page => params[:page]) %>">
           <% if controller.action_name == 'normal' %>
             <%= image_tag("icons/normal_listing_selected.png", :size=>"24x24") %>
           <% else %>
@@ -30,7 +32,8 @@
         </a>
         <a href="<%= url_for(:controller => 'hotentry', 
                              :action => 'large',
-                             :category => params[:category]) %>">
+                             :category => params[:category],
+                             :page => params[:page]) %>">
           <% if controller.action_name == 'large' %>
             <%= image_tag("icons/large_listing_selected.png", :size=>"24x24") %>
           <% else %>

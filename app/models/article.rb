@@ -23,7 +23,7 @@ class Article < ActiveRecord::Base
   ZERO_ZERO_ONE_DAYS = 28
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   HOTENTRY_CANDIDATE_NUM = 200
-  PERSONAL_HOTENTRY_CANDIDATE_NUM = 40
+  PERSONAL_HOTENTRY_CANDIDATE_NUM = 100
   HOTENTRY_DISPLAY_NUM = 20
   HOTENTRY_MAX_CLUSTER_NUM = 5
   BLANK = ""
@@ -164,7 +164,7 @@ class Article < ActiveRecord::Base
     end
     return candidate_entries.sort{|a,b| 
       (-1)*(a.get_current_strength <=> b.get_current_strength)
-    }.first(HOTENTRY_DISPLAY_NUM)
+    }
   end
 
   def self.get_personal_hotentry(user)
@@ -208,7 +208,7 @@ class Article < ActiveRecord::Base
       end
       return candidate_entries.sort{|a,b| 
         (-1)*(a.get_current_strength <=> b.get_current_strength)
-      }.first(HOTENTRY_DISPLAY_NUM)
+      }
     else
       return Array.new
     end
