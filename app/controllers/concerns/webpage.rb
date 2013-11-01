@@ -125,9 +125,6 @@ module Webpage
   #登録しようとしているURLにADVERTISEMENT_LISTが含まれる場合は何もしない
   def isAdvertisement?(url, img_url)
     ADVERTISEMENT_LIST.each do |advertisement|
-      p url
-      p img_url
-      p advertisement
       if !(url.include?(advertisement)) && img_url.include?(advertisement)
         return true
       end

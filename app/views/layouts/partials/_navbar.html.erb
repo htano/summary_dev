@@ -1,39 +1,39 @@
+<script>
+function checkSearchtext(){
+  if($('#searchtext_nav').val() == ""){
+    return false;
+  }
+}
+</script>
 
-<%= form_tag({:controller => 'search', :action => 'search_article'}, {:method => 'GET'}) do %>
+<%= form_tag({:controller => 'search', :action => 'search_article'}, {:method => 'GET' ,:onsubmit => 'return checkSearchtext()'}) do %>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
         <a href="<%= url_for :controller => 'hotentry', :action => 'index' %>" class="brand">Summary</a>
         <div class="nav-collapse">
-          <ul class="nav pull-right">
-
-          <% if signed_in? %>
-          
+          <ul class="nav pull-right">         
             <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" placeholder="Please input the words you want."></li>
             <li><input type="submit" id="search_nav" value="search" class="button button-flat:hover submit"></li>
-            <li>
-              <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" >add</a>
-            </li>
-          <% end %>
-
-          <% if false %>
-          <% if signed_in? %>
-            <li>
-              <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#"><%= get_notifying_objects.size %></a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="#">action</a>
-                </li>
-                <li>
-                  <a href="#">next action</a>
-                </li>
-                <li>
-                  <a href="#">more actions</a>
-                </li>
-              </ul>
-            </li>
-          <% end %>
-          <% end %>
+            <% if signed_in? %>
+              <li>
+                <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" >add</a>
+              </li>
+              <li>
+                <a class="dropdown-toggle nav_news" data-toggle="dropdown" href="#"><%= get_notifying_objects.size %></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">action</a>
+                  </li>
+                  <li>
+                    <a href="#">next action</a>
+                  </li>
+                  <li>
+                    <a href="#">more actions</a>
+                  </li>
+                </ul>
+              </li>
+            <% end %>
 
             <li>
               <div id="profile">
