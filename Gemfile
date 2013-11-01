@@ -37,8 +37,8 @@ gem 'kaminari'
 #measure image size(GIF, PNG, JPEG ,,, etc)
 gem 'imagesize'
 
-#Object-based searching.
-#gem "ransack"
+#Extraction of the ActiveRecord
+gem 'activerecord-import'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
