@@ -172,15 +172,23 @@ p @svm_scale
 @title_tfidf = nil
 #Article.get_hotentry_articles.each do |e|
 Article.all.each do |e|
-  @user = User.find_by_name("system001")
-  if @user
-    @summary_model = e.summaries.find_by_user_id(User.find_by_name("system001").id)
-    if @summary_model
-      Rails.logger.info "Auto summary has aleady existed.: " + e.id.to_s
+  user = User.find_by_name("system001")
+  if user
+    if e.summaries.find_by_user_id(user.id)
+      Rails.logger.debug(
+        "Auto summary has aleady existed.: " + e.id.to_s
+      )
+      next
+    elsif e.auto_summary_error_status
+      Rails.logger.info(
+        "This page has invalid status: " + 
+        e.auto_summary_error_status + 
+        ", ArticleId: " + e.id.to_s
+      )
       next
     end
   else
-    Rails.logger.error "system001 is not exists."
+    Rails.logger.error("system001 is not exists.")
     break
   end
 
@@ -196,8 +204,10 @@ Article.all.each do |e|
     html = html.force_encoding("UTF-8")
     html = html.encode("UTF-8", "UTF-8")
   rescue => err
+    e.auto_summary_error_status = "openuri"
+    e.save
     p err
-    Rails.logger.error "openuri: " + err.message
+    Rails.logger.info("openuri: " + err.message)
     next
   end
 
@@ -227,7 +237,11 @@ Article.all.each do |e|
     title.split("")
     body.split("")
   rescue => err
-    Rails.logger.error "A page has invalid encoding: " + err.message
+    e.auto_summary_error_status = "encoding"
+    e.save
+    Rails.logger.info(
+      "A page has invalid encoding: " + err.message
+    )
     p err
     next
   end
@@ -299,7 +313,7 @@ Article.all.each do |e|
     @summary_contents += s_line[:sen]
   end
 
-  Summary.create( content:@summary_contents, user_id:@user.id, article_id:e.id )
+  Summary.create( content:@summary_contents, user_id:user.id, article_id:e.id )
   puts "[URL] " + e.url
   puts "[Title] " + title
   puts @summary_contents

@@ -24,3 +24,7 @@ rails runner \
   sort -n > tmp/personal-hotentry/tmp/predicted-db-articles.txt
 rails runner scripts/personal-hotentry/tmp/adding-user-articles.rb
 rails runner scripts/article_classifier/predict/predict_category.rb
+
+# Auto summarization
+echo "=== run auto summarization ==="
+rails runner scripts/auto_summarize/predict/run_auto_summarize.rb
