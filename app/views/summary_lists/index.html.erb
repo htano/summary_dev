@@ -15,7 +15,7 @@
 <div class="container">
   <div class="row">
     <!-- summary list -->
-    <div id="summary_list" class="col-md-10">
+    <div id="summary_list" class="col-md-10 col-md-offset-1">
       <div id="summary_list_header" class="row">
         <div class="col-md-2">
           <span id="article_readers_num"><%= @num_of_mark_users %></span>
@@ -28,7 +28,8 @@
           </div>
         <% else %>
           <div id="summarize" class="col-md-4">
-
+            カテゴリ予定
+  
           </div>
         <% end %>
         <div class="col-md-2 col-md-offset-2">
@@ -147,7 +148,7 @@
               </div>
             <% end %>
               <div class="col-md-9">
-                カテゴリとタグ予定 
+                タグ予定 
               </div>
           </div>
           <div id="preview" class="row" style="display:none">
@@ -162,6 +163,13 @@
             <!-- 自分の要約があればそれを見せる --> 
             <% if @user %>
               <% if @summary_by_me then %>
+              <% end %>	
+            <% end %>
+
+            <% @summary_list.each.with_index do |summary_item,index| %>
+              <!-- 自分の要約した文言は別で一番先頭で表示するので、リストでは見せない -->
+              <% if @user %>
+                <% if summary_item.summary == @summary_by_me then %>
             <div id="summary_box" class="row">
               <div id="summary_box_left" class="col-md-1">
                 <div id="summary_auther_img">
@@ -258,14 +266,7 @@
                 </div>
               </div>
             </div>
-              <% end %>	
-            <% end %>
-
-            <% @summary_list.each.with_index(1) do |summary_item,index| %>
-              <!-- 自分の要約した文言は別で一番先頭で表示するので、リストでは見せない -->
-              <% if @user %>
-                <% if summary_item.summary == @summary_by_me then %>
-                  <% next %>
+            <% next %>
                 <% end %>	
               <% end %>
 
@@ -413,7 +414,7 @@
   </div>
 
   <!-- pass to other side-->
-  <div class="col-md-2">
+  <div class="col-md-1">
   </div>
 </div>
 

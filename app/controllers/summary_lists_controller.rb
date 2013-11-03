@@ -1,4 +1,5 @@
 class SummaryListsController < ApplicationController
+  NUM_OF_SUMMARY_AT_ONE_PAGE = 5
   def index
     logger.info("index start")
 
@@ -12,7 +13,7 @@ class SummaryListsController < ApplicationController
     @user = get_login_user
 
     @summary_list = Kaminari.paginate_array(@article.get_good_score_sorted_summary_list(@user))
-                      .page(params[:page]).per(3)
+                      .page(params[:page]).per(NUM_OF_SUMMARY_AT_ONE_PAGE)
     @is_read_article = @article.read?(@user)
     @article_preview = @article.get_contents_preview
     @num_of_mark_users = @article.get_marked_user

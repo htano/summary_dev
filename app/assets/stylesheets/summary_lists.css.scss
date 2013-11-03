@@ -35,6 +35,8 @@ hr {
     border: solid;
     border-color: #FEE5E5; 
     border-top-color: #FF9B9B; 
+    margin-top: 30px;
+    margin-bottom: 30px;
   #summary_list_header{
     padding-top: 5px;
 
@@ -74,7 +76,7 @@ hr {
   #summary_list_body{ 
 
     #article_entrydate{ 
-      text-align: right; 
+      text-align: center; 
     }
 
     #article_title{ font-weight: bold; 
