@@ -4,8 +4,8 @@ class UserArticleTag < ActiveRecord::Base
   #記事登録時にタグを設定するメソッド
   def self.edit_user_article_tag(user_article_id, tag_list)
     user_article_tag_list = where(:user_article_id => user_article_id)
+    tags = []
     if user_article_tag_list.length == 0
-      tags = []
       tag_list.each do |tag|
         tags << UserArticleTag.new(:user_article_id => user_article_id, :tag => tag)
         #user_article_tag = UserArticleTag.create(:user_article_id => user_article_id, :tag => tag)
