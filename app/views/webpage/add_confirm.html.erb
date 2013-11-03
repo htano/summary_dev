@@ -12,10 +12,10 @@ $(document).ready(function() {
 <div class="url_box">
   <form method="POST" action="add_complete" class="confirm_url">
     <p class="url_title"><a href="<%= @url %>"target="_blank"><%= @title[0, 100] %></a></p>
-    <p class="url_link"><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><a href="<%= URI(@url).host %>"target="_blank"><%= URI(@url).host %></a></p>
+    <p class="url_link"><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><a href="http://<%= URI(@url).host %>"target="_blank"><%= URI(@url).host %></a></p>
     <span id="summary_num">
       <% if @summary_num == nil || @summary_num == 0 then %>
-        0 summary
+        0 summaries
       <% elsif @summary_num == 1 %>
         <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %> summary
       <% else %>
