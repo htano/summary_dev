@@ -1,24 +1,7 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-
-disableControlButton = (className) ->
-    $(".#{className}>#mark-as-read-btn>a").addClass("disabled").css("background-color", "#ddd")
-    $(".#{className}>#mark-as-unread-btn>a").addClass("disabled").css("background-color", "#ddd")
-    $(".#{className}>#mark-as-favorite-btn>a").addClass("disabled").css("background-color", "#ddd")
-    $(".#{className}>#mark-off-favorite-btn>a").addClass("disabled").css("background-color", "#ddd")
-    $(".#{className}>#delete-btn>a").addClass("disabled").css("background-color", "#ddd")
-    $(".#{className}>#delete-summary-btn>a").addClass("disabled").css("background-color", "#ddd")
-
-enableControlButton = (className) ->
-  $(".#{className}>#mark-as-read-btn>a").removeClass("disabled").css("background-color", "white")
-  $(".#{className}>#mark-as-unread-btn>a").removeClass("disabled").css("background-color", "white")
-  $(".#{className}>#mark-as-favorite-btn>a").removeClass("disabled").css("background-color", "white")
-  $(".#{className}>#mark-off-favorite-btn>a").removeClass("disabled").css("background-color", "white")
-  $(".#{className}>#delete-btn>a").removeClass("disabled").css("background-color", "white")
-  $(".#{className}>#delete-summary-btn>a").removeClass("disabled").css("background-color", "white")
-
-renewControlIssue = (className, params, page) ->
+@renewControlIssue = (className, params, page) ->
   $(".#{className}>#mark-as-read-btn>a").attr("href", "/mypage/mark_as_read?#{params}#{page}")
   $(".#{className}>#mark-as-unread-btn>a").attr("href", "/mypage/mark_as_unread?#{params}#{page}")
   $(".#{className}>#mark-as-favorite-btn>a").attr("href", "/mypage/mark_as_favorite?#{params}#{page}")
@@ -41,9 +24,10 @@ renewControlIssue = (className, params, page) ->
     i++
 
   if checkedNum is 0
-    disableControlButton(className)
+    $("#article-controller>.#{className}>div>a").addClass("disabled").css("background-color", "#ddd")
   else
-    enableControlButton(className)
+    $("#article-controller>.#{className}>div>a").removeClass("disabled").css("background-color", "white")
+
 
   if checkedNum > 0
     i = 0
