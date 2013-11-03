@@ -15,6 +15,7 @@
     delCookie('name');
 
     var lastStayedTab = getCookie('tab', 'main');
+    checkAll(lastStayedTab, false);
     activateTab(lastStayedTab);
     makeSortLink(lastStayedTab);
   });
@@ -32,6 +33,7 @@
     if (userNameCookie == '<%= @user.name %>') {
       lastStayedTab = getCookie('other_tab', 'main');
     } 
+    checkAll(lastStayedTab, false);
     activateTab(lastStayedTab);
     makeSortLink(lastStayedTab);
   });
@@ -333,7 +335,7 @@
               <th id="article-title-top">
                 <div class="article-checkbox">
                   <%= check_box 'check_all', 0, 
-                  {:id => "main-check-all", :onclick => "checkAll('main-check-all', 'main-check-form')"}, 0, false %>
+                  {:id => "main-check-all", :onclick => "checkAll('main')"}, 0, false %>
                 </div>
                 TITLE
               </th>
@@ -348,7 +350,7 @@
               <th id="article-title-top">
                 <div class="article-checkbox">
                   <%= check_box 'check_all', 0, 
-                  {:id => "summary-check-all", :onclick => "checkAll('summary-check-all', 'summary-check-form')"}, 0, false %>
+                  {:id => "summary-check-all", :onclick => "checkAll('summary')"}, 0, false %>
                 </div>
                 TITLE
               </th>
@@ -363,7 +365,7 @@
               <th id="article-title-top">
                 <div class="article-checkbox">
                   <%= check_box 'check_all', 0, 
-                  {:id => "favorite-check-all", :onclick => "checkAll('favorite-check-all', 'favorite-check-form')"}, 0, false %>
+                  {:id => "favorite-check-all", :onclick => "checkAll('favorite')"}, 0, false %>
                 </div>
                 TITLE</th>
               <th id="summary-number-top">summary</th>
@@ -377,7 +379,7 @@
               <th id="article-title-top">
                 <div class="article-checkbox">
                   <%= check_box 'check_all', 0, 
-                  {:id => "read-check-all", :onclick => "checkAll('read-check-all', 'read-check-form')"}, 0, false %>
+                  {:id => "read-check-all", :onclick => "checkAll('read')"}, 0, false %>
                 </div>
                 TITLE
               </th>

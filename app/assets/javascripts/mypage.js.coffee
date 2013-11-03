@@ -96,19 +96,23 @@
 
     $("#clip-btn>a").attr("href", "/mypage/clip?name=#{name}&#{params}")
 
-@checkAll = (checker, formName) ->
+@checkAll = (tab, defVal) ->
+  checker = tab + '-check-all'
+  formName = tab + '-check-form'
+
   form = document.getElementById(formName)
   checkboxNum = form.length
 
-  i = 1
-  value = document.getElementById(checker).checked
+  isSetVal = (if typeof defVal == "undefined" then false else true)
+  value = (if isSetVal then defVal else document.getElementById(checker).checked)
+  i = (if isSetVal then 0 else 1)
+
   while i < checkboxNum
     form.elements[i].checked = value
     i++
   form.elements[1].onclick() unless i is 1
 
 currentTab = "main"
-
 @getPage = (tab) ->
   page = "mpage"
   switch tab
