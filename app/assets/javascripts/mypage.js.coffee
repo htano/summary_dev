@@ -2,11 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-#wrapAll = (className, params, checkedNum, articleID, page) ->
-  # $(".#{className}>#mark-as-unread-btn").wrap("<a href=/mypage/mark_as_unread?#{params}#{page}></a>")
-  # $(".#{className}>#mark-off-favorite-btn").wrap("<a href=/mypage/mark_off_favorite?#{params}#{page}></a>")
-  # $(".#{className}>#delete-btn").wrap("<a href=/mypage/delete_article?#{params}#{page}></a>")
-  # $(".#{className}>#delete-summary-btn").wrap("<a href=/mypage/delete_summary?#{params}#{page}></a>")
 disableControlButton = (className) ->
     $(".#{className}>#mark-as-read-btn>a").addClass("disabled").css("background-color", "#ddd")
     $(".#{className}>#mark-as-unread-btn>a").addClass("disabled").css("background-color", "#ddd")
