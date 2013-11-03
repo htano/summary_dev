@@ -400,6 +400,9 @@ private
       like_num = 
         is_summary ? user.summaries.find_by_article_id(article.id).good_summaries.size : nil
 
+      user_article_ids = article.user_articles.select(:id)
+      tags = UserArticleTag.where(:user_article_id => user_article_ids).pluck(:tag)
+
       is_registered = false
       is_already_read = false
 
@@ -418,7 +421,8 @@ private
               :is_registered => is_registered, 
               :is_already_read => is_already_read,
               :like_num => like_num,
-              :last_updated => last_updated}
+              :last_updated => last_updated,
+              :tags => tags}
 
       table_data.push(data)
     end
