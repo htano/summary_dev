@@ -28,15 +28,21 @@ class SummaryListsController < ApplicationController
       logger.debug("end good_summary, pass to entrance")
       return	
     end
-    good_summary = GoodSummary.new(:user_id => get_login_user.id, :summary_id =>params[:summary_id]) 
 
-    if good_summary.save
-      logger.debug("success good_summary")
-      @list_index = params[:list_index]
+
+    unless GoodSummary.where(:user_id => get_login_user.id).where(:summary_id =>params[:summary_id]).exists?
+      good_summary = GoodSummary.new(:user_id => get_login_user.id, :summary_id =>params[:summary_id]) 
+
+      if good_summary.save
+        logger.debug("success good_summary")
+        @list_index = params[:list_index]
+      else
+        logger.error("ERROR good_summary")
+      end 
     else
-      logger.error("ERROR good_summary")
+        logger.debug("good_summary already done")
+        @list_index = params[:list_index]
     end 
-
     respond_to do |format|
       format.html { redirect_to :action => "index" }
       format.js
