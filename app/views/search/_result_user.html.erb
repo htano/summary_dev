@@ -1,5 +1,8 @@
 <% if @user_num == 0 %>
-  <%= @searchtext %> の 検索結果 <%= @user_num %> 件
+  <div id="user_operation">
+    <span id="message"><%= @searchtext[0,10] %>の 検索結果 <%= @user_num %> 件</span>
+    <!--<%= @searchtext %> の 検索結果 <%= @user_num %> 件-->
+  </div>
 <% else %>
   <div id="user_operation">
     <span id="message"><%= @searchtext[0,10] %>の 検索結果 <%= @user_num %> 件</span>

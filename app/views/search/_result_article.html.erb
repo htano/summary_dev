@@ -1,5 +1,8 @@
 <% if @article_num == 0 %>
-  <%= @searchtext %> の <%= @type_text %> 検索結果 <%= @article_num %> 件
+  <div id="article_operation">
+    <!--<%= @searchtext %> の <%= @type_text %> 検索結果 <%= @article_num %> 件-->
+    <span id="message"><%= @searchtext[0,10] %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
+  </div>
 <% else %>
   <div id="article_operation">
     <span id="message"><%= @searchtext[0,10] %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
