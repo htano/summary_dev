@@ -124,7 +124,8 @@ renewControlIssue = (className, params, page) ->
   form.elements[1].onclick() unless i is 1
 
 currentTab = "main"
-getPage = (tab) ->
+
+@getPage = (tab) ->
   page = "mpage"
   switch tab
     when "main"
@@ -138,21 +139,16 @@ getPage = (tab) ->
     else
   page
 
-replaceRef = (tab, num) ->
+@changeSortRef = (tab) ->
   currentPage = getPage(currentTab)
   replacePage = getPage(tab)
-  i = 1
-  while i < num+1
-    replaceURL = $("#sort#{i} a").attr("href").replace(currentPage, replacePage)
-    $("#sort#{i} a").attr("href", "#{replaceURL}")
-    i++
+  $(".sort-type>a").each ->
+    replaceURL = $(this).attr("href").replace(currentPage, replacePage)
+    $(this).attr("href", "#{replaceURL}")
 
-changeSortRef = (tab, sortNum) ->
-  replaceRef(tab, sortNum)
-
-@setCurrentTab = (tab, sortNum) ->
+@setCurrentTab = (tab) ->
   if currentTab != tab
-    changeSortRef(tab, sortNum)
+    changeSortRef(tab)
     currentTab = tab
 
 @getCurrentTab = ->
@@ -208,9 +204,14 @@ changeSortRef = (tab, sortNum) ->
   document.cookie = cookieName + ";expires=" + date.toGMTString()
 
 @activateTab = (tab) ->
-  if typeof tab == "undefined" || tab == ''
+  if typeof tab == 'undefined' || tab == ''
     tab = 'main'
-  $(".#{tab}").addClass("active")
+  $(".#{tab}").addClass('active')
+
+@makeSortLink = (tab) ->
+  if typeof tab == 'undefined' || tab == ''
+    tab = 'main'
+  changeSortRef(tab)
 
 scrollNavbar = ->
   win = $(window)

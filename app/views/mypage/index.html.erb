@@ -16,6 +16,7 @@
 
     var lastStayedTab = getCookie('tab', 'main');
     activateTab(lastStayedTab);
+    makeSortLink(lastStayedTab);
   });
 </script>
 <% else %>
@@ -32,6 +33,7 @@
       lastStayedTab = getCookie('other_tab', 'main');
     } 
     activateTab(lastStayedTab);
+    makeSortLink(lastStayedTab);
   });
 </script>
 <% end %>
@@ -131,16 +133,16 @@
     <div class="span9">
       <div class="div-tag">
         <ul class="tab clear">
-          <li class="none main my-overflow" onclick="setCurrentTab('main', 6)">
+          <li class="none main my-overflow" onclick="setCurrentTab('main')">
             <a href=".main" data-toggle="tab">main</a>
           </li>
-          <li class="none summary my-overflow" onclick="setCurrentTab('summary', 6)">
+          <li class="none summary my-overflow" onclick="setCurrentTab('summary')">
             <a href=".summary" data-toggle="tab">summary</a>
           </li>
-          <li class="none favorite my-overflow" onclick="setCurrentTab('favorite', 6)">
+          <li class="none favorite my-overflow" onclick="setCurrentTab('favorite')">
             <a href=".favorite" data-toggle="tab">favorite</a>
           </li>
-          <li class="none read my-overflow" onclick="setCurrentTab('read', 6)">
+          <li class="none read my-overflow" onclick="setCurrentTab('read')">
             <a href=".read" data-toggle="tab">read</a>
           </li>
         </ul>
@@ -149,32 +151,32 @@
           <%= @sort_menu_title %><span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
-            <li id="sort1">
+            <li class="sort-type">
               <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=desc&sort=registered">
                 <%= raw is_selected_sort_type(@sort_menu_title, "Newest", "desc-registered") %>
               </a>
             </li>
-            <li id="sort2">
+            <li class="sort-type">
               <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=asc&sort=registered">
                 <%= raw is_selected_sort_type(@sort_menu_title, "Oldest", "asc-registered") %>
               </a>
             </li>
-            <li id="sort3">
+            <li class="sort-type">
               <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=desc&sort=summaries">
                 <%= raw is_selected_sort_type(@sort_menu_title, "Most summarized", "asc-registered") %>
               </a>
             </li>
-            <li id="sort4">
+            <li class="sort-type">
               <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=asc&sort=summaries">
                 <%= raw is_selected_sort_type(@sort_menu_title, "Least summarized", "asc-registered") %>
               </a>
             </li>
-            <li id="sort5">
+            <li class="sort-type">
               <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=desc&sort=reader">
                 <%= raw is_selected_sort_type(@sort_menu_title, "Most read", "asc-registered") %>
               </a>
             </li>
-            <li id="sort6">
+            <li class="sort-type">
               <a href="/mypage/index?name=<%= @user.name %>&mpage=1&direction=asc&sort=reader">
                 <%= raw is_selected_sort_type(@sort_menu_title, "Least read", "asc-registered") %>
               </a>
