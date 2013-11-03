@@ -87,12 +87,15 @@ class Article < ActiveRecord::Base
     is_good_completed = Array.new
 
     self.summaries.each_with_index do |summary,i|  
-
-      good_summary_point = summary.good_summaries.count
-
-      score_list[i] = score_item.new(summary, good_summary_point)
+    #自分のsummaryがあれば、それを先頭にリストを再結合
+      if summary.user_id == user.id then
+        good_summary_point = summary.good_summaries.count
+        score_list[0,0] = score_item.new(summary, good_summary_point)
+      else
+        good_summary_point = summary.good_summaries.count
+        score_list[i] = score_item.new(summary, good_summary_point)
+      end
     end 
-
 
     #sort summary list
     #
@@ -109,7 +112,7 @@ class Article < ActiveRecord::Base
     #insert to each params  
     score_list_sorted.each_with_index do |score_item, i|         
       unless user == nil then
-        unless score_item.summary.good_summaries.find_by(:user_id => user.id) == nil then 
+        if score_item.summary.good_summaries.find_by(:user_id => user.id) then 
           is_good_completed = true
         else
           is_good_completed = false 

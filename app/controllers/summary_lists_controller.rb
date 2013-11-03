@@ -10,7 +10,9 @@ class SummaryListsController < ApplicationController
       return
     end
     @user = get_login_user
-    @summary_list = @article.get_good_score_sorted_summary_list(@user)
+
+    @summary_list = Kaminari.paginate_array(@article.get_good_score_sorted_summary_list(@user))
+                      .page(params[:page]).per(3)
     @is_read_article = @article.read?(@user)
     @article_preview = @article.get_contents_preview
     @num_of_mark_users = @article.get_marked_user

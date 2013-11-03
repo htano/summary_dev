@@ -120,7 +120,7 @@
           <cite style="word-wrap: break-word;"> <%= URI(@article.url).host %> </cite>
         </div>
         <div id="article_entrydate" class="col-md-4">
-          （かみなりページング）
+          <%= paginate @summary_list %> 
         </div>
       </div><!--end article_body-->
 
