@@ -14,6 +14,13 @@
 
 <div class="container">
   <div class="row">
+    <!-- article recording date -->
+    <div id="article_created_date" class="col-md-10 col-md-offset-1">
+        <%= @article.created_at.strftime("%Y年%m月%d日 %H時%M分") %>
+    </div>
+    <div class="col-md-1">
+    </div>
+    
     <!-- summary list -->
     <div id="summary_list" class="col-md-10 col-md-offset-1">
       <div id="summary_list_header" class="row">
@@ -21,18 +28,16 @@
           <span id="article_readers_num"><%= @num_of_mark_users %></span>
           <span id="article_readers_char"> readers</span>
         </div>
-        <% unless @summary_by_me then %>
-          <div id="summarize" class="col-md-4">
-              <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>この記事を要約する'),
-                {:controller => "summary", :action => "edit", :article_id => @article.id } %>
-          </div>
-        <% else %>
-          <div id="summarize" class="col-md-4">
-            カテゴリ予定
-  
-          </div>
-        <% end %>
-        <div class="col-md-2 col-md-offset-2">
+        <div id="summarize" class="col-md-3">
+          カテゴリ予定 
+        </div>
+        <div id="summarize" class="col-md-3">
+          <% unless @summary_by_me then %>
+                <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>この記事を要約する'),
+                  {:controller => "summary", :action => "edit", :article_id => @article.id } %>
+          <% end %>
+        </div>
+        <div class="col-md-2">
           <% if @user %>
             <div id ="article_read_later">
             <div id="read_later_button" 
@@ -147,9 +152,26 @@
               <div class="col-md-3">
               </div>
             <% end %>
-              <div class="col-md-9">
-                タグ予定 
-              </div>
+                <div id="tags_header" class="col-md-1">
+                  タグ
+                </div>
+                <% tags = @article.get_top_rated_tag %>
+                <% unless tags.count == 0 then%>
+                  <div id="tags_box" class="col-md-6">
+                    <% tags.each do |t| %>
+                      <span id="tags">
+                        <%= t %>
+                      </span>
+                    <% end %>
+                  </div>
+                  <div class="col-md-2">
+                    <!-- margin -->
+                  </div>
+                <% else %>
+                  <div id="notags" class="col-md-8">
+                    登録されているタグがありません
+                  </div> 
+                <% end %>
           </div>
           <div id="preview" class="row" style="display:none">
             <div class="col-md-max">
@@ -161,10 +183,6 @@
           <!-- summary lists -->
           <% if @summary_list %>
             <!-- 自分の要約があればそれを見せる --> 
-            <% if @user %>
-              <% if @summary_by_me then %>
-              <% end %>	
-            <% end %>
 
             <% @summary_list.each.with_index do |summary_item,index| %>
               <!-- 自分の要約した文言は別で一番先頭で表示するので、リストでは見せない -->
