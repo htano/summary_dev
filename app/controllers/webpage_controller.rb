@@ -26,12 +26,12 @@ class WebpageController < ApplicationController
 
       article = Article.find_by_url(@url)
       unless article == nil
-        user_article = article.user_articles.find_by_user_id(@user_id)
         @summary_num = article.summaries_count
         @reader_num = article.user_articles_count
         @article_id = article.id
         @top_rated_tags = article.get_top_rated_tag
-        @set_tags = user_article.get_set_tag
+        user_article = article.user_articles.find_by_user_id(@user_id)
+        @set_tags = user_article.get_set_tag unless user_article == nil
       end
 
     else
