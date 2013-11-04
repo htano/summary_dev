@@ -49,7 +49,7 @@
       <div class="edit-tag-btn">
         <%= link_to image_tag("icons/glyphicons_065_tag_gray.png", :size => "12x12") +
             content_tag(:p, "edit tag"),
-            {:controller => "webpage", :action => "add_confirm", :url => table_data[:article].url, :edit => true},
+            {:controller => "webpage", :action => "add_confirm", :url => table_data[:article].url},
             {:class => "btn btn-default btn-xs", :method => :post} %>
       </div>
       <% else %>

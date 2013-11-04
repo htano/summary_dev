@@ -100,4 +100,8 @@ class User < ActiveRecord::Base
     self.keep_login_ip = nil
     return self.save
   end
+
+  def get_followers_count
+    return FavoriteUser.count(:all, :conditions => {:favorite_user_id => self.id})
+  end
 end

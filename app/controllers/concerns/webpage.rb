@@ -8,23 +8,38 @@ require "uri"
 require "bundler/setup"
 require "extractcontent"
 require "RMagick"
+require "image_size"
 
 module Webpage
 
   #TODO 定数定義は外出しにしたい
   BLANK = ""
-  THRESHOLD_SIDE = 100
-  ADVERTISEMENTLIST = ["amazon","rakuten"]
+  THRESHOLD_FILE = 100
+  THRESHOLD_IMAGE = 150
+  ADVERTISEMENT_LIST = ["amazon","rakuten","bannar","Bannar"]
+  EXCEPTION_PAGE_LIST = ["http://g-ec2.images-amazon.com/images/G/09/gno/beacon/BeaconSprite-JP-02._V393500380_.png"]
 
-  #TODO livedoorのサイトでエラーが発生する。
+  def add_webpage(url, tag_list = [])
+    article = Article.find_by_url(url)
+    if article == nil
+      h = get_webpage_element(url)
+      return nil if h == nil
+      article = Article.create(:url => url, :title => h["title"], :contents_preview => h["contentsPreview"][0, 200], :category_id =>"001", :thumbnail => h["thumbnail"])
+    end
+    article.add_strength
+    user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
+    UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
+    return article
+  end
+
   def get_webpage_element(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
     begin
       html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
         f.read
       end
-      title = title_flg ? get_webpage_title(html) : nil
+      title = title_flg ? get_webpage_title(url, html) : nil
       contentsPreview = contentsPreview_flg ? get_webpage_contents_preview(html) : nil
-      thumbnail = thumbnail_flg ? get_webpage_thumbnail(html) : nil
+      thumbnail = thumbnail_flg ? get_webpage_thumbnail(url, html) : nil
       h = {"title" => title, "thumbnail" => thumbnail, "contentsPreview" => contentsPreview}
       return h
     rescue => e
@@ -34,37 +49,47 @@ module Webpage
   end
 
   #タイトルを取得するメソッド
-  def get_webpage_title(html)
-    begin
-      doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
-      if doc.title == nil || doc.title == BLANK
-        return URI.parse("#{params[:url]}").host
-      else
-        return doc.title
-      end
-    rescue => e
-      logger.error("error :#{e}")
-      return BLANK
+  def get_webpage_title(url, html)
+    doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
+    if doc.title == nil || doc.title == BLANK
+      return URI.parse(url).host
+    else
+      return doc.title
     end
   end
 
   #サムネイルを取得するメソッド
-  def get_webpage_thumbnail(html)
+  def get_webpage_thumbnail(url, html)
+    img_url = nil
     begin
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
-      doc.xpath("//img[starts-with(@src, 'http://')]").each do |img|
-        p img["src"]
-        next if ADVERTISEMENTLIST.include?(img["src"])
-        image = Magick::ImageList.new(img["src"])
-        columns = image.columns 
-        rows = image.rows
-        if columns.to_i > THRESHOLD_SIDE && rows.to_i > THRESHOLD_SIDE
-          return img["src"]
+      doc.xpath("//img").each do |img|
+        img_url = img["src"]
+        next if img_url == nil
+        next if isAdvertisement?(url, img_url)
+        next if isExceptionImage?(img_url)
+        img_url = URI.join(url, img_url).to_s unless img_url.start_with?("http")
+        begin
+          file = ImageSize.new(open(img_url, "rb").read)
+          unless file.get_width == nil || file.get_height == nil
+            if file.get_width > THRESHOLD_FILE && file.get_height > THRESHOLD_FILE
+              return img_url
+            else
+              next
+            end
+          end
+        rescue => e
+          logger.info("get_webpage_thumbnail info :#{e}")
+          next
+        end
+        image = Magick::ImageList.new(img_url)
+        if image.columns.to_i > THRESHOLD_IMAGE && image.rows.to_i > THRESHOLD_IMAGE
+          return img_url
         end
       end
       return "no_image.png"
     rescue => e
-        logger.error("error :#{e}")
+        logger.info("get_webpage_thumbnail info :#{e}")
         return "no_image.png"
     end
   end
@@ -78,7 +103,7 @@ module Webpage
       contents_preview.split(BLANK)
       return contents_preview
     rescue => e
-      logger.error("error :#{e}")
+      logger.info("get_webpage_contents_preview info :#{e}")
       begin
         contents_preview = BLANK
         Nokogiri::HTML.parse(html).xpath("//p").each do |p|
@@ -89,9 +114,30 @@ module Webpage
         contents_preview.split(BLANK)
         return contents_preview
       rescue => e
-        logger.error("error :#{e}")
+        logger.info("get_webpage_contents_preview info :#{e}")
         return "プレビューは取得出来ませんでした。"
       end
     end
+  end
+
+  #広告画像を排除する
+  #画像URLにADVERTISEMENT_LISTが含まれる場合は広告と判断する
+  #登録しようとしているURLにADVERTISEMENT_LISTが含まれる場合は何もしない
+  def isAdvertisement?(url, img_url)
+    ADVERTISEMENT_LIST.each do |advertisement|
+      if !(url.include?(advertisement)) && img_url.include?(advertisement)
+        return true
+      end
+    end
+    return false
+  end
+
+  def isExceptionImage?(img_url)
+    EXCEPTION_PAGE_LIST.each do |exception_page|
+      if img_url == exception_page
+        return true
+      end
+    end
+    return false
   end
 end

@@ -2,18 +2,35 @@
   <%= stylesheet_link_tag "webpage" %>
 <% end %>
 
+<script>
+$(document).ready(function() {
+  loadConfirmView()
+});
+</script>
+
 <div class="comment_box">Confirm.</div>
 <div class="url_box">
   <form method="POST" action="add_complete" class="confirm_url">
-    <p class="url_title"><%= @title[0, 100] %></p>
-    <p class="url_link"><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><a href="<%= @url %>"target="_blank"><%= @url[0, 100] %></a></p>
-    <div id="summary_num">
+    <p class="url_title"><a href="<%= @url %>"target="_blank"><%= @title[0, 100] %></a></p>
+    <p class="url_link"><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><a href="http://<%= URI(@url).host %>"target="_blank"><%= URI(@url).host %></a></p>
+    <span id="summary_num">
       <% if @summary_num == nil || @summary_num == 0 then %>
-        0 summary
+        0 summaries
+      <% elsif @summary_num == 1 %>
+        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %> summary
       <% else %>
-        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %>&nbsp;summaries
+        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %> summaries
       <% end %>
-    </div>
+    </span>
+    <span id="reader_num">
+      <% if @reader_num == nil || @reader_num == 0 then %>
+        0 readers
+      <% elsif @reader_num == 1 %>
+        <%= @reader_num %> reader
+      <% else%>
+        <%= @reader_num %> readers
+      <% end %>
+    </span>
     <div id="tag_area">
       <% if @top_rated_tags == nil || @top_rated_tags.length == 0 %>
         <div id="recommend_tags">No one tags for this article.<br><br></div>
@@ -38,11 +55,7 @@
 
       <div id="my_tags">tags for this article. <%= image_tag("icons/glyphicons_016_bin.png", :size => "12x12", :id => "tag_clear") %><br>
         <% for num in 1..10 do %>
-          <% if @tags == nil %>
-            <input type="text" class="tag_text" name="tag_text_<%= num %>" id="tag_text_<%= num %>" maxlength="10">
-          <% else %>
-            <input type="text" class="tag_text" name="tag_text_<%= num %>" id="tag_text_<%= num %>" maxlength="10" value="<%= @tags[num-1] %>">
-          <% end %>
+          <input type="text" class="tag_text" name="tag_text_<%= num %>" id="tag_text_<%= num %>" maxlength="10" value="<%= @set_tags[num-1] %>">
         <% end %>
       </div>
     </div>

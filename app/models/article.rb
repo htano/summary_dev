@@ -16,7 +16,7 @@ class Article < ActiveRecord::Base
   ZERO_ZERO_ONE_DAYS = 7
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   BLANK = ""
-
+=begin
   def self.edit_article(url)
     article = Article.find_by_url(url)
     if article == nil
@@ -26,31 +26,33 @@ class Article < ActiveRecord::Base
       end
       article = Article.new(:url => url, :title => h["title"], :contents_preview => h["contentsPreview"][0, 200], :category_id =>"001", :thumbnail => h["thumbnail"])
       if article.save
+        article.add_strength
         return article
       end
     else
+      article.add_strength
       return article
     end
   end
-
+=end
   #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag)
     return nil if tag == nil || tag == BLANK
-    articles = joins(:user_articles => :user_article_tags).where(["user_article_tags.tag LIKE ?", "%"+tag+"%"]).group("url")
-    return articles
-  end
-
-  #指定されたタイトルを持つ記事を取得する
-  def self.search_by_title(title)
-    return nil if title == nil || title == BLANK
-    articles = where(["title LIKE ?", "%"+title+"%"])
+    articles = joins(:user_articles => :user_article_tags).where("user_article_tags.tag" => tag).group("url")
     return articles
   end
 
   #指定された本文を持つ記事を取得する
   def self.search_by_content(content)
     return nil if content == nil || content == BLANK
-    articles = where(["contents_preview LIKE ?", "%"+content+"%"])
+    articles = where(["contents_preview LIKE ? or title LIKE ?", "%"+content+"%", "%"+content+"%"])
+    return articles
+  end
+
+  #指定されたドメインがURLに含まれる記事を取得する
+  def self.search_by_domain(domain)
+    return nil if domain == nil || domain == BLANK
+    articles = where(["url LIKE ? or url LIKE ? ", "http://"+domain+"%", "https://"+domain+"%"])
     return articles
   end
 
@@ -58,20 +60,25 @@ class Article < ActiveRecord::Base
     return self.user_articles.count
   end
 
+  def read_later?(user)
+    is_read_later = false
+    if user then
+      if self.user_articles.exists?(:user_id => user.id) then
+        is_read_later = true
+      end
+    end
+    return is_read_later
+  end
+
   def read?(user)
-    unless user == nil then
+    is_read = false
+    if user then
       user_article = self.user_articles.find_by(:user_id => user.id)
-      unless  user_article == nil then
+      if user_article then
         if user_article.read_flg == true then
           is_read = true
-        else
-          is_read = false
         end
-      else
-        is_read = false 
       end
-    else
-      is_read = false 
     end  
     return is_read
   end
@@ -82,12 +89,15 @@ class Article < ActiveRecord::Base
     is_good_completed = Array.new
 
     self.summaries.each_with_index do |summary,i|  
-
-      good_summary_point = summary.good_summaries.count
-
-      score_list[i] = score_item.new(summary, good_summary_point)
+    #自分のsummaryがあれば、それを先頭にリストを再結合
+      if summary.user_id == user.id then
+        good_summary_point = summary.good_summaries.count
+        score_list[0,0] = score_item.new(summary, good_summary_point)
+      else
+        good_summary_point = summary.good_summaries.count
+        score_list[i] = score_item.new(summary, good_summary_point)
+      end
     end 
-
 
     #sort summary list
     #
@@ -104,7 +114,7 @@ class Article < ActiveRecord::Base
     #insert to each params  
     score_list_sorted.each_with_index do |score_item, i|         
       unless user == nil then
-        unless score_item.summary.good_summaries.find_by(:user_id => user.id) == nil then 
+        if score_item.summary.good_summaries.find_by(:user_id => user.id) then 
           is_good_completed = true
         else
           is_good_completed = false 
@@ -187,6 +197,6 @@ class Article < ActiveRecord::Base
   def get_top_rated_tag
     first_index = 0
     last_index = 9
-    return Article.joins(:user_articles => :user_article_tags).where("url" => self.url).group("tag").order("count_tag desc").count("tag").keys[first_index..last_index]
+    return Article.joins(:user_articles => :user_article_tags).where("url" => self.url).group("tag").order("count_tag desc, user_article_tags.created_at desc").count("tag").keys[first_index..last_index]
   end
 end

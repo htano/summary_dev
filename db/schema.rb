@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131002145549) do
+ActiveRecord::Schema.define(version: 20131025100721) do
 
   create_table "articles", force: true do |t|
     t.string   "url"
@@ -82,19 +82,21 @@ ActiveRecord::Schema.define(version: 20131002145549) do
     t.datetime "last_login"
     t.datetime "last_mypage_access"
     t.string   "open_id"
-    t.string   "prof_image",         default: "no_image.png"
+    t.string   "prof_image",           default: "no_image.png"
     t.integer  "mail_addr_status"
     t.string   "token_uuid"
     t.datetime "token_expire"
-    t.string   "full_name",          default: ""
-    t.text     "comment",            default: ""
-    t.string   "site_url",           default: ""
-    t.boolean  "public_flg",         default: false
+    t.string   "full_name",            default: ""
+    t.text     "comment",              default: ""
+    t.string   "site_url",             default: ""
+    t.boolean  "public_flg",           default: false
     t.string   "keep_login_token"
     t.datetime "keep_login_expire"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "keep_login_ip"
+    t.integer  "summaries_count"
+    t.integer  "favorite_users_count"
   end
 
   add_index "users", ["name"], name: "idx_name", unique: true

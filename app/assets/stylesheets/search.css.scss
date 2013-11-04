@@ -5,6 +5,19 @@
 #search_main {
 }
 
+.sort-split-btn {
+//  float: right;
+  button {
+    color: gray;
+    .caret {
+      margin-left: 5px;
+    }
+  }
+  ul > li > a {
+    color: gray;
+  }
+}
+
 .pagination {
   span, a {
     color: gray;
@@ -24,7 +37,8 @@
     #searchtext {
       width: 500px;
     }
-    #submit {
+    #search {
+      margin-top: 0px;
       width: 100px;
       height: 25px;
     }
@@ -44,7 +58,8 @@
       font-size: 10px;
     }
     .edited_tag {
-      padding: 1px 2px 1px 2px;
+      margin: 2px 2px 0 2px;
+      //padding: 1px 2px 1px 2px;
       border-radius: 0.3em;
       background: gray;
       cursor:pointer;
@@ -53,7 +68,7 @@
         color: white;
       }
     }
-  }  
+  }
 }
 
 #option_area {
@@ -61,9 +76,9 @@
   width: 14%;
   height: 500px;
   float: left;
-  .condition, .sort, .focus {
+  .type_area, .target_area {
     text-align: center;
-    height: 120px;
+    height: 135px;
     border-bottom: 1px solid #ECECEC;
     .select_area {
       span:hover {
@@ -81,7 +96,7 @@
       font-size: 18px;
       color: #ff9b9b;
     }
-    .no_selected {
+    .not_selected {
       font-size: 12px;
       color: gray;
     }
@@ -93,12 +108,85 @@
   float: left;
   height: 100%;
   width: 85%;
-  #message {
-    padding: 0px 25px 0 25px;
-    margin: 4px 10px 0 25px;
-    height: 25px;
+  .user_contents_follow, .user_contents_not_follow {
+    margin: auto;
+    padding: 2px 0px 2px 0px;
+    position: relative;
+    //border: 1px solid #ECECEC;
+    border-top: 4px solid #ECECEC;
+    z-index: 1;
+    width: 760px;
+    height: 75px;
+    text-align: center;
+    color: gray;
+    #user_prof_image {
+      height: 75px;
+      width: 75px;
+      float: left;
+      img {
+        height: 70px;
+        width: 70px;
+        display: block;
+        margin: auto;
+      }
+    }
+    #user_name {
+      height: 35px;
+      width: 150px;
+      float: left;
+      font-size: 20px;
+    }
+    #user_full_name {
+      height: 35px;
+      width: 250px;
+      font-size: 20px;
+      float: left;
+    }
+    #user_mail_addr {
+      height: 18px;
+      width: 250px;
+      float: left;
+      font-size: 10px;
+    }
+    #user_site {
+      height: 17px;
+      width: 250px;
+      float: left;
+      font-size: 10px;
+    }
+    #user_info {
+      padding: 8px 0px 2px 0px;
+      height: 35px;
+      width: 400px;
+      float: left;
+      font-size: 15px;
+    }
+    #follow_info {
+      padding: 4px 0px 2px 0px;
+      height: 35px;
+      width: 90px;
+      float: left;
+    }
   }
-  #article_contents{
+  #article_operation, #user_operation {
+    padding: 5px 0px 5px 0px;
+    margin: auto;
+    position: relative;
+    width: 760px;
+    color: gray;
+  }
+  #checkbox {
+    padding: 0 0 0 70px;
+  }
+  #message {
+    padding: 0px 150px 0 20px;
+    margin: 4px 10px 0 25px;
+  }
+  #sort {
+    margin-left: auto;
+    width: 65px;
+  }
+  .article_contents, .article_contents_not_read {
     margin: auto;
     padding: 18px 25px 0 25px;
     position: relative;
@@ -106,19 +194,20 @@
     border-top: 4px solid #ECECEC;
     z-index: 1;
     width: 760px;
-    height: 300px;
+    height: 275px;
+    color: gray;
     #thumbnail {
       padding: 2px 0 0 0;
-      height: 200px;
-      width: 100px;
+      height: 125px;
+      width: 125px;
       //border: 1px solid gray;
       float: left;
       p {
         font-size: 30px;
       }
       img {
-        max-height: 200px;
-        max-width: 100px;
+        max-height: 125px;
+        max-width: 125px;
         //height: 100px;
         //width: 100px;
         display: block;
@@ -129,11 +218,21 @@
       //border: 1px solid gray;
       float: left;
       padding: 0 10px 0 10px;
-      width: 500px;
-      height: 100px;
+      width: 630px;
+      height: 60px;
       p a {
-        color: black;
+        color: gray;
         font-size: 20px;
+      }
+    }
+    #url_host {
+      //border: 1px solid gray;
+      float: left;
+      padding: 0 10px 0 10px;
+      width: 760px;
+      height: 15px;
+      p a {
+        font-size: 10px;
       }
     }
     #contents_preview {
@@ -141,29 +240,28 @@
       float: left;
       padding: 0 10px 0 10px;
       max-width: 680px;
-      width: 500px;
-      height: 100px;
+      width: 580px;
+      height: 125px;
       p {
-        font-size: 10px;  
-      }  
+        font-size: 12px;
+      }
     }
     #article_infomation {
       float: left;
       //border: 1px solid gray;
-      width: 100px;
-      height: 90px;
+      width:  80px;
+      height: 60px;
       #user_article_num {
         p {
-          color: #ff9b9b;
+        color: gray;
         }
       }
       #summary_num {
+        color: #ff9b9b;
         a {
           font-size: 25px;
-          color: gray;
-        }
-        p {
-          color: gray;
+          color: #ff9b9b;
+          text-decoration: underline;
         }
       }
     }
@@ -171,36 +269,40 @@
       //border: 1px solid gray;
       float: left;
       width: 150px;
-      height: 60px;
+      height: 40px;
       p {
-        font-size: 10px;  
-      }  
+        font-size: 10px;
+      }
     }
     #category {
-      border: 1px dotted gray;
+      //border: 1px dotted gray;
       float: left;
       width: 100px;
-      height: 60px;
+      height: 40px;
       p {
-        font-size: 10px;  
-      }  
+        font-size: 10px;
+      }
     }
     #tag {
       //border: 1px solid gray;
       float: left;
       padding: 0 10px 0 10px;
       width: 400px;
-      height: 60px;
+      height: 40px;
       line-height: 25px;
       p {
-        font-size: 10px;  
+        font-size: 10px;
       }
       .edited_tag {
-        padding: 1px 2px 1px 2px;
+        margin: 2px 2px 0 2px;
+        padding: 2px 2px 0 2px;
+        //margin: 2px 2px 0 2px;
+        //padding: 1px 2px 1px 2px;
         border-radius: 0.3em;
-        background: gray;
+        background: #a2a2a2;
         cursor:pointer;
         cursor:hand;
+        //white-space: nowrap;
         a {
           color: white;
         }
@@ -225,7 +327,7 @@ button.read_it_later {
   background-image: -webkit-linear-gradient(#8add6d, #60b044);
   background-image: linear-gradient(#8add6d, #60b044);
   //margin-bottom: 1em;
-  margin-top: 25px;
+  margin-top: 10px;
   border: 1px solid #d8d8d8;
 }
 
@@ -245,6 +347,6 @@ button.read_it_cancel {
   background-image: -webkit-linear-gradient(#aaa, #999);
   background-image: linear-gradient(#aaa, #999);
   //margin-bottom: 1em;
-  margin-top: 25px;
+  margin-top: 10px;
   border: 1px solid #d8d8d8;
 }
