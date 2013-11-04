@@ -9,8 +9,12 @@ require "bundler/setup"
 require "extractcontent"
 require "RMagick"
 require "image_size"
+require './lib/article_classifier.rb'
+require './lib/personal-hotentry.rb'
 
 module Webpage
+  ArticleClassifier.instance.read_models
+  PersonalHotentry.instance
 
   #TODO 定数定義は外出しにしたい
   BLANK = ""
@@ -24,8 +28,22 @@ module Webpage
     if article == nil
       h = get_webpage_element(url)
       return nil if h == nil
-      article = Article.create(:url => url, :title => h["title"], :contents_preview => h["contentsPreview"][0, 200], :category_id =>"001", :thumbnail => h["thumbnail"])
+      ph_inst = PersonalHotentry.instance
+      cluster_id, cluster_score = 
+        ph_inst.predict_max_cluster_id(h["title"])
+      ac_inst = ArticleClassifier.instance
+      category_name = ac_inst.predict(h["title"])
+      category_id = Category.find_by_name(category_name).id
+      article = Article.create(
+        :url => url, 
+        :title => h["title"], 
+        :contents_preview => h["contentsPreview"][0, 200], 
+        :category_id => category_id, 
+        :cluster_id => cluster_id,
+        :thumbnail => h["thumbnail"]
+      )
     end
+    get_login_user.add_cluster_id(article.cluster_id)
     article.add_strength
     user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
     UserArticleTag.edit_user_article_tag(user_article.id, tag_list)

@@ -1,63 +1,96 @@
-<% content_for :head do %>
-  　<%= stylesheet_link_tag "hotentry", "bootstrap/bootstrap.css" %>
+<% content_for(:head) do %>
+  　<%= stylesheet_link_tag("hotentry", 
+                            "bootstrap/bootstrap.css") %>
 <% end %> 
 
 <div class="row">
   <div class="col-md-12 hotentry-container">
-    <%= render :partial => "hotentry/partials/hotentrymenu" %>
-
-  <% @entries.each do |e| %>
     <div class="row">
-    <% if e.get_top_rated_summary %>
-      <div class="col-md-12 hotentry-row hotentry-row-with-summary">
-    <% else %>
-      <div class="col-md-12 hotentry-row hotentry-row-no-summary">
-    <% end %>
-        <div class="row hotentry-normal-body">
-          <div class="col-md-2 hotentry-normal-image">
-            <%= image_tag(e.thumbnail, :width=>"100%", :style=>"max-width:100px;") %>
-          </div>
-          <div class="col-md-10">
-            <div class="row">
-              <div class="col-md-12 hotentry-normal-title">
-                <a href="<%= e.url %>" target="_blank">
-                  <h5><%=e.title%></h5>
-                </a>
+      <div class="col-md-2">
+        <%= render(:partial => "hotentry/partials/hotentrytab") %>
+      </div>
+      <div class="col-md-10">
+        <%= render(:partial => "hotentry/partials/hotentrymenu") %>
+      <% @entries.each do |e| %>
+        <div class="row">
+        <% if e.get_top_rated_summary %>
+          <div class="col-md-12 hotentry-row hotentry-row-with-summary">
+        <% else %>
+          <div class="col-md-12 hotentry-row hotentry-row-no-summary">
+        <% end %>
+            <div class="row hotentry-normal-body">
+              <div class="col-md-2 hotentry-normal-image">
+                <%= image_tag(
+                  e.thumbnail,
+                  :class => "hotentry-normal-image-imgtag",
+                ) %>
+              </div>
+              <div class="col-md-10">
+                <div class="row">
+                  <div class="col-md-12 hotentry-normal-title">
+                    <a href="<%= e.url %>" target="_blank">
+                      <h5><%=e.title%></h5>
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 hotentry-normal-contents">
+                    <% if e.get_top_rated_summary %>
+                      <span class="hotentry-top-summary">
+                        Top rated summary
+                      </span>
+                      <p>
+                        <%= e.get_top_rated_summary.content %>
+                      </p>
+                    <% else %>
+                      <span class="hotentry-contents-preview">
+                        Contents preview
+                      </span>
+                      <p>
+                        <%= e.get_contents_preview %>
+                      </p>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 hotentry-normal-summaries">
+                    <%= e.user_articles.count %> readers,
+                    <a href="<%= url_for(:controller=>'summary_lists',
+                                         :action=>'index',
+                                         :article_id=>e.id) %>">
+                      <%= e.summaries.count %> summaries.
+                    </a>
+                  </div>
+                  <div class="col-md-6 hotentry-normal-summaries">
+                    <% if e.get_top_rated_summary %>
+                      <%= link_to("View all summaries", 
+                                  :controller => 'summary_lists',
+                                  :action => 'index',
+                                  :article_id => e.id) %>
+                    <% else %>
+                      <%= link_to("Edit summary", 
+                                  :controller => 'summary',
+                                  :action => 'edit',
+                                  :article_id => e.id) %>
+                    <% end %>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6 hotentry-normal-summaries">
-                <%= e.user_articles.count %> readers,
-                <a href="<%= url_for(:controller => 'summary_lists',
-                                     :action=>'index',
-                                     :article_id => e.id) %>">
-                  <%= e.summaries.count %> summaries.
-                </a>
+            <div class="row hotentry-normal-bottom">
+              <div class="col-md-6 hotentry-normal-domain">
+                <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
+                <%= URI(e.url).host %>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 hotentry-normal-contents">
-                <p style="font-size:9px;">
-                  <% if e.get_top_rated_summary %>
-                    <%= e.get_top_rated_summary.content %>
-                  <% else %>
-                    <%= e.get_contents_preview %>
-                  <% end %>
-                </p>
+              <div class="col-md-6 hotentry-normal-tags">
               </div>
             </div>
           </div>
         </div>
-        <div class="row hotentry-normal-bottom">
-          <div class="col-md-6 hotentry-normal-domain">
-            <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
-            <%= URI(e.url).host %>
-          </div>
-          <div class="col-md-6 hotentry-normal-tags">
-          </div>
-        </div>
+      <% end %>
+      <%= paginate(@entries) %>
       </div>
     </div>
-  <% end %>
   </div>
 </div>
+

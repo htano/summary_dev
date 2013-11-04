@@ -101,7 +101,6 @@ def extract_features s
     end
     @s_prob = @s_prob / s.length
     @title_cosine = get_cosine_similarity(@s_tfidf, @title_tfidf)
-
     @length_key = 2
     case @s_length
     when 0
@@ -125,7 +124,6 @@ def extract_features s
     else
       @length_key += 9
     end
-
     return { 1 => @sum_idf, 2 => @title_cosine, @length_key => 1.0, 12 => @s_prob}
   else
     return nil
@@ -172,23 +170,31 @@ p @svm_scale
 @tf_of_doc = {}
 @sum_tf_of_doc = 0
 @title_tfidf = nil
-Article.get_hotentry_articles.each do |e|
-  @user = User.find_by_name("system001")
-  if @user
-    @summary_model = e.summaries.find_by_user_id(User.find_by_name("system001").id)
-    if @summary_model
-      Rails.logger.info "Auto summary has aleady existed.: " + e.id.to_s
+#Article.get_hotentry_articles.each do |e|
+Article.all.each do |e|
+  user = User.find_by_name("system001")
+  if user
+    if e.summaries.find_by_user_id(user.id)
+      Rails.logger.debug(
+        "Auto summary has aleady existed.: " + e.id.to_s
+      )
+      next
+    elsif e.auto_summary_error_status
+      Rails.logger.info(
+        "This page has invalid status: " + 
+        e.auto_summary_error_status + 
+        ", ArticleId: " + e.id.to_s
+      )
       next
     end
   else
-    Rails.logger.error "system001 is not exists."
+    Rails.logger.error("system001 is not exists.")
     break
   end
 
   body  = ""
   title = ""
   doc = nil
-
   begin
     charset = nil
     html = open(e.url) do |f|
@@ -198,8 +204,10 @@ Article.get_hotentry_articles.each do |e|
     html = html.force_encoding("UTF-8")
     html = html.encode("UTF-8", "UTF-8")
   rescue => err
+    e.auto_summary_error_status = "openuri"
+    e.save
     p err
-    Rails.logger.error "openuri: " + err.message
+    Rails.logger.info("openuri: " + err.message)
     next
   end
 
@@ -229,7 +237,11 @@ Article.get_hotentry_articles.each do |e|
     title.split("")
     body.split("")
   rescue => err
-    Rails.logger.error "A page has invalid encoding: " + err.message
+    e.auto_summary_error_status = "encoding"
+    e.save
+    Rails.logger.info(
+      "A page has invalid encoding: " + err.message
+    )
     p err
     next
   end
@@ -251,9 +263,9 @@ Article.get_hotentry_articles.each do |e|
     end
   end
   body.split("\n").each do |p|
-    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/。/, "") }
+    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/[。．]/, "") }
     if p.length > 0
-      p.split(/。/).each do |s|
+      p.split(/[。．]/).each do |s|
         s.ngram(2).each do |k|
           @sum_tf_of_doc += 1
           if @tf_of_doc[k]
@@ -270,9 +282,10 @@ Article.get_hotentry_articles.each do |e|
   sentences_with_score = []
   idx = 0
   body.split("\n").each do |p|
-    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/。/, "") }
+    p = p.gsub(/([\u300C][^\u300D]+[\u300D])/){ $1.gsub(/[。．]/, "") }
     if p.length > 0
-      p.split(/。/).each do |s|
+      p.split(/[。．]/).each do |s|
+        #puts s
         @s_features = extract_features(s)
         if @s_features
           #@s_score = @s_features[:title_cosine]
@@ -300,7 +313,7 @@ Article.get_hotentry_articles.each do |e|
     @summary_contents += s_line[:sen]
   end
 
-  Summary.create( content:@summary_contents, user_id:@user.id, article_id:e.id )
+  Summary.create( content:@summary_contents, user_id:user.id, article_id:e.id )
   puts "[URL] " + e.url
   puts "[Title] " + title
   puts @summary_contents

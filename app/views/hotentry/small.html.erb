@@ -1,49 +1,69 @@
 <% content_for :head do %>
-  　<%= stylesheet_link_tag "hotentry", "bootstrap/bootstrap.css" %>
+  　<%= stylesheet_link_tag("hotentry", 
+                            "bootstrap/bootstrap.css") %>
 <% end %> 
 
 <div class="row">
   <div class="col-md-12 hotentry-container">
-    <%= render :partial => "hotentry/partials/hotentrymenu" %>
-
-  <% @entries.each do |e| %>
     <div class="row">
-    <% if e.get_top_rated_summary %>
-      <div class="col-md-12 hotentry-small-row hotentry-row-with-summary">
-    <% else %>
-      <div class="col-md-12 hotentry-small-row hotentry-row-no-summary">
-    <% end %>
-        <div class="row hotentry-small-body">
-          <div class="col-md-1 hotentry-small-order">
-            <%= @hash[e.id] %>.
+      <div class="col-md-2">
+        <%= render(:partial => "hotentry/partials/hotentrytab") %>
+      </div>
+      <div class="col-md-10">
+        <%= render :partial => "hotentry/partials/hotentrymenu" %>
+      <% @entries.each do |e| %>
+        <div class="row">
+        <% if e.get_top_rated_summary %>
+          <div class="col-md-12 hotentry-small-row hotentry-row-with-summary">
+        <% else %>
+          <div class="col-md-12 hotentry-small-row hotentry-row-no-summary">
+        <% end %>
+            <div class="row hotentry-small-body">
+              <div class="col-md-1 hotentry-small-order">
+                <%= @hash[e.id] %>.
+              </div>
+              <div class="col-md-11">
+                <div class="row">
+                  <div class="col-md-12 hotentry-small-title">
+                    <a href="<%= e.url %>" target="_blank">
+                      <h5><%=e.title%></h5>
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 hotentry-small-summaries">
+                    <%= e.user_articles.count %> readers,
+                    <a href="<%= url_for(:controller => 'summary_lists',
+                                         :action=>'index',
+                                         :article_id => e.id) %>">
+                      <%= e.summaries.count %> summaries.
+                    </a>
+                  </div>
+                  <div class="col-md-5 hotentry-small-summaries">
+                    <% if e.get_top_rated_summary %>
+                      <%= link_to("View all summaries", 
+                                  :controller => 'summary_lists',
+                                  :action => 'index',
+                                  :article_id => e.id) %>
+                    <% else %>
+                      <%= link_to("Edit summary", 
+                                  :controller => 'summary',
+                                  :action => 'edit',
+                                  :article_id => e.id) %>
+                    <% end %>
+                  </div>
+                  <div class="col-md-4 hotentry-normal-domain">
+                    <%= image_tag("http://favicon.hatena.ne.jp/?url=" + e.url) %>
+                    <%= URI(e.url).host %>
+                  </div>
+                </div>
+              </div> 
+            </div>
           </div>
-          <div class="col-md-11">
-            <div class="row">
-              <div class="col-md-12 hotentry-small-title">
-                <a href="<%= e.url %>" target="_blank">
-                  <h5><%=e.title%></h5>
-                </a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 hotentry-small-summaries">
-                <%= e.user_articles.count %> readers,
-                <a href="<%= url_for(:controller => 'summary_lists',
-                                     :action=>'index',
-                                     :article_id => e.id) %>">
-                  <%= e.summaries.count %> summaries.
-                </a>
-              </div>
-              <div class="col-md-6 hotentry-normal-domain">
-                <%= image_tag("http://favicon.hatena.ne.jp/?url=" + e.url) %>
-                <%= URI(e.url).host %>
-              </div>
-            </div>
-          </div> 
         </div>
+      <% end %>
+      <%= paginate(@entries) %>
       </div>
     </div>
-  <% end %>
-
   </div>
 </div>
