@@ -10,28 +10,52 @@
       <% end %>
       </div>
       <div class="title">
-        <a href="<%= table_data[:article].url %>" target="_blank">
-        <%= table_data[:article].title %>
-          <% if @is_login_user != true && table_data[:is_registered] %>
-          <span>
-            <% if table_data[:is_already_read] %>
-            << you already read
-            <% else %>
-            << you also register
-            <% end %>
-          </span>
-          <% end %>
-          <p>
+        <div class="title-prop">
+          <a href="<%= table_data[:article].url %>" target="_blank">
+          <%= table_data[:article].title %>
+          </a>
+        </div>
+        <p>
           <%= table_data[:registered_num] %> registered, created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
           <% unless table_data[:summary_num] > 1 %>
           summary
           <% else %>
           summaries
           <% end %>
-          <br>
-          <%= table_data[:article].get_contents_preview %> ...
-          </p>
-        </a>
+        </p>
+        <div class="article-tags">
+          <ul class="tags">
+            <% table_data[:tags].each do |tag| %>
+            <li><a href="#"><%= tag %></a></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <div>
+      <% if @is_login_user %>
+      <div class="summarize-btn">
+        <%= link_to image_tag("icons/glyphicons_030_pencil_gray.png", :size => "12x12") +
+            content_tag(:p, "summarize"),
+            {:controller => "summary", :action => "edit", :article_id => table_data[:article].id},
+            {:class => "btn btn-default btn-xs"} %>
+      </div>
+      <div class="edit-tag-btn">
+        <%= link_to image_tag("icons/glyphicons_065_tag_gray.png", :size => "12x12") +
+            content_tag(:p, "edit tag"),
+            {:controller => "webpage", :action => "add_confirm", :url => table_data[:article].url},
+            {:class => "btn btn-default btn-xs", :method => :post} %>
+      </div>
+      <% else %>
+      <% if @is_login_user != true && table_data[:is_registered] %>
+        <span>
+        <% if table_data[:is_already_read] %>
+        << already read
+        <% else %>
+        << also register
+        <% end %>
+        </span>
+      <% end %>
+      <% end %>
       </div>
     </div>
   </th>

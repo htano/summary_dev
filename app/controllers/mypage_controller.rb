@@ -1,118 +1,79 @@
+include FollowManager
+
 class MypageController < ApplicationController
-  TABLE_ROW_NUM = 10
+  RENDER_USERS_NUM = 13
+  RENDER_FAVORITE_USERS_NUM = RENDER_USERS_NUM
+  RENDER_FOLLOWERS_NUM = RENDER_USERS_NUM
+  TABLE_ROW_NUM = 20
+
+  before_filter :require_login_with_name, :only => [:index]
+  before_filter :require_login, :except => [:index]
 
   def index
-    logger.debug("action index")
-
-    # check wheter user accessed to this action is signed in user or not
-    if params[:name]
-      if login_user?(params[:name])
-        @is_login_user = true
-      else
-        @is_login_user = false
-      end
-    else
-      if signed_in?
-        @is_login_user = true
-      else
-        redirect_to :controller => 'consumer', :action => 'index' and return
-      end
-    end
+    @table_row_num = TABLE_ROW_NUM
+    @is_login_user = params[:name] ? login_user?(params[:name]) : true
 
     if @is_login_user
-      @user = User.find_by_name(get_current_user_name)
+      @user = get_login_user
       @user.update_mypage_access
     else
       @user = User.find_by_name(params[:name])
-      if @user
-        # check whether already follows or not
-        @is_already_following = is_already_following(@user)
-      else
-        # error account doesn't exist
-        render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false, :content_type => 'text/html'
-        return
-      end
+      @is_already_following = is_already_following?(@user.id)
     end
 
-    # follow user information
-    @favorite_users = []
-    @user.favorite_users.each do |favorite_user|
-      user = User.find(favorite_user.favorite_user_id)
-      @favorite_users.push(user)
-    end
+    favorite_users = get_favorite_users(@user)
+    @favorite_users_info = {:num => favorite_users.length ,
+                            :lists => favorite_users[0..RENDER_FAVORITE_USERS_NUM]}
 
-    # followers 
-    followers_favorite_users = FavoriteUser.where(:favorite_user_id => @user.id)
-    @followers = []
-    followers_favorite_users.each do |follower_favorite_user|
-      user = follower_favorite_user.user
-      @followers.push(user)
-    end
+    followers = get_followers(@user)
+    @followers_info = {:num => followers.length,
+                        :lists => followers[0..RENDER_FOLLOWERS_NUM]}
 
-    renew_sort_type(cookies, params[:direction], params[:sort])
+    update_sort_type(cookies, params[:direction], params[:sort])
     sort_info = get_sort_info(cookies)
     @sort_menu_title = sort_info[:menu_title]
-    sort_order_condition = sort_info[:condition]
-    # logger.debug("title : #{sort_info[:menu_title]}, condition : #{sort_info[:condition]}")
+    order_condition = sort_info[:condition]
 
-    # main tab & favorite tab & read tab
-    @main_articles_table = []
-    @mpage = params[:mpage] ? params[:mpage] : 1
-    @mpage = @mpage.to_i > 1 ? @mpage : 1
+    @mpage = get_page(params[:mpage])
     offset = (@mpage.to_i - 1) * TABLE_ROW_NUM
-    user_articles = 
-      @user.user_articles.order(sort_order_condition).offset(offset).unread.take(TABLE_ROW_NUM)
-    if user_articles.size == 0
-      user_articles = 
-        @user.user_articles.order(sort_order_condition).offset(0).unread.take(TABLE_ROW_NUM)
+    unread_articles = get_unread_articles(@user, order_condition, offset, TABLE_ROW_NUM)
+    unless unread_articles.size > 0
+      unread_articles = get_unread_articles(@user, order_condition, 0, TABLE_ROW_NUM)
       @mpage = 1
     end
-    @main_articles_table = get_table(user_articles, @is_login_user)
+    @main_articles_table = get_table_data(@user, unread_articles, @is_login_user)
     @total_main_articles_num = @user.user_articles.unread.size
 
-    @favorite_articles_table = []
-    @fpage = params[:fpage] ? params[:fpage] : 1
-    @fpage = @fpage.to_i > 1 ? @fpage : 1
+    @fpage = get_page(params[:fpage])
     offset = (@fpage.to_i - 1) * TABLE_ROW_NUM
-    user_articles = 
-      @user.user_articles.order(sort_order_condition).offset(offset).favorite.take(TABLE_ROW_NUM)
-    if user_articles.size == 0
-      user_articles = 
-        @user.user_articles.order(sort_order_condition).offset(0).favorite.take(TABLE_ROW_NUM)
+    favorite_articles = get_favorite_articles(@user, order_condition, offset, TABLE_ROW_NUM)
+    unless favorite_articles.size > 0
+      favorite_articles = get_favorite_articles(@user, order_condition, 0, TABLE_ROW_NUM)
       @fpage = 1
     end
-    @favorite_articles_table = get_table(user_articles, @is_login_user)
+    @favorite_articles_table = get_table_data(@user, favorite_articles, @is_login_user)
     @total_favorite_articles_num = @user.user_articles.favorite.size
 
-    @read_articles_table = []
-    @rpage = params[:rpage] ? params[:rpage] : 1
-    @rpage = @rpage.to_i > 1 ? @rpage : 1
+    @rpage = get_page(params[:rpage])
     offset = (@rpage.to_i - 1) * TABLE_ROW_NUM
-    user_articles = 
-      @user.user_articles.order(sort_order_condition).offset(offset).read.take(TABLE_ROW_NUM)
-    if user_articles.size == 0
-      user_articles = 
-        @user.user_articles.order(sort_order_condition).offset(0).read.take(TABLE_ROW_NUM)
+    read_articles = get_read_articles(@user, order_condition, offset, TABLE_ROW_NUM)
+    unless read_articles.size > 0
+      read_articles = get_read_articles(@user, order_condition, 0, TABLE_ROW_NUM)
       @rpage = 1
     end
-    @read_articles_table = get_table(user_articles, @is_login_user)
+    @read_articles_table = get_table_data(@user, read_articles, @is_login_user)
     @total_read_articles_num = @user.user_articles.read.size
-    
-    # summary tab
-    @summaries_table = []
-    @spage = params[:spage] ? params[:spage] : 1
-    @spage = @spage.to_i > 1 ? @spage : 1
+
+    @spage = get_page(params[:spage])
     offset = (@spage.to_i - 1) * TABLE_ROW_NUM
-    summaries = 
-      @user.summaries.order(sort_order_condition).offset(offset).take(TABLE_ROW_NUM)
-    if summaries.size == 0
-      summaries = 
-        @user.summaries.order(sort_order_condition).offset(0).take(TABLE_ROW_NUM)
+    summarized_articles = get_summarized_articles(@user, order_condition, offset, TABLE_ROW_NUM)
+    unless summarized_articles.size > 0
+      summarized_articles = get_summarized_articles(@user, order_condition, 0, TABLE_ROW_NUM)
       @spage = 1
     end
-    @summaries_table = get_summary_table(summaries, @is_login_user)
+    @summaries_table = get_table_data(@user, summarized_articles, @is_login_user, true)
     @total_summaries_num = @user.summaries.size
-    
+
     if params[:mpage]
       @current_tab = "main"
     elsif params[:spage]
@@ -124,7 +85,6 @@ class MypageController < ApplicationController
     else
       @current_tab = "main"
     end
-
 
     respond_to do |format|
       format.html { render :layout => 'application'}
@@ -143,8 +103,7 @@ class MypageController < ApplicationController
         article.destroy
       end
     end
-
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def delete_summary
@@ -156,14 +115,13 @@ class MypageController < ApplicationController
       end
     end
 
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def mark_as_read
     login_user = get_login_user
 
     params[:article_ids].each do |article_id|
-      logger.debug("#{article_id}")
       article = login_user.user_articles.find_by_article_id(article_id)
 
       if article && article.read_flg != true
@@ -172,7 +130,7 @@ class MypageController < ApplicationController
       end
     end
 
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def mark_as_unread
@@ -188,7 +146,7 @@ class MypageController < ApplicationController
       end
     end
 
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def mark_as_favorite
@@ -205,7 +163,7 @@ class MypageController < ApplicationController
       end
     end
 
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def mark_off_favorite
@@ -222,14 +180,10 @@ class MypageController < ApplicationController
       end
     end
 
-    render_tab(params)
+    redirect_to :action => "index", :params => params
   end
 
   def clip
-    unless signed_in?
-      redirect_to :controller => 'consumer', :action => 'index' and return
-    end
-
     login_user = get_login_user
     params[:article_ids].each do |article_id|
       if Article.exists?(article_id)
@@ -237,21 +191,13 @@ class MypageController < ApplicationController
       end
     end
 
-    redirect_to :action => "index", :name => params[:name]
+    redirect_to :action => "index", :params => params
   end
 
   def follow
-    unless signed_in?
-      respond_to do |format|
-        format.html { redirect_to :controller => 'consumer', :action => 'index' and return }
-        format.js { render 'login_page' and return }
-      end
-    end
-    
     @current_user = get_login_user
 
     if @current_user
-      logger.debug("follow user id : #{params[:follow_user_id]}")
       if User.exists?(params[:follow_user_id])
         FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
       else
@@ -275,8 +221,6 @@ class MypageController < ApplicationController
   end
 
   def unfollow
-    logger.debug("unfollow")
-
     @current_user = get_login_user
 
     if @current_user && @current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id])
@@ -305,91 +249,39 @@ class MypageController < ApplicationController
   end
 
 private
-  def is_already_following(user)
-    is_already_following = false
-    signed_user = User.find_by_name(get_current_user_name)
-    if signed_user && signed_user.favorite_users.exists?(:favorite_user_id => user.id)
-      is_already_following = true
+  def require_login_with_name
+    if params[:name]
+      unless User.exists?(:name => params[:name])
+        render :file => "#{Rails.root}/public/404.html", 
+               :status => 404, :layout => false, :content_type => 'text/html'
+      end
     else
-      is_already_following = false
+      unless signed_in?
+        redirect_to :controller => 'consumer', :action => 'index'
+      end
+    end
+  end
+
+  def require_login
+    unless signed_in?
+      respond_to do |format|
+        format.html { redirect_to :controller => 'consumer', :action => 'index' and return }
+        format.js { render 'login_page' and return }
+      end
+    end
+  end
+
+  def is_already_following?(user_id)
+    is_already_following = false;
+    if signed_in?
+      if get_login_user.favorite_users.exists?(:favorite_user_id => user_id)
+        is_already_following = true
+      end
     end
     return is_already_following
   end
 
-  def get_table(user_articles, is_login_user)
-    table = []
-
-    user_articles.each do |user_article|
-      if Article.exists?(user_article.article_id)
-        article = user_article.article
-        summary_num = article.summaries.size
-        registered_num = article.user_articles.size
-        registered_date = user_article.created_at
-
-        is_registered = false
-        is_already_read = false
-        if signed_in? && is_login_user == false
-          if get_login_user.user_articles.exists?(:article_id => user_article.article_id)
-            is_registered = true
-            is_already_read = get_login_user.user_articles.find_by_article_id(user_article.article_id).read_flg
-          end
-        end
-
-        table_data = {:article => article, :summary_num => summary_num, 
-                      :registered_num => registered_num, :registered_date  => registered_date, 
-                      :is_registered => is_registered, :is_already_read => is_already_read}
-
-        table.push(table_data)
-      end
-    end
-    return table
-  end
-
-  def get_summary_table(summaries, is_login_user)
-    table = []
-    summaries.each do |summary|
-      if Summary.exists?(summary.article_id)
-        article = summary.article
-        registered_num = article.user_articles.size
-        last_updated = summary.updated_at
-        like_num = summary.good_summaries.size
-        summary_num = article.summaries.size
-
-        is_registered = false
-        is_already_read = false
-        if signed_in? && is_login_user == false
-          if get_login_user.user_articles.exists?(:article_id => summary.article_id)
-            is_registered = true
-            is_already_read = get_login_user.user_articles.find_by_article_id(summary.article_id).read_flg
-          end
-        end
-
-        table_data = {:article => article, :summary_num => summary_num, 
-                      :registered_num => registered_num, :last_updated => last_updated, 
-                      :like_num => like_num, :is_registered => is_registered, :is_already_read => is_already_read}
-
-        table.push(table_data)
-      end
-    end
-    return table
-  end
-
-  def render_tab(params)
-    if params[:mpage]
-      redirect_to :action => "index", :mpage => params[:mpage]
-    end
-    if params[:spage]
-      redirect_to :action => "index", :spage => params[:spage]
-    end
-    if params[:fpage]
-      redirect_to :action => "index", :fpage => params[:fpage]
-    end
-    if params[:rpage]
-      redirect_to :action => "index", :rpage => params[:rpage]
-    end
-  end
-
-  def renew_sort_type(cookies, direction, sort)
+  def update_sort_type(cookies, direction, sort)
     if direction
       cookies[:direction] = {:value => direction, :expires => 7.days.from_now }
     end
@@ -406,10 +298,136 @@ private
       else
         return {:menu_title => "Newest", :condition => "created_at DESC"}
       end
+    when "summaries"
+      if cookies[:direction] == "asc"
+        return {:menu_title => "Least summarized", :condition => "summaries_count ASC"}
+      else
+        return {:menu_title => "Most summarized", :condition => "summaries_count DESC"}
+      end
+    when "reader"
+      if cookies[:direction] == "asc"
+        return {:menu_title => "Least read", :condition => "user_articles_count ASC"}
+      else
+        return {:menu_title => "Most read", :condition => "user_articles_count DESC"}
+      end
     else
-      #default
       return {:menu_title => "Newest", :condition => "created_at DESC"}
     end
+  end
+
+  def get_page(param_page)
+    page = param_page ? param_page : 1
+    page = page.to_i > 1 ? page : 1
+    return page
+  end
+
+  def get_unread_articles(user, order_condition = nil, offset = 0, num = -1)
+    articles = []
+    if order_condition && order_condition.index("created_at")
+      ordered_user_articles = 
+        user.user_articles.order(order_condition).offset(offset).unread.limit(num)
+      ordered_user_articles.each do |user_article|
+        article = user_article.article
+        articles.push(article)
+      end
+    else
+      article_ids = user.user_articles.unread.select(:article_id)
+      articles = Article.where(:id => article_ids).order(order_condition).offset(offset).limit(num)
+    end
+    return articles
+  end
+
+  def get_read_articles(user, order_condition = nil, offset = 0, num = -1)
+    articles = []
+    if order_condition && order_condition.index("created_at")
+      ordered_user_articles = 
+        user.user_articles.order(order_condition).offset(offset).read.limit(num)
+      ordered_user_articles.each do |user_article|
+        article = user_article.article
+        articles.push(article)
+      end
+    else
+      article_ids = user.user_articles.read.select(:article_id)
+      articles = Article.where(:id => article_ids).order(order_condition).offset(offset).limit(num)
+    end
+    return articles
+  end
+
+  def get_favorite_articles(user, order_condition = nil, offset = 0, num = -1)
+    articles = []
+    if order_condition && order_condition.index("created_at")
+      ordered_user_articles = 
+        user.user_articles.order(order_condition).offset(offset).favorite.limit(num)
+      ordered_user_articles.each do |user_article|
+        article = user_article.article
+        articles.push(article)
+      end
+    else
+      article_ids = user.user_articles.favorite.select(:article_id)
+      articles = Article.where(:id => article_ids).order(order_condition).offset(offset).limit(num)
+    end
+    return articles
+  end
+
+  def get_summarized_articles(user, order_condition = nil, offset = 0, num = -1)
+    articles = []
+    if order_condition && order_condition.index("created_at")
+      ordered_summarized_articles = 
+        user.summaries.order(order_condition).offset(offset).limit(num)
+      ordered_summarized_articles.each do |summarized_article|
+        article = Article.find(summarized_article.article_id)
+        articles.push(article)
+      end
+    else
+      article_ids = user.summaries.select(:article_id)
+      articles = Article.where(:id => article_ids).order(order_condition).offset(offset).limit(num)
+    end
+
+    return articles
+  end
+
+  def get_table_data(user, articles, is_login_user, is_summary = false)
+    table_data = []
+    articles.each do |article|
+      summary_num = 
+        article.summaries_count ? article.summaries_count : 0
+      registered_num = 
+        article.user_articles_count ? article.user_articles_count : 0
+      registered_date = user.user_articles.size > 0 ?
+          user.user_articles.find_by_article_id(article.id).created_at : nil
+      last_updated =
+        is_summary ? user.summaries.find_by_article_id(article.id).updated_at : nil
+      like_num = 
+        is_summary ? user.summaries.find_by_article_id(article.id).good_summaries.size : nil
+
+      user_article_ids = article.user_articles.select(:id)
+      tags = UserArticleTag.where(:user_article_id => user_article_ids).pluck(:tag)
+
+      is_registered = false
+      is_already_read = false
+
+      if signed_in? && is_login_user == false
+        if get_login_user.user_articles.exists?(:article_id => article.id)
+          is_registered = true
+          is_already_read = 
+            get_login_user.user_articles.find_by_article_id(article.id).read_flg
+        end
+      end
+
+      data = {:article => article, 
+              :summary_num => summary_num,
+              :registered_num => registered_num,
+              :registered_date => registered_date, 
+              :is_registered => is_registered, 
+              :is_already_read => is_already_read,
+              :like_num => like_num,
+              :last_updated => last_updated,
+              :tags => tags}
+
+      table_data.push(data)
+    end
+
+    return table_data
   end
 
 end

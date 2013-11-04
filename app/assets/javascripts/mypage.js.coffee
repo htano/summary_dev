@@ -1,18 +1,13 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-disableButton = (elem) ->
-  $(elem).css("background-color", "#ddd").unwrap()
-
-wrapAll = (className, params, checkedNum, articleID, page) ->
-  $(".#{className}>#mark-as-read-btn").wrap("<a href=/mypage/mark_as_read?#{params}#{page}></a>")
-  $(".#{className}>#mark-as-unread-btn").wrap("<a href=/mypage/mark_as_unread?#{params}#{page}></a>")
-  if checkedNum == 1
-    $(".#{className}>#edit-summary-btn").wrap("<a href='/summary/#{articleID}/edit'}></a>")
-  $(".#{className}>#mark-as-favorite-btn").wrap("<a href=/mypage/mark_as_favorite?#{params}#{page}></a>")
-  $(".#{className}>#mark-off-favorite-btn").wrap("<a href=/mypage/mark_off_favorite?#{params}#{page}></a>")
-  $(".#{className}>#delete-btn").wrap("<a href=/mypage/delete_article?#{params}#{page}></a>")
-  $(".#{className}>#delete-summary-btn").wrap("<a href=/mypage/delete_summary?#{params}#{page}></a>")
+@renewControlIssue = (className, params, page) ->
+  $(".#{className}>#mark-as-read-btn>a").attr("href", "/mypage/mark_as_read?#{params}#{page}")
+  $(".#{className}>#mark-as-unread-btn>a").attr("href", "/mypage/mark_as_unread?#{params}#{page}")
+  $(".#{className}>#mark-as-favorite-btn>a").attr("href", "/mypage/mark_as_favorite?#{params}#{page}")
+  $(".#{className}>#mark-off-favorite-btn>a").attr("href", "/mypage/mark_off_favorite?#{params}#{page}")
+  $(".#{className}>#delete-btn>a").attr("href", "/mypage/delete_article?#{params}#{page}")
+  $(".#{className}>#delete-summary-btn>a").attr("href", "/mypage/delete_summary?#{params}#{page}")
 
 @clickArticleCheckBox = (formName, className, page) ->
   checkbox = document.getElementsByName(formName.name).item(0)
@@ -29,11 +24,10 @@ wrapAll = (className, params, checkedNum, articleID, page) ->
     i++
 
   if checkedNum is 0
-    disableButton(".#{className}>a>div")
-  else if checkedNum is 1
-    $(".#{className}>div").css("background-color", "white")
-  else if checkedNum is 2
-    disableButton(".#{className}>a>#edit-summary-btn")
+    $("#article-controller>.#{className}>div>a").addClass("disabled").css("background-color", "#ddd")
+  else
+    $("#article-controller>.#{className}>div>a").removeClass("disabled").css("background-color", "white")
+
 
   if checkedNum > 0
     i = 0
@@ -41,9 +35,7 @@ wrapAll = (className, params, checkedNum, articleID, page) ->
     while i < articleIDs.length
       params += "article_ids[]=" + "#{articleIDs[i]}&"
       i++
-
-    $(".#{className}>a>div").unwrap()
-    wrapAll(className, params, checkedNum, articleIDs, page)
+    renewControlIssue(className, params, page)
 
 @clickCheckBoxForClip = (name) ->
   mainCheckbox     = document.main_checkbox
@@ -89,13 +81,10 @@ wrapAll = (className, params, checkedNum, articleID, page) ->
       articleIDs.push(articleID)
     i++
 
-  clipBtn = document.getElementById('clip-btn')
-
   if checkedNum is 0
-    clipBtn.style.backgroundColor = "#ddd"
-    $("a>#clip-btn").unwrap()
+    $("#clip-btn>a").addClass("disabled").css("background-color", "#ddd")
   else
-    clipBtn.style.backgroundColor = "white"
+    $("#clip-btn>a").removeClass("disabled").css("background-color", "white")
 
   # create link
   if checkedNum > 0
@@ -105,22 +94,26 @@ wrapAll = (className, params, checkedNum, articleID, page) ->
       params += "article_ids[]=" + "#{articleIDs[i]}&"
       i++
 
-    $("a>#clip-btn").unwrap()
-    $("div>#clip-btn").wrap("<a href='/mypage/clip?name=#{name}&#{params}'></a>")
+    $("#clip-btn>a").attr("href", "/mypage/clip?name=#{name}&#{params}")
 
-@checkAll = (checker, formName) ->
+@checkAll = (tab, defVal) ->
+  checker = tab + '-check-all'
+  formName = tab + '-check-form'
+
   form = document.getElementById(formName)
   checkboxNum = form.length
 
-  i = 1
-  value = document.getElementById(checker).checked
+  isSetVal = (if typeof defVal == "undefined" then false else true)
+  value = (if isSetVal then defVal else document.getElementById(checker).checked)
+  i = (if isSetVal then 0 else 1)
+
   while i < checkboxNum
     form.elements[i].checked = value
     i++
   form.elements[1].onclick() unless i is 1
 
 currentTab = "main"
-getPage = (tab) ->
+@getPage = (tab) ->
   page = "mpage"
   switch tab
     when "main"
@@ -134,25 +127,79 @@ getPage = (tab) ->
     else
   page
 
-replaceRef = (tab, num) ->
+@changeSortRef = (tab) ->
   currentPage = getPage(currentTab)
   replacePage = getPage(tab)
-  i = 1
-  while i < num+1
-    replaceURL = $("#sort#{i} a").attr("href").replace(currentPage, replacePage)
-    $("#sort#{i} a").attr("href", "#{replaceURL}")
-    i++
+  $(".sort-type>a").each ->
+    replaceURL = $(this).attr("href").replace(currentPage, replacePage)
+    $(this).attr("href", "#{replaceURL}")
 
-changeSortRef = (tab, sortNum) ->
-  replaceRef(tab, sortNum)
-
-@setCurrentTab = (tab, sortNum) ->
+@setCurrentTab = (tab) ->
   if currentTab != tab
-    changeSortRef(tab, sortNum)
+    changeSortRef(tab)
     currentTab = tab
 
 @getCurrentTab = ->
   currentTab
+
+toggleUnfollowBtn = ->
+  $(document).ready ->
+    $("#unfollow-button").hover (->
+      $(this).val "unfollow"
+      $(this).removeClass("btn-primary").addClass("btn-danger")
+    ), ->
+      $(this).val "following"
+      $(this).removeClass("btn-danger").addClass("btn-primary")
+
+@setTabInfoBeforeUnload = (name) ->
+  tabBeforeUnload = "main"
+  if $("#article-controller .active").hasClass("main")
+    tabBeforeUnload = "main"
+  else if $("#article-controller .active").hasClass("summary")
+    tabBeforeUnload = "summary"
+  else if $("#article-controller .active").hasClass("favorite")
+    tabBeforeUnload = "favorite"
+  else if $("#article-controller .active").hasClass("read")
+    tabBeforeUnload = "read"
+  else
+  if typeof name == "undefined"
+    # console.debug "set my tab cookie : " + tabBeforeUnload
+    document.cookie = 'tab=' + encodeURIComponent(tabBeforeUnload)
+  else
+    # console.debug "set other user tab cookie :" + tabBeforeUnload 
+    document.cookie = 'name=' + encodeURIComponent(name)
+    document.cookie = 'other_tab=' + encodeURIComponent(tabBeforeUnload)
+
+@getCookie = (name, defaultVal) ->
+  result = defaultVal
+  cookieName = name + '='
+  allCookies = document.cookie
+  position = allCookies.indexOf(cookieName)
+  # console.debug "position : " + position
+  if position != -1
+    startIndex = position + cookieName.length
+    endIndex = allCookies.indexOf(';', startIndex)
+    if endIndex == -1
+      endIndex = allCookies.length
+    result = decodeURIComponent(allCookies.substring(startIndex, endIndex))
+  return result
+
+@delCookie = (name) ->
+  # console.debug "called delCookie"
+  cookieName = name + '='
+  date = new Date()
+  date.setYear date.getYear() - 1
+  document.cookie = cookieName + ";expires=" + date.toGMTString()
+
+@activateTab = (tab) ->
+  if typeof tab == 'undefined' || tab == ''
+    tab = 'main'
+  $(".#{tab}").addClass('active')
+
+@makeSortLink = (tab) ->
+  if typeof tab == 'undefined' || tab == ''
+    tab = 'main'
+  changeSortRef(tab)
 
 scrollNavbar = ->
   win = $(window)
