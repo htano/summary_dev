@@ -4,9 +4,9 @@
 
 <div class="comment_box">Register URL.</div>
 <div class="add_url">
-  <form method="POST" action="add_confirm" class="form-vertical" onsubmit="return blank_check()">
+  <form method="POST" action="add_confirm" class="form-vertical" onsubmit="return check_url()">
     <span id="text_url">URL</span>
-    <input type="text" id="url" name="url" class="input_url_text" placeholder="Please input URL." onKeyUp="check_url()">
+    <input type="text" id="url" name="url" class="input_url_text" placeholder="Please input URL." onKeyUp="check_format()">
     <input type="submit" id="submit" value="next" class="button button-flat:hover"><br>
     <span id="add_msg"><%= @msg %></span>
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">

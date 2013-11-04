@@ -1,9 +1,7 @@
 SummaryDev::Application.routes.draw do
   get "search/index"
-  get "search/search"
-  get "search/search_by_tag"
-  get "search/search_by_content"
-  get "search/search_by_title"
+  get "search/search_article"
+  get "search/search_user"
   get "follow_lists/followers"
   get "follow_lists/following"
   get "follow_lists/suggestion"
@@ -36,13 +34,15 @@ SummaryDev::Application.routes.draw do
   get "mypage/destroy"
 
   #for chrome extension
-  get "chrome/get_summary_num"
+  get "chrome/get_background_info"
   get "chrome/get_summary_list"
   get "chrome/get_recommend_tag"
   get "chrome/get_recent_tag"
-  get "chrome/get_add_history"
-  get "chrome/get_current_user_name"
+  get "chrome/get_set_tag"
+  get "chrome/get_article_data"
+  get "chrome/get_login_user_id"
   get "chrome/add"
+  get "chrome/edit_tag"
   #for webpage
   get "webpage/add" => "webpage#add"
   post "webpage/add_confirm" => "webpage#add_confirm"
@@ -64,6 +64,8 @@ SummaryDev::Application.routes.draw do
   post 'summary_lists/cancel_good_summary/:list_index/:summary_id/:article_id' => 'summary_lists#cancel_good_summary'
   post 'summary_lists/read/:article_id' => 'summary_lists#read'
   post 'summary_lists/cancel_read/:article_id' => 'summary_lists#cancel_read'
+  post 'summary_lists/read_later/:article_id' => 'summary_lists#read_later'
+  post 'summary_lists/cancel_read_later/:article_id' => 'summary_lists#cancel_read_later'
   post 'summary_lists/follow/:list_index/:follow_user_id' => 'summary_lists#follow'
   post 'summary_lists/unfollow/:list_index/:unfollow_user_id' => 'summary_lists#unfollow'
   # The priority is based upon order of creation: first created -> highest priority.

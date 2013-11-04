@@ -5,109 +5,44 @@
 <script>
 $(document).ready(function() {
   set_option_area()
+  hide_navbar_text()
 });
 </script>
 
-<!--TODO flashのスタイル等々微妙なので調整が必要-->
-<form id="search_form" action="search" onLoad="set_option_area">
+<form id="search_form" action="search_article" onLoad="set_option_area">
   <div id="search_main">
     <div id="operation_area">
       <div id="operation">
         <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="Please input the words you want.">
-        <input type="submit" id="submit" value="search" class="button button-flat:hover submit"><br>
-        <%= flash[:error] %>
+        <input type="submit" id="search" value="search" class="button button-flat:hover submit"><br>
       </div>
     </div>
     <div id="option_area">
-      <div class="condition">
-        <p>condition</p>
+      <div class="target_area">
+        <p>target</p>
         <div class="select_area">
-          <span class="selected" id="condition_tag">tag</span><br>
-          <span class="no_selected"  id="condition_title">title</span><br>
-          <span class="no_selected"  id="condition_content">content</span><br>
-          <input type="hidden" name="condition" id="condition" value="<%= @condition %>">
+          <span id="target_article">article</span><br>
+          <span id="target_user">user</span><br>
         </div>
       </div>
-      <div class="sort">
-        <p>sort</p>
+      <div class="type_area">
+        <p>type</p>
         <div class="select_area">
-          <span class="selected" id="sort_recent">recent</span><br>
-          <span class="no_selected" id="sort_summary_num">summary num</span><br>
-          <span class="no_selected" id="sort_user_num">user num</span><br>
-          <input type="hidden" name="sort" id="sort" value="<%= @sort %>">
+          <span id="type_content">content</span><br>
+          <span id="type_tag">tag</span><br>
+          <span id="type_domain">domain</span><br>
         </div>
       </div>
-      <div class="focus">
-        <p>focus</p>
-        <div class="select_area">
-          <span class="selected" id="focus_all">all</span><br>
-          <% if signed_in? %>
-          <span class="no_selected" id="focus_added_only">added only</span><br>
-          <span class="no_selected" id="focus_without_added">without added</span><br>
-          <% end %>
-          <input type="hidden" name="focus" id="focus" value="<%= @focus %>">
-        </div>
-      </div>
-    </div>
-    <div id="result_area">
-      <% if @articles == nil || @articles.length == 0 %>
-       <!-- <%= @searchtext %> の検索結果 0 件 -->
-      <% else %>
-        <div id="message">
-          <%= @searchtext %> の検索結果 <%= @articles_num %> 件
-        </div>
-        <div style='text-align:center;'>
-          <%= paginate @articles, :window => 4, :outer_window => 2  %>
-        </div>        
-        <% @articles.each do |article| %>
-          <div id="article_contents">
-            <div id="thumbnail">
-              <%= image_tag(article.thumbnail) %>
-            </div>
-            <div id="url_title">
-              <p><a href="<%= article.url %>" target="_blank"><%= article.title[0, 100] %></a></p>
-            </div>
-            <div id="article_infomation">
-              <div id="user_article_num">
-                <p><%= article.user_articles.length %> users.</p>
-              </div>
-              <div id="summary_num">
-                <%= link_to article.summaries.length , {:controller => "summary_lists", :action => "index", :article_id => article.id} %>summaries.
-              </div>
-            </div>
-            <div id="contents_preview">
-              <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= article.contents_preview[0, 200] %></p>
-            </div>
-            <div id="article_operation">
-              <% if get_login_user %>
-                  <% if article.user_articles.where(:user_id => get_login_user.id).first %>
-                    <button class="read_it_cancel" disabled>reading</button>
-                  <% else %>
-                    <button class="read_it_later" >add</button>
-                  <% end %>
-                <% else %>
-              <% end %>
-            </div>
-            <% tags = article.get_top_rated_tag %>
-            <% if tags == nil || tags.length == 0 %>
-              <div id="tag">no tags for this article.<br></div>    
-            <% else %>
-              <div id="tag">tags for this article.<br>
-                <% tags.each do |tag| %>
-                  <!--<span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag} %></span>-->
-                  <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :condition => "1", :sort => "1", :focus => "1"} %></span>
-                <% end %>
-              </div>
-            <% end %>
-            <div id="category">
-              category
-            </div>
-          </div>
-        <% end %>
-        <div style='text-align:center;'>
-          <%= paginate @articles, :window => 4, :outer_window => 2  %>
-        </div>        
-      <% end %>
+    <input type="hidden" name="target" id="target" value="<%= @target %>">
+    <input type="hidden" name="type" id="type" value="<%= @type %>">
     </div>
   </div>
 </form>
+<div id="result_area">
+  <% if @target == "1" %>
+    <%= render :template => "/search/_result_article" %>
+  <% elsif @target == "2" %>
+    <%= render :template => "/search/_result_user" %>
+  <% else %>
+  <% end %>
+</div>

@@ -2,6 +2,12 @@
 <%= stylesheet_link_tag "webpage" %>
 <% end %>
 
+<script>
+$(document).ready(function() {
+  loadEditForm()
+});
+</script>
+
 <div class="comment_box">
   <p>Register Complete.</p>
   <span id="msg"><%= @msg %></span>
@@ -24,7 +30,7 @@
   <% else %>
     <div id="tag_area">your tags for this article.<br>
       <% @tags.each do |tag| %>
-        <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search", :searchtext => tag, :condition => "1", :sort => "1", :focus => "1"} %></span>
+        <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search_article", :searchtext => tag, :target => "1", :sort => "1"} %></span>
       <% end %>
     </div>
   <% end %>

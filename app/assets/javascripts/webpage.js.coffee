@@ -4,13 +4,28 @@
 
 BLANK = ''
 
-@blank_check = ->
+@loadConfirmView = ->
+  text_list = []
+  for i in [1...11]
+    text_value = (document.getElementById('tag_text_' + i).value)
+    unless document.getElementById('recommend_tag_' + text_value) == null
+      document.getElementById('recommend_tag_' + text_value).setAttribute('class', 'recommend_tag_pushed')
+
+    unless document.getElementById('recent_tag_' + text_value) == null
+      document.getElementById('recent_tag_' + text_value).setAttribute('class', 'recent_tag_pushed')
+
+@check_url = ->
   url = document.getElementById('url').value
   if url.length is 0
     document.getElementById('add_msg').innerHTML = 'Please input URL.'
     return false
+  else
+    check = url.match(/(http):\/\/.+/i)
+    if !check
+      document.getElementById('add_msg').innerHTML = 'Please input URL format.'
+      return false
 
-@check_url = ->
+@check_format = ->
   url = document.getElementById('url').value
   if url.length is 0
     document.getElementById('add_msg').innerHTML = BLANK
@@ -50,6 +65,8 @@ $ ->
       if document.getElementById('tag_text_' + i).value == BLANK
         document.getElementById('tag_text_' + i).value = value
         document.getElementById('recommend_tag_' + value).setAttribute('class', 'recommend_tag_pushed')
+        unless document.getElementById('recent_tag_' + value) == null
+          document.getElementById('recent_tag_' + value).setAttribute('class', 'recent_tag_pushed')
         return
     alert "Please set tags within 10."
 
@@ -58,6 +75,8 @@ $ ->
       if document.getElementById('tag_text_' + i).value == value
         document.getElementById('tag_text_' + i).value = BLANK
         document.getElementById('recommend_tag_' + value).setAttribute('class', 'recommend_tag')
+        unless document.getElementById('recent_tag_' + value) == null
+          document.getElementById('recent_tag_' + value).setAttribute('class', 'recent_tag')
         return
 
 @clickRecentTag = (value) ->
@@ -75,6 +94,8 @@ $ ->
       if document.getElementById('tag_text_' + i).value == BLANK
         document.getElementById('tag_text_' + i).value = value
         document.getElementById('recent_tag_' + value).setAttribute('class', 'recent_tag_pushed')
+        unless document.getElementById('recommend_tag_' + value) == null
+          document.getElementById('recommend_tag_' + value).setAttribute('class', 'recommend_tag_pushed')
         return
     alert "Please set tags within 10."
 
@@ -83,6 +104,8 @@ $ ->
       if document.getElementById('tag_text_' + i).value == value
         document.getElementById('tag_text_' + i).value = BLANK
         document.getElementById('recent_tag_' + value).setAttribute('class', 'recent_tag')
+        unless document.getElementById('recommend_tag_' + value) == null
+          document.getElementById('recommend_tag_' + value).setAttribute('class', 'recommend_tag')
         return
 
 @ckick_submit_button = ->

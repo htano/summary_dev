@@ -1,63 +1,82 @@
 # encoding: utf-8
 
-#TODO flashのスタイル等々微妙なので調整が必要
 class SearchController < ApplicationController
 
   PAGE_PER = 25
+  BLANK = ""
 
   #初期表示
   def index
-    @condition = 1
+    @target = 1
+    @type = 1
     @sort = 1
-    @focus = 1
   end
 
-  def search
-    @searchtext = "#{params[:searchtext]}"
-    @condition = "#{params[:condition]}"
-    @sort = "#{params[:sort]}"
-    @focus = "#{params[:focus]}"
+  def search_article
+    @searchtext = params[:searchtext]
+    @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
+    @type = params[:type] == BLANK || params[:type] == nil ? "1" : params[:type]
+    @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @articles = []
-    @articles_num = 0
-    case @condition
+    @article_num = 0
+    case @type
     when "1"
-      @articles = Article.search_by_tag(@searchtext)
-    when "2"
-      @articles = Article.search_by_title(@searchtext)
-    when "3"
       @articles = Article.search_by_content(@searchtext)
-    else
-      flash[:error] = "Please check search conditions."
-      redirect_to :action => "index" and return
-    end
-    redirect_to :action => "index" and return unless @articles
-
-    case @focus
-    when "1", ""
-      @articles = @articles.joins(:user_articles)
+      @type_text = "タイトル＆本文"
     when "2"
-      @articles = @articles.joins(:user_articles).where("user_articles.user_id" => get_login_user.id)
+      @articles = Article.search_by_tag(@searchtext)
+      @type_text = "タグ"
     when "3"
-      @articles = @articles.joins(:user_articles).where.not("user_articles.user_id" => get_login_user.id)
-    else      
-      flash[:error] = "Please check search conditions."
+      @articles = Article.search_by_domain(@searchtext)
+      @type_text = "ドメイン"
+    else
+      flash[:error] = "Please retry."
       redirect_to :action => "index" and return
     end
-    @articles_num = @articles.length
+    @article_num = @articles.length
+    redirect_to :action => "index", :type => @type, :sort => @sort and return unless @articles
+    render :template => "search/index" and return unless @articles
 
     case @sort
     when "1"
       @articles = @articles.order("created_at desc")
+      @sort_menu_title = "Newest"
     when "2"
       @articles = @articles.order("summaries_count desc, created_at desc")
+      @sort_menu_title = "Summary num"
     when "3"
       @articles = @articles.order("user_articles_count desc, created_at desc")
+      @sort_menu_title = "Reader num"
     else
-      flash[:error] = "Please check search conditions."
+      flash[:error] = "Please retry."
       redirect_to :action => "index" and return
     end
 
     @articles = @articles.page(params[:page]).per(PAGE_PER)
+
+    render :template => "search/index"
+  end
+
+  def search_user
+    @searchtext = params[:searchtext]
+    @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
+    @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
+    @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"]).where("yuko_flg" => true)
+    @user_num = @users == BLANK || @users == nil ? 0 : @users.length
+
+    case @sort
+    when "1"
+      @users = @users.sort_by! {|user| user.get_followers_count }.reverse
+      @sort_menu_title = "Follower num"
+    when "2"
+      @users = @users.order("summaries_count desc, created_at desc")
+      @sort_menu_title = "Summary num"
+    else
+      flash[:error] = "Please retry."
+      redirect_to :action => "index" and return
+    end
+
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(PAGE_PER)
 
     render :template => "search/index"
   end

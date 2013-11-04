@@ -6,36 +6,34 @@ include Webpage
 class WebpageController < ApplicationController
   def add
     if signed_in?
-      @user_id = "#{params[:id]}"
-      @msg = "#{params[:msg]}"
+      @user_id = params[:id]
     else
       redirect_to :controller => "consumer", :action => "index"
     end
   end
-  
+
   def add_confirm
     if signed_in?
       @user_id = get_login_user.id
-      @url = "#{params[:url]}"
+      @url = params[:url]
       h =   get_webpage_element(@url, true, false, false)
       if h == nil || @url.start_with?("chrome://extensions/")
-        @msg = "Please check URL."
-        redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+        flash[:error] = "Please check URL."
+        redirect_to :controller => "webpage", :action => "add" and return
       end
 
       @title = h["title"]
       @recent_tags = UserArticle.get_recent_tag(@user_id)
+      @set_tags = []
 
-      article = Article.find_by_url(@url) 
+      article = Article.find_by_url(@url)
       unless article == nil
         user_article = article.user_articles.find_by_user_id(@user_id)
-        unless user_article == nil
-          @msg = "you already registered."
-          redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
-        end
-        @summary_num = article.summaries.count(:all)
+        @summary_num = article.summaries_count
+        @reader_num = article.user_articles_count
         @article_id = article.id
         @top_rated_tags = article.get_top_rated_tag
+        @set_tags = user_article.get_set_tag
       end
 
     else
@@ -46,27 +44,24 @@ class WebpageController < ApplicationController
   def add_complete
     if signed_in?
       @prof_image =  get_login_user.prof_image
-      @url = "#{params[:url]}"
+      @url = params[:url]
       tag_list = []
       params.each do |key,value|
         if key.start_with?("tag_text_")
           tag_list.push(value) unless value == BLANK || tag_list.include?(value)
         end
       end
-      article = Article.edit_article(@url)
+      article = add_webpage(@url, tag_list)
       if article == nil
-        @msg = "Please check URL."
-        redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+        flash[:error] = "Please check URL."
+        redirect_to :controller => "webpage", :action => "add" and return
       end
-      get_login_user.add_cluster_id(article.cluster_id)
-      user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
-      UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
-      article.add_strength
       @article_id = article.id
       @title = article.title
       @contents_preview = article.contents_preview
       @thumbnail = article.thumbnail
       @tags = []
+      user_article = article.user_articles.find_by_user_id(get_login_user.id)
       user_article.user_article_tags(:all).each do |user_article_tag|
         @tags.push(user_article_tag.tag)
       end

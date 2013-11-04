@@ -1,4 +1,5 @@
 class SummaryListsController < ApplicationController
+  NUM_OF_SUMMARY_AT_ONE_PAGE = 5
   def index
     logger.info("index start")
 
@@ -10,10 +11,14 @@ class SummaryListsController < ApplicationController
       return
     end
     @user = get_login_user
-    @summary_list = @article.get_good_score_sorted_summary_list(@user)
+
+    @summary_list = Kaminari.paginate_array(@article.get_good_score_sorted_summary_list(@user))
+                      .page(params[:page]).per(NUM_OF_SUMMARY_AT_ONE_PAGE)
     @is_read_article = @article.read?(@user)
+    @article_preview = @article.get_contents_preview
     @num_of_mark_users = @article.get_marked_user
     @summary_by_me = @article.summaries.find_by user_id: @user 
+    @is_read_later = @article.read_later?(@user) 
   end
 
   def good_summary 
@@ -23,15 +28,21 @@ class SummaryListsController < ApplicationController
       logger.debug("end good_summary, pass to entrance")
       return	
     end
-    good_summary = GoodSummary.new(:user_id => get_login_user.id, :summary_id =>params[:summary_id]) 
 
-    if good_summary.save
-      logger.debug("success good_summary")
-      @list_index = params[:list_index]
+
+    unless GoodSummary.where(:user_id => get_login_user.id).where(:summary_id =>params[:summary_id]).exists?
+      good_summary = GoodSummary.new(:user_id => get_login_user.id, :summary_id =>params[:summary_id]) 
+
+      if good_summary.save
+        logger.debug("success good_summary")
+        @list_index = params[:list_index]
+      else
+        logger.error("ERROR good_summary")
+      end 
     else
-      logger.error("ERROR good_summary")
+        logger.debug("good_summary already done")
+        @list_index = params[:list_index]
     end 
-
     respond_to do |format|
       format.html { redirect_to :action => "index" }
       format.js
@@ -90,7 +101,7 @@ class SummaryListsController < ApplicationController
       where(:user_id=>get_login_user.id).
       where(:article_id=>params[:article_id]).first
 
-    unless user_article_for_is_read == nil then
+    if user_article_for_is_read then
       user_article_for_is_read.read_flg = true	
     else
       user_article_for_is_read = UserArticle.
@@ -197,4 +208,50 @@ class SummaryListsController < ApplicationController
   end
 
 
+  def read_later 
+    logger.debug("read_later" )
+
+    if get_login_user == nil then
+      redirect_to :controller => "consumer", :action => "index"
+      return	
+    end
+    
+    if UserArticle.create(:user_id => get_login_user.id, 
+                        :article_id => params[:article_id])
+      logger.debug("success read_later")
+    else
+      logger.error("ERROR read_later")
+    end
+
+    respond_to do |format|
+      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.js
+    end
+    logger.debug("end read_later")
+  end
+
+  def cancel_read_later 
+    logger.debug("start cancel_read_later")
+
+    if get_login_user == nil then
+      logger.fatal("ERROR nil user push cancel_read_later!")
+      redirect_to :controller => "consumer", :action => "index"
+      return	
+    end
+
+    current_user = get_login_user
+
+    if current_user && current_user.user_articles.exists?(:article_id => params[:article_id])
+      current_user.user_articles.find_by_article_id(params[:article_id]).destroy
+      logger.debug("success cancel_read_later")
+    else
+      logger.error("ERROR cancel_read_later")
+    end 
+
+    respond_to do |format|
+      format.html { redirect_to :action => "index" }
+      format.js
+    end
+    logger.debug("end cancel_read_later")
+  end
 end

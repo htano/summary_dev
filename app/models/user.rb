@@ -140,4 +140,8 @@ class User < ActiveRecord::Base
     self.cluster_vector = new_cluster_array.join(",")
     self.save
   end
+
+  def get_followers_count
+    return FavoriteUser.count(:all, :conditions => {:favorite_user_id => self.id})
+  end
 end

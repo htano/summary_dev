@@ -1,15 +1,15 @@
 /*TODO ホストの書き方*/
 $(document).ready( function(){
   var bg = window.chrome.extension.getBackgroundPage();
-  console.log( $("p#p_title").text() );
-  $("img.a_load").attr("style", "visibility:visible;");
+  console.log( $("#p_title").text() );
+  $("img.a_load").show();
   $.ajax({
       url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_summary_list",
       type: "GET",
       data: "url=" + escape(bg.current_tab.url),
       dataType: "json",
       success: function(data) {
-        $("img.a_load").attr("style", "visibility:hidden;");
+        $("img.a_load").hide();
         if(data && data.length != 0){
           for(var i in data){
             data_replace = data[i].content.replace(/\n|\r\n/g,"<br>");
