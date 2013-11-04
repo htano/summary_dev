@@ -393,8 +393,12 @@ private
         article.summaries_count ? article.summaries_count : 0
       registered_num = 
         article.user_articles_count ? article.user_articles_count : 0
-      registered_date = user.user_articles.size > 0 ?
-          user.user_articles.find_by_article_id(article.id).created_at : nil
+
+      registered_date = Time.now
+      if user.user_articles.exists?(:article_id => article.id)
+        registered_date = user.user_articles.find_by_article_id(article.id).created_at
+      end
+
       last_updated =
         is_summary ? user.summaries.find_by_article_id(article.id).updated_at : nil
       like_num = 
