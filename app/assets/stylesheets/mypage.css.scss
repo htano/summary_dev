@@ -597,7 +597,7 @@ ul.tab {
 }
 
 .tags a {
-  padding: 1px 10px 1px 12px;
+  padding: 2px 10px 2px 12px;
   margin-right: 10px;
   background-color: #ddd;
   text-decoration: none;
@@ -613,13 +613,13 @@ ul.tab {
   content: "";
   float: left;
   position: absolute;
-  top: 2px;
-  left: -7px;
+  top: 1px;
+  left: -9px;
   width: 0;
   height: 5px;
   border-color: transparent #ddd transparent transparent;
   border-style: solid;
-  border-width: 8px 8px 8px 0;
+  border-width: 9px 9px 9px 0;
 }
 
 .tags a:after {
@@ -644,5 +644,22 @@ ul.tab {
 .tags a:hover:before {
   border-color: transparent gray transparent transparent;
   color: white;
+}
+
+
+.summarize-btn, .edit-tag-btn {
+  height: 20px;
+  margin-bottom: 7px;
+  a {
+    width: 90px;
+    height: 22px;
+    p {
+      float: left;
+    }
+  }
+}
+
+.edit-tag-btn > a > p {
+  margin-left: 10px;
 }
 

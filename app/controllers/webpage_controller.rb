@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require "webpage"
 include Webpage
 
@@ -30,12 +28,17 @@ class WebpageController < ApplicationController
       unless article == nil
         user_article = article.user_articles.find_by_user_id(@user_id)
         unless user_article == nil
-          @msg = "you already registered."
-          redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+          if params[:edit] == nil
+            @msg = "you already registered."
+            redirect_to :controller => "webpage", :action => "add", :msg => @msg and return
+          end
         end
         @summary_num = article.summaries.count(:all)
         @article_id = article.id
         @top_rated_tags = article.get_top_rated_tag
+        if params[:edit] != nil
+          @tags = get_login_user.user_articles.find_by_article_id(article.id).user_article_tags.pluck(:tag)
+        end
       end
 
     else

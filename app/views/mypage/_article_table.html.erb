@@ -33,10 +33,18 @@
       </div>
       <div>
       <% if @is_login_user %>
+      <div class="summarize-btn">
         <%= link_to image_tag("icons/glyphicons_030_pencil_gray.png", :size => "12x12") +
             content_tag(:p, "summarize"),
             {:controller => "summary", :action => "edit", :article_id => table_data[:article].id},
             {:class => "btn btn-default btn-xs"} %>
+      </div>
+      <div class="edit-tag-btn">
+        <%= link_to image_tag("icons/glyphicons_065_tag_gray.png", :size => "12x12") +
+            content_tag(:p, "edit tag"),
+            {:controller => "webpage", :action => "add_confirm", :url => table_data[:article].url, :edit => true},
+            {:class => "btn btn-default btn-xs", :method => :post} %>
+      </div>
       <% else %>
       <% if @is_login_user != true && table_data[:is_registered] %>
         <span>
