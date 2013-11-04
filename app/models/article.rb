@@ -94,6 +94,9 @@ class Article < ActiveRecord::Base
         if summary.user_id == user.id then
           good_summary_point = summary.good_summaries.count
           score_list[0,0] = score_item.new(summary, good_summary_point)
+        else
+          good_summary_point = summary.good_summaries.count
+          score_list[i] = score_item.new(summary, good_summary_point)
         end
       else
         good_summary_point = summary.good_summaries.count
