@@ -90,9 +90,11 @@ class Article < ActiveRecord::Base
 
     self.summaries.each_with_index do |summary,i|  
     #自分のsummaryがあれば、それを先頭にリストを再結合
-      if summary.user_id == user.id then
-        good_summary_point = summary.good_summaries.count
-        score_list[0,0] = score_item.new(summary, good_summary_point)
+      if user then
+        if summary.user_id == user.id then
+          good_summary_point = summary.good_summaries.count
+          score_list[0,0] = score_item.new(summary, good_summary_point)
+        end
       else
         good_summary_point = summary.good_summaries.count
         score_list[i] = score_item.new(summary, good_summary_point)
