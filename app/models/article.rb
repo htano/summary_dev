@@ -247,12 +247,18 @@ class Article < ActiveRecord::Base
 
   def get_contents_preview
     begin
-      self.contents_preview.split("")
+      return BLANK if self.contents_preview == nil
+      self.contents_preview.split(BLANK)
       return self.contents_preview
     rescue => err
       logger.error("This page has invalid encoding: " + err.message)
-      return ""
+      return BLANK
     end
+  end
+
+  def get_thumbnail
+    return "no_image.png" if self.thumbnail == nil
+    return self.thumbnail
   end
 
   #記事に設定されたタグ情報を登録順に取得するメソッド
