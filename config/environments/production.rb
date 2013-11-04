@@ -75,8 +75,7 @@ SummaryDev::Application.configure do
     :port => 587,
     :authentication => :login,
     :user_name => 'summary.dev',
-    #:password => ENV['MAIL_PASSWORD']
-    :password => 'summary0813'
+    :password => ENV['MAIL_PASSWORD']
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

@@ -6,35 +6,24 @@ include Webpage
 #require "ransack"
 
 class Article < ActiveRecord::Base
-  has_many :user_articles, :dependent => :destroy
-  has_many :summaries, :dependent => :destroy
+  has_many(:user_articles, :dependent => :destroy)
+  has_many(:summaries, :dependent => :destroy)
+  belongs_to(:category)
+  validates(:url, :uniqueness=>true)
 
   # This is a decay parameter for article's strength.
   # A 'point' means a people say he is reading the article.
   # And the points are decaying by time spending.
-  # This parameter means that '1' point will decay to '0.01' point until some days after.
-  ZERO_ZERO_ONE_DAYS = 7
+  # This parameter means that '1' point will decay 
+  # to '0.01' point until some days after.
+  ZERO_ZERO_ONE_DAYS = 28
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
+  HOTENTRY_CANDIDATE_NUM = 200
+  PERSONAL_HOTENTRY_CANDIDATE_NUM = 100
+  HOTENTRY_DISPLAY_NUM = 20
+  HOTENTRY_MAX_CLUSTER_NUM = 5
   BLANK = ""
-=begin
-  def self.edit_article(url)
-    article = Article.find_by_url(url)
-    if article == nil
-      h = get_webpage_element(url)
-      if h == nil
-        return nil
-      end
-      article = Article.new(:url => url, :title => h["title"], :contents_preview => h["contentsPreview"][0, 200], :category_id =>"001", :thumbnail => h["thumbnail"])
-      if article.save
-        article.add_strength
-        return article
-      end
-    else
-      article.add_strength
-      return article
-    end
-  end
-=end
+
   #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag)
     return nil if tag == nil || tag == BLANK
@@ -134,11 +123,79 @@ class Article < ActiveRecord::Base
   end
 
   # Class Method
-  def self.get_hotentry_articles
-    # 1. getCandidateHotentries
-    @candidate_entries = where("last_added_at > ?", Time.now - ZERO_ZERO_ONE_DAYS.days).order('strength desc, last_added_at desc').limit(100)
-    # 2. sort by current strength
-    return @candidate_entries.sort{|a,b| (-1)*(a.get_current_strength <=> b.get_current_strength)}.first(20)
+  def self.get_hotentry_articles(category_name = 'all')
+    # query = User.find(1).user_articles.select(:article_id)
+    # Article.where.not(id:query)
+    if category_name == 'all'
+      candidate_entries = 
+        where( "last_added_at > ?", 
+               Time.now.beginning_of_hour - ZERO_ZERO_ONE_DAYS.days
+             ).order(
+               'strength desc, last_added_at desc'
+                #'last_added_at desc, strength desc'
+             ).limit(HOTENTRY_CANDIDATE_NUM)
+    else
+      candidate_entries = 
+        where( ["last_added_at > ? and category_id = ?", 
+                Time.now.beginning_of_hour - ZERO_ZERO_ONE_DAYS.days,
+                Category.find_by_name(category_name)]
+             ).order(
+               'strength desc, last_added_at desc'
+               #'last_added_at desc, strength desc'
+             ).limit(HOTENTRY_CANDIDATE_NUM)
+    end
+    return candidate_entries.sort{|a,b| 
+      (-1)*(a.get_current_strength <=> b.get_current_strength)
+    }
+  end
+
+  def self.get_personal_hotentry(user)
+    unless user
+      return Array.new
+    end
+    query = user.user_articles.select(:article_id)
+    if user.cluster_vector
+      cluster_hash = Hash.new(0)
+      user.cluster_vector.split(",").each do |elem|
+        cid, val = elem.split(":")
+        cluster_hash[cid.to_i] = val.to_f
+      end
+      top_cluster_hash = Hash.new(0)
+      cluster_count = 0
+      cluster_norm = 0
+      cluster_hash.sort_by{|cid, val| 
+        -val
+      }.each do |cid, val|
+        if cluster_count < HOTENTRY_MAX_CLUSTER_NUM
+          top_cluster_hash[cid] = val
+          cluster_norm += val
+        end
+        cluster_count += 1
+      end
+      candidate_entries = Array.new
+      top_cluster_hash.each do |cid, val|
+        val = val / cluster_norm
+        candidate_entries +=
+          where.not(id:query).where("last_added_at > ? and " +
+                                    "cluster_id = ?",
+                                    Time.now.beginning_of_hour - 
+                                    ZERO_ZERO_ONE_DAYS.days,
+                                    cid
+                                   ).order(
+                                      #'last_added_at desc, ' +
+                                      #'strength desc'
+                                      'strength desc, ' +
+                                      'last_added_at desc'
+                                   ).limit(
+                                      (PERSONAL_HOTENTRY_CANDIDATE_NUM * val).to_i
+                                   )
+      end
+      return candidate_entries.sort{|a,b| 
+        (-1)*(a.get_current_strength <=> b.get_current_strength)
+      }
+    else
+      return Array.new
+    end
   end
 
   # Instance Method

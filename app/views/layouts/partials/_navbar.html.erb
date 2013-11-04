@@ -57,11 +57,15 @@ function checkSearchtext(){
                   <a href="<%= url_for :controller =>'settings', :action => 'profile'%>">account setting</a>
                 </li>
                 <li>
+                <% if(request.get?) %>
                   <a href="<%= url_for(:controller => 'consumer', :action => 'sign_out', :fromUrl => request.url)%>">sign out</a>
+                <% else %>
+                  <a href="<%= url_for(:controller => 'consumer', :action => 'sign_out')%>">sign out</a>
+                <% end %>
                 </li>
               </ul>
               <% else %>
-                <% if request.url =~ %r!^#{url_for(:controller => 'consumer', :action => 'index', :only_path => false)}! %>
+                <% if(request.url =~ %r!^#{url_for(:controller => 'consumer', :action => 'index', :only_path => false)}!) %>
                   <a href="<%= url_for(:controller => 'consumer', :action => 'index')%>">sign in</a>
                 <% else %>
                   <a href="<%= url_for(:controller => 'consumer', :action => 'index', :fromUrl => request.url)%>">sign in</a>

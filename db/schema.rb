@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131025100721) do
+ActiveRecord::Schema.define(version: 20131102080405) do
 
   create_table "articles", force: true do |t|
     t.string   "url"
@@ -19,15 +19,26 @@ ActiveRecord::Schema.define(version: 20131025100721) do
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "contents_preview"
     t.decimal  "strength"
     t.datetime "last_added_at"
+    t.string   "contents_preview"
     t.string   "thumbnail"
     t.integer  "summaries_count"
     t.integer  "user_articles_count"
+    t.integer  "cluster_id",                default: 0
+    t.string   "auto_summary_error_status"
   end
 
   add_index "articles", ["last_added_at", "strength"], name: "idx_strength"
+  add_index "articles", ["url"], name: "idx_articles_on_url", unique: true
+
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "categories", ["name"], name: "idx_categories_on_name", unique: true
 
   create_table "favorite_users", force: true do |t|
     t.integer  "user_id"
@@ -44,6 +55,8 @@ ActiveRecord::Schema.define(version: 20131025100721) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "good_summaries", ["user_id", "summary_id"], name: "idx_good_summaries_on_user_id_and_summary_id", unique: true
 
   create_table "summaries", force: true do |t|
     t.text     "content"
@@ -95,6 +108,7 @@ ActiveRecord::Schema.define(version: 20131025100721) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "keep_login_ip"
+    t.text     "cluster_vector"
     t.integer  "summaries_count"
     t.integer  "favorite_users_count"
   end

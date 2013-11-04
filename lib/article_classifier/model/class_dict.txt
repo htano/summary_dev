@@ -1,0 +1,7 @@
+economics	0
+entertainment	1
+fun	2
+it	3
+knowledge	4
+life	5
+social	6

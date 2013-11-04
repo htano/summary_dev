@@ -9,8 +9,39 @@
 
 div.hotentry-container {
   margin: auto;
-  width: 60%;
-  border: solid 1px #eee;
+  width: 80%;
+  //border: solid 1px #eee;
+}
+
+div.hotentry-tab {
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      -webkit-margin-before: 0px;
+      -webkit-margin-after: 0px;
+      li {
+        border-radius: 2px;
+        border: 1px solid #d8d8d8;
+        a {
+          color: #a2a2a2;
+          text-decoration: none;
+          display: block;
+          padding: 8px 10px 8px 8px;
+          text-shadow: 0 1px 0 #fff;
+          border-left: 2px solid #fafafb;
+          background: #fafafb;
+        }
+        a.selected {
+          background: #fff;
+          border-left: 2px solid #5B91FF;
+          font-weight: bold;
+          color: gray;
+          cursor: default;
+          box-shadow: inset 0 0px 1px rgba(0,0,0,0.1);
+        }
+      }
+    }
 }
 
 div.hotentry-menu {
@@ -24,6 +55,12 @@ div.hotentry-menu {
     padding: 10px 10px 11px 10px;
   }
 
+}
+
+div.hotentry-menu-icons {
+  a {
+    text-decoration: none;
+  }
 }
 
 div.hotentry-row {
@@ -94,7 +131,13 @@ div.hotentry-large-title {
 }
 
 div.hotentry-normal-summaries, div.hotentry-small-summaries {
-  font-size: 11px;
+  font-size: 12px;
+}
+
+div.hotentry-normal-contents {
+  p {
+    font-size: 11px;
+  }
 }
 
 div.hotentry-large-contents {
@@ -109,8 +152,44 @@ div.hotentry-large-contents {
   }
 }
 
+span.hotentry-top-summary, span.hotentry-contents-preview {
+  font-size: 14px;
+}
+
+div.hotentry-top-summary, div.hotentry-contents-preview {
+  font-size: 18px;
+}
+
+.hotentry-top-summary {
+  color: #F5AC0F;
+}
+
+.hotentry-contents-preview {
+  color: #0FC7F5;
+}
+
 div.hotentry-large-image {
   margin-top: 23px;
+}
+
+div.hotentry-normal-image {
+  margin-top: 20px;
+}
+
+img.hotentry-large-image-imgtag {
+  max-width: 160px;
+  max-height: 190px;
+}
+
+img.hotentry-normal-image-imgtag {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+div.hotentry-large-goodsummary {
+  a {
+    text-decoration: none;
+  }
 }
 
 div.hotentry-normal-domain {

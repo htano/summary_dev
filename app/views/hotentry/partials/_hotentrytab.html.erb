@@ -1,0 +1,41 @@
+  <div class="hotentry-tab">
+    <ul>
+
+      <li>
+      <% if @category_name == 'all' %>
+        <%= link_to("all", 
+                    {:action => "index"}, 
+                    :class => 'selected') %>
+      <% else %>
+        <%= link_to("all", {:action => "index"}) %>
+      <% end %>
+      </li>
+
+      <% Category.all.each do |c| %>
+        <li>
+        <% if @category_name == c.name %>
+          <%= link_to(c.name, 
+                      {:action => "index", :category => c.name},
+                      :class => 'selected') %>
+        <% else %>
+          <%= link_to(c.name, 
+                      {:action => "index", :category => c.name}) %>
+        <% end %>
+        </li>
+      <% end %>
+
+      <li>
+      <% if @category_name == 'personal' %>
+        <%= link_to("personal", 
+                    {:action => "index", 
+                     :category => 'personal'}, 
+                     :class => 'selected') %>
+      <% else %>
+        <%= link_to("personal",
+                    {:action => "index",
+                     :category => 'personal'}) %>
+      <% end %>
+      </li>
+
+    </ul>
+  </div>
