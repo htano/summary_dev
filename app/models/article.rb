@@ -1,15 +1,11 @@
 # encoding: utf-8
 
-require './lib/article_classifier.rb'
-require './lib/personal-hotentry.rb'
 require "webpage"
 include Webpage
 
 #require "ransack"
 
 class Article < ActiveRecord::Base
-  ArticleClassifier.instance.read_models
-  PersonalHotentry.instance
   has_many(:user_articles, :dependent => :destroy)
   has_many(:summaries, :dependent => :destroy)
   belongs_to(:category)
@@ -27,38 +23,7 @@ class Article < ActiveRecord::Base
   HOTENTRY_DISPLAY_NUM = 20
   HOTENTRY_MAX_CLUSTER_NUM = 5
   BLANK = ""
-=begin
-  def self.edit_article(url)
-    article = Article.find_by_url(url)
-    if article == nil
-      h = get_webpage_element(url)
-      if h == nil
-        return nil
-      end
-      ph_inst = PersonalHotentry.instance
-      cluster_id, cluster_score = 
-        ph_inst.predict_max_cluster_id(h["title"])
-      ac_inst = ArticleClassifier.instance
-      category_name = ac_inst.predict(h["title"])
-      category_id = Category.find_by_name(category_name).id
-      article = Article.new(
-        :url => url, 
-        :title => h["title"], 
-        :contents_preview => h["contentsPreview"][0, 200], 
-        :category_id => category_id, 
-        :cluster_id => cluster_id,
-        :thumbnail => h["thumbnail"]
-      )
-      if article.save
-        article.add_strength
-        return article
-      end
-    else
-      article.add_strength
-      return article
-    end
-  end
-=end
+
   #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag)
     return nil if tag == nil || tag == BLANK
