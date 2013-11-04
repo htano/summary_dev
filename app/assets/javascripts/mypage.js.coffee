@@ -182,7 +182,9 @@ toggleUnfollowBtn = ->
     if endIndex == -1
       endIndex = allCookies.length
     result = decodeURIComponent(allCookies.substring(startIndex, endIndex))
-  return result
+  if result == ''
+    result = defaultVal
+  result
 
 @delCookie = (name) ->
   # console.debug "called delCookie"

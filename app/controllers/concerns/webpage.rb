@@ -37,7 +37,7 @@ module Webpage
       article = Article.create(
         :url => url, 
         :title => h["title"], 
-        :contents_preview => h["contentsPreview"][0, 200], 
+        :contents_preview => h["contentsPreview"], 
         :category_id => category_id, 
         :cluster_id => cluster_id,
         :thumbnail => h["thumbnail"]
