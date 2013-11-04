@@ -55,10 +55,10 @@
         </div>
       </div>
       <div id="thumbnail">
-        <%= image_tag(article.thumbnail) %>
+        <%= image_tag(article.get_thumbnail) %>
       </div>
       <div id="contents_preview">
-        <p><%= article.contents_preview[0, 200] %></p>
+        <p><%= article.get_contents_preview[0, 300] %></p>
       </div>
       <div id="url_host">
         <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host , {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
