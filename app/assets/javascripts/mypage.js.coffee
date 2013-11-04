@@ -142,7 +142,7 @@ currentTab = "main"
 @getCurrentTab = ->
   currentTab
 
-@toggleUnfollowBtn = ->
+toggleUnfollowBtn = ->
   $(document).ready ->
     $("#unfollow-button").hover (->
       $(this).val "unfollow"
