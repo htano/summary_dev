@@ -79,8 +79,20 @@
             </div>
             <div class="row hotentry-normal-bottom">
               <div class="col-md-6 hotentry-normal-domain">
-                <%= image_tag "http://favicon.hatena.ne.jp/?url=" + e.url %>
-                <%= URI(e.url).host %>
+                <a href="<%= url_for(
+                  :controller => 'search',
+                  :action => 'search_article',
+                  :searchtext => URI(e.url).host,
+                  :sort => '3',
+                  :target => '1',
+                  :type => '3'
+                ) %>">
+                  <%= image_tag(
+                    "http://favicon.hatena.ne.jp/?url=" + 
+                    e.url
+                  ) %>
+                  <%= URI(e.url).host %>
+                </a>
               </div>
               <div class="col-md-6 hotentry-normal-tags">
               </div>
