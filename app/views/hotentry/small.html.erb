@@ -32,11 +32,11 @@
                 </div>
                 <div class="row">
                   <div class="col-md-3 hotentry-small-summaries">
-                    <%= e.user_articles.count %> readers,
+                    <%= e.user_articles_count %> readers,
                     <a href="<%= url_for(:controller => 'summary_lists',
                                          :action=>'index',
                                          :article_id => e.id) %>">
-                      <%= e.summaries.count %> summaries.
+                      <%= e.summaries_count %> summaries.
                     </a>
                   </div>
                   <div class="col-md-5 hotentry-small-summaries">

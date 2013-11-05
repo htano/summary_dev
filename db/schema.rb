@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131102080405) do
+ActiveRecord::Schema.define(version: 20131105133548) do
 
   create_table "articles", force: true do |t|
     t.string   "url"
@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20131102080405) do
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "contents_preview"
     t.decimal  "strength"
     t.datetime "last_added_at"
+    t.string   "contents_preview"
     t.string   "thumbnail"
     t.integer  "summaries_count"
     t.integer  "user_articles_count"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20131102080405) do
     t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "good_summaries_count", default: 0
   end
 
   add_index "summaries", ["user_id", "article_id"], name: "index_summaries_on_user_id_and_article_id", unique: true
