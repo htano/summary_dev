@@ -404,7 +404,7 @@ private
       like_num = 
         is_summary ? user.summaries.find_by_article_id(article.id).good_summaries.size : nil
 
-      user_article_ids = article.user_articles.select(:id)
+      user_article_ids = user.user_articles.where(:article_id => article.id).select(:id)
       tags = UserArticleTag.where(:user_article_id => user_article_ids).pluck(:tag)
 
       is_registered = false
