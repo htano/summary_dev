@@ -100,6 +100,9 @@ class MypageController < ApplicationController
       article = login_user.user_articles.find_by_article_id(article_id)
       unless article == nil
         Article.find(article_id).remove_strength(get_login_user.id)
+        login_user.delete_cluster_id(
+          Article.find(article_id).cluster_id
+        )
         article.destroy
       end
     end
