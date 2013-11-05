@@ -261,6 +261,10 @@ class Article < ActiveRecord::Base
     return self.thumbnail
   end
 
+  def get_category_name
+    return Category.find(self.category_id).name
+  end
+
   #記事に設定されたタグ情報を登録順に取得するメソッド
   def get_top_rated_tag
     first_index = 0

@@ -58,6 +58,7 @@ class WebpageController < ApplicationController
       @title = article.title
       @contents_preview = article.get_contents_preview
       @thumbnail = article.get_thumbnail
+      @category = article.get_category_name
       @tags = []
       user_article = article.user_articles.find_by_user_id(get_login_user.id)
       user_article.user_article_tags(:all).each do |user_article_tag|

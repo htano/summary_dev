@@ -24,6 +24,7 @@ $(document).ready(function() {
     <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><%= @contents_preview[0, 200] %></p>
   </div>
   <div id="category">
+    <%= @category %>
   </div>
   <% if @tags == nil || @tags.length == 0 %>
     <div id="tag_area">no tags for this article.<br></div>
