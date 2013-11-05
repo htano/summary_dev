@@ -19,11 +19,6 @@ rails runner \
 # For testing
 echo "=== making test data from url-list ==="
 rails runner scripts/personal-hotentry/tmp/add-articles-by-list.rb
-rails runner \
-  scripts/personal-hotentry/tmp/predict-db-articles.rb | \
-  sort -n > tmp/personal-hotentry/tmp/predicted-db-articles.txt
-rails runner scripts/personal-hotentry/tmp/adding-user-articles.rb
-rails runner scripts/article_classifier/predict/predict_category.rb
 
 # Auto summarization
 echo "=== run auto summarization ==="

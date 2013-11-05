@@ -54,11 +54,19 @@
                 </div>
                 <div class="row">
                   <div class="col-md-6 hotentry-normal-summaries">
-                    <%= e.user_articles_count %> readers,
+                    <% if e.user_articles_count %>
+                      <%= e.user_articles_count %> readers,
+                    <% else %>
+                      0 readers,
+                    <% end %>
                     <a href="<%= url_for(:controller=>'summary_lists',
                                          :action=>'index',
                                          :article_id=>e.id) %>">
-                      <%= e.summaries_count %> summaries.
+                      <% if e.summaries_count %>
+                        <%= e.summaries_count %> summaries.
+                      <% else %>
+                        0 summaries.
+                      <% end %>
                     </a>
                   </div>
                   <div class="col-md-6 hotentry-normal-summaries">
