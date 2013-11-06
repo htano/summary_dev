@@ -125,6 +125,10 @@ div.hotentry-small-title {
   min-height: 30px;
 }
 
+div.hotentry-normal-title {
+  min-height: 40px;
+}
+
 div.hotentry-large-title {
   border-bottom: solid 1px #eee;
   min-height: 65px;
@@ -136,6 +140,7 @@ div.hotentry-normal-summaries, div.hotentry-small-summaries {
 
 div.hotentry-normal-contents {
   p {
+    height: 80px;
     font-size: 11px;
   }
 }
