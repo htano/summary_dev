@@ -41,4 +41,28 @@ module MypageHelper
               :object => table
     end
   end
+
+  def get_summary_string(num)
+    if num == 1
+      "summary"
+    else
+      "summaries"
+    end
+  end
+
+  def get_like_string(num)
+    if num == 1
+      "like"
+    else
+      "likes"
+    end
+  end
+
+  def get_reader_string(num)
+    if num == 1
+      "reader"
+    else
+      "readers"
+    end
+  end
 end
