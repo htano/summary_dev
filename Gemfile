@@ -77,3 +77,5 @@ gem 'extractcontent', :git => 'http://github.com/mono0x/extractcontent.git'
 gem 'figaro'
 
 gem 'ngrams_parser'
+
+gem "i18n-js"

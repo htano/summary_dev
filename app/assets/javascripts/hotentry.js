@@ -45,7 +45,7 @@ function clickReadItLater(btn, url, aid) {
         dataType: 'text',
         success: function(data) {
           btn.className="read_it_later";
-          btn.innerHTML="後で読む";
+          btn.innerHTML=I18n.t('read_later.add');
           var reading_num = $('#reading_counter'+aid).text();
           $('#reading_counter'+aid).text(parseInt(reading_num) - 1);
           btn.style.display = "inline";
@@ -61,14 +61,14 @@ function clickReadItLater(btn, url, aid) {
         dataType: 'text',
         success: function(data) {
           btn.className="read_it_cancel";
-          btn.innerHTML="読まない";
+          btn.innerHTML=I18n.t('read_later.cancel');
           var reading_num = $('#reading_counter'+aid).text();
           $('#reading_counter'+aid).text(parseInt(reading_num) + 1);
           btn.style.display = "inline";
           $("#add_page_loader" + aid).hide();
           $("#mark_as_read_btn" + aid).attr('style', "visibility:visible;");
           $("#mark_as_read_btn" + aid).attr('class', "mark_as_read");
-          $("#mark_as_read_btn" + aid).text("Mark as read");
+          $("#mark_as_read_btn" + aid).text(I18n.t('read_status.mark_as_read'));
         }
       });
     }
@@ -88,10 +88,10 @@ function clickMarkAsRead(btn, aid) {
       $("#mark_read_loader" + aid).hide();
       if(data == "mark_as_read") {
         btn.className="mark_as_unread";
-        btn.innerHTML="未読にする";
+        btn.innerHTML=I18n.t('read_status.mark_as_unread');
       } else {
         btn.className="mark_as_read";
-        btn.innerHTML="既読にする";
+        btn.innerHTML=I18n.t('read_status.mark_as_read')
       }
     }
   });

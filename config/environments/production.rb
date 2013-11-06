@@ -64,6 +64,7 @@ SummaryDev::Application.configure do
   files.map! {|file| file.sub(%r(#{Rails.root}/app/assets/stylesheets/), '') }
   files.map! {|file| file.sub(%r(\.scss), '') }
   config.assets.precompile += files
+  config.assets.initialize_on_precompile = true
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
