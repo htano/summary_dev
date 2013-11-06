@@ -46,22 +46,22 @@
                         :user_id => get_login_user.id).first.read_flg
                       ) %>
                         <button id="mark_as_read_btn<%= e.id %>" class="mark_as_unread" onClick='clickMarkAsRead(this, "<%= e.id %>")' >
-                          Unread
+                          <%= t('read_status.mark_as_unread') %>
                         </button>
                       <% else %>
                         <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' >
-                          Mark as read
+                          <%= t('read_status.mark_as_read') %>
                         </button>
                       <% end %>
                       <button class="read_it_cancel" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")' >
-                        Read cancel
+                        <%= t('read_later.cancel') %>
                       </button>
                     <% else %>
                       <button id="mark_as_read_btn<%= e.id %>" class="mark_as_read" onClick='clickMarkAsRead(this, "<%= e.id %>")' style="visibility:hidden;">
-                        Mark as read
+                        <%= t('read_status.mark_as_read') %>
                       </button>
                       <button class="read_it_later" onClick='clickReadItLater(this, "<%= e.url %>", "<%= e.id %>")'>
-                        Read later
+                        <%= t('read_later.add') %>
                       </button>
                     <% end %>
                   <% end %>
@@ -76,20 +76,29 @@
                         0
                       <% end %>
                     </span>
-                    readers,
+                    <% if e.user_articles_count != 1 %>
+                      <%= t('reader.count') %>,
+                    <% else %>
+                      <%= t('reader.count_one') %>,
+                    <% end %>
                     <a href="<%= url_for(:controller => 'summary_lists',
                                          :action=>'index',
                                          :article_id => e.id) %>">
                       <% if e.summaries_count %>
-                        <%= e.summaries_count %> summaries.
+                        <%= e.summaries_count %>
                       <% else %>
-                        0 summaries.
+                        0
+                      <% end %>
+                      <% if e.summaries_count != 1 %>
+                        <%= t('summary.count') %>.
+                      <% else %>
+                        <%= t('summary.count_one') %>.
                       <% end %>
                     </a>
                   </div>
                   <div class="col-md-3">
                     <% if e.get_top_rated_summary %>
-                      <%= link_to("View all summaries", 
+                      <%= link_to(t('summary.view_all'), 
                                   :controller => 'summary_lists',
                                   :action => 'index',
                                   :article_id => e.id) %>
@@ -107,7 +116,7 @@
                     <div class="row hotentry-large-contents-header">
                       <% if e.get_top_rated_summary %>
                        <div class="col-md-8 hotentry-top-summary">
-                         Top rated summary
+                         <%= t('article.top_rated_summary') %>
                        </div>
                        <div class="col-md-4">
                          <a href="<%= url_for(
@@ -127,7 +136,7 @@
                        </div>
                       <% else %>
                        <div class="col-md-6 hotentry-contents-preview">
-                         Contents preview
+                         <%= t('article.contents_preview') %>
                        </div>
                       <% end %>
                     </div>
@@ -151,7 +160,7 @@
                           :action => 'edit', 
                           :article_id => e.id
                         ) %>">
-                          Edit summary
+                          <%= t('summary.edit') %>
                         </a>
                       </div>
                       <div class="col-md-3 hotentry-large-goodsummary">
@@ -181,7 +190,7 @@
                         <span id="good_summary_count<%= e.get_top_rated_summary.id %>">
                           <%= e.get_top_rated_summary.good_summaries.count %>
                         </span>
-                        likes.
+                        <%= t('good_summary.add') %>
                       <% end %>
                       </div>
                     </div>

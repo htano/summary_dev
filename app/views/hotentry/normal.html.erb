@@ -37,14 +37,14 @@
                   <div class="col-md-12 hotentry-normal-contents">
                     <% if e.get_top_rated_summary %>
                       <span class="hotentry-top-summary">
-                        Top rated summary
+                        <%= t('article.top_rated_summary') %>
                       </span>
                       <p>
                         <%= e.get_top_rated_summary.content %>
                       </p>
                     <% else %>
                       <span class="hotentry-contents-preview">
-                        Contents preview
+                        <%= t('article.contents_preview') %>
                       </span>
                       <p>
                         <%= e.get_contents_preview %>
@@ -55,28 +55,38 @@
                 <div class="row">
                   <div class="col-md-6 hotentry-normal-summaries">
                     <% if e.user_articles_count %>
-                      <%= e.user_articles_count %> readers,
+                      <%= e.user_articles_count %>
                     <% else %>
-                      0 readers,
+                      0
+                    <% end %>
+                    <% if e.user_articles_count != 1 %>
+                      <%= t('reader.count') %>,
+                    <% else %>
+                      <%= t('reader.count_one') %>,
                     <% end %>
                     <a href="<%= url_for(:controller=>'summary_lists',
                                          :action=>'index',
                                          :article_id=>e.id) %>">
                       <% if e.summaries_count %>
-                        <%= e.summaries_count %> summaries.
+                        <%= e.summaries_count %>
                       <% else %>
-                        0 summaries.
+                        0
+                      <% end %>
+                      <% if e.summaries_count != 1 %>
+                        <%= t('summary.count') %>.
+                      <% else %>
+                        <%= t('summary.count_one') %>.
                       <% end %>
                     </a>
                   </div>
                   <div class="col-md-6 hotentry-normal-summaries">
                     <% if e.get_top_rated_summary %>
-                      <%= link_to("View all summaries", 
+                      <%= link_to(t('summary.view_all'),
                                   :controller => 'summary_lists',
                                   :action => 'index',
                                   :article_id => e.id) %>
                     <% else %>
-                      <%= link_to("Edit summary", 
+                      <%= link_to(t('summary.edit'),
                                   :controller => 'summary',
                                   :action => 'edit',
                                   :article_id => e.id) %>

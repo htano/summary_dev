@@ -45,7 +45,7 @@ function clickReadItLater(btn, url, aid) {
         dataType: 'text',
         success: function(data) {
           btn.className="read_it_later";
-          btn.innerHTML="Read later";
+          btn.innerHTML="後で読む";
           var reading_num = $('#reading_counter'+aid).text();
           $('#reading_counter'+aid).text(parseInt(reading_num) - 1);
           btn.style.display = "inline";
@@ -61,7 +61,7 @@ function clickReadItLater(btn, url, aid) {
         dataType: 'text',
         success: function(data) {
           btn.className="read_it_cancel";
-          btn.innerHTML="Read cancel";
+          btn.innerHTML="読まない";
           var reading_num = $('#reading_counter'+aid).text();
           $('#reading_counter'+aid).text(parseInt(reading_num) + 1);
           btn.style.display = "inline";
@@ -88,10 +88,10 @@ function clickMarkAsRead(btn, aid) {
       $("#mark_read_loader" + aid).hide();
       if(data == "mark_as_read") {
         btn.className="mark_as_unread";
-        btn.innerHTML="Unread";
+        btn.innerHTML="未読にする";
       } else {
         btn.className="mark_as_read";
-        btn.innerHTML="Mark as read";
+        btn.innerHTML="既読にする";
       }
     }
   });
