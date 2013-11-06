@@ -1,4 +1,5 @@
 include FollowManager
+include Webpage
 
 class MypageController < ApplicationController
   RENDER_USERS_NUM = 13
@@ -186,9 +187,8 @@ class MypageController < ApplicationController
   def clip
     login_user = get_login_user
     params[:article_ids].each do |article_id|
-      if Article.exists?(article_id)
-        login_user.user_articles.find_or_create_by(:user_id => get_login_user.id, :article_id => article_id)
-      end
+      url = Article.find_by_id(article_id).url
+      add_webpage(url) if url
     end
 
     redirect_to :action => "index", :params => params
