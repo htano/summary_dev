@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'my_delayed_jobs'
 
 class SettingsController < ApplicationController
   def profile
@@ -129,11 +130,15 @@ class SettingsController < ApplicationController
       if @mail_change
         if @new_mail_address == @confirm_mail_address
           if get_login_user.update_mail_address(@new_mail_address)
-            @mail_auth_url = url_for(:action => 'email_auth', 
-                                     :token_uuid => get_login_user.token_uuid)
-            Message.change_mail_addr(get_login_user.name, 
-                                     get_login_user.mail_addr, 
-                                     @mail_auth_url).deliver
+            mail_auth_url = url_for(
+              :action => 'email_auth', 
+              :token_uuid => get_login_user.token_uuid
+            )
+            job = MyDelayedJobs::MailingJob.new(
+              get_login_user, 
+              mail_auth_url
+            )
+            job.delay.run
           else
             logger.debug("Fail to update email address: " + @new_mail_address)
             # TODO 失敗した理由によってはエラーレベルを変える

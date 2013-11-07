@@ -79,3 +79,6 @@ gem 'figaro'
 gem 'ngrams_parser'
 
 gem "i18n-js"
+
+gem 'delayed_job_active_record'
+gem 'daemons'
