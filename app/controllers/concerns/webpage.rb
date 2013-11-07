@@ -9,11 +9,10 @@ require "bundler/setup"
 require "extractcontent"
 require "RMagick"
 require "image_size"
-require './lib/article_classifier.rb'
+require 'my_delayed_jobs'
 require './lib/personal-hotentry.rb'
 
 module Webpage
-  ArticleClassifier.instance.read_models
   PersonalHotentry.instance
 
   #TODO 定数定義は外出しにしたい
@@ -31,17 +30,19 @@ module Webpage
       ph_inst = PersonalHotentry.instance
       cluster_id, cluster_score = 
         ph_inst.predict_max_cluster_id(h["title"])
-      ac_inst = ArticleClassifier.instance
-      category_name = ac_inst.predict(h["title"])
-      category_id = Category.find_by_name(category_name).id
       article = Article.create(
         :url => url, 
         :title => h["title"], 
         :contents_preview => h["contentsPreview"], 
-        :category_id => category_id, 
+        :category_id => 0, 
         :cluster_id => cluster_id,
         :thumbnail => h["thumbnail"]
       )
+      if article
+        classify_job = 
+          MyDelayedJobs::ClassifyingJob.new(article.id)
+        classify_job.delay.run
+      end
     end
     get_login_user.add_cluster_id(article.cluster_id)
     article.add_strength

@@ -5,7 +5,7 @@ TMP_DIR = Rails.root.to_s + "/tmp/article_classifier/learning"
 TRAIN_DATA = TMP_DIR + "/title_with_class.txt"
 TRAIN_LIBSVM = TMP_DIR + "/libsvm.txt"
 
-ac_inst = ArticleClassifier.instance
+ac_inst = ArticleClassifier.new
 # make feature, class and df dictionary
 open(TRAIN_DATA) do |file|
   file.each do |line|

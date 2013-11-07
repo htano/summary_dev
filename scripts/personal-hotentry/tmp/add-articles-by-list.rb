@@ -6,7 +6,7 @@ TMP_DIR = Rails.root.to_s + "/tmp/personal-hotentry/tmp"
 TITLE_URL_FILE = TMP_DIR + "/title-url.txt"
 
 ph_inst = PersonalHotentry.instance
-ac_inst = ArticleClassifier.instance
+ac_inst = ArticleClassifier.new
 ac_inst.read_models
 open(TITLE_URL_FILE) do |file|
   file.each do |line|

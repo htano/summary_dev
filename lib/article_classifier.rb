@@ -1,10 +1,7 @@
 # coding: utf-8
 require 'article_classifier/hash_extended'
-require 'singleton'
 
 class ArticleClassifier
-  include Singleton
-
   MODEL_DIR = Rails.root.to_s + "/lib/article_classifier/model"
   DF_FILE = MODEL_DIR + "/df.txt"
   FEATURE_DICT_FILE = MODEL_DIR + "/feature_dict.txt"
