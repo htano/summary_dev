@@ -10,6 +10,7 @@ class SearchController < ApplicationController
     @target = 1
     @type = 1
     @sort = 1
+    @category = 0
   end
 
   def search_article
@@ -17,6 +18,7 @@ class SearchController < ApplicationController
     @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
     @type = params[:type] == BLANK || params[:type] == nil ? "1" : params[:type]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
+    @category = params[:category] == BLANK || params[:category] == nil ? "0" : params[:category]
     @articles = []
     @article_num = 0
     case @type
@@ -33,8 +35,18 @@ class SearchController < ApplicationController
       flash[:error] = "Please retry."
       redirect_to :action => "index" and return
     end
-    @article_num = @articles.length
-    redirect_to :action => "index", :type => @type, :sort => @sort and return unless @articles
+    unless @category == "0" or @articles == nil
+      @articles = @articles.where("category_id" => @category)
+    end
+    if @articles == nil
+      @article_num = 0
+    else
+      @article_num = @articles.length
+    end
+    p"!!!"
+    p @category
+    p"!!!"
+    redirect_to :action => "index" and return unless @articles
     render :template => "search/index" and return unless @articles
 
     case @sort

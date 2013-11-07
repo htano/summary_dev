@@ -73,28 +73,35 @@
 
 #option_area {
   border-right: 1px solid #ECECEC;
-  width: 14%;
+  width: 15%;
   height: 500px;
   float: left;
-  .type_area, .target_area {
+  .type_area, .target_area, .category_area {
     text-align: center;
-    height: 135px;
-    border-bottom: 1px solid #ECECEC;
-    .select_area {
-      span:hover {
-        border-radius: 2px;
-        background: #ff9b9b;
-        color:white;
-        font-size: 18px;
-      }
-    }
+    width: 100%;
+    border-top: 1px solid #ECECEC;
     p {
       color: gray;
+      font-weight: bold;
       font-size: 20px;
     }
+    .select_area {
+      span:hover {
+        padding: 0px 5px 0px 5px;
+        font-size: 18px;
+        border-radius: 0.2em;
+        background: #efefef;
+        color: gray;
+        cursor:pointer;
+        cursor:hand;
+      }
+    }
     .selected {
+      padding: 0px 5px 0px 5px;
       font-size: 18px;
-      color: #ff9b9b;
+      border-radius: 0.2em;
+      background-color: #ff9b9b;
+      color:white;
     }
     .not_selected {
       font-size: 12px;
