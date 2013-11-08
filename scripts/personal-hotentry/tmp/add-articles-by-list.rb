@@ -5,7 +5,7 @@ require './lib/article_classifier.rb'
 TMP_DIR = Rails.root.to_s + "/tmp/personal-hotentry/tmp"
 TITLE_URL_FILE = TMP_DIR + "/title-url.txt"
 
-ph_inst = PersonalHotentry.instance
+ph_inst = PersonalHotentry.new
 ac_inst = ArticleClassifier.new
 ac_inst.read_models
 open(TITLE_URL_FILE) do |file|

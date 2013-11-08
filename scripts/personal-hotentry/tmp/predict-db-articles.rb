@@ -1,7 +1,7 @@
 # coding: utf-8
 require './lib/personal-hotentry.rb'
 
-ph_inst = PersonalHotentry.instance
+ph_inst = PersonalHotentry.new
 Article.all.each do |a|
   contents = a.title
   if a.get_top_rated_summary

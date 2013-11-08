@@ -1,10 +1,7 @@
 # coding: utf-8
 require 'article_classifier/hash_extended'
-require 'singleton'
 
 class PersonalHotentry
-  include Singleton
-
   MODEL_DIR = Rails.root.to_s + "/lib/article_classifier/model"
   DF_FILE = MODEL_DIR + "/df.txt"
   DOCUMENT_SIZE = 10000

@@ -10,11 +10,8 @@ require "extractcontent"
 require "RMagick"
 require "image_size"
 require 'my_delayed_jobs'
-require './lib/personal-hotentry.rb'
 
 module Webpage
-  PersonalHotentry.instance
-
   #TODO 定数定義は外出しにしたい
   BLANK = ""
   THRESHOLD_FILE = 100
@@ -27,21 +24,21 @@ module Webpage
     if article == nil
       h = get_webpage_element(url)
       return nil if h == nil
-      ph_inst = PersonalHotentry.instance
-      cluster_id, cluster_score = 
-        ph_inst.predict_max_cluster_id(h["title"])
       article = Article.create(
         :url => url, 
         :title => h["title"], 
         :contents_preview => h["contentsPreview"], 
         :category_id => 0, 
-        :cluster_id => cluster_id,
+        :cluster_id => 0,
         :thumbnail => h["thumbnail"]
       )
       if article
         classify_job = 
           MyDelayedJobs::ClassifyingJob.new(article.id)
         classify_job.delay.run
+        cluster_job =
+          MyDelayedJobs::ClusteringJob.new(article.id)
+        cluster_job.delay.run
       end
     end
     get_login_user.add_cluster_id(article.cluster_id)
