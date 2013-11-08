@@ -13,15 +13,18 @@
 
 ActiveRecord::Schema.define(version: 20131107132720) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "articles", force: true do |t|
     t.string   "url"
     t.string   "title"
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "contents_preview"
     t.decimal  "strength"
     t.datetime "last_added_at"
-    t.string   "contents_preview"
     t.string   "thumbnail"
     t.integer  "summaries_count"
     t.integer  "user_articles_count"
@@ -29,8 +32,8 @@ ActiveRecord::Schema.define(version: 20131107132720) do
     t.string   "auto_summary_error_status"
   end
 
-  add_index "articles", ["last_added_at", "strength"], name: "idx_strength"
-  add_index "articles", ["url"], name: "idx_articles_on_url", unique: true
+  add_index "articles", ["last_added_at", "strength"], name: "idx_strength", using: :btree
+  add_index "articles", ["url"], name: "idx_articles_on_url", unique: true, using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -38,7 +41,7 @@ ActiveRecord::Schema.define(version: 20131107132720) do
     t.datetime "updated_at"
   end
 
-  add_index "categories", ["name"], name: "idx_categories_on_name", unique: true
+  add_index "categories", ["name"], name: "idx_categories_on_name", unique: true, using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -54,7 +57,7 @@ ActiveRecord::Schema.define(version: 20131107132720) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "favorite_users", force: true do |t|
     t.integer  "user_id"
@@ -63,7 +66,7 @@ ActiveRecord::Schema.define(version: 20131107132720) do
     t.datetime "updated_at"
   end
 
-  add_index "favorite_users", ["user_id", "favorite_user_id"], name: "index_favorite_users_on_user_id_and_favorite_user_id", unique: true
+  add_index "favorite_users", ["user_id", "favorite_user_id"], name: "index_favorite_users_on_user_id_and_favorite_user_id", unique: true, using: :btree
 
   create_table "good_summaries", force: true do |t|
     t.integer  "user_id"
@@ -72,7 +75,7 @@ ActiveRecord::Schema.define(version: 20131107132720) do
     t.datetime "updated_at"
   end
 
-  add_index "good_summaries", ["user_id", "summary_id"], name: "idx_good_summaries_on_user_id_and_summary_id", unique: true
+  add_index "good_summaries", ["user_id", "summary_id"], name: "idx_good_summaries_on_user_id_and_summary_id", unique: true, using: :btree
 
   create_table "summaries", force: true do |t|
     t.text     "content"
@@ -83,7 +86,7 @@ ActiveRecord::Schema.define(version: 20131107132720) do
     t.integer  "good_summaries_count", default: 0
   end
 
-  add_index "summaries", ["user_id", "article_id"], name: "index_summaries_on_user_id_and_article_id", unique: true
+  add_index "summaries", ["user_id", "article_id"], name: "index_summaries_on_user_id_and_article_id", unique: true, using: :btree
 
   create_table "user_article_tags", force: true do |t|
     t.integer  "user_article_id"
@@ -92,7 +95,7 @@ ActiveRecord::Schema.define(version: 20131107132720) do
     t.datetime "updated_at"
   end
 
-  add_index "user_article_tags", ["user_article_id", "tag"], name: "index_user_article_tags_on_user_article_id_and_tag", unique: true
+  add_index "user_article_tags", ["user_article_id", "tag"], name: "index_user_article_tags_on_user_article_id_and_tag", unique: true, using: :btree
 
   create_table "user_articles", force: true do |t|
     t.integer  "user_id"
@@ -103,7 +106,7 @@ ActiveRecord::Schema.define(version: 20131107132720) do
     t.boolean  "favorite_flg", default: false
   end
 
-  add_index "user_articles", ["user_id", "article_id"], name: "index_user_articles_on_user_id_and_article_id", unique: true
+  add_index "user_articles", ["user_id", "article_id"], name: "index_user_articles_on_user_id_and_article_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -130,7 +133,7 @@ ActiveRecord::Schema.define(version: 20131107132720) do
     t.integer  "favorite_users_count"
   end
 
-  add_index "users", ["name"], name: "idx_name", unique: true
-  add_index "users", ["open_id"], name: "idx_openid", unique: true
+  add_index "users", ["name"], name: "idx_name", unique: true, using: :btree
+  add_index "users", ["open_id"], name: "idx_openid", unique: true, using: :btree
 
 end
