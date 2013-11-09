@@ -64,14 +64,19 @@
         <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host , {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
       </div>
       <div id="article_operation">
-        <% if get_login_user %>
+        <div id="article_operation_<%= article.id %>">
+          <% if get_login_user %>
+            <%= render_read_status(article) %>
+<!--
           <% if article.user_articles.where(:user_id =>get_login_user.id).first %>
             <button class="read_it_cancel" disabled>reading</button>
           <% else %>
             <button class="read_it_later" >add</button>
           <% end %>
-        <% else %>
-        <% end %>
+-->
+          <% else %>
+          <% end %>
+        </div>
       </div>
       <% tags = article.get_top_rated_tag %>
       <% if tags == nil || tags.length == 0 %>

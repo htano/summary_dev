@@ -1,4 +1,6 @@
 # encoding: utf-8
+require "webpage"
+include Webpage
 
 class SearchController < ApplicationController
 
@@ -91,5 +93,17 @@ class SearchController < ApplicationController
     @users = Kaminari.paginate_array(@users).page(params[:page]).per(PAGE_PER)
 
     render :template => "search/index"
+  end
+
+  def read
+    @atricle_id = params[:article_id]
+    article = Article.find(@atricle_id)
+    add_webpage(article.url)
+  end
+
+  def not_read
+    @atricle_id = params[:article_id]
+    article = Article.find(@atricle_id)
+    article.user_articles.find_by_user_id(get_login_user.id).destroy()
   end
 end
