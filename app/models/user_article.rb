@@ -34,7 +34,9 @@ class UserArticle < ActiveRecord::Base
   def get_set_tag()
     first_index = 0
     last_index = 9
-    set_tags = self.user_article_tags.group("tag").order("user_article_tags.created_at desc").count("tag").keys
+    set_tags = self.user_article_tags.order(
+      "user_article_tags.created_at desc"
+    ).pluck(:tag)
     p set_tags
     return set_tags[first_index..last_index]
   end
