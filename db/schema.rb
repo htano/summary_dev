@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131102080405) do
+ActiveRecord::Schema.define(version: 20131109120815) do
 
   create_table "articles", force: true do |t|
     t.string   "url"
@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(version: 20131102080405) do
   add_index "categories", ["name"], name: "idx_categories_on_name", unique: true
 
   create_table "favorite_users", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "favorite_user_id"
+    t.integer  "user_id",          null: false
+    t.integer  "favorite_user_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

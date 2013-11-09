@@ -77,3 +77,9 @@ gem 'extractcontent', :git => 'http://github.com/mono0x/extractcontent.git'
 gem 'figaro'
 
 gem 'ngrams_parser'
+
+group :test do
+  gem "rspec"
+  gem "rspec-rails"
+  gem 'spork', '1.0.0rc4'
+end

@@ -1,0 +1,16 @@
+user1:
+    id: 1
+    name: "summary"
+    mail_addr: "summary.dev@gmail.com"
+    yuko_flg: true
+    prof_image: "no_image.png"
+    full_name: summary_dev
+    comment: "this is test comment."
+user2:
+    id: 2
+    name: "taro"
+    mail_addr: "taro@summary.com"
+    yuko_flg: true
+    prof_image: "no_image.png"
+    full_name: summary_taro
+    comment: "Nice to meet you, my name is summary taro."

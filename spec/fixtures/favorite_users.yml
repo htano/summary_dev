@@ -1,0 +1,44 @@
+follow_data_1:
+  id: 1
+  user_id : 1
+  favorite_user_id : 2
+follow_data_2:
+  id: 2
+  user_id: 1
+  favorite_user_id: 3
+follow_data_3:
+  id: 3
+  user_id: 1
+  favorite_user_id: 4
+follow_data_4:
+  id: 4
+  user_id: 1
+  favorite_user_id: 5
+follow_data_5:
+  id: 5
+  user_id: 1
+  favorite_user_id: 6
+follow_data_6:
+  id: 6
+  user_id: 2
+  favorite_user_id: 1
+follow_data_7:
+  id: 7
+  user_id: 2
+  favorite_user_id: 3
+follow_data_8:
+  id: 8
+  user_id: 2
+  favorite_user_id: 4
+follow_data_9:
+  id: 9
+  user_id: 2
+  favorite_user_id: 5
+follow_data_10:
+  id: 10
+  user_id: 3
+  favorite_user_id: 1
+follow_data_11:
+  id: 11
+  user_id: 3
+  favorite_user_id: 2
