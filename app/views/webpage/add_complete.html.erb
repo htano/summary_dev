@@ -21,7 +21,7 @@ $(document).ready(function() {
     <p><a href="<%= @url %>" target="_blank"><%= @title[0, 100] %></a></p>
   </div>
   <div id="contents_preview">
-    <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><%= @contents_preview[0, 200] %></p>
+    <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><%= @contents_preview[0, 150] %></p>
   </div>
   <div id="category">
     <%= @category %>

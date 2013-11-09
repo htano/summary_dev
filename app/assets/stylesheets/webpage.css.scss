@@ -3,12 +3,12 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 a {
- color: gray; 
+ color: gray;
 }
 
 .comment_box {
   padding: 20px 26px 0 30px;
-  height: 100px;
+  height: 150px;
   font-size: 30px;
   font-weight: bold;
 }
@@ -103,19 +103,19 @@ a {
   border-top: 4px solid #ECECEC;
   z-index: 1;
   width: 680px;
-  height: 300px;
+  height: 250px;
   color :gray;
   #thumbnail {
     padding: 2px 0 0 0;
     //border: 1px solid gray;
-    height: 200px;
+    height: 150px;
     width: 100px;
     float: left;
     p {
       font-size: 30px;
     }
     img {
-      max-height: 200px;
+      max-height: 150px;
       max-width: 100px;
       //height: 100px;
       //width: 100px;
@@ -142,7 +142,7 @@ a {
     padding: 0 10px 0 10px;
     max-width: 680px;
     width: 500px;
-    height: 100px;
+    height: 50px;
     p {
       font-size: 10px;
     }

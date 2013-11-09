@@ -14,7 +14,8 @@ class WebpageController < ApplicationController
     if signed_in?
       @user_id = get_login_user.id
       @url = params[:url]
-      h =   get_webpage_element(@url, true, false, false)
+      @add_flag = params[:add_flag]
+      h = get_webpage_element(@url, true, false, false)
       if h == nil || @url.start_with?("chrome://extensions/")
         flash[:error] = "Please check URL."
         redirect_to :controller => "webpage", :action => "add" and return
@@ -53,6 +54,9 @@ class WebpageController < ApplicationController
       if article == nil
         flash[:error] = "Please check URL."
         redirect_to :controller => "webpage", :action => "add" and return
+      end
+      if params[:add_flag] == BLANK
+        redirect_to :controller => "mypage", :action => "index"
       end
       @article_id = article.id
       @title = article.title

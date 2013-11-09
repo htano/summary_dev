@@ -60,9 +60,14 @@ $(document).ready(function() {
       </div>
     </div>
     <div id="submit_area">
-      <input type="submit" id="submit" value="add" class="button button-flat:hover submit" onclick="ckick_submit_button">
+      <% if @add_flag == nil %>
+        <input type="submit" id="submit" value="edit" class="button button-flat:hover submit" onclick="ckick_submit_button">
+      <% else %>
+        <input type="submit" id="submit" value="add" class="button button-flat:hover submit" onclick="ckick_submit_button">
+      <% end %>
     </div>
       <input type="hidden" name="url" value="<%= @url %>">
+      <input type="hidden" name="add_flag" value="<%= @add_flag %>">
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   </form>
 </div>
