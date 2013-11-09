@@ -12,23 +12,7 @@ class MypageController < ApplicationController
 
   def index
     @table_row_num = TABLE_ROW_NUM
-    @is_login_user = params[:name] ? login_user?(params[:name]) : true
-
-    if @is_login_user
-      @user = get_login_user
-      @user.update_mypage_access
-    else
-      @user = User.find_by_name(params[:name])
-      @is_already_following = is_already_following?(@user.id)
-    end
-
-    favorite_users = get_favorite_users(@user)
-    @favorite_users_info = {:num => favorite_users.length ,
-                            :lists => favorite_users[0..RENDER_FAVORITE_USERS_NUM]}
-
-    followers = get_followers(@user)
-    @followers_info = {:num => followers.length,
-                        :lists => followers[0..RENDER_FOLLOWERS_NUM]}
+    get_profile_info()
 
     update_sort_type(cookies, params[:direction], params[:sort])
     sort_info = get_sort_info(cookies)
@@ -73,7 +57,6 @@ class MypageController < ApplicationController
       @spage = 1
     end
     @summaries_table = get_table_data(@user, summarized_articles, @is_login_user, true)
-    @total_summaries_num = @user.summaries.size
 
     if params[:mpage]
       @current_tab = "main"
@@ -92,6 +75,10 @@ class MypageController < ApplicationController
       format.js
     end
 
+  end
+
+  def tag
+    get_profile_info()
   end
 
   def delete_article
@@ -269,6 +256,28 @@ private
         format.js { render 'login_page' and return }
       end
     end
+  end
+
+  def get_profile_info
+    @is_login_user = params[:name] ? login_user?(params[:name]) : true
+
+    if @is_login_user
+      @user = get_login_user
+      @user.update_mypage_access
+    else
+      @user = User.find_by_name(params[:name])
+      @is_already_following = is_already_following?(@user.id)
+    end
+
+    favorite_users = get_favorite_users(@user)
+    @favorite_users_info = {:num => favorite_users.length ,
+                            :lists => favorite_users[0..RENDER_FAVORITE_USERS_NUM]}
+
+    followers = get_followers(@user)
+    @followers_info = {:num => followers.length,
+                        :lists => followers[0..RENDER_FOLLOWERS_NUM]}
+
+    @total_summaries_num = @user.summaries.size
   end
 
   def is_already_following?(user_id)
