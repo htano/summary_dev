@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+ruby "2.0.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
@@ -87,5 +88,3 @@ gem "i18n-js"
 
 gem 'delayed_job_active_record'
 gem 'daemons'
-
-ruby "2.0.0"
