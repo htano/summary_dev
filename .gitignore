@@ -29,5 +29,6 @@
 /public/assets
 
 # Ignore application configuration
-#/config/application.yml
-#/config/application.yml.prod
+/config/application.yml
+/config/application.yml.dev
+/config/application.yml.prod
