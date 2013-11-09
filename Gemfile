@@ -77,7 +77,7 @@ group :development do
   gem 'binding_of_caller'
 end
 
-gem 'extractcontent', :git => 'http://github.com/mono0x/extractcontent.git'
+gem 'extractcontent', :git => 'https://github.com/mono0x/extractcontent.git'
 
 gem 'figaro'
 

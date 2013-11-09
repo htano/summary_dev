@@ -1,5 +1,5 @@
 GIT
-  remote: http://github.com/mono0x/extractcontent.git
+  remote: https://github.com/mono0x/extractcontent.git
   revision: 220ed055e8f8e22b2fb085da593881c3ec9bba12
   specs:
     extractcontent (0.0.1)
