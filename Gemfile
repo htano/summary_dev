@@ -87,3 +87,5 @@ gem "i18n-js"
 
 gem 'delayed_job_active_record'
 gem 'daemons'
+
+ruby "2.0.0"
