@@ -1,14 +1,13 @@
 class FollowListsController < ApplicationController
   DISPLAY_USER_NUM = 20
 
+  before_filter :require_login
+
   def followers
-    @user_name = get_user_name(params[:name])
+    @user_name = params[:name] ? params[:name] : get_current_user_name
     user = User.find_by_name(@user_name)
 
-    number = 0
-    if params[:number]
-      number = params[:number].to_i
-    end
+    number = params[:number] ? params[:number].to_i : 0
     offset = DISPLAY_USER_NUM * number
 
     follower_users = 
@@ -23,13 +22,10 @@ class FollowListsController < ApplicationController
   end
 
   def following
-    @user_name = get_user_name(params[:name])
+    @user_name = params[:name] ? params[:name] : get_current_user_name
     user = User.find_by_name(@user_name)
 
-    number = 0
-    if params[:number]
-      number = params[:number].to_i
-    end
+    number = params[:number] ? params[:number].to_i : 0
     offset = DISPLAY_USER_NUM * number
 
     @following_users = []
@@ -42,7 +38,7 @@ class FollowListsController < ApplicationController
   end
 
   def suggestion
-    @user_name = get_user_name(params[:name])
+    @user_name = params[:name] ? params[:name] : get_current_user_name
     user = User.find_by_name(@user_name)
     current_user = get_login_user
 
@@ -66,10 +62,7 @@ class FollowListsController < ApplicationController
     end
     candidate_user_ids = candidate_user_ids.uniq
 
-    number = 0
-    if params[:number]
-      number = params[:number].to_i
-    end
+    number = params[:number] ? params[:number].to_i : 0
     offset = DISPLAY_USER_NUM * number
 
     @candidate_users = 
@@ -77,12 +70,9 @@ class FollowListsController < ApplicationController
   end
 
 private
-  def get_user_name(param)
-    if param
-      user_name = param
-    else
-      user_name = get_current_user_name
+  def require_login
+    if params[:name] == nil && signed_in? == false
+      redirect_to :controller => 'consumer', :action => 'index'
     end
-    return user_name
   end
 end
