@@ -1,8 +1,10 @@
 # coding: utf-8
 require 'uri'
+require 'singleton'
 
-# TODO: Singletonを使う
 class ContentsExtractor::ExtractorFactory
+  include Singleton
+
   def initialize
     @config = Hash.new
   end

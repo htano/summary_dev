@@ -13,8 +13,7 @@ rescue => e
   exit 1
 end
 
-# TODO: Singleton使う
-factory = ContentsExtractor::ExtractorFactory.new
+factory = ContentsExtractor::ExtractorFactory.instance
 extractor = factory.new_extractor(url)
 extractor.analyze!(html)
 puts extractor.get_title
