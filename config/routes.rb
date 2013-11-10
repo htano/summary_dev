@@ -19,6 +19,7 @@ SummaryDev::Application.routes.draw do
   get "settings/account"
 
   get "auth/:provider/callback" => "consumer#oauth_complete"
+  get "auth/failure" => "consumer#auth_failure"
 
   get "mypage/index"
   post "mypage/delete_article"

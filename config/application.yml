@@ -8,6 +8,10 @@
 
 ## This is figaro configuration of development environment.
 # For OmniAuth
+# (local test2)
+#OMNIAUTH_GITHUB_KEY: e630d444e52372bae36e
+#OMNIAUTH_GITHUB_SECRET: 770df3228e6018ed14bc0c0f1061e0f9ecb7d37c
+
 OMNIAUTH_GITHUB_KEY: d9ace621056b74fd7882
 OMNIAUTH_GITHUB_SECRET: c51ae94cd901abcebeeb9140ffddc068fa25da54
 OMNIAUTH_TWITTER_KEY: KyySEEUVeybRoV31R8tFrg
