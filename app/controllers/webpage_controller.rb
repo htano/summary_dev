@@ -23,6 +23,7 @@ class WebpageController < ApplicationController
 
       @title = h["title"]
       @recent_tags = UserArticle.get_recent_tag(@user_id)
+      #@recent_tags = []
       @set_tags = []
 
       article = Article.find_by_url(@url)
@@ -31,6 +32,7 @@ class WebpageController < ApplicationController
         @reader_num = article.user_articles_count
         @article_id = article.id
         @top_rated_tags = article.get_top_rated_tag
+        #@top_rated_tags = []
         user_article = article.user_articles.find_by_user_id(@user_id)
         @set_tags = user_article.get_set_tag unless user_article == nil
       end

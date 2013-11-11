@@ -269,6 +269,6 @@ class Article < ActiveRecord::Base
   def get_top_rated_tag
     first_index = 0
     last_index = 9
-    return Article.joins(:user_articles => :user_article_tags).where("url" => self.url).group("tag").order("count_tag desc, user_article_tags.created_at desc").count("tag").keys[first_index..last_index]
+    return Article.joins(:user_articles => :user_article_tags).where("url" => self.url).group("tag, user_article_tags.created_at").order("count_tag desc, user_article_tags.created_at desc").count("tag").keys[first_index..last_index]
   end
 end
