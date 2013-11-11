@@ -1,6 +1,5 @@
 # coding: utf-8
 class TextAnalyzer::DocumentFrequency
-  GRAM_SIZE = 2
   DOCUMENT_SIZE = 10000
 
   def initialize(filename)
@@ -32,6 +31,9 @@ class TextAnalyzer::DocumentFrequency
     else 
       return Math.log(DOCUMENT_SIZE)
     end
+  end
+
+  def tfidf(sentence)
   end
 
   def add_text(text)

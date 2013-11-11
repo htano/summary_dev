@@ -26,6 +26,7 @@ class ContentsExtractor::MonoExtractor < ContentsExtractor::BaseExtractor
       if p.length > 0
         p_obj = ContentsExtractor::Paragraph.new
         p.split(/[。．]/).each do |s|
+          s.gsub!(//, "。")
           p_obj.add_sentence(s + "。")
         end
         @body.push(p_obj)
