@@ -34,15 +34,17 @@ class TextAnalyzer::DocumentFrequency
   end
 
   def tfidf(sentence)
+    tfidf = Hash.new
+    tf = get_tf(sentence)
+    tf.each do |term, freq|
+      tfidf[term] = freq * idf(term)
+    end
+    return tfidf
   end
 
   def add_text(text)
     text.force_encoding("UTF-8")
-    ng_ary = NgramsParser::ngram(text,GRAM_SIZE)
-    tf = Hash.new(0)
-    ng_ary.each do |ng|
-      tf[ng] += 1
-    end
+    tf = get_tf(text)
     tf.keys.each do |ng|
       @df[ng] += 1
     end
