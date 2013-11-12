@@ -18,8 +18,7 @@ class UserArticle < ActiveRecord::Base
   def self.get_recent_tag(user_id)
     first_index = 0
     last_index = 9
-    #recent_tags = joins(:user_article_tags).where("user_id" => user_id).group("tag, user_article_tags.created_at").order("user_article_tags.created_at desc").count("tag").keys
-    recent_tags = joins(:user_article_tags).where("user_id" => user_id).group("tag, user_article_tags.created_at").order("user_article_tags.created_at desc").count("tag").keys
+    recent_tags = joins(:user_article_tags).where("user_id" => user_id).order("user_article_tags.created_at desc").pluck("user_article_tags.tag").uniq
     return recent_tags[first_index..last_index]
   end
 
@@ -27,7 +26,7 @@ class UserArticle < ActiveRecord::Base
   def get_set_tag()
     first_index = 0
     last_index = 9
-    set_tags = self.user_article_tags.group("tag, user_article_tags.created_at").order("user_article_tags.created_at desc").count("tag").keys
+    set_tags = self.user_article_tags.order("user_article_tags.created_at desc").pluck(:tag).uniq
     return set_tags[first_index..last_index]
   end
 end

@@ -27,21 +27,21 @@ class Article < ActiveRecord::Base
   #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag)
     return nil if tag == nil || tag == BLANK
-    articles = joins(:user_articles => :user_article_tags).where("user_article_tags.tag" => tag).group("url")
+    articles = joins(:user_articles => :user_article_tags).where("user_article_tags.tag" => tag).group("articles.id")
     return articles
   end
 
   #指定された本文を持つ記事を取得する
   def self.search_by_content(content)
     return nil if content == nil || content == BLANK
-    articles = where(["contents_preview LIKE ? or title LIKE ?", "%"+content+"%", "%"+content+"%"])
+    articles = where(["contents_preview ILIKE ? or title ILIKE ?", "%"+content+"%", "%"+content+"%"])
     return articles
   end
 
   #指定されたドメインがURLに含まれる記事を取得する
   def self.search_by_domain(domain)
     return nil if domain == nil || domain == BLANK
-    articles = where(["url LIKE ? or url LIKE ? ", "http://"+domain+"%", "https://"+domain+"%"])
+    articles = where(["url ILIKE ? or url ILIKE ? ", "http://"+domain+"%", "https://"+domain+"%"])
     return articles
   end
 
@@ -269,6 +269,7 @@ class Article < ActiveRecord::Base
   def get_top_rated_tag
     first_index = 0
     last_index = 9
-    return Article.joins(:user_articles => :user_article_tags).where("url" => self.url).group("tag, user_article_tags.created_at").order("count_tag desc, user_article_tags.created_at desc").count("tag").keys[first_index..last_index]
+    tag_array = self.user_articles.joins(:user_article_tags).group(:tag).order("count_tag desc").count(:tag).keys
+    return tag_array[first_index..last_index]
   end
 end

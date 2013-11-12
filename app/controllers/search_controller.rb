@@ -45,9 +45,6 @@ class SearchController < ApplicationController
     else
       @article_num = @articles.length
     end
-    p"!!!"
-    p @category
-    p"!!!"
     redirect_to :action => "index" and return unless @articles
     render :template => "search/index" and return unless @articles
 
