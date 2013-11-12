@@ -10,15 +10,9 @@ class FollowListsController < ApplicationController
     number = params[:number] ? params[:number].to_i : 0
     offset = DISPLAY_USER_NUM * number
 
-    follower_users = 
-      FavoriteUser.where(:favorite_user_id => user.id).offset(offset).take(DISPLAY_USER_NUM)
-    @followers = []
-    follower_users.each do |follower_user|
-      follower = follower_user.user
-      if follower != get_login_user
-        @followers.push(follower)
-      end
-    end
+    follower_ids = 
+      FavoriteUser.where(:favorite_user_id => user.id).offset(offset).limit(DISPLAY_USER_NUM).pluck(:user_id)
+    @followers = User.where(:id => follower_ids)
   end
 
   def following
