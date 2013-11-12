@@ -6,5 +6,5 @@ module AutoSummary
   BODY_DF_FILE  = '/body_df.txt'
   require 'auto-summary/feature-extractor'
   require 'auto-summary/summarizer'
-  require 'auto-summary/learner'
+  require 'auto-summary/trainer'
 end
