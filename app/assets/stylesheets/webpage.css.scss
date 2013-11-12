@@ -156,6 +156,22 @@ a {
     p {
       font-size: 10px;
     }
+    a {
+      //background: #fff;
+      //border-left: 2px solid #5B91FF;
+      //font-weight: bold;
+      color: gray;
+      cursor: default;
+      //box-shadow: inset 0 0px 1px rgba(0, 0, 0, 0.1);
+      cursor:pointer;
+      cursor:hand;
+      //text-decoration: none;
+      //display: block;
+      //padding: 8px 10px 8px 8px;
+      //text-shadow: 0 1px 0 #fff;
+      //border-left: 2px solid #fafafb;
+      //background: #fafafb;
+    }
   }
 
   #tag_area {
