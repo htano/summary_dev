@@ -2,6 +2,15 @@ module TextAnalyzer
   require 'text-analyzer/document-frequency'
   GRAM_SIZE = 2
 
+  def get_tn(sentence)
+    tn = Hash.new(1)
+    ng_ary = NgramsParser::ngram(sentence, GRAM_SIZE)
+    ng_ary.each do |ng|
+      tn[ng] += 1
+    end
+    return tn
+  end
+
   def get_tf(sentence)
     tn_sum = 0
     tn = Hash.new(0)

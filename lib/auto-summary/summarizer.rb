@@ -40,7 +40,8 @@ class AutoSummary::Summarizer
     summary_contents = get_summary_contents(sentences_with_score)
     if summary_contents.length > 0
       return summary_contents
-    else return nil
+    else
+      return nil
     end
   end
 
@@ -110,10 +111,9 @@ class AutoSummary::Summarizer
   def read_hash(filename)
     h = Hash.new
     open(filename) do |f|
-      f.each do |line|
-        line.chomp!
-        k, v = line.split("\t")
-        h[k] = v.to_f
+      f.each_with_index do |value, key|
+        value.chomp!
+        h[key+1] = value.to_f
       end
     end
   end
