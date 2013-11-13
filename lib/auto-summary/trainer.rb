@@ -10,7 +10,6 @@ class AutoSummary::Trainer
     @body_df = DocumentFrequency.new(df_dir + BODY_DF_FILE)
     @title_df.open_file
     @body_df.open_file
-    @ext_factory = ExtractorFactory.instance
   end
 
   def print_liblinears_of_webpage(
@@ -19,13 +18,9 @@ class AutoSummary::Trainer
     body_array
   )
     feature_extractor = 
-      FeatureExtractor.new(title, 
-                           body_array, 
-                           @title_df, 
-                           @body_df)
+      FeatureExtractor.new(title, body_array, @title_df, @body_df)
     summary_array.each do |s|
-      features = 
-        feature_extractor.get_features(s)
+      features = feature_extractor.get_features(s)
       print "+1"
       features.each do |k,v|
         print " #{k}:#{v}"
@@ -33,8 +28,7 @@ class AutoSummary::Trainer
       print "\n"
     end
     body_array.each do |s|
-      features = 
-        feature_extractor.get_features(s)
+      features = feature_extractor.get_features(s)
       print "-1"
       features.each do |k,v|
         print " #{k}:#{v}"

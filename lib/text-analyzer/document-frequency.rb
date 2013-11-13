@@ -1,5 +1,6 @@
 # coding: utf-8
 class TextAnalyzer::DocumentFrequency
+  include TextAnalyzer
   DOCUMENT_SIZE = 10000
 
   def initialize(filename)

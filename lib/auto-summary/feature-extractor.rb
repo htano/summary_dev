@@ -2,7 +2,7 @@
 require './lib/text-analyzer.rb'
 
 class AutoSummary::FeatureExtractor
-  include TextAnayzer
+  include TextAnalyzer
   def initialize(title, doc_ary, title_df, body_df)
     @title = title
     @doc_array = doc_ary
@@ -15,10 +15,11 @@ class AutoSummary::FeatureExtractor
 
   def get_features(sentence)
     features = Hash.new(0)
-    features[1] = get_title_cosine(sentence)
-    features[2] = get_generative_probability(sentence)
-    features[3] = get_sumof_idf(sentence)
+    features[1] = get_sumof_idf(sentence)
+    features[2] = get_title_cosine(sentence)
+    features[3] = get_generative_probability(sentence)
     features[get_length_key(sentence)] = 1.0
+    return features
   end
 
   private
@@ -31,7 +32,7 @@ class AutoSummary::FeatureExtractor
     s_prob = 0.0
     if sentence.length > 0
       get_tn(sentence).each do |ng, num|
-        s_prob += num * Math.log(get_probability(ng))
+        s_prob += (num-1) * Math.log(get_probability(ng))
       end
       s_prob = s_prob / sentence.length
     end
@@ -48,32 +49,30 @@ class AutoSummary::FeatureExtractor
 
   def get_length_key(sentence)
     case sentence.length
-    when 0
-      length_key = 4
     when 1..5
-      length_key = 5
+      length_key = 4
     when 6..10
-      length_key = 6
+      length_key = 5
     when 11..20
-      length_key = 7
+      length_key = 6
     when 21..25
-      length_key = 8
+      length_key = 7
     when 26..30
-      length_key = 9
+      length_key = 8
     when 31..40
-      length_key = 10
+      length_key = 9
     when 41..60
-      length_key = 11
+      length_key = 10
     when 61..100
-      length_key = 12
+      length_key = 11
     else
-      length_key = 13
+      length_key = 12
     end
     return length_key
   end
 
   def get_doc_tn
-    doc_tn = Hash.new(0)
+    doc_tn = Hash.new(1)
     @doc_array.each do |sentence|
       get_tn(sentence).each do |ng, num|
         doc_tn[ng] += num
@@ -83,7 +82,7 @@ class AutoSummary::FeatureExtractor
   end
 
   def get_sum_doc_tn
-    sum_doc_tn = 0
+    sum_doc_tn = 1
     @doc_tn.each do |ng, num|
       sum_doc_tn += num
     end
