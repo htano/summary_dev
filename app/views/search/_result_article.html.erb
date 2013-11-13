@@ -67,14 +67,6 @@
         <div id="article_operation_<%= article.id %>">
           <% if get_login_user %>
             <%= render_read_status(article) %>
-<!--
-          <% if article.user_articles.where(:user_id =>get_login_user.id).first %>
-            <button class="read_it_cancel" disabled>reading</button>
-          <% else %>
-            <button class="read_it_later" >add</button>
-          <% end %>
--->
-          <% else %>
           <% end %>
         </div>
       </div>
@@ -92,12 +84,7 @@
           <% end %>
         </div>
       <% end %>
-<!--
-        <div id="category">
-          <%= article.get_category_name %>
-        </div>
--->
-      </div>
+    </div>
   <% end %>
   <div style='text-align:center;'>
     <%= paginate @articles, :window =>4, :outer_window => 2  %>

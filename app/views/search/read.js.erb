@@ -1,4 +1,4 @@
-<% not_read = button_to "not read",
+<% not_read = button_to "Read cancel",
             {:action => "not_read", :controller => "search", :article_id => @atricle_id},
             {:class => "read_it_cancel", :remote => true} %>
 $("#article_operation_<%= @atricle_id %>").html("<%= raw(escape_javascript(not_read))  %>")
