@@ -22,13 +22,9 @@ class FollowListsController < ApplicationController
     number = params[:number] ? params[:number].to_i : 0
     offset = DISPLAY_USER_NUM * number
 
-    @following_users = []
-    user.favorite_users.offset(offset).take(DISPLAY_USER_NUM).each do |favorite_user|
-      following_user = User.find(favorite_user.favorite_user_id)
-      if following_user != get_login_user
-        @following_users.push(following_user)
-      end
-    end
+    following_ids = 
+      user.favorite_users.offset(offset).limit(DISPLAY_USER_NUM).pluck(:favorite_user_id)
+    @following_users = User.where(:id => following_ids)
   end
 
   def suggestion
