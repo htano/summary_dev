@@ -14,12 +14,13 @@ class AutoSummary::Trainer
 
   def print_liblinears_of_webpage(
     title,
-    summary_array,
-    body_array
+    body_array,
+    positive_array,
+    negative_array
   )
     feature_extractor = 
       FeatureExtractor.new(title, body_array, @title_df, @body_df)
-    summary_array.each do |s|
+    positive_array.each do |s|
       features = feature_extractor.get_features(s)
       print "+1"
       features.each do |k,v|
@@ -27,7 +28,7 @@ class AutoSummary::Trainer
       end
       print "\n"
     end
-    body_array.each do |s|
+    negative_array.each do |s|
       features = feature_extractor.get_features(s)
       print "-1"
       features.each do |k,v|

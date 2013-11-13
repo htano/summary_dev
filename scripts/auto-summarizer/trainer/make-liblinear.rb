@@ -12,7 +12,8 @@ Dir.glob(IN_DIR + "/????????/train_data_*.txt").each do |filename|
   line_idx = 0
   title = String.new
   body_array = Array.new
-  summary_array = Array.new
+  positive_array = Array.new
+  negative_array = Array.new
   open(filename) do |f|
     f.each do |line|
       line.chomp!
@@ -31,6 +32,7 @@ Dir.glob(IN_DIR + "/????????/train_data_*.txt").each do |filename|
             p.split(/。/).each do |s|
               s.gsub!(//, "。")
               body_array.push(s)
+              negative_array.push(s)
             end
           end
         end
@@ -43,22 +45,27 @@ Dir.glob(IN_DIR + "/????????/train_data_*.txt").each do |filename|
           }
           if p.length > 0
             p.split(/。/).each do |s|
+              body_array.push(s)
               if s =~ /^\([^\)]+\)$/
-                body_array.push(s)
+                negative_array.push(s)
               else
                 if s.length < 6
-                  body_array.push(s)
+                  negative_array.push(s)
                 else
-                  body_array.push(s)
-                  summary_array.push(s)
+                  positive_array.push(s)
+                  positive_array.push(s)
+                  positive_array.push(s)
                 end
               end
             end
           end
         end
-        train.print_liblinears_of_webpage(title, 
-                                          summary_array, 
-                                          body_array)
+        train.print_liblinears_of_webpage(
+          title, 
+          body_array,
+          positive_array,
+          negative_array
+        ) 
 
       else
         #error
