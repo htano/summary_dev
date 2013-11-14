@@ -2,12 +2,6 @@
 <%= stylesheet_link_tag "webpage" %>
 <% end %>
 
-<script>
-$(document).ready(function() {
-  loadEditForm()
-});
-</script>
-
 <div class="comment_box">
   <p>Register Complete.</p>
   <span id="msg"><%= @msg %></span>
@@ -38,7 +32,6 @@ $(document).ready(function() {
 </div>
 
 <div id="operation_contents">
-<!--  <span id="prof_image"><%= image_tag(@prof_image, :size => "30x30") %></span>-->
   <span id="mypage">
     <%= image_tag(@prof_image, :size => "15x15") %>
     <%= link_to content_tag(:p, get_current_user_name) , {:controller => "mypage", :action => "index"} %>
