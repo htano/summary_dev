@@ -52,7 +52,7 @@ class AutoSummary::Summarizer
     sentences_with_score.sort{|a,b|
       b[:score]<=>a[:score]
     }.each do |s_score|
-      if sum_length + s_score[:sen].length <= 300
+      if summary_length + s_score[:sen].length <= 300
         summary_sentences.push(s_score)
         summary_length += s_score[:sen].length
       end
@@ -69,7 +69,7 @@ class AutoSummary::Summarizer
   def make_sentences_with_score(sentence_ary, feature_extractor)
     sentences_with_score = Array.new
     sentence_ary.each_with_index do |s, idx|
-      features = get_features(s)
+      features = feature_extractor.get_features(s)
       s_score = get_score(features)
       s_with_score = {
         :order => idx,
@@ -116,5 +116,6 @@ class AutoSummary::Summarizer
         h[key+1] = value.to_f
       end
     end
+    return h
   end
 end
