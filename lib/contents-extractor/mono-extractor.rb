@@ -18,6 +18,17 @@ class ContentsExtractor::MonoExtractor < ContentsExtractor::BaseExtractor
         body_text += d.text + "\n"
       end 
     end 
+    # Error Checking & Handling
+    begin
+      @title.split("")
+      body_text.split("")
+    rescue => err
+      @error_status = "encoding"
+      Rails.logger.info(
+        "A page has invalid encoding: " + err.message
+      )
+      return false
+    end
     body_text.gsub!(/\r/, "")
     body_text.split("\n").each do |p|
       p.gsub!(/([\u300C][^\u300D]+[\u300D])/){
@@ -26,11 +37,18 @@ class ContentsExtractor::MonoExtractor < ContentsExtractor::BaseExtractor
       if p.length > 0
         p_obj = ContentsExtractor::Paragraph.new
         p.split(/[。．]/).each do |s|
+          next if s =~ /^\d+.*\d{4}.\d{2}.\d{2}.*ID.*$/;
+          s.gsub!(/(.)\1{3}\1+/, "")
+          next if s.length <= 5;
+          #s.gsub!(/[ 　]/, "")
           s.gsub!(//, "。")
           p_obj.add_sentence(s + "。")
         end
-        @body.push(p_obj)
+        if p_obj.get_length > 0
+          @body.push(p_obj)
+        end
       end
     end
+    return true
   end
 end

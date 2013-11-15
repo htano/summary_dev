@@ -26,15 +26,20 @@ Article.all.each do |e|
     break
   end
 
-  summary_contents = summarizer.run(e.url)
+  summary_contents, error_status = summarizer.run(e.url)
+  if error_status
+    e.auto_summary_error_status = error_status
+    e.save
+  else
+    Summary.create(
+      :content => summary_contents, 
+      :user_id => user.id, 
+      :article_id => e.id
+    )
+    puts "[URL] " + e.url
+    puts "[Title] " + e.title
+    puts summary_contents
+    puts "\n"
+  end
 
-  Summary.create(
-    :content => summary_contents, 
-    :user_id => user.id, 
-    :article_id => e.id
-  )
-  puts "[URL] " + e.url
-  puts "[Title] " + e.title
-  puts summary_contents
-  puts "\n"
 end

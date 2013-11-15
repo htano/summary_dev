@@ -22,4 +22,4 @@ rails runner scripts/personal-hotentry/tmp/add-articles-by-list.rb
 
 # Auto summarization
 echo "=== run auto summarization ==="
-rails runner scripts/auto_summarize/predict/run_auto_summarize.rb
+rails runner scripts/auto-summarizer/predictor/run-summarize.rb

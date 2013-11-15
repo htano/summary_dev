@@ -22,11 +22,15 @@ class AutoSummary::Summarizer
     unless html
       html = get_html(url)
       unless html
-        return nil
+        return nil, "openuri"
       end
     end
     contents_extractor = @ext_factory.new_extractor(url)
-    contents_extractor.analyze!(html)
+    unless contents_extractor.analyze!(html)
+      if contents_extractor.get_error_status
+        return nil, contents_extractor.get_error_status
+      end
+    end
     title = contents_extractor.get_title
     sentence_ary = contents_extractor.get_body_sentence_array
     feature_extractor = FeatureExtractor.new(title, 
@@ -39,9 +43,9 @@ class AutoSummary::Summarizer
     )
     summary_contents = get_summary_contents(sentences_with_score)
     if summary_contents.length > 0
-      return summary_contents
+      return summary_contents, nil
     else
-      return nil
+      return nil, "no_summary"
     end
   end
 
@@ -52,9 +56,11 @@ class AutoSummary::Summarizer
     sentences_with_score.sort{|a,b|
       b[:score]<=>a[:score]
     }.each do |s_score|
-      if summary_length + s_score[:sen].length <= 300
-        summary_sentences.push(s_score)
-        summary_length += s_score[:sen].length
+      if s_score[:score] > -1.0
+        if (summary_length + s_score[:sen].length) <= 300
+          summary_sentences.push(s_score)
+          summary_length += s_score[:sen].length
+        end
       end
     end
     summary_contents = ""
@@ -90,7 +96,7 @@ class AutoSummary::Summarizer
       html = html.encode("UTF-8", "UTF-8")
       return html
     rescue => e
-      Rails.logger.error("openuri: " + e.message)
+      Rails.logger.info("openuri: " + e.message)
       return nil
     end
   end

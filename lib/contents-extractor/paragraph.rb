@@ -8,6 +8,10 @@ class ContentsExtractor::Paragraph
     @sentences.push(s)
   end
 
+  def get_length
+    return @sentences.length
+  end
+
   def get_text
     sentence_text = ""
     @sentences.each do |s|

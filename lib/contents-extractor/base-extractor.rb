@@ -5,10 +5,19 @@ class ContentsExtractor::BaseExtractor
     @html = nil
     @title = ""
     @body = Array.new
+    @error_status = nil
   end
 
   def analyze!(html)
-    raise "Called abstract method: analyze!"
+    Rails.logger.error(
+      "Called abstract method: analyze!"
+    )
+    @error_status = "called_abstract"
+    return false
+  end
+
+  def get_error_status
+    return @error_status
   end
 
   def get_title
