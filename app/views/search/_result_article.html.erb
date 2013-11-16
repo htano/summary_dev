@@ -76,12 +76,12 @@
           no tags for this article.
         <br></div>
       <% else %>
-        <div id="tag">
-          <% tags.each do |tag| %>
-            <span class="edited_tag">
-              <%= link_to tag ,{:controller =>"search", :action => "search_article", :searchtext => tag, :type => "2", :sort => "1"} %>
-            </span>
-          <% end %>
+        <div class="article-tags">
+          <ul class="tags">
+            <% tags.each do |tag| %>
+              <li><%= link_to tag ,{:controller => "search", :action => "search_article", :searchtext => tag, :target => "1",:type => "2", :sort => "1"} %></li>
+            <% end %>
+          </ul>
         </div>
       <% end %>
     </div>
