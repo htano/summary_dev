@@ -54,15 +54,6 @@ BLANK = ''
     when "8"
       set_category_other_selected()
 
-###
-jQuery(document).on "click", ".btn-info", ->
-    $(this).parent().parent().parent().parent().parent().removeClass()
-    $(this).parent().parent().parent().parent().parent().addClass("user_contents_follow")
-
-jQuery(document).on "click", ".btn-danger", ->
-    $(this).parent().parent().parent().parent().parent().removeClass()
-    $(this).parent().parent().parent().parent().parent().addClass("user_contents_not_follow")
-###
 $ ->
   $("#target_article").click ->
     $(".type_area").show 10
