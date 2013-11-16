@@ -10,6 +10,7 @@ begin
   end
 rescue => e
   p e
+  p $!
   exit 1
 end
 

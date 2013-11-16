@@ -16,3 +16,20 @@ www.itmedia.co.jp:
 www.yomiuri.co.jp:
   extractor_type: defalut
   encoding: utf-8
+karapaia.livedoor.biz:
+  extractor_type: defalut
+  encoding: euc-jp
+qiita.com:
+  extractor_type: xpath
+  xpath: //section[@itemprop='articleBody']//p
+www.slideshare.net:
+  extractor_type: xpath
+  xpath: //ul[@class='transcripts h-transcripts']/li
+matome.naver.jp:
+  extractor_type: xpath
+  xpath: //div[@class='mdMTMWidget01ItemQuote01' or @class='mdHeading01Desc']//p
+togetter.com:
+  extractor_type: xpath
+  xpath: //div[@class='tweet' or @class='info_description rad5 balloon_body']
+www.jcp.or.jp:
+  encoding: utf-8

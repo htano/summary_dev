@@ -54,10 +54,11 @@ class ContentsExtractor::BaseExtractor
 
   private
   def encode_utf8(html)
-    puts @encoding
     case @encoding
     when 'utf-8'
       #No encoding
+    when 'euc-jp'
+      html = html.encode("UTF-8", "EUC-JP")
     else
       #Default force encoding
       html = html.force_encoding("UTF-8")
