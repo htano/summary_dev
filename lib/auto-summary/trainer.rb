@@ -4,8 +4,10 @@ require './lib/text-analyzer.rb'
 
 class AutoSummary::Trainer
   include TextAnalyzer
+  include AutoSummary
 
-  def initialize(df_dir)
+  def initialize
+    df_dir = DF_DIR
     @title_df = DocumentFrequency.new(df_dir + TITLE_DF_FILE)
     @body_df = DocumentFrequency.new(df_dir + BODY_DF_FILE)
     @title_df.open_file

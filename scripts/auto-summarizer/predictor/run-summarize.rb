@@ -1,12 +1,10 @@
 # encoding: utf-8
 require './lib/auto-summary.rb'
 include AutoSummary
-PARAMS_DIR = Rails.root.to_s + "/lib/auto-summary/params"
-DF_DIR = Rails.root.to_s + "/lib/text-analyzer/df_dict"
 
-summarizer = Summarizer.new(PARAMS_DIR, DF_DIR)
+summarizer = Summarizer.new
 Article.all.each do |e|
-  user = User.find_by_name("system001")
+  user = User.find_by_name(AUTO_SUMMARIZER_NAME)
   if user
     if e.summaries.find_by_user_id(user.id)
       Rails.logger.debug(

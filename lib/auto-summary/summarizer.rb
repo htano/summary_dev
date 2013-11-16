@@ -6,8 +6,11 @@ require './lib/contents-extractor.rb'
 class AutoSummary::Summarizer
   include TextAnalyzer
   include ContentsExtractor
+  include AutoSummary
 
-  def initialize(params_dir, df_dir)
+  def initialize
+    params_dir = PARAMS_DIR
+    df_dir = DF_DIR
     @weight = read_hash(params_dir + WEIGHT_FILE)
     @center = read_hash(params_dir + CENTER_FILE)
     @scale  = read_hash(params_dir + SCALE_FILE)

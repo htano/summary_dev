@@ -2,11 +2,10 @@
 require './lib/auto-summary.rb'
 include AutoSummary
 
-DF_DIR = Rails.root.to_s + "/lib/text-analyzer/df_dict"
 IN_DIR = Rails.root.to_s + "/tmp/auto_summarize/learning" + 
   "/url_summary_contents"
 
-train = Trainer.new(DF_DIR)
+train = Trainer.new
 Dir.glob(IN_DIR + "/????????/train_data_*.txt").each do |filename|
 
   line_idx = 0
