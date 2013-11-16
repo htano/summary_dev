@@ -16,5 +16,7 @@ end
 factory = ContentsExtractor::ExtractorFactory.instance
 extractor = factory.new_extractor(url)
 extractor.analyze!(html)
-puts extractor.get_title
+puts "[URL]" + url
+puts "[title]" + extractor.get_title
+puts "[Body]"
 puts extractor.get_body_text

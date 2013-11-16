@@ -1,0 +1,4 @@
+anond.hatelabo.jp	xpath	//div[@class='body']//p
+melborne.github.io	xpath	//p
+codezine.jp	xpath	//p
+www.afpbb.com	xpath	//div[@class='summary']//p
