@@ -1,12 +1,13 @@
 # coding: utf-8
 
 class ContentsExtractor::BaseExtractor
-  def initialize(xpath = nil)
+  def initialize(xpath = nil, encoding = nil)
     @html = nil
     @title = ""
     @body = Array.new
     @error_status = nil
     @xpath = xpath
+    @encoding = encoding
   end
 
   def analyze!(html)
@@ -52,6 +53,19 @@ class ContentsExtractor::BaseExtractor
   end
 
   private
+  def encode_utf8(html)
+    puts @encoding
+    case @encoding
+    when 'utf-8'
+      #No encoding
+    else
+      #Default force encoding
+      html = html.force_encoding("UTF-8")
+      html = html.encode("UTF-8", "UTF-8")
+    end
+    return html
+  end
+
   def parse_text(body_text)
     # Error Checking & Handling
     begin

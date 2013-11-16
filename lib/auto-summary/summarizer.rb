@@ -92,8 +92,6 @@ class AutoSummary::Summarizer
       html = open(url) do |f|
         f.read
       end
-      html = html.force_encoding("UTF-8")
-      html = html.encode("UTF-8", "UTF-8")
       return html
     rescue => e
       Rails.logger.info("openuri: " + e.message)

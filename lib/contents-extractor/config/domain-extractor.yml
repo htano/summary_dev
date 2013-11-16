@@ -1,0 +1,18 @@
+anond.hatelabo.jp:
+  extractor_type: xpath
+  xpath: //div[@class='body']//p
+melborne.github.io:
+  extractor_type: xpath
+  xpath: //p
+codezine.jp:
+  extractor_type: xpath
+  xpath: //p
+www.afpbb.com:
+  extractor_type: xpath
+  xpath: //div[@class='summary']//p
+www.itmedia.co.jp:
+  extractor_type: defalut
+  encoding: utf-8
+www.yomiuri.co.jp:
+  extractor_type: defalut
+  encoding: utf-8

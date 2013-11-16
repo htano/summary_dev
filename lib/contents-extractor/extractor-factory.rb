@@ -1,57 +1,53 @@
 # coding: utf-8
 require 'uri'
 require 'singleton'
+require 'yaml'
 
 class ContentsExtractor::ExtractorFactory
   include Singleton
   CONFIG_FILE = Rails.root.to_s + 
-    '/lib/contents-extractor/config/domain-extractor.tsv'
+    '/lib/contents-extractor/config/domain-extractor.yml'
 
   def initialize
-    @config = Hash.new
-    read_config_file(CONFIG_FILE)
-  end
-
-  def read_config_file(filename)
-    open(filename) do |file|
-      file.each do |line|
-        line.chomp!
-        domain, ex_type, xpath = line.split("\t")
-        @config[domain] = {
-          :extractor_type => ex_type,
-          :xpath => xpath
-        }
-      end
-    end
+    @config = YAML.load_file(CONFIG_FILE)
   end
 
   def new_extractor(url = nil)
-    case get_extractor_type(url)
+    domain = get_domain(url)
+    encoding = get_encoding(domain)
+    xpath = get_xpath(domain)
+    case get_extractor_type(domain)
     when 'default'
-      return ContentsExtractor::MonoExtractor.new
+      return ContentsExtractor::MonoExtractor.new(xpath, encoding)
     when 'xpath'
-      xpath = get_xpath(url)
-      return ContentsExtractor::XpathExtractor.new(xpath)
+      return ContentsExtractor::XpathExtractor.new(xpath, encoding)
     else
-      return ContentsExtractor::MonoExtractor.new
+      return ContentsExtractor::MonoExtractor.new(xpath, encoding)
     end
   end
 
-  def get_xpath(url)
-    domain = get_domain(url)
+  private
+  def get_encoding(domain)
     if @config[domain]
-      return @config[domain][:xpath]
+      return @config[domain]["encoding"]
     else
       return nil
     end
   end
 
-  def get_extractor_type(url)
-    domain = get_domain(url)
+  def get_xpath(domain)
     if @config[domain]
-      return @config[domain][:extractor_type]
+      return @config[domain]["xpath"]
     else
-      return 'default'
+      return nil
+    end
+  end
+
+  def get_extractor_type(domain)
+    if @config[domain]
+      return @config[domain]["extractor_type"]
+    else
+      return nil
     end
   end
 

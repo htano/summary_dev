@@ -4,9 +4,7 @@ require 'nokogiri'
 
 class ContentsExtractor::XpathExtractor < ContentsExtractor::BaseExtractor
   def analyze!(html)
-    html = html.force_encoding("UTF-8")
-    html = html.encode("UTF-8", "UTF-8")
-    @html = html
+    @html = encode_utf8(html)
     body_text = ""
     doc = Nokogiri::HTML.parse(@html)
     @title = doc.title

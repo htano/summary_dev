@@ -5,9 +5,7 @@ require 'nokogiri'
 
 class ContentsExtractor::MonoExtractor < ContentsExtractor::BaseExtractor
   def analyze!(html)
-    html = html.force_encoding("UTF-8")
-    html = html.encode("UTF-8", "UTF-8")
-    @html = html
+    @html = encode_utf8(html)
     body_text = ""
     begin
       body_text, @title = ExtractContent.analyse(@html)
@@ -21,3 +19,4 @@ class ContentsExtractor::MonoExtractor < ContentsExtractor::BaseExtractor
     return parse_text(body_text)
   end
 end
+
