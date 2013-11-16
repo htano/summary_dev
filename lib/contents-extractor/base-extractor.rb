@@ -57,8 +57,6 @@ class ContentsExtractor::BaseExtractor
     case @encoding
     when 'utf-8'
       #No encoding
-    when 'euc-jp'
-      html = html.encode("UTF-8", "EUC-JP")
     else
       #Default force encoding
       html = html.force_encoding("UTF-8")
@@ -90,6 +88,7 @@ class ContentsExtractor::BaseExtractor
         p.split(/[。．]/).each do |s|
           s.gsub!(/[\u3010][^\u3011]+[\u3011]/,"")
           next if s =~ /^\d+.*\d{4}.\d{2}.\d{2}.*ID.*$/;
+          next if s =~ /^[\x20-\x7E]+$/;
           s.gsub!(/>>\d+/, "")
           s.gsub!(/(.)\1{3}\1+/, "")
           s.gsub!(/（?[\x21-\x7E]{10,9999}）?/, "") #TODO: Only japanese site.
