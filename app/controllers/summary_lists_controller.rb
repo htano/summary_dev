@@ -19,6 +19,11 @@ class SummaryListsController < ApplicationController
     @num_of_mark_users = @article.get_marked_user
     @summary_by_me = @article.summaries.find_by user_id: @user 
     @is_read_later = @article.read_later?(@user) 
+    if Category.where(:id => @article.category_id).exists? then
+      @category_name = Category.find_by_id(@article.category_id).name
+    else
+      @category_name ="未分類カテゴリ" 
+    end
   end
 
   def good_summary 
