@@ -37,8 +37,16 @@ hr {
     border: solid;
     border-color: #FEE5E5; 
     border-top-color: #FF9B9B; 
-    margin-bottom: 30px;
   #summary_list_header{
+
+    //for my Kaminari
+    .pagination {
+      display: inline-block;
+      padding-left: 0;
+      margin: 0;
+      border-radius: 4px;
+    }
+
     padding-top: 5px;
 
 
