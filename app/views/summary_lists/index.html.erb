@@ -3,20 +3,21 @@
 <%= stylesheet_link_tag "summary_lists"%>
 <% end %>
 
-<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-<script>!function(d,s,id)
-{var js,fjs=d.getElementsByTagName(s)[0],
-  p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id))
-  {js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}
-}(document, 'script', 'twitter-wjs');
-</script>
-
-
-<div class="container">
+<div id="summary_list_container" class="container">
   <div class="row">
     <!-- article recording date -->
-    <div id="article_created_date" class="col-md-12">
+    <div  class="col-md-10">
         <%= @article.created_at.strftime("%Y年%m月%d日 %H時%M分") %>
+    </div>
+
+    <div class="col-md-2">
+      <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+      <script>!function(d,s,id)
+      {var js,fjs=d.getElementsByTagName(s)[0],
+        p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id))
+        {js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}
+      }(document, 'script', 'twitter-wjs');
+      </script>
     </div>
   </div>
 
@@ -136,7 +137,7 @@
 
       <div id="summary_list_body" class="row">
         <div class="col-md-2">
-          <%= image_tag(@article.thumbnail, :width => "128") %>
+          <%= image_tag(@article.thumbnail, :width => "170") %>
         </div>
         <div  class="col-md-10">
           <div id="article_title">
