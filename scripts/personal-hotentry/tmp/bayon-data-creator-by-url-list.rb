@@ -1,27 +1,15 @@
 # coding: utf-8
 require './lib/article_classifier.rb'
+require './lib/contents-extractor.rb'
 require "open-uri"
 require "extractcontent"
 
 TITLE_WITH_URL = "tmp/personal-hotentry/tmp/title-url.txt"
-MODEL_DIR = Rails.root.to_s + "/lib/article_classifier/model"
-DF_FILE = MODEL_DIR + "/df.txt"
 DOCUMENT_SIZE = 10000
 GRAM_SIZE = 2
 MAX_TERM_NUM = 10000
 
-df = Hash.new(1)
-df.read_kv(DF_FILE)
-
-def idf(ngram, df)
-  return 1.0
-  #if df[ngram]
-  #  return Math.log(DOCUMENT_SIZE / df[ngram])
-  #else 
-  #  return Math.log(DOCUMENT_SIZE)
-  #end
-end
-
+factory = ContentsExtractor::ExtractorFactory.instance
 open(TITLE_WITH_URL) do |file|
   file.each_with_index do |line, idx|
     line.chomp!
@@ -31,17 +19,21 @@ open(TITLE_WITH_URL) do |file|
       html = open(url) do |f|
         f.read
       end
-      body, ex_title = ExtractContent.analyse(html)
-      body.gsub!(/\r?\n/, " ")
-      contents += " " + body
     rescue => e
+      p e
+      next
     end
-    contents = contents.force_encoding("UTF-8")
-    contents = contents.encode("UTF-8", "UTF-8")
+    extractor = factory.new_extractor(url)
+    extractor.analyze!(html)
+    body = extractor.get_body_text
+    if body
+      contents += " " + body
+    end
+    contents.gsub!(/\r?\n/, " ")
     ngram_array = NgramsParser::ngram(contents, GRAM_SIZE)
     tfidf_hash = Hash.new(0)
     ngram_array.each do |ngram|
-      tfidf_hash[ngram] += idf(ngram, df) / ngram_array.length
+      tfidf_hash[ngram] += 1.0
     end
     print(title)
     i = 0

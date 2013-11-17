@@ -7,17 +7,17 @@ Article.all.each do |e|
   user = User.find_by_name(AUTO_SUMMARIZER_NAME)
   if user
     if e.summaries.find_by_user_id(user.id)
-      Rails.logger.debug(
-        "Auto summary has aleady existed.: " + e.id.to_s
-      )
+      #Rails.logger.debug(
+      #  "Auto summary has aleady existed.: " + e.id.to_s
+      #)
       next
     elsif e.auto_summary_error_status
-      Rails.logger.info(
-        "This page has invalid status: " + 
-        e.auto_summary_error_status + 
-        ", ArticleId: " + e.id.to_s
-      )
-      next
+      #Rails.logger.info(
+      #  "This page has invalid status: " + 
+      #  e.auto_summary_error_status + 
+      #  ", ArticleId: " + e.id.to_s
+      #)
+      #next
     end
   else
     Rails.logger.error("system001 is not exists.")
