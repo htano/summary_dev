@@ -34,12 +34,12 @@ module Webpage
         :thumbnail => h["thumbnail"]
       )
       if article
+        summarize_job = SummarizingJob.new(article.id)
+        summarize_job.delay.run
         classify_job = ClassifyingJob.new(article.id)
         classify_job.delay.run
         cluster_job = ClusteringJob.new(article.id)
         cluster_job.delay.run
-        summarize_job = SummarizingJob.new(article.id)
-        summarize_job.delay.run
       end
     end
     get_login_user.add_cluster_id(article.cluster_id)

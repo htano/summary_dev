@@ -87,6 +87,7 @@ class ContentsExtractor::BaseExtractor
         p_obj = ContentsExtractor::Paragraph.new
         p.split(/[。．]/).each do |s|
           s.gsub!(/[\u3010][^\u3011]+[\u3011]/,"")
+          next if s =~ / \- GIGAZINE$/;
           next if s =~ /^\d+.*\d{4}.\d{2}.\d{2}.*ID.*$/;
           next if s =~ /^[\x20-\x7E]+$/;
           s.gsub!(/>>\d+/, "")

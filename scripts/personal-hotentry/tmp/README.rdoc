@@ -17,6 +17,13 @@
   perl -pe "s/\n/\n\n====\n/" | perl -pe "s/\t/\n/g" > \
   tmp/personal-hotentry/tmp/bayon-result.txt
 
+  #新モデル
+  $ bayon -l 2.5 --idf --vector-size=100 --clvector-size=200 \
+  tmp/personal-hotentry/tmp/bayon-train.txt -c \
+  lib/personal-hotentry/model/bayon-cluster.txt | \
+  perl -pe "s/\n/\n\n====\n/" | perl -pe "s/\t/\n/g" > \
+  tmp/personal-hotentry/tmp/bayon-result.txt
+
 === 3. テスト用の記事をたくさん登録する
   # titleとurlのリストを作成
   $ rails runner scripts/personal-hotentry/tmp/get_title_url.rb > \

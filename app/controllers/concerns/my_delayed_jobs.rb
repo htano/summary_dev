@@ -84,8 +84,13 @@ module MyDelayedJobs
     def run
       article = Article.find(@article_id)
       ph_inst = PersonalHotentry.new
+      contents = article.title
+      if(article.get_top_rated_summary &&
+        article.get_top_rated_summary.content)
+        contents += " " + article.get_top_rated_summary.content
+      end
       cluster_id, cluster_score =
-        ph_inst.predict_max_cluster_id(article.title)
+        ph_inst.predict_max_cluster_id(contents)
       UserArticle.where(article_id: @article_id).each do |ua|
         ua.user.add_cluster_id(cluster_id)
       end

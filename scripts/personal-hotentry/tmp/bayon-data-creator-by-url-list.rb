@@ -20,7 +20,7 @@ open(TITLE_WITH_URL) do |file|
         f.read
       end
     rescue => e
-      p e
+      warn("openuri error: #{url}")
       next
     end
     extractor = factory.new_extractor(url)
@@ -33,7 +33,7 @@ open(TITLE_WITH_URL) do |file|
     ngram_array = NgramsParser::ngram(contents, GRAM_SIZE)
     tfidf_hash = Hash.new(0)
     ngram_array.each do |ngram|
-      tfidf_hash[ngram] += 1.0
+      tfidf_hash[ngram] += 1.0 / ngram_array.length
     end
     print(title)
     i = 0
