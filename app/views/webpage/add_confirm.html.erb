@@ -35,7 +35,7 @@ $(document).ready(function() {
       <% if @top_rated_tags == nil || @top_rated_tags.length == 0 %>
         <div id="recommend_tags">No one tags for this article.<br><br></div>
       <% else %>
-        <div id="recommend_tags">recommend tags for this article.<br><br>
+        <div id="recommend_tags">recommend tags for this article.<br>
           <% @top_rated_tags.each do |recommend_tag| %>
             <label><span class="recommend_tag" onclick="clickRecommendTag('<%= recommend_tag %>')" id="recommend_tag_<%= recommend_tag %>"><%= recommend_tag %></span></label>
           <% end %>
@@ -45,7 +45,7 @@ $(document).ready(function() {
       <% if @recent_tags == nil || @recent_tags.length == 0 %>
         <div id="recent_tags">you used no tags.<br><br></div>
       <% else %>
-        <div id="recent_tags">recent tags.<br><br>
+        <div id="recent_tags">recent tags.<br>
           <% @recent_tags.each do |recent_tag| %>
             <label><span class="recent_tag" onclick="clickRecentTag('<%= recent_tag %>')" id="recent_tag_<%= recent_tag %>"><%= recent_tag %></span></label>
           <% end %>
