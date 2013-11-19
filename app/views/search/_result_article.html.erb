@@ -54,21 +54,21 @@
           <% end %>
         </div>
       </div>
-      <div id="thumbnail">
-        <%= image_tag(article.get_thumbnail) %>
-      </div>
-      <div id="contents_preview">
-        <p><%= article.get_contents_preview %></p>
-      </div>
-      <div id="url_host">
-        <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host , {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
-      </div>
       <div id="article_operation">
         <div id="article_operation_<%= article.id %>">
           <% if get_login_user %>
             <%= render_read_status(article) %>
           <% end %>
         </div>
+      </div>
+      <div id="thumbnail">
+        <%= image_tag(article.get_thumbnail) %>
+      </div>
+      <div id="url_host">
+        <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host , {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
+      </div>
+      <div id="contents_preview">
+        <p><%= article.get_contents_preview %></p>
       </div>
       <% tags = article.get_top_rated_tag %>
       <% if tags == nil || tags.length == 0 %>
