@@ -3,7 +3,6 @@ require './lib/text-analyzer.rb'
 include TextAnalyzer
 
 class PersonalHotentry
-  MODEL_DIR = Rails.root.to_s + "/lib/article_classifier/model"
   MAX_TERM_NUM = 1000
   CLUSTER_FILE = Rails.root.to_s + 
     "/lib/personal-hotentry/model/bayon-cluster.txt"

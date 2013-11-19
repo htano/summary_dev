@@ -82,3 +82,5 @@ gem "i18n-js"
 
 gem 'delayed_job_active_record'
 gem 'daemons'
+
+#gem 'rsemantic', :git => 'git://github.com/josephwilk/rsemantic.git'
