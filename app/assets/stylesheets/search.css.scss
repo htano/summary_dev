@@ -3,7 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .sort-split-btn {
-//  float: right;
   button {
     color: gray;
     .caret {
@@ -56,7 +55,6 @@
     }
     .edited_tag {
       margin: 2px 2px 0 2px;
-      //padding: 1px 2px 1px 2px;
       border-radius: 0.3em;
       background: gray;
       cursor:pointer;
@@ -108,7 +106,6 @@
 }
 
 #result_area {
-  //border: 1px solid gray;
   float: left;
   height: 100%;
   width: 85%;
@@ -116,7 +113,6 @@
     margin: auto;
     padding: 2px 0px 2px 0px;
     position: relative;
-    //border: 1px solid #ECECEC;
     border-top: 4px solid #ECECEC;
     z-index: 1;
     width: 760px;
@@ -192,9 +188,7 @@
   }
   .article_contents, .article_contents_not_read {
     margin: auto;
-    //padding: 18px 25px 0 25px;
     position: relative;
-    //border: 1px solid #ECECEC;
     border-top: 2px solid #ECECEC;
     z-index: 1;
     width: 760px;
@@ -211,14 +205,11 @@
       img {
         max-height: 100px;
         max-width: 125px;
-        //height: 100px;
-        //width: 100px;
         display: block;
         margin: auto;
       }
     }
     #url_title {
-      //border: 1px solid gray;
       float: left;
       padding: 0 10px 0 10px;
       width: 450px;
@@ -229,8 +220,6 @@
       }
     }
     #url_host {
-      //border: 1px solid gray;
-      //float: left;
       padding: 0 10px 0 10px;
       width: 125px;
       height: 15px;
@@ -250,12 +239,12 @@
     }
     #article_infomation {
       float: left;
-      //border: 1px solid gray;
       width:  120px;
       height: 60px;
       #user_article_num {
         p {
-        color: gray;
+          color: gray;
+          font-size: 12px;
         }
       }
       #summary_num {
@@ -268,7 +257,6 @@
       }
     }
     #article_operation {
-      //border: 1px solid gray;
       float: left;
       width: 125px;
       height: 60px;

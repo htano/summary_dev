@@ -35,7 +35,7 @@
     <% end %>
       <div id="url_title">
         <p>
-          <a href="<%= article.url %>" target="_blank"><%= article.title[0, 200] %></a>
+          <a href="<%= article.url %>" target="_blank"><%= article.title[0, 50] %></a>
         </p>
       </div>
       <div id="article_infomation">
@@ -65,7 +65,7 @@
         <%= image_tag(article.get_thumbnail) %>
       </div>
       <div id="url_host">
-        <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host , {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
+        <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host[0,18] , {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
       </div>
       <div id="contents_preview">
         <p><%= article.get_contents_preview %></p>
