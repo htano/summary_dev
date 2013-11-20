@@ -156,7 +156,7 @@ $(document).ready( function(){
       }
     });
   });
-  
+
   $("#link_to_edit_tag").click(function(){
     $("#load").show();
     $.ajax({
@@ -322,11 +322,3 @@ function clickRecentTag(obj){
     }
   }
 }
-/*
-$("#test").click(function(){
-  for (var i=1 ; i<=10 ; i++){
-    document.getElementById('tag_text_' + i).value = BLANK
-  }
-  alert("clickDelete()");
-});
-*/

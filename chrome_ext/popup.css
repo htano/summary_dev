@@ -9,7 +9,6 @@ a {
 #edit_summary {
   display: block;
   border: 2px solid #ddd;
-  /*background-color: #ddd;*/
   border-radius: 0.3em;
   float: left;
   margin-right: 5px;
@@ -29,8 +28,6 @@ a {
 #edit_tag {
   display: block;
   border: 2px solid #ddd;
-  /*background-color: #ddd;*/
-  border-radius: 0.3em;
   float: left;
   margin-right: 5px;
   margin-bottom: 3px;
@@ -50,24 +47,23 @@ a {
 
 
 .tag_text{
+  font-size: 10px;
   width: 70px;
 }
 
 .recommend_tag, .recent_tag {
+  font-size: 13px;
   margin: 2px 2px 0 2px;
-  /*padding: 2px 2px 0 2px;*/
   border:solid 1px #a2a2a2;
-  border-radius: 0.3em;
   background: #a2a2a2;
   color: white;
   cursor:pointer;
   cursor:hand;
 }
 .recommend_tag_pushed, .recent_tag_pushed {
+  font-size: 13px;
   margin: 2px 2px 0 2px;
-  /*padding: 2px 2px 0 2px;*/
   border:solid 1px #a2a2a2;
-  border-radius: 0.3em;
   background: white;
   color: gray;
   cursor:pointer;
