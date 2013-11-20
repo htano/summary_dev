@@ -50,10 +50,12 @@ $(document).ready( function(){
           var i=1;
           var objBody = document.getElementById("recommend_tag");
           while(tags.length>=i){
-            var element = document.createElement("span"); 
+            var label = document.createElement('label');
+            var element = document.createElement("span");
             element.id = "recommend_tag_"+(i);
             element.innerHTML = tags[i-1].trim();
-            objBody.appendChild(element);
+            label.appendChild(element);
+            objBody.appendChild(label);
             $("#recommend_tag_"+(i)).click(function(){clickRecommendTag(this)});
             i++;
           }
@@ -74,10 +76,12 @@ $(document).ready( function(){
           var objBody = document.getElementById("recent_tag");
           while(tags.length>=i){
             var tag = tags[i-1].trim();
-            var element = document.createElement("span"); 
+            var label = document.createElement('label');
+            var element = document.createElement("span");
             element.id = "recent_tag_"+(i);
             element.innerHTML = tag;
-            objBody.appendChild(element);
+            label.appendChild(element);
+            objBody.appendChild(label);
             $("#recent_tag_"+(i)).click(function(){clickRecentTag(this)});
             i++;
           }

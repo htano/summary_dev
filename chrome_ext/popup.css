@@ -2,6 +2,11 @@ a {
   color: gray;
 }
 
+label {
+  display: inline-block;
+}
+
+
 .table-bordered {
   width: 100%;
 }
