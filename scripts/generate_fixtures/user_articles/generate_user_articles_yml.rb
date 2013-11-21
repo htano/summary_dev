@@ -4,6 +4,7 @@ id=0
 
 output_data() {
     echo "user_articles_$1:"
+    echo "    id: $1"
     echo "    user_id: $2"
     echo "    article_id: $3"
     echo "    read_flg: $4"
