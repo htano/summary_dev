@@ -5,6 +5,7 @@ main_user_id=1
 
 output_data() {
   echo "favorite_user_data$1:"
+  echo "    id: $1"
   echo "    user_id: $2"
   echo "    favorite_user_id: $3"
 }

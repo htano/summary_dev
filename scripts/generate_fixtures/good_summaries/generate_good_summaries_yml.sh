@@ -2,6 +2,7 @@
 
 output_data() {
     echo "good_summaries$1:"
+    echo "    id: $1"
     echo "    user_id: $2"
     echo "    summary_id : $3"
 }

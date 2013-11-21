@@ -1,198 +1,264 @@
 good_summaries1:
+    id: 1
     user_id: 1
     summary_id : 1
 good_summaries2:
+    id: 2
     user_id: 1
     summary_id : 2
 good_summaries3:
+    id: 3
     user_id: 1
     summary_id : 3
 good_summaries4:
+    id: 4
     user_id: 1
     summary_id : 4
 good_summaries5:
+    id: 5
     user_id: 1
     summary_id : 5
 good_summaries6:
+    id: 6
     user_id: 1
     summary_id : 6
 good_summaries7:
+    id: 7
     user_id: 1
     summary_id : 7
 good_summaries8:
+    id: 8
     user_id: 1
     summary_id : 8
 good_summaries9:
+    id: 9
     user_id: 1
     summary_id : 9
 good_summaries10:
+    id: 10
     user_id: 1
     summary_id : 10
 good_summaries11:
+    id: 11
     user_id: 1
     summary_id : 11
 good_summaries12:
+    id: 12
     user_id: 2
     summary_id : 1
 good_summaries13:
+    id: 13
     user_id: 2
     summary_id : 2
 good_summaries14:
+    id: 14
     user_id: 2
     summary_id : 3
 good_summaries15:
+    id: 15
     user_id: 2
     summary_id : 4
 good_summaries16:
+    id: 16
     user_id: 2
     summary_id : 5
 good_summaries17:
+    id: 17
     user_id: 2
     summary_id : 6
 good_summaries18:
+    id: 18
     user_id: 2
     summary_id : 7
 good_summaries19:
+    id: 19
     user_id: 2
     summary_id : 8
 good_summaries20:
+    id: 20
     user_id: 2
     summary_id : 9
 good_summaries21:
+    id: 21
     user_id: 2
     summary_id : 10
 good_summaries22:
+    id: 22
     user_id: 2
     summary_id : 11
 good_summaries23:
+    id: 23
     user_id: 3
     summary_id : 1
 good_summaries24:
+    id: 24
     user_id: 3
     summary_id : 2
 good_summaries25:
+    id: 25
     user_id: 3
     summary_id : 3
 good_summaries26:
+    id: 26
     user_id: 3
     summary_id : 4
 good_summaries27:
+    id: 27
     user_id: 3
     summary_id : 5
 good_summaries28:
+    id: 28
     user_id: 3
     summary_id : 6
 good_summaries29:
+    id: 29
     user_id: 3
     summary_id : 7
 good_summaries30:
+    id: 30
     user_id: 3
     summary_id : 8
 good_summaries31:
+    id: 31
     user_id: 3
     summary_id : 9
 good_summaries32:
+    id: 32
     user_id: 3
     summary_id : 10
 good_summaries33:
+    id: 33
     user_id: 3
     summary_id : 11
 good_summaries34:
+    id: 34
     user_id: 4
     summary_id : 1
 good_summaries35:
+    id: 35
     user_id: 4
     summary_id : 2
 good_summaries36:
+    id: 36
     user_id: 4
     summary_id : 3
 good_summaries37:
+    id: 37
     user_id: 4
     summary_id : 4
 good_summaries38:
+    id: 38
     user_id: 4
     summary_id : 5
 good_summaries39:
+    id: 39
     user_id: 4
     summary_id : 6
 good_summaries40:
+    id: 40
     user_id: 4
     summary_id : 7
 good_summaries41:
+    id: 41
     user_id: 4
     summary_id : 8
 good_summaries42:
+    id: 42
     user_id: 4
     summary_id : 9
 good_summaries43:
+    id: 43
     user_id: 4
     summary_id : 10
 good_summaries44:
+    id: 44
     user_id: 4
     summary_id : 11
 good_summaries45:
+    id: 45
     user_id: 5
     summary_id : 1
 good_summaries46:
+    id: 46
     user_id: 5
     summary_id : 2
 good_summaries47:
+    id: 47
     user_id: 5
     summary_id : 3
 good_summaries48:
+    id: 48
     user_id: 5
     summary_id : 4
 good_summaries49:
+    id: 49
     user_id: 5
     summary_id : 5
 good_summaries50:
+    id: 50
     user_id: 5
     summary_id : 6
 good_summaries51:
+    id: 51
     user_id: 5
     summary_id : 7
 good_summaries52:
+    id: 52
     user_id: 5
     summary_id : 8
 good_summaries53:
+    id: 53
     user_id: 5
     summary_id : 9
 good_summaries54:
+    id: 54
     user_id: 5
     summary_id : 10
 good_summaries55:
+    id: 55
     user_id: 5
     summary_id : 11
 good_summaries56:
+    id: 56
     user_id: 6
     summary_id : 1
 good_summaries57:
+    id: 57
     user_id: 6
     summary_id : 2
 good_summaries58:
+    id: 58
     user_id: 6
     summary_id : 3
 good_summaries59:
+    id: 59
     user_id: 6
     summary_id : 4
 good_summaries60:
+    id: 60
     user_id: 6
     summary_id : 5
 good_summaries61:
+    id: 61
     user_id: 6
     summary_id : 6
 good_summaries62:
+    id: 62
     user_id: 6
     summary_id : 7
 good_summaries63:
+    id: 63
     user_id: 6
     summary_id : 8
 good_summaries64:
+    id: 64
     user_id: 6
     summary_id : 9
 good_summaries65:
+    id: 65
     user_id: 6
     summary_id : 10
 good_summaries66:
+    id: 66
     user_id: 6
     summary_id : 11
