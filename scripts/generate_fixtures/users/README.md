@@ -1,1 +1,1 @@
-Usage : ./generate_user_yml.sh user_data > user.yml  
+Usage : $ ./generate_user_yml.sh user_data > user.yml  

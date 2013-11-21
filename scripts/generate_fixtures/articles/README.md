@@ -1,1 +1,1 @@
-Usage : ruby convert_articles.rb
+Usage : $ ruby convert_articles.rb
