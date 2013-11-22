@@ -14,6 +14,7 @@ class PersonalHotentry
 
   def initialize
     @df = DocumentFrequency.new(BODY_DF_FILE)
+    @df.open_file
     @cluster = Hash.new()
     read_cluster
   end
