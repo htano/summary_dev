@@ -57,6 +57,8 @@ class ContentsExtractor::BaseExtractor
     case @encoding
     when 'utf-8'
       #No encoding
+    when 'shift_jis'
+      html = html.encode("UTF-8", "Shift_JIS")
     else
       #Default force encoding
       html = html.force_encoding("UTF-8")

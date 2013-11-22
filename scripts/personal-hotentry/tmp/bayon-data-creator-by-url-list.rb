@@ -18,7 +18,7 @@ open(TITLE_WITH_URL) do |file|
   file.each_with_index do |line, idx|
     line.chomp!
     title, url = line.split("\t")
-    contents = title
+    contents = title + " " + title
     begin
       html = open(url) do |f|
         f.read

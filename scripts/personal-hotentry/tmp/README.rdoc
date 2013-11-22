@@ -11,18 +11,15 @@
   tmp/personal-hotentry/tmp/bayon-train.txt
 
 === 2. bayonで学習
-  $ bayon -l 2.5 --idf --vector-size=100 --clvector-size=300 \
+  # 最良モデル
+  $ bayon -l 2.5 --clvector-size=300 \
   tmp/personal-hotentry/tmp/bayon-train.txt -c \
-  lib/personal-hotentry/model/bayon-cluster.txt | \
+  tmp/personal-hotentry/tmp/bayon-cluster.txt | \
   perl -pe "s/\n/\n\n====\n/" | perl -pe "s/\t/\n/g" > \
   tmp/personal-hotentry/tmp/bayon-result.txt
 
-  #新モデル
-  $ bayon -l 2.5 --idf --vector-size=100 --clvector-size=200 \
-  tmp/personal-hotentry/tmp/bayon-train.txt -c \
-  lib/personal-hotentry/model/bayon-cluster.txt | \
-  perl -pe "s/\n/\n\n====\n/" | perl -pe "s/\t/\n/g" > \
-  tmp/personal-hotentry/tmp/bayon-result.txt
+  $ cp tmp/personal-hotentry/tmp/bayon-cluster.txt \
+  lib/personal-hotentry/model/bayon-cluster.txt
 
 === 3. テスト用の記事をたくさん登録する
   # titleとurlのリストを作成
@@ -30,7 +27,7 @@
   tmp/personal-hotentry/tmp/title-url-`date "+%Y%m%d"`.txt 
   $ cp tmp/personal-hotentry/tmp/title-url-????????.txt \
   tmp/personal-hotentry/tmp/title-url.txt
-  
+
   # リストにある記事をDBに登録する
   $ rails runner scripts/personal-hotentry/tmp/add-articles-by-list.rb
 
@@ -41,3 +38,22 @@
 
 === 5. すでにユーザが登録している記事から、ユーザの興味情報を登録する
   $ rails runner scripts/personal-hotentry/tmp/adding-user-articles.rb
+
+=== 6. 行列分解データをクラスタリング（やらない）
+  $ rails runner \
+  scripts/personal-hotentry/tmp/redsvd-data-creator.rb > \
+  tmp/personal-hotentry/tmp/svd-test/svd-input.txt
+  $ cd tmp/personal-hotentry/tmp/svd-test
+  $ redsvd -i svd-input.txt -o data -f sparse -r 30
+  $ cut -f1 ../bayon-train.txt > train-title.txt
+  $ paste train-title.txt data.U > train-title-feature.txt
+  $ cd ../../../../
+  $ rails runner \
+  scripts/personal-hotentry/tmp/svdfeature-to-bayon.rb > \
+  tmp/personal-hotentry/tmp/svd-test/bayon-train.txt
+  $ bayon -n 1000 \
+  tmp/personal-hotentry/tmp/svd-test/bayon-train.txt -c \
+  tmp/personal-hotentry/tmp/svd-test/bayon-cluster.txt \
+  --method=kmeans | perl -pe "s/\n/\n\n====\n/" | \
+  perl -pe "s/\t/\n/g" > \
+  tmp/personal-hotentry/tmp/svd-test/bayon-result.txt

@@ -6,7 +6,7 @@ class PersonalHotentry
   MAX_TERM_NUM = 1000
   CLUSTER_FILE = Rails.root.to_s + 
     "/lib/personal-hotentry/model/bayon-cluster.txt"
-  CLUSTER_SCORE_THRESHOLD = 0.01
+  CLUSTER_SCORE_THRESHOLD = 0.1
   TITLE_DF_FILE = Rails.root.to_s + 
     "/lib/text-analyzer/df_dict/title-df.txt"
   BODY_DF_FILE = Rails.root.to_s + 
