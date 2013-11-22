@@ -3,10 +3,10 @@ require './lib/text-analyzer.rb'
 include TextAnalyzer
 
 class PersonalHotentry
-  MAX_TERM_NUM = 1000
+  MAX_TERM_NUM = 100
   CLUSTER_FILE = Rails.root.to_s + 
     "/lib/personal-hotentry/model/bayon-cluster.txt"
-  CLUSTER_SCORE_THRESHOLD = 0.1
+  CLUSTER_SCORE_THRESHOLD = 0.08
   TITLE_DF_FILE = Rails.root.to_s + 
     "/lib/text-analyzer/df_dict/title-df.txt"
   BODY_DF_FILE = Rails.root.to_s + 
@@ -24,17 +24,12 @@ class PersonalHotentry
     max_cluster_id = 0
     text.gsub!(/\r?\n/, " ")
     tfidf_hash = @df.tfidf(text)
+    tfidf_hash = reduce_features(tfidf_hash)
     tfidf_hash = normalize(tfidf_hash)
     @cluster.each do |cluster_id, cluster_center|
       cosine = 0.0
-      i = 0
-      tfidf_hash.sort_by{|k,v|
-        -v
-      }.each do |ng, tfidf|
-        if i < MAX_TERM_NUM
-          cosine += tfidf * cluster_center[ng]
-        end
-        i += 1
+      tfidf_hash.each do |ng, tfidf|
+        cosine += tfidf * cluster_center[ng]
       end
       if cosine > max_cosine
         max_cluster_id = cluster_id
@@ -57,6 +52,14 @@ class PersonalHotentry
         @cluster[cluster_id] = normalize(@cluster[cluster_id])
       end
     end
+  end
+
+  def reduce_features(h)
+    new_h = Hash.new
+    h.sort_by{|k,v| -v}.first(MAX_TERM_NUM).each do |k,v|
+      new_h[k] = v
+    end
+    return new_h
   end
 
   def normalize(h)
