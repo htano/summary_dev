@@ -25,7 +25,12 @@ class AutoSummary::FeatureExtractor
   private
   def get_title_cosine(sentence)
     sectence_tfidf = @body_df.tfidf(sentence)
-    return get_cosine_similarity(@title_tfidf, sectence_tfidf)
+    cosine = get_cosine_similarity(@title_tfidf, sectence_tfidf)
+    if cosine > 0.8
+      return -9999
+    else
+      return cosine
+    end
   end
 
   def get_generative_probability(sentence)

@@ -7,6 +7,7 @@ class AutoSummary::Summarizer
   include TextAnalyzer
   include ContentsExtractor
   include AutoSummary
+  SUMMARY_LENGTH = 200
 
   def initialize
     params_dir = PARAMS_DIR
@@ -60,7 +61,7 @@ class AutoSummary::Summarizer
       b[:score]<=>a[:score]
     }.each do |s_score|
       if s_score[:score] > -1.0
-        if (summary_length + s_score[:sen].length) <= 300
+        if (summary_length + s_score[:sen].length) <= SUMMARY_LENGTH
           summary_sentences.push(s_score)
           summary_length += s_score[:sen].length
         end
