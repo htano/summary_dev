@@ -57,3 +57,6 @@ www.jil.go.jp:
 iphonech.com:
   extractor_type: xpath
   xpath: //div[@class='article-body-inner']//span
+rochefort.hatenablog.com:
+  extractor_type: xpath
+  xpath: //p
