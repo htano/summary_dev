@@ -1,0 +1,6 @@
+<% follow = button_to 'follow', 
+              {:action => 'follow', :follow_user_id => @user_id}, 
+              {:id => 'follow-button', :class => 'btn btn-info btn-xs', :remote => true} %>
+$('#follow-<%= @user_id %>').html("<%= raw(escape_javascript(follow))  %>")
+$('#follow-<%= @user_id %>').parent().parent().removeClass()
+$('#follow-<%= @user_id %>').parent().parent().addClass("user_contents_not_follow")

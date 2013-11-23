@@ -2,3 +2,5 @@
             {:action => "read", :controller => "search", :article_id => @atricle_id},
             {:class => "read_it_later", :remote => true} %>
 $("#article_operation_<%= @atricle_id %>").html("<%= raw(escape_javascript(read))  %>")
+$("#article_operation_<%= @atricle_id %>").parent().parent().removeClass()
+$("#article_operation_<%= @atricle_id %>").parent().parent().addClass("article_contents_not_read")

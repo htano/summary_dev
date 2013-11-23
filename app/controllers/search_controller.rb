@@ -103,4 +103,53 @@ class SearchController < ApplicationController
     article = Article.find(@atricle_id)
     article.user_articles.find_by_user_id(get_login_user.id).destroy()
   end
+
+  def follow
+    @current_user = get_login_user
+
+    if @current_user
+      if User.exists?(params[:follow_user_id])
+        FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
+      else
+        respond_to do |format|
+          format.html { render :file => "#{Rails.root}/public/404.html", 
+                        :status => 404, :layout => false, :content_type => 'text/html'}
+          format.js { render '404_error_page' and return }
+        end
+      end
+    end
+
+    @user_id = params[:follow_user_id]
+    # for renewing followers number on profile view
+    @num = FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]})
+    @follower_num = "followers" + "<br>" + @num.to_s
+
+    respond_to do |format|
+      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.js
+    end
+  end
+
+  def unfollow
+    @current_user = get_login_user
+
+    if @current_user && @current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id])
+      @current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
+    else
+      respond_to do |format|
+        format.html { render :file => "#{Rails.root}/public/404.html", 
+                      :status => 404, :layout => false, :content_type => 'text/html'}
+        format.js { render '404_error_page' and return }
+      end
+    end
+
+    @user_id = params[:unfollow_user_id]
+    @follower_num = "followers" + "<br>" + 
+                    FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:unfollow_user_id]}).to_s
+
+    respond_to do |format|
+      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.js
+    end
+  end
 end
