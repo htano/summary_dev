@@ -71,3 +71,9 @@ news.kakaku.com:
   encoding: utf-8
   xpath: //div[@id='article']//p
   extractor_type: xpath
+himasoku.com:
+  extractor_type: xpath
+  xpath: //div[@class='t_b']
+detail.chiebukuro.yahoo.co.jp:
+  extractor_type: xpath
+  xpath: //div[@class='details-inner']//p

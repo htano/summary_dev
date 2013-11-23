@@ -81,6 +81,18 @@ class AutoSummary::Summarizer
     sentence_ary.each_with_index do |s, idx|
       features = feature_extractor.get_features(s)
       s_score = get_score(features)
+      # Remove similar sentences for diversity.
+      pre_sentence_cosine = 0.0
+      sentences_with_score.each do |sws|
+        cosine = feature_extractor.sentence_cosine(s,sws[:sen])
+        if cosine > pre_sentence_cosine
+          pre_sentence_cosine = cosine
+        end
+      end
+      #Rails.logger.debug("#{s}: #{pre_sentence_cosine}\n")
+      if pre_sentence_cosine > 0.8
+        s_score = -9999
+      end
       s_with_score = {
         :order => idx,
         :sen => s,

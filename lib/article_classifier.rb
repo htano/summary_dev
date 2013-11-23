@@ -66,9 +66,11 @@ class ArticleClassifier
     pred_class = 'other'
     pred_score = THRESHOLD
     unless @is_trained
-      Rails.logger.error("[ArticleClassifier] predict method " +
-                         "was called when the trained models " +
-                         "were not read.")
+      Rails.logger.error(
+        "[ArticleClassifier] predict method " +
+        "was called when the trained models " +
+        "were not read."
+      )
       return pred_class
     end
     text.force_encoding("UTF-8")

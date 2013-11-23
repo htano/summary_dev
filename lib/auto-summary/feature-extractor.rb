@@ -22,6 +22,13 @@ class AutoSummary::FeatureExtractor
     return features
   end
 
+  def sentence_cosine(str_a, str_b)
+    tfidf_a = @body_df.tfidf(str_a)
+    tfidf_b = @body_df.tfidf(str_b)
+    cosine = get_cosine_similarity(tfidf_a, tfidf_b)
+    return cosine
+  end
+
   private
   def get_title_cosine(sentence)
     sectence_tfidf = @body_df.tfidf(sentence)
