@@ -67,3 +67,7 @@ jibun.atmarkit.co.jp:
 dietmatome.doorblog.jp:
   extractor_type: xpath
   xpath: //div[@class='t_b']
+news.kakaku.com:
+  encoding: utf-8
+  xpath: //div[@id='article']//p
+  extractor_type: xpath
