@@ -29,8 +29,8 @@ module Webpage
         :url => url, 
         :title => h["title"], 
         :contents_preview => h["contentsPreview"][0, 200],
-        :category_id => category_id, 
-        :cluster_id => cluster_id,
+        :category_id => 0, 
+        :cluster_id => 0,
         :thumbnail => h["thumbnail"]
       )
       if article
