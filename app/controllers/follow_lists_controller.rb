@@ -1,3 +1,5 @@
+include FollowManager
+
 class FollowListsController < ApplicationController
   DISPLAY_USER_NUM = 20
 
@@ -28,35 +30,30 @@ class FollowListsController < ApplicationController
   end
 
   def suggestion
-    @user_name = params[:name] ? params[:name] : get_current_user_name
-    user = User.find_by_name(@user_name)
-    current_user = get_login_user
+    @user_name = get_user_name(params[:name])
+    @candidate_users = []
 
-    favorite_user_ids = []
-    user.favorite_users.each do |favorite_user|
-      id = favorite_user.favorite_user_id
-      favorite_user_ids.push(id)
+    if signed_in? && User.exists?(:name => params[:name])
+      user = User.find_by_name(@user_name)
+      current_user = get_login_user
+
+      followers = FavoriteUser.where(:favorite_user_id => user.id)
+                              .pluck(:user_id)
+      followers.delete(current_user.id.to_i)
+
+      login_user_favorites = current_user.favorite_users.pluck(:favorite_user_id)
+
+      followers = followers - login_user_favorites
+
+      candidates = FavoriteUser.where(:user_id => login_user_favorites, :favorite_user_id => followers)
+                               .pluck(:favorite_user_id).uniq
+
+      number = params[:number] ? params[:number].to_i : 0
+      offset = DISPLAY_USER_NUM * number
+
+      @candidate_users = 
+        User.where(:id => candidates).offset(offset).take(DISPLAY_USER_NUM)
     end
-
-    favorite_users = User.find(favorite_user_ids)
-    candidate_user_ids = []
-    favorite_users.each do |favorite_user|
-      favorite_user.favorite_users.each do |candidate|
-        id = candidate.favorite_user_id
-        if current_user && 
-          current_user.favorite_users.exists?(:favorite_user_id => id) == nil &&
-          current_user.id != id
-          candidate_user_ids.push(id)
-        end
-      end
-    end
-    candidate_user_ids = candidate_user_ids.uniq
-
-    number = params[:number] ? params[:number].to_i : 0
-    offset = DISPLAY_USER_NUM * number
-
-    @candidate_users = 
-      User.where(:id => candidate_user_ids).offset(offset).take(DISPLAY_USER_NUM)
   end
 
 private
@@ -64,5 +61,15 @@ private
     if params[:name] == nil && signed_in? == false
       redirect_to :controller => 'consumer', :action => 'index'
     end
+  end
+  private
+
+  def get_user_name(param)
+    if param
+      user_name = param
+    else
+      user_name = get_current_user_name
+    end
+    return user_name
   end
 end
