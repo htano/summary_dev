@@ -274,7 +274,11 @@ class Article < ActiveRecord::Base
   end
 
   def get_category_name
-    return Category.find(self.category_id).name
+    if Category.find(self.category_id)
+      return Category.find(self.category_id).name
+    else
+      return 'other'
+    end
   end
 
   #記事に設定されたタグ情報を登録順に取得するメソッド
