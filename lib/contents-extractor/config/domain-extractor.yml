@@ -60,10 +60,6 @@ iphonech.com:
 rochefort.hatenablog.com:
   extractor_type: xpath
   xpath: //p
-jibun.atmarkit.co.jp:
-  encoding: shift_jis
-  extractor_type: xpath
-  xpath: //div[@class='centercol']//p
 dietmatome.doorblog.jp:
   extractor_type: xpath
   xpath: //div[@class='t_b']

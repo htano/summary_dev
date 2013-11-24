@@ -140,16 +140,17 @@ div.hotentry-normal-summaries, div.hotentry-small-summaries {
 
 div.hotentry-normal-contents {
   p {
-    height: 80px;
-    font-size: 11px;
+    height: 90px;
+    font-size: 13px;
+    overflow: auto;
   }
 }
 
 div.hotentry-large-contents {
   p {
-    font-size:14px;
+    font-size:15px;
     border: solid 1px #eee;
-    height: 180px;
+    height: 160px;
     padding: 5px;
     margin-bottom: 3px;
     margin-top: 3px;
@@ -178,11 +179,11 @@ div.hotentry-large-image {
 }
 
 div.hotentry-normal-image {
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
 img.hotentry-large-image-imgtag {
-  max-width: 160px;
+  max-width: 170px;
   max-height: 190px;
 }
 
