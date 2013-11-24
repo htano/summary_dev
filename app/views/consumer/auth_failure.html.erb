@@ -1,0 +1,70 @@
+<% content_for :head do %>
+  　<%= stylesheet_link_tag "consumer", "social-buttons/zocial.css"%>
+<% end %> 
+
+<div class="setting_container">
+  <div class="login_buttons_contents">
+    <h3>Sorry. Unknown error has occured. Please try again.</h3>
+    <div class="setting_inner">
+
+      <dl>
+        <dt>
+          <input type="checkbox" id="keep_login_chk" name="keep_login" value="on">Keep me signed in
+        </dt>
+      </dl>
+
+      <dl>
+        <dt>
+        <label>OAuth</label>
+        </dt>
+        <dd>
+          <ul class="login_buttons">
+
+            <% case @strategy %>
+            <% when 'twitter' %>
+            <li>
+              <% if params[:fromUrl] %>
+              <a class="zocial twitter" href="<%= url_for '/auth/twitter?origin=' + params[:fromUrl] %>" style="width:140px;">
+              <% else %>
+              <a class="zocial twitter" href="<%= url_for '/auth/twitter?origin='%>" style="width:140px;">
+              <% end %>
+                Twitter
+              </a>
+            </li>
+
+            <% when 'facebook' %>
+            <li>
+              <% if params[:fromUrl] %>
+              <a class='zocial facebook' href="<%= url_for '/auth/facebook?origin=' + params[:fromUrl] %>" style="width:140px;">
+              <% else %>
+              <a class='zocial facebook' href="<%= url_for '/auth/facebook?origin='%>" style="width:140px;">
+              <% end %>
+                Facebook
+              </a>
+            </li>
+
+            <% when 'github' %>
+            <li>
+              <% if params[:fromUrl] %>
+              <a class="zocial github" href="<%= url_for '/auth/github?origin=' + params[:fromUrl] %>" style="width:140px;">
+              <% else %>
+              <a class="zocial github" href="<%= url_for '/auth/github?origin='%>" style="width:140px;">
+              <% end %>
+                Github
+              </a>
+            </li>
+            <% end %>
+
+          </ul>
+        </dd>
+      </dl>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

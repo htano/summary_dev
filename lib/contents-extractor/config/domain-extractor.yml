@@ -1,0 +1,75 @@
+anond.hatelabo.jp:
+  extractor_type: xpath
+  xpath: //div[@class='body']//p
+melborne.github.io:
+  extractor_type: xpath
+  xpath: //p
+codezine.jp:
+  extractor_type: xpath
+  xpath: //p
+www.afpbb.com:
+  extractor_type: xpath
+  xpath: //div[@class='summary']//p
+www.itmedia.co.jp:
+  extractor_type: defalut
+  encoding: utf-8
+www.yomiuri.co.jp:
+  extractor_type: defalut
+  encoding: utf-8
+karapaia.livedoor.biz:
+  extractor_type: defalut
+  encoding: utf-8
+qiita.com:
+  extractor_type: xpath
+  xpath: //section[@itemprop='articleBody']//p
+www.slideshare.net:
+  extractor_type: xpath
+  xpath: //ul[@class='transcripts h-transcripts']/li
+matome.naver.jp:
+  extractor_type: xpath
+  xpath: //div[@class='mdMTMWidget01ItemQuote01' or @class='mdHeading01Desc' or @class='mdMTMWidget01ItemTweet01' or @class='mdMTMWidget01ItemComment01']//p
+togetter.com:
+  extractor_type: xpath
+  xpath: //div[@class='tweet' or @class='info_description rad5 balloon_body']
+www.jcp.or.jp:
+  encoding: utf-8
+www.atmarkit.co.jp:
+  encoding: utf-8
+  extractor_type: xpath
+  xpath: //div[@class='inner']//p
+alfalfalfa.com:
+  extractor_type: xpath
+  xpath: //div[@class='news_quote' or @class='mainmore']
+www.google.co.jp:
+  extractor_type: xpath
+  xpath: //div[@class='maia-col-7']//p
+www.gadget2ch.com:
+  extractor_type: xpath
+  xpath: //div[@class='t_b']
+kizitora.jp:
+  extractor_type: xpath
+  xpath: //div[@class='t_b']
+natalie.mu:
+  extractor_type: xpath
+  xpath: //div[@id='sp-left']//p
+www.jil.go.jp:
+  encoding: utf-8
+iphonech.com:
+  extractor_type: xpath
+  xpath: //div[@class='article-body-inner']//span
+rochefort.hatenablog.com:
+  extractor_type: xpath
+  xpath: //p
+dietmatome.doorblog.jp:
+  extractor_type: xpath
+  xpath: //div[@class='t_b']
+news.kakaku.com:
+  encoding: utf-8
+  xpath: //div[@id='article']//p
+  extractor_type: xpath
+himasoku.com:
+  extractor_type: xpath
+  xpath: //div[@class='t_b']
+detail.chiebukuro.yahoo.co.jp:
+  extractor_type: xpath
+  xpath: //div[@class='details-inner']//p

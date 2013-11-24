@@ -12,6 +12,7 @@ require "image_size"
 require 'my_delayed_jobs'
 
 module Webpage
+  include MyDelayedJobs
   #TODO 定数定義は外出しにしたい
   BLANK = ""
   THRESHOLD_FILE = 100
@@ -33,12 +34,15 @@ module Webpage
         :thumbnail => h["thumbnail"]
       )
       if article
-        classify_job = 
-          MyDelayedJobs::ClassifyingJob.new(article.id)
-        classify_job.delay.run
-        cluster_job =
-          MyDelayedJobs::ClusteringJob.new(article.id)
-        cluster_job.delay.run
+        summarize_job = SummarizingJob.new(article.id)
+        #summarize_job.delay.run
+        summarize_job.run
+        classify_job = ClassifyingJob.new(article.id)
+        #classify_job.delay.run
+        classify_job.run
+        cluster_job = ClusteringJob.new(article.id)
+        #cluster_job.delay.run
+        cluster_job.run
       end
     end
     get_login_user.add_cluster_id(article.cluster_id)

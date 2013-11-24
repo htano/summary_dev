@@ -203,6 +203,18 @@ class Article < ActiveRecord::Base
   end
 
   # Instance Method
+  def get_related_articles(num = 5)
+    if self.cluster_id == 0
+      return Array.new
+    end
+    related_articles = Article.where(
+      ["cluster_id = ? and id != ?", self.cluster_id, self.id]
+    )
+    return related_articles.sort{|a,b| 
+      (-1)*(a.get_current_strength <=> b.get_current_strength)
+    }.first(num)
+  end
+
   def add_strength
     if self.last_added_at && self.strength
       @diff_hours = ((Time.now - self.last_added_at) / 1.hours).to_i

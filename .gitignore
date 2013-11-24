@@ -32,4 +32,5 @@
 /config/application.yml
 /config/application.yml.dev
 /config/application.yml.prod
+
 .env

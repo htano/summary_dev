@@ -7,6 +7,20 @@ require 'openid/store/filesystem'
 class ConsumerController < ApplicationController
   layout nil
 
+  def auth_failure
+    if signed_in?
+      redirect_to(:controller => 'mypage', :action => 'index')
+      return
+    end
+    message = params[:message]
+    @strategy = params[:strategy]
+    if !message || !@strategy || message != 'invalid_credentials'
+      flash[:error] = 'Something error has occured.'
+      redirect_to(:action => 'index')
+      return
+    end
+  end
+
   def oauth_complete
     @oauth_url = "oauth://" + env['omniauth.auth']['provider'] + 
       "/" + env['omniauth.auth']['uid']

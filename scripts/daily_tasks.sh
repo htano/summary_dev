@@ -17,9 +17,9 @@ rails runner \
   tmp/personal-hotentry/tmp/bayon-train-`date "+%Y%m%d"`.txt
 
 # For testing
-echo "=== making test data from url-list ==="
-rails runner scripts/personal-hotentry/tmp/add-articles-by-list.rb
+#echo "=== making test data from url-list ==="
+#rails runner scripts/personal-hotentry/tmp/add-articles-by-list.rb
 
 # Auto summarization
-echo "=== run auto summarization ==="
-rails runner scripts/auto_summarize/predict/run_auto_summarize.rb
+#echo "=== run auto summarization ==="
+#rails runner scripts/auto-summarizer/predictor/run-summarize.rb
