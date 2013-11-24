@@ -20,7 +20,7 @@ BLANK = ''
     document.getElementById('add_msg').innerHTML = 'Please input URL.'
     return false
   else
-    check = url.match(/(http):\/\/.+/i)
+    check = url.match(/(http|https):\/\/.+/i)
     if !check
       document.getElementById('add_msg').innerHTML = 'Please input URL format.'
       return false
@@ -32,7 +32,7 @@ BLANK = ''
     document.getElementById('submit').disabled = ''
     return
   else
-    check = url.match(/(http):\/\/.+/i)
+    check = url.match(/(http|https):\/\/.+/i)
     if !check
       document.getElementById('add_msg').innerHTML = 'Please input URL format.'
       document.getElementById('submit').disabled = 'true'
