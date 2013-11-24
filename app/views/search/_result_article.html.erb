@@ -8,7 +8,7 @@
     <span id="message"><%= @searchtext[0,10] %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
     <% if get_login_user %>
     <span>
-      <input type="checkbox" id="not_read_only">Not Read only.</span>
+      <input type="checkbox" id="not_read_only"><%= t('article.filter_only_not_read') %></span>
     <% end %>
     <span id="sort">
       <div class="btn-group sort-split-btn">

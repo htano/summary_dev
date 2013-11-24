@@ -15,20 +15,20 @@ $(document).ready(function() {
     <p class="url_link"><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><a href="http://<%= URI(@url).host %>"target="_blank"><%= URI(@url).host %></a></p>
     <span id="summary_num">
       <% if @summary_num == nil || @summary_num == 0 then %>
-        0 summaries
+        0 <%= t('summary.count') %>
       <% elsif @summary_num == 1 %>
-        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %> summary
+        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %> <%= t('summary.count_one') %>
       <% else %>
-        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %> summaries
+        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %> <%= t('summary.count') %>
       <% end %>
     </span>
     <span id="reader_num">
       <% if @reader_num == nil || @reader_num == 0 then %>
-        0 readers
+        0 <%= t('reader.count') %>
       <% elsif @reader_num == 1 %>
-        <%= @reader_num %> reader
+        <%= @reader_num %> <%= t('reader.count_one') %>
       <% else%>
-        <%= @reader_num %> readers
+        <%= @reader_num %> <%= t('reader.count') %>
       <% end %>
     </span>
     <div id="tag_area">

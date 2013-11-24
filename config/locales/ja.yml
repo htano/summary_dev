@@ -24,6 +24,7 @@ ja:
     top_rated_summary: "トップ要約"
     contents_preview:  "プレビュー"
     filter_only_summarized: "要約がある記事に絞る"
+    filter_only_not_read: "登録してない記事に絞る"
   read_later:
     add: "後で読む"
     cancel: "読まない"
