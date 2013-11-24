@@ -172,7 +172,6 @@ class MypageController < ApplicationController
   end
 
   def clip
-    login_user = get_login_user
     params[:article_ids].each do |article_id|
       url = Article.find_by_id(article_id).url
       add_webpage(url) if url
