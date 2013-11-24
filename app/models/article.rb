@@ -274,8 +274,8 @@ class Article < ActiveRecord::Base
   end
 
   def get_category_name
-    if self.category_id != 0
-      return Category.find(self.category_id).name
+    if Category.find_by_id(self.category_id)
+      return Category.find_by_id(self.category_id).name
     else
       return 'other'
     end
