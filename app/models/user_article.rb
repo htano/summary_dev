@@ -26,7 +26,7 @@ class UserArticle < ActiveRecord::Base
       "user_article_tags.created_at desc"
     ).pluck(
       "user_article_tags.tag"
-    )
+    ).uniq
     return recent_tags[first_index..last_index]
   end
 
@@ -36,8 +36,7 @@ class UserArticle < ActiveRecord::Base
     last_index = 9
     set_tags = self.user_article_tags.order(
       "user_article_tags.created_at desc"
-    ).pluck(:tag)
-    p set_tags
+    ).pluck(:tag).uniq
     return set_tags[first_index..last_index]
   end
 end

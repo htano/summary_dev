@@ -1,4 +1,6 @@
 # encoding: utf-8
+require "webpage"
+include Webpage
 
 class SearchController < ApplicationController
 
@@ -10,6 +12,7 @@ class SearchController < ApplicationController
     @target = 1
     @type = 1
     @sort = 1
+    @category = 0
   end
 
   def search_article
@@ -17,6 +20,7 @@ class SearchController < ApplicationController
     @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
     @type = params[:type] == BLANK || params[:type] == nil ? "1" : params[:type]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
+    @category = params[:category] == BLANK || params[:category] == nil ? "0" : params[:category]
     @articles = []
     @article_num = 0
     case @type
@@ -33,8 +37,15 @@ class SearchController < ApplicationController
       flash[:error] = "Please retry."
       redirect_to :action => "index" and return
     end
-    @article_num = @articles.length
-    redirect_to :action => "index", :type => @type, :sort => @sort and return unless @articles
+    unless @category == "0" or @articles == nil
+      @articles = @articles.where("category_id" => @category)
+    end
+    if @articles == nil
+      @article_num = 0
+    else
+      @article_num = @articles.length
+    end
+    redirect_to :action => "index" and return unless @articles
     render :template => "search/index" and return unless @articles
 
     case @sort
@@ -79,5 +90,66 @@ class SearchController < ApplicationController
     @users = Kaminari.paginate_array(@users).page(params[:page]).per(PAGE_PER)
 
     render :template => "search/index"
+  end
+
+  def read
+    @atricle_id = params[:article_id]
+    article = Article.find(@atricle_id)
+    add_webpage(article.url)
+  end
+
+  def not_read
+    @atricle_id = params[:article_id]
+    article = Article.find(@atricle_id)
+    article.user_articles.find_by_user_id(get_login_user.id).destroy()
+  end
+
+  def follow
+    @current_user = get_login_user
+
+    if @current_user
+      if User.exists?(params[:follow_user_id])
+        FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
+      else
+        respond_to do |format|
+          format.html { render :file => "#{Rails.root}/public/404.html", 
+                        :status => 404, :layout => false, :content_type => 'text/html'}
+          format.js { render '404_error_page' and return }
+        end
+      end
+    end
+
+    @user_id = params[:follow_user_id]
+    # for renewing followers number on profile view
+    @num = FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]})
+    @follower_num = "followers" + "<br>" + @num.to_s
+
+    respond_to do |format|
+      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.js
+    end
+  end
+
+  def unfollow
+    @current_user = get_login_user
+
+    if @current_user && @current_user.favorite_users.exists?(:favorite_user_id => params[:unfollow_user_id])
+      @current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
+    else
+      respond_to do |format|
+        format.html { render :file => "#{Rails.root}/public/404.html", 
+                      :status => 404, :layout => false, :content_type => 'text/html'}
+        format.js { render '404_error_page' and return }
+      end
+    end
+
+    @user_id = params[:unfollow_user_id]
+    @follower_num = "followers" + "<br>" + 
+                    FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:unfollow_user_id]}).to_s
+
+    respond_to do |format|
+      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.js
+    end
   end
 end

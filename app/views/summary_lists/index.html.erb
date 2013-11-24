@@ -3,35 +3,38 @@
 <%= stylesheet_link_tag "summary_lists"%>
 <% end %>
 
-<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-<script>!function(d,s,id)
-{var js,fjs=d.getElementsByTagName(s)[0],
-  p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id))
-  {js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}
-}(document, 'script', 'twitter-wjs');
-</script>
-
-
-<div class="container">
+<div id="summary_list_container" class="container">
   <div class="row">
     <!-- article recording date -->
-    <div id="article_created_date" class="col-md-10 col-md-offset-1">
+    <div  class="col-md-10">
         <%= @article.created_at.strftime("%Y年%m月%d日 %H時%M分") %>
     </div>
-    <div class="col-md-1">
+
+    <div class="col-md-2">
+      <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+      <script>!function(d,s,id)
+      {var js,fjs=d.getElementsByTagName(s)[0],
+        p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id))
+        {js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}
+      }(document, 'script', 'twitter-wjs');
+      </script>
     </div>
   </div>
 
   <div class="row">
     <!-- summary list -->
-    <div id="summary_list" class="col-md-10 col-md-offset-1">
+    <div id="summary_list" class="col-md-12">
       <div id="summary_list_header" class="row">
         <div class="col-md-2">
           <span id="article_readers_num"><%= @num_of_mark_users %></span>
-          <span id="article_readers_char"> readers</span>
+          <span id="article_readers_char"> reader
+            <% if @num_of_mark_users != 1 then %>
+              s
+            <% end %>  
+          </span>
         </div>
         <div id="summarize" class="col-md-3">
-          カテゴリ予定 
+          <%= @category_name %>
         </div>
         <div id="summarize" class="col-md-3">
           <% unless @summary_by_me then %>
@@ -42,37 +45,36 @@
         <div class="col-md-2">
           <% if @user %>
             <div id ="article_read_later">
-            <div id="read_later_button" 
-              <% if @is_read_later then %>
-                style="display:none"
-            <% end %>
-              >
-              <%= link_to raw("<span class='glyphicon glyphicon-unchecked'></span> 後で読む") ,
-                   {:action => "read_later", 
-                   :article_id => @article.id, 
-                   :remote => true},
-                   {:type => "button",
-                    :id => "read_button",
-                    :class=>"btn btn-info btn-sm", 
-                   :method => :post} %>
+              <div id="read_later_button" 
+                <% if @is_read_later then %>
+                  style="display:none"
+                <% end %>
+                >
+                <%= link_to raw("<span class='glyphicon glyphicon-unchecked'></span> 後で読む") ,
+                     {:action => "read_later", 
+                     :article_id => @article.id, 
+                     :remote => true},
+                     {:type => "button",
+                      :id => "read_button",
+                      #infoがなおるまでの暫定
+                      :class=>"btn btn-default btn-sm", 
+                     :method => :post} %>
              </div>
              <div id="not_read_button" 
-               <% unless @is_read_later then %>
-                 style="display:none"
-             <% end %>
-               >
+                 <% unless @is_read_later then %>
+                   style="display:none"
+                 <% end %>
+             >
                  <%= link_to raw("<span class='glyphicon glyphicon-check'></span> 読まない"), 
-                              {:action => "cancel_read_later", 
-                              :article_id => @article.id, 
-                              :remote => true},
+                   {:action => "cancel_read_later", 
+                    :article_id => @article.id, 
+                    :remote => true},
                    {:type => "button",
                     :id => "read_button",
                     :class=>"btn btn-default btn-sm", 
                    :method => :post} %>
+              </div>
             </div>
-
-                </div>
-
           <% end %>
         </div>
         <div class="col-md-2">
@@ -93,7 +95,8 @@
                    :remote => true},
                    {:type => "button",
                     :id => "read_button",
-                    :class=>"btn btn-info btn-sm", 
+                    #infoがなおるまでの暫定
+                    :class=>"btn btn-default btn-sm", 
                    :method => :post} %>
              </div>
              <div id="already_read_button" 
@@ -134,7 +137,7 @@
 
       <div id="summary_list_body" class="row">
         <div class="col-md-2">
-          <%= image_tag(@article.thumbnail, :size => "128x160") %>
+          <%= image_tag(@article.thumbnail, :width => "170") %>
         </div>
         <div  class="col-md-10">
           <div id="article_title">
@@ -430,9 +433,6 @@
       <div class="col-md-12">
       </div>
     </div>
-
-  </div>
-  <div class="col-md-1">
   </div>
 
   <!-- pass to other side-->

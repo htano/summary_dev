@@ -88,3 +88,9 @@ gem "i18n-js"
 
 gem 'delayed_job_active_record'
 gem 'daemons'
+
+group :test do
+  gem "rspec"
+  gem "rspec-rails"
+  gem 'spork', '1.0.0rc4'
+end

@@ -27,25 +27,21 @@ class Article < ActiveRecord::Base
   #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag)
     return nil if tag == nil || tag == BLANK
-    articles = joins(
-      :user_articles => :user_article_tags
-    ).where(
-      "user_article_tags.tag" => tag
-    )
+    articles = joins(:user_articles => :user_article_tags).where("user_article_tags.tag" => tag).group("articles.id")
     return articles
   end
 
   #指定された本文を持つ記事を取得する
   def self.search_by_content(content)
     return nil if content == nil || content == BLANK
-    articles = where(["contents_preview LIKE ? or title LIKE ?", "%"+content+"%", "%"+content+"%"])
+    articles = where(["contents_preview ILIKE ? or title ILIKE ?", "%"+content+"%", "%"+content+"%"])
     return articles
   end
 
   #指定されたドメインがURLに含まれる記事を取得する
   def self.search_by_domain(domain)
     return nil if domain == nil || domain == BLANK
-    articles = where(["url LIKE ? or url LIKE ? ", "http://"+domain+"%", "https://"+domain+"%"])
+    articles = where(["url ILIKE ? or url ILIKE ? ", "http://"+domain+"%", "https://"+domain+"%"])
     return articles
   end
 
@@ -275,6 +271,10 @@ class Article < ActiveRecord::Base
   def get_thumbnail
     return "no_image.png" if self.thumbnail == nil
     return self.thumbnail
+  end
+
+  def get_category_name
+    return Category.find(self.category_id).name
   end
 
   #記事に設定されたタグ情報を登録順に取得するメソッド

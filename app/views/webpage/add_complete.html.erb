@@ -2,12 +2,6 @@
 <%= stylesheet_link_tag "webpage" %>
 <% end %>
 
-<script>
-$(document).ready(function() {
-  loadEditForm()
-});
-</script>
-
 <div class="comment_box">
   <p>Register Complete.</p>
   <span id="msg"><%= @msg %></span>
@@ -21,25 +15,28 @@ $(document).ready(function() {
     <p><a href="<%= @url %>" target="_blank"><%= @title[0, 100] %></a></p>
   </div>
   <div id="contents_preview">
-    <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><%= @contents_preview[0, 200] %></p>
+    <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><%= @contents_preview[0, 120] %></p>
   </div>
   <div id="category">
+    <%= link_to @category, {:controller => "hotentry", :action => "index", :category => @category} %>
   </div>
   <% if @tags == nil || @tags.length == 0 %>
     <div id="tag_area">no tags for this article.<br></div>
   <% else %>
-    <div id="tag_area">your tags for this article.<br>
-      <% @tags.each do |tag| %>
-        <span class="edited_tag"><%= link_to tag ,{:controller => "search", :action => "search_article", :searchtext => tag, :target => "1",:type => "2", :sort => "1"} %></span>
-      <% end %>
+    <div class="article-tags">
+      <ul class="tags">
+        <% @tags.each do |tag| %>
+          <li><%= link_to tag ,{:controller => "search", :action => "search_article", :searchtext => tag, :target => "1",:type => "2", :sort => "1"} %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 </div>
 
 <div id="operation_contents">
-  <span id="prof_image"><%= image_tag(@prof_image, :size => "30x30") %></span>
   <span id="mypage">
-    <%= link_to image_tag("icons/glyphicons_003_user.png", :size => "16x16") + content_tag(:p, "mypage") , {:controller => "mypage", :action => "index"} %>
+    <%= image_tag(@prof_image, :size => "15x15") %>
+    <%= link_to content_tag(:p, get_current_user_name) , {:controller => "mypage", :action => "index"} %>
   </span>
   <span id="summary_edit">
     <%= link_to image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit summary") , {:controller => "summary", :action => "edit", :article_id => @article_id} %>

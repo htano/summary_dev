@@ -28,9 +28,9 @@ module Webpage
       article = Article.create(
         :url => url, 
         :title => h["title"], 
-        :contents_preview => h["contentsPreview"][0,200], 
-        :category_id => 0, 
-        :cluster_id => 0,
+        :contents_preview => h["contentsPreview"][0, 200],
+        :category_id => category_id, 
+        :cluster_id => cluster_id,
         :thumbnail => h["thumbnail"]
       )
       if article
@@ -85,7 +85,7 @@ module Webpage
       doc = Nokogiri::HTML.parse(html.toutf8, nil, "UTF-8")
       doc.xpath("//img").each do |img|
         img_url = img["src"]
-        next if img_url == nil
+        next if img_url == nil or img_url == BLANK
         next if isAdvertisement?(url, img_url)
         next if isExceptionImage?(img_url)
         img_url = URI.join(url, img_url).to_s unless img_url.start_with?("http")
@@ -109,7 +109,7 @@ module Webpage
       end
       return "no_image.png"
     rescue => e
-        logger.info("get_webpage_thumbnail info :#{e}")
+        logger.warn("get_webpage_thumbnail info :#{e}")
         return "no_image.png"
     end
   end

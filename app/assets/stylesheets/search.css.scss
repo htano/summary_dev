@@ -2,11 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#search_main {
-}
-
 .sort-split-btn {
-//  float: right;
   button {
     color: gray;
     .caret {
@@ -59,7 +55,6 @@
     }
     .edited_tag {
       margin: 2px 2px 0 2px;
-      //padding: 1px 2px 1px 2px;
       border-radius: 0.3em;
       background: gray;
       cursor:pointer;
@@ -73,28 +68,35 @@
 
 #option_area {
   border-right: 1px solid #ECECEC;
-  width: 14%;
+  width: 15%;
   height: 500px;
   float: left;
-  .type_area, .target_area {
+  .type_area, .target_area, .category_area {
     text-align: center;
-    height: 135px;
+    width: 100%;
     border-bottom: 1px solid #ECECEC;
-    .select_area {
-      span:hover {
-        border-radius: 2px;
-        background: #ff9b9b;
-        color:white;
-        font-size: 18px;
-      }
-    }
     p {
       color: gray;
+      font-weight: bold;
       font-size: 20px;
     }
+    .select_area {
+      span:hover {
+        padding: 0px 5px 0px 5px;
+        font-size: 18px;
+        border-radius: 0.2em;
+        background: #efefef;
+        color: gray;
+        cursor:pointer;
+        cursor:hand;
+      }
+    }
     .selected {
+      padding: 0px 5px 0px 5px;
       font-size: 18px;
-      color: #ff9b9b;
+      border-radius: 0.2em;
+      background-color: #ff9b9b;
+      color:white;
     }
     .not_selected {
       font-size: 12px;
@@ -104,7 +106,6 @@
 }
 
 #result_area {
-  //border: 1px solid gray;
   float: left;
   height: 100%;
   width: 85%;
@@ -112,7 +113,6 @@
     margin: auto;
     padding: 2px 0px 2px 0px;
     position: relative;
-    //border: 1px solid #ECECEC;
     border-top: 4px solid #ECECEC;
     z-index: 1;
     width: 760px;
@@ -168,7 +168,7 @@
       float: left;
     }
   }
-  #article_operation, #user_operation {
+  #result_operation {
     padding: 5px 0px 5px 0px;
     margin: auto;
     position: relative;
@@ -188,48 +188,40 @@
   }
   .article_contents, .article_contents_not_read {
     margin: auto;
-    padding: 18px 25px 0 25px;
     position: relative;
-    //border: 1px solid #ECECEC;
-    border-top: 4px solid #ECECEC;
+    border-top: 2px solid #ECECEC;
     z-index: 1;
     width: 760px;
-    height: 275px;
+    height: 185px;
     color: gray;
     #thumbnail {
       padding: 2px 0 0 0;
-      height: 125px;
+      height: 100px;
       width: 125px;
-      //border: 1px solid gray;
       float: left;
       p {
         font-size: 30px;
       }
       img {
-        max-height: 125px;
+        max-height: 100px;
         max-width: 125px;
-        //height: 100px;
-        //width: 100px;
         display: block;
         margin: auto;
       }
     }
     #url_title {
-      //border: 1px solid gray;
       float: left;
       padding: 0 10px 0 10px;
-      width: 630px;
+      width: 450px;
       height: 60px;
       p a {
         color: gray;
-        font-size: 20px;
+        font-size: 18px;
       }
     }
     #url_host {
-      //border: 1px solid gray;
-      float: left;
       padding: 0 10px 0 10px;
-      width: 760px;
+      width: 125px;
       height: 15px;
       p a {
         font-size: 10px;
@@ -239,79 +231,108 @@
       border: 1px solid white;
       float: left;
       padding: 0 10px 0 10px;
-      max-width: 680px;
       width: 580px;
-      height: 125px;
+      height: 65px;
       p {
-        font-size: 12px;
+        font-size: 10px;
       }
     }
     #article_infomation {
       float: left;
-      //border: 1px solid gray;
-      width:  80px;
+      width:  120px;
       height: 60px;
       #user_article_num {
         p {
-        color: gray;
+          color: gray;
+          font-size: 12px;
         }
       }
       #summary_num {
         color: #ff9b9b;
         a {
-          font-size: 25px;
+          font-size: 18px;
           color: #ff9b9b;
           text-decoration: underline;
         }
       }
     }
     #article_operation {
-      //border: 1px solid gray;
       float: left;
-      width: 150px;
-      height: 40px;
+      width: 125px;
+      height: 60px;
       p {
         font-size: 10px;
       }
     }
-    #category {
-      //border: 1px dotted gray;
-      float: left;
-      width: 100px;
-      height: 40px;
-      p {
-        font-size: 10px;
+    .article-tags {
+    float: left;
+    padding: 0 10px 0 10px;
+    width: 580px;
+    height: 50px;
+    .tags {
+      list-style: none;
+      margin-bottom: 0;
+      li {
+        float: left;
+        height: 100%;
+        line-height: 20px;
+        position: relative;
       }
-    }
-    #tag {
-      //border: 1px solid gray;
-      float: left;
-      padding: 0 10px 0 10px;
-      width: 400px;
-      height: 40px;
-      line-height: 25px;
-      p {
-        font-size: 10px;
+      a {
+        font-size: 11px;
+        color: gray;
+        padding: 2px 10px 2px 12px;
+        margin-right: 10px;
+        background-color: #ddd;
+        text-decoration: none;
+        -moz-border-radius-bottomright: 4px;
+        -webkit-border-bottom-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        -moz-border-radius-topright: 4px;
+        -webkit-border-top-right-radius: 4px;
+        border-top-right-radius: 4px;
       }
-      .edited_tag {
-        margin: 2px 2px 0 2px;
-        padding: 2px 2px 0 2px;
-        //margin: 2px 2px 0 2px;
-        //padding: 1px 2px 1px 2px;
-        border-radius: 0.3em;
-        background: #a2a2a2;
-        cursor:pointer;
-        cursor:hand;
-        //white-space: nowrap;
-        a {
-          color: white;
-        }
+      a:before {
+        content: "";
+        float: left;
+        position: absolute;
+        top: 1px;
+        left: -9px;
+        width: 0;
+        height: 5px;
+        border-color: transparent #ddd transparent transparent;
+        border-style: solid;
+        border-width: 9px 9px 9px 0;
+      }
+      a:after {
+        content: "";
+        position: absolute;
+        top: 8px;
+        left: 0;
+        float: left;
+        width: 4px;
+        height: 4px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        background: #fff;
+      }
+      a:hover {
+        background: gray;
+        color: white;
+      }
+      a:hover:before {
+        border-color: transparent gray transparent transparent;
+        color: white;
       }
     }
   }
 }
+}
 
-button.read_it_later {
+.read_it_later {
+  margin: 0px 0px 0px 25px;
+  font-size: 11px;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #60b044;
@@ -331,7 +352,9 @@ button.read_it_later {
   border: 1px solid #d8d8d8;
 }
 
-button.read_it_cancel {
+.read_it_cancel {
+  margin: 0px 0px 0px 25px;
+  font-size: 11px;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #999;

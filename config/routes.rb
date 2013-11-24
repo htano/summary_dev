@@ -2,6 +2,10 @@ SummaryDev::Application.routes.draw do
   get "search/index"
   get "search/search_article"
   get "search/search_user"
+  post "search/read"
+  post "search/not_read"
+  post "search/follow"
+  post "search/unfollow"
   get "follow_lists/followers"
   get "follow_lists/following"
   get "follow_lists/suggestion"
@@ -22,6 +26,7 @@ SummaryDev::Application.routes.draw do
   get "auth/failure" => "consumer#auth_failure"
 
   get "mypage/index"
+  get "mypage/tag"
   post "mypage/delete_article"
   post "mypage/delete_summary"
   post "mypage/mark_as_read"
@@ -56,7 +61,7 @@ SummaryDev::Application.routes.draw do
   post "summary/:article_id/edit_complete" => "summary#edit_complete"
   post "summary/:article_id/delete" => "summary#delete"
   get "summary/:article_id/get_article_image" => "summary#get_article_image"
-  
+
   #for webpage
   post 'summary_lists/goodSummaryAjax' => 'summary_lists#goodSummaryAjax'
   #for summary lists

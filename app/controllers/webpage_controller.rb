@@ -14,7 +14,8 @@ class WebpageController < ApplicationController
     if signed_in?
       @user_id = get_login_user.id
       @url = params[:url]
-      h =   get_webpage_element(@url, true, false, false)
+      @add_flag = params[:add_flag]
+      h = get_webpage_element(@url, true, false, false)
       if h == nil || @url.start_with?("chrome://extensions/")
         flash[:error] = "Please check URL."
         redirect_to :controller => "webpage", :action => "add" and return
@@ -22,6 +23,7 @@ class WebpageController < ApplicationController
 
       @title = h["title"]
       @recent_tags = UserArticle.get_recent_tag(@user_id)
+      #@recent_tags = []
       @set_tags = []
 
       article = Article.find_by_url(@url)
@@ -30,6 +32,7 @@ class WebpageController < ApplicationController
         @reader_num = article.user_articles_count
         @article_id = article.id
         @top_rated_tags = article.get_top_rated_tag
+        #@top_rated_tags = []
         user_article = article.user_articles.find_by_user_id(@user_id)
         @set_tags = user_article.get_set_tag unless user_article == nil
       end
@@ -54,10 +57,14 @@ class WebpageController < ApplicationController
         flash[:error] = "Please check URL."
         redirect_to :controller => "webpage", :action => "add" and return
       end
+      if params[:add_flag] == BLANK
+        redirect_to :controller => "mypage", :action => "index"
+      end
       @article_id = article.id
       @title = article.title
       @contents_preview = article.get_contents_preview
       @thumbnail = article.get_thumbnail
+      @category = article.get_category_name
       @tags = []
       user_article = article.user_articles.find_by_user_id(get_login_user.id)
       user_article.user_article_tags(:all).each do |user_article_tag|

@@ -7,9 +7,10 @@ $(document).ready(function() {
   set_option_area()
   hide_navbar_text()
 });
+toggleUnfollowBtn();
 </script>
 
-<form id="search_form" action="search_article" onLoad="set_option_area">
+<form id="search_form" action="search_article" onLoad="set_option_area" onsubmit ="return checkSearchtext_search()">
   <div id="search_main">
     <div id="operation_area">
       <div id="operation">
@@ -33,8 +34,18 @@ $(document).ready(function() {
           <span id="type_domain">domain</span><br>
         </div>
       </div>
-    <input type="hidden" name="target" id="target" value="<%= @target %>">
-    <input type="hidden" name="type" id="type" value="<%= @type %>">
+      <div class="category_area">
+        <p>category</p>
+        <div class="select_area">
+            <span id="category_all">all</span><br>
+          <% Category.all.each do |c| %>
+            <span id="category_<%= c.name %>"><%= c.name %></span><br>
+          <% end %>
+        </div>
+      </div>
+      <input type="hidden" name="target" id="target" value="<%= @target %>">
+      <input type="hidden" name="type" id="type" value="<%= @type %>">
+      <input type="hidden" name="category" id="category" value="<%= @category %>">
     </div>
   </div>
 </form>

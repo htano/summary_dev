@@ -1,10 +1,10 @@
 <% if @article_num == 0 %>
-  <div id="article_operation">
+  <div id="result_operation">
     <!--<%= @searchtext %> の <%= @type_text %> 検索結果 <%= @article_num %> 件-->
     <span id="message"><%= @searchtext[0,10] %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
   </div>
 <% else %>
-  <div id="article_operation">
+  <div id="result_operation">
     <span id="message"><%= @searchtext[0,10] %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
     <% if get_login_user %>
     <span>
@@ -35,7 +35,7 @@
     <% end %>
       <div id="url_title">
         <p>
-          <a href="<%= article.url %>" target="_blank"><%= article.title[0, 200] %></a>
+          <a href="<%= article.url %>" target="_blank"><%= article.title[0, 50] %></a>
         </p>
       </div>
       <div id="article_infomation">
@@ -54,41 +54,35 @@
           <% end %>
         </div>
       </div>
+      <div id="article_operation">
+        <div id="article_operation_<%= article.id %>">
+          <% if get_login_user %>
+            <%= render_read_status(article) %>
+          <% end %>
+        </div>
+      </div>
       <div id="thumbnail">
         <%= image_tag(article.get_thumbnail) %>
       </div>
-      <div id="contents_preview">
-        <p><%= article.get_contents_preview[0, 300] %></p>
-      </div>
       <div id="url_host">
-        <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host , {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
+        <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host[0,18] , {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
       </div>
-      <div id="article_operation">
-        <% if get_login_user %>
-          <% if article.user_articles.where(:user_id =>get_login_user.id).first %>
-            <button class="read_it_cancel" disabled>reading</button>
-          <% else %>
-            <button class="read_it_later" >add</button>
-          <% end %>
-        <% else %>
-        <% end %>
+      <div id="contents_preview">
+        <p><%= article.get_contents_preview %></p>
       </div>
       <% tags = article.get_top_rated_tag %>
       <% if tags == nil || tags.length == 0 %>
-        <div id="tag">
-          no tags for this article.
-        <br></div>
+        <div id="article-tags"></div>
       <% else %>
-        <div id="tag">
-          <% tags.each do |tag| %>
-            <span class="edited_tag">
-              <%= link_to tag ,{:controller =>"search", :action => "search_article", :searchtext => tag, :type => "2", :sort => "1"} %>
-            </span>
-          <% end %>
+        <div class="article-tags">
+          <ul class="tags">
+            <% tags.each do |tag| %>
+              <li><%= link_to tag ,{:controller => "search", :action => "search_article", :searchtext => tag, :target => "1",:type => "2", :sort => "1"} %></li>
+            <% end %>
+          </ul>
         </div>
       <% end %>
-      <div id="category"></div>
-      </div>
+    </div>
   <% end %>
   <div style='text-align:center;'>
     <%= paginate @articles, :window =>4, :outer_window => 2  %>

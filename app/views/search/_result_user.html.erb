@@ -1,10 +1,10 @@
 <% if @user_num == 0 %>
-  <div id="user_operation">
+  <div id="result_operation">
     <span id="message"><%= @searchtext[0,10] %>の 検索結果 <%= @user_num %> 件</span>
     <!--<%= @searchtext %> の 検索結果 <%= @user_num %> 件-->
   </div>
 <% else %>
-  <div id="user_operation">
+  <div id="result_operation">
     <span id="message"><%= @searchtext[0,10] %>の 検索結果 <%= @user_num %> 件</span>
     <% if get_login_user %>
     <span id="checkbox">
