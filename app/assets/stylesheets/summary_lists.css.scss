@@ -20,8 +20,6 @@
 //---------------------------------------
 // whole layout
 //---------------------------------------
-
-
 hr {
   margin: 5px 0px 10px 0px;
   height:2px;
@@ -31,16 +29,27 @@ hr {
   background:-moz-linear-gradient(left, #f5f5f5, #999, #f5f5f5);
 }
 
-#aricle_created_date{
+#summary_list_container{
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 #summary_list{
     border: solid;
     border-color: #FEE5E5; 
     border-top-color: #FF9B9B; 
-    margin-bottom: 30px;
+
+  //for my Kaminari
+  .pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 0;
+    border-radius: 4px;
+  }
+
   #summary_list_header{
+
+
     padding-top: 5px;
 
 
@@ -131,10 +140,11 @@ hr {
     }
     #summary_box{
       min-height: 80px;
-      padding-bottom: 10px;
+      padding: 3px 3px 10px 3px;
       margin: 15px 5px 15px 0px;
       background-color: #FFFFFF;
       border-style: solid;
+      border-color: #AAA;
       border-width: 1px;
       #summary_box_left{
         padding: 0px;
