@@ -41,9 +41,9 @@
       <div id="article_infomation">
         <div id="summary_num">
           <% if article.summaries_count == 1 %>
-            <%= link_to article.summaries.length , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>summary
+            <%= link_to article.summaries.length.to_s+"summary" , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>
           <% else %>
-            <%= link_to article.summaries.length , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>summaries
+            <%= link_to article.summaries.length.to_s+"summaries" , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>
           <% end %>
         </div>
         <div id="user_article_num">
