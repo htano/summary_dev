@@ -25,6 +25,7 @@ SummaryDev::Application.routes.draw do
   get "auth/:provider/callback" => "consumer#oauth_complete"
 
   get "mypage/index"
+  get "mypage/tag"
   post "mypage/delete_article"
   post "mypage/delete_summary"
   post "mypage/mark_as_read"

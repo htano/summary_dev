@@ -1,0 +1,1 @@
+Usage : $ ruby convert_categories.rb

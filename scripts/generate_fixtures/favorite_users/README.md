@@ -1,0 +1,1 @@
+usage : $ ./generate_favorite_users_yml.sh > favorite_users.yml

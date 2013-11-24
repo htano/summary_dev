@@ -1,0 +1,403 @@
+---
+tags_1:
+  id: 1
+  user_article_id: 65
+  tag: ge
+  created_at: '2013-10-01 01:46:05.354744'
+  updated_at: '2013-10-01 01:46:05.354744'
+tags_2:
+  id: 2
+  user_article_id: 89
+  tag: it
+  created_at: '2013-10-02 12:25:36.763095'
+  updated_at: '2013-10-02 12:25:36.763095'
+tags_3:
+  id: 3
+  user_article_id: 19
+  tag: Ruby
+  created_at: '2013-10-11 10:44:28.922740'
+  updated_at: '2013-10-11 10:44:28.922740'
+tags_4:
+  id: 4
+  user_article_id: 19
+  tag: Rails
+  created_at: '2013-10-11 10:44:28.936604'
+  updated_at: '2013-10-11 10:44:28.936604'
+tags_5:
+  id: 5
+  user_article_id: 19
+  tag: sqlite3
+  created_at: '2013-10-11 10:44:28.951472'
+  updated_at: '2013-10-11 10:44:28.951472'
+tags_6:
+  id: 6
+  user_article_id: 28
+  tag: ruby
+  created_at: '2013-10-13 05:27:50.817459'
+  updated_at: '2013-10-13 05:27:50.817459'
+tags_7:
+  id: 7
+  user_article_id: 28
+  tag: rails
+  created_at: '2013-10-13 05:27:50.841079'
+  updated_at: '2013-10-13 05:27:50.841079'
+tags_8:
+  id: 8
+  user_article_id: 28
+  tag: activerecord
+  created_at: '2013-10-13 05:27:50.858620'
+  updated_at: '2013-10-13 05:27:50.858620'
+tags_9:
+  id: 9
+  user_article_id: 29
+  tag: 野球
+  created_at: '2013-10-13 06:53:40.041394'
+  updated_at: '2013-10-13 06:53:40.041394'
+tags_10:
+  id: 10
+  user_article_id: 35
+  tag: activerecord
+  created_at: '2013-10-13 09:44:06.374074'
+  updated_at: '2013-10-13 09:44:06.374074'
+tags_11:
+  id: 11
+  user_article_id: 35
+  tag: rails
+  created_at: '2013-10-13 09:44:06.393449'
+  updated_at: '2013-10-13 09:44:06.393449'
+tags_12:
+  id: 12
+  user_article_id: 35
+  tag: ruby
+  created_at: '2013-10-13 09:44:06.413607'
+  updated_at: '2013-10-13 09:44:06.413607'
+tags_13:
+  id: 13
+  user_article_id: 35
+  tag: sqlite3
+  created_at: '2013-10-13 09:44:06.429463'
+  updated_at: '2013-10-13 09:44:06.429463'
+tags_14:
+  id: 14
+  user_article_id: 37
+  tag: イヤホン
+  created_at: '2013-10-13 09:49:37.387763'
+  updated_at: '2013-10-13 09:49:37.387763'
+tags_15:
+  id: 15
+  user_article_id: 43
+  tag: テスト
+  created_at: '2013-10-14 10:05:13.140272'
+  updated_at: '2013-10-14 10:05:13.140272'
+tags_16:
+  id: 16
+  user_article_id: 43
+  tag: Rails
+  created_at: '2013-10-14 10:05:13.155813'
+  updated_at: '2013-10-14 10:05:13.155813'
+tags_17:
+  id: 17
+  user_article_id: 45
+  tag: はてぶ
+  created_at: '2013-10-14 10:39:01.787054'
+  updated_at: '2013-10-14 10:39:01.787054'
+tags_18:
+  id: 18
+  user_article_id: 45
+  tag: Gunosy
+  created_at: '2013-10-14 10:39:01.807517'
+  updated_at: '2013-10-14 10:39:01.807517'
+tags_19:
+  id: 19
+  user_article_id: 46
+  tag: エンタメ
+  created_at: '2013-10-14 14:25:57.685802'
+  updated_at: '2013-10-14 14:25:57.685802'
+tags_20:
+  id: 20
+  user_article_id: 48
+  tag: Web
+  created_at: '2013-10-14 16:56:21.857240'
+  updated_at: '2013-10-14 16:56:21.857240'
+tags_21:
+  id: 21
+  user_article_id: 48
+  tag: CSS
+  created_at: '2013-10-14 16:56:21.878636'
+  updated_at: '2013-10-14 16:56:21.878636'
+tags_22:
+  id: 22
+  user_article_id: 49
+  tag: gotolove
+  created_at: '2013-10-15 09:50:30.168132'
+  updated_at: '2013-10-15 09:50:30.168132'
+tags_23:
+  id: 23
+  user_article_id: 49
+  tag: wei
+  created_at: '2013-10-15 09:50:30.183830'
+  updated_at: '2013-10-15 09:50:30.183830'
+tags_24:
+  id: 24
+  user_article_id: 49
+  tag: ruby
+  created_at: '2013-10-15 09:50:30.198551'
+  updated_at: '2013-10-15 09:50:30.198551'
+tags_25:
+  id: 25
+  user_article_id: 49
+  tag: nokogiri
+  created_at: '2013-10-15 09:50:30.215433'
+  updated_at: '2013-10-15 09:50:30.215433'
+tags_26:
+  id: 26
+  user_article_id: 50
+  tag: 台風
+  created_at: '2013-10-15 12:05:40.436717'
+  updated_at: '2013-10-15 12:05:40.436717'
+tags_27:
+  id: 27
+  user_article_id: 51
+  tag: エンタメ
+  created_at: '2013-10-15 12:06:37.668121'
+  updated_at: '2013-10-15 12:06:37.668121'
+tags_28:
+  id: 28
+  user_article_id: 52
+  tag: facebook
+  created_at: '2013-10-15 12:08:00.839205'
+  updated_at: '2013-10-15 12:08:00.839205'
+tags_29:
+  id: 29
+  user_article_id: 53
+  tag: エンタメ
+  created_at: '2013-10-15 12:08:20.907406'
+  updated_at: '2013-10-15 12:08:20.907406'
+tags_30:
+  id: 30
+  user_article_id: 54
+  tag: 世の中
+  created_at: '2013-10-15 13:58:09.225917'
+  updated_at: '2013-10-15 13:58:09.225917'
+tags_31:
+  id: 31
+  user_article_id: 58
+  tag: github
+  created_at: '2013-10-17 14:27:49.542975'
+  updated_at: '2013-10-17 14:27:49.542975'
+tags_32:
+  id: 32
+  user_article_id: 58
+  tag: テクノロジー
+  created_at: '2013-10-17 14:27:49.589814'
+  updated_at: '2013-10-17 14:27:49.589814'
+tags_33:
+  id: 33
+  user_article_id: 63
+  tag: エンタメ
+  created_at: '2013-10-19 17:35:36.127156'
+  updated_at: '2013-10-19 17:35:36.127156'
+tags_34:
+  id: 34
+  user_article_id: 64
+  tag: クラスタリング
+  created_at: '2013-10-20 12:42:48.468903'
+  updated_at: '2013-10-20 12:42:48.468903'
+tags_35:
+  id: 35
+  user_article_id: 64
+  tag: テキスト解析
+  created_at: '2013-10-20 12:42:48.489161'
+  updated_at: '2013-10-20 12:42:48.489161'
+tags_36:
+  id: 36
+  user_article_id: 66
+  tag: Rails
+  created_at: '2013-10-20 15:23:53.270553'
+  updated_at: '2013-10-20 15:23:53.270553'
+tags_37:
+  id: 37
+  user_article_id: 67
+  tag: Rails
+  created_at: '2013-10-20 15:27:54.810627'
+  updated_at: '2013-10-20 15:27:54.810627'
+tags_38:
+  id: 38
+  user_article_id: 68
+  tag: Rails
+  created_at: '2013-10-20 15:37:14.715205'
+  updated_at: '2013-10-20 15:37:14.715205'
+tags_39:
+  id: 39
+  user_article_id: 83
+  tag: Rails
+  created_at: '2013-10-24 09:20:45.156451'
+  updated_at: '2013-10-24 09:20:45.156451'
+tags_40:
+  id: 40
+  user_article_id: 83
+  tag: Ruby
+  created_at: '2013-10-24 09:20:45.179354'
+  updated_at: '2013-10-24 09:20:45.179354'
+tags_41:
+  id: 41
+  user_article_id: 92
+  tag: Ruby
+  created_at: '2013-11-01 08:49:15.076810'
+  updated_at: '2013-11-01 08:49:15.076810'
+tags_42:
+  id: 42
+  user_article_id: 92
+  tag: Rails
+  created_at: '2013-11-01 08:49:15.093761'
+  updated_at: '2013-11-01 08:49:15.093761'
+tags_43:
+  id: 43
+  user_article_id: 92
+  tag: nokogiri
+  created_at: '2013-11-01 08:49:15.124413'
+  updated_at: '2013-11-01 08:49:15.124413'
+tags_44:
+  id: 44
+  user_article_id: 92
+  tag: ruby
+  created_at: '2013-11-01 08:49:15.141510'
+  updated_at: '2013-11-01 08:49:15.141510'
+tags_45:
+  id: 45
+  user_article_id: 93
+  tag: はてぶ
+  created_at: '2013-11-02 05:48:53.283509'
+  updated_at: '2013-11-02 05:48:53.283509'
+tags_46:
+  id: 46
+  user_article_id: 95
+  tag: マーケティング
+  created_at: '2013-11-02 05:49:50.264540'
+  updated_at: '2013-11-02 05:49:50.264540'
+tags_47:
+  id: 47
+  user_article_id: 96
+  tag: マーケティング
+  created_at: '2013-11-02 05:50:31.950100'
+  updated_at: '2013-11-02 05:50:31.950100'
+tags_48:
+  id: 48
+  user_article_id: 97
+  tag: MVC
+  created_at: '2013-11-02 05:55:31.869975'
+  updated_at: '2013-11-02 05:55:31.869975'
+tags_49:
+  id: 49
+  user_article_id: 98
+  tag: マーケティング
+  created_at: '2013-11-02 06:25:39.347973'
+  updated_at: '2013-11-02 06:25:39.347973'
+tags_50:
+  id: 50
+  user_article_id: 1
+  tag: Rails
+  created_at: '2013-11-02 12:27:42.449966'
+  updated_at: '2013-11-02 12:27:42.449966'
+tags_51:
+  id: 51
+  user_article_id: 2
+  tag: マーケティング
+  created_at: '2013-11-02 16:34:10.591528'
+  updated_at: '2013-11-02 16:34:10.591528'
+tags_52:
+  id: 52
+  user_article_id: 3
+  tag: MVC
+  created_at: '2013-11-02 23:09:13.145006'
+  updated_at: '2013-11-02 23:09:13.145006'
+tags_53:
+  id: 53
+  user_article_id: 72
+  tag: ruby
+  created_at: '2013-11-04 09:27:26.135059'
+  updated_at: '2013-11-04 09:27:26.135137'
+tags_54:
+  id: 54
+  user_article_id: 72
+  tag: Rails
+  created_at: '2013-11-04 09:27:26.135059'
+  updated_at: '2013-11-04 09:27:26.135137'
+tags_55:
+  id: 55
+  user_article_id: 72
+  tag: Ruby
+  created_at: '2013-11-04 09:27:26.135059'
+  updated_at: '2013-11-04 09:27:26.135137'
+tags_56:
+  id: 56
+  user_article_id: 72
+  tag: SQL
+  created_at: '2013-11-04 09:27:26.135059'
+  updated_at: '2013-11-04 09:27:26.135137'
+tags_57:
+  id: 57
+  user_article_id: 72
+  tag: １２３４５６７８９０
+  created_at: '2013-11-04 09:27:49.097383'
+  updated_at: '2013-11-04 09:27:49.097420'
+tags_58:
+  id: 58
+  user_article_id: 72
+  tag: １２３４５６７８９１
+  created_at: '2013-11-04 09:27:49.097383'
+  updated_at: '2013-11-04 09:27:49.097420'
+tags_59:
+  id: 59
+  user_article_id: 72
+  tag: １２３４５６７８９２
+  created_at: '2013-11-04 09:27:49.097383'
+  updated_at: '2013-11-04 09:27:49.097420'
+tags_60:
+  id: 60
+  user_article_id: 72
+  tag: １２３４５６７８９３
+  created_at: '2013-11-04 09:27:49.097383'
+  updated_at: '2013-11-04 09:27:49.097420'
+tags_61:
+  id: 61
+  user_article_id: 72
+  tag: １２３４５６７８９４
+  created_at: '2013-11-04 09:27:49.097383'
+  updated_at: '2013-11-04 09:27:49.097420'
+tags_62:
+  id: 62
+  user_article_id: 72
+  tag: １２３４５６７８９５
+  created_at: '2013-11-04 09:27:49.097383'
+  updated_at: '2013-11-04 09:27:49.097420'
+tags_63:
+  id: 63
+  user_article_id: 24
+  tag: ge
+  created_at: '2013-11-04 09:32:20.651567'
+  updated_at: '2013-11-04 09:32:20.651604'
+tags_64:
+  id: 64
+  user_article_id: 32
+  tag: Ruby
+  created_at: '2013-11-05 02:49:23.636633'
+  updated_at: '2013-11-05 02:49:23.636694'
+tags_65:
+  id: 65
+  user_article_id: 33
+  tag: jvm
+  created_at: '2013-11-11 10:33:08.580139'
+  updated_at: '2013-11-11 10:33:08.580192'
+tags_66:
+  id: 66
+  user_article_id: 34
+  tag: wordpress
+  created_at: '2013-11-11 10:33:38.295865'
+  updated_at: '2013-11-11 10:33:38.295909'
+tags_67:
+  id: 67
+  user_article_id: 35
+  tag: heroku
+  created_at: '2013-11-11 10:33:55.859294'
+  updated_at: '2013-11-11 10:33:55.859325'

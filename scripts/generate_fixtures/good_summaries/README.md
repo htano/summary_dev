@@ -1,0 +1,1 @@
+Usage : $ ./generate_good_summaries_yml.sh > good_summaries.yml

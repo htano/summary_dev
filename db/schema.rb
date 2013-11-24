@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131102080405) do
+ActiveRecord::Schema.define(version: 20131109120815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(version: 20131102080405) do
   add_index "categories", ["name"], name: "idx_categories_on_name", unique: true, using: :btree
 
   create_table "favorite_users", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "favorite_user_id"
+    t.integer  "user_id",          null: false
+    t.integer  "favorite_user_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

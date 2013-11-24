@@ -1,4 +1,5 @@
 include FollowManager
+include Webpage
 
 class MypageController < ApplicationController
   RENDER_USERS_NUM = 13
@@ -11,23 +12,7 @@ class MypageController < ApplicationController
 
   def index
     @table_row_num = TABLE_ROW_NUM
-    @is_login_user = params[:name] ? login_user?(params[:name]) : true
-
-    if @is_login_user
-      @user = get_login_user
-      @user.update_mypage_access
-    else
-      @user = User.find_by_name(params[:name])
-      @is_already_following = is_already_following?(@user.id)
-    end
-
-    favorite_users = get_favorite_users(@user)
-    @favorite_users_info = {:num => favorite_users.length ,
-                            :lists => favorite_users[0..RENDER_FAVORITE_USERS_NUM]}
-
-    followers = get_followers(@user)
-    @followers_info = {:num => followers.length,
-                        :lists => followers[0..RENDER_FOLLOWERS_NUM]}
+    get_profile_info()
 
     update_sort_type(cookies, params[:direction], params[:sort])
     sort_info = get_sort_info(cookies)
@@ -72,7 +57,6 @@ class MypageController < ApplicationController
       @spage = 1
     end
     @summaries_table = get_table_data(@user, summarized_articles, @is_login_user, true)
-    @total_summaries_num = @user.summaries.size
 
     if params[:mpage]
       @current_tab = "main"
@@ -91,6 +75,10 @@ class MypageController < ApplicationController
       format.js
     end
 
+  end
+
+  def tag
+    get_profile_info()
   end
 
   def delete_article
@@ -184,11 +172,9 @@ class MypageController < ApplicationController
   end
 
   def clip
-    login_user = get_login_user
     params[:article_ids].each do |article_id|
-      if Article.exists?(article_id)
-        login_user.user_articles.find_or_create_by(:user_id => get_login_user.id, :article_id => article_id)
-      end
+      url = Article.find_by_id(article_id).url
+      add_webpage(url) if url
     end
 
     redirect_to :action => "index", :params => params
@@ -269,6 +255,28 @@ private
         format.js { render 'login_page' and return }
       end
     end
+  end
+
+  def get_profile_info
+    @is_login_user = params[:name] ? login_user?(params[:name]) : true
+
+    if @is_login_user
+      @user = get_login_user
+      @user.update_mypage_access
+    else
+      @user = User.find_by_name(params[:name])
+      @is_already_following = is_already_following?(@user.id)
+    end
+
+    favorite_users = get_favorite_users(@user)
+    @favorite_users_info = {:num => favorite_users.length ,
+                            :lists => favorite_users[0..RENDER_FAVORITE_USERS_NUM]}
+
+    followers = get_followers(@user)
+    @followers_info = {:num => followers.length,
+                        :lists => followers[0..RENDER_FOLLOWERS_NUM]}
+
+    @total_summaries_num = @user.summaries.size
   end
 
   def is_already_following?(user_id)
@@ -404,7 +412,7 @@ private
       like_num = 
         is_summary ? user.summaries.find_by_article_id(article.id).good_summaries.size : nil
 
-      user_article_ids = article.user_articles.select(:id)
+      user_article_ids = user.user_articles.where(:article_id => article.id).select(:id)
       tags = UserArticleTag.where(:user_article_id => user_article_ids).pluck(:tag)
 
       is_registered = false
