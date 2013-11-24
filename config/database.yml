@@ -6,11 +6,18 @@
 #  timeout: 5000
 #  password:
 
+#development:
+#  adapter: sqlite3
+#  database: db/development.sqlite3
+#  pool: 5
+#  timeout: 5000
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: summary_dev_development
   pool: 5
   timeout: 5000
+  password:
 
 
 # Warning: The database defined as "test" will be erased and
