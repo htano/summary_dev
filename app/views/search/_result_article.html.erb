@@ -8,7 +8,7 @@
     <span id="message"><%= @searchtext[0,10] %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
     <% if get_login_user %>
     <span>
-      <input type="checkbox" id="not_read_only"><%= t('article.filter_only_not_read') %></span>
+      <input type="checkbox" id="not_read_only"><%= t("article.filter_only_not_read") %></span>
     <% end %>
     <span id="sort">
       <div class="btn-group sort-split-btn">
@@ -41,16 +41,16 @@
       <div id="article_infomation">
         <div id="summary_num">
           <% if article.summaries_count == 1 %>
-            <%= link_to article.summaries.length.to_s+"summary" , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>
+            <%= link_to article.summaries.length.to_s+t("summary.count_one") , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>
           <% else %>
-            <%= link_to article.summaries.length.to_s+"summaries" , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>
+            <%= link_to article.summaries.length.to_s+t("summary.count") , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>
           <% end %>
         </div>
         <div id="user_article_num">
           <% if article.user_articles.length == 1 %>
-            <p><%= article.user_articles.length %>reader</p>
+            <p><%= article.user_articles.length.to_s+t("reader.count_one") %></p>
           <% else %>
-            <p><%= article.user_articles.length %>readers</p>
+            <p><%= article.user_articles.length.to_s+t("reader.count") %></p>
           <% end %>
         </div>
       </div>
@@ -84,7 +84,7 @@
       <% end %>
     </div>
   <% end %>
-  <div style='text-align:center;'>
+  <div style="text-align:center;">
     <%= paginate @articles, :window =>4, :outer_window => 2  %>
   </div>
 <% end %>

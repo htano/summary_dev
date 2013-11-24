@@ -39,7 +39,7 @@ toggleUnfollowBtn();
         <div class="select_area">
             <span id="category_all">all</span><br>
           <% Category.all.each do |c| %>
-            <span id="category_<%= c.name %>"><%= c.name %></span><br>
+            <span id="category_<%= c.name %>"><%= t("category."+c.name) %></span><br>
           <% end %>
         </div>
       </div>

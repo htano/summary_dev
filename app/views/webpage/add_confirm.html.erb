@@ -15,20 +15,20 @@ $(document).ready(function() {
     <p class="url_link"><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><a href="http://<%= URI(@url).host %>"target="_blank"><%= URI(@url).host %></a></p>
     <span id="summary_num">
       <% if @summary_num == nil || @summary_num == 0 then %>
-        0 <%= t('summary.count') %>
+        0 <%= t("summary.count") %>
       <% elsif @summary_num == 1 %>
-        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %> <%= t('summary.count_one') %>
+        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %> <%= t("summary.count_one") %>
       <% else %>
-        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %> <%= t('summary.count') %>
+        <%= link_to @summary_num, {:controller => "summary_lists", :action => "index", :article_id => @article_id} %> <%= t("summary.count") %>
       <% end %>
     </span>
     <span id="reader_num">
       <% if @reader_num == nil || @reader_num == 0 then %>
-        0 <%= t('reader.count') %>
+        0 <%= t("reader.count") %>
       <% elsif @reader_num == 1 %>
-        <%= @reader_num %> <%= t('reader.count_one') %>
+        <%= @reader_num %> <%= t("reader.count_one") %>
       <% else%>
-        <%= @reader_num %> <%= t('reader.count') %>
+        <%= @reader_num %> <%= t("reader.count") %>
       <% end %>
     </span>
     <div id="tag_area">
@@ -37,7 +37,7 @@ $(document).ready(function() {
       <% else %>
         <div id="recommend_tags">recommend tags for this article.<br>
           <% @top_rated_tags.each do |recommend_tag| %>
-            <label><span class="recommend_tag" onclick="clickRecommendTag('<%= recommend_tag %>')" id="recommend_tag_<%= recommend_tag %>"><%= recommend_tag %></span></label>
+            <label><span class="recommend_tag" onclick="clickRecommendTag("<%= recommend_tag %>")" id="recommend_tag_<%= recommend_tag %>"><%= recommend_tag %></span></label>
           <% end %>
         </div>
       <% end %>
@@ -47,7 +47,7 @@ $(document).ready(function() {
       <% else %>
         <div id="recent_tags">recent tags.<br>
           <% @recent_tags.each do |recent_tag| %>
-            <label><span class="recent_tag" onclick="clickRecentTag('<%= recent_tag %>')" id="recent_tag_<%= recent_tag %>"><%= recent_tag %></span></label>
+            <label><span class="recent_tag" onclick="clickRecentTag("<%= recent_tag %>")" id="recent_tag_<%= recent_tag %>"><%= recent_tag %></span></label>
           <% end %>
         </div>
       <% end %>
