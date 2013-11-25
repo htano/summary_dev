@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131109120815) do
+ActiveRecord::Schema.define(version: 20131125113929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20131109120815) do
     t.integer  "user_articles_count"
     t.integer  "cluster_id",                default: 0
     t.string   "auto_summary_error_status"
+    t.text     "html"
   end
 
   add_index "articles", ["last_added_at", "strength"], name: "idx_strength", using: :btree

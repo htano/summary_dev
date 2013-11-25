@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 require "nokogiri"
 require "openssl"
 require "open-uri"
@@ -28,12 +27,18 @@ module Webpage
       article = Article.create(
         :url => url, 
         :title => h["title"], 
-        :contents_preview => h["contentsPreview"][0, 200],
+        #:contents_preview => h["contentsPreview"][0, 200],
+        :contents_preview => nil,
         :category_id => 0, 
         :cluster_id => 0,
-        :thumbnail => h["thumbnail"]
+        :thumbnail => h["thumbnail"],
+        :html => h["html"]
       )
       if article
+        preview_job = PreviewingJob.new(article.id)
+        preview_job.delay.run
+        thumbnail_job = ThumbnailingJob.new(article.id)
+        thumbnail_job.delay.run
         summarize_job = SummarizingJob.new(article.id)
         summarize_job.delay.run
         classify_job = ClassifyingJob.new(article.id)
@@ -58,9 +63,16 @@ module Webpage
         f.read
       end
       title = title_flg ? get_webpage_title(url, html) : nil
-      contentsPreview = contentsPreview_flg ? get_webpage_contents_preview(html) : nil
-      thumbnail = thumbnail_flg ? get_webpage_thumbnail(url, html) : nil
-      h = {"title" => title, "thumbnail" => thumbnail, "contentsPreview" => contentsPreview}
+      #contentsPreview = contentsPreview_flg ? get_webpage_contents_preview(html) : nil
+      #thumbnail = thumbnail_flg ? get_webpage_thumbnail(url, html) : nil
+      contentsPreview = nil
+      thumbnail = nil
+      h = {
+        "title" => title, 
+        "thumbnail" => thumbnail, 
+        "contentsPreview" => contentsPreview,
+        "html" => html
+      }
       return h
     rescue => e
       logger.error("error :#{e}")
