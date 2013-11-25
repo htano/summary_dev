@@ -35,10 +35,10 @@ module Webpage
         :html => h["html"]
       )
       if article
-        preview_job = PreviewingJob.new(article.id)
-        preview_job.delay.run
         thumbnail_job = ThumbnailingJob.new(article.id)
         thumbnail_job.delay.run
+        preview_job = PreviewingJob.new(article.id)
+        preview_job.delay.run
         summarize_job = SummarizingJob.new(article.id)
         summarize_job.delay.run
         classify_job = ClassifyingJob.new(article.id)
