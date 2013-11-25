@@ -20,24 +20,24 @@ toggleUnfollowBtn();
     </div>
     <div id="option_area">
       <div class="target_area">
-        <p>target</p>
+<!--        <p>target</p>-->
         <div class="select_area">
-          <span id="target_article">article</span><br>
-          <span id="target_user">user</span><br>
+          <span id="target_article"><%= t("target.article") %></span><br>
+          <span id="target_user"><%= t("target.user") %></span><br>
         </div>
       </div>
       <div class="type_area">
-        <p>type</p>
+<!--        <p>type</p>-->
         <div class="select_area">
-          <span id="type_content">content</span><br>
-          <span id="type_tag">tag</span><br>
-          <span id="type_domain">domain</span><br>
+          <span id="type_content"><%= t("type.content") %></span><br>
+          <span id="type_tag"><%= t("type.tag") %></span><br>
+          <span id="type_domain"><%= t("type.domain") %></span><br>
         </div>
       </div>
       <div class="category_area">
-        <p>category</p>
+<!--        <p>category</p>-->
         <div class="select_area">
-            <span id="category_all">all</span><br>
+            <span id="category_all"><%= t("category.all") %></span><br>
           <% Category.all.each do |c| %>
             <span id="category_<%= c.name %>"><%= t("category."+c.name) %></span><br>
           <% end %>

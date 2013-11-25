@@ -2,7 +2,7 @@
   <%= stylesheet_link_tag "webpage" %>
 <% end %>
 
-<div class="comment_box">Register URL.</div>
+<div class="comment_box"><%= t("webpage.add") %></div>
 <div class="add_url">
   <%= form_tag({:action => 'add_confirm', :add_flag => true}, {:method => 'POST', :class => "form-vertical" ,:onsubmit => 'return check_url()'}) do %>
     <span id="text_url">URL</span>

@@ -8,7 +8,7 @@ $(document).ready(function() {
 });
 </script>
 
-<div class="comment_box">Confirm.</div>
+<div class="comment_box"><%= t("webpage.confirm") %></div>
 <div class="url_box">
   <form method="POST" action="add_complete" class="confirm_url">
     <p class="url_title"><a href="<%= @url %>"target="_blank"><%= @title[0, 100] %></a></p>
