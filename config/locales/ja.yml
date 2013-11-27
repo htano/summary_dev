@@ -70,3 +70,12 @@ ja:
     add: "記事を登録"
     confirm: "追加情報"
     complete: "登録完了"
+  tag:
+    no_recommend_tags: "この記事に対するタグ設定なし"
+    no_recent_tags: "最近タグを設定していません"
+    recommend_tags: "他の人が設定したタグ"
+    recent_tags: "最近設定したタグ"
+    set_tags: "この記事に設定したタグ"
+  placeholder:
+    searcht_ext: "検索したい単語を入力して下さい。"
+    input_url_text: "追加したURLを入力して下さい。"

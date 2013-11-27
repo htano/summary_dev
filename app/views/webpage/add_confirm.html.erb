@@ -33,9 +33,9 @@ $(document).ready(function() {
     </span>
     <div id="tag_area">
       <% if @top_rated_tags == nil || @top_rated_tags.length == 0 %>
-        <div id="recommend_tags">No one tags for this article.<br><br></div>
+        <div id="recommend_tags"><%= t("tag.no_recommend_tags") %><br><br></div>
       <% else %>
-        <div id="recommend_tags">recommend tags for this article.<br>
+        <div id="recommend_tags"><%= t("tag.recommend_tags") %><br>
           <% @top_rated_tags.each do |recommend_tag| %>
             <label><span class="recommend_tag" onclick="clickRecommendTag("<%= recommend_tag %>")" id="recommend_tag_<%= recommend_tag %>"><%= recommend_tag %></span></label>
           <% end %>
@@ -43,9 +43,9 @@ $(document).ready(function() {
       <% end %>
 
       <% if @recent_tags == nil || @recent_tags.length == 0 %>
-        <div id="recent_tags">you used no tags.<br><br></div>
+        <div id="recent_tags"><%= t("tag.no_recent_tags") %><br><br></div>
       <% else %>
-        <div id="recent_tags">recent tags.<br>
+        <div id="recent_tags"><%= t("tag.recent_tags") %><br>
           <% @recent_tags.each do |recent_tag| %>
             <label><span class="recent_tag" onclick="clickRecentTag("<%= recent_tag %>")" id="recent_tag_<%= recent_tag %>"><%= recent_tag %></span></label>
           <% end %>
@@ -53,7 +53,7 @@ $(document).ready(function() {
       <% end %>
 
 
-      <div id="my_tags">tags for this article. <%= image_tag("icons/glyphicons_016_bin.png", :size => "12x12", :id => "tag_clear") %><br>
+      <div id="my_tags"><%= t("tag.set_tags") %><%= image_tag("icons/glyphicons_016_bin.png", :size => "12x12", :id => "tag_clear") %><br>
         <% for num in 1..10 do %>
           <input type="text" class="tag_text" name="tag_text_<%= num %>" id="tag_text_<%= num %>" maxlength="10" value="<%= @set_tags[num-1] %>">
         <% end %>

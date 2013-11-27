@@ -14,7 +14,7 @@ function checkSearchtext(){
         <div class="nav-collapse">
           <ul class="nav pull-right">
           
-            <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" placeholder="Please input the words you want."></li>
+            <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" placeholder="<%= t("placeholder.searcht_ext") %>"></li>
             <li><input type="submit" id="search_nav" value="search" class="button button-flat:hover submit"></li>
 
           <% if signed_in? %>
