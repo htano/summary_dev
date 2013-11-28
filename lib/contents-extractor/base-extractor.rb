@@ -94,7 +94,7 @@ class ContentsExtractor::BaseExtractor
           next if s =~ /^[\x20-\x7E]+$/;
           s.gsub!(/>>\d+/, "")
           s.gsub!(/(.)\1{3}\1+/, "")
-          s.gsub!(/（?[\x21-\x7E]{10,9999}）?/, "") #TODO: Only japanese site.
+          s.gsub!(/（?[\x21-\x7E]{15,9999}）?/, "") #TODO: Only japanese site.
           s.gsub!(/[wWｗＷ]{3,9999}$/, "")
           s.gsub!(/[ \u3000]+$/, "")
           s.gsub!(/^[ \u3000]+/, "")
