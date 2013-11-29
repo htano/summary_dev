@@ -67,9 +67,11 @@ ja:
     tag: "タグ"
     domain: "ドメイン"
   webpage:
-    add: "記事を登録"
-    confirm: "追加情報"
+    add: "追加"
+    confirm: "編集"
     complete: "登録完了"
+  search:
+    search: "検索"
   tag:
     no_recommend_tags: "この記事に対するタグ設定なし"
     no_recent_tags: "最近タグを設定していません"

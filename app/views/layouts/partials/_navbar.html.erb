@@ -15,11 +15,11 @@ function checkSearchtext(){
           <ul class="nav pull-right">
           
             <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" placeholder="<%= t("placeholder.searcht_ext") %>"></li>
-            <li><input type="submit" id="search_nav" value="search" class="button button-flat:hover submit"></li>
+            <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li>
 
           <% if signed_in? %>
             <li>
-              <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" >add</a>
+              <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" ><%= t("webpage.add") %></a>
             </li>
           <% end %>
 
