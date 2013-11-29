@@ -37,7 +37,7 @@ $(document).ready(function() {
       <% else %>
         <div id="recommend_tags"><%= t("tag.recommend_tags") %><br>
           <% @top_rated_tags.each do |recommend_tag| %>
-            <label><span class="recommend_tag" onclick="clickRecommendTag("<%= recommend_tag %>")" id="recommend_tag_<%= recommend_tag %>"><%= recommend_tag %></span></label>
+            <label><span class="recommend_tag" onclick="clickRecommendTag('<%= recommend_tag %>')" id="recommend_tag_<%= recommend_tag %>"><%= recommend_tag %></span></label>
           <% end %>
         </div>
       <% end %>
@@ -47,7 +47,7 @@ $(document).ready(function() {
       <% else %>
         <div id="recent_tags"><%= t("tag.recent_tags") %><br>
           <% @recent_tags.each do |recent_tag| %>
-            <label><span class="recent_tag" onclick="clickRecentTag("<%= recent_tag %>")" id="recent_tag_<%= recent_tag %>"><%= recent_tag %></span></label>
+            <label><span class="recent_tag" onclick="clickRecentTag('<%= recent_tag %>')" id="recent_tag_<%= recent_tag %>"><%= recent_tag %></span></label>
           <% end %>
         </div>
       <% end %>
