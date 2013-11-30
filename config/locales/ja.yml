@@ -62,7 +62,7 @@ ja:
   webpage:
     add: "追加"
     confirm: "編集"
-    complete: "登録完了"
+    complete: "完了"
   search:
     search: "検索"
     sort_newest: "新しい順"
