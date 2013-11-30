@@ -51,13 +51,13 @@ class SearchController < ApplicationController
     case @sort
     when "1"
       @articles = @articles.order("created_at desc")
-      @sort_menu_title = "Newest"
+      @sort_menu_title = t("search.sort_newest")
     when "2"
       @articles = @articles.order("summaries_count desc, created_at desc")
-      @sort_menu_title = "Summary num"
+      @sort_menu_title = t("search.sort_summary_num")
     when "3"
       @articles = @articles.order("user_articles_count desc, created_at desc")
-      @sort_menu_title = "Reader num"
+      @sort_menu_title = t("search.sort_reader_num")
     else
       flash[:error] = "Please retry."
       redirect_to :action => "index" and return

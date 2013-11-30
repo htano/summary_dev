@@ -59,19 +59,20 @@ ja:
     social: "社会"
     other: "その他"
     personal: "パーソナル"
-  target:
-    article: "記事"
-    user: "ユーザー"
-  type:
-    content: "内容"
-    tag: "タグ"
-    domain: "ドメイン"
   webpage:
     add: "追加"
     confirm: "編集"
     complete: "登録完了"
   search:
     search: "検索"
+    sort_newest: "新しい順"
+    sort_summary_num: "要約数順"
+    sort_reader_num: "登録人数順"
+    target_article: "記事"
+    target_user: "ユーザー"
+    type_content: "内容"
+    type_tag: "タグ"
+    type_domain: "ドメイン"
   tag:
     no_recommend_tags: "この記事に対するタグ設定なし"
     no_recent_tags: "最近タグを設定していません"
