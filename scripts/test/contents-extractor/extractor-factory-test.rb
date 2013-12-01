@@ -9,6 +9,7 @@ begin
     f.read
   end
 rescue => e
+  warn "openuri: error was happened."
   p e
   exit 1
 end
