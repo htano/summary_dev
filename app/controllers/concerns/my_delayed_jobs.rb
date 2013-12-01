@@ -169,7 +169,8 @@ module MyDelayedJobs
       ac_inst = ArticleClassifier.new
       ac_inst.read_models
       article = Article.find(@article_id)
-      category_name = ac_inst.predict(article.title)
+      contents = article.get_contents_text
+      category_name = ac_inst.predict(contents)
       category_id = Category.find_by_name(category_name).id
       article.category_id = category_id
       article.save
@@ -184,12 +185,7 @@ module MyDelayedJobs
     def run
       article = Article.find(@article_id)
       ph_inst = PersonalHotentry.new
-      contents = article.title + " " + article.title
-      if(article.get_top_rated_summary &&
-        article.get_top_rated_summary.content)
-        contents += " " + article.get_top_rated_summary.content
-      end
-      contents.gsub!(/\r?\n/, " ")
+      contents = article.get_contents_text
       cluster_id, cluster_score =
         ph_inst.predict_max_cluster_id(contents)
       UserArticle.where(article_id: @article_id).each do |ua|

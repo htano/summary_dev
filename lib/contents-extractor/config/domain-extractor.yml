@@ -73,3 +73,7 @@ himasoku.com:
 detail.chiebukuro.yahoo.co.jp:
   extractor_type: xpath
   xpath: //div[@class='details-inner']//p
+internet.watch.impress.co.jp:
+  encoding: utf-8
+  xpath: //div[@class='main-contents mainContents']//p
+  extractor_type: xpath

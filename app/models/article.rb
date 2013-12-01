@@ -248,15 +248,26 @@ class Article < ActiveRecord::Base
   end
 
   def get_top_rated_summary
-    @top_rated_summary = nil
-    @top_rate = -1
+    top_rated_summary = nil
+    top_rate = -1
     self.summaries.order('created_at desc').each do |summary|
-      if @top_rate < summary.good_summaries.count
-        @top_rate = summary.good_summaries.count
-        @top_rated_summary = summary
+      if top_rate < summary.good_summaries.count
+        top_rate = summary.good_summaries.count
+        top_rated_summary = summary
       end
     end
-    return @top_rated_summary
+    return top_rated_summary
+  end
+
+  def get_contents_text
+    contents  = self.title + " "
+    contents += self.title + " "
+    if(self.get_top_rated_summary &&
+       self.get_top_rated_summary.content)
+      contents += " " + self.get_top_rated_summary.content
+    end
+    contents.gsub!(/\r?\n/, " ")
+    return contents
   end
 
   def get_contents_preview
