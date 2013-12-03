@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
   MAIL_STATUS_DEFINITIVE  = 2
   MAIL_STATUS_ERROR       = 3
   CLUSTER_DECAY_DELTA = 0.95
+  
+  has_attached_file :avatar, styles: {
+    medium: '100x100>'
+  }, :default_url => "/images/:style/no_image.png"
 
   validates :name, :uniqueness => true
   validates :open_id,   :uniqueness => true
@@ -143,5 +147,13 @@ class User < ActiveRecord::Base
 
   def get_followers_count
     return FavoriteUser.count(:all, :conditions => {:favorite_user_id => self.id})
+  end
+
+  def prof_image
+    if self["prof_image"] && self["prof_image"] =~ /^http/
+      return self["prof_image"]
+    else
+      return self.avatar.url(:medium)
+    end
   end
 end

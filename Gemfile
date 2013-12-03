@@ -96,3 +96,6 @@ group :test do
 end
 
 gem 'okura'
+
+gem 'paperclip'
+gem 'aws-sdk'

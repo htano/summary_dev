@@ -40,8 +40,8 @@ class SettingsController < ApplicationController
         user.public_flg = public_flg
         edit_flg = true
       end
-      if !edit_error && params[:profile_image] != nil
-        if save_prof_image(user, params[:profile_image])
+      if !edit_error && params[:user] != nil
+        if user.update_attributes(user_params)
           edit_flg = true
         else
           edit_error = true
@@ -180,5 +180,9 @@ class SettingsController < ApplicationController
       flash[:error] = "Input image-file is not image file or exceeds 1024KB."
       return false
     end
+  end
+
+  def user_params
+    params.require(:user).permit(:avatar)
   end
 end
