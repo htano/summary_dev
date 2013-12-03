@@ -15,12 +15,13 @@ ul.tab {
 
   li {
     float: left;
-    margin: 5px 5px 0px 0px;
+    margin: 5px 0px 0px 0px;
     position: relative;
     bottom: -2px;
     list-style-type: none;
     border: 1px #ddd solid;
-    border-bottom: 2px #ddd solid;
+    border-bottom: 2px solid #ddd;
+    border-top: 2px solid #ddd;
     text-align: center;
 
     a {
@@ -35,15 +36,15 @@ ul.tab {
 
       &:hover {
         position: relative;
-        background-color: gray;
+        background-color: #ddd;
         color: white;
       }
     }
-    .active {
-      color: white;
-      background-color: #e6e6e6;
-    }
   }
+}
+
+.tab > .active {
+  border-top: 2px solid #5B91FF;
 }
 
 .clear:after {
