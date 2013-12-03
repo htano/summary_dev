@@ -1,4 +1,4 @@
-<% unfollow = button_to 'following', 
+<% unfollow = button_to t('follow.is_true'), 
               {:action => 'unfollow', :unfollow_user_id => @user_id}, 
               {:id => 'unfollow-button', :class => 'btn btn-primary btn-xs', :remote => true} %>
 <% image = link_to image_tag(@current_user.prof_image, :size => '32x32', :title => @current_user.name),

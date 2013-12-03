@@ -4,8 +4,8 @@
 @toggleUnfollowBtn = ->
   $(document).ready ->
     $("[id=unfollow-button]").hover (->
-      $(this).val "unfollow"
+      $(this).val I18n.t('follow.cancel')
       $(this).removeClass("btn-primary").addClass("btn-danger");
     ), ->
-      $(this).val "following"
+      $(this).val I18n.t('follow.is_true')
       $(this).removeClass("btn-danger").addClass("btn-primary")

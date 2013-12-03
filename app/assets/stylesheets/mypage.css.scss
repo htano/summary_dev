@@ -353,7 +353,6 @@ ul.tab {
 
 .article-table {
   clear: left;
-  width: 800px;
   padding-left: 35px;
 
   table {
@@ -373,13 +372,13 @@ ul.tab {
 }
 
 #article-title-top {
-  width: 711px;
+  width: 672px;
   padding: 4px 0px 0px 0px;
   text-align: center;
 }
 
 #summary-number-top {
-  width: 100px;
+  width: 80px;
   padding: 4px 0px 0px 0px;
   text-align: center;
 }
@@ -446,10 +445,6 @@ ul.tab {
       font-size: 10px;
     }
   }
-}
-
-#unfollow-button {
-  width: 66px;
 }
 
 .num-column {
@@ -656,11 +651,12 @@ ul.tab {
     height: 22px;
     p {
       float: left;
+      margin-left: 10px;
     }
   }
 }
 
 .edit-tag-btn > a > p {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 

@@ -1,4 +1,4 @@
-<% follow = button_to 'follow', 
+<% follow = button_to t('follow.add'), 
               {:action => 'follow', :follow_user_id => @user_id}, 
               {:id => 'follow-button', :class => 'btn btn-info btn-xs', :remote => true} %>
 $('#follow-<%= @user_id %>').html("<%= raw(escape_javascript(follow))  %>")

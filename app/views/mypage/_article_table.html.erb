@@ -17,7 +17,7 @@
         </div>
         <p>
           <%= table_data[:registered_num] %> <%= get_reader_string(table_data[:registered_num])%>, 
-          created at <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | 
+          <%= t('article.created_at') %> <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | 
           <%= table_data[:summary_num] %> <%= get_summary_string(table_data[:summary_num]) %>
         </p>
         <div class="article-tags">
@@ -32,13 +32,13 @@
       <% if @is_login_user %>
       <div class="summarize-btn">
         <%= link_to image_tag("icons/glyphicons_030_pencil_gray.png", :size => "12x12") +
-            content_tag(:p, "summarize"),
+            content_tag(:p, t('summary.edit')),
             {:controller => "summary", :action => "edit", :article_id => table_data[:article].id},
             {:class => "btn btn-default btn-xs"} %>
       </div>
       <div class="edit-tag-btn">
         <%= link_to image_tag("icons/glyphicons_065_tag_gray.png", :size => "12x12") +
-            content_tag(:p, "edit tag"),
+            content_tag(:p, t('tag.edit')),
             {:controller => "webpage", :action => "add_confirm", :url => table_data[:article].url},
             {:class => "btn btn-default btn-xs", :method => :post} %>
       </div>
@@ -46,9 +46,9 @@
       <% if @is_login_user != true && table_data[:is_registered] %>
         <span>
         <% if table_data[:is_already_read] %>
-        << already read
+        << <%= t('article_table.is_read') %>
         <% else %>
-        << also register
+        << <%= t('article_table.is_registered') %>
         <% end %>
         </span>
       <% end %>

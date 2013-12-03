@@ -22,11 +22,19 @@ module MypageHelper
     page_position
   end
 
+  def get_sort_title(title)
+    t('article_sort.' + get_i18n_sort_type(title))
+  end
+
   def is_selected_sort_type(title, type, id)
     if title == type
-      '<span id="' + id + '" ' + 'class="glyphicon glyphicon-ok"></span><span>' + type + '</span>'
+      '<span id="' + id + '" ' + 'class="glyphicon glyphicon-ok"></span><span>' + 
+        t('article_sort.' + get_i18n_sort_type(type)) + 
+        '</span>'
     else
-      '<span id="' + id + '""></span><span>' + type + '</span>'
+      '<span id="' + id + '""></span><span>' + 
+        t('article_sort.' + get_i18n_sort_type(type)) + 
+        '</span>'
     end
   end
 
@@ -48,9 +56,9 @@ module MypageHelper
 
   def get_summary_string(num)
     if num == 1
-      "summary"
+      t('summary.count_one')
     else
-      "summaries"
+      t('summary.count')
     end
   end
 
@@ -64,9 +72,28 @@ module MypageHelper
 
   def get_reader_string(num)
     if num == 1
-      "reader"
+      t('reader.count_one')
     else
-      "readers"
+      t('reader.count')
+    end
+  end
+
+  def get_i18n_sort_type(type)
+    case type
+    when "Oldest"
+      "oldest"
+    when "Newest"
+      "newest"
+    when "Least summarized"
+      "least_summarized"
+    when "Most summarized"
+      "most_summarized"
+    when "Least read"
+      "least_read"
+    when "Most read"
+      "most_read"
+    else
+      "oldest"
     end
   end
 end

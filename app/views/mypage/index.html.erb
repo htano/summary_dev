@@ -48,21 +48,22 @@
       <div class="div-tag">
         <ul class="tab clear">
           <li class="main my-overflow" onclick="setCurrentTab('main')">
-            <a href=".main" data-toggle="tab">main</a>
+            <a href=".main" data-toggle="tab"><%= t('tab.main') %></a>
           </li>
           <li class="summary my-overflow" onclick="setCurrentTab('summary')">
-            <a href=".summary" data-toggle="tab">summary</a>
+            <a href=".summary" data-toggle="tab"><%= t('tab.summary') %></a>
           </li>
           <li class="favorite my-overflow" onclick="setCurrentTab('favorite')">
-            <a href=".favorite" data-toggle="tab">favorite</a>
+            <a href=".favorite" data-toggle="tab"><%= t('tab.favorite') %></a>
           </li>
           <li class="read my-overflow" onclick="setCurrentTab('read')">
-            <a href=".read" data-toggle="tab">read</a>
+            <a href=".read" data-toggle="tab"><%= t('tab.read') %></a>
           </li>
         </ul>
         <div class="btn-group sort-split-btn">
           <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-          <%= @sort_menu_title %><span class="caret"></span>
+            <%= raw get_sort_title(@sort_menu_title) %>
+          <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
             <li class="sort-type">
@@ -103,17 +104,17 @@
         <div class="none main">
           <div id="mark-as-read-btn">
             <%= link_to image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16") +
-              content_tag(:p, "mark as read"),
+              content_tag(:p, t('read_status.mark_as_read')),
               {:action => "mark_as_read"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div id="mark-as-favorite-btn">
             <%= link_to image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") +
-              content_tag(:p, "mark as favorite"),
+              content_tag(:p, t('favorite_status.mark_as_favorite')),
               {:action => "mark_as_favorite"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div id="delete-btn">
             <%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") +
-              content_tag(:p, "delete"),
+              content_tag(:p, t('article.delete')),
               {:action => "delete_article"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
@@ -126,7 +127,7 @@
         <div class="none summary">
           <div id="delete-summary-btn">
             <%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") +
-              content_tag(:p, "delete"),
+              content_tag(:p, t('summary.delete')),
               {:action => "delete_summary"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
@@ -139,12 +140,12 @@
         <div class="none favorite">
           <div id="mark-off-favorite-btn">
             <%= link_to image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") +
-              content_tag(:p, "mark off favorite"),
+              content_tag(:p, t('favorite_status.mark_off_favorite')),
               {:action => "mark_off_favorite"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div id="delete-btn">
             <%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") +
-              content_tag(:p, "delete"),
+              content_tag(:p, t('article.delete')),
               {:action => "delete_article"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
@@ -157,17 +158,17 @@
         <div class="none read">
           <div id="mark-as-unread-btn">
             <%= link_to image_tag("icons/glyphicons_152_check_gray.png", :size => "16x16") +
-              content_tag(:p, "mark as unread"),
+              content_tag(:p, t('read_status.mark_as_unread')),
               {:action => "mark_as_unread"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div id="mark-as-favorite-btn">
             <%= link_to image_tag("icons/glyphicons_049_star_gray.png", :size => "16x16") +
-              content_tag(:p, "mark as favorite"),
+              content_tag(:p, t('favorite_status.mark_as_favorite')),
               {:action => "mark_as_favorite"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div id="delete-btn">
             <%= link_to image_tag("icons/glyphicons_016_bin_gray.png", :size => "16x16") +
-              content_tag(:p, "delete"),
+              content_tag(:p, t('article.delete')),
               {:action => "delete_article"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
@@ -182,7 +183,7 @@
         <div class="none main">
           <div id="clip-btn">
             <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
-              content_tag(:p, "clip"),
+              content_tag(:p, t('clip.clip')),
               {:action => "clip"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
@@ -195,7 +196,7 @@
         <div class="none summary">
           <div id="clip-btn">
             <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
-              content_tag(:p, "clip"),
+              content_tag(:p, t('clip.clip')),
               {:action => "clip"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
@@ -208,7 +209,7 @@
         <div class="none favorite">
           <div id="clip-btn">
             <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
-              content_tag(:p, "clip"),
+              content_tag(:p, t('clip.clip')),
               {:action => "clip"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
@@ -221,7 +222,7 @@
         <div class="none read">
           <div id="clip-btn">
             <%= link_to image_tag("icons/glyphicons_062_paperclip_gray.png", :size => "16x16") +
-              content_tag(:p, "clip"),
+              content_tag(:p, t('clip.clip')),
               {:action => "clip"}, {:class => "btn btn-default btn-xs disabled", :method => :post} %>
           </div>
           <div class="page-ejection" style="float: right; padding: 0;">
@@ -244,9 +245,11 @@
                   <%= check_box 'check_all', 0, 
                   {:id => "main-check-all", :onclick => "checkAll('main')"}, 0, false %>
                 </div>
-                TITLE
+                <%= t('article_table.title') %>
               </th>
-              <th id="summary-number-top">summary</th>
+              <th id="summary-number-top">
+                <%= t('article_table.summary')%>
+              </th>
             </tr>
             <%= render_article_table('main', @main_articles_table, 'mpage=' + @mpage.to_s) %>
           </table>
@@ -259,9 +262,11 @@
                   <%= check_box 'check_all', 0, 
                   {:id => "summary-check-all", :onclick => "checkAll('summary')"}, 0, false %>
                 </div>
-                TITLE
+                <%= t('article_table.title') %>
               </th>
-              <th id="summary-number-top">summary</th>
+              <th id="summary-number-top">
+                <%= t('article_table.summary')%>
+              </th>
             </tr>
             <%= render_summary_table = render_summary_table('summary', @summaries_table, 'spage=' + @spage.to_s) %>
           </table>
@@ -274,8 +279,11 @@
                   <%= check_box 'check_all', 0, 
                   {:id => "favorite-check-all", :onclick => "checkAll('favorite')"}, 0, false %>
                 </div>
-                TITLE</th>
-              <th id="summary-number-top">summary</th>
+                <%= t('article_table.title') %>
+              </th>
+              <th id="summary-number-top">
+                <%= t('article_table.summary')%>
+              </th>
             </tr>
             <%= render_favorite_table = render_article_table('favorite', @favorite_articles_table, 'fpage=' + @fpage.to_s) %>
           </table>
@@ -288,9 +296,11 @@
                   <%= check_box 'check_all', 0, 
                   {:id => "read-check-all", :onclick => "checkAll('read')"}, 0, false %>
                 </div>
-                TITLE
+                <%= t('article_table.title') %>
               </th>
-              <th id="summary-number-top">summary</th>
+              <th id="summary-number-top">
+                <%= t('article_table.summary')%>
+              </th>
             </tr>
             <%= render_read_table = render_article_table('read', @read_articles_table, 'rpage=' + @rpage.to_s) %>
           </table>

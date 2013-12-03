@@ -142,15 +142,6 @@ currentTab = "main"
 @getCurrentTab = ->
   currentTab
 
-toggleUnfollowBtn = ->
-  $(document).ready ->
-    $("#unfollow-button").hover (->
-      $(this).val "unfollow"
-      $(this).removeClass("btn-primary").addClass("btn-danger")
-    ), ->
-      $(this).val "following"
-      $(this).removeClass("btn-danger").addClass("btn-primary")
-
 @setTabInfoBeforeUnload = (name) ->
   tabBeforeUnload = "main"
   if $("#article-controller .active").hasClass("main")

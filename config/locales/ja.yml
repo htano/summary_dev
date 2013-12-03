@@ -24,12 +24,19 @@ ja:
     top_rated_summary: "トップ要約"
     contents_preview:  "プレビュー"
     filter_only_summarized: "要約がある記事に絞る"
+    delete: "削除する"
+    created_at: "登録日"
   read_later:
     add: "後で読む"
     cancel: "読まない"
   read_status:
     mark_as_read: "既読にする"
     mark_as_unread: "未読にする"
+  favorite_status:
+    mark_as_favorite: "お気に入りにする"
+    mark_off_favorite: "お気に入り解除"
+  clip:
+    clip: "クリップ"
   reader:
     count: "readers"
     count_one: "reader"
@@ -38,6 +45,8 @@ ja:
     count_one: "summary"
     edit: "要約する"
     view_all: "全ての要約を見る"
+    delete: "削除する"
+    last_updated: "最終更新日"
   follow:
     add: "フォロー"
     is_true: "フォロー中"
@@ -56,3 +65,30 @@ ja:
     social: "社会"
     other: "その他"
     personal: "パーソナル"
+  tag:
+    edit: "タグを編集"
+  article_sort:
+    newest: "登録日が新しい順"
+    oldest: "登録日が古い順"
+    least_summarized: "要約が少ない順"
+    most_summarized: "要約が多い順"
+    least_read: "登録が少ない順"
+    most_read: "登録が多い順"
+  profile:
+    show_more: "詳細表示"
+    following: "FOLLOWING"
+    followers: "FOLLOWERS"
+    summary: "SUMMARY"
+  tab:
+    main: "登録済み"
+    summary: "要約した記事"
+    favorite: "お気に入り"
+    read: "既読"
+  article_table:
+    title: "タイトル"
+    summary: "要約数"
+    is_read: "既読"
+    is_registered: "登録済み"
+
+
+
