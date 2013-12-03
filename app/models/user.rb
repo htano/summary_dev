@@ -5,9 +5,21 @@ class User < ActiveRecord::Base
   MAIL_STATUS_ERROR       = 3
   CLUSTER_DECAY_DELTA = 0.95
   
-  has_attached_file :avatar, styles: {
-    medium: '100x100>'
-  }, :default_url => "/images/:style/no_image.png"
+  if Rails.env.production?
+    has_attached_file(
+      :avatar, 
+      :styles => { medium: '100x100>' }, 
+      :default_url => "/images/:style/no_image.png",
+    )
+  else
+    has_attached_file(
+      :avatar, 
+      :styles => { medium: '100x100>' }, 
+      :default_url => "/images/:style/no_image.png",
+      :url => "/images/:class/:attachment/:id_partition/:style/:filename",
+      :path => "#{Rails.root}/public/images/:class/:attachment/:id_partition/:style/:filename"
+    )
+  end
 
   validates :name, :uniqueness => true
   validates :open_id,   :uniqueness => true
