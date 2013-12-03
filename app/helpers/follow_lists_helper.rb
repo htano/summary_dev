@@ -3,11 +3,11 @@ module FollowListsHelper
     current_user = get_login_user
 
     if current_user && current_user.favorite_users.exists?(:favorite_user_id => user.id)
-      return button_to "following", 
+      return button_to t('follow.is_true'), 
             {:action => "unfollow", :controller => "mypage", :unfollow_user_id => user.id}, 
             {:id => "unfollow-button", :class => "btn btn-primary btn-xs", :remote => true}
     else
-      return button_to "follow", 
+      return button_to t('follow.add'), 
               {:action => "follow", :controller => "mypage", :follow_user_id => user.id}, 
               {:id => "follow-button", :class => "btn btn-info btn-xs", :remote => true}
     end
@@ -30,6 +30,6 @@ module FollowListsHelper
       summary_str = "edited " + summary_num.to_s + " summary"
     end
 
-    return content_tag(:p, register_str + ", " + summary_str)
+    content_tag(:p, register_str + ", " + summary_str)
   end
 end

@@ -76,9 +76,6 @@ ja:
     most_read: "登録が多い順"
   profile:
     show_more: "詳細表示"
-    following: "FOLLOWING"
-    followers: "FOLLOWERS"
-    summary: "SUMMARY"
   tab:
     main: "登録済み"
     summary: "要約した記事"
