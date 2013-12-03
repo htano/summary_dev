@@ -395,7 +395,7 @@ describe MypageController do
     end
   end
 
-  describe "GET #unfollow" do
+  describe "POST #unfollow" do
     before(:each) do
       session[:openid_url] = "oauth://twitter/12345"
       @login_user = User.find_by_id(1)
@@ -408,7 +408,7 @@ describe MypageController do
     end
   end
 
-  describe "GET #unfollow and invalid user id" do
+  describe "POST #unfollow and invalid user id" do
     before(:each) do
       session[:openid_url] = "oauth://twitter/12345"
       @login_user = User.find_by_id(1)
@@ -419,4 +419,34 @@ describe MypageController do
       expect(response).to render_template(:file => "#{Rails.root}/public/404.html")
     end
   end
+
+  describe "GET #tag without signing in" do
+    it "access to route" do
+      get :tag, :tag => "test"
+      expect(response).to redirect_to :controller => 'consumer', 
+                                      :action => 'index'
+    end
+  end
+
+  describe "GET #tag with signing in" do
+    before(:each) do
+      session[:openid_url] = "oauth://twitter/12345"
+      @login_user = User.find_by_id(1)
+      @expect_result = [6, 12, 24, 44, 53]
+    end
+    it "access to route with unregistered tag" do
+      get :tag, :tag => "unknown"
+      expect(response).to be_success
+    end
+    it "access to route with valid tag" do
+      get :tag, :tag => "ruby"
+      expect(response).to be_success
+    end
+    it "access to route with valid tag and check result" do
+      get :tag, :tag => "ruby"
+      result = assigns[:articles].pluck(:id)
+      expect(result).to match_array @expect_result
+    end
+  end
+
 end

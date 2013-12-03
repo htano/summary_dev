@@ -79,6 +79,8 @@ class MypageController < ApplicationController
 
   def tag
     get_profile_info()
+    @articles = []
+    tag = params[:tag]
   end
 
   def delete_article
