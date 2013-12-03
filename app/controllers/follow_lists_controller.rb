@@ -9,7 +9,8 @@ class FollowListsController < ApplicationController
     @user_name = params[:name] ? params[:name] : get_current_user_name
     user = User.find_by_name(@user_name)
 
-    number = params[:number] ? params[:number].to_i : 0
+    number = 
+      params[:number].to_i > 0 ? params[:number].to_i : 0
     offset = DISPLAY_USER_NUM * number
 
     follower_ids = 
@@ -21,7 +22,8 @@ class FollowListsController < ApplicationController
     @user_name = params[:name] ? params[:name] : get_current_user_name
     user = User.find_by_name(@user_name)
 
-    number = params[:number] ? params[:number].to_i : 0
+    number = 
+      params[:number].to_i > 0 ? params[:number].to_i : 0
     offset = DISPLAY_USER_NUM * number
 
     following_ids = 
@@ -48,7 +50,8 @@ class FollowListsController < ApplicationController
       candidates = FavoriteUser.where(:user_id => login_user_favorites, :favorite_user_id => followers)
                                .pluck(:favorite_user_id).uniq
 
-      number = params[:number] ? params[:number].to_i : 0
+      number = 
+        params[:number].to_i > 0 ? params[:number].to_i : 0
       offset = DISPLAY_USER_NUM * number
 
       @candidate_users = 

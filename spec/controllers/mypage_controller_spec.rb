@@ -130,6 +130,20 @@ describe MypageController do
     end
   end
 
+  describe "POST #mark_as_read with signing in and invalid article id" do
+    before(:each) do
+      session[:openid_url] = "oauth://twitter/12345"
+      @login_user = User.find_by_id(1)
+      @article_ids = [4, 8, 100]
+      @expect_result = [true, true]
+    end
+    it "access to route and check result" do
+      post :mark_as_read, :article_ids => @article_ids
+      result = @login_user.user_articles.where(:article_id => @article_ids).pluck(:read_flg)
+      expect(result).to match_array @expect_result
+    end
+  end
+
   describe "POST #mark_as_unread without signing in" do
     before(:each) do
       @article_ids = [2, 6, 10, 14, 18]
@@ -147,6 +161,20 @@ describe MypageController do
       @login_user = User.find_by_id(1)
       @article_ids = [2, 6, 10, 14, 18]
       @expect_result = [false, false, false, false, false]
+    end
+    it "access to route and check result" do
+      post :mark_as_unread, :article_ids => @article_ids
+      result = @login_user.user_articles.where(:article_id => @article_ids).pluck(:read_flg)
+      expect(result).to match_array @expect_result
+    end
+  end
+
+  describe "POST #mark_as_unread with signing in and invalid article id" do
+    before(:each) do
+      session[:openid_url] = "oauth://twitter/12345"
+      @login_user = User.find_by_id(1)
+      @article_ids = [2, 6, 100]
+      @expect_result = [false, false]
     end
     it "access to route and check result" do
       post :mark_as_unread, :article_ids => @article_ids
@@ -180,6 +208,20 @@ describe MypageController do
     end
   end
 
+  describe "POST #mark_as_favorite with signin in and invalid article id" do
+    before(:each) do
+      session[:openid_url] = "oauth://twitter/12345"
+      @login_user = User.find_by_id(1)
+      @article_ids = [4, 6, 100]
+      @expect_result = [true, true]
+    end
+    it "access to route and check result" do
+      post :mark_as_favorite, :article_ids => @article_ids
+      result = @login_user.user_articles.where(:article_id => @article_ids).pluck(:favorite_flg)
+      expect(result).to match_array @expect_result
+    end
+  end
+
   describe "POST #mark_off_favorite without signing in" do
     before(:each) do
       @article_ids = [2, 8, 14, 20, 26]
@@ -197,6 +239,20 @@ describe MypageController do
       @login_user = User.find_by_id(1)
       @article_ids = [2, 8, 14, 20, 26]
       @expect_result = [false, false, false, false, false]
+    end
+    it "access to route and check result" do
+      post :mark_off_favorite, :article_ids => @article_ids
+      result = @login_user.user_articles.where(:article_id => @article_ids).pluck(:favorite_flg)
+      expect(result).to match_array @expect_result
+    end
+  end
+
+  describe "POST #mark_off_favorite with signing in and invalid article id" do
+    before(:each) do
+      session[:openid_url] = "oauth://twitter/12345"
+      @login_user = User.find_by_id(1)
+      @article_ids = [2, 8, 100]
+      @expect_result = [false, false]
     end
     it "access to route and check result" do
       post :mark_off_favorite, :article_ids => @article_ids
@@ -253,6 +309,19 @@ describe MypageController do
     end
   end
 
+  describe "POST #delete_summary with singing in and invalid article id" do
+    before(:each) do
+      session[:openid_url] = "oauth://twitter/12345"
+      @login_user = User.find_by_id(1)
+      @article_ids = [4, 10, 15, 100]
+    end
+    it "access to route and check result" do
+      post :delete_summary, :article_ids => @article_ids
+      result = @login_user.summaries.where(:article_id => @article_ids)
+      expect(result).to eq([])
+    end
+  end
+
   describe "POST #clip without signing in" do
     before(:each) do
       @article_ids = [92, 94, 96, 98, 100]
@@ -268,7 +337,20 @@ describe MypageController do
     before(:each) do
       session[:openid_url] = "oauth://twitter/12345"
       @login_user = User.find_by_id(1)
-      @article_ids = [92, 94, 96, 98, 100]
+      @article_ids = [92, 94, 96, 98]
+    end
+    it "access to route and check result" do
+      post :clip, :article_ids => @article_ids
+      result = @login_user.user_articles.where(:article_id => @article_ids)
+      expect(result).not_to eq([])
+    end
+  end
+
+  describe "POST #clip with singing in and invalid article id" do
+    before(:each) do
+      session[:openid_url] = "oauth://twitter/12345"
+      @login_user = User.find_by_id(1)
+      @article_ids = [92, 100]
     end
     it "access to route and check result" do
       post :clip, :article_ids => @article_ids
@@ -301,6 +383,18 @@ describe MypageController do
     end
   end
 
+  describe "POST #follow with signing in and invalid user id" do
+    before(:each) do
+      session[:openid_url] = "oauth://twitter/12345"
+      @login_user = User.find_by_id(1)
+      @following_user_id = 1000
+    end
+    it "access to route without no parameters" do
+      post :follow, :follow_user_id => @following_user_id
+      expect(response).to render_template(:file => "#{Rails.root}/public/404.html")
+    end
+  end
+
   describe "GET #unfollow" do
     before(:each) do
       session[:openid_url] = "oauth://twitter/12345"
@@ -311,6 +405,18 @@ describe MypageController do
       post :unfollow, :unfollow_user_id => @unfollow_user_id
       result = FavoriteUser.where(:user_id => @login_user.id, :favorite_user_id => @unfollow_user_id)
       expect(result).to eq([])
+    end
+  end
+
+  describe "GET #unfollow and invalid user id" do
+    before(:each) do
+      session[:openid_url] = "oauth://twitter/12345"
+      @login_user = User.find_by_id(1)
+      @unfollow_user_id = 1000
+    end
+    it "access to route without no parameters" do
+      post :unfollow, :unfollow_user_id => @unfollow_user_id
+      expect(response).to render_template(:file => "#{Rails.root}/public/404.html")
     end
   end
 end

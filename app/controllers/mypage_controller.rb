@@ -176,8 +176,10 @@ class MypageController < ApplicationController
 
   def clip
     params[:article_ids].each do |article_id|
-      url = Article.find_by_id(article_id).url
-      add_webpage(url) if url
+      if Article.exists?(article_id)
+        url = Article.find_by_id(article_id).url
+        add_webpage(url) if url
+      end
     end
 
     redirect_to :action => "index", :params => params
@@ -192,7 +194,7 @@ class MypageController < ApplicationController
       else
         respond_to do |format|
           format.html { render :file => "#{Rails.root}/public/404.html", 
-                        :status => 404, :layout => false, :content_type => 'text/html'}
+                        :status => 404, :layout => false, :content_type => 'text/html' and return }
           format.js { render '404_error_page' and return }
         end
       end
@@ -217,7 +219,7 @@ class MypageController < ApplicationController
     else
       respond_to do |format|
         format.html { render :file => "#{Rails.root}/public/404.html", 
-                      :status => 404, :layout => false, :content_type => 'text/html'}
+                      :status => 404, :layout => false, :content_type => 'text/html' and return }
         format.js { render '404_error_page' and return }
       end
     end
