@@ -128,7 +128,6 @@ class MypageController < ApplicationController
     login_user = get_login_user
 
     params[:article_ids].each do |article_id|
-      logger.debug("#{article_id}")
       article = login_user.user_articles.find_by_article_id(article_id)
 
       if article && article.read_flg == true
@@ -141,11 +140,9 @@ class MypageController < ApplicationController
   end
 
   def mark_as_favorite
-    logger.debug("mark as favorite")
     login_user = get_login_user
 
     params[:article_ids].each do |article_id|
-      logger.debug("#{article_id}")
       article = login_user.user_articles.find_by_article_id(article_id)
 
       if article && article.favorite_flg != true
@@ -158,11 +155,9 @@ class MypageController < ApplicationController
   end
 
   def mark_off_favorite
-    logger.debug("mark off favorite")
     login_user = get_login_user
 
     params[:article_ids].each do |article_id|
-      logger.debug("#{article_id}")
       article = login_user.user_articles.find_by_article_id(article_id)
 
       if article && article.favorite_flg == true
@@ -291,7 +286,7 @@ private
         is_already_following = true
       end
     end
-    return is_already_following
+    is_already_following
   end
 
   def update_sort_type(cookies, direction, sort)
@@ -307,31 +302,31 @@ private
     case cookies[:sort]
     when "registered"
       if cookies[:direction] == "asc"
-        return {:menu_title => "Oldest", :condition => "created_at ASC"}
+        {:menu_title => "Oldest", :condition => "created_at ASC"}
       else
-        return {:menu_title => "Newest", :condition => "created_at DESC"}
+        {:menu_title => "Newest", :condition => "created_at DESC"}
       end
     when "summaries"
       if cookies[:direction] == "asc"
-        return {:menu_title => "Least summarized", :condition => "summaries_count ASC"}
+        {:menu_title => "Least summarized", :condition => "summaries_count ASC"}
       else
-        return {:menu_title => "Most summarized", :condition => "summaries_count DESC"}
+        {:menu_title => "Most summarized", :condition => "summaries_count DESC"}
       end
     when "reader"
       if cookies[:direction] == "asc"
-        return {:menu_title => "Least read", :condition => "user_articles_count ASC"}
+        {:menu_title => "Least read", :condition => "user_articles_count ASC"}
       else
-        return {:menu_title => "Most read", :condition => "user_articles_count DESC"}
+        {:menu_title => "Most read", :condition => "user_articles_count DESC"}
       end
     else
-      return {:menu_title => "Newest", :condition => "created_at DESC"}
+      {:menu_title => "Newest", :condition => "created_at DESC"}
     end
   end
 
   def get_page(param_page)
     page = param_page ? param_page : 1
     page = page.to_i > 1 ? page : 1
-    return page
+    page
   end
 
   def get_unread_articles(user, order_condition = nil, offset = 0, num = -1)
@@ -347,7 +342,7 @@ private
       article_ids = user.user_articles.unread.select(:article_id)
       articles = Article.where(:id => article_ids).order(order_condition).offset(offset).limit(num)
     end
-    return articles
+    articles
   end
 
   def get_read_articles(user, order_condition = nil, offset = 0, num = -1)
@@ -363,7 +358,7 @@ private
       article_ids = user.user_articles.read.select(:article_id)
       articles = Article.where(:id => article_ids).order(order_condition).offset(offset).limit(num)
     end
-    return articles
+    articles
   end
 
   def get_favorite_articles(user, order_condition = nil, offset = 0, num = -1)
@@ -379,7 +374,7 @@ private
       article_ids = user.user_articles.favorite.select(:article_id)
       articles = Article.where(:id => article_ids).order(order_condition).offset(offset).limit(num)
     end
-    return articles
+    articles
   end
 
   def get_summarized_articles(user, order_condition = nil, offset = 0, num = -1)
@@ -395,8 +390,7 @@ private
       article_ids = user.summaries.select(:article_id)
       articles = Article.where(:id => article_ids).order(order_condition).offset(offset).limit(num)
     end
-
-    return articles
+    articles
   end
 
   def get_table_data(user, articles, is_login_user, is_summary = false)
@@ -444,7 +438,6 @@ private
       table_data.push(data)
     end
 
-    return table_data
+    table_data
   end
-
 end

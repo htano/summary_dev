@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131109120815) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20131203143214) do
 
   create_table "articles", force: true do |t|
     t.string   "url"
@@ -26,8 +23,8 @@ ActiveRecord::Schema.define(version: 20131109120815) do
     t.decimal  "strength"
     t.datetime "last_added_at"
     t.string   "thumbnail"
-    t.integer  "summaries_count"
-    t.integer  "user_articles_count"
+    t.integer  "summaries_count",           default: 0
+    t.integer  "user_articles_count",       default: 0
     t.integer  "cluster_id",                default: 0
     t.string   "auto_summary_error_status"
   end
