@@ -77,37 +77,45 @@ class WebpageController < ApplicationController
   end
 
   def delete
-    @aid = params[:article_id]
-    user_article = get_login_user.user_articles.find_by_article_id(@aid)
-    if user_article
-      article = Article.find(@aid)
-      article.remove_strength(get_login_user.id)
-      get_login_user.delete_cluster_id(article.cluster_id)
-      user_article.destroy
-      render :text => "OK"
+    if signed_in?
+      @aid = params[:article_id]
+      user_article = get_login_user.user_articles.find_by_article_id(@aid)
+      if user_article
+        article = Article.find(@aid)
+        article.remove_strength(get_login_user.id)
+        get_login_user.delete_cluster_id(article.cluster_id)
+        user_article.destroy
+        render :text => "OK"
+      else
+        render :text => "NG"
+      end
     else
-      render :text => "NG"
+      redirect_to :controller => "consumer", :action => "index"
     end
   end
 
   def mark_as_read
-    @msg = "NG"
-    @aid = params[:article_id]
-    @user_article = get_login_user.user_articles.find_by_article_id(@aid)
-    if @user_article
-      if @user_article.read_flg
-        @user_article.read_flg = false
-      else
-        @user_article.read_flg = true
-      end
-      if @user_article.save
+    if signed_in?
+      @msg = "NG"
+      @aid = params[:article_id]
+      @user_article = get_login_user.user_articles.find_by_article_id(@aid)
+      if @user_article
         if @user_article.read_flg
-          @msg = "mark_as_read"
+          @user_article.read_flg = false
         else
-          @msg = "mark_as_unread"
+          @user_article.read_flg = true
+        end
+        if @user_article.save
+          if @user_article.read_flg
+            @msg = "mark_as_read"
+          else
+            @msg = "mark_as_unread"
+          end
         end
       end
+      render :text => @msg
+    else
+      redirect_to :controller => "consumer", :action => "index"
     end
-    render :text => @msg
   end
 end
