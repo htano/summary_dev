@@ -36,6 +36,7 @@ module MyDelayedJobs
     EXCEPTION_PAGE_LIST = [
       "http://g-ec2.images-amazon.com/images/G/09/gno/beacon/BeaconSprite-JP-02._V393500380_.png"
     ]
+
     def initialize(article_id)
       @article_id = article_id
     end
@@ -47,6 +48,10 @@ module MyDelayedJobs
     end
 
     private
+    #広告画像を排除する
+    #画像URLにADVERTISEMENT_LISTが含まれる場合は広告と判断する
+    #登録しようとしているURLにADVERTISEMENT_LISTが含まれる場合は
+    #何もしない
     def isAdvertisement?(img_url)
       ADVERTISEMENT_LIST.each do |adv|
         if img_url.include?(adv)
