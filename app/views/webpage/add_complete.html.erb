@@ -3,8 +3,8 @@
 <% end %>
 
 <div class="comment_box">
-  <p>Register Complete.</p>
-  <span id="msg"><%= @msg %></span>
+  <p><%= t("webpage.complete") %></p>
+<!--  <span id="msg"><%= @msg %></span>-->
 </div>
 
 <div id="article_contents">
@@ -18,7 +18,7 @@
     <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><%= @contents_preview[0, 120] %></p>
   </div>
   <div id="category">
-    <%= link_to @category, {:controller => "hotentry", :action => "index", :category => @category} %>
+    <%= t("category."+@category) %>
   </div>
   <% if @tags == nil || @tags.length == 0 %>
     <div id="tag_area">no tags for this article.<br></div>

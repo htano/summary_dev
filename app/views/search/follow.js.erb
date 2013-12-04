@@ -1,10 +1,6 @@
-<% unfollow = button_to 'following', 
-              {:action => 'unfollow', :unfollow_user_id => @user_id}, 
+<% unfollow = button_to t("follow.is_true"),
+              {:action => 'unfollow', :unfollow_user_id => @user_id},
               {:id => 'unfollow-button', :class => 'btn btn-primary btn-xs', :remote => true} %>
-<% image = link_to image_tag(@current_user.prof_image, :size => '32x32', :title => @current_user.name),
-              {:action => 'index', :name => @current_user.name},
-              {:id => 'follower-id-' + @current_user.id.to_s } %>
-
 $('#follow-<%= @user_id %>').html("<%= raw(escape_javascript(unfollow))  %>")
 $('#follow-<%= @user_id %>').parent().parent().removeClass()
 $('#follow-<%= @user_id %>').parent().parent().addClass("user_contents_follow")

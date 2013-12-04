@@ -24,6 +24,9 @@ ja:
     top_rated_summary: "トップ要約"
     contents_preview:  "プレビュー"
     filter_only_summarized: "要約がある記事に絞る"
+    filter_only_not_read: "登録してない記事に絞る"
+  user:
+    filter_only_not_follow: "フォローしてないユーザー"
   read_later:
     add: "後で読む"
     cancel: "読まない"
@@ -56,3 +59,26 @@ ja:
     social: "社会"
     other: "その他"
     personal: "パーソナル"
+  webpage:
+    add: "追加"
+    confirm: "編集"
+    complete: "完了"
+  search:
+    search: "検索"
+    sort_newest: "新しい順"
+    sort_summary_num: "要約数順"
+    sort_reader_num: "登録人数順"
+    target_article: "記事"
+    target_user: "ユーザー"
+    type_content: "内容"
+    type_tag: "タグ"
+    type_domain: "ドメイン"
+  tag:
+    no_recommend_tags: "この記事に対するタグ設定なし"
+    no_recent_tags: "最近タグを設定していません"
+    recommend_tags: "他の人が設定したタグ"
+    recent_tags: "最近設定したタグ"
+    set_tags: "この記事に設定したタグ"
+  placeholder:
+    searcht_ext: "検索したい単語を入力して下さい。"
+    input_url_text: "追加したURLを入力して下さい。"
