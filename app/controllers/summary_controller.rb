@@ -12,7 +12,7 @@ class SummaryController < ApplicationController
         if summary.destroy
           redirect_to :controller => "mypage", :action => "index"
         end
-      end 
+      end
     else
       redirect_to :controller => "consumer", :action => "index"
     end
@@ -60,7 +60,7 @@ class SummaryController < ApplicationController
         if summary.save
           redirect_to :controller => "summary_lists", :action => "index", :article_id => @article_id
         end
-      end 
+      end
     else
       redirect_to :controller => "consumer", :action => "index"
     end
