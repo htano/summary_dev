@@ -78,6 +78,7 @@ div.hotentry-row-with-summary {
 
 div.hotentry-row-no-summary {
   border-left: solid 3px #0FC7F5;
+  border-top: solid 2px #EEE;
 }
 
 div.hotentry-small-row {
@@ -95,7 +96,7 @@ div.hotentry-large-row {
 div.hotentry-large-row-nosum,  {
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border-bottom: solid 2px #eee;
+  //border-bottom: solid 2px #eee;
 }
 
 div.hotentry-small-order, div.hotentry-small-order-nosum {
