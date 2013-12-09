@@ -79,3 +79,5 @@ internet.watch.impress.co.jp:
   extractor_type: xpath
 www.geekpage.jp:
   encoding: utf-8
+news.searchina.ne.jp:
+  encoding: utf-8

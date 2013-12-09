@@ -72,7 +72,15 @@ module MyDelayedJobs
 
     def get_image_url(a)
       img_url = nil
-      doc = Nokogiri::HTML.parse(a.html)
+      begin
+        html = open(a.url) do |f|
+          f.read
+        end
+        doc = Nokogiri::HTML.parse(html)
+      rescue => e
+        Rails.logget.info("get_image_url: #{e}")
+        return "no_image.png"
+      end
       doc.xpath("//img").each do |img|
         img_url = img["src"]
         next if img_url == nil or img_url == ""
@@ -130,7 +138,7 @@ module MyDelayedJobs
             )
           else
             summary_contents, error_status = 
-              summarizer.run(article.url, article.html)
+              summarizer.run(article.url)
             if error_status
               article.auto_summary_error_status = error_status
               article.save
