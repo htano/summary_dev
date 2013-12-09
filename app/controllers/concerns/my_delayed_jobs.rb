@@ -14,9 +14,17 @@ module MyDelayedJobs
     def run
       ext_factory = ExtractorFactory.instance
       a= Article.find(@article_id)
+      begin
+        html = open(a.url) do |f|
+          f.read
+        end
+      rescue => e
+        Rails.logget.info("PreviewingJob::run #{e}")
+        return
+      end
       c_ext= ext_factory.new_extractor(a.url)
-      if a.html
-        if c_ext.analyze!(a.html)
+      if html
+        if c_ext.analyze!(html)
           a.contents_preview = c_ext.get_body_text[0,200]
           a.save
         end
