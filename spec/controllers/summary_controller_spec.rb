@@ -32,7 +32,7 @@ describe SummaryController do
       assigns[:content].should == ""
       assigns[:content_num].should == 0
     end
-     it "edit with known article" do
+     it "edit with unknown article" do
       get :edit, :article_id => "9999999"
       response.response_code.should == 404
     end
@@ -48,10 +48,23 @@ describe SummaryController do
 #TODO ちょっと全体的に未完成なので修正する
   describe "POST #edit_complete signing in" do
     before(:each) do
-      session[:openid_url] = "oauth://twitter/12345"
+      session[:openid_url] = "oauth://facebook/12350"
     end
-    it "access to route without no parameters" do
-      post :edit_complete, :article_id => "1"
+     it "edit_complete with unknown article" do
+      get :edit_complete, :article_id => "9999999"
+      response.response_code.should == 404
+    end
+     it "edit_complete with known article" do
+      post :edit_complete, :article_id => "1", :content => "要約ですよ"
+      summary = Summary.find_by_user_id_and_article_id("6", "1")
+      summary.content.should == "要約ですよ"
+      expect(response).to redirect_to :controller => 'summary_lists',:action => 'index'
+    end
+     it "edit_complete no summary article" do
+      post :edit_complete, :article_id => "2", :content => "要約ですの"
+      summary = Summary.find_by_user_id_and_article_id("6", "2")
+      summary.content.should == "要約ですの"
+      expect(response).to redirect_to :controller => 'summary_lists',:action => 'index'
     end
   end
 
