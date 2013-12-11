@@ -129,7 +129,7 @@ class User < ActiveRecord::Base
             value.to_f * CLUSTER_DECAY_DELTA
         end
       end
-      cluster_hash[adding_cluster_id] += 1.0
+      cluster_hash[adding_cluster_id.to_i] += 1.0
       cluster_num = 0
       new_cluster_array = Array.new
       cluster_hash.sort_by{|k,v| -v}.each do |cluster_id, value|
