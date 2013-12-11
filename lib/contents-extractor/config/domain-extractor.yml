@@ -85,3 +85,9 @@ www.geekpage.jp:
   encoding: utf-8
 news.searchina.ne.jp:
   encoding: utf-8
+komachi.yomiuri.co.jp:
+  extractor_type: xpath
+  xpath: //p
+news4wide.livedoor.biz:
+  extractor_type: xpath
+  xpath: //div[@class='t_b  ']
