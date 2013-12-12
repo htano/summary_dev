@@ -16,7 +16,7 @@ class Article < ActiveRecord::Base
   # And the points are decaying by time spending.
   # This parameter means that '1' point will decay 
   # to '0.01' point until some days after.
-  ZERO_ZERO_ONE_DAYS = 28
+  ZERO_ZERO_ONE_DAYS = 365 #28
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   HOTENTRY_CANDIDATE_NUM = 200
   PERSONAL_HOTENTRY_CANDIDATE_NUM = 100
