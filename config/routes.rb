@@ -60,7 +60,6 @@ SummaryDev::Application.routes.draw do
   get "summary/:article_id/edit" => "summary#edit"
   post "summary/:article_id/edit_complete" => "summary#edit_complete"
   post "summary/:article_id/delete" => "summary#delete"
-  get "summary/:article_id/get_article_image" => "summary#get_article_image"
 
   #for webpage
   post 'summary_lists/goodSummaryAjax' => 'summary_lists#goodSummaryAjax'
