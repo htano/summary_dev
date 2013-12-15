@@ -120,9 +120,13 @@ class SettingsController < ApplicationController
               mail_auth_url
             )
             job.delay.run
-            fork do
-              exec(Rails.root.to_s + 
-                   "/bin/delayed_job run --exit-on-complete")
+            begin
+              fork do
+                exec(Rails.root.to_s + 
+                     "/bin/delayed_job run --exit-on-complete")
+              end
+            rescue => err
+              logger.error("[email_edit_complete] #{err}")
             end
           else
             logger.debug("Fail to update email address: " + @new_mail_address)
