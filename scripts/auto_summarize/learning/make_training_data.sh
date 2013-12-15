@@ -14,6 +14,8 @@ echo "== make_idf_dict =="
 ruby ${SCRIPT_L}/make_idf_dict.rb > ${TMP_L}/dict/idf_dict.txt
 cp ${TMP_L}/dict/idf_dict.txt ${SCRIPT_P}/dict/idf_dict.txt
 echo "== make_liblinear =="
+rails runner scripts/auto-summarizer/trainer/make-liblinear.rb -e production | tail -n+2 > tmp/auto_summarize/learning/train_data.txt
 ruby ${SCRIPT_L}/make_liblinear.rb > ${TMP_L}/train_data.txt
 echo "== run_liblinear_learning =="
 R --vanilla --slave < scripts/auto_summarize/learning/run_liblinear_learning.r
+R --vanilla --slave < scripts/auto-summarizer/trainer/run_liblinear_learning.r

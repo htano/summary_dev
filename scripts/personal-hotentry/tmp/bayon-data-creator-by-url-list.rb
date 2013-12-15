@@ -5,20 +5,26 @@ require './lib/text-analyzer.rb'
 require "open-uri"
 include TextAnalyzer
 
+OUTPUT_FILE = Rails.root.to_s + "/" + ENV['OUT']
+
 BODY_DF_FILE = Rails.root.to_s + 
   "/lib/text-analyzer/df_dict/body-df.txt"
-TITLE_WITH_URL = "tmp/personal-hotentry/tmp/title-url.txt"
-GRAM_SIZE = 2
-MAX_TERM_NUM = 100
+TITLE_WITH_URL = Rails.root.to_s +
+  "/tmp/personal-hotentry/tmp/title-url.txt"
+MAX_TERM_NUM = 50
 
 df = DocumentFrequency.new(BODY_DF_FILE)
 df.open_file
 factory = ContentsExtractor::ExtractorFactory.instance
-open(TITLE_WITH_URL) do |file|
-  file.each_with_index do |line, idx|
+file_o = open(OUTPUT_FILE, "w")
+open(TITLE_WITH_URL) do |file_i|
+  file_i.each_with_index do |line, idx|
     line.chomp!
     title, url = line.split("\t")
-    contents = title + " " + title
+    contents_ary = Array.new
+    contents_ary.push(title)
+    contents_ary.push(title)
+    warn("#{idx}: #{title}")
     begin
       html = open(url) do |f|
         f.read
@@ -29,25 +35,24 @@ open(TITLE_WITH_URL) do |file|
     end
     extractor = factory.new_extractor(url)
     extractor.analyze!(html)
-    body = extractor.get_body_text
-    if body
-      contents += " " + body
+    body_ary = extractor.get_body_sentence_array
+    if body_ary
+      contents_ary += body_ary
     end
-    contents.gsub!(/\r?\n/, " ")
-    tfidf_hash = df.tfidf(contents)
-    print(title)
+    tfidf_hash = df.tfidf_from_sentence_array(contents_ary)
+    file_o.write(title)
     i = 0
     tfidf_hash.sort_by{|key, value| 
       -value
     }.each do |ng,tfidf|
       if i < MAX_TERM_NUM
         if tfidf > 0.0
-          print("\t", ng, "\t", tfidf)
+          file_o.write("\t#{ng}\t#{tfidf}")
         end
       end
       i += 1
     end
-    print("\n")
-    warn(idx.to_s + ": " + title)
+    file_o.write("\n")
   end
 end
+file_o.close

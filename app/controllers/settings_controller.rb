@@ -15,74 +15,55 @@ class SettingsController < ApplicationController
   end
 
   def profile_edit_complete
-    @uploaded_image_file = params[:profile_image]
-    @user_full_name = params[:user_full_name]
-    @user_comment = params[:user_comment]
-    @user_site_url = params[:user_site_url]
-    @user_public_flg = (params[:user_public_flg] == "TRUE")
-    @redirect_url = url_for(:action => 'profile')
-    @edit_flg = false
-    @edit_error = false
-    @error_message = ""
-    @login_user = get_login_user
-    if @login_user
-      if @user_full_name && @user_full_name != @login_user.full_name
-        logger.debug @user_full_name
-        @login_user.full_name = @user_full_name
-        @edit_flg = true
+    public_flg = (params[:user_public_flg] == "TRUE")
+    redirect_url = url_for(:action => 'profile')
+    edit_flg = false
+    edit_error = false
+    user = get_login_user
+    if user
+      if(params[:user_full_name] &&
+         params[:user_full_name] != user.full_name)
+        user.full_name = params[:user_full_name]
+        edit_flg = true
       end
-      if @user_comment && @user_comment != @login_user.comment
-        @login_user.comment = @user_comment
-        @edit_flg = true
+      if(params[:user_comment] &&
+         params[:user_comment] != user.comment)
+        user.comment = params[:user_comment]
+        edit_flg = true
       end
-      if @user_site_url && @user_site_url != @login_user.site_url
-        @login_user.site_url = @user_site_url
-        @edit_flg = true
+      if(params[:user_site_url] &&
+         params[:user_site_url] != user.site_url)
+        user.site_url = params[:user_site_url]
+        edit_flg = true
       end
-      if @user_public_flg != @login_user.public_flg
-        @login_user.public_flg = @user_public_flg
-        @edit_flg = true
+      if public_flg != user.public_flg
+        user.public_flg = public_flg
+        edit_flg = true
       end
-      if !@edit_error && @uploaded_image_file != nil
-        logger.debug("image file size: " + @uploaded_image_file.size.to_s + " Byte")
-        logger.debug("image content type: " + @uploaded_image_file.content_type + "")
-        if(@uploaded_image_file.size < 1024 * 1024 &&
-           @uploaded_image_file.content_type =~ /^image/)
-          @save_file_name = './public/images/' +
-            'account_pictures/' + 
-            @login_user.id.to_s + 
-            '_uploaded_image_' + 
-            @uploaded_image_file.original_filename
-          @for_db_image_path = 'account_pictures/' + 
-            @login_user.id.to_s + 
-            '_uploaded_image_' + 
-            @uploaded_image_file.original_filename
-          File.open(@save_file_name, 'wb') do |of|
-            of.write(@uploaded_image_file.read)
-          end
-          @login_user.prof_image = @for_db_image_path
-          @edit_flg = true
+      if !edit_error && params[:user] != nil
+        if user.update_attributes(user_params)
+          edit_flg = true
         else
-          @edit_error = true
-          flash[:error] = "Input image-file is not image file or exceeds 1024KB."
+          edit_error = true
         end
       end
-      if @edit_flg
-        unless @login_user.save
-          @edit_error = true
+      if edit_flg
+        unless user.save
+          edit_error = true
         end
       end
-      if @edit_error
+      if edit_error
         #TODO ModelでValidationをすれば、
-        #errorsにエラーメッセージが入るはずなので、flashとかに入れる
-        logger.debug @login_user.errors.to_yaml
-        @redirect_url = url_for(:action => 'profile_edit')
+        #errorsにエラーメッセージが入るはずなので、
+        #flashとかに入れる
+        redirect_url = url_for(:action => 'profile_edit')
       end
     else
       flash[:error] = "To show the profile page, you have to login."
-      @redirect_url = url_for(:controller => 'consumer', :action => 'index')
+      redirect_url = url_for(:controller => 'consumer', 
+                             :action => 'index')
     end
-    redirect_to(@redirect_url)
+    redirect_to(redirect_url)
   end
 
   def email
@@ -139,6 +120,14 @@ class SettingsController < ApplicationController
               mail_auth_url
             )
             job.delay.run
+            begin
+              fork do
+                exec(Rails.root.to_s + 
+                     "/bin/delayed_job run --exit-on-complete")
+              end
+            rescue => err
+              logger.error("[email_edit_complete] #{err}")
+            end
           else
             logger.debug("Fail to update email address: " + @new_mail_address)
             # TODO 失敗した理由によってはエラーレベルを変える
@@ -180,5 +169,28 @@ class SettingsController < ApplicationController
 
   def account
     @action_type = 'account'
+  end
+
+  private
+  def save_prof_image(user, img_file)
+    image_file = 
+      "#{user.id}_uploaded_image_#{img_file.original_filename}"
+    db_path = "account_pictures/#{image_file}"
+    save_path = "#{Rails.root}/public/images/#{db_path}"
+    if(img_file.size < 1024 * 1024 &&
+       img_file.content_type =~ /^image/)
+      File.open(save_path, 'wb') do |of|
+        of.write(img_file.read)
+      end
+      user.prof_image = db_path
+      return true
+    else
+      flash[:error] = "Input image-file is not image file or exceeds 1024KB."
+      return false
+    end
+  end
+
+  def user_params
+    params.require(:user).permit(:avatar)
   end
 end

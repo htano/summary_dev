@@ -3,16 +3,16 @@
   tmp/personal-hotentry/tmp/title-url-`date "+%Y%m%d"`.txt
   $ cp tmp/personal-hotentry/tmp/title-url-`date "+%Y%m%d"`.txt \
   tmp/personal-hotentry/tmp/title-url.txt
-  $ rails runner \
-  scripts/personal-hotentry/tmp/bayon-data-creator-by-url-list.rb > \
-  tmp/personal-hotentry/tmp/bayon-train-`date "+%Y%m%d"`.txt
+  $ OUT=tmp/personal-hotentry/tmp/bayon-train-`date "+%Y%m%d"`.txt \
+  rails runner \
+  scripts/personal-hotentry/tmp/bayon-data-creator-by-url-list.rb 
 
   $ sort -u tmp/personal-hotentry/tmp/bayon-train-????????.txt > \
   tmp/personal-hotentry/tmp/bayon-train.txt
 
 === 2. bayonで学習
   # 最良モデル
-  $ bayon -l 2.5 --clvector-size=300 \
+  $ bayon -l 2.0 --clvector-size=100 \
   tmp/personal-hotentry/tmp/bayon-train.txt -c \
   tmp/personal-hotentry/tmp/bayon-cluster.txt | \
   perl -pe "s/\n/\n\n====\n/" | perl -pe "s/\t/\n/g" > \

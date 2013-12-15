@@ -94,3 +94,8 @@ group :test do
   gem "rspec-rails"
   gem 'spork', '1.0.0rc4'
 end
+
+gem 'okura'
+
+gem 'paperclip'
+gem 'aws-sdk'

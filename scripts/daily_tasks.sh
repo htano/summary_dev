@@ -12,9 +12,8 @@ rails runner scripts/personal-hotentry/tmp/get_title_url.rb > \
   tmp/personal-hotentry/tmp/title-url-`date "+%Y%m%d"`.txt
 cp tmp/personal-hotentry/tmp/title-url-`date "+%Y%m%d"`.txt \
   tmp/personal-hotentry/tmp/title-url.txt
-rails runner \
-  scripts/personal-hotentry/tmp/bayon-data-creator-by-url-list.rb > \
-  tmp/personal-hotentry/tmp/bayon-train-`date "+%Y%m%d"`.txt
+OUT=tmp/personal-hotentry/tmp/bayon-train-`date "+%Y%m%d"`.txt \
+  rails runner scripts/personal-hotentry/tmp/bayon-data-creator-by-url-list.rb
 
 # For testing
 #echo "=== making test data from url-list ==="

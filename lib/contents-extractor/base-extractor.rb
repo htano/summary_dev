@@ -84,17 +84,21 @@ class ContentsExtractor::BaseExtractor
       p.gsub!(/([\u300C][^\u300D]+[\u300D])/){
         $1.gsub(/[。．]/, "") 
       }
+      p.gsub!(/([\u0028][^\u0029]+[\u0029])/){
+        $1.gsub(/[。．]/, "") 
+      }
       if p.length > 0
         next if p =~ /^\d+.*\d{4}.\d{2}.\d{2}.*ID.*$/;
         p_obj = ContentsExtractor::Paragraph.new
         p.split(/[。．]/).each do |s|
           s.gsub!(/[\u3010][^\u3011]+[\u3011]/,"")
+          s.gsub!(/[\u0028][^\u0029]+[\u0029]/,"")
           next if s =~ / \- GIGAZINE$/;
           next if s =~ /^\d+.*\d{4}.\d{2}.\d{2}.*ID.*$/;
           next if s =~ /^[\x20-\x7E]+$/;
           s.gsub!(/>>\d+/, "")
           s.gsub!(/(.)\1{3}\1+/, "")
-          s.gsub!(/（?[\x21-\x7E]{10,9999}）?/, "") #TODO: Only japanese site.
+          s.gsub!(/（?[\x21-\x7E]{15,9999}）?/, "")
           s.gsub!(/[wWｗＷ]{3,9999}$/, "")
           s.gsub!(/[ \u3000]+$/, "")
           s.gsub!(/^[ \u3000]+/, "")

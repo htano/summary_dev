@@ -24,6 +24,7 @@
 
 # Ignore uploaded images
 /public/images/account_pictures/*_uploaded_image_*
+/public/images/users/avatars
 
 # Ignore precompiled files
 /public/assets

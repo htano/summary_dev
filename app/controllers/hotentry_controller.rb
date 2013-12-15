@@ -27,7 +27,7 @@ class HotentryController < ApplicationController
     end
     @entries = Kaminari.paginate_array(@entries).page(
       params[:page]
-    ).per(Article::HOTENTRY_DISPLAY_NUM)
+    ).per(Article::HOTENTRY_DISPLAY_NUM_NORMAL)
   end
 
   def small
@@ -50,7 +50,7 @@ class HotentryController < ApplicationController
     end
     @entries = Kaminari.paginate_array(@entries).page(
       params[:page]
-    ).per(Article::HOTENTRY_DISPLAY_NUM)
+    ).per(Article::HOTENTRY_DISPLAY_NUM_SMALL)
   end
 
   def large
@@ -67,6 +67,6 @@ class HotentryController < ApplicationController
     end
     @entries = Kaminari.paginate_array(@entries).page(
       params[:page]
-    ).per(Article::HOTENTRY_DISPLAY_NUM)
+    ).per(Article::HOTENTRY_DISPLAY_NUM_LARGE)
   end
 end

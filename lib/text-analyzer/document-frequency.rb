@@ -2,9 +2,10 @@
 class TextAnalyzer::DocumentFrequency
   include TextAnalyzer
   DOCUMENT_SIZE = 20000
-  MAX_DF_NUM = 2000
+  MAX_DF_NUM = 4500
 
   def initialize(filename)
+    @ma = MorphemeAnalyzer.instance
     @filename = filename
     @df = Hash.new(1)
     @index = Hash.new
@@ -38,6 +39,9 @@ class TextAnalyzer::DocumentFrequency
   end
 
   def idf(term)
+    if term =~ /^[wｗ]{3,9999}$/
+      return 0.0
+    end
     if @df[term]
       if @df[term] > MAX_DF_NUM
         return 0.0
@@ -50,7 +54,7 @@ class TextAnalyzer::DocumentFrequency
   end
 
   def tfidf(sentence)
-    tf = get_tf(sentence)
+    tf = @ma.get_tf(sentence)
     return tf2tfidf(tf)
   end
 
@@ -60,6 +64,18 @@ class TextAnalyzer::DocumentFrequency
       tfidf[term] = freq * idf(term)
     end
     return tfidf
+  end
+
+  def tfidf_from_sentence_array(s_ary)
+    tf = Hash.new(0)
+    s_ary.each do |s|
+      s.force_encoding("UTF-8")
+      tf_tmp = @ma.get_tf(s)
+      tf_tmp.each do |term, freq|
+        tf[term] += freq
+      end
+    end
+    return tf2tfidf(tf)
   end
 
   def tf2svd(tf)
@@ -72,9 +88,23 @@ class TextAnalyzer::DocumentFrequency
     return svd
   end
 
+  def add_sentence_array(s_ary)
+    tf = Hash.new(0)
+    s_ary.each do |s|
+      s.force_encoding("UTF-8")
+      tf_tmp = @ma.get_tf(s)
+      tf_tmp.each do |term, freq|
+        tf[term] += freq
+      end
+    end
+    tf.keys.each do |ng|
+      @df[ng] += 1
+    end
+  end
+
   def add_text(text)
     text.force_encoding("UTF-8")
-    tf = get_tf(text)
+    tf = @ma.get_tf(text)
     tf.keys.each do |ng|
       @df[ng] += 1
     end

@@ -23,20 +23,24 @@ class AutoSummary::Trainer
     feature_extractor = 
       FeatureExtractor.new(title, body_array, @title_df, @body_df)
     positive_array.each do |s|
-      features = feature_extractor.get_features(s)
-      print "+1"
-      features.each do |k,v|
-        print " #{k}:#{v}"
+      if s.length > 0
+        features = feature_extractor.get_features(s)
+        print "+1"
+        features.each do |k,v|
+          print " #{k}:#{v}"
+        end
+        print "\n"
       end
-      print "\n"
     end
     negative_array.each do |s|
-      features = feature_extractor.get_features(s)
-      print "-1"
-      features.each do |k,v|
-        print " #{k}:#{v}"
+      if s.length > 0
+        features = feature_extractor.get_features(s)
+        print "-1"
+        features.each do |k,v|
+          print " #{k}:#{v}"
+        end
+        print "\n"
       end
-      print "\n"
     end
   end
 end

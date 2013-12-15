@@ -13,6 +13,10 @@ www.afpbb.com:
 www.itmedia.co.jp:
   extractor_type: defalut
   encoding: utf-8
+marketing.itmedia.co.jp:
+  encoding: utf-8
+  extractor_type: xpath
+  xpath: //div[@class='inner']//p
 www.yomiuri.co.jp:
   extractor_type: defalut
   encoding: utf-8
@@ -69,7 +73,24 @@ news.kakaku.com:
   extractor_type: xpath
 himasoku.com:
   extractor_type: xpath
-  xpath: //div[@class='t_b']
+  xpath: //dd
 detail.chiebukuro.yahoo.co.jp:
   extractor_type: xpath
   xpath: //div[@class='details-inner']//p
+internet.watch.impress.co.jp:
+  encoding: utf-8
+  xpath: //div[@class='main-contents mainContents']//p
+  extractor_type: xpath
+www.geekpage.jp:
+  encoding: utf-8
+news.searchina.ne.jp:
+  encoding: utf-8
+komachi.yomiuri.co.jp:
+  extractor_type: xpath
+  xpath: //p
+news4wide.livedoor.biz:
+  extractor_type: xpath
+  xpath: //div[@class='t_b  ']
+irorio.jp:
+  extractor_type: xpath
+  xpath: //p

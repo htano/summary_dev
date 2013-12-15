@@ -179,7 +179,7 @@ class SummaryListsController < ApplicationController
     # for renewing followers number on profile view
 
     respond_to do |format|
-      format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
+      format.html { redirect_to :action => "index" }
       format.js
     end
     logger.debug("end follow")
