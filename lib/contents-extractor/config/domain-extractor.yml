@@ -91,3 +91,6 @@ komachi.yomiuri.co.jp:
 news4wide.livedoor.biz:
   extractor_type: xpath
   xpath: //div[@class='t_b  ']
+irorio.jp:
+  extractor_type: xpath
+  xpath: //p
