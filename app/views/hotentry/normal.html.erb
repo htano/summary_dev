@@ -6,7 +6,7 @@
 <div class="row">
   <div class="col-md-12 hotentry-container">
     <div class="row">
-      <div class="col-md-2">
+      <div class="hidden-xs col-md-2">
         <%= render(:partial => "hotentry/partials/hotentrytab") %>
       </div>
       <div class="col-md-10">
@@ -19,7 +19,7 @@
           <div class="col-md-12 hotentry-row hotentry-row-no-summary">
         <% end %>
             <div class="row hotentry-normal-body">
-              <div class="col-md-2 hotentry-normal-image">
+              <div class="hidden-xs col-md-2 hotentry-normal-image">
                 <%= image_tag(
                   e.thumbnail,
                   :class => "hotentry-normal-image-imgtag",
@@ -53,7 +53,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6 hotentry-normal-summaries">
+                  <div class="col-xs-12 col-md-6 hotentry-normal-summaries">
                     <% if e.user_articles_count %>
                       <%= e.user_articles_count %>
                     <% else %>
@@ -79,7 +79,7 @@
                       <% end %>
                     </a>
                   </div>
-                  <div class="col-md-6 hotentry-normal-summaries">
+                  <div class="col-xs-12 col-md-6 hotentry-normal-summaries">
                     <% if e.get_top_rated_summary %>
                       <%= link_to(t('summary.view_all'),
                                   :controller => 'summary_lists',
@@ -119,6 +119,9 @@
         </div>
       <% end %>
       <%= paginate(@entries) %>
+      </div>
+      <div class="visible-xs">
+        <%= render(:partial => "hotentry/partials/hotentrytab") %>
       </div>
     </div>
   </div>

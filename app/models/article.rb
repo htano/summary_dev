@@ -16,12 +16,14 @@ class Article < ActiveRecord::Base
   # And the points are decaying by time spending.
   # This parameter means that '1' point will decay 
   # to '0.01' point until some days after.
-  ZERO_ZERO_ONE_DAYS = 28
+  ZERO_ZERO_ONE_DAYS = 365 #28
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   HOTENTRY_CANDIDATE_NUM = 200
   PERSONAL_HOTENTRY_CANDIDATE_NUM = 100
-  HOTENTRY_DISPLAY_NUM = 20
-  HOTENTRY_MAX_CLUSTER_NUM = 5
+  HOTENTRY_DISPLAY_NUM_SMALL = 20
+  HOTENTRY_DISPLAY_NUM_NORMAL = 10
+  HOTENTRY_DISPLAY_NUM_LARGE = 5
+  HOTENTRY_MAX_CLUSTER_NUM = 20
   BLANK = ""
 
   #指定されたタグ情報を持つ記事を取得する
@@ -246,15 +248,26 @@ class Article < ActiveRecord::Base
   end
 
   def get_top_rated_summary
-    @top_rated_summary = nil
-    @top_rate = -1
+    top_rated_summary = nil
+    top_rate = -1
     self.summaries.order('created_at desc').each do |summary|
-      if @top_rate < summary.good_summaries.count
-        @top_rate = summary.good_summaries.count
-        @top_rated_summary = summary
+      if top_rate < summary.good_summaries.count
+        top_rate = summary.good_summaries.count
+        top_rated_summary = summary
       end
     end
-    return @top_rated_summary
+    return top_rated_summary
+  end
+
+  def get_contents_text
+    contents  = self.title + " "
+    contents += self.title + " "
+    if(self.get_top_rated_summary &&
+       self.get_top_rated_summary.content)
+      contents += " " + self.get_top_rated_summary.content
+    end
+    contents.gsub!(/\r?\n/, " ")
+    return contents
   end
 
   def get_contents_preview

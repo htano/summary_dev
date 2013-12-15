@@ -12,10 +12,10 @@ class ArticleClassifier
     "/lib/text-analyzer/df_dict/title-df.txt"
   BODY_DF_FILE = Rails.root.to_s + 
     "/lib/text-analyzer/df_dict/body-df.txt"
-  THRESHOLD = -0.03
+  THRESHOLD = -0.55
 
   def initialize
-    @df = DocumentFrequency.new(TITLE_DF_FILE)
+    @df = DocumentFrequency.new(BODY_DF_FILE)
     @df.open_file
     @feature_dict = Hash.new()
     @class_dict = Hash.new()
@@ -27,7 +27,7 @@ class ArticleClassifier
     unless @class_dict[class_name]
       @class_dict[class_name] = @class_dict.length
     end
-    get_tn(text).each do |ng, num|
+    MorphemeAnalyzer.instance.get_tn(text).each do |ng, num|
       unless @feature_dict[ng]
         @feature_dict[ng] = @feature_dict.length + 1
       end
@@ -87,6 +87,7 @@ class ArticleClassifier
         pred_class = class_name
       end
     end
+    warn "#{pred_class}: #{pred_score}"
     return pred_class
   end
 

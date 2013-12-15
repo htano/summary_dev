@@ -1,15 +1,15 @@
 <div class="row">
-  <div class="col-md-12 hotentry-menu">
+  <div class="col-xs-12 col-md-12 hotentry-menu">
     <div class="row">
-      <div class="col-md-7">
+      <div class="col-xs-6 col-md-6">
         <h3>Hot Entry</h3>
       </div>
-      <div class="col-md-3" style="margin-top:8px;">
+      <div class="hidden-xs col-md-4" style="margin-top:8px;">
         <input type="checkbox" id="only_summarized" style="font-size: 16px;">
           <%= t('article.filter_only_summarized') %>
         </input>
       </div>
-      <div class="col-md-2 hotentry-menu-icons" style="margin-top:8px;">
+      <div class="col-xs-6 col-md-2 hotentry-menu-icons" style="margin-top:8px;">
         <a href="<%= url_for(:controller => 'hotentry', 
                              :action => 'small',
                              :category => params[:category],

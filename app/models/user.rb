@@ -4,6 +4,23 @@ class User < ActiveRecord::Base
   MAIL_STATUS_DEFINITIVE  = 2
   MAIL_STATUS_ERROR       = 3
   CLUSTER_DECAY_DELTA = 0.95
+  USER_CLUSTER_MAX_NUM = 20
+  
+  if Rails.env.production?
+    has_attached_file(
+      :avatar, 
+      :styles => { medium: '100x100>' }, 
+      :default_url => "/images/:style/no_image.png",
+    )
+  else
+    has_attached_file(
+      :avatar, 
+      :styles => { medium: '100x100>' }, 
+      :default_url => "/images/:style/no_image.png",
+      :url => "/images/:class/:attachment/:id_partition/:style/:filename",
+      :path => "#{Rails.root}/public/images/:class/:attachment/:id_partition/:style/:filename"
+    )
+  end
 
   validates :name, :uniqueness => true
   validates :open_id,   :uniqueness => true
@@ -105,7 +122,6 @@ class User < ActiveRecord::Base
   def add_cluster_id(adding_cluster_id)
     if adding_cluster_id != 0
       cluster_hash = Hash.new(0.0)
-      new_cluster_array = Array.new
       if self.cluster_vector
         self.cluster_vector.split(",").each do |elem|
           cluster_id, value = elem.split(":")
@@ -113,9 +129,16 @@ class User < ActiveRecord::Base
             value.to_f * CLUSTER_DECAY_DELTA
         end
       end
-      cluster_hash[adding_cluster_id] += 1.0
-      cluster_hash.each do |cluster_id, value|
-        new_cluster_array.push(cluster_id.to_s + ":" + value.to_s)
+      cluster_hash[adding_cluster_id.to_i] += 1.0
+      cluster_num = 0
+      new_cluster_array = Array.new
+      cluster_hash.sort_by{|k,v| -v}.each do |cluster_id, value|
+        if cluster_num < USER_CLUSTER_MAX_NUM
+          new_cluster_array.push(
+            cluster_id.to_s + ":" + value.to_s
+          )
+        end
+        cluster_num += 1
       end
       self.cluster_vector = new_cluster_array.join(",")
       self.save
@@ -143,5 +166,13 @@ class User < ActiveRecord::Base
 
   def get_followers_count
     return FavoriteUser.count(:all, :conditions => {:favorite_user_id => self.id})
+  end
+
+  def prof_image
+    if self["prof_image"] && self["prof_image"] =~ /^http/
+      return self["prof_image"]
+    else
+      return self.avatar.url(:medium)
+    end
   end
 end

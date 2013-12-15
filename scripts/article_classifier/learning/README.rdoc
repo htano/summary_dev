@@ -13,10 +13,10 @@
   $ rails runner scripts/article_classifier/learning/svm_data_creator.rb
 
 ==== 4. cross validationでsvm-cを決定する(本当はスクリプトにしたい)
-  $ ./scripts/article_classifier/learning/liblinear/train -c 0.001 -s 3 -v 10 \
+  $ ./scripts/article_classifier/learning/liblinear/train -c 0.1 -s 3 -v 10 \
   tmp/article_classifier/learning/libsvm.txt
 
 ==== 5. liblinearで学習する
-  $ ./scripts/article_classifier/learning/liblinear/train -c 0.001 -s 3 \
+  $ ./scripts/article_classifier/learning/liblinear/train -c 0.1 -s 3 \
   tmp/article_classifier/learning/libsvm.txt \
   lib/article_classifier/model/liblinear.model

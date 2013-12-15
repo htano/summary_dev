@@ -45,7 +45,10 @@ class AutoSummary::Summarizer
       sentence_ary,
       feature_extractor
     )
-    summary_contents = get_summary_contents(sentences_with_score)
+    summary_contents = get_summary_contents(
+      sentences_with_score,
+      feature_extractor
+    )
     if summary_contents.length > 0
       return summary_contents, nil
     else
@@ -54,16 +57,31 @@ class AutoSummary::Summarizer
   end
 
   private
-  def get_summary_contents(sentences_with_score)
+  def get_summary_contents(sentences_with_score, feature_extractor)
     summary_sentences = Array.new
     summary_length = 0
     sentences_with_score.sort{|a,b|
       b[:score]<=>a[:score]
     }.each do |s_score|
       if s_score[:score] > -1.0
-        if (summary_length + s_score[:sen].length) <= SUMMARY_LENGTH
-          summary_sentences.push(s_score)
-          summary_length += s_score[:sen].length
+        if((summary_length + 
+            s_score[:sen].length) <= SUMMARY_LENGTH)
+          # Remove similar sentences for diversity.
+          Rails.logger.debug("[AutoSumamry] #{s_score[:sen]}")
+          max_cosine_score = 0.0
+          summary_sentences.each do |sws|
+            cosine = feature_extractor.sentence_cosine(
+              s_score[:sen],sws[:sen]
+            )
+            if cosine > max_cosine_score
+              max_cosine_score = cosine
+            end
+          end
+          Rails.logger.debug("[AutoSumamry] #{max_cosine_score}")
+          if max_cosine_score < 0.8
+            summary_sentences.push(s_score)
+            summary_length += s_score[:sen].length
+          end
         end
       end
     end
@@ -77,22 +95,14 @@ class AutoSummary::Summarizer
   end
 
   def make_sentences_with_score(sentence_ary, feature_extractor)
+    Rails.logger.debug("AutoSummary::make_sentences_with_score started.")
     sentences_with_score = Array.new
     sentence_ary.each_with_index do |s, idx|
+      Rails.logger.debug("[AutoSummary] exec[#{idx}] #{s}")
       features = feature_extractor.get_features(s)
+      Rails.logger.debug("[AutoSummary] get_features #{features}")
       s_score = get_score(features)
-      # Remove similar sentences for diversity.
-      pre_sentence_cosine = 0.0
-      sentences_with_score.each do |sws|
-        cosine = feature_extractor.sentence_cosine(s,sws[:sen])
-        if cosine > pre_sentence_cosine
-          pre_sentence_cosine = cosine
-        end
-      end
-      #Rails.logger.debug("#{s}: #{pre_sentence_cosine}\n")
-      if pre_sentence_cosine > 0.8
-        s_score = -9999
-      end
+      Rails.logger.debug("[AutoSummary] get_score: #{s_score}")
       s_with_score = {
         :order => idx,
         :sen => s,
