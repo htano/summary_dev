@@ -14,33 +14,36 @@ toggleUnfollowBtn();
   <div id="search_main">
     <div id="operation_area">
       <div id="operation">
-        <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="Please input the words you want.">
-        <input type="submit" id="search" value="search" class="button button-flat:hover submit"><br>
+        <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="<%= t("placeholder.searcht_ext") %>">
+        <input type="submit" id="search" value="<%= t("search.search") %>" class="button button-flat:hover submit"><br>
       </div>
     </div>
     <div id="option_area">
       <div class="target_area">
-        <p>target</p>
         <div class="select_area">
-          <span id="target_article">article</span><br>
-          <span id="target_user">user</span><br>
+          <br>
+          <span id="target_article"><%= t("search.target_article") %></span><br>
+          <span id="target_user"><%= t("search.target_user") %></span><br>
+          <br>
         </div>
       </div>
       <div class="type_area">
-        <p>type</p>
         <div class="select_area">
-          <span id="type_content">content</span><br>
-          <span id="type_tag">tag</span><br>
-          <span id="type_domain">domain</span><br>
+          <br>
+          <span id="type_content"><%= t("search.type_content") %></span><br>
+          <span id="type_tag"><%= t("search.type_tag") %></span><br>
+          <span id="type_domain"><%= t("search.type_domain") %></span><br>
+          <br>
         </div>
       </div>
       <div class="category_area">
-        <p>category</p>
         <div class="select_area">
-            <span id="category_all">all</span><br>
+          <br>
+            <span id="category_all"><%= t("category.all") %></span><br>
           <% Category.all.each do |c| %>
-            <span id="category_<%= c.name %>"><%= c.name %></span><br>
+            <span id="category_<%= c.name %>"><%= t("category."+c.name) %></span><br>
           <% end %>
+          <br>
         </div>
       </div>
       <input type="hidden" name="target" id="target" value="<%= @target %>">

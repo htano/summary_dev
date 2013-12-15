@@ -8,7 +8,7 @@
     <span id="message"><%= @searchtext[0,10] %>の 検索結果 <%= @user_num %> 件</span>
     <% if get_login_user %>
     <span id="checkbox">
-      <input type="checkbox" id="not_follow_only">Not Follow only.</span>
+      <input type="checkbox" id="not_follow_only"><%= t("user.filter_only_not_follow") %></span>
     <% end %>
     <span id="sort">
       <div class="btn-group sort-split-btn">

@@ -35,3 +35,6 @@
 /config/application.yml.prod
 
 .env
+
+# Ignore files related with i18n
+/public/javascripts/translations.js
