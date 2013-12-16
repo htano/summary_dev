@@ -27,10 +27,10 @@ module Webpage
       h = get_webpage_element(url)
       return nil if h == nil
       article = Article.create(
-        :url => url, 
-        :title => h["title"], 
+        :url => url,
+        :title => h["title"],
         :contents_preview => h["contentsPreview"][0, 200],
-        :category_id => 0, 
+        :category_id => 0,
         :cluster_id => 0,
         :thumbnail => h["thumbnail"],
       )
@@ -45,7 +45,7 @@ module Webpage
         cluster_job.delay.run
         begin
           fork do
-            exec(Rails.root.to_s + 
+            exec(Rails.root.to_s +
                  "/bin/delayed_job run --exit-on-complete")
           end
         rescue => err
@@ -85,7 +85,7 @@ module Webpage
     thumbnail = nil
     h = {
       "title" => title, 
-      "thumbnail" => thumbnail, 
+      "thumbnail" => thumbnail,
       "contentsPreview" => contentsPreview
     }
     return h

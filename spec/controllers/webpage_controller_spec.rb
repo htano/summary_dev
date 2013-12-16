@@ -50,7 +50,7 @@ describe WebpageController do
     it "add_confirm with known article no set tag" do
       post :add_confirm, :url => "http://zasshi.news.yahoo.co.jp/article?a=20130930-00010000-bjournal-bus_all", :add_flag => "true"
       response.should be_success
-      assigns[:title].should == "auのKDDI、あきれた二枚舌営業〜購入時に虚偽説明、強いクレームには特別に補償対応 （Business Journal） - Yahoo!ニュース"
+      assigns[:title].should == "auのKDDI、あきれた二枚舌営業〜購入時に虚偽説明、強いクレームには特別に補償対応 (Business Journal) - Yahoo!ニュース"
       assigns[:top_rated_tags].should == []
       assigns[:recent_tags].should ==  ["１２３４５６７８９０", "１２３４５６７８９５", "１２３４５６７８９４", "１２３４５６７８９３", "１２３４５６７８９２", "１２３４５６７８９１", "Rails", "SQL", "Ruby", "ruby"]
       assigns[:set_tags].should == []
@@ -93,7 +93,7 @@ describe WebpageController do
     it "add complete no tag" do
       post :add_complete, :url => "http://zasshi.news.yahoo.co.jp/article?a=20130930-00010000-bjournal-bus_all", :add_flag => "true"
       response.should be_success
-      assigns[:prof_image].should == "no_image.png"
+      assigns[:prof_image].should == "/images/medium/no_image.png"
       assigns[:url].should == "http://zasshi.news.yahoo.co.jp/article?a=20130930-00010000-bjournal-bus_all"
       assigns[:article_id].should == 1
       assigns[:title].should == "auのKDDI、あきれた二枚舌営業〜購入時に虚偽説明、強いクレームには特別に補償対応 （Business Journal） - Yahoo!ニュース"
@@ -117,7 +117,7 @@ describe WebpageController do
        :tag_text_9 =>"tag9",
        :tag_text_10 =>"tag10"
       response.should be_success
-      assigns[:prof_image].should == "no_image.png"
+      assigns[:prof_image].should == "/images/medium/no_image.png"
       assigns[:url].should == "http://zasshi.news.yahoo.co.jp/article?a=20130930-00010000-bjournal-bus_all"
       assigns[:article_id].should == 1
       assigns[:title].should == "auのKDDI、あきれた二枚舌営業〜購入時に虚偽説明、強いクレームには特別に補償対応 （Business Journal） - Yahoo!ニュース"
