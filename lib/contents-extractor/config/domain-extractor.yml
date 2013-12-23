@@ -94,3 +94,6 @@ news4wide.livedoor.biz:
 irorio.jp:
   extractor_type: xpath
   xpath: //p
+kamesokuhou.com:
+  extractor_type: xpath
+  xpath: //div[@class='t_b']
