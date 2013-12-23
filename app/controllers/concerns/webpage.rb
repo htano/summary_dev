@@ -43,14 +43,14 @@ module Webpage
         classify_job.delay.run
         cluster_job = ClusteringJob.new(article.id)
         cluster_job.delay.run
-        begin
-          fork do
-            exec(Rails.root.to_s + 
-                 "/bin/delayed_job run --exit-on-complete")
-          end
-        rescue => err
-          Rails.logger.error("[add_webpage] #{err}")
-        end
+        #begin
+        #  fork do
+        #    exec(Rails.root.to_s + 
+        #         "/bin/delayed_job run --exit-on-complete")
+        #  end
+        #rescue => err
+        #  Rails.logger.error("[add_webpage] #{err}")
+        #end
       end
     end
     get_login_user.add_cluster_id(article.cluster_id)
