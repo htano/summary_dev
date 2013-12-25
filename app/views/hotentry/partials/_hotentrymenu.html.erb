@@ -27,7 +27,7 @@
                              :action => 'small',
                              :category => params[:category],
                              :page => params[:page]) %>">
-          <% if controller.action_name == 'small' %>
+          <% if @view_type == 'small' %>
             <%= image_tag("icons/small_listing_selected.png", :size=>"24x24") %>
           <% else %>
             <%= image_tag("icons/small_listing.png", :size=>"24x24") %>
@@ -37,7 +37,7 @@
                              :action => 'normal',
                              :category => params[:category],
                              :page => params[:page]) %>">
-          <% if controller.action_name == 'normal' %>
+          <% if @view_type == 'normal' %>
             <%= image_tag("icons/normal_listing_selected.png", :size=>"24x24") %>
           <% else %>
             <%= image_tag("icons/normal_listing.png", :size=>"24x24") %>
@@ -47,7 +47,7 @@
                              :action => 'large',
                              :category => params[:category],
                              :page => params[:page]) %>">
-          <% if controller.action_name == 'large' %>
+          <% if @view_type == 'large' %>
             <%= image_tag("icons/large_listing_selected.png", :size=>"24x24") %>
           <% else %>
             <%= image_tag("icons/large_listing.png", :size=>"24x24") %>
