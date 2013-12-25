@@ -97,3 +97,6 @@ irorio.jp:
 kamesokuhou.com:
   extractor_type: xpath
   xpath: //div[@class='t_b']
+tabelog.com:
+  extractor_type: xpath
+  xpath: //div[@class='review-baloon']
