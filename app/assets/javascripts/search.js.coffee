@@ -9,6 +9,7 @@ BLANK = ''
     return false
 
 @hide_navbar_text = ->
+  $(".dropdown").hide 10
   $("#searchtext_nav").hide 10
   $("#search_nav").hide 10
 

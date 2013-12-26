@@ -13,7 +13,24 @@ function checkSearchtext(){
         <a href="<%= url_for :controller => 'hotentry', :action => 'index' %>" class="brand">Summary</a>
         <div class="nav-collapse">
           <ul class="nav pull-right">
-          
+<li><span class="dropdown">
+  <a class="dropdown-toggle btn btn-primary" data-toggle="dropdown" href="#">dropdown</a>
+  <ul class="dropdown-menu">
+    <li><a tabindex="-1" href="#">aaa</a></li>
+    <li class="disabled"><a tabindex="-1" href="#">bbb</a></li>
+    <li><a tabindex="-1" href="#">ccc</a></li>
+    <li class="divider"></li>
+    <li class="dropdown-submenu">
+      <a tabindex="-1" href="#">ddd</a>
+      <ul class="dropdown-menu">
+        <li><a tabindex="-1" href="#">eee</a></li>
+        <li><a tabindex="-1" href="#">fff</a></li>
+        <li><a tabindex="-1" href="#">ggg</a></li>
+      </ul>
+    </li>
+  </ul>
+</span></li>
+
             <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" placeholder="<%= t("placeholder.searcht_ext") %>"></li>
             <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li>
 
