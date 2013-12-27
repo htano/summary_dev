@@ -13,27 +13,19 @@ function checkSearchtext(){
         <a href="<%= url_for :controller => 'hotentry', :action => 'index' %>" class="brand">Summary</a>
         <div class="nav-collapse">
           <ul class="nav pull-right">
-<li><span class="dropdown">
-  <a class="dropdown-toggle btn btn-primary" data-toggle="dropdown" href="#">dropdown</a>
-  <ul class="dropdown-menu">
-    <li><a tabindex="-1" href="#">aaa</a></li>
-    <li class="disabled"><a tabindex="-1" href="#">bbb</a></li>
-    <li><a tabindex="-1" href="#">ccc</a></li>
-    <li class="divider"></li>
-    <li class="dropdown-submenu">
-      <a tabindex="-1" href="#">ddd</a>
-      <ul class="dropdown-menu">
-        <li><a tabindex="-1" href="#">eee</a></li>
-        <li><a tabindex="-1" href="#">fff</a></li>
-        <li><a tabindex="-1" href="#">ggg</a></li>
-      </ul>
-    </li>
-  </ul>
-</span></li>
-
+            <li>
+<!--              <span id="type">-->
+                <div class="btn-group sort-split-btn">
+                  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">テスト<span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li>検索</li>
+                    <li>追加</li>
+                  </ul>
+                </div>
+<!--              </span>-->
+            </li>
             <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" placeholder="<%= t("placeholder.searcht_ext") %>"></li>
             <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li>
-
           <% if signed_in? %>
             <li>
               <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" ><%= t("webpage.add") %></a>
