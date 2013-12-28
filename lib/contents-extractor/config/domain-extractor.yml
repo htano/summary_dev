@@ -104,3 +104,13 @@ portal.nifty.com:
   encoding: utf-8
   extractor_type: xpath
   xpath: //div[@id='mainContentsInner']//div[@class='title-text-area' or @class='text-area']
+lifehack2ch.livedoor.biz:
+  extractor_type: xpath
+  xpath: //div[@class='mainmore']//p
+www.kotaku.jp:
+  extractor_type: xpath
+  xpath: //div[@class='entry_body']//p
+www.sponichi.co.jp:
+  encoding: utf-8
+  xpath: //p[@class='news-textB01']
+  extractor_type: xpath

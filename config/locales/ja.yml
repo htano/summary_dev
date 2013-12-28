@@ -111,3 +111,6 @@ ja:
   placeholder:
     searcht_ext: "検索したい単語を入力して下さい。"
     input_url_text: "追加したURLを入力して下さい。"
+  views:
+    pagination:
+      truncate: "..."
