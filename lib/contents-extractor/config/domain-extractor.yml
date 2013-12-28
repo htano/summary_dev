@@ -114,3 +114,13 @@ www.sponichi.co.jp:
   encoding: utf-8
   xpath: //p[@class='news-textB01']
   extractor_type: xpath
+markezine.jp:
+  extractor_type: xpath
+  xpath: //div[@id='article']//p/text()
+www.tokyo-np.co.jp:
+  encoding: utf-8
+  xpath: //div[@class='Text']//p
+  extractor_type: xpath
+jp.reuters.com:
+  extractor_type: xpath
+  xpath: //div[@id='resizeableText']//p
