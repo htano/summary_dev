@@ -144,14 +144,16 @@ div.hotentry-normal-summaries, div.hotentry-small-summaries {
 div.hotentry-normal-contents {
   p {
     min-height: 90px;
-    font-size: 13px;
+    //font-size: 13px;
+    font-size: 1.0em;
     overflow: auto;
   }
 }
 
 div.hotentry-large-contents {
   p {
-    font-size:15px;
+    //font-size:15px;
+    font-size: 1.1em;
     border: solid 1px #eee;
     min-height: 160px;
     padding: 5px;
