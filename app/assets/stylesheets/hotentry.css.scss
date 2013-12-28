@@ -52,7 +52,7 @@ div.hotentry-menu {
   h3 {
     color: white;
     margin: 0;
-    font-size: 18px;
+    font-size: 1.3em;
     padding: 10px 10px 11px 10px;
   }
 
@@ -100,7 +100,7 @@ div.hotentry-large-row-nosum,  {
 }
 
 div.hotentry-small-order, div.hotentry-small-order-nosum {
-  font-size: 32px;
+  font-size: 2.0em;
 }
 
 div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
@@ -138,13 +138,12 @@ div.hotentry-large-title {
 }
 
 div.hotentry-normal-summaries, div.hotentry-small-summaries {
-  font-size: 12px;
+  font-size: 1.0em;
 }
 
 div.hotentry-normal-contents {
   p {
     min-height: 90px;
-    //font-size: 13px;
     font-size: 1.0em;
     overflow: auto;
   }
@@ -152,7 +151,6 @@ div.hotentry-normal-contents {
 
 div.hotentry-large-contents {
   p {
-    //font-size:15px;
     font-size: 1.1em;
     border: solid 1px #eee;
     min-height: 160px;
@@ -164,11 +162,11 @@ div.hotentry-large-contents {
 }
 
 span.hotentry-top-summary, span.hotentry-contents-preview {
-  font-size: 14px;
+  font-size: 1.1em;
 }
 
 div.hotentry-top-summary, div.hotentry-contents-preview {
-  font-size: 18px;
+  font-size: 1.2em;
 }
 
 .hotentry-top-summary {
@@ -204,7 +202,7 @@ div.hotentry-large-goodsummary {
 }
 
 div.hotentry-normal-domain {
-  font-size: 11px;
+  font-size: 0.9em;
 }
 
 div.hotentry_container {
@@ -261,7 +259,7 @@ div.entry_title {
 }
 
 div.entry_title h3 {
-  font-size: 20px;
+  font-size: 1.2em;
   margin-top: 8px;
   height: 60px;
   text-decoration: underline;
@@ -285,14 +283,14 @@ div.entry_count_num {
   text-align: center;
 }
 
-span.entry_count_label {
-  //text-decoration: underline;
-  font-size: 14px;
-}
+//span.entry_count_label {
+//  //text-decoration: underline;
+//  font-size: 1.1em;
+//}
 
-span.entry_count_num {
-  font-size: 32px;
-}
+//span.entry_count_num {
+//  font-size: 1.6em;
+//}
 
 div.entry_box_left {
   //width: 760px;
@@ -325,30 +323,30 @@ div.entry_top_icon {
   text-align: center;
 }
 
-div.entry_contents_prev {
-  font-size: 14px;
-  margin-top: 5px;
-  border: solid 1px #eee;
-  padding: 10px;
-  height: 150px;
-}
-
-div.entry_contents_prev_label {
-  //padding-left: 0;
-  margin-top: 0px;
-  font-size: 16px;
-}
+//div.entry_contents_prev {
+//  font-size: 14px;
+//  margin-top: 5px;
+//  border: solid 1px #eee;
+//  padding: 10px;
+//  height: 150px;
+//}
+//
+//div.entry_contents_prev_label {
+//  //padding-left: 0;
+//  margin-top: 0px;
+//  font-size: 16px;
+//}
 
 div.entry_summary_label {
   height: 26px;
   position: relative;
 }
 
-div.entry_summary_label label {
-  //margin-left: 10px;
-  font-size: 16px;
-  //text-decoration: underline;
-}
+//div.entry_summary_label label {
+//  //margin-left: 10px;
+//  font-size: 16px;
+//  //text-decoration: underline;
+//}
 
 div.entry_top_summary {
   //padding: 5px;
@@ -357,22 +355,22 @@ div.entry_top_summary {
   //float: left;
 }
 
-div.entry_top_summary_user span {
-  //vertical-align: 50%;
-  //margin-left: 3px;
-  font-size: 14px;
-}
+//div.entry_top_summary_user span {
+//  //vertical-align: 50%;
+//  //margin-left: 3px;
+//  font-size: 14px;
+//}
 
-div.entry_top_summary textarea {
-  padding: 10px;
-  border: solid 1px #eee;
-  background-color: #fff;
-  resize: none;
-  margin-top: 7px;
-  width: 100%;
-  height: 154px;
-  font-size: 14px;
-}
+//div.entry_top_summary textarea {
+//  padding: 10px;
+//  border: solid 1px #eee;
+//  background-color: #fff;
+//  resize: none;
+//  margin-top: 7px;
+//  width: 100%;
+//  height: 154px;
+//  font-size: 14px;
+//}
 
 div.entry_top_like {
   padding-top: 30px;
@@ -411,17 +409,17 @@ div.entry_like_num:after {
   left: 5px;
 }
 
-div.entry_like_num div {
-  width: 94px;
-  position: absolute;
-  bottom: 9px;
-  left: 3px;
-  padding-top: 15px;
-  font-size: 32px;
-}
+//div.entry_like_num div {
+//  width: 94px;
+//  position: absolute;
+//  bottom: 9px;
+//  left: 3px;
+//  padding-top: 15px;
+//  font-size: 32px;
+//}
 
 button.read_it_later {
-  font-size: 12px;
+  font-size: 0.9em;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #60b044;
@@ -442,7 +440,7 @@ button.read_it_later {
 }
 
 button.read_it_cancel {
-  font-size: 11px;
+  font-size: 0.9em;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #999;
@@ -463,7 +461,7 @@ button.read_it_cancel {
 }
 
 button.mark_as_read {
-  font-size: 10px;
+  font-size: 0.9em;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #60b044;
@@ -483,7 +481,7 @@ button.mark_as_read {
 }
 
 button.mark_as_unread {
-  font-size: 12px;
+  font-size: 0.9em;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #999;
