@@ -124,3 +124,9 @@ www.tokyo-np.co.jp:
 jp.reuters.com:
   extractor_type: xpath
   xpath: //div[@id='resizeableText']//p
+blog.livedoor.jp/dqnplus:
+  extractor_type: xpath
+  xpath: //div[@class='main entry-content' or @class='mainmore']//text()
+blog.livedoor.jp/kinisoku:
+  extractor_type: xpath
+  xpath: //div[@class='article_body']/span/b/span
