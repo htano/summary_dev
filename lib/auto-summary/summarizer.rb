@@ -23,20 +23,20 @@ class AutoSummary::Summarizer
   end
 
   def run(url, html = nil)
+    c_ext = @ext_factory.new_extractor(url)
     unless html
-      html = get_html(url)
+      html = c_ext.openurl_wrapper(url)
       unless html
         return nil, "openuri"
       end
     end
-    contents_extractor = @ext_factory.new_extractor(url)
-    unless contents_extractor.analyze!(html)
-      if contents_extractor.get_error_status
-        return nil, contents_extractor.get_error_status
+    unless c_ext.analyze!(html)
+      if c_ext.get_error_status
+        return nil, c_ext.get_error_status
       end
     end
-    title = contents_extractor.get_title
-    sentence_ary = contents_extractor.get_body_sentence_array
+    title = c_ext.get_title
+    sentence_ary = c_ext.get_body_sentence_array
     feature_extractor = FeatureExtractor.new(title, 
                                              sentence_ary, 
                                              @title_df, 

@@ -12,27 +12,24 @@ module MyDelayedJobs
     end
 
     def run
-      ext_factory = ExtractorFactory.instance
       a= Article.find(@article_id)
-      begin
-        html = open(a.url) do |f|
-          f.read
-        end
-      rescue => e
-        Rails.logget.info("PreviewingJob::run #{e}")
-        return
-      end
-      c_ext= ext_factory.new_extractor(a.url)
+      ext_factory = ExtractorFactory.instance
+      c_ext = ext_factory.new_extractor(a.url)
+      html = c_ext.openurl_wrapper(a.url)
       if html
         if c_ext.analyze!(html)
           a.contents_preview = c_ext.get_body_text[0,200]
           a.save
         end
+      else
+        Rails.logger.warn("[PreviewingJob]Can't get html:#{a.url}")
       end
     end
   end
 
   class ThumbnailingJob
+    include ContentsExtractor
+
     THRESHOLD_FILE = 100
     THRESHOLD_IMAGE = 150
     ADVERTISEMENT_LIST = [
@@ -80,13 +77,16 @@ module MyDelayedJobs
 
     def get_image_url(a)
       img_url = nil
+      c_ext = ExtractorFactory.instance.new_extractor(a.url)
+      html = c_ext.openurl_wrapper(a.url)
+      unless html
+        Rails.logger.warn("[get_image_url]Can't get html:#{a.url}")
+        return "no_image.png"
+      end
       begin
-        html = open(a.url) do |f|
-          f.read
-        end
         doc = Nokogiri::HTML.parse(html)
       rescue => e
-        Rails.logget.info("get_image_url: #{e}")
+        Rails.logger.info("get_image_url: #{e}")
         return "no_image.png"
       end
       doc.xpath("//img").each do |img|

@@ -61,16 +61,21 @@ module Webpage
   end
 
   def get_webpage_element(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
-    begin
-      html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
-        f.read
-      end
-    rescue => e
-      logger.error("error :#{e}")
+    #begin
+    #  html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
+    #    f.read
+    #  end
+    #rescue => e
+    #  logger.error("error :#{e}")
+    #  return nil
+    #end
+    ext_fac = ExtractorFactory.instance
+    c_ext = ext_fac.new_extractor(url)
+    html = c_ext.openurl_wrapper(url)
+    unless html
+      logger.warn("[get_webpage_element] Can't get html: #{url}")
       return nil
     end
-    ext_fac = ExtractorFactory.instance
-    c_ext= ext_fac.new_extractor(url)
     if c_ext.analyze!(html)
       title = title_flg ? c_ext.get_title : nil
       contentsPreview = 

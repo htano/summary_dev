@@ -1,4 +1,5 @@
 # coding: utf-8
+require 'open-uri'
 
 class ContentsExtractor::BaseExtractor
   def initialize(xpath = nil, encoding = nil)
@@ -16,6 +17,38 @@ class ContentsExtractor::BaseExtractor
     )
     @error_status = "called_abstract"
     return false
+  end
+
+  def openurl_wrapper(url)
+    html = nil
+    begin
+      case @encoding
+      when 'utf-8'
+        html = open(url) do |f|
+          f.read
+        end
+      #when 'euc-jp'
+      #when 'shift_jis'
+      else
+        html = open(url, "r:binary") do |f|
+          charset = f.charset
+          Rails.logger.info("[openurl_wrapper] #{url}:#{charset}")
+          if charset == "iso-8859-1"
+            f.read
+          else
+            f.read.encode("utf-8", 
+                          charset, 
+                          :invalid => :replace, 
+                          :undef => :replace)
+          end
+        end
+      end
+    rescue => err
+      Rails.logger.warn("[ContentsExtractor:get_html] " +
+                        "openuri error has occured at " + 
+                        "#{url}: #{err}")
+    end
+    return html
   end
 
   def get_error_status
@@ -57,6 +90,11 @@ class ContentsExtractor::BaseExtractor
     case @encoding
     when 'utf-8'
       #No encoding
+    when 'euc-jp'
+      html = html.encode("UTF-8", "EUC-JP",
+                         :invalid => :replace,
+                         :undef => :replace, 
+                         :replace => "?")
     when 'shift_jis'
       html = html.encode("UTF-8", "Shift_JIS")
     else

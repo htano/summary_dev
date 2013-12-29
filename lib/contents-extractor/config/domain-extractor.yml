@@ -130,3 +130,6 @@ blog.livedoor.jp/dqnplus:
 blog.livedoor.jp/kinisoku:
   extractor_type: xpath
   xpath: //div[@class='article_body']/span/b/span
+blog.livedoor.jp/uwasainfo:
+  extractor_type: xpath
+  xpath: //div[@class='t_b']

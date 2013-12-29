@@ -10,11 +10,9 @@ class ContentsExtractor::MonoExtractor <
     body_text = ""
     begin
       body_text, @title = ExtractContent.analyse(@html)
-      Rails.logger.debug("[ContentsExtractor:ExtractContent] #{@title}")
     rescue
       doc = Nokogiri::HTML.parse(@html)
       @title = doc.title
-      Rails.logger.debug("[ContentsExtractor:Nokogiri] #{@title}")
       doc.xpath('//p').each do |d| 
         #d_text = d.text.gsub(/\r?\n/, "")
         body_text += d.text + "\n"
