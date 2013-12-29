@@ -99,8 +99,8 @@ class ContentsExtractor::BaseExtractor
       html = html.encode("UTF-8", "Shift_JIS")
     else
       #Default force encoding
-      html = html.force_encoding("UTF-8")
-      html = html.encode("UTF-8", "UTF-8")
+      #html = html.force_encoding("UTF-8")
+      #html = html.encode("UTF-8", "UTF-8")
     end
     return html
   end

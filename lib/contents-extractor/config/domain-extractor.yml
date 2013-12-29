@@ -11,18 +11,19 @@ www.afpbb.com:
   extractor_type: xpath
   xpath: //div[@class='summary']//p
 www.itmedia.co.jp:
-  extractor_type: defalut
-  encoding: utf-8
+  extractor_type: xpath
+  xpath: //div[@class='inner']//p
+  #encoding: utf-8
 marketing.itmedia.co.jp:
-  encoding: utf-8
+  #encoding: utf-8
   extractor_type: xpath
   xpath: //div[@class='inner']//p
 www.yomiuri.co.jp:
   extractor_type: defalut
-  encoding: utf-8
+  #encoding: utf-8
 karapaia.livedoor.biz:
   extractor_type: defalut
-  encoding: utf-8
+  #encoding: utf-8
 qiita.com:
   extractor_type: xpath
   xpath: //section[@itemprop='articleBody']//p
@@ -36,9 +37,9 @@ togetter.com:
   extractor_type: xpath
   xpath: //div[@class='tweet' or @class='info_description rad5 balloon_body']
 www.jcp.or.jp:
-  encoding: utf-8
+  #encoding: utf-8
 www.atmarkit.co.jp:
-  encoding: utf-8
+  #encoding: utf-8
   extractor_type: xpath
   xpath: //div[@class='inner']//p
 alfalfalfa.com:
@@ -57,7 +58,7 @@ natalie.mu:
   extractor_type: xpath
   xpath: //div[@id='sp-left']//p
 www.jil.go.jp:
-  encoding: utf-8
+  #encoding: utf-8
 iphonech.com:
   extractor_type: xpath
   xpath: //div[@class='article-body-inner']//span
@@ -68,7 +69,7 @@ dietmatome.doorblog.jp:
   extractor_type: xpath
   xpath: //div[@class='t_b']
 news.kakaku.com:
-  encoding: utf-8
+  #encoding: utf-8
   xpath: //div[@id='article']//p
   extractor_type: xpath
 himasoku.com:
@@ -78,13 +79,13 @@ detail.chiebukuro.yahoo.co.jp:
   extractor_type: xpath
   xpath: //div[@class='details-inner']//p
 internet.watch.impress.co.jp:
-  encoding: utf-8
+  #encoding: utf-8
   xpath: //div[@class='main-contents mainContents']//p
   extractor_type: xpath
 www.geekpage.jp:
-  encoding: utf-8
+  #encoding: utf-8
 news.searchina.ne.jp:
-  encoding: utf-8
+  #encoding: utf-8
 komachi.yomiuri.co.jp:
   extractor_type: xpath
   xpath: //p
@@ -101,7 +102,7 @@ tabelog.com:
   extractor_type: xpath
   xpath: //div[@class='review-baloon']
 portal.nifty.com:
-  encoding: utf-8
+  #encoding: utf-8
   extractor_type: xpath
   xpath: //div[@id='mainContentsInner']//div[@class='title-text-area' or @class='text-area']
 lifehack2ch.livedoor.biz:
@@ -111,14 +112,14 @@ www.kotaku.jp:
   extractor_type: xpath
   xpath: //div[@class='entry_body']//p
 www.sponichi.co.jp:
-  encoding: utf-8
+  #encoding: utf-8
   xpath: //p[@class='news-textB01']
   extractor_type: xpath
 markezine.jp:
   extractor_type: xpath
   xpath: //div[@id='article']//p/text()
 www.tokyo-np.co.jp:
-  encoding: utf-8
+  #encoding: utf-8
   xpath: //div[@class='Text']//p
   extractor_type: xpath
 jp.reuters.com:

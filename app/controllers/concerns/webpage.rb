@@ -61,14 +61,6 @@ module Webpage
   end
 
   def get_webpage_element(url, title_flg = true, contentsPreview_flg = true, thumbnail_flg = true)
-    #begin
-    #  html = open(url,"r",:ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE) do |f|
-    #    f.read
-    #  end
-    #rescue => e
-    #  logger.error("error :#{e}")
-    #  return nil
-    #end
     ext_fac = ExtractorFactory.instance
     c_ext = ext_fac.new_extractor(url)
     html = c_ext.openurl_wrapper(url)
