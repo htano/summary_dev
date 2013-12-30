@@ -98,6 +98,7 @@ group :test do
   gem 'capybara-webkit'
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
+  gem 'rails_best_practices', :require => false
 end
 
 gem 'okura'

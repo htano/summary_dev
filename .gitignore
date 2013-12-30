@@ -39,5 +39,8 @@
 # Ignore files related with i18n
 /public/javascripts/translations.js
 
-# for coverage 
+# Code Coverage
 coverage
+
+# Code Quality
+reports
