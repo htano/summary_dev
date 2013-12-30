@@ -96,6 +96,8 @@ group :test do
   gem 'database_cleaner'
   gem 'headless'
   gem 'capybara-webkit'
+  gem 'simplecov', :require => false
+  gem 'simplecov-rcov', :require => false
 end
 
 gem 'okura'

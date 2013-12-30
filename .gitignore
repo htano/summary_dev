@@ -38,3 +38,6 @@
 
 # Ignore files related with i18n
 /public/javascripts/translations.js
+
+# for coverage 
+coverage
