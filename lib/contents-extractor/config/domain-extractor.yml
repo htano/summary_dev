@@ -44,7 +44,7 @@ www.atmarkit.co.jp:
   xpath: //div[@class='inner']//p
 alfalfalfa.com:
   extractor_type: xpath
-  xpath: //div[@class='news_quote' or @class='mainmore']
+  xpath: //div[@class="article-body"]//*[@class='mm' or @class='rr' or @class='news_quote']
 www.google.co.jp:
   extractor_type: xpath
   xpath: //div[@class='maia-col-7']//p
@@ -72,9 +72,6 @@ news.kakaku.com:
   #encoding: utf-8
   xpath: //div[@id='article']//p
   extractor_type: xpath
-himasoku.com:
-  extractor_type: xpath
-  xpath: //div[@class='t_b']
 detail.chiebukuro.yahoo.co.jp:
   extractor_type: xpath
   xpath: //div[@class='details-inner']//p
