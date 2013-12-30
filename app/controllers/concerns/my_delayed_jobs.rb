@@ -30,6 +30,7 @@ module MyDelayedJobs
   class ThumbnailingJob
     include ContentsExtractor
     THRESHOLD_IMAGE_SIZE = 10000
+    MAX_CHECK_IMAGE_NUMS = 20
     ADVERTISEMENT_LIST = [
       "amazon",
       "rakuten",
@@ -107,8 +108,10 @@ module MyDelayedJobs
       end
       max_size = THRESHOLD_IMAGE_SIZE
       maz_size_img_url = 'no_image.png'
-      doc.xpath("//img").each do |img|
+      doc.xpath("//img").each_with_index do |img, idx|
         img_url = img["src"]
+        Rails.logger.debug("[#{idx}]img_url = #{img_url}")
+        break if idx > MAX_CHECK_IMAGE_NUMS
         next if img_url == nil or img_url == ""
         next if isAdvertisement?(img_url)
         next if isExceptionImage?(img_url)
