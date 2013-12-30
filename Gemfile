@@ -99,6 +99,7 @@ group :test do
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
   gem 'rails_best_practices', :require => false
+  gem 'yard', :require => false
 end
 
 gem 'okura'

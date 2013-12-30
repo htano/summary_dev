@@ -47,3 +47,7 @@ reports
 
 # DRY
 tools/pmd/docs
+
+# Yard Document
+.yardoc
+doc
