@@ -29,9 +29,7 @@ module MyDelayedJobs
 
   class ThumbnailingJob
     include ContentsExtractor
-
-    THRESHOLD_FILE = 100
-    THRESHOLD_IMAGE = 150
+    THRESHOLD_IMAGE_SIZE = 10000
     ADVERTISEMENT_LIST = [
       "amazon",
       "rakuten",
@@ -75,6 +73,24 @@ module MyDelayedJobs
       return false
     end
 
+    def get_image_size(img_url)
+      begin
+        file = ImageSize.new(open(img_url, "rb").read)
+      rescue => e
+        Rails.logger.info("[get_image_size:ImageSize] " + 
+                          "Can't get image size #{img_url} : #{e}")
+        return 0
+      end
+      if file.width && file.height
+        return (file.width * file.height)
+      else
+        Rails.logger.info("[get_image_size:ImageSize] " + 
+                          "Can't get image size #{img_url} : " +
+                          "this image doesn't have the size infomation.")
+        return 0
+      end
+    end
+
     def get_image_url(a)
       img_url = nil
       c_ext = ExtractorFactory.instance.new_extractor(a.url)
@@ -89,6 +105,8 @@ module MyDelayedJobs
         Rails.logger.info("get_image_url: #{e}")
         return "no_image.png"
       end
+      max_size = THRESHOLD_IMAGE_SIZE
+      maz_size_img_url = 'no_image.png'
       doc.xpath("//img").each do |img|
         img_url = img["src"]
         next if img_url == nil or img_url == ""
@@ -97,32 +115,13 @@ module MyDelayedJobs
         unless img_url.start_with?("http")
           img_url = URI.join(a.url, img_url).to_s
         end
-        begin
-          file = ImageSize.new(open(img_url, "rb").read)
-        rescue => e
-          Rails.logger.info("[Info@get_image_url] ImageSize:#{e}")
-          next
-        end
-        if file.get_width && file.get_height
-          if(file.get_width > THRESHOLD_FILE &&
-             file.get_height > THRESHOLD_FILE)
-            return img_url
-          else
-            next
-          end
-        end
-        begin
-          image = Magick::ImageList.new(img_url)
-        rescue => e
-          Rails.logger.info("[Info@get_image_url] Magick:#{e}")
-          next
-        end
-        if(image.columns.to_i > THRESHOLD_IMAGE &&
-           image.rows.to_i > THRESHOLD_IMAGE)
-          return img_url
+        img_size = get_image_size(img_url)
+        if img_size > max_size
+          max_size = img_size
+          maz_size_img_url = img_url
         end
       end
-      return "no_image.png"
+      return maz_size_img_url
     end
   end
 

@@ -74,7 +74,7 @@ news.kakaku.com:
   extractor_type: xpath
 himasoku.com:
   extractor_type: xpath
-  xpath: //dd
+  xpath: //div[@class='t_b']
 detail.chiebukuro.yahoo.co.jp:
   extractor_type: xpath
   xpath: //div[@class='details-inner']//p
@@ -134,3 +134,9 @@ blog.livedoor.jp/kinisoku:
 blog.livedoor.jp/uwasainfo:
   extractor_type: xpath
   xpath: //div[@class='t_b']
+blog.livedoor.jp/domesoccer:
+  extractor_type: xpath
+  xpath: //div[@class='article-body-inner' or @class='article-body-more']//span
+u-note.me:
+  extractor_type: xpath
+  xpath: //div[@class='note-content-v2']/div/span

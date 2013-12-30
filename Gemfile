@@ -42,7 +42,7 @@ gem 'rmagick'
 gem 'kaminari'
 
 #measure image size(GIF, PNG, JPEG ,,, etc)
-gem 'imagesize'
+gem 'image_size'
 
 #Extraction of the ActiveRecord
 gem 'activerecord-import'
