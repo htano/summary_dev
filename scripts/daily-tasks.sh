@@ -1,12 +1,19 @@
 #!/bin/bash
 RAILS_ROOT=$1
+R_ENV=$2
 cd ${RAILS_ROOT}
 
+# stop delayed_job
+RAILS_ENV=${R_ENV} bin/delayed_job stop
+
 # make common daily data
-rails runner scripts/daily-tasks/common/mklist-class-title-url.rb
+bin/rails runner scripts/daily-tasks/common/mklist-class-title-url.rb
 
 # make document frequency
-rails runner scripts/daily-tasks/text-analyzer/mkdf.rb
+bin/rails runner scripts/daily-tasks/text-analyzer/mkdf.rb
 
 # add common daily data with tfidf
-rails runner scripts/daily-tasks/common/mklist-class-title-url-tfidf.rb
+bin/rails runner scripts/daily-tasks/common/mklist-class-title-url-tfidf.rb
+
+# start delayed_job
+RAILS_ENV=${R_ENV} bin/delayed_job start
