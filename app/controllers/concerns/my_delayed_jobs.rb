@@ -29,7 +29,7 @@ module MyDelayedJobs
 
   class ThumbnailingJob
     include ContentsExtractor
-    THRESHOLD_IMAGE_SIZE = 10000
+    THRESHOLD_IMAGE_SIZE = 100
     MAX_CHECK_IMAGE_NUMS = 20
     ADVERTISEMENT_LIST = [
       "amazon",
@@ -82,8 +82,12 @@ module MyDelayedJobs
                           "Can't get image size #{img_url} : #{e}")
         return 0
       end
-      if file.width && file.height
-        return (file.width * file.height)
+      if(file.width && file.height && 
+         file.width > THRESHOLD_IMAGE_SIZE && 
+         file.height > THRESHOLD_IMAGE_SIZE)
+        denominator = (file.width > file.height) ? 
+          (file.width / file.height) : (file.height / file.width)
+        return (file.width * file.height) / denominator
       else
         Rails.logger.info("[get_image_size:ImageSize] " + 
                           "Can't get image size #{img_url} : " +
@@ -106,7 +110,7 @@ module MyDelayedJobs
         Rails.logger.info("get_image_url: #{e}")
         return "no_image.png"
       end
-      max_size = THRESHOLD_IMAGE_SIZE
+      max_size = THRESHOLD_IMAGE_SIZE * THRESHOLD_IMAGE_SIZE
       maz_size_img_url = 'no_image.png'
       doc.xpath("//img").each_with_index do |img, idx|
         img_url = img["src"]

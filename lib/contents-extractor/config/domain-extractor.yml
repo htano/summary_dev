@@ -44,7 +44,7 @@ www.atmarkit.co.jp:
   xpath: //div[@class='inner']//p
 alfalfalfa.com:
   extractor_type: xpath
-  xpath: //div[@class="article-body"]//*[@class='mm' or @class='rr' or @class='news_quote']
+  xpath: //div[@class="article-body"]//*[@class='mm' or @class='rr' or @class='news_quote' or @class='r2']
 www.google.co.jp:
   extractor_type: xpath
   xpath: //div[@class='maia-col-7']//p
