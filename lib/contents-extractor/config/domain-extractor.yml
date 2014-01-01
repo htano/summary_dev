@@ -137,3 +137,36 @@ blog.livedoor.jp/domesoccer:
 u-note.me:
   extractor_type: xpath
   xpath: //div[@class='note-content-v2']/div/span
+www.appbank.net:
+  extractor_type: xpath
+  xpath: //div[@class='i5']/p
+news4vip.livedoor.biz:
+  extractor_type: xpath
+  xpath: //div[@class='ently_text' or @class='article-body-more']/div[@class='rr']
+kanasoku.info:
+  extractor_type: xpath
+  xpath: //div[@class='entry_body' or @class='entry_more']/div
+burusoku-vip.com:
+  extractor_type: xpath
+  xpath: //div[@class='article-body-inner' or @class='article-body-more']//div[@class='t_b']
+blog.livedoor.jp/chihhylove:
+  extractor_type: xpath
+  xpath: //div[@class='blogbody']//div[@class='t_b']
+news.2chblog.jp:
+  extractor_type: xpath
+  xpath: //div[@class='article-body-inner' or @class='article-body-more']/div[@class='honbun']
+news020.blog13.fc2.com:
+  extractor_type: xpath
+  xpath: //div[@class='ently_text']//div[@class='quote' or @class='res']
+michaelsan.livedoor.biz:
+  extractor_type: xpath
+  xpath: //div[@class='blogbody']//div[@class='main']//p//span/text()
+blog.livedoor.jp/roadtoreality:
+  extractor_type: xpath
+  xpath: //div[@class='article-body-inner' or @class='article-body-more']/div[@class='resindent']/span/text()
+watashe.blog135.fc2.com:
+  extractor_type: xpath
+  xpath: //dt/strong/text()
+zinger-hole.net:
+  extractor_type: xpath
+  xpath: //div[@class='main']/dl/dd
