@@ -6,4 +6,134 @@
   <div class="myrow">
     <%= render_profile() %>
   </div>
+  <div id="tag-container">
+    <div>
+      <div id="tag-top">
+        <div id="tag-title">tag : <%= @tag %></div>
+        <div class="btn-group sort-split-btn">
+          <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+            <%= raw get_sort_title(@sort_menu_title) %>
+          <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li class="sort-type">
+              <a href="/mypage/tag?tag=<%= @tag %>&direction=desc&sort=registered">
+                <%= raw is_selected_sort_type(@sort_menu_title, "Newest", "desc-registered") %>
+              </a>
+            </li>
+            <li class="sort-type">
+              <a href="/mypage/tag?tag=<%= @tag %>&direction=asc&sort=registered">
+                <%= raw is_selected_sort_type(@sort_menu_title, "Oldest", "asc-registered") %>
+              </a>
+            </li>
+            <li class="sort-type">
+              <a href="/mypage/tag?tag=<%= @tag %>&direction=desc&sort=summaries">
+                <%= raw is_selected_sort_type(@sort_menu_title, "Most summarized", "asc-registered") %>
+              </a>
+            </li>
+            <li class="sort-type">
+              <a href="/mypage/tag?tag=<%= @tag %>&direction=asc&sort=summaries">
+                <%= raw is_selected_sort_type(@sort_menu_title, "Least summarized", "asc-registered") %>
+              </a>
+            </li>
+            <li class="sort-type">
+              <a href="/mypage/tag?tag=<%= @tag %>&direction=desc&sort=reader">
+                <%= raw is_selected_sort_type(@sort_menu_title, "Most read", "asc-registered") %>
+              </a>
+            </li>
+            <li class="sort-type">
+              <a href="/mypage/tag?tag=<%= @tag %>&direction=asc&sort=reader">
+                <%= raw is_selected_sort_type(@sort_menu_title, "Least read", "asc-registered") %>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="article-controller">
+      <div>
+        <div class="page-ejection" style="float: right; padding: 0px;">
+          <ul>
+            <li class="page-prev">
+              <% if @page.to_i > 1 %>
+                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "tag", :tag => @tag, :page => (@page.to_i - 1), :remote => false } %>
+              <% else %>
+              <div>
+                <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
+              </div>
+              <% end %>
+            </li>
+            <li class="vertical-boder" style="height: 22px;"></li>
+            <li class="page-next">
+            <% if @articles.length == @table_row_num.to_i && ((@page.to_i - 1) * @table_row_num.to_i + @articles.length != @total_num ) %>
+            <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "tag", :tag => @tag, :page => (@page.to_i + 1), :remote => false } %>
+            <% else %>
+            <div>
+              <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
+            </div>
+            <% end %>
+          </li>
+        </ul>
+        </div>
+        <p class="page_info">
+          <%= raw get_page_position(@page, @articles, @total_num) %>
+        </p>
+      </div>
+    </div>
+    <table class="article-table2">
+      <tr class="table-top">
+        <th id="article-title-top">
+          <%= t('article_table.title') %>
+        </th>
+        <th id="summary-number-top">
+          <%= t('article_table.summary')%>
+        </th>
+      </tr>
+      <% @articles.each_with_index do |article, i| %>
+      <tr>
+        <th>
+          <div class="title">
+            <div class="title-prop">
+              <a href="<%= article.url %>" target="_blank">
+                <%= article.title %>
+              </a>
+            </div>
+            <p>
+              <%= article.user_articles_count %> <%= get_reader_string(article.user_articles_count)%>, 
+              <%= t('article.created_at') %> <%= @date[i].strftime("%Y/%m/%d") %> | 
+              <%= article.summaries_count %> <%= get_summary_string(article.summaries_count) %>
+            </p>
+            <div class="article-tags">
+              <ul class="tags">
+                <% @tags[i].each do |tag| %>
+                <li><%= link_to tag, {:action => "tag", :tag => tag} %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+          <div class="summarize-btn">
+            <%= link_to image_tag("icons/glyphicons_030_pencil_gray.png", :size => "12x12") +
+            content_tag(:p, t('summary.edit')),
+            {:controller => "summary", :action => "edit", :article_id => article.id},
+            {:class => "btn btn-default btn-xs"} %>
+          </div>
+          <div class="edit-tag-btn">
+            <%= link_to image_tag("icons/glyphicons_065_tag_gray.png", :size => "12x12") +
+            content_tag(:p, t('tag.edit')),
+            {:controller => "webpage", :action => "add_confirm", :url => article.url},
+            {:class => "btn btn-default btn-xs", :method => :post} %>
+          </div>
+        </th>
+        <th class="num-column">
+          <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :article_id => article.id) do %>
+          <p><%= article.summaries_count %></p>
+          <span>
+            <p><%= get_summary_string(article.summaries_count) %></p>
+          </span>
+          <% end %>
+        </th>
+      </tr>
+      <% end %>
+    </table>
+  </div>
 </div>

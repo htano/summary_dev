@@ -12,6 +12,7 @@ class MypageController < ApplicationController
 
   def index
     @table_row_num = TABLE_ROW_NUM
+    # get @user
     get_profile_info()
 
     update_sort_type(cookies, params[:direction], params[:sort])
@@ -78,9 +79,44 @@ class MypageController < ApplicationController
   end
 
   def tag
+    @table_row_num = TABLE_ROW_NUM
+    @tag = params[:tag]
+    login_user = get_login_user
     get_profile_info()
-    @articles = []
-    tag = params[:tag]
+
+    update_sort_type(cookies, params[:direction], params[:sort])
+    sort_info = get_sort_info(cookies)
+    @sort_menu_title = sort_info[:menu_title]
+    order_condition = "articles." + sort_info[:condition]
+
+    @page = get_page(params[:page])
+    offset = (@page.to_i - 1) * TABLE_ROW_NUM
+
+    @articles = 
+      Article.order(order_condition).offset(offset).search_by_tag(@tag, login_user.id).limit(TABLE_ROW_NUM)
+    unless @articles.length > 0
+      @page = 1
+      @articles = 
+        Article.order(order_condition).offset(0).search_by_tag(@tag, login_user.id).limit(TABLE_ROW_NUM)
+    end
+
+    @tags = []
+    @date = []
+    @articles.each do |article|
+      user_article_ids = 
+        login_user.user_articles.where(:article_id => article.id).select(:id)
+      tags = UserArticleTag.where(:user_article_id => user_article_ids).pluck(:tag)
+      @tags.push(tags)
+
+      date = Time.now
+      if login_user.user_articles.exists?(:article_id => article.id)
+        date = login_user.user_articles.find_by_article_id(article.id).created_at
+      elsif login_user.summaries.exists?(:article_id => article.id)
+        date = user.summaries.find_by_article_id(article.id).updated_at
+      end
+      @date.push(date)
+    end
+    @total_num = Article.order(order_condition).search_by_tag(@tag, login_user.id).length
   end
 
   def delete_article

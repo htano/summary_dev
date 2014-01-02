@@ -179,7 +179,7 @@
 }
 
 #article-controller {
-//  border: 2px solid #ddd;
+  // border: 2px solid #ddd;
   width: 790px;
   height: 29px;
 
@@ -587,6 +587,9 @@ ul.tab {
       height: 100%;
       line-height: 20px;
       position: relative;
+      a:hover {
+        text-decoration: none;
+      }
     }
   }
 }
@@ -641,7 +644,6 @@ ul.tab {
   color: white;
 }
 
-
 .summarize-btn, .edit-tag-btn {
   height: 20px;
   margin-bottom: 7px;
@@ -659,3 +661,63 @@ ul.tab {
   margin-left: 5px;
 }
 
+#tag-top {
+  border-bottom: 2px solid #ddd;
+  float: right;
+  width: 770px;
+  height: 32px;
+  margin: 20px 50px 0px 0px;
+  padding-left: 30px;
+  padding-bottom: 40px;
+  #tag-title {
+    font-size: 25px;
+    color: gray;
+    &+div {
+      margin-top: -35px;
+      margin-right: 0px;
+    }
+  }
+}
+
+#tag-container {
+  #article-controller {
+    float: right;
+    margin-top: 5px;
+    width: 800px;
+    padding-left: 0px;
+    padding-right: 50px;
+    table {
+      border-collapse: separate;
+      border-spacing: 2px 2px; 
+    }
+  }
+
+  .article-table2 {
+    width: 770px;
+    float: right;
+    margin-right: 50px;
+    border-collapse: separate;
+    border-spacing: 2px 2px;
+    th {
+      border-bottom: 2px solid #e5e5e5;
+    }
+  }
+  .summarize-btn {
+    margin-right: 2px;
+  }
+  .edit-tag-btn {
+    float: right;
+    p {
+      float: right;
+      font-size: 11px;
+      color: gray;
+      margin-top: 3px;
+    }
+  }
+  li {
+    line-height: 22px;
+  }
+  .page-ejection {
+    margin-left: 10px;
+  }
+}

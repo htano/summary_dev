@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require "webpage"
 include Webpage
 
@@ -27,10 +25,13 @@ class Article < ActiveRecord::Base
   BLANK = ""
 
   #指定されたタグ情報を持つ記事を取得する
-  def self.search_by_tag(tag)
+  def self.search_by_tag(tag, user_id = 0)
     return nil if tag == nil || tag == BLANK
-    articles = joins(:user_articles => :user_article_tags).where("user_article_tags.tag" => tag).group("articles.id")
-    return articles
+    unless user_id == 0
+      articles = joins(:user_articles => :user_article_tags).where("user_articles.user_id" => user_id, "user_article_tags.tag" => tag).group("articles.id")
+    else
+      articles = joins(:user_articles => :user_article_tags).where("user_article_tags.tag" => tag).group("articles.id")
+    end
   end
 
   #指定された本文を持つ記事を取得する
