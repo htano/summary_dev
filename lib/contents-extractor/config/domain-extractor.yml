@@ -170,3 +170,6 @@ watashe.blog135.fc2.com:
 zinger-hole.net:
   extractor_type: xpath
   xpath: //div[@class='main']/dl/dd
+www3.nhk.or.jp:
+  extractor_type: xpath
+  xpath: //div[@class='entry']/p
