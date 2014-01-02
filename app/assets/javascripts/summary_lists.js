@@ -20,7 +20,7 @@ $(function(){
 
   $("article").readmore({
     speed: 10,
-    maxHeight: 150,
+    maxHeight: 200,
     moreLink: '<a href="#" class="readmore_char">続きを読む</a>',
     lessLink: '<a href="#" class="readmore_char">閉じる</a>'
   });
