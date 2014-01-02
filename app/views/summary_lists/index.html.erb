@@ -136,10 +136,11 @@
       </div><!--end article_body-->
 
       <div id="summary_list_body" class="row">
-        <div class="col-md-2">
-          <%= image_tag(@article.thumbnail, :width => "170") %>
+        <div class="col-md-3" style="height=30em; overflow:hidden;">
+          <%= image_tag(@article.thumbnail, :width => "100%",
+                        :style => "max-width: 15em;") %>
         </div>
-        <div  class="col-md-10">
+        <div  class="col-md-9">
           <div id="article_title">
             <% if @article.title %>
               <%= link_to(@article.title,@article.url,:target=>["_blank"]) %>	

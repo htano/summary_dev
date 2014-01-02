@@ -30,14 +30,17 @@ hr {
 }
 
 #summary_list_container{
+  margin: auto;
   margin-top: 30px;
   margin-bottom: 30px;
+  width: 80%;
+  max-width: 980px;
 }
 
 #summary_list{
-    border: solid;
-    border-color: #FEE5E5; 
-    border-top-color: #FF9B9B; 
+    border-top: solid;
+    border-bottom: solid;
+    border-color: #BBB;
 
   //for my Kaminari
   .pagination {
@@ -93,9 +96,9 @@ hr {
     }
 
     #article_title{ font-weight: bold; 
-      font-size: 28px; 
+      font-size: 23px; 
       overflow: hidden;
-      white-space: nowrap;
+      //white-space: nowrap;
       text-overflow: ellipsis;
       -moz-text-overflow:ellipsis; /* Firefox */
       -o-text-overflow: ellipsis; /* Opera */
