@@ -4,9 +4,19 @@ function checkSearchtext(){
     return false;
   }
 }
+
+function click_dropdown_manu_search(){
+  $("#navbar_form").attr("controller","search");
+  $("#navbar_form").attr("action","search_article");
+}
+
+function click_dropdown_manu_add(){
+  $("#navbar_form").attr("controller","webpage");
+  $("#navbar_form").attr("action","add");
+}
 </script>
 
-<%= form_tag({:controller => 'search', :action => 'search_article'}, {:method => 'GET' ,:onsubmit => 'return checkSearchtext()'}) do %>
+<%= form_tag({:controller => 'search', :action => 'search_article'}, {:name => 'navbar_form', :method => 'GET' ,:onsubmit => 'return checkSearchtext()'}) do %>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
@@ -18,14 +28,14 @@ function checkSearchtext(){
                 <div class="btn-group sort-split-btn">
                   <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">テスト<span class="caret"></span></button>
                   <ul class="dropdown-menu">
-                    <li>検索</li>
-                    <li>追加</li>
+                    <li><a href="#" onclick="click_dropdown_manu_search()">検索</a></li>
+                    <li><a href="#" onclick="click_dropdown_manu_add()">追加</a></li>
                   </ul>
                 </div>
 <!--              </span>-->
             </li>
             <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" placeholder="<%= t("placeholder.searcht_ext") %>"></li>
-            <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li>
+<!--            <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li> -->
           <% if signed_in? %>
             <li>
               <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" ><%= t("webpage.add") %></a>
