@@ -16,7 +16,7 @@ function click_dropdown_manu_add(){
 }
 </script>
 
-<%= form_tag({:controller => 'search', :action => 'search_article'}, {:name => 'navbar_form', :method => 'GET' ,:onsubmit => 'return checkSearchtext()'}) do %>
+<%= form_tag({:controller => 'search', :action => 'search_article'}, {:id => 'navbar_form', :method => 'GET' ,:onsubmit => 'return checkSearchtext()'}) do %>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
