@@ -37,7 +37,12 @@ open(DATAFILE) do |file|
       warn("openuri error: #{url}")
       next
     end
-    extractor.analyze!(html)
+    begin
+      extractor.analyze!(html)
+    rescue => err_o
+      warn("[mklist_tfidf:analyze] #{url}: #{err_o}")
+      next
+    end
     body_ary = extractor.get_body_sentence_array
     contents_ary = Array.new
     contents_ary.push(title)
