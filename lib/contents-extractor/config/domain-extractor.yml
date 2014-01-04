@@ -114,7 +114,7 @@ www.sponichi.co.jp:
   extractor_type: xpath
 markezine.jp:
   extractor_type: xpath
-  xpath: //div[@id='article']//p/text()
+  xpath: //div[@id='article']//p
 www.tokyo-np.co.jp:
   #encoding: utf-8
   xpath: //div[@class='Text']//p
@@ -173,3 +173,9 @@ zinger-hole.net:
 www3.nhk.or.jp:
   extractor_type: xpath
   xpath: //div[@class='entry']/p
+himasoku.com:
+  xpath: //div[@class='article-body-inner' or @class='article-body-more']/dl//dd/span/text()
+  extractor_type: xpath
+bipblog.com:
+  extractor_type: xpath
+  xpath: //div[@class='main_center_body_text']//div[@class='ent_body']/p
