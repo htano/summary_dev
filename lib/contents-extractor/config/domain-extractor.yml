@@ -99,7 +99,7 @@ tabelog.com:
   extractor_type: xpath
   xpath: //div[@class='review-baloon']
 portal.nifty.com:
-  #encoding: utf-8
+  encoding: shift_jis
   extractor_type: xpath
   xpath: //div[@id='mainContentsInner']//div[@class='title-text-area' or @class='text-area']
 lifehack2ch.livedoor.biz:

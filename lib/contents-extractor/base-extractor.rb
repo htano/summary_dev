@@ -24,11 +24,19 @@ class ContentsExtractor::BaseExtractor
     begin
       case @encoding
       when 'utf-8'
-        html = open(url) do |f|
-          f.read
+        html = open(url, "r:binary") do |f|
+          f.read.encode("utf-8", 
+                        :invalid => :replace, 
+                        :undef => :replace)
         end
       #when 'euc-jp'
-      #when 'shift_jis'
+      when 'shift_jis'
+        html = open(url, "r:binary") do |f|
+          f.read.encode("utf-8", 
+                        "shift_jis",
+                        :invalid => :replace, 
+                        :undef => :replace)
+        end
       else
         html = open(url, "r:binary") do |f|
           charset = f.charset
@@ -96,7 +104,7 @@ class ContentsExtractor::BaseExtractor
                          :undef => :replace, 
                          :replace => "?")
     when 'shift_jis'
-      html = html.encode("UTF-8", "Shift_JIS")
+      #html = html.encode("UTF-8", "Shift_JIS")
     else
       #Default force encoding
       #html = html.force_encoding("UTF-8")
