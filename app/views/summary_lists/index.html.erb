@@ -7,7 +7,7 @@
   <div class="row">
     <!-- article recording date -->
     <div  class="col-md-10">
-        <%= @article.created_at.strftime("%Y年%m月%d日 %H時%M分") %>
+        <%= @article.created_at.strftime("%Y/%m/%d/ %H:%M:%S") %>
     </div>
 
     <div class="col-md-2">
@@ -27,9 +27,11 @@
       <div id="summary_list_header" class="row">
         <div class="col-md-2">
           <span id="article_readers_num"><%= @num_of_mark_users %></span>
-          <span id="article_readers_char"> reader
+          <span id="article_readers_char"> 
             <% if @num_of_mark_users != 1 then %>
-              s
+              <%= t('reader.count')%> 
+            <% else %>
+              <%= t('reader.count_one')%> 
             <% end %>  
           </span>
         </div>
@@ -38,7 +40,7 @@
         </div>
         <div id="summarize" class="col-md-3">
           <% unless @summary_by_me then %>
-                <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>この記事を要約する'),
+            <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>') + t('summary.edit_the_article'),
                   {:controller => "summary", :action => "edit", :article_id => @article.id } %>
           <% end %>
         </div>
@@ -50,7 +52,7 @@
                   style="display:none"
                 <% end %>
                 >
-                <%= link_to raw("<span class='glyphicon glyphicon-unchecked'></span> 後で読む") ,
+                <%= link_to raw("<span class='glyphicon glyphicon-unchecked'></span>") + t('read_later.add'),
                      {:action => "read_later", 
                      :article_id => @article.id, 
                      :remote => true},
@@ -65,7 +67,7 @@
                    style="display:none"
                  <% end %>
              >
-                 <%= link_to raw("<span class='glyphicon glyphicon-check'></span> 読まない"), 
+                 <%= link_to raw("<span class='glyphicon glyphicon-check'></span>") + t('read_later.cancel'), 
                    {:action => "cancel_read_later", 
                     :article_id => @article.id, 
                     :remote => true},
@@ -89,7 +91,7 @@
                   style="display:none"
                 <% end %>
               >
-              <%= link_to raw("<span class='glyphicon glyphicon-unchecked'></span> 既読にする") ,
+              <%= link_to raw("<span class='glyphicon glyphicon-unchecked'></span> ") + t('read_status.mark_as_read') ,
                    {:action => "read", 
                    :article_id => @article.id, 
                    :remote => true},
@@ -104,7 +106,7 @@
                  style="display:none"
                <% end %>
              >
-               <%= link_to raw("<span class='glyphicon glyphicon-check'></span> 未読に戻す"), 
+               <%= link_to raw("<span class='glyphicon glyphicon-check'></span> ") + t('read_status.mark_as_unread'), 
                             {:action => "cancel_read", 
                             :article_id => @article.id, 
                             :remote => true},
@@ -148,17 +150,17 @@
           <div class="row">
             <% unless @article_preview == "" %>
               <div id="display_preview" class="col-md-3">
-                <a>記事のプレビュー <span class="glyphicon glyphicon-chevron-down"></span></a>
+                <a>t('article.contents_preview')<span class="glyphicon glyphicon-chevron-down"></span></a>
               </div>
               <div id="hide_preview" class="col-md-3" style="display:none">
-                <a>記事のプレビュー <span class="glyphicon glyphicon-chevron-up"></span></a>
+                <a>t('article.contents_preview')<span class="glyphicon glyphicon-chevron-up"></span></a>
               </div>
             <% else %>
               <div class="col-md-3">
               </div>
             <% end %>
                 <div id="tags_header" class="col-md-1">
-                  タグ
+                  <%= t('search.type_tag')%> 
                 </div>
                 <% tags = @article.get_top_rated_tag %>
                 <% unless tags.count == 0 then%>
@@ -174,7 +176,7 @@
                   </div>
                 <% else %>
                   <div id="notags" class="col-md-8">
-                    登録されているタグがありません
+                  <%= t('tag.no_tags')%> 
                   </div> 
                 <% end %>
           </div>
@@ -208,16 +210,17 @@
                 <div id="summary_box_header" class="row">
                   <div id="summary_auther" class="col-md-4">
                     <div>
-                      <span class="glyphicon glyphicon-user"></span>あなた
+                      <span class="glyphicon glyphicon-user"></span>
+                      <%= t('user.yourself')%> 
                     </div>
                     <div>
-                      <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>自分の要約を編集する'),
+                      <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>') + t('summary.modify_my_summary'),
                         {:controller => "summary", :action => "edit", :article_id => @article.id } %>
                     </div>
                   </div>
                   <div id="summary_edit_date" class="col-md-5">
-                    要約日: 
-                    <%= @summary_by_me.updated_at.strftime("%Y年%m月%d日 %H時%M分") %>
+                    <%= t('summary.edit_date')%> 
+                    <%= @summary_by_me.updated_at.strftime("%Y/%m/%d %H:%M:%S") %>
                   </div>
                   <div id="summary_good" class="col-md-3">
                   <!-- good dummary button -->
@@ -320,7 +323,7 @@
                             style="display:none"
                           <% end %>
                         >
-                        <%= link_to "フォロー", 
+                        <%= link_to t('follow.add'), 
                           {:action => "follow",
                            :list_index =>index,
                            :follow_user_id => summary_item.user.id,
@@ -336,7 +339,7 @@
                            style="display:none"
                          <% end %>
                        >  
-                       <%= link_to "フォロー中", 
+                       <%= link_to t('follow.is_true'), 
                          { :action => "unfollow",
                            :list_index =>index,
                            :unfollow_user_id => summary_item.user.id,
@@ -350,8 +353,8 @@
                    <% end %>
                   </div>
                   <div id="summary_edit_date" class="col-md-5">
-                    要約日: 
-                    <%= summary_item.summary.updated_at.strftime("%Y年%m月%d日 %H時%M分") %>
+                    <%= t('summary.edit_date')%> 
+                    <%= summary_item.summary.updated_at.strftime("%Y/%m/%d/ %H:%M:%S") %>
                   </div>
                   <div id="summary_good" class="col-md-3">
                   <!-- good dummary button -->
@@ -361,7 +364,7 @@
                         style="display:none"
                       <% end %>
                     >
-                       <%= link_to raw("<span class='glyphicon glyphicon-thumbs-up'></span>グッド"), 
+                       <%= link_to raw("<span class='glyphicon glyphicon-thumbs-up'></span>") + t('good_summary.add'), 
                          { :action => "good_summary",
                            :list_index =>index,
                            :summary_id =>summary_item.summary.id, 
@@ -388,7 +391,7 @@
                          style="display:none"
                      <% end %>
                      >
-                     <%= link_to raw("<span class='glyphicon glyphicon-thumbs-up'></span>グッド済"), 
+                     <%= link_to raw("<span class='glyphicon glyphicon-thumbs-up'></span>")+ t('good_summary.cancel'), 
                          { :action => "cancel_good_summary",
                            :list_index =>index,
                            :summary_id =>summary_item.summary.id, 
