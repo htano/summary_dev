@@ -7,11 +7,13 @@ function checkSearchtext(){
 
 function click_dropdown_manu_search(){
   $("#navbar_form").attr("action","/search/search_article");
+  $("#type_nav_title").html("検索");
 }
 
 function click_dropdown_manu_add(){
   $("#navbar_form").attr("action","/webpage/add_confirm");
   $("#navbar_form").attr("method","POST");
+  $("#type_nav_title").html("追加");
 }
 </script>
 
@@ -24,10 +26,12 @@ function click_dropdown_manu_add(){
           <ul class="nav pull-right">
             <li>
               <div id="type_nav" class="btn-group sort-split-btn">
-                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">検索<span class="caret"></span></button>
+                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span id="type_nav_title">検索</span><span class="caret"></span></button>
                 <ul class="dropdown-menu">
                   <li><a href="#" onclick="click_dropdown_manu_search()">検索</a></li>
-                  <li><a href="#" onclick="click_dropdown_manu_add()">追加</a></li>
+                  <% if signed_in? %>
+                    <li><a href="#" onclick="click_dropdown_manu_add()">追加</a></li>
+                  <% end %>
                 </ul>
               </div>
             </li>
