@@ -300,7 +300,7 @@ private
 
     if @is_login_user
       @user = get_login_user
-      @user.update_mypage_access
+      #@user.update_mypage_access
     else
       @user = User.find_by_name(params[:name])
       @is_already_following = is_already_following?(@user.id)

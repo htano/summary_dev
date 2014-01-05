@@ -67,7 +67,7 @@ ja:
     entertainment: "エンタメ"
     fun: "おもしろ"
     it: "エンジニア"
-    knowledge: "科学"
+    knowledge: "学問"
     life: "ライフハック"
     social: "社会"
     other: "その他"
@@ -117,3 +117,6 @@ ja:
   placeholder:
     searcht_ext: "検索したい単語を入力して下さい。"
     input_url_text: "追加したURLを入力して下さい。"
+  views:
+    pagination:
+      truncate: "..."

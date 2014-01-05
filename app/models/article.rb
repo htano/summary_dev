@@ -14,7 +14,7 @@ class Article < ActiveRecord::Base
   # And the points are decaying by time spending.
   # This parameter means that '1' point will decay 
   # to '0.01' point until some days after.
-  ZERO_ZERO_ONE_DAYS = 365 #28
+  ZERO_ZERO_ONE_DAYS = 28
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   HOTENTRY_CANDIDATE_NUM = 200
   PERSONAL_HOTENTRY_CANDIDATE_NUM = 100
@@ -132,7 +132,8 @@ class Article < ActiveRecord::Base
     if category_name == 'all'
       candidate_entries = 
         where( "last_added_at > ?", 
-               Time.now.beginning_of_hour - ZERO_ZERO_ONE_DAYS.days
+               #Time.now.beginning_of_hour - ZERO_ZERO_ONE_DAYS.days
+               Time.now - ZERO_ZERO_ONE_DAYS.days
              ).order(
                'strength desc, last_added_at desc'
                 #'last_added_at desc, strength desc'
@@ -140,7 +141,8 @@ class Article < ActiveRecord::Base
     else
       candidate_entries = 
         where( ["last_added_at > ? and category_id = ?", 
-                Time.now.beginning_of_hour - ZERO_ZERO_ONE_DAYS.days,
+                #Time.now.beginning_of_hour - ZERO_ZERO_ONE_DAYS.days,
+                Time.now - ZERO_ZERO_ONE_DAYS.days,
                 Category.find_by_name(category_name)]
              ).order(
                'strength desc, last_added_at desc'
@@ -181,7 +183,8 @@ class Article < ActiveRecord::Base
         candidate_entries +=
           where.not(id:query).where("last_added_at > ? and " +
                                     "cluster_id = ?",
-                                    Time.now.beginning_of_hour - 
+                                    #Time.now.beginning_of_hour - 
+                                    Time.now - 
                                     ZERO_ZERO_ONE_DAYS.days,
                                     cid
                                    ).order(
@@ -216,7 +219,8 @@ class Article < ActiveRecord::Base
 
   def add_strength
     if self.last_added_at && self.strength
-      @diff_hours = ((Time.now - self.last_added_at) / 1.hours).to_i
+      #@diff_hours = ((Time.now - self.last_added_at) / 1.hours).to_i
+      @diff_hours = ((Time.now - self.last_added_at) / 1.hours).to_f
       self.strength = self.strength * (DECAY_DELTA**@diff_hours) + 1
     else
       self.strength = 1.0
@@ -229,8 +233,10 @@ class Article < ActiveRecord::Base
     @user_article = self.user_articles.find_by_user_id(uid)
     if @user_article && self.strength && self.last_added_at
       @user_added_at = @user_article.created_at
-      @hours_from_last_add = ((Time.now - self.last_added_at) / 1.hours).to_i
-      @hours_from_user_add = ((Time.now - @user_added_at) / 1.hours).to_i
+      #@hours_from_last_add = ((Time.now - self.last_added_at) / 1.hours).to_i
+      #@hours_from_user_add = ((Time.now - @user_added_at) / 1.hours).to_i
+      @hours_from_last_add = ((Time.now - self.last_added_at) / 1.hours).to_f
+      @hours_from_user_add = ((Time.now - @user_added_at) / 1.hours).to_f
       self.strength = self.strength * (DECAY_DELTA**@hours_from_last_add) - 1.0 * (DECAY_DELTA**@hours_from_user_add)
       self.last_added_at = Time.now
       return self.save
@@ -242,7 +248,8 @@ class Article < ActiveRecord::Base
   def get_current_strength
     @current_strength = 0
     if self.last_added_at && self.strength
-      @diff_hours = ((Time.now - self.last_added_at) / 1.hours).to_i
+      #@diff_hours = ((Time.now - self.last_added_at) / 1.hours).to_i
+      @diff_hours = ((Time.now - self.last_added_at) / 1.hours).to_f
       @current_strength = self.strength * (DECAY_DELTA**@diff_hours)
     end
     return @current_strength

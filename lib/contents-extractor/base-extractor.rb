@@ -1,4 +1,5 @@
 # coding: utf-8
+require 'open-uri'
 
 class ContentsExtractor::BaseExtractor
   def initialize(xpath = nil, encoding = nil)
@@ -16,6 +17,46 @@ class ContentsExtractor::BaseExtractor
     )
     @error_status = "called_abstract"
     return false
+  end
+
+  def openurl_wrapper(url)
+    html = nil
+    begin
+      case @encoding
+      when 'utf-8'
+        html = open(url, "r:binary") do |f|
+          f.read.encode("utf-8", 
+                        :invalid => :replace, 
+                        :undef => :replace)
+        end
+      #when 'euc-jp'
+      when 'shift_jis'
+        html = open(url, "r:binary") do |f|
+          f.read.encode("utf-8", 
+                        "shift_jis",
+                        :invalid => :replace, 
+                        :undef => :replace)
+        end
+      else
+        html = open(url, "r:binary") do |f|
+          charset = f.charset
+          Rails.logger.info("[openurl_wrapper] #{url}:#{charset}")
+          if charset == "iso-8859-1"
+            f.read
+          else
+            f.read.encode("utf-8", 
+                          charset, 
+                          :invalid => :replace, 
+                          :undef => :replace)
+          end
+        end
+      end
+    rescue => err
+      Rails.logger.warn("[ContentsExtractor:get_html] " +
+                        "openuri error has occured at " + 
+                        "#{url}: #{err}")
+    end
+    return html
   end
 
   def get_error_status
@@ -57,12 +98,17 @@ class ContentsExtractor::BaseExtractor
     case @encoding
     when 'utf-8'
       #No encoding
+    when 'euc-jp'
+      html = html.encode("UTF-8", "EUC-JP",
+                         :invalid => :replace,
+                         :undef => :replace, 
+                         :replace => "?")
     when 'shift_jis'
-      html = html.encode("UTF-8", "Shift_JIS")
+      #html = html.encode("UTF-8", "Shift_JIS")
     else
       #Default force encoding
-      html = html.force_encoding("UTF-8")
-      html = html.encode("UTF-8", "UTF-8")
+      #html = html.force_encoding("UTF-8")
+      #html = html.encode("UTF-8", "UTF-8")
     end
     return html
   end
@@ -82,15 +128,15 @@ class ContentsExtractor::BaseExtractor
     body_text.gsub!(/\r/, "")
     body_text.split("\n").each do |p|
       p.gsub!(/([\u300C][^\u300D]+[\u300D])/){
-        $1.gsub(/[。．]/, "") 
+        $1.gsub(/[。]/, "") 
       }
       p.gsub!(/([\u0028][^\u0029]+[\u0029])/){
-        $1.gsub(/[。．]/, "") 
+        $1.gsub(/[。]/, "") 
       }
       if p.length > 0
         next if p =~ /^\d+.*\d{4}.\d{2}.\d{2}.*ID.*$/;
         p_obj = ContentsExtractor::Paragraph.new
-        p.split(/[。．]/).each do |s|
+        p.split(/[。]/).each do |s|
           s.gsub!(/[\u3010][^\u3011]+[\u3011]/,"")
           s.gsub!(/[\u0028][^\u0029]+[\u0029]/,"")
           next if s =~ / \- GIGAZINE$/;

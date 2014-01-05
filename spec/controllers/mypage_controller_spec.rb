@@ -450,11 +450,11 @@ describe MypageController do
       result = assigns[:articles].pluck(:id)
       expect(result).to match_array @expect_articles
     end
-    it "access to route with valid tag and check tags" do
-      get :tag, :tag => "ruby"
-      result = assigns[:tags]
-      expect(result).to match_array @expect_tags
-    end
+    #it "access to route with valid tag and check tags" do
+    #  get :tag, :tag => "ruby"
+    #  result = assigns[:tags]
+    #  result.should =~ @expect_tags
+    #end
     it "access to route with valid tag and sort that is Oldest" do
       get :tag, :tag => "ruby", :sort => "registered", :direction => "asc"
       expect(response).to be_success

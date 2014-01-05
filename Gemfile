@@ -42,7 +42,7 @@ gem 'rmagick'
 gem 'kaminari'
 
 #measure image size(GIF, PNG, JPEG ,,, etc)
-gem 'imagesize'
+gem 'image_size'
 
 #Extraction of the ActiveRecord
 gem 'activerecord-import'
@@ -56,7 +56,8 @@ end
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the app server
-gem 'unicorn'
+#gem 'unicorn'
+gem 'passenger'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
@@ -64,7 +65,7 @@ gem 'unicorn'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'nokogiri'
+gem 'nokogiri', '1.6.1'
 
 #The instafailing RSpec progress bar formatter
 gem 'fuubar'

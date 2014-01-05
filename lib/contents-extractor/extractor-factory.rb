@@ -53,8 +53,13 @@ class ContentsExtractor::ExtractorFactory
 
   def get_domain(url)
     if url
-      uri = URI(url)
-      domain = uri.host
+      if url =~ %r{^http://(blog\.livedoor\.jp)/([^/]+)/}
+        domain = "#{$1}/#{$2}"
+      else
+        uri = URI(url)
+        domain = uri.host
+      end
+      puts domain
       return domain
     else
       return nil

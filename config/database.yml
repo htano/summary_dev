@@ -20,7 +20,10 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: summary_dev_development
+  host: <%= ENV['HEROKU_DB_HOST'] %>
+  database: <%= ENV['HEROKU_DB_NAME'] %>
+  username: <%= ENV['HEROKU_DB_USER'] %>
+  password: <%= ENV['HEROKU_DB_PASS'] %>
   pool: 5
   timeout: 5000
-  password:
+

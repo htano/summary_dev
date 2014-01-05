@@ -12,29 +12,25 @@ module MyDelayedJobs
     end
 
     def run
-      ext_factory = ExtractorFactory.instance
       a= Article.find(@article_id)
-      begin
-        html = open(a.url) do |f|
-          f.read
-        end
-      rescue => e
-        Rails.logget.info("PreviewingJob::run #{e}")
-        return
-      end
-      c_ext= ext_factory.new_extractor(a.url)
+      ext_factory = ExtractorFactory.instance
+      c_ext = ext_factory.new_extractor(a.url)
+      html = c_ext.openurl_wrapper(a.url)
       if html
         if c_ext.analyze!(html)
           a.contents_preview = c_ext.get_body_text[0,200]
           a.save
         end
+      else
+        Rails.logger.warn("[PreviewingJob]Can't get html:#{a.url}")
       end
     end
   end
 
   class ThumbnailingJob
-    THRESHOLD_FILE = 100
-    THRESHOLD_IMAGE = 150
+    include ContentsExtractor
+    THRESHOLD_IMAGE_SIZE = 100
+    MAX_CHECK_IMAGE_NUMS = 20
     ADVERTISEMENT_LIST = [
       "amazon",
       "rakuten",
@@ -78,51 +74,61 @@ module MyDelayedJobs
       return false
     end
 
+    def get_image_size(img_url)
+      begin
+        file = ImageSize.new(open(img_url, "rb").read)
+      rescue => e
+        Rails.logger.info("[get_image_size:ImageSize] " + 
+                          "Can't get image size #{img_url} : #{e}")
+        return 0
+      end
+      if(file.width && file.height && 
+         file.width > THRESHOLD_IMAGE_SIZE && 
+         file.height > THRESHOLD_IMAGE_SIZE)
+        denominator = (file.width > file.height) ? 
+          (file.width / file.height) : (file.height / file.width)
+        return (file.width * file.height) / denominator
+      else
+        Rails.logger.info("[get_image_size:ImageSize] " + 
+                          "Can't get image size #{img_url} : " +
+                          "this image doesn't have the size infomation.")
+        return 0
+      end
+    end
+
     def get_image_url(a)
       img_url = nil
-      begin
-        html = open(a.url) do |f|
-          f.read
-        end
-        doc = Nokogiri::HTML.parse(html)
-      rescue => e
-        Rails.logget.info("get_image_url: #{e}")
+      c_ext = ExtractorFactory.instance.new_extractor(a.url)
+      html = c_ext.openurl_wrapper(a.url)
+      unless html
+        Rails.logger.warn("[get_image_url]Can't get html:#{a.url}")
         return "no_image.png"
       end
-      doc.xpath("//img").each do |img|
+      begin
+        doc = Nokogiri::HTML.parse(html)
+      rescue => e
+        Rails.logger.info("get_image_url: #{e}")
+        return "no_image.png"
+      end
+      max_size = THRESHOLD_IMAGE_SIZE * THRESHOLD_IMAGE_SIZE
+      maz_size_img_url = 'no_image.png'
+      doc.xpath("//img").each_with_index do |img, idx|
         img_url = img["src"]
+        Rails.logger.debug("[#{idx}]img_url = #{img_url}")
+        break if idx > MAX_CHECK_IMAGE_NUMS
         next if img_url == nil or img_url == ""
         next if isAdvertisement?(img_url)
         next if isExceptionImage?(img_url)
         unless img_url.start_with?("http")
           img_url = URI.join(a.url, img_url).to_s
         end
-        begin
-          file = ImageSize.new(open(img_url, "rb").read)
-        rescue => e
-          Rails.logger.info("[Info@get_image_url] ImageSize:#{e}")
-          next
-        end
-        if file.get_width && file.get_height
-          if(file.get_width > THRESHOLD_FILE &&
-             file.get_height > THRESHOLD_FILE)
-            return img_url
-          else
-            next
-          end
-        end
-        begin
-          image = Magick::ImageList.new(img_url)
-        rescue => e
-          Rails.logger.info("[Info@get_image_url] Magick:#{e}")
-          next
-        end
-        if(image.columns.to_i > THRESHOLD_IMAGE &&
-           image.rows.to_i > THRESHOLD_IMAGE)
-          return img_url
+        img_size = get_image_size(img_url)
+        if img_size > max_size
+          max_size = img_size
+          maz_size_img_url = img_url
         end
       end
-      return "no_image.png"
+      return maz_size_img_url
     end
   end
 
