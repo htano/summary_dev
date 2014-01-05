@@ -246,7 +246,9 @@ li {
   height: 25px;
 }
 
-.btn-group.sort-split-btn {
-  height: 20px;
-  margin: 2px 5px 0px 0px;
+.navbar{
+  .btn-group.sort-split-btn {
+    height: 20px;
+    margin: 2px 5px 0px 0px;
+  }
 }
