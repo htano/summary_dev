@@ -149,10 +149,10 @@
           <div class="row">
             <% unless @article_preview == "" %>
               <div id="display_preview" class="col-md-3">
-                <%= <a>t('article.contents_preview') %><span class="glyphicon glyphicon-chevron-down"></span></a>
+                <a><%= t('article.contents_preview') %><span class="glyphicon glyphicon-chevron-down"></span></a>
               </div>
               <div id="hide_preview" class="col-md-3" style="display:none">
-                <%= <a>t('article.contents_preview') %><span class="glyphicon glyphicon-chevron-up"></span></a>
+                <a><%= t('article.contents_preview') %><span class="glyphicon glyphicon-chevron-up"></span></a>
               </div>
             <% else %>
               <div class="col-md-3">
