@@ -67,6 +67,9 @@ gem 'passenger'
 
 gem 'nokogiri'
 
+#The instafailing RSpec progress bar formatter
+gem 'fuubar'
+
 gem 'omniauth-github'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'

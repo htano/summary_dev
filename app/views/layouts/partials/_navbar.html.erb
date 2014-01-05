@@ -4,25 +4,47 @@ function checkSearchtext(){
     return false;
   }
 }
+
+function click_dropdown_manu_search(){
+  $("#navbar_form").attr("action","/search/search_article");
+  $("#type_nav_title").html("検索");
+}
+
+function click_dropdown_manu_add(){
+  $("#navbar_form").attr("action","/webpage/add_confirm");
+  $("#navbar_form").attr("method","POST");
+  $("#type_nav_title").html("追加");
+}
 </script>
 
-<%= form_tag({:controller => 'search', :action => 'search_article'}, {:method => 'GET' ,:onsubmit => 'return checkSearchtext()'}) do %>
+<%= form_tag({:controller => 'search', :action => 'search_article'}, {:id => 'navbar_form', :method => 'GET' ,:onsubmit => 'return checkSearchtext()'}) do %>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
         <a href="<%= url_for :controller => 'hotentry', :action => 'index' %>" class="brand">SummaQ!</a>
         <div class="nav-collapse">
           <ul class="nav pull-right">
-          
+            <li>
+              <div id="type_nav" class="btn-group sort-split-btn">
+                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span id="type_nav_title">検索</span><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" onclick="click_dropdown_manu_search()">検索</a></li>
+                  <% if signed_in? %>
+                    <li><a href="#" onclick="click_dropdown_manu_add()">追加</a></li>
+                  <% end %>
+                </ul>
+              </div>
+            </li>
             <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" placeholder="<%= t("placeholder.searcht_ext") %>"></li>
-            <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li>
-
-          <% if signed_in? %>
+            <input type="hidden" name="add_flag" value="true">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+<!--            <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li> -->
+<!--          <% if signed_in? %>
             <li>
               <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" ><%= t("webpage.add") %></a>
             </li>
           <% end %>
-
+-->
           <% if false %>
           <% if signed_in? %>
             <li>
