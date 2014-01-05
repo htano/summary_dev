@@ -4,34 +4,37 @@
 
 <div class="comment_box">
   <p><%= t("webpage.complete") %></p>
-<!--  <span id="msg"><%= @msg %></span>-->
 </div>
 
-<div id="article_contents">
-  <div id="thumbnail">
-    <%= image_tag(@thumbnail) %>
-  </div>
-  <div id="url_title">
-    <p><a href="<%= @url %>" target="_blank"><%= @title[0, 100] %></a></p>
-  </div>
-  <div id="contents_preview">
-    <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><%= @contents_preview[0, 120] %></p>
-  </div>
-  <div id="category">
-    <%= t("category."+@category) %>
-  </div>
-  <% if @tags == nil || @tags.length == 0 %>
-    <div id="tag_area">no tags for this article.<br></div>
-  <% else %>
-    <div class="article-tags">
-      <ul class="tags">
-        <% @tags.each do |tag| %>
-          <li><%= link_to tag ,{:controller => "search", :action => "search_article", :searchtext => tag, :target => "1",:type => "2", :sort => "1"} %></li>
-        <% end %>
-      </ul>
+<% unless @thumbnail == "no_image.png" %>
+  <div id="article_contents">
+    <div id="thumbnail">
+      <%= image_tag(@thumbnail) %>
     </div>
-  <% end %>
-</div>
+<% else %>
+  <div id="article_contents_no_thumbnail">
+<% end %>
+    <div id="url_title">
+      <p><a href="<%= @url %>" target="_blank"><%= @title[0, 100] %></a></p>
+    </div>
+    <div id="contents_preview">
+      <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + @url %><%= @contents_preview[0, 120] %></p>
+    </div>
+    <div id="category">
+      <%= t("category."+@category) %>
+    </div>
+    <% if @tags == nil || @tags.length == 0 %>
+      <div id="tag_area">no tags for this article.<br></div>
+    <% else %>
+      <div class="article-tags">
+        <ul class="tags">
+          <% @tags.each do |tag| %>
+            <li><%= link_to tag ,{:controller => "search", :action => "search_article", :searchtext => tag, :target => "1",:type => "2", :sort => "1"} %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
 
 <div id="operation_contents">
   <span id="mypage">
