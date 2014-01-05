@@ -75,7 +75,7 @@ describe MypageController do
       get :index, :fpage => 1
       expect(response).to be_success
     end
-    it "access to route with the paramter of name and read ta" do
+    it "access to route with the paramter of name and read tab" do
       get :index, :rpage => 1
       expect(response).to be_success
     end
@@ -430,9 +430,12 @@ describe MypageController do
 
   describe "GET #tag with signing in" do
     before(:each) do
-      session[:openid_url] = "oauth://twitter/12345"
-      @login_user = User.find_by_id(1)
-      @expect_result = [6, 12, 24, 44, 53]
+      session[:openid_url] = "oauth://facebook/12346"
+      @login_user = User.find_by_id(2)
+      @expect_articles = [6, 20, 48]
+      @expect_tags = [["activerecord", "rails", "ruby", "sqlite3", "heroku"], 
+                      ["gotolove", "wei", "ruby", "nokogiri"],
+                      ["ruby", "rails", "activerecord"]]
     end
     it "access to route with unregistered tag" do
       get :tag, :tag => "unknown"
@@ -442,13 +445,48 @@ describe MypageController do
       get :tag, :tag => "ruby"
       expect(response).to be_success
     end
-=begin
     it "access to route with valid tag and check result" do
       get :tag, :tag => "ruby"
       result = assigns[:articles].pluck(:id)
-      expect(result).to match_array @expect_result
+      expect(result).to match_array @expect_articles
     end
-=end
+    #it "access to route with valid tag and check tags" do
+    #  get :tag, :tag => "ruby"
+    #  result = assigns[:tags]
+    #  result.should =~ @expect_tags
+    #end
+    it "access to route with valid tag and sort that is Oldest" do
+      get :tag, :tag => "ruby", :sort => "registered", :direction => "asc"
+      expect(response).to be_success
+    end
+    it "access to route with valid tag and sort that is Newest" do
+      get :tag, :tag => "ruby", :sort => "registered", :direction => "desc"
+      expect(response).to be_success
+    end
+    it "access to route with valid tag and sort that is Least summarized" do
+      get :tag, :tag => "ruby", :sort => "summaries", :direction => "asc"
+      expect(response).to be_success
+    end
+    it "access to route with valid tag and sort that is Most summarized" do
+      get :tag, :tag => "ruby", :sort => "summaries", :direction => "desc"
+      expect(response).to be_success
+    end
+    it "access to route with valid tag and sort that is Least read" do
+      get :tag, :tag => "ruby", :sort => "reader", :direction => "asc"
+      expect(response).to be_success
+    end
+    it "access to route with valid tag and sort that is Most read" do
+      get :tag, :tag => "ruby", :sort => "reader", :direction => "desc"
+      expect(response).to be_success
+    end
+    it "access to route with valid tag and page" do
+      get :tag, :tag => "ruby", :page => 1
+      expect(response).to be_success
+    end
+    it "access to route with valid tag and over page" do
+      get :tag, :tag => "ruby", :page => 2
+      expect(response).to be_success
+    end
   end
 
 end

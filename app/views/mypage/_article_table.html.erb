@@ -23,7 +23,7 @@
         <div class="article-tags">
           <ul class="tags">
             <% table_data[:tags].each do |tag| %>
-            <li><a href="#"><%= tag %></a></li>
+            <li><%= link_to tag, {:action => "tag", :tag => tag} %></li>
             <% end %>
           </ul>
         </div>

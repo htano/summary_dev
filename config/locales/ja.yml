@@ -28,6 +28,7 @@ ja:
     created_at: "登録日"
     filter_only_not_read: "登録してない記事に絞る"
   user:
+    yourself: "あなた"
     filter_only_not_follow: "フォローしてないユーザー"
   read_later:
     add: "後で読む"
@@ -47,6 +48,9 @@ ja:
     count: "summaries"
     count_one: "summary"
     edit: "要約する"
+    edit_the_article: "この記事を要約する"
+    modify_my_summary: "自分の要約を編集する"
+    edit_date: "要約日"
     view_all: "全ての要約を見る"
     delete: "削除する"
     last_updated: "最終更新日"
@@ -68,6 +72,7 @@ ja:
     social: "社会"
     other: "その他"
     personal: "パーソナル"
+    unknown: "未分類カテゴリ" 
   article_sort:
     newest: "登録日が新しい順"
     oldest: "登録日が古い順"
@@ -102,6 +107,7 @@ ja:
     type_tag: "タグ"
     type_domain: "ドメイン"
   tag:
+    no_tags: "登録されているタグがありません"
     no_recommend_tags: "この記事に対するタグ設定なし"
     no_recent_tags: "最近タグを設定していません"
     recommend_tags: "他の人が設定したタグ"
