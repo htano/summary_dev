@@ -9,6 +9,7 @@ SummaryDev::Application.routes.draw do
   get "follow_lists/followers"
   get "follow_lists/following"
   get "follow_lists/suggestion"
+  root :to => "hotentry#index"
   get "hotentry/index"
   get "hotentry/small"
   get "hotentry/normal"
