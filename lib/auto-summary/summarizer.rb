@@ -7,7 +7,7 @@ class AutoSummary::Summarizer
   include TextAnalyzer
   include ContentsExtractor
   include AutoSummary
-  SUMMARY_LENGTH = 200
+  SUMMARY_LENGTH = 150
 
   def initialize
     params_dir = PARAMS_DIR
