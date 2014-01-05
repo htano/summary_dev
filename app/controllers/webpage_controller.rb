@@ -13,17 +13,17 @@ class WebpageController < ApplicationController
   def add_confirm
     if signed_in?
       @user_id = get_login_user.id
-      @url = params[:url]
+      @url = params[:url] == BLANK || params[:url] == nil ? params[:searchtext] : params[:url]
+      p @url
       @add_flag = params[:add_flag]
       h = get_webpage_element(@url, true, false, false)
       if h == nil || @url.start_with?("chrome://extensions/")
         flash[:error] = "Please check URL."
-        redirect_to :controller => "webpage", :action => "add" and return
+        redirect_to(:back) and return
       end
 
       @title = h["title"]
       @recent_tags = UserArticle.get_recent_tag(@user_id)
-      #@recent_tags = []
       @set_tags = []
 
       article = Article.find_by_url(@url)
@@ -32,7 +32,6 @@ class WebpageController < ApplicationController
         @reader_num = article.user_articles_count
         @article_id = article.id
         @top_rated_tags = article.get_top_rated_tag
-        #@top_rated_tags = []
         user_article = article.user_articles.find_by_user_id(@user_id)
         @set_tags = user_article.get_set_tag unless user_article == nil
       end

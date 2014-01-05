@@ -455,27 +455,27 @@ describe MypageController do
       result = assigns[:tags]
       expect(result).to match_array @expect_tags
     end
-    it "acess to route with valid tag and sort that is Oldest" do
+    it "access to route with valid tag and sort that is Oldest" do
       get :tag, :tag => "ruby", :sort => "registered", :direction => "asc"
       expect(response).to be_success
     end
-    it "acess to route with valid tag and sort that is Newest" do
+    it "access to route with valid tag and sort that is Newest" do
       get :tag, :tag => "ruby", :sort => "registered", :direction => "desc"
       expect(response).to be_success
     end
-    it "acess to route with valid tag and sort that is Least summarized" do
+    it "access to route with valid tag and sort that is Least summarized" do
       get :tag, :tag => "ruby", :sort => "summaries", :direction => "asc"
       expect(response).to be_success
     end
-    it "acess to route with valid tag and sort that is Most summarized" do
+    it "access to route with valid tag and sort that is Most summarized" do
       get :tag, :tag => "ruby", :sort => "summaries", :direction => "desc"
       expect(response).to be_success
     end
-    it "acess to route with valid tag and sort that is Least read" do
+    it "access to route with valid tag and sort that is Least read" do
       get :tag, :tag => "ruby", :sort => "reader", :direction => "asc"
       expect(response).to be_success
     end
-    it "acess to route with valid tag and sort that is Most read" do
+    it "access to route with valid tag and sort that is Most read" do
       get :tag, :tag => "ruby", :sort => "reader", :direction => "desc"
       expect(response).to be_success
     end

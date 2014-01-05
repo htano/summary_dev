@@ -38,3 +38,16 @@
 
 # Ignore files related with i18n
 /public/javascripts/translations.js
+
+# Code Coverage
+coverage
+
+# Code Quality
+reports
+
+# DRY
+tools/pmd/docs
+
+# Yard Document
+.yardoc
+doc

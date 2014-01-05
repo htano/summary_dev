@@ -231,15 +231,24 @@ li {
 }
 
 #searchtext_nav {
-  margin-top: 9px;
+  margin-right: 8px;
+  margin-top: 7px ;
   width: 400px;
   height: 25px;
   line-height: normal;
   color: black;
 }
+
 #search_nav {
   margin-top: 9px;
   margin-left: 5px;
   width: 90px;
   height: 25px;
+}
+
+.navbar{
+  .btn-group.sort-split-btn {
+    height: 20px;
+    margin: 2px 5px 0px 0px;
+  }
 }

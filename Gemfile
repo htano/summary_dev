@@ -66,6 +66,9 @@ gem 'unicorn'
 
 gem 'nokogiri'
 
+#The instafailing RSpec progress bar formatter
+gem 'fuubar'
+
 gem 'omniauth-github'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
@@ -90,9 +93,16 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 
 group :test do
-  gem "rspec"
-  gem "rspec-rails"
+  gem 'rspec'
+  gem 'rspec-rails'
   gem 'spork', '1.0.0rc4'
+  gem 'database_cleaner'
+  gem 'headless'
+  gem 'capybara-webkit'
+  gem 'simplecov', :require => false
+  gem 'simplecov-rcov', :require => false
+  gem 'rails_best_practices', :require => false
+  gem 'yard', :require => false
 end
 
 gem 'okura'
