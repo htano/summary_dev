@@ -31,7 +31,7 @@ describe WebpageController do
       expect(response).to redirect_to :controller => 'consumer',:action => 'index'
     end
   end
-
+=begin
   describe "POST #add_confirm with signing in" do
     before(:each) do
       session[:openid_url] = "oauth://facebook/12354"
@@ -70,7 +70,7 @@ describe WebpageController do
       assigns[:article_id].should == 44
     end
   end
-
+=end
   describe "POST #add_complete without signing in" do
     it "access to route without no parameters" do
       post :add_complete
