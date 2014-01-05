@@ -285,7 +285,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   ngrams_parser
-  nokogiri
+  nokogiri (= 1.6.1)
   okura
   omniauth-facebook
   omniauth-github

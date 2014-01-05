@@ -65,7 +65,7 @@ gem 'passenger'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'nokogiri'
+gem 'nokogiri', '1.6.1'
 
 #The instafailing RSpec progress bar formatter
 gem 'fuubar'

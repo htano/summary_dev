@@ -124,7 +124,7 @@ describe WebpageController do
       assigns[:contents_preview].should == "\n米アップルのiPhone 5s/5cの発売、およびNTTドコモのiPhone商戦への参入で話題沸騰の携帯電話業界。その陰で、KDDI(au)の不誠実な消費者対応が大きな問題となる可能性がある。その行為は、「詐欺的」と言われても仕方ないもので、消費者は今後、auの動向に注目していく必要がある。\nKDDIは今年5月21日、不当景品類及び不当表示防止法の規定に基づく措置命令を消費者庁から受けた。その概"
       assigns[:thumbnail].should == "http://amd.c.yimg.jp/im_sigg8XxvdH3npMkCXSmvXM9SvQ---x153-y200-q90/amd/20130930-00010000-bjournal-000-1-view.jpg"
       assigns[:category].should == "other"
-      assigns[:tags].should == ["tag1", "tag2", "tag3", "tag4", "tag5", "tag6", "tag7", "tag8", "tag9", "tag10"]
+      assigns[:tags].should =~ ["tag1", "tag2", "tag3", "tag4", "tag5", "tag6", "tag7", "tag8", "tag9", "tag10"]
       assigns[:msg].should == "Completed."
       #assigns[:title].should == "rubyのgeocoderの使い方 - Qiita [キータ]"
     end
