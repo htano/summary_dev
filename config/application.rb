@@ -24,5 +24,6 @@ module SummaryDev
     config.generators do |g|
         g.test_framework = "rspec"
     end
+    I18n.enforce_available_locales = true
   end
 end
