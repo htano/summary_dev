@@ -240,14 +240,15 @@ li {
 }
 
 #search_nav {
-  margin-top: 9px;
-  margin-left: 5px;
+  margin-top: 8px;
+  //margin-left: 5px;
+  margin-right: 6px;
   width: 90px;
   height: 25px;
 }
 
 .navbar{
-  .btn-group.sort-split-btn {
+  .btn-group {
     height: 20px;
     margin: 2px 5px 0px 0px;
   }

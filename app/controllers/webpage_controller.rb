@@ -14,7 +14,10 @@ class WebpageController < ApplicationController
     if signed_in?
       @user_id = get_login_user.id
       @url = params[:url] == BLANK || params[:url] == nil ? params[:searchtext] : params[:url]
-      p @url
+      if(/[^ -~｡-ﾟ]/ =~ @url)
+        flash[:error] = "Please check URL."
+        redirect_to(:back) and return
+      end
       @add_flag = params[:add_flag]
       h = get_webpage_element(@url, true, false, false)
       if h == nil || @url.start_with?("chrome://extensions/")
