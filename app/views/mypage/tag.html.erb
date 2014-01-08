@@ -53,24 +53,27 @@
     <div id="article-controller">
       <div>
         <div class="page-ejection" style="float: right; padding: 0px;">
-          <ul>
+          <ul class="pagination pagination-sm">
+            <% if @page.to_i > 1 %>
             <li class="page-prev">
-              <% if @page.to_i > 1 %>
-                <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "tag", :tag => @tag, :page => (@page.to_i - 1), :remote => false } %>
-              <% else %>
-              <div>
-                <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
-              </div>
-              <% end %>
-            </li>
-            <li class="vertical-boder" style="height: 22px;"></li>
-            <li class="page-next">
-            <% if @articles.length == @table_row_num.to_i && ((@page.to_i - 1) * @table_row_num.to_i + @articles.length != @total_num ) %>
-            <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "tag", :tag => @tag, :page => (@page.to_i + 1), :remote => false } %>
+            <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "8x12", :title => "go to prev"), 
+                        {:action => "tag", :tag => @tag, :page => (@page.to_i - 1), :remote => false } %>
             <% else %>
-            <div>
-              <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
-            </div>
+            <li class="page-prev disabled">
+              <a href="#">
+              <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "8x12") %>
+              </a>
+            <% end %>
+            </li>
+            <% if @articles.length == @table_row_num.to_i && ((@page.to_i - 1) * @table_row_num.to_i + @articles.length != @total_num ) %>
+            <li class="page-next">
+            <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "8x12", :title => "go to next"), 
+                        {:action => "tag", :tag => @tag, :page => (@page.to_i + 1), :remote => false } %>
+            <% else %>
+            <li class="page-next disabled">
+              <a href="#">
+              <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "8x12") %>
+              </a>
             <% end %>
           </li>
         </ul>
