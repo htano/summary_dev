@@ -238,6 +238,7 @@
       <% if @is_login_user || @user.public_flg %>
       <div class="article-table">
         <form id="main-check-form" name="main_checkbox" class="main">
+          <%= image_tag("loader.gif", :alt => "Ajax Loader", :width => "64", :height => "64", :class => "mypage-loader", :id => "main-table-loader") %>
           <table class="main-table">
             <tr class="table-top">
               <th id="article-title-top">
@@ -255,6 +256,7 @@
           </table>
         </form>
         <form id="summary-check-form" name="summary_checkbox" class="summary">
+          <%= image_tag("loader.gif", :alt => "Ajax Loader", :width => "64", :height => "64", :class => "mypage-loader", :id => "summary-table-loader") %>
           <table class="summary-table summary">
             <tr class="table-top">
               <th id="article-title-top">
@@ -272,6 +274,7 @@
           </table>
         </form>
         <form id="favorite-check-form" name="favorite_checkbox" class="favorite">
+          <%= image_tag("loader.gif", :alt => "Ajax Loader", :width => "64", :height => "64", :class => "mypage-loader", :id => "favorite-table-loader") %>
           <table class="favorite-table favorite">
             <tr class="table-top">
               <th id="article-title-top">
@@ -289,6 +292,7 @@
           </table>
         </form>
         <form id="read-check-form" name="read_checkbox" class="read">
+          <%= image_tag("loader.gif", :alt => "Ajax Loader", :width => "64", :height => "64", :class => "mypage-loader", :id => "read-table-loader") %>
           <table class="read-table read">
             <tr class="table-top">
               <th id="article-title-top">

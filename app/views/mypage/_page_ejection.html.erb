@@ -2,9 +2,9 @@
   <li class="page-prev">
   <% if page.to_i > 1 %>
     <% if @is_login_user %>
-      <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", page_param => (page.to_i - 1), :remote => true }%>
+      <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", page_param => (page.to_i - 1), :remote => true }, {:onclick => "clickPager('#{page_param}')"} %>
     <% else %>
-      <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, page_param => (page.to_i - 1), :remote => true } %>
+      <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, page_param => (page.to_i - 1), :remote => true }, {:onclick => "clickPager('#{page_param}')"} %>
     <% end %>
   <% else %>
     <div>
@@ -16,9 +16,9 @@
   <li class="page-next">
   <% if table_size == @table_row_num.to_i && ((page.to_i - 1) * @table_row_num.to_i + table_size != total_num ) %>
     <% if @is_login_user %>
-      <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", page_param => (page.to_i + 1), :remote => true } %>
+      <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", page_param => (page.to_i + 1), :remote => true }, {:onclick => "clickPager('#{page_param}')"} %>
     <% else %>
-      <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, page_param => (page.to_i + 1), :remote => true } %>
+      <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, page_param => (page.to_i + 1), :remote => true }, {:onclick => "clickPager(#{page_param})"} %>
     <% end %>
   <% else %>
     <div>
