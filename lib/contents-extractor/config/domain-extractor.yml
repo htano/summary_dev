@@ -179,3 +179,5 @@ himasoku.com:
 bipblog.com:
   extractor_type: xpath
   xpath: //div[@class='main_center_body_text']//div[@class='ent_body']/p
+jibun.atmarkit.co.jp:
+  encoding: shift_jis
