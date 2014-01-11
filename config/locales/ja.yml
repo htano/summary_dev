@@ -120,3 +120,6 @@ ja:
   views:
     pagination:
       truncate: "..."
+  hotentry:
+    personal:
+      no_entry_message: "ログインしていくつかのウェブサイトを登録すると、あなた専用のホットエントリーが作成されます"

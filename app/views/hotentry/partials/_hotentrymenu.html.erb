@@ -71,3 +71,8 @@
   </div>
 </div>
 
+<% if @category_name == 'personal' && @entries.size == 0 %>
+  <p style="font-size:1.5em;">
+    <%= t('hotentry.personal.no_entry_message') %>
+  </p>
+<% end %>
