@@ -174,10 +174,19 @@ www3.nhk.or.jp:
   extractor_type: xpath
   xpath: //div[@class='entry']/p
 himasoku.com:
-  xpath: //div[@class='article-body-inner' or @class='article-body-more']/dl//dd/span/text()
+  xpath: //div[@class='article-body-inner' or @class='article-body-more']//text()
   extractor_type: xpath
 bipblog.com:
   extractor_type: xpath
   xpath: //div[@class='main_center_body_text']//div[@class='ent_body']/p
 jibun.atmarkit.co.jp:
   encoding: shift_jis
+gqjapan.jp:
+  extractor_type: xpath
+  xpath: //div[@class='post']//text()
+sonicch.com:
+  extractor_type: xpath
+  xpath: //div[@class='article-body-inner']//dd//text()
+www.negisoku.com:
+  extractor_type: xpath
+  xpath: //div[@class='article-body-inner']//div[@class='res_b2']//text()
