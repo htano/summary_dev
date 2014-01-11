@@ -28,9 +28,9 @@ module MypageHelper
 
   def is_selected_sort_type(title, type, id)
     if title == type
-      '<span id="' + id + '" ' + 'class="glyphicon glyphicon-ok"></span><span>' + 
-        t('article_sort.' + get_i18n_sort_type(type)) + 
-        '</span>'
+      '<img alt="icon" height="14" src="/assets/icons/glyphicons_206_ok_2_gray.png" width="14" id="' + id + '" >' +
+      t('article_sort.' + get_i18n_sort_type(type)) + 
+      '</span>'
     else
       '<span id="' + id + '""></span><span>' + 
         t('article_sort.' + get_i18n_sort_type(type)) + 

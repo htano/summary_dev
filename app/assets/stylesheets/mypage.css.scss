@@ -161,8 +161,8 @@
           color: #5B91FF;
         }
       }
-      span {
-        margin-top: 4px;
+      img {
+        margin-top: -5px;
       }
     }
   }
@@ -335,10 +335,11 @@ ul.tab {
   }
   #asc-registered, #desc-registered {
     float: left;
+    margin-top: 5px;
     margin-left: -10px;
     margin-right: 5px;
-    width: 14px;
-    height: 17px;
+    width: 10px;
+    height: 10px;
   }
 }
 

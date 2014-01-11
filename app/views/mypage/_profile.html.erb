@@ -65,7 +65,8 @@
     <% end %>
     <br>
     <a href="/follow_lists/following?name=<%= @user.name %>">
-      <span class="glyphicon glyphicon-th-list"></span> <%= t('profile.show_more') %>
+    <%= image_tag("icons/glyphicons_157_show_thumbnails_with_lines_gray.png", :size => "14x14", :title => "lines", :alt => "icon") %>
+    <%= t('profile.show_more') %>
     </a>
     <% end %>
     </div>
@@ -79,7 +80,8 @@
       <div id="insert-image"></div>
       <br>
       <a href="/follow_lists/followers?name=<%= @user.name %>">
-        <span class="glyphicon glyphicon-th-list"></span> <%= t('profile.show_more') %>
+      <%= image_tag("icons/glyphicons_157_show_thumbnails_with_lines_gray.png", :size => "14x14", :title => "lines", :alt => "icon") %>
+      <%= t('profile.show_more') %>
       </a>
       <% end %>
     </div>
