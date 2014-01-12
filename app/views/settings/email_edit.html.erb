@@ -6,13 +6,13 @@
   <%= render :partial => "settings/partials/navilist", :locals => {:user => @user} %>
 
   <div class="setting-contents">
-    <h3>Mail Setting(Edit)</h3>
+    <h3><%=t('settings.email_setting')%>(<%=t('settings.edit')%>)</h3>
     <form method="post" accept-charset="UTF-8" action="<%= url_for :action => 'email_edit_complete'%>">
     <div class="setting-inner">
 
       <dl>
         <dt>
-          <label>Mail Address</label>
+        <label><%= t('settings.email.mail_address') %></label>
         </dt>
         <dd>
           <%= @email %>
@@ -22,20 +22,20 @@
 
       <dl>
         <dt>
-          <label>Mail Address(New)</label>
+        <label><%= t('settings.email.mail_address') %>(New)</label>
         </dt>
         <input type="text" name="mail_addr" value="" style="width:97%;"/>
       </dl>
 
       <dl>
         <dt>
-          <label>Mail Address(Confirm)</label>
+        <label><%= t('settings.email.mail_address') %>(Confirm)</label>
         </dt>
         <input type="text" name="mail_addr_confirm" value="" style="width:97%"/>
       </dl>
 
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <input type="submit" class="button button-flat:hover" value="send"></input>
+      <input type="submit" class="button button-flat:hover" value="<%=t('settings.submit')%>"></input>
     </div>
   </form>
   </div>

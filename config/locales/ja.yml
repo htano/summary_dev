@@ -131,3 +131,31 @@ ja:
     edit_profile_message: "ユーザー登録直後にユーザープロファイルも設定する"
     user_id: "ユーザーID"
     temporary_error_message: "一時的なエラーが発生しました。申し訳ありませんが、もう一度ログインをしてください。"
+  navbar:
+    sign_in: "サインイン"
+    sign_out: "サインアウト"
+  settings:
+    profile_setting: "プロファイル設定"
+    email_setting: "メール設定"
+    account_setting: "アカウント設定"
+    edit: "編集"
+    submit: "登録"
+    profile:
+      name: "名前"
+      image: "ユーザー画像"
+      self_introduction: "自己紹介"
+      web_site: "ウェブサイト"
+      public: "公開設定"
+      private_radio: "非公開　"
+      public_radio: "公開(登録したウェブサイトなどが公開されます)"
+    email:
+      mail_address: "メールアドレス"
+      status: "ステータス"
+      status_message:
+        blank: "　"
+        undefined: "(未登録)"
+        provisional: "(仮登録)"
+        provisional_expired: "(有効期限切れの仮登録)"
+        definitive: "(本登録)"
+        unknown: "(未知のステータス)"
+        error: "(エラー)"

@@ -71,23 +71,23 @@ class SettingsController < ApplicationController
     if get_login_user
       case get_login_user.mail_addr_status
       when User::MAIL_STATUS_UNDEFINED
-        @email_status = "　"
+        @email_status = t('settings.email.status_message.blank')
       when User::MAIL_STATUS_PROVISIONAL
-        @email_status = "(provisional registration)"
+        @email_status = t('settings.email.status_message.provisional')
         if(get_login_user.token_expire && 
            get_login_user.token_expire < Time.now)
-          @email_status = "(provisional registration has been expired.)"
+          @email_status = t('settings.email.status_message.provisional_expired')
         end
       when User::MAIL_STATUS_DEFINITIVE
-         @email_status = "(definitive registration)"
+         @email_status = t('settings.email.status_message.definitive')
       when User::MAIL_STATUS_ERROR
-        @email_status = "(error)"
+        @email_status = t('settings.email.status_message.error')
       else
-        @email_status = "(unknown status)"
+        @email_status = t('settings.email.status_message.unknown')
       end
       @email = get_login_user.mail_addr
       if @email == nil
-        @email = "(undefined)"
+        @email = t('settings.email.status_message.undefined')
       else
       end
     else
