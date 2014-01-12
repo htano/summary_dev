@@ -7,6 +7,7 @@ function checkSearchtext(){
 
 function click_dropdown_manu_search(){
   $("#navbar_form").attr("action","/search/search_article");
+  $("#navbar_form").attr("method","GET");
   $("#type_nav_title").html("検索");
   $("#search_nav").val("検索");
 }
