@@ -38,7 +38,8 @@ module MyDelayedJobs
       "Bannar"
     ]
     EXCEPTION_PAGE_LIST = [
-      "http://g-ec2.images-amazon.com/images/G/09/gno/beacon/BeaconSprite-JP-02._V393500380_.png"
+      "http://g-ec2.images-amazon.com/images/G/09/gno/beacon/BeaconSprite-JP-02._V393500380_.png",
+      "http://livedoor.blogimg.jp/news23vip/imgs/a/d/adb3fd09.png"
     ]
 
     def initialize(article_id)
