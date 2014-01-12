@@ -123,3 +123,11 @@ ja:
   hotentry:
     personal:
       no_entry_message: "ログインしていくつかのウェブサイトを登録すると、あなた専用のホットエントリーが作成されます"
+  consumer:
+    sign_up_with: "ログインするサービスを選択する"
+    keep_signed_in: "ログイン状態を保持する"
+    signup_button: "登録"
+    signup_page_title: "ユーザー登録"
+    edit_profile_message: "ユーザー登録直後にユーザープロファイルも設定する"
+    user_id: "ユーザーID"
+    temporary_error_message: "一時的なエラーが発生しました。申し訳ありませんが、もう一度ログインをしてください。"
