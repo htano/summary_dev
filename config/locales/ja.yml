@@ -72,7 +72,7 @@ ja:
     social: "社会"
     other: "その他"
     personal: "パーソナル"
-    unknown: "未分類カテゴリ" 
+    unknown: "未分類" 
   article_sort:
     newest: "登録日が新しい順"
     oldest: "登録日が古い順"

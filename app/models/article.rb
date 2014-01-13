@@ -298,7 +298,7 @@ class Article < ActiveRecord::Base
     if Category.find_by_id(self.category_id)
       return Category.find_by_id(self.category_id).name
     else
-      return 'other'
+      return 'unknown'
     end
   end
 

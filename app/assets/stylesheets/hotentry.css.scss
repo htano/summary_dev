@@ -189,17 +189,25 @@ div.hotentry-top-summary, div.hotentry-contents-preview {
   color: #0FC7F5;
 }
 
+div.hotentry-category {
+  border: solid 1px #aaa;
+  text-align: center;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+  border-radius: 5px;
+}
+
 div.hotentry-large-image {
   //margin-top: 23px;
   width: 15em;
-  height: 12em;
+  height: 15em;
   overflow: hidden;
 }
 
 div.hotentry-normal-image {
-  margin-top: 50px;
+  margin-top: 1em;
   width: 10em;
-  height: 7em;
+  height: 11em;
   overflow: hidden;
 }
 

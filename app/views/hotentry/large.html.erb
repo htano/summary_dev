@@ -107,6 +107,9 @@
                 </div>
                 <div class="row">
                   <div class="col-xs-9 col-md-3 hotentry-large-image">
+                    <div class="hotentry-category">
+                      <%= t('category.'+e.get_category_name) %>
+                    </div>
                     <%= image_tag(
                       e.thumbnail,
                       :class => "hotentry-large-image-imgtag",
