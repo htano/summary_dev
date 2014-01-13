@@ -195,3 +195,6 @@ ranking.goo.ne.jp:
 brow2ing.doorblog.jp:
   extractor_type: xpath
   xpath: //div[@class='article_contents']//dd//text()
+www.facebook.com:
+  extractor_type: xpath
+  xpath: //span[@class='userContent']//text()
