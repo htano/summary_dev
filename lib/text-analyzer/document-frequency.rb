@@ -1,8 +1,9 @@
 # coding: utf-8
 class TextAnalyzer::DocumentFrequency
   include TextAnalyzer
-  DOCUMENT_SIZE = 20000
-  MAX_DF_NUM = 4500
+  DOCUMENT_SIZE = 50000
+  MAX_DF_NUM = DOCUMENT_SIZE / 10
+  MIN_DF_NUM = DOCUMENT_SIZE / 10000
 
   def initialize(filename)
     @ma = MorphemeAnalyzer.instance
@@ -28,8 +29,10 @@ class TextAnalyzer::DocumentFrequency
       file.each do |line|
         line.chomp!
         k,v,idx = line.split("\t")
-        @df[k] = v.to_f
-        @index[k] = idx.to_i
+        if v.to_f > MIN_DF_NUM
+          @df[k] = v.to_f
+          @index[k] = idx.to_i
+        end
       end
     end
   end
@@ -49,7 +52,7 @@ class TextAnalyzer::DocumentFrequency
         return Math.log(DOCUMENT_SIZE / @df[term])
       end
     else 
-      return Math.log(DOCUMENT_SIZE)
+      return Math.log(DOCUMENT_SIZE / MIN_DF_NUM)
     end
   end
 
