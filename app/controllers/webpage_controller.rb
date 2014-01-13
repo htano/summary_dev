@@ -2,6 +2,7 @@ require "webpage"
 include Webpage
 
 class WebpageController < ApplicationController
+=begin
   def add
     if signed_in?
       @user_id = params[:id]
@@ -9,6 +10,7 @@ class WebpageController < ApplicationController
       redirect_to :controller => "consumer", :action => "index"
     end
   end
+=end
 
   def add_confirm
     if signed_in?

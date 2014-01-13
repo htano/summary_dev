@@ -231,7 +231,7 @@ li {
 }
 
 #searchtext_nav {
-  margin-right: 8px;
+  margin-right: 3px;
   margin-top: 4px;
   width: 400px;
   height: 30px;
@@ -242,17 +242,19 @@ li {
 #search_nav {
   margin-top: 4px;
   //margin-left: 5px;
-  margin-right: 6px;
-  width: 90px;
+  margin-right: 3px;
+  width: 75px;
   height: 30px;
+  color: #999;
 }
 
 .navbar{
   .btn-group {
     margin: 4px 5px 0px 0px;
+    .caret {
+      border-top-color: #999;
+    }
   }
-  #type_nav_title {
-      color: #999;
-      height: 10px;
+  .dropdown-menu > li {
   }
 }
