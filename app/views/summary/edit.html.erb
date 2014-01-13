@@ -45,7 +45,7 @@ $(document).ready(function() {
           <%= link_to image_tag("icons/glyphicons_016_bin.png", :size => "16x16") + content_tag(:p, "delete") , {:controller => "summary", :action => "delete", :article_id => @article_id}, {:method => "POST", :confirm => "delete summary ?"} %>
         </span>
       <% end %>
-      <span id="help"><a href="/help.html" target="_blank"><%= image_tag("icons/glyphicons_194_circle_question_mark.png", :size => "16x16") %></a></span>
+<!--      <span id="help"><a href="/help.html" target="_blank"><%= image_tag("icons/glyphicons_194_circle_question_mark.png", :size => "16x16") %></a></span> -->
     </div>
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   </div>
