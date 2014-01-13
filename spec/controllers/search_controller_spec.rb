@@ -136,15 +136,15 @@ describe SearchController do
   describe "GET #search_user" do
     it "search_user sort 1" do
       get :search_user, :searchtext => "", :sort => "1"
-      response.response_code.should == 200
+      expect(response.response_code).to eq 200
     end
     it "search_user sort 2" do
       get :search_user, :searchtext => "", :sort => "2"
-      response.response_code.should == 200
+      expect(response.response_code).to eq 200
     end
     it "search_user sort 3" do
       get :search_user, :searchtext => "", :sort => "3"
-      response.response_code.should == 302
+      expect(response.response_code).to eq 302
     end
   end
 end
