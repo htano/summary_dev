@@ -6,12 +6,12 @@
   <%= render :partial => "settings/partials/navilist", :locals => {:user => @user} %>
 
   <div class="setting-contents">
-    <h3>Mail Setting</h3>
+    <h3><%=t('settings.email_setting')%></h3>
     <div class="setting-inner">
 
       <dl>
         <dt>
-          <label>Mail Address</label>
+        <label><%= t('settings.email.mail_address') %></label>
         </dt>
         <dd>
           <%= @email %>
@@ -20,7 +20,7 @@
 
       <dl>
         <dt>
-          <label>Status</label>
+        <label><%=t('settings.email.status')%></label>
         </dt>
         <dd>
           <%= @email_status %>
@@ -28,7 +28,7 @@
       </dl>
 
       <a href="<%= url_for :action => 'email_edit' %>">
-        <button class="button button-flat:hover">edit</button>
+        <button class="button button-flat:hover"><%=t('settings.edit')%></button>
       </a>
     </div>
   </div>

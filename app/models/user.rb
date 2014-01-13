@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   def self.regist(uname, openid)
     error_message = nil
     if uname
-      #uname = uname.downcase
+      uname = uname.downcase
       if uname =~ /^[A-Za-z0-9_\-]{4,20}$/
         created_user = create( name: uname, open_id: openid, yuko_flg: true, last_login: Time.now  )
         if created_user.new_record?

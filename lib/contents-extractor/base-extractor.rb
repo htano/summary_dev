@@ -29,7 +29,13 @@ class ContentsExtractor::BaseExtractor
                         :invalid => :replace, 
                         :undef => :replace)
         end
-      #when 'euc-jp'
+      when 'euc-jp'
+        html = open(url, "r:binary") do |f|
+          f.read.encode("utf-8", 
+                        "euc-jp",
+                        :invalid => :replace, 
+                        :undef => :replace)
+        end
       when 'shift_jis'
         html = open(url, "r:binary") do |f|
           f.read.encode("utf-8", 
@@ -99,10 +105,6 @@ class ContentsExtractor::BaseExtractor
     when 'utf-8'
       #No encoding
     when 'euc-jp'
-      html = html.encode("UTF-8", "EUC-JP",
-                         :invalid => :replace,
-                         :undef => :replace, 
-                         :replace => "?")
     when 'shift_jis'
       #html = html.encode("UTF-8", "Shift_JIS")
     else

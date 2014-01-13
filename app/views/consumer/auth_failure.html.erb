@@ -4,12 +4,12 @@
 
 <div class="setting_container">
   <div class="login_buttons_contents">
-    <h3>Sorry. Unknown error has occured. Please try again.</h3>
+    <h3><%= t('consumer.temporary_error_message') %></h3>
     <div class="setting_inner">
 
       <dl>
         <dt>
-          <input type="checkbox" id="keep_login_chk" name="keep_login" value="on">Keep me signed in
+        <input type="checkbox" id="keep_login_chk" name="keep_login" value="on"><%= t('consumer.keep_signed_in') %>
         </dt>
       </dl>
 
@@ -62,9 +62,4 @@
     </div>
   </div>
 </div>
-
-
-
-
-
 

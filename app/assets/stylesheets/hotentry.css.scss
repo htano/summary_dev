@@ -4,7 +4,7 @@
 
 
 * {
-  color: #999;
+  color: #666;
 }
 
 div.hotentry-container {
@@ -108,7 +108,7 @@ div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
 
   h4 {
     font-size: 1.3em;
-    color: #999;
+    color: #666;
     text-decoration: underline;
     margin-top: 2px;
     margin-bottom: 5px;
@@ -117,7 +117,7 @@ div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
 
   h5 {
     font-size: 1.2em;
-    color: #999;
+    color: #666;
     text-decoration: underline;
     margin-top: 2px;
     margin-bottom: 5px;
@@ -126,7 +126,7 @@ div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
 
   h6 {
     font-size: 1.1em;
-    color: #999;
+    color: #666;
     text-decoration: underline;
     margin-top: 2px;
     margin-bottom: 5px;
@@ -189,17 +189,25 @@ div.hotentry-top-summary, div.hotentry-contents-preview {
   color: #0FC7F5;
 }
 
+div.hotentry-category {
+  border: solid 1px #aaa;
+  text-align: center;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+  border-radius: 5px;
+}
+
 div.hotentry-large-image {
   //margin-top: 23px;
   width: 15em;
-  height: 12em;
+  height: 15em;
   overflow: hidden;
 }
 
 div.hotentry-normal-image {
-  margin-top: 50px;
+  margin-top: 1em;
   width: 10em;
-  height: 7em;
+  height: 11em;
   overflow: hidden;
 }
 
@@ -228,7 +236,7 @@ div.hotentry_container {
 
 h1.hotentry a{
   //margin-left: 0;
-  color: #999;
+  //color: #999;
 }
 
 ul.entry_container {
@@ -284,7 +292,7 @@ div.entry_title h3 {
   text-overflow: ellipsis;
   -webkit-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
-  color: #999;
+  //color: #999;
 }
 
 div.entry_count_num {

@@ -6,19 +6,19 @@
   <%= render :partial => "settings/partials/navilist", :locals => {:user => @user} %>
 
   <div class="setting-contents">
-    <h3>User Profile</h3>
+    <h3><%= t('settings.profile_setting') %></h3>
     <div class="setting-inner">
 
       <dl>
         <dt>
-          <label>Your Name</label>
+        <label><%= t('settings.profile.name') %></label>
         </dt>
         <input type="text" name="user_full_name" value="<%= get_login_user.full_name %>" style="width:97%;" disabled="disabled"/>
       </dl>
 
       <dl>
         <dt>
-          <label>Profile Image</label>
+        <label><%= t('settings.profile.image') %></label>
         </dt>
         <dd>
         <% begin %>
@@ -31,35 +31,35 @@
 
       <dl>
         <dt>
-          <label>Self Introduction</label>
+        <label><%= t('settings.profile.self_introduction') %></label>
         </dt>
         <textarea name="user_comment" style="width:97%; height: 100px;" disabled="disabled"><%= get_login_user.comment %></textarea>
       </dl>
 
       <dl>
         <dt>
-          <label>Your Site</label>
+        <label><%= t('settings.profile.web_site') %></label>
         </dt>
         <input type="text" name="user_site_url" value="<%= get_login_user.site_url %>" style="width:97%;" disabled="disabled"/>
       </dl>
 
       <dl>
         <dt>
-          <label>Public Setting</label>
+        <label><%=t('settings.profile.public')%></label>
         </dt>
         <dd>
         <% if get_login_user.public_flg %>
-          <input type="radio" name="user_public_flg" value="FALSE" disabled="disabled" >Private　
-          <input type="radio" name="user_public_flg" value="TRUE" disabled="disabled" checked>Public
+          <input type="radio" name="user_public_flg" value="FALSE" disabled="disabled" ><%= t('settings.profile.private_radio') %>
+          <input type="radio" name="user_public_flg" value="TRUE" disabled="disabled" checked><%=t('settings.profile.public_radio')%>
         <% else %>
-          <input type="radio" name="user_public_flg" value="FALSE" disabled="disabled" checked>Private　
-          <input type="radio" name="user_public_flg" value="TRUE" disabled="disabled" >Public
+          <input type="radio" name="user_public_flg" value="FALSE" disabled="disabled" checked><%= t('settings.profile.private_radio') %>
+          <input type="radio" name="user_public_flg" value="TRUE" disabled="disabled" ><%=t('settings.profile.public_radio')%>
         <% end %>
         </dd>
       </dl>
 
       <a href="<%= url_for :action => 'profile_edit' %>">
-        <button class="button button-flat:hover">edit</button>
+        <button class="button button-flat:hover"><%=t('settings.edit')%></button>
       </a>
 
     </div>

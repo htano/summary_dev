@@ -21,7 +21,7 @@ function click_dropdown_manu_add(){
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
-        <a href="<%= url_for :controller => 'hotentry', :action => 'index' %>" class="brand">SummaQ!</a>
+        <a href="<%= url_for :controller => 'hotentry', :action => 'index' %>" class="brand">SummaQ! (β版)</a>
         <div class="nav-collapse">
           <ul class="nav pull-right">
             <li>
@@ -76,21 +76,31 @@ function click_dropdown_manu_add(){
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <a href="<%= url_for :controller =>'settings', :action => 'profile'%>">account setting</a>
+                <a href="<%= url_for :controller =>'settings', :action => 'profile'%>">
+                  <%=t('settings.account_setting')%>
+                </a>
                 </li>
                 <li>
                 <% if(request.get?) %>
-                  <a href="<%= url_for(:controller => 'consumer', :action => 'sign_out', :fromUrl => request.url)%>">sign out</a>
+                  <a href="<%= url_for(:controller => 'consumer', :action => 'sign_out', :fromUrl => request.url)%>">
+                    <%=t('navbar.sign_out')%>
+                  </a>
                 <% else %>
-                  <a href="<%= url_for(:controller => 'consumer', :action => 'sign_out')%>">sign out</a>
+                  <a href="<%= url_for(:controller => 'consumer', :action => 'sign_out')%>">
+                    <%=t('navbar.sign_out')%>
+                  </a>
                 <% end %>
                 </li>
               </ul>
               <% else %>
                 <% if(request.url =~ %r!^#{url_for(:controller => 'consumer', :action => 'index', :only_path => false)}!) %>
-                  <a href="<%= url_for(:controller => 'consumer', :action => 'index')%>">sign in</a>
+                  <a href="<%= url_for(:controller => 'consumer', :action => 'index')%>">
+                    <%=t('navbar.sign_in')%>
+                  </a>
                 <% else %>
-                  <a href="<%= url_for(:controller => 'consumer', :action => 'index', :fromUrl => request.url)%>">sign in</a>
+                  <a href="<%= url_for(:controller => 'consumer', :action => 'index', :fromUrl => request.url)%>">
+                    <%=t('navbar.sign_in')%>
+                  </a>
                 <% end %>
               <% end %>
             </li>

@@ -7,25 +7,39 @@
     <ul>
       <li>
       <% if @action_type == 'profile' %>
-        <a class="selected" href="<%= url_for :controller => 'settings', :action => 'profile' %>">Profile</a>
+        <a class="selected" href="<%= url_for :controller => 'settings', :action => 'profile' %>">
+          <%= t('settings.profile_setting') %>
+        </a>
       <% else %>
-        <a href="<%= url_for :controller => 'settings', :action => 'profile' %>">Profile</a>
+        <a href="<%= url_for :controller => 'settings', :action => 'profile' %>">
+          <%= t('settings.profile_setting') %>
+        </a>
       <% end %>
       </li>
       <li>
       <% if @action_type == 'email' %>
-        <a class="selected" href="<%= url_for :controller => 'settings', :action => 'email' %>">Emails</a>
+        <a class="selected" href="<%= url_for :controller => 'settings', :action => 'email' %>">
+          <%= t('settings.email_setting') %>
+        </a>
       <% else %>
-        <a href="<%= url_for :controller => 'settings', :action => 'email' %>">Emails</a>
+        <a href="<%= url_for :controller => 'settings', :action => 'email' %>">
+          <%= t('settings.email_setting') %>
+        </a>
       <% end %>
       </li>
+<!--
       <li>
       <% if @action_type == 'account' %>
-        <a class="selected" href="<%= url_for :controller => 'settings', :action => 'account' %>">Account Settings</a>
+        <a class="selected" href="<%= url_for :controller => 'settings', :action => 'account' %>">
+          <%= t('settings.account_setting') %>
+        </a>
       <% else %>
-        <a href="<%= url_for :controller => 'settings', :action => 'account' %>">Account Settings</a>
+        <a href="<%= url_for :controller => 'settings', :action => 'account' %>">
+          <%= t('settings.account_setting') %>
+        </a>
       <% end %>
       </li>
+-->
     </ul>
   </div>
 </div>

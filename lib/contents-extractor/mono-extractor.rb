@@ -10,6 +10,10 @@ class ContentsExtractor::MonoExtractor <
     body_text = ""
     begin
       body_text, @title = ExtractContent.analyse(@html)
+      if @title == nil || @title == ""
+        doc = Nokogiri::HTML.parse(@html)
+        @title = doc.title
+      end
     rescue
       doc = Nokogiri::HTML.parse(@html)
       @title = doc.title
