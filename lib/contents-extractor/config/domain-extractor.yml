@@ -192,3 +192,6 @@ www.negisoku.com:
   xpath: //div[@class='article-body-inner']//div[@class='res_b2']//text()
 ranking.goo.ne.jp:
   encoding: euc-jp
+brow2ing.doorblog.jp:
+  extractor_type: xpath
+  xpath: //div[@class='article_contents']//dd//text()
