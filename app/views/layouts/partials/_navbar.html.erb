@@ -8,7 +8,9 @@ $(document).ready(function() {
         if(data){
           set_type_nav();
         } else {
-          click_dropdown_manu_search();
+          $("#navbar_form").attr("action","/search/search_article");
+          $("#navbar_form").attr("method","GET");
+          $("#search_nav").val("検索");
         }
       }
   });
