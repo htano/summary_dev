@@ -13,9 +13,9 @@ www.afpbb.com:
 www.itmedia.co.jp:
   extractor_type: xpath
   xpath: //div[@class='inner']//p
-  #encoding: utf-8
+  encoding: shift_jis
 marketing.itmedia.co.jp:
-  #encoding: utf-8
+  encoding: shift_jis
   extractor_type: xpath
   xpath: //div[@class='inner']//p
 www.yomiuri.co.jp:
