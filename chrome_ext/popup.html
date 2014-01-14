@@ -10,36 +10,28 @@
     <link href="popup.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-  <h3><a href="http://localhost:3000" target="_blank">SummaQ!</a></h3>
+  <h3><a href="http://localhost:3000" target="_blank">SummaQ!　あとで読むをちゃんと読む 〜 要約キュレーションサービス</a></h3>
     <ul class="nav nav-tabs">
-      <li class="active"><a href="tabmenu1.html"><span>Read later</span></a></li>
-      <li><a href="popup2.html" ><span>Summaries</span></a></li>
+      <li class="active"><a href="tabmenu1.html"><span>追加</span></a></li>
+      <li><a href="popup2.html" ><span>要約一覧</span></a></li>
     </ul>
 
     <div class="table">
       <table class="table-bordered">
         <tbody>
+          <tr id="title"></tr>
           <tr>
-            <th>title</th>
+            <td><p id="title_data">(default)</p></td>
           </tr>
-          <tr>
-            <td><p id="title">(default)</p></td>
-          </tr>
-          <tr id="recommend_tag_title">
-            <th>recommend tags for this article.</th>
-          </tr>
+          <tr id="recommend_tag_title"></tr>
           <tr id="recommend_tag_data">
             <td id="recommend_tag"></td>
           </tr>
-          <tr id="recent_tag_title">
-            <th>your recent tags.</th>
-          </tr>
+          <tr id="recent_tag_title"></tr>
           <tr id="recent_tag_data">
             <td id="recent_tag"></td>
           </tr>
-          <tr id="my_tag_title">
-            <th>input your tags.</th>
-          </tr>
+          <tr id="my_tag_title"></tr>
           <tr id="my_tag_data">
             <td>
               <div id="my_tag">
@@ -60,14 +52,14 @@
       </table>
     </div>
  
-    <button id="button_read_later"class="button button-flat:hover">Read later</button>
+    <button id="button_read_later"class="button button-flat:hover"></button>
     <p id="comment">(default)</p>
-    <a id="link_to_login" href="http://localhost:3000/session/consumer/index" target="_blank">login</a>
+    <a id="link_to_login" href="http://localhost:3000/session/consumer/index" target="_blank"></a>
     <span id="edit_summary">
-      <img src="glyphicons_030_pencil_gray.png" width="16" height="16"><a id="link_to_edit_summary" target="_blank">edit summary</a>
+      <img src="glyphicons_030_pencil_gray.png" width="16" height="16"><a id="link_to_edit_summary" target="_blank"></a>
     </span>
     <span id="edit_tag">
-      <img src="glyphicons_066_tags.png" width="16" height="16"><a id="link_to_edit_tag" target="_blank">edit tag</a>
+      <img src="glyphicons_066_tags.png" width="16" height="16"><a id="link_to_edit_tag" target="_blank"></a>
     </span>
     <img id="load" src="ajax-loader.gif"/>
   </body>

@@ -1,10 +1,8 @@
 BLANK = ""
 
-/*TODO ホストの書き方*/
 $(document).ready( function(){
   var bg = window.chrome.extension.getBackgroundPage();
   init(bg);
-
   $.ajax({
       url: "http://" + bg.SERVICE_HOSTNAME + "/chrome/get_login_user_id",
       type: "GET",
@@ -60,6 +58,9 @@ $(document).ready( function(){
             i++;
           }
           $("#recommend_tag").find("span").addClass("recommend_tag");
+        } else {
+          $("#recommend_tag_title").hide();
+          $("#recommend_tag_data").hide();
         }
       }
   });
@@ -86,6 +87,9 @@ $(document).ready( function(){
             i++;
           }
           $("#recent_tag").find("span").addClass("recent_tag");
+        } else {
+          $("#recent_tag_title").hide();
+          $("#recent_tag_data").hide();
         }
       }
   });
@@ -189,12 +193,13 @@ $(document).ready( function(){
 });
 
 function init(baclgroundpage){
-  $("#title").text(baclgroundpage.current_tab.title);
+  $("#title_data").text(baclgroundpage.current_tab.title);
   $("#comment").hide();
   $("#link_to_login").hide();
   $("#edit_tag").hide();
   $("#edit_summary").hide();
   $("#load").hide();
+  setTitle();
 }
 
 function hiddenTagArea(){
@@ -325,4 +330,46 @@ function clickRecentTag(obj){
       }
     }
   }
+}
+
+function setTitle(){
+  /* set title */
+  var objBody = document.getElementById("title");
+  var element = document.createElement("th");
+  element.innerHTML = chrome.i18n.getMessage("title");
+  objBody.appendChild(element);
+
+  /* set recommend tag */
+  var objBody = document.getElementById("recommend_tag_title");
+  var element = document.createElement("th");
+  element.innerHTML = chrome.i18n.getMessage("recommend_tag");
+  objBody.appendChild(element);
+
+  /* set recent tag */
+  var objBody = document.getElementById("recent_tag_title");
+  var element = document.createElement("th");
+  element.innerHTML = chrome.i18n.getMessage("recent_tag");
+  objBody.appendChild(element);
+
+  /* set my tag */
+  var objBody = document.getElementById("my_tag_title");
+  var element = document.createElement("th");
+  element.innerHTML = chrome.i18n.getMessage("my_tag");
+  objBody.appendChild(element);
+
+  /* set button read later */
+  var element = document.getElementById("button_read_later");
+  element.innerHTML = chrome.i18n.getMessage("read_later");
+
+  /* set link to login */
+  var element = document.getElementById("link_to_login");
+  element.innerHTML = chrome.i18n.getMessage("login");
+
+  /* set link to edit summary */
+  var element = document.getElementById("link_to_edit_summary");
+  element.innerHTML = chrome.i18n.getMessage("edit_summary");
+
+  /* set link to edit tag */
+  var element = document.getElementById("link_to_edit_tag");
+  element.innerHTML = chrome.i18n.getMessage("edit_tag");
 }

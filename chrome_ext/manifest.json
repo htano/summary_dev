@@ -1,6 +1,7 @@
 {
   "name": "SummaQ!",
   "description": "あとで読むをちゃんと読む 〜 要約キュレーションサービス",
+  "default_locale": "ja",
   "browser_action": {
     "default_icon": "summary.png",
     "default_title": "Summary development",
