@@ -78,10 +78,10 @@ class SearchController < ApplicationController
     case @sort
     when "1"
       @users = @users.sort_by! {|user| user.get_followers_count }.reverse
-      @sort_menu_title = "Follower num"
+      @sort_menu_title = t("search.sort_follower_num")
     when "2"
       @users = @users.order("summaries_count desc, created_at desc")
-      @sort_menu_title = "Summary num"
+      @sort_menu_title = t("search.sort_summary_num")
     else
       flash[:error] = "Please retry."
       redirect_to :action => "index" and return
