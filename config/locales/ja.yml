@@ -120,6 +120,9 @@ ja:
   placeholder:
     searcht_ext: "検索したい単語を入力して下さい。"
     input_url_text: "追加したURLを入力して下さい。"
+  navbar:
+    search_menu: "検索窓へ変更する"
+    add_menu: "追加窓へ変更する"
   views:
     pagination:
       truncate: "..."
