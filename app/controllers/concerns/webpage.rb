@@ -12,6 +12,7 @@ module Webpage
   include MyDelayedJobs
   include ContentsExtractor
   BLANK = ""
+  PREVIEW_LENGTH = 100
 
   def add_webpage(url, tag_list = [])
     article = Article.find_by_url(url)
@@ -21,7 +22,7 @@ module Webpage
       article = Article.create(
         :url => url,
         :title => h["title"],
-        :contents_preview => h["contentsPreview"][0, 200],
+        :contents_preview => h["contentsPreview"][0, PREVIEW_LENGTH],
         :category_id => 0,
         :cluster_id => 0,
         :thumbnail => h["thumbnail"],

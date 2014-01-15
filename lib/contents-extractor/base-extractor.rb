@@ -138,6 +138,7 @@ class ContentsExtractor::BaseExtractor
       if p.length > 0
         next if p =~ /^\d+.*\d{4}.\d{2}.\d{2}.*ID.*$/;
         p_obj = ContentsExtractor::Paragraph.new
+        p.gsub!(/[．]/,"。")
         p.split(/[。]/).each do |s|
           s.gsub!(/[\u3010][^\u3011]+[\u3011]/,"")
           s.gsub!(/[\u0028][^\u0029]+[\u0029]/,"")
