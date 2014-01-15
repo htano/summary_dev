@@ -25,6 +25,8 @@ Dir.glob(CONFIG_DIR + "/*.txt").each do |filename|
       p_start, p_step, p_end = p_rule.split(",")
       for i in (p_start.to_i..p_end.to_i).step(p_step.to_i) do
         url = src_url.gsub(/___PAGE_FROM___/, i.to_s)
+        #`open_http': 502 Bad Gateway (OpenURI::HTTPError)
+        #TODO: error handling is needed.
         open(url) do |io|
           html = io.read
           begin

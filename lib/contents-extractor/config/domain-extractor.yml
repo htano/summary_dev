@@ -136,7 +136,7 @@ blog.livedoor.jp/domesoccer:
   xpath: //div[@class='article-body-inner' or @class='article-body-more']//span
 u-note.me:
   extractor_type: xpath
-  xpath: //div[@class='note-content-v2']/div/span
+  xpath: //div[@class='note-content-v2']//text()
 www.appbank.net:
   extractor_type: xpath
   xpath: //div[@class='i5']/p
@@ -198,3 +198,6 @@ brow2ing.doorblog.jp:
 www.facebook.com:
   extractor_type: xpath
   xpath: //span[@class='userContent']//text()
+howcollect.jp:
+  extractor_type: xpath
+  xpath: //div[@class='article-contents-block']//text()
