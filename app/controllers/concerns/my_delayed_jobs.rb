@@ -35,7 +35,8 @@ module MyDelayedJobs
       "amazon",
       "rakuten",
       "bannar",
-      "Bannar"
+      "Bannar",
+      "accesstrade"
     ]
     EXCEPTION_PAGE_LIST = [
       "http://g-ec2.images-amazon.com/images/G/09/gno/beacon/BeaconSprite-JP-02._V393500380_.png",
