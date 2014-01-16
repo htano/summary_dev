@@ -16,8 +16,8 @@
           </a>
         </div>
         <p>
-          <%= table_data[:registered_num] %> <%= get_reader_string(table_data[:registered_num])%>, 
-          <%= t('article.created_at') %> <%= table_data[:registered_date].strftime("%Y/%m/%d") %> | 
+          <%= table_data[:article].user_articles_count %> <%= get_reader_string(table_data[:article].user_articles_count)%>, 
+          <%= t('article.created_at') %> <%= table_data[:article].created_at.strftime("%Y/%m/%d") %> | 
           <%= table_data[:article].summaries_count %> <%= get_summary_string(table_data[:article].summaries_count) %>
         </p>
         <div class="article-tags">

@@ -434,14 +434,6 @@ private
   def get_table_data(user, articles, is_login_user, is_summary = false)
     table_data = []
     articles.each do |article|
-      registered_num = 
-        article.user_articles_count ? article.user_articles_count : 0
-
-      registered_date = Time.now
-      if user.user_articles.exists?(:article_id => article.id)
-        registered_date = user.user_articles.find_by_article_id(article.id).created_at
-      end
-
       last_updated =
         is_summary ? user.summaries.find_by_article_id(article.id).updated_at : nil
       like_num = 
@@ -462,8 +454,6 @@ private
       end
 
       data = {:article => article, 
-              :registered_num => registered_num,
-              :registered_date => registered_date, 
               :is_registered => is_registered, 
               :is_already_read => is_already_read,
               :like_num => like_num,
