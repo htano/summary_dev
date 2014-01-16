@@ -434,8 +434,6 @@ private
   def get_table_data(user, articles, is_login_user, is_summary = false)
     table_data = []
     articles.each do |article|
-      summary_num = 
-        article.summaries_count ? article.summaries_count : 0
       registered_num = 
         article.user_articles_count ? article.user_articles_count : 0
 
@@ -464,7 +462,6 @@ private
       end
 
       data = {:article => article, 
-              :summary_num => summary_num,
               :registered_num => registered_num,
               :registered_date => registered_date, 
               :is_registered => is_registered, 
