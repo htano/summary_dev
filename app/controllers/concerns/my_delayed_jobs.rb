@@ -36,6 +36,8 @@ module MyDelayedJobs
       "rakuten",
       "bannar",
       "Bannar",
+      "api.amebame.com",
+      "stat.profile.ameba.jp",
       "accesstrade"
     ]
     EXCEPTION_PAGE_LIST = [
