@@ -201,3 +201,6 @@ www.facebook.com:
 howcollect.jp:
   extractor_type: xpath
   xpath: //div[@class='article-contents-block']//text()
+news.ameba.jp:
+  extractor_type: xpath
+  xpath: //div[@class='hentry']/p/text()
