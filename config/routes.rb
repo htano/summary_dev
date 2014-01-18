@@ -53,7 +53,6 @@ SummaryDev::Application.routes.draw do
   get "chrome/add"
   get "chrome/edit_tag"
   #for webpage
-  get "webpage/add" => "webpage#add"
   post "webpage/add_confirm" => "webpage#add_confirm"
   post "webpage/add_complete" => "webpage#add_complete"
   post "webpage/delete" => "webpage#delete"
