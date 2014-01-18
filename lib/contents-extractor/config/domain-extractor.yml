@@ -204,3 +204,5 @@ howcollect.jp:
 news.ameba.jp:
   extractor_type: xpath
   xpath: //div[@class='hentry']/p/text()
+news24.jp:
+  encoding: shift_jis
