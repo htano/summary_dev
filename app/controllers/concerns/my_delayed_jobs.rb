@@ -125,7 +125,12 @@ module MyDelayedJobs
         next if isAdvertisement?(img_url)
         next if isExceptionImage?(img_url)
         unless img_url.start_with?("http")
-          img_url = URI.join(a.url, img_url).to_s
+          begin
+            img_url = URI.join(a.url, img_url).to_s
+          rescue => err_uri
+            Rails.logger.debug("[#{idx}]img_url = #{img_url}")
+            next
+          end
         end
         img_size = get_image_size(img_url)
         if img_size > max_size
