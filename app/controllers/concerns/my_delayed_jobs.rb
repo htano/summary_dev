@@ -36,6 +36,7 @@ module MyDelayedJobs
       "rakuten",
       "bannar",
       "Bannar",
+      "ad.jp.doubleclick.net",
       "api.amebame.com",
       "stat.profile.ameba.jp",
       "accesstrade"
