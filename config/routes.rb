@@ -1,4 +1,6 @@
 SummaryDev::Application.routes.draw do
+  get "error/render_404"
+  get "error/render_500"
   get "search/index"
   get "search/search_article"
   get "search/search_user"
@@ -131,4 +133,6 @@ SummaryDev::Application.routes.draw do
 
   get 'session/consumer/:action' => 'consumer#:action'
   post 'session/consumer/:action' => 'consumer#:action'
+
+  get "*not_found" => "application#render_404"
 end
