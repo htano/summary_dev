@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe WebpageController do
   fixtures(:all)
-
+=begin
   describe "GET #add without signing in" do
     it "access to route without no parameters" do
       get :add
@@ -24,7 +24,7 @@ describe WebpageController do
       @user_id == "1"
     end
   end
-
+=end
   describe "POST #add_confirm without signing in" do
     it "access to route without no parameters" do
       post :add_confirm
@@ -38,7 +38,7 @@ describe WebpageController do
     end
     it "add_confirm with unknown article" do
       post :add_confirm, :url => "http://www.yahoo.co.jp/", :add_flag => "true"
-      response.should be_success
+      expect(response).to be_success
       assigns[:title].should == "Yahoo! JAPAN"
       assigns[:top_rated_tags].should == nil
       assigns[:recent_tags].should ==  ["１２３４５６７８９０", "１２３４５６７８９５", "１２３４５６７８９４", "１２３４５６７８９３", "１２３４５６７８９２", "１２３４５６７８９１", "Rails", "SQL", "Ruby", "ruby"]
@@ -49,7 +49,7 @@ describe WebpageController do
     end
     it "add_confirm with known article no set tag" do
       post :add_confirm, :url => "http://zasshi.news.yahoo.co.jp/article?a=20130930-00010000-bjournal-bus_all", :add_flag => "true"
-      response.should be_success
+      expect(response).to be_success
       assigns[:title].should == "auのKDDI、あきれた二枚舌営業〜購入時に虚偽説明、強いクレームには特別に補償対応 (Business Journal) - Yahoo!ニュース"
       assigns[:top_rated_tags].should == []
       assigns[:recent_tags].should ==  ["１２３４５６７８９０", "１２３４５６７８９５", "１２３４５６７８９４", "１２３４５６７８９３", "１２３４５６７８９２", "１２３４５６７８９１", "Rails", "SQL", "Ruby", "ruby"]
@@ -60,8 +60,7 @@ describe WebpageController do
     end
     it "add_confirm with known article set tag" do
       post :add_confirm, :url => "http://qiita.com/toyama0919/items/3e165e41232266edbb23", :add_flag => "true"
-      response.should be_success
-      #assigns[:title].should == "rubyのgeocoderの使い方 - Qiita [キータ]"
+      expect(response).to be_success
       assigns[:top_rated_tags].should == ["ge"]
       assigns[:recent_tags].should ==  ["１２３４５６７８９０", "１２３４５６７８９５", "１２３４５６７８９４", "１２３４５６７８９３", "１２３４５６７８９２", "１２３４５６７８９１", "Rails", "SQL", "Ruby", "ruby"]
       assigns[:set_tags].should == ["ge"]
@@ -92,7 +91,7 @@ describe WebpageController do
     end
     it "add complete no tag" do
       post :add_complete, :url => "http://zasshi.news.yahoo.co.jp/article?a=20130930-00010000-bjournal-bus_all", :add_flag => "true"
-      response.should be_success
+      expect(response).to be_success
       assigns[:prof_image].should == "/images/medium/no_image.png"
       assigns[:url].should == "http://zasshi.news.yahoo.co.jp/article?a=20130930-00010000-bjournal-bus_all"
       assigns[:article_id].should == 1
@@ -102,7 +101,6 @@ describe WebpageController do
       assigns[:category].should == "other"
       assigns[:tags].should == []
       assigns[:msg].should == "Completed."
-      #assigns[:title].should == "rubyのgeocoderの使い方 - Qiita [キータ]"
     end
     it "add complete with tag" do
       post :add_complete, :url => "http://zasshi.news.yahoo.co.jp/article?a=20130930-00010000-bjournal-bus_all", :add_flag => "true",
@@ -116,7 +114,7 @@ describe WebpageController do
        :tag_text_8 =>"tag8",
        :tag_text_9 =>"tag9",
        :tag_text_10 =>"tag10"
-      response.should be_success
+      expect(response).to be_success
       assigns[:prof_image].should == "/images/medium/no_image.png"
       assigns[:url].should == "http://zasshi.news.yahoo.co.jp/article?a=20130930-00010000-bjournal-bus_all"
       assigns[:article_id].should == 1
@@ -126,7 +124,6 @@ describe WebpageController do
       assigns[:category].should == "other"
       assigns[:tags].should =~ ["tag1", "tag2", "tag3", "tag4", "tag5", "tag6", "tag7", "tag8", "tag9", "tag10"]
       assigns[:msg].should == "Completed."
-      #assigns[:title].should == "rubyのgeocoderの使い方 - Qiita [キータ]"
     end
   end
 
@@ -143,13 +140,13 @@ describe WebpageController do
     end
     it "OK" do
       post :delete, :article_id => "20"
-      response.should be_success
-      response.body.should == "OK"
+      expect(response).to be_success
+      expect(response.body).to eq "OK"
     end
     it "NG" do
       post :delete, :article_id => "21"
-      response.should be_success
-      response.body.should == "NG"
+      expect(response).to be_success
+      expect(response.body).to eq "NG"
     end
   end
 
@@ -166,18 +163,18 @@ describe WebpageController do
     end
     it "mark unread" do
       post :mark_as_read, :article_id => "20"
-      response.should be_success
-      response.body.should == "mark_as_unread"
+      expect(response).to be_success
+      expect(response.body).to eq "mark_as_unread"
     end
     it "mark read" do
       post :mark_as_read, :article_id => "22"
-      response.should be_success
-      response.body.should == "mark_as_read"
+      expect(response).to be_success
+      expect(response.body).to eq "mark_as_read"
     end
     it "NG" do
       post :mark_as_read, :article_id => "21"
-      response.should be_success
-      response.body.should == "NG"
+      expect(response).to be_success
+      expect(response.body).to eq "NG"
     end
   end
 end

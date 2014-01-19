@@ -8,6 +8,8 @@
   $("#main-check-all").attr("checked", false);
   <% render_main_table = render_article_table('main', @main_articles_table, 'mpage=' + @mpage.to_s) %>
   $(".main-table .table-top").nextAll().remove();
+  $("#main-table-loader").hide();
+  $(".main-table").removeAttr("style")
   $(".main-table tbody").append("<%= escape_javascript(render_main_table) %>");
 <% elsif @current_tab == "summary" %>
   $("#article-controller>.summary>div>a").not(".disabled").addClass("disabled").css("background-color", "#ddd")
@@ -19,6 +21,8 @@
   $("#summary-check-all").attr("checked", false);
   <% render_summary_table = render_summary_table('summary', @summaries_table, 'spage=' + @spage.to_s) %>
   $(".summary-table .table-top").nextAll().remove();
+  $("#summary-table-loader").hide();
+  $(".summary-table").removeAttr("style")
   $(".summary-table tbody").append("<%= escape_javascript(render_summary_table) %>");
 <% elsif @current_tab == "favorite" %>
   $("#article-controller>.favorite>div>a").not(".disabled").addClass("disabled").css("background-color", "#ddd")
@@ -31,6 +35,8 @@
   $("#favorite-check-all").attr("checked", false);
   <% render_favorite_table = render_article_table('favorite', @favorite_articles_table, 'fpage=' + @fpage.to_s) %>
   $(".favorite-table .table-top").nextAll().remove();
+  $("#favorite-table-loader").hide();
+  $(".favorite-table").removeAttr("style")
   $(".favorite-table tbody").append("<%= escape_javascript(render_favorite_table) %>");
 <% elsif @current_tab == "read" %>
   $("#article-controller>.read>div>a").not(".disabled").addClass("disabled").css("background-color", "#ddd")
@@ -42,5 +48,7 @@
   $("#read-check-all").attr("checked", false);
   <% render_read_table = render_article_table('read', @read_articles_table, 'rpage=' + @rpage.to_s) %>
   $(".read-table .table-top").nextAll().remove();
+  $("#read-table-loader").hide();
+  $(".read-table").removeAttr("style")
   $(".read-table tbody").append("<%= escape_javascript(render_read_table) %>");
 <% end %>

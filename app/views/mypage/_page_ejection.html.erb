@@ -1,29 +1,38 @@
-<ul>
-  <li class="page-prev">
+<ul class="pagination pagination-sm">
   <% if page.to_i > 1 %>
+  <li class="page-prev">  
     <% if @is_login_user %>
-      <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", page_param => (page.to_i - 1), :remote => true }%>
+      <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "8x12", :title => "go to prev"), 
+                  {:action => "index", page_param => (page.to_i - 1), :remote => true }, 
+                  {:onclick => "clickPager('#{page_param}')"} %>
     <% else %>
-      <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16", :title => "go to prev"), {:action => "index", :name => @user.name, page_param => (page.to_i - 1), :remote => true } %>
+      <%= link_to image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "8x12", :title => "go to prev"), 
+                  {:action => "index", :name => @user.name, page_param => (page.to_i - 1), :remote => true }, 
+                  {:onclick => "clickPager('#{page_param}')"} %>
     <% end %>
   <% else %>
-    <div>
-    <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "10x16") %>
-    </div>
+  <li class="page-prev disabled">
+    <a href="#">
+    <%= image_tag("icons/glyphicons_224_chevron-left_gray.png", :size => "8x12") %>
+    </a>
   <% end %>
   </li>
-  <li class="vertical-boder"></li>
-  <li class="page-next">
   <% if table_size == @table_row_num.to_i && ((page.to_i - 1) * @table_row_num.to_i + table_size != total_num ) %>
+  <li class="page-next">  
     <% if @is_login_user %>
-      <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", page_param => (page.to_i + 1), :remote => true } %>
+      <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "8x12", :title => "go to next"), 
+                  {:action => "index", page_param => (page.to_i + 1), :remote => true }, 
+                  {:onclick => "clickPager('#{page_param}')"} %>
     <% else %>
-      <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16", :title => "go to next"), {:action => "index", :name => @user.name, page_param => (page.to_i + 1), :remote => true } %>
+      <%= link_to image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "8x12", :title => "go to next"), 
+                  {:action => "index", :name => @user.name, page_param => (page.to_i + 1), :remote => true }, 
+                  {:onclick => "clickPager(#{page_param})"} %>
     <% end %>
   <% else %>
-    <div>
-    <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "10x16") %>
-    </div>
+  <li class="page-next disabled">
+    <a href="#">
+    <%= image_tag("icons/glyphicons_223_chevron-right_gray.png", :size => "8x12") %>
+    </a>
   <% end %>
   </li>
 </ul>

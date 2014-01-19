@@ -161,8 +161,8 @@
           color: #5B91FF;
         }
       }
-      span {
-        margin-top: 4px;
+      img {
+        margin-top: -5px;
       }
     }
   }
@@ -170,6 +170,9 @@
 
 .span9 {
   float: right;
+  .btn-group {
+    margin-right: 60px;
+  }
 }
 
 .my-overflow {
@@ -216,7 +219,6 @@
   }
   div .page-ejection {
     float: right; 
-    border: 2px solid #ddd;
     border-radius: 0.3em;
     background-color: white;
     ul {
@@ -228,21 +230,19 @@
         float: left;
         width: 20px;
         height: 100%;
-        div {
+      }
+      .page-prev {
+        margin-right: 10px;
+      }
+      .page-next {
+        margin-right: 8px;
+      }
+      a {
+        height: 29px;
+      }
+      .disabled {
+        a {
           background-color: #ddd;
-          width: 100%;
-          height: 100%;
-        }
-      }
-      .vertical-boder {
-        border: 1px solid #ddd;
-        height: 100%;
-        width: auto;
-      }
-      .page-prev, .page-next {
-        background-color: white;
-        img {
-          margin-left: 5px;
         }
       }
     }
@@ -335,17 +335,18 @@ ul.tab {
   }
   #asc-registered, #desc-registered {
     float: left;
+    margin-top: 5px;
     margin-left: -10px;
     margin-right: 5px;
-    width: 14px;
-    height: 17px;
+    width: 10px;
+    height: 10px;
   }
 }
-
+/*
 .btn-group > button {
    height: 34px;
 }
-
+*/
 .btn-group > .btn:first-child {
   color: #a2a2a2;
 }
@@ -663,12 +664,17 @@ ul.tab {
 
 #tag-top {
   border-bottom: 2px solid #ddd;
-  float: right;
-  width: 770px;
+  float: left;
+  width: 800px;
   height: 32px;
-  margin: 20px 50px 0px 0px;
+  margin: 20px 0px 0px 70px;
   padding-left: 30px;
-  padding-bottom: 40px;
+  padding-bottom: 38px;
+  .sort-split-btn {
+    .btn {
+      margin-right: 30px;
+    }
+  }
   #tag-title {
     font-size: 25px;
     color: gray;
@@ -696,6 +702,7 @@ ul.tab {
     width: 770px;
     float: right;
     margin-right: 50px;
+    margin-top: -2px;
     border-collapse: separate;
     border-spacing: 2px 2px;
     th {
@@ -717,7 +724,18 @@ ul.tab {
   li {
     line-height: 22px;
   }
-  .page-ejection {
-    margin-left: 10px;
+  #article-controller {
+    .page-ejection {
+      margin-left: 10px;
+      margin-top: -2px;
+      .page-next {
+        margin-right: 10px;
+      }
+    }
   }
+}
+
+.mypage-loader {
+  margin: 250px 0px 0px 350px;
+  display: none;
 }

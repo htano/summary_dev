@@ -194,6 +194,22 @@ currentTab = "main"
     tab = 'main'
   changeSortRef(tab)
 
+@clickPager = (tab) ->
+  table = "main-table"
+  switch tab
+    when "mpage"
+      table = "main-table"
+    when "spage"
+      table = "summary-table"
+    when "fpage"
+      table = "favorite-table"
+    when "rpage"
+      table = "read-table"
+    else
+  console.debug "table : " + table
+  $("." + table).hide()
+  $("#" + table + "-loader").show()
+
 scrollNavbar = ->
   win = $(window)
   overwriteLeft = ->

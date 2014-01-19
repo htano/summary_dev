@@ -16,12 +16,12 @@
           </a>
         </div>
         <p>
-          <%= table_data[:registered_num] %> <%= get_reader_string(table_data[:registered_num])%>, 
+          <%= table_data[:article].user_articles_count %> <%= get_reader_string(table_data[:article].user_articles_count)%>, 
           <%= table_data[:like_num] %>
           <%= get_like_string(table_data[:like_num]) %>
           , <%= t('summary.last_updated') %> 
-          <%= table_data[:last_updated].strftime("%Y/%m/%d") %> | <%= table_data[:summary_num] %>
-          <%= get_summary_string(table_data[:summary_num]) %>
+          <%= table_data[:last_updated].strftime("%Y/%m/%d") %> | <%= table_data[:article].summaries_count %>
+          <%= get_summary_string(table_data[:article].summaries_count) %>
         </p>
         <div class="article-tags">
           <ul class="tags">
@@ -61,9 +61,9 @@
   </th>
   <th class="num-column">
   <%= link_to (url_for :controller => 'summary_lists', :action => 'index', :article_id => table_data[:article].id) do %>
-    <p><%= table_data[:summary_num] %></p>
+    <p><%= table_data[:article].summaries_count %></p>
     <span>
-      <p><%= get_summary_string(table_data[:summary_num]) %></p>
+      <p><%= get_summary_string(table_data[:article].summaries_count) %></p>
     </span>
  <% end %>
  </th>
