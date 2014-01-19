@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
   private
   def exec_authenticate
     if Rails.env.production?
-      authenticate
+      #authenticate
     end
   end
 
