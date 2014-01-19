@@ -73,7 +73,7 @@ ja:
     life: "ライフハック"
     social: "社会"
     other: "その他"
-    personal: "パーソナル"
+    personal: "あなたへのオススメ"
     unknown: "未分類" 
   article_sort:
     newest: "登録日が新しい順"
