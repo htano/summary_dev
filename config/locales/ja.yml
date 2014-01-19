@@ -54,10 +54,12 @@ ja:
     view_all: "全ての要約を見る"
     delete: "削除する"
     last_updated: "最終更新日"
+    summary_num: "要約数"
   follow:
     add: "フォロー"
     is_true: "フォロー中"
     cancel: "フォロー解除"
+    follower_num: "フォロワー数"
   good_summary:
     add: "グッド"
     cancel: "グッド解除"
@@ -100,6 +102,7 @@ ja:
     search: "検索"
     sort_newest: "新しい順"
     sort_summary_num: "要約数順"
+    sort_follower_num: "フォロワー数順"
     sort_reader_num: "登録人数順"
     target_article: "記事"
     target_user: "ユーザー"
@@ -117,6 +120,9 @@ ja:
   placeholder:
     searcht_ext: "検索したい単語を入力して下さい。"
     input_url_text: "追加したURLを入力して下さい。"
+  navbar:
+    search_menu: "検索窓へ変更する"
+    add_menu: "追加窓へ変更する"
   views:
     pagination:
       truncate: "..."

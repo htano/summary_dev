@@ -231,24 +231,30 @@ li {
 }
 
 #searchtext_nav {
-  margin-right: 8px;
-  margin-top: 7px ;
+  margin-right: 3px;
+  margin-top: 4px;
   width: 400px;
-  height: 25px;
+  height: 30px;
   line-height: normal;
   color: black;
 }
 
 #search_nav {
-  margin-top: 9px;
-  margin-left: 5px;
-  width: 90px;
-  height: 25px;
+  margin-top: 4px;
+  //margin-left: 5px;
+  margin-right: 3px;
+  width: 75px;
+  height: 30px;
+  color: #999;
 }
 
 .navbar{
-  .btn-group.sort-split-btn {
-    height: 20px;
-    margin: 2px 5px 0px 0px;
+  .btn-group {
+    margin: 4px 5px 0px 0px;
+    .caret {
+      border-top-color: #999;
+    }
+  }
+  .dropdown-menu > li {
   }
 }

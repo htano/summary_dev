@@ -1,0 +1,13 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "error" %>
+<% end %>
+
+<div class="container">
+  <div class="span2">
+    <h2>システムエラー</h2>
+    <HR>
+    <p>誠に申し訳ございませんが、サーバーがエラーを検出したため、ページを表示することが出来ませんでした。</p>
+    <p>お手数ですが、トップページ へアクセスするか、時間をおいて再度アクセスして下さい。</p>
+    <%= link_to '戻る', :back %>
+  </div>
+</div>

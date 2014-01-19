@@ -34,7 +34,7 @@ describe SummaryController do
     end
      it "edit with unknown article" do
       get :edit, :article_id => "9999999"
-      response.response_code.should == 404
+      expect(response.response_code).to eq 404
     end
   end
 
@@ -52,18 +52,18 @@ describe SummaryController do
     end
      it "edit_complete with unknown article" do
       get :edit_complete, :article_id => "9999999"
-      response.response_code.should == 404
+      expect(response.response_code).to eq 404
     end
      it "edit_complete with known article" do
       post :edit_complete, :article_id => "1", :content => "要約ですよ"
       summary = Summary.find_by_user_id_and_article_id("6", "1")
-      summary.content.should == "要約ですよ"
+      expect(summary.content).to eq "要約ですよ"
       expect(response).to redirect_to :controller => 'summary_lists',:action => 'index'
     end
      it "edit_complete no summary article" do
       post :edit_complete, :article_id => "2", :content => "要約ですの"
       summary = Summary.find_by_user_id_and_article_id("6", "2")
-      summary.content.should == "要約ですの"
+      expect(summary.content).to eq "要約ですの"
       expect(response).to redirect_to :controller => 'summary_lists',:action => 'index'
     end
   end

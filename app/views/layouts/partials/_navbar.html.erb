@@ -1,4 +1,22 @@
 <script>
+$(document).ready(function() {
+  $.ajax({
+      url: "/chrome/get_login_user_id",
+      type: "GET",
+      dataType: "text",
+      success: function(data) {
+        if(data){
+          set_type_nav();
+        } else {
+          $("#navbar_form").attr("action","/search/search_article");
+          $("#navbar_form").attr("method","GET");
+          $("#search_nav").val('検索');
+          /*$("#search_nav").val(I18n.t('search.search'));*/
+        }
+      }
+  });
+});
+
 function checkSearchtext(){
   if($('#searchtext_nav').val() == ""){
     return false;
@@ -7,44 +25,52 @@ function checkSearchtext(){
 
 function click_dropdown_manu_search(){
   $("#navbar_form").attr("action","/search/search_article");
-  $("#type_nav_title").html("検索");
+  $("#navbar_form").attr("method","GET");
+  /*$("#search_nav").val(I18n.t('search.search'));*/
+  $("#search_nav").val('検索');
+  $.cookie('type_nav', 1, {path: '/'});
 }
 
 function click_dropdown_manu_add(){
   $("#navbar_form").attr("action","/webpage/add_confirm");
   $("#navbar_form").attr("method","POST");
-  $("#type_nav_title").html("追加");
+  /*$("#search_nav").val(I18n.t('webpage.add'));*/
+  $("#search_nav").val('追加');
+  $.cookie('type_nav', 2, {path: '/'});
+}
+
+function set_type_nav(){
+  var type_nav = $.cookie("type_nav");
+  if(type_nav == "1") {
+    click_dropdown_manu_search();
+  } else {
+    click_dropdown_manu_add();
+  }
 }
 </script>
 
-<%= form_tag({:controller => 'search', :action => 'search_article'}, {:id => 'navbar_form', :method => 'GET' ,:onsubmit => 'return checkSearchtext()'}) do %>
+<%= form_tag({:controller => 'search', :action => 'search_article'}, {:id => 'navbar_form', :method => 'GET', :onsubmit => 'return checkSearchtext()'}) do %>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
         <a href="<%= url_for :controller => 'hotentry', :action => 'index' %>" class="brand">SummaQ!</a>
         <div class="nav-collapse">
           <ul class="nav pull-right">
-            <li>
-              <div id="type_nav" class="btn-group sort-split-btn">
-                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span id="type_nav_title">検索</span><span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a href="#" onclick="click_dropdown_manu_search()">検索</a></li>
-                  <% if signed_in? %>
-                    <li><a href="#" onclick="click_dropdown_manu_add()">追加</a></li>
-                  <% end %>
-                </ul>
-              </div>
-            </li>
-            <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" placeholder="<%= t("placeholder.searcht_ext") %>"></li>
+            <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" ></li>
+            <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li>
+            <% if signed_in? %>
+              <li>
+                <div id="type_nav" class="btn-group">
+                  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" onclick="click_dropdown_manu_add()">追加へ変更する</a></li>
+                    <li><a href="#" onclick="click_dropdown_manu_search()">検索へ変更する</a></li>
+                  </ul>
+                </div>
+              </li>
+            <% end %>
             <input type="hidden" name="add_flag" value="true">
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-<!--            <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li> -->
-<!--          <% if signed_in? %>
-            <li>
-              <a href="<%= url_for :controller => 'webpage', :action => 'add', :mehotd => 'POST' %>" ><%= t("webpage.add") %></a>
-            </li>
-          <% end %>
--->
           <% if false %>
           <% if signed_in? %>
             <li>

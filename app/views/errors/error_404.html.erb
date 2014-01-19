@@ -1,6 +1,12 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "error" %>
+<% end %>
 
-<html>
-<body>
-404 HTML TEST
-<body>
-</html>
+<div class="container">
+  <div class="span2">
+    <h2>お探しのページは見つかりませんでした。</h2>
+    <HR>
+    <p>お探しのページが削除された可能性があります。</p>
+    <%= link_to '戻る', :back %>
+  </div>
+</div>

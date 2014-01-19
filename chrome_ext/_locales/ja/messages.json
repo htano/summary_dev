@@ -1,0 +1,27 @@
+/* message.json */
+{
+  "read_later": {
+    "message": "後で読む"
+  },
+  "login": {
+    "message": "ログイン"
+  },
+  "edit_summary": {
+    "message": "要約編集"
+  },
+  "edit_tag": {
+    "message": "タグ編集"
+  },
+  "title": {
+    "message": "タイトル"
+  },
+  "recommend_tag": {
+    "message": "この記事に対するお勧めタグ"
+  },
+  "recent_tag": {
+    "message": "あなたが最近登録したタグ"
+  },
+  "my_tag": {
+    "message": "この記事のタグ"
+  }
+}
