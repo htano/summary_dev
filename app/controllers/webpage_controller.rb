@@ -7,13 +7,13 @@ class WebpageController < ApplicationController
       @user_id = get_login_user.id
       @url = params[:url] == BLANK || params[:url] == nil ? params[:searchtext] : params[:url]
       if(/[^ -~｡-ﾟ]/ =~ @url)
-        flash[:error] = "Please check URL."
+        flash[:error] = "入力内容を確認して下さい。"
         redirect_to(:back) and return
       end
       @add_flag = params[:add_flag]
       h = get_webpage_element(@url, true, false, false)
       if h == nil || @url.start_with?("chrome://extensions/")
-        flash[:error] = "Please check URL."
+        flash[:error] = "入力内容を確認して下さい。"
         redirect_to(:back) and return
       end
 
@@ -48,23 +48,11 @@ class WebpageController < ApplicationController
       end
       article = add_webpage(@url, tag_list)
       if article == nil
-        flash[:error] = "Please check URL."
-        redirect_to :controller => "webpage", :action => "add" and return
+        flash[:error] = "入力内容を確認して下さい。"
+        redirect_to :controller => "mypage", :action => "index" and return
       end
-      if params[:add_flag] == BLANK
-        redirect_to :controller => "mypage", :action => "index"
-      end
-      @article_id = article.id
-      @title = article.title
-      @contents_preview = article.get_contents_preview
-      @thumbnail = article.get_thumbnail
-      @category = article.get_category_name
-      @tags = []
-      user_article = article.user_articles.find_by_user_id(get_login_user.id)
-      user_article.user_article_tags(:all).each do |user_article_tag|
-        @tags.push(user_article_tag.tag)
-      end
-      @msg = "Completed." and return
+      flash[:success] = "追加しました。"
+      redirect_to :controller => "mypage", :action => "index" and return
     else
       redirect_to :controller => "consumer", :action => "index"
     end
