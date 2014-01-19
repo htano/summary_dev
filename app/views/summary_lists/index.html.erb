@@ -7,11 +7,23 @@
 <div id="summary_list_container" class="container">
   <div class="row">
     <!-- article recording date -->
-    <div  class="col-md-10">
+    <div  class="col-md-7">
         <%= @article.created_at.strftime("%Y/%m/%d/ %H:%M:%S") %>
-    </div>
+    </div> 
 
-    <div class="col-md-2">
+    <div class="col-md-5">
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=612232268799464";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <div class="fb-like" data-href="<%= request.url %>" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+
+    <a href="http://b.hatena.ne.jp/entry/<%= request.url %>" class="hatena-bookmark-button" data-hatena-bookmark-title="SummaQ! ｜あとで読むをちゃんと読む 〜 要約キュレーションサービス" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+
       <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
       <script>!function(d,s,id)
       {var js,fjs=d.getElementsByTagName(s)[0],
