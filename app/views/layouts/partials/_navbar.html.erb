@@ -10,7 +10,8 @@ $(document).ready(function() {
         } else {
           $("#navbar_form").attr("action","/search/search_article");
           $("#navbar_form").attr("method","GET");
-          $("#search_nav").val(I18n.t('search.search'));
+          $("#search_nav").val('検索');
+          /*$("#search_nav").val(I18n.t('search.search'));*/
         }
       }
   });
@@ -25,14 +26,16 @@ function checkSearchtext(){
 function click_dropdown_manu_search(){
   $("#navbar_form").attr("action","/search/search_article");
   $("#navbar_form").attr("method","GET");
-  $("#search_nav").val(I18n.t('search.search'));
+  /*$("#search_nav").val(I18n.t('search.search'));*/
+  $("#search_nav").val('検索');
   $.cookie('type_nav', 1, {path: '/'});
 }
 
 function click_dropdown_manu_add(){
   $("#navbar_form").attr("action","/webpage/add_confirm");
   $("#navbar_form").attr("method","POST");
-  $("#search_nav").val(I18n.t('webpage.add'));
+  /*$("#search_nav").val(I18n.t('webpage.add'));*/
+  $("#search_nav").val('追加');
   $.cookie('type_nav', 2, {path: '/'});
 }
 
