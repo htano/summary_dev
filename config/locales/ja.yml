@@ -136,7 +136,7 @@ ja:
   navbar:
     sign_in: "サインイン"
     sign_out: "サインアウト"
-    guide_url: "https://github.com/htano/summary_dev/wiki/SummaQ!-%E4%BD%BF%E3%81%84%E6%96%B9%E3%82%AC%E3%82%A4%E3%83%89"
+    guide_url: "https://github.com/summaq/guide/wiki/manual"
   settings:
     profile_setting: "プロファイル設定"
     email_setting: "メール設定"
