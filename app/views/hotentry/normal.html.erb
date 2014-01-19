@@ -1,6 +1,8 @@
-<% content_for(:head) do %>
+<% content_for :head do %>
   　<%= stylesheet_link_tag("hotentry", 
                             "bootstrap/bootstrap.css") %>
+<meta name="keywords" content="<%=t('hotentry.meta_keywords')%>" xml:lang="ja" lang="ja" />
+<meta name="description" content="<%=t('hotentry.meta_description')%>"/>
 <% end %> 
 
 <div class="row">

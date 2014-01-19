@@ -22,6 +22,10 @@ function click_dropdown_manu_add(){
     <div class="navbar-inner">
       <div class="container">
         <a href="<%= url_for :controller => 'hotentry', :action => 'index' %>" class="brand">SummaQ! (β版)</a>
+        <%= link_to("(SummaQ!とは？)",
+        t('navbar.guide_url'),
+        target: "_blank",
+        class: "guide")%>
         <div class="nav-collapse">
           <ul class="nav pull-right">
             <li>

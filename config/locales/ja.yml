@@ -123,6 +123,8 @@ ja:
   hotentry:
     personal:
       no_entry_message: "ログインしていくつかのウェブサイトを登録すると、あなた専用のホットエントリーが作成されます"
+    meta_keywords: "SummaQ,要約,キュレーション,あとで読む,自動要約"
+    meta_description: "「あとで読むをちゃんと読む」をコンセプトに作られた要約キュレーションサービス。気になるウェブサイトを登録すれば、心優しい「だれか」がそのページの要約を分かりやすくまとめてくれます。"
   consumer:
     sign_up_with: "ログインするサービスを選択する"
     keep_signed_in: "ログイン状態を保持する"
@@ -134,6 +136,7 @@ ja:
   navbar:
     sign_in: "サインイン"
     sign_out: "サインアウト"
+    guide_url: "https://github.com/htano/summary_dev/wiki/SummaQ!-%E4%BD%BF%E3%81%84%E6%96%B9%E3%82%AC%E3%82%A4%E3%83%89"
   settings:
     profile_setting: "プロファイル設定"
     email_setting: "メール設定"

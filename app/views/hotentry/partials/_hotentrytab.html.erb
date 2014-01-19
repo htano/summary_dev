@@ -1,42 +1,42 @@
-  <div class="hotentry-tab">
-    <ul>
+<div class="hotentry-tab">
+  <ul>
 
+    <li>
+    <% if @category_name == 'all' %>
+      <%= link_to(t('category.all'), 
+                  {:action => "index"}, 
+                  :class => 'selected') %>
+    <% else %>
+      <%= link_to(t('category.all'), 
+                  {:action => "index"}) %>
+    <% end %>
+    </li>
+
+    <% Category.all.each do |c| %>
       <li>
-      <% if @category_name == 'all' %>
-        <%= link_to(t('category.all'), 
-                    {:action => "index"}, 
+      <% if @category_name == c.name %>
+        <%= link_to(t('category.' + c.name), 
+                    {:action => "index", :category => c.name},
                     :class => 'selected') %>
       <% else %>
-        <%= link_to(t('category.all'), 
-                    {:action => "index"}) %>
+        <%= link_to(t('category.' + c.name), 
+                    {:action => "index", :category => c.name}) %>
       <% end %>
       </li>
+    <% end %>
 
-      <% Category.all.each do |c| %>
-        <li>
-        <% if @category_name == c.name %>
-          <%= link_to(t('category.' + c.name), 
-                      {:action => "index", :category => c.name},
-                      :class => 'selected') %>
-        <% else %>
-          <%= link_to(t('category.' + c.name), 
-                      {:action => "index", :category => c.name}) %>
-        <% end %>
-        </li>
-      <% end %>
+    <li>
+    <% if @category_name == 'personal' %>
+      <%= link_to(t('category.personal'),
+                  {:action => "index", 
+                   :category => 'personal'}, 
+                   :class => 'selected') %>
+    <% else %>
+      <%= link_to(t('category.personal'),
+                  {:action => "index",
+                   :category => 'personal'}) %>
+    <% end %>
+    </li>
 
-      <li>
-      <% if @category_name == 'personal' %>
-        <%= link_to(t('category.personal'),
-                    {:action => "index", 
-                     :category => 'personal'}, 
-                     :class => 'selected') %>
-      <% else %>
-        <%= link_to(t('category.personal'),
-                    {:action => "index",
-                     :category => 'personal'}) %>
-      <% end %>
-      </li>
-
-    </ul>
-  </div>
+  </ul>
+</div>
