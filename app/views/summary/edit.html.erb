@@ -13,16 +13,16 @@ $(document).ready(function() {
     <div id ="edit_summary">
       <table class="edit_table" id="main" >
         <tr class="table_top">
-          <th id="title_top">TITLE</th>
-          <th id="summary_top">summary</th>
+          <th id="title_top"><%= t("summary.title") %></th>
+          <th id="summary_top"><%= t("summary.summary_num") %></th>
         </tr>
         <tr>
           <th class="article_title"><a href="<%= @url %>" target="_blank"><%= @title %></a></th>
           <th class="summary_num"><%= link_to @summary_num , {:controller => "summary_lists", :action => "index", :article_id => @article_id} %></th>
         </tr>
         <tr class="table_top">
-          <th id="title_top">content</th>
-          <th id="title_top">characters</th>
+          <th id="title_top"><%= t("summary.content") %></th>
+          <th id="title_top"><%= t("summary.characters") %></th>
         </tr>
         <tr>
           <th><textarea id="content" name="content"  placeholder="Please edit summary within 300 characters." onKeyUp="countContentCharacters()"><%= @content %></textarea></th>
@@ -32,20 +32,23 @@ $(document).ready(function() {
     </div>
     <div id="operate_summary">
       <span id="edit" onclick="clickEditButton()">
-        <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, "edit") %>
+        <% if @content %>
+          <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, t("summary.edit")) %>
+        <% else %>
+          <%= image_tag("icons/glyphicons_030_pencil_gray.png", :size => "16x16") + content_tag(:p, t("summary.post")) %>
+        <% end %>
       </span>
       <span id="clear" onclick="clickClearButton()">
-        <%= image_tag("icons/brightness.png", :size => "16x16") + content_tag(:p, "clear") %>
+        <%= image_tag("icons/brightness.png", :size => "16x16") + content_tag(:p, t("summary.clear")) %>
       </span>
       <% if @content %>
         <span id="restore" onclick="clickRestoreButton()">
-          <%= image_tag("icons/restore.png", :size => "16x16") + content_tag(:p, "restore") %>
+          <%= image_tag("icons/restore.png", :size => "16x16") + content_tag(:p, t("summary.restore")) %>
         </span>
         <span id="delete">
-          <%= link_to image_tag("icons/glyphicons_016_bin.png", :size => "16x16") + content_tag(:p, "delete") , {:controller => "summary", :action => "delete", :article_id => @article_id}, {:method => "POST", :confirm => "delete summary ?"} %>
+          <%= link_to image_tag("icons/glyphicons_016_bin.png", :size => "16x16") + content_tag(:p, t("summary.delete")) , {:controller => "summary", :action => "delete", :article_id => @article_id}, {:method => "POST", :confirm => "要約を削除して良いですか？"} %>
         </span>
       <% end %>
-<!--      <span id="help"><a href="/help.html" target="_blank"><%= image_tag("icons/glyphicons_194_circle_question_mark.png", :size => "16x16") %></a></span> -->
     </div>
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   </div>
