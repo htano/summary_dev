@@ -33,7 +33,7 @@ $(document).ready(function() {
     </span>
     <div id="tag_area">
       <% if @top_rated_tags == nil || @top_rated_tags.length == 0 %>
-        <div id="recommend_tags"><%= t("tag.no_recommend_tags") %><br><br></div>
+        <!--<div id="recommend_tags"><%= t("tag.no_recommend_tags") %><br><br></div>-->
       <% else %>
         <div id="recommend_tags"><%= t("tag.recommend_tags") %><br>
           <% @top_rated_tags.each do |recommend_tag| %>
@@ -43,7 +43,7 @@ $(document).ready(function() {
       <% end %>
 
       <% if @recent_tags == nil || @recent_tags.length == 0 %>
-        <div id="recent_tags"><%= t("tag.no_recent_tags") %><br><br></div>
+        <!--<div id="recent_tags"><%= t("tag.no_recent_tags") %><br><br></div>-->
       <% else %>
         <div id="recent_tags"><%= t("tag.recent_tags") %><br>
           <% @recent_tags.each do |recent_tag| %>

@@ -51,7 +51,7 @@ class WebpageController < ApplicationController
         flash[:error] = "入力内容を確認して下さい。"
         redirect_to :controller => "mypage", :action => "index" and return
       end
-      flash[:success] = "追加しました。"
+      flash[:success] = "登録しました。"
       redirect_to :controller => "mypage", :action => "index" and return
     else
       redirect_to :controller => "consumer", :action => "index"

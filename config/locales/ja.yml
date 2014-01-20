@@ -74,7 +74,7 @@ ja:
     social: "社会"
     other: "その他"
     personal: "あなたへのオススメ"
-    unknown: "未分類" 
+    unknown: "未分類"
   article_sort:
     newest: "登録日が新しい順"
     oldest: "登録日が古い順"
@@ -96,7 +96,7 @@ ja:
     is_registered: "登録済み"
   webpage:
     add: "追加"
-    confirm: "編集"
+    confirm: "記事を登録します。"
     complete: "完了"
   search:
     search: "検索"
@@ -113,9 +113,9 @@ ja:
     no_tags: "登録されているタグがありません"
     no_recommend_tags: "この記事に対するタグ設定なし"
     no_recent_tags: "最近タグを設定していません"
-    recommend_tags: "他の人が設定したタグ"
-    recent_tags: "最近設定したタグ"
-    set_tags: "この記事に設定したタグ"
+    recommend_tags: "この記事に対して、他の人が設定したタグ"
+    recent_tags: "最近貴方が設定したタグ"
+    set_tags: "この記事にタグを設定して貴方だけの管理が出来ます。"
     edit: "タグを編集"
   placeholder:
     searcht_ext: "検索したい単語を入力して下さい。"
