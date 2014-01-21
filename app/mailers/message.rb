@@ -16,4 +16,14 @@ class Message < ActionMailer::Base
       subject: "[SummaryDev] Checking your email address changed.",
     )
   end
+
+  def inform_user_number
+    @user_num = User.all.size
+    @article_num = Article.all.size
+    d = Date.today
+    mail(
+      to: "toru1055h@gmail.com,shingo0809@gmail.com,tanohiro@gmail.com,xemurux@gmail.com,ahayashi10@gmail.com",
+      subject: "[SummaQ] Statistical Report(#{d})"
+    )
+  end
 end
