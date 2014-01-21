@@ -11,6 +11,7 @@ $(document).ready(function() {
           $("#navbar_form").attr("action","/search/search_article");
           $("#navbar_form").attr("method","GET");
           $("#search_nav").val('検索');
+          $("#searchtext_nav").attr("placeholder", "検索したい言葉を入力して、ボタンを押して下さい。");
           /*$("#search_nav").val(I18n.t('search.search'));*/
         }
       }
@@ -28,6 +29,7 @@ function click_dropdown_manu_search(){
   $("#navbar_form").attr("method","GET");
   /*$("#search_nav").val(I18n.t('search.search'));*/
   $("#search_nav").val('検索');
+  $("#searchtext_nav").attr("placeholder", "検索したい言葉を入力して、ボタンを押して下さい。");
   $.cookie('type_nav', 1, {path: '/'});
 }
 
@@ -36,6 +38,7 @@ function click_dropdown_manu_add(){
   $("#navbar_form").attr("method","POST");
   /*$("#search_nav").val(I18n.t('webpage.add'));*/
   $("#search_nav").val('追加');
+  $("#searchtext_nav").attr("placeholder", "気になる記事のURLを入力して、ボタンを押して下さい。");
   $.cookie('type_nav', 2, {path: '/'});
 }
 

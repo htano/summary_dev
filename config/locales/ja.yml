@@ -104,8 +104,8 @@ ja:
     is_registered: "登録済み"
   webpage:
     add: "追加"
-    confirm: "記事を登録します。"
-    complete: "完了"
+    confirm: "記事にタグを設定して登録します。"
+    complete: "登録"
   search:
     search: "検索"
     sort_newest: "新しい順"
