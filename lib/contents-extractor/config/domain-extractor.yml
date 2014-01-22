@@ -206,3 +206,6 @@ news.ameba.jp:
   xpath: //div[@class='hentry']/p/text()
 news24.jp:
   encoding: shift_jis
+blog.livedoor.jp/rbkyn844:
+  extractor_type: xpath
+  xpath: //div[@class='article-content']//p[@class='res2']//text()
