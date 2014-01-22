@@ -21,11 +21,11 @@ class Message < ActionMailer::Base
     @user_num = User.all.size
     @article_num = Article.all.size
     @user_article_num = ""
-    UserArticle.group(:user_id).count.first(10).each do |uid, num|
+    UserArticle.group(:user_id).count.sort_by{|k,v| -v}.first(10).each do |uid, num|
       @user_article_num += User.find(uid).name + ":\t#{num}\n"
     end
     @user_summary_num = ""
-    Summary.group(:user_id).count.first(10).each do |uid, num|
+    Summary.group(:user_id).count.sort_by{|k,v| -v}.first(10).each do |uid, num|
       @user_summary_num += User.find(uid).name + ":\t#{num}\n"
     end
     d = Date.today
