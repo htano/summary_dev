@@ -173,6 +173,9 @@ zinger-hole.net:
 www3.nhk.or.jp:
   extractor_type: xpath
   xpath: //div[@class='entry']/p
+www.nhk.or.jp:
+  extractor_type: xpath
+  xpath: //div[@class='entry']/p
 himasoku.com:
   xpath: //div[@class='article-body-inner' or @class='article-body-more']//text()
   extractor_type: xpath
