@@ -15,7 +15,7 @@ class Article < ActiveRecord::Base
   # This parameter means that '1' point will decay 
   # to '0.01' point until some days after.
   DAYS_OF_FOR_WEEKS = 28
-  ZERO_ZERO_ONE_DAYS = 7
+  ZERO_ZERO_ONE_DAYS = 14
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   HOTENTRY_CANDIDATE_NUM = 100
   PERSONAL_HOTENTRY_CANDIDATE_NUM = 100
