@@ -22,6 +22,7 @@
 ja:
   article:
     top_rated_summary: "人気の要約"
+    normal_summary: "要約(グッドがありません)"
     contents_preview:  "プレビュー"
     filter_only_summarized: "要約がある記事に絞る"
     delete: "削除する"
