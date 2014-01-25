@@ -16,7 +16,7 @@ class SettingsController < ApplicationController
 
   def profile_edit_complete
     public_flg = (params[:user_public_flg] == "TRUE")
-    redirect_url = url_for(:action => 'profile')
+    redirect_url = url_for(:action => 'profile_edit')
     edit_flg = false
     edit_error = false
     user = get_login_user

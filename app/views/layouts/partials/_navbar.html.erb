@@ -102,11 +102,11 @@ function set_type_nav(){
             <li>
               <% if signed_in? %>
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <%= image_tag("icons/glyphicons_136_cogwheel_gray.png", :size => "20x20") %>
+                <%= image_tag("icons/glyphicons_136_cogwheel_white.png", :size => "20x20") %>
               </a>
               <ul class="dropdown-menu">
                 <li>
-                <a href="<%= url_for :controller =>'settings', :action => 'profile'%>">
+                <a href="<%= url_for :controller =>'settings', :action => 'profile_edit'%>">
                   <%=t('settings.account_setting')%>
                 </a>
                 </li>

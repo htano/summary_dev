@@ -16,7 +16,11 @@
       <% @entries.each do |e| %>
         <div class="row">
         <% if e.get_top_rated_summary %>
-          <div class="col-xs-12 col-md-12 hotentry-large-row hotentry-row-with-summary">
+          <% if e.has_good_summary? %>
+            <div class="col-xs-12 col-md-12 hotentry-large-row hotentry-row-with-good-summary">
+          <% else %>
+            <div class="col-xs-12 col-md-12 hotentry-large-row hotentry-row-with-summary">
+          <% end %>
         <% else %>
           <div class="col-xs-12 col-md-12 
             hotentry-large-row-nosum hotentry-row-no-summary">
@@ -121,9 +125,15 @@
                   <div class="col-xs-12 col-md-9 hotentry-large-contents">
                     <div class="row hotentry-large-contents-header">
                       <% if e.get_top_rated_summary %>
-                       <div class="col-xs-6 col-md-8 hotentry-top-summary">
-                         <%= t('article.top_rated_summary') %>
-                       </div>
+                        <% if e.has_good_summary? %>
+                         <div class="col-xs-6 col-md-8 hotentry-top-summary">
+                           <%= t('article.top_rated_summary') %>
+                         </div>
+                        <% else %>
+                         <div class="col-xs-6 col-md-8 hotentry-normal-summary">
+                           <%= t('article.normal_summary') %>
+                         </div>
+                        <% end %>
                        <div class="col-xs-6 col-md-4">
                          <a href="<%= url_for(
                            :controller => 'mypage', 

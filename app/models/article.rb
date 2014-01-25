@@ -24,6 +24,11 @@ class Article < ActiveRecord::Base
   HOTENTRY_DISPLAY_NUM_LARGE = 5
   HOTENTRY_MAX_CLUSTER_NUM = 20
   BLANK = ""
+  GOOD_SUMMARY_FILTER_NUM = 1
+
+  def self.get_decay
+    return DECAY_DELTA
+  end
 
   #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag, user_id = 0)
@@ -315,5 +320,15 @@ class Article < ActiveRecord::Base
       :tag
     ).keys
     return tag_array[first_index..last_index]
+  end
+
+  def has_good_summary?
+    if(self.summaries.
+       where("good_summaries_count >= ?", 
+             GOOD_SUMMARY_FILTER_NUM).size > 0)
+      return true
+    else
+      return false
+    end
   end
 end

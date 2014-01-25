@@ -1,10 +1,10 @@
 // Place all the styles related to the Hotentry controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
+@import "defval";
 
 * {
-  color: #666;
+  color: $basic-color;
 }
 
 div.hotentry-container {
@@ -47,7 +47,7 @@ div.hotentry-tab {
 }
 
 div.hotentry-menu {
-  background-color: #e6e6e6;
+  background-color: $basic-color;
   margin-bottom: 5px;
 
   h3 {
@@ -56,7 +56,9 @@ div.hotentry-menu {
     font-size: 1.3em;
     padding: 10px 10px 11px 10px;
   }
-
+  .row > .hidden-xs {
+    color: white;
+  }
 }
 
 div.hotentry-menu-icons {
@@ -69,7 +71,12 @@ div.hotentry-row {
   margin-bottom: 5px;
   padding-bottom: 5px;
   //border-bottom: solid 2px #eee;
-  border-left: solid 3px #F5AC0F;
+  //border-left: solid 3px #F5AC0F;
+}
+
+div.hotentry-row-with-good-summary {
+  border-left: solid 3px #F00;
+  border-top: solid 2px #EEE;
 }
 
 div.hotentry-row-with-summary {
@@ -108,7 +115,7 @@ div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
 
   h4 {
     font-size: 1.3em;
-    color: #666;
+    //color: #666;
     text-decoration: underline;
     margin-top: 2px;
     margin-bottom: 5px;
@@ -117,7 +124,7 @@ div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
 
   h5 {
     font-size: 1.2em;
-    color: #666;
+    //color: #666;
     text-decoration: underline;
     margin-top: 2px;
     margin-bottom: 5px;
@@ -126,7 +133,7 @@ div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
 
   h6 {
     font-size: 1.1em;
-    color: #666;
+    //color: #666;
     text-decoration: underline;
     margin-top: 2px;
     margin-bottom: 5px;
@@ -173,15 +180,19 @@ div.hotentry-large-contents {
   }
 }
 
-span.hotentry-top-summary, span.hotentry-contents-preview {
+span.hotentry-top-summary, span.hotentry-contents-preview, span.hotentry-normal-summary {
   font-size: 1.1em;
 }
 
-div.hotentry-top-summary, div.hotentry-contents-preview {
+div.hotentry-top-summary, div.hotentry-contents-preview, div.hotentry-normal-summary {
   font-size: 1.2em;
 }
 
 .hotentry-top-summary {
+  color: #F00;
+}
+
+.hotentry-normal-summary {
   color: #F5AC0F;
 }
 

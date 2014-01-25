@@ -16,7 +16,11 @@
       <% @entries.each do |e| %>
         <div class="row">
         <% if e.get_top_rated_summary %>
-          <div class="col-md-12 hotentry-row hotentry-row-with-summary">
+          <% if e.has_good_summary? %>
+            <div class="col-md-12 hotentry-row hotentry-row-with-good-summary">
+          <% else %>
+            <div class="col-md-12 hotentry-row hotentry-row-with-summary">
+          <% end %>
         <% else %>
           <div class="col-md-12 hotentry-row hotentry-row-no-summary">
         <% end %>
@@ -42,9 +46,15 @@
                 <div class="row">
                   <div class="col-md-12 hotentry-normal-contents">
                     <% if e.get_top_rated_summary %>
-                      <span class="hotentry-top-summary">
-                        <%= t('article.top_rated_summary') %>
-                      </span>
+                      <% if e.has_good_summary? %>
+                        <span class="hotentry-top-summary">
+                          <%= t('article.top_rated_summary') %>
+                        </span>
+                      <% else %>
+                        <span class="hotentry-normal-summary">
+                          <%= t('article.normal_summary') %>
+                        </span>
+                      <% end %>
                       <p>
                         <%= e.get_top_rated_summary.content %>
                       </p>

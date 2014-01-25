@@ -1,7 +1,7 @@
 // Place all the styles related to the YouyakuLists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
+@import "defval";
 
 //---------------------------------------
 // Page Color Define
@@ -24,9 +24,9 @@ hr {
   margin: 5px 0px 10px 0px;
   height:2px;
   border:0;
-  background:linear-gradient(left, #f5f5f5, #999, #f5f5f5);
-  background:-webkit-linear-gradient(left, #f5f5f5, #999, #f5f5f5);
-  background:-moz-linear-gradient(left, #f5f5f5, #999, #f5f5f5);
+  background:linear-gradient(left, $basic-color, #999, $basic-color);
+  background:-webkit-linear-gradient(left, $basic-color, #999, $basic-color);
+  background:-moz-linear-gradient(left, $basic-color, #999, $basic-color);
 }
 
 #summary_list_container{
@@ -40,7 +40,7 @@ hr {
 #summary_list{
     border-top: solid;
     border-bottom: solid;
-    border-color: #BBB;
+    border-color: $basic-color;
 
   //for my Kaminari
   .pagination {
@@ -147,7 +147,7 @@ hr {
       margin: 15px 5px 15px 0px;
       background-color: #FFFFFF;
       border-style: solid;
-      border-color: #AAA;
+      border-color: $basic-color;
       border-width: 1px;
       #summary_box_left{
         padding: 0px;
