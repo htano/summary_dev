@@ -105,9 +105,11 @@ ja:
     is_read: "既読"
     is_registered: "登録済み"
   webpage:
-    add: "追加"
-    confirm: "記事にタグを設定して登録します。"
-    complete: "登録"
+    add: "登録"
+    edit: "編集"
+    confirm: "登録ボタンを押して下さい。"
+    confirm_comment: "タグを設定することも出来ます。"
+    tag_edit: "タグを設定して編集ボタンを押して下さい。"
   search:
     search: "検索"
     sort_newest: "新しい順"
@@ -120,12 +122,12 @@ ja:
     type_tag: "タグ"
     type_domain: "ドメイン"
   tag:
-    no_tags: "登録されているタグがありません"
-    no_recommend_tags: "この記事に対するタグ設定なし"
+    no_tags: "設定されているタグがありません"
+    no_recommend_tags: "この記事にタグは設定されていません。"
     no_recent_tags: "最近タグを設定していません"
-    recommend_tags: "この記事に対して、他の人が設定したタグ"
+    recommend_tags: "この記事に対して、他のユーザーが設定したタグ"
     recent_tags: "最近貴方が設定したタグ"
-    set_tags: "この記事にタグを設定して貴方だけの管理が出来ます。"
+    set_tags: "タグを設定する場合は、テキストボックスに入力して下さい。"
     edit: "タグを編集"
   placeholder:
     searcht_ext: "検索したい単語を入力して下さい。"

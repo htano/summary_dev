@@ -8,7 +8,14 @@ $(document).ready(function() {
 });
 </script>
 
-<div class="comment_box"><%= t("webpage.confirm") %></div>
+<div class="comment_box">
+  <% if @add_flag == "true" %>
+    <%= t("webpage.confirm") %><br>
+    <%= t("webpage.confirm_comment") %>
+  <% else %>
+    <%= t("webpage.tag_edit") %><br>
+  <% end %>
+</div>
 <div class="url_box">
   <form method="POST" action="add_complete" class="confirm_url">
     <p class="url_title"><a href="<%= @url %>"target="_blank"><%= @title[0, 100] %></a></p>
@@ -60,10 +67,10 @@ $(document).ready(function() {
       </div>
     </div>
     <div id="submit_area">
-      <% if @add_flag == nil %>
-        <input type="submit" id="submit" value="<%= t("webpage.complete") %>" class="button button-flat:hover submit" onclick="ckick_submit_button">
+      <% if @add_flag == "true" %>
+        <input type="submit" id="submit" value="<%= t("webpage.add") %>" class="button button-flat:hover submit" onclick="ckick_submit_button">
       <% else %>
-        <input type="submit" id="submit" value="<%= t("webpage.complete") %>" class="button button-flat:hover submit" onclick="ckick_submit_button">
+        <input type="submit" id="submit" value="<%= t("webpage.edit") %>" class="button button-flat:hover submit" onclick="ckick_submit_button">
       <% end %>
     </div>
       <input type="hidden" name="url" value="<%= @url %>">

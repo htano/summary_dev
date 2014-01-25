@@ -6,6 +6,7 @@ class WebpageController < ApplicationController
     if signed_in?
       @user_id = get_login_user.id
       @url = params[:url] == BLANK || params[:url] == nil ? params[:searchtext] : params[:url]
+      @add_flag =  params[:add_flag]
       if(/[^ -~｡-ﾟ]/ =~ @url)
         flash[:error] = "入力内容を確認して下さい。"
         redirect_to(:back) and return
@@ -51,7 +52,12 @@ class WebpageController < ApplicationController
         flash[:error] = "入力内容を確認して下さい。"
         redirect_to :controller => "mypage", :action => "index" and return
       end
-      flash[:success] = "登録しました。"
+      @add_flag =  params[:add_flag]
+      if @add_flag == "true"
+        flash[:success] = "記事を登録しました。"
+      else
+        flash[:success] = "タグを編集しました。"
+      end
       redirect_to :controller => "mypage", :action => "index" and return
     else
       redirect_to :controller => "consumer", :action => "index"

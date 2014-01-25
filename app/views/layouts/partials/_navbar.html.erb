@@ -5,10 +5,10 @@ $(document).ready(function() {
     set_type_nav();
   } else {
     $("#navbar_form").attr("action","/search/search_article");
-    $("#navbar_form").attr("method","GET");
+    /*$("#navbar_form").attr("method","GET");*/
     $("#search_nav").val('検索');
+    $("#search_nav").val(I18n.t('search.search'));
     $("#searchtext_nav").attr("placeholder", "検索したい言葉を入力して、ボタンを押して下さい。");
-    /*$("#search_nav").val(I18n.t('search.search'));*/
   }
 });
 
@@ -30,8 +30,9 @@ function click_dropdown_manu_search(){
 function click_dropdown_manu_add(){
   $("#navbar_form").attr("action","/webpage/add_confirm");
   $("#navbar_form").attr("method","POST");
+  $("#navbar_form").attr("add_flag","true");
   /*$("#search_nav").val(I18n.t('webpage.add'));*/
-  $("#search_nav").val('追加');
+  $("#search_nav").val('登録');
   $("#searchtext_nav").attr("placeholder", "気になる記事のURLを入力して、ボタンを押して下さい。");
   $.cookie('type_nav', 2, {path: '/'});
 }
@@ -64,7 +65,7 @@ function set_type_nav(){
                 <div id="type_nav" class="btn-group">
                   <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
                   <ul class="dropdown-menu">
-                    <li><a href="#" onclick="click_dropdown_manu_add()">追加へ変更する</a></li>
+                    <li><a href="#" onclick="click_dropdown_manu_add()">登録へ変更する</a></li>
                     <li><a href="#" onclick="click_dropdown_manu_search()">検索へ変更する</a></li>
                   </ul>
                 </div>
