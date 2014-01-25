@@ -1,21 +1,15 @@
 <script>
 $(document).ready(function() {
-  $.ajax({
-      url: "/chrome/get_login_user_id",
-      type: "GET",
-      dataType: "text",
-      success: function(data) {
-        if(data){
-          set_type_nav();
-        } else {
-          $("#navbar_form").attr("action","/search/search_article");
-          $("#navbar_form").attr("method","GET");
-          $("#search_nav").val('検索');
-          $("#searchtext_nav").attr("placeholder", "検索したい言葉を入力して、ボタンを押して下さい。");
-          /*$("#search_nav").val(I18n.t('search.search'));*/
-        }
-      }
-  });
+  var signed_in_status = $.cookie("signed_in_status");
+  if(signed_in_status == "true"){
+    set_type_nav();
+  } else {
+    $("#navbar_form").attr("action","/search/search_article");
+    $("#navbar_form").attr("method","GET");
+    $("#search_nav").val('検索');
+    $("#searchtext_nav").attr("placeholder", "検索したい言葉を入力して、ボタンを押して下さい。");
+    /*$("#search_nav").val(I18n.t('search.search'));*/
+  }
 });
 
 function checkSearchtext(){
@@ -78,6 +72,7 @@ function set_type_nav(){
               </li>
             <% end %>
             <input type="hidden" name="add_flag" value="true">
+            <input type="hidden" name="signed_in_status" value="<%= @signed_in_status %>">
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
           <% if false %>
           <% if signed_in? %>
