@@ -33,9 +33,13 @@
         <h3>Hot Entry</h3>
       </div>
       <div class="hidden-xs col-md-4" style="margin-top:8px;">
+        <!--
         <input type="checkbox" id="only_summarized" style="font-size: 16px;">
           <%= t('article.filter_only_summarized') %>
-        </input>
+          </input>
+          -->
+        <button >人気の要約がある記事</button>
+        <button disabled>全ての記事</button>
       </div>
       <div class="col-xs-6 col-md-2 hotentry-menu-icons" style="margin-top:8px;">
         <a href="<%= url_for(:controller => 'hotentry', 
