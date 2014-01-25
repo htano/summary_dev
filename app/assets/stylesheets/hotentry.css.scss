@@ -4,7 +4,7 @@
 @import "defval";
 
 * {
-  color: #666;
+  color: $basic-color;
 }
 
 div.hotentry-container {
@@ -47,7 +47,7 @@ div.hotentry-tab {
 }
 
 div.hotentry-menu {
-  background-color: #e6e6e6;
+  background-color: $basic-color;
   margin-bottom: 5px;
 
   h3 {
@@ -56,7 +56,9 @@ div.hotentry-menu {
     font-size: 1.3em;
     padding: 10px 10px 11px 10px;
   }
-
+  .row > .hidden-xs {
+    color: white;
+  }
 }
 
 div.hotentry-menu-icons {
