@@ -21,7 +21,8 @@
 
 ja:
   article:
-    top_rated_summary: "人気の要約"
+    top_rated_summary: "人気の要約(グッドが多い)"
+    normal_summary: "要約(グッドがない)"
     contents_preview:  "プレビュー"
     filter_only_summarized: "要約がある記事に絞る"
     delete: "削除する"
@@ -63,6 +64,7 @@ ja:
     clear: "消去"
     restore: "戻す"
     delete: "削除"
+    placeholder: "300文字以内で要約を入力して下さい。"
   follow:
     add: "フォロー"
     is_true: "フォロー中"

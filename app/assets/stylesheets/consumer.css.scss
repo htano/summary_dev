@@ -1,3 +1,5 @@
+@import "defval";
+
 #verify-form {
   border: 1px solid #777777;
   background: #dddddd;
@@ -26,7 +28,7 @@ ul.login_buttons li {
 
 .login_buttons_contents {
   width: 715px;
-  background: #efefef;
+  background: $basic-color;
   padding: 3px;
   border-radius: 3px;
   margin-left: auto;
@@ -41,17 +43,18 @@ ul.login_buttons li {
 }
 
 .login_buttons_contents > h3 {
-  background-color: #e0e0e0;
-  background-image: linear-gradient(#fafafa, #e0e0e0);
+  color: white;
+  background-color: $basic-color;
+  // background-image: linear-gradient(#fafafa, #e0e0e0);
   background-repeat: repeat-x;
   margin: 0;
   border-top-left-radius: 1px;
   border-top-right-radius: 1px;
-  border: 1px solid #d8d8d8;
+  // border: 1px solid #d8d8d8;
   border-bottom: none;
   padding: 10px 10px 11px 10px;
   font-size: 14px;
-  text-shadow: 0 1px 0 #fff;
+  // text-shadow: 0 1px 0 #fff;
 }
 
 .setting_inner {
@@ -61,12 +64,12 @@ ul.login_buttons li {
   border-top: 1px solid #ccc;
   border-bottom-left-radius: 1px;
   border-bottom-right-radius: 1px;
-  color: #666;
+  color: $basic-color;
   font-size: 13px;
 }
 
 .setting_inner > dl > dd {
-  border: 1px solid #d8d8d8;
+  border: 1px solid $basic-color;
   padding: 10px;
   margin-left: 0;
 }

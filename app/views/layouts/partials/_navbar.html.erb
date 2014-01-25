@@ -23,7 +23,7 @@ function click_dropdown_manu_search(){
   $("#navbar_form").attr("method","GET");
   /*$("#search_nav").val(I18n.t('search.search'));*/
   $("#search_nav").val('検索');
-  $("#searchtext_nav").attr("placeholder", "検索したい言葉を入力して、ボタンを押して下さい。");
+  $("#searchtext_nav").attr("placeholder", "検索したい単語を入力して、ボタンを押して下さい。");
   $.cookie('type_nav', 1, {path: '/'});
 }
 
@@ -38,7 +38,6 @@ function click_dropdown_manu_add(){
 
 function set_type_nav(){
   var type_nav = $.cookie("type_nav");
-  alert(document.cookie);
   if(type_nav == "1") {
     click_dropdown_manu_search();
   } else {
@@ -101,11 +100,11 @@ function set_type_nav(){
             <li>
               <% if signed_in? %>
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <%= image_tag("icons/glyphicons_136_cogwheel_gray.png", :size => "20x20") %>
+                <%= image_tag("icons/glyphicons_136_cogwheel_white.png", :size => "20x20") %>
               </a>
               <ul class="dropdown-menu">
                 <li>
-                <a href="<%= url_for :controller =>'settings', :action => 'profile'%>">
+                <a href="<%= url_for :controller =>'settings', :action => 'profile_edit'%>">
                   <%=t('settings.account_setting')%>
                 </a>
                 </li>

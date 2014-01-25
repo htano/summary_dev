@@ -25,7 +25,7 @@ $(document).ready(function() {
           <th id="title_top"><%= t("summary.characters") %></th>
         </tr>
         <tr>
-          <th><textarea id="content" name="content"  placeholder="Please edit summary within 300 characters." onKeyUp="countContentCharacters()"><%= @content %></textarea></th>
+          <th><textarea id="content" name="content"  placeholder="<%= t("summary.placeholder") %>" onKeyUp="countContentCharacters()"><%= @content %></textarea></th>
           <th><span id="count" class="count"><%= @content_num %></span></th>
         </tr>
       </table>
