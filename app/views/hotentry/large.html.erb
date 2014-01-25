@@ -115,6 +115,7 @@
                     <%= image_tag(
                       e.thumbnail,
                       :class => "hotentry-large-image-imgtag",
+                      :onerror => 'this.src="'+asset_path('no_image.png')+'"'
                     ) %>
                   </div>
                   <div class="col-xs-12 col-md-9 hotentry-large-contents">

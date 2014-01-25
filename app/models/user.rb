@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   MAIL_STATUS_ERROR       = 3
   CLUSTER_DECAY_DELTA = 0.95
   USER_CLUSTER_MAX_NUM = 20
+  DEFAULT_USER_ICON_PATH = "/images/medium/no_image.png"
   
   if Rails.env.production?
     has_attached_file(
@@ -169,7 +170,9 @@ class User < ActiveRecord::Base
   end
 
   def prof_image
-    if self["prof_image"] && self["prof_image"] =~ /^http/
+    if(self["prof_image"] && 
+       self["prof_image"] =~ /^http/ && 
+       self.avatar.url(:medium) == DEFAULT_USER_ICON_PATH)
       return self["prof_image"]
     else
       return self.avatar.url(:medium)
