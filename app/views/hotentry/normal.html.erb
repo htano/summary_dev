@@ -28,6 +28,7 @@
                 <%= image_tag(
                   e.thumbnail,
                   :class => "hotentry-normal-image-imgtag",
+                  :onerror => 'this.src="'+asset_path('no_image.png')+'"'
                 ) %>
               </div>
               <div class="col-md-10">

@@ -16,4 +16,23 @@ class Message < ActionMailer::Base
       subject: "[SummaryDev] Checking your email address changed.",
     )
   end
+
+  def inform_user_number
+    @user_num = User.all.size
+    @article_num = Article.all.size
+    @user_article_num = ""
+    UserArticle.group(:user_id).count.sort_by{|k,v| -v}.first(10).each do |uid, num|
+      @user_article_num += User.find(uid).name + ":\t#{num}\n"
+    end
+    @user_summary_num = ""
+    Summary.group(:user_id).count.sort_by{|k,v| -v}.first(10).each do |uid, num|
+      @user_summary_num += User.find(uid).name + ":\t#{num}\n"
+    end
+    d = Date.today
+    mail(
+      to: "toru1055h@gmail.com,shingo0809@gmail.com,tanohiro@gmail.com,xemurux@gmail.com,ahayashi10@gmail.com",
+      #to: "toru1055h@gmail.com",
+      subject: "[SummaQ] Statistical Report(#{d})"
+    )
+  end
 end
