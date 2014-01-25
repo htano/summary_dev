@@ -25,6 +25,10 @@ class Article < ActiveRecord::Base
   HOTENTRY_MAX_CLUSTER_NUM = 20
   BLANK = ""
 
+  def self.get_decay
+    return DECAY_DELTA
+  end
+
   #指定されたタグ情報を持つ記事を取得する
   def self.search_by_tag(tag, user_id = 0)
     return nil if tag == nil || tag == BLANK

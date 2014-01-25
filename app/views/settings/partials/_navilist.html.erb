@@ -7,11 +7,11 @@
     <ul>
       <li>
       <% if @action_type == 'profile' %>
-        <a class="selected" href="<%= url_for :controller => 'settings', :action => 'profile' %>">
+        <a class="selected" href="<%= url_for :controller => 'settings', :action => 'profile_edit' %>">
           <%= t('settings.profile_setting') %>
         </a>
       <% else %>
-        <a href="<%= url_for :controller => 'settings', :action => 'profile' %>">
+        <a href="<%= url_for :controller => 'settings', :action => 'profile_edit' %>">
           <%= t('settings.profile_setting') %>
         </a>
       <% end %>

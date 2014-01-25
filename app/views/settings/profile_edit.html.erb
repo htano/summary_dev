@@ -6,7 +6,7 @@
   <%= render :partial => "settings/partials/navilist", :locals => {:user => @user} %>
 
   <div class="setting-contents">
-    <h3><%= t('settings.profile_setting') %>(<%= t('settings.edit') %>)</h3>
+    <h3><%= t('settings.profile_setting') %></h3>
     <form method="post" accept-charset="UTF-8" action="<%= url_for :action => 'profile_edit_complete'%>" enctype="multipart/form-data">
     <div class="setting-inner">
 
