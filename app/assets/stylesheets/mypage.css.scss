@@ -1,12 +1,14 @@
 // Place all the styles related to the mypage controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "defval";
+
 .myrow {
   margin-left: -30px;
 }
 
 .profile {
-  border: 2px solid #ddd;
+  border: 2px solid $basic-color;
   padding: 5px;
 //  height: 1000px;
   height: 500px;
@@ -14,10 +16,11 @@
   float: left;
   margin: 20px 0px 0px 10px;
   width: 270px;
-  color: #a2a2a2;
+  color: $basic-color;
 
   hr {
     margin: 5px auto 5px auto;
+    border-top: 1px solid $basic-color;
   }
 
   // ----------------------
@@ -45,7 +48,7 @@
       }
 
       a {
-        background-color: #a2a2a2;
+        background-color: $basic-color;
         color: white;
         text-align: left;
         padding-left: 10px;
@@ -108,7 +111,7 @@
         -o-text-overflow: ellipsis;
 
         a {
-          color: #a2a2a2;
+          color: $basic-color;
         }
 
         &:hover {
@@ -132,7 +135,7 @@
 
       .divider-vertical {
         height: 50px;
-        background-color: #eeeeee;
+        background-color: $basic-color;
       }
     }
   }
@@ -156,7 +159,7 @@
       }
       br+a {
         float: right;
-        color: #a2a2a2;
+        color: $basic-color;
         &:hover {
           color: #5B91FF;
         }
@@ -192,6 +195,9 @@
 
   .none > div, .none > a {
     display: none;
+    .disabled {
+      background-color: #ddd;
+    }
   }
 
   .active > div > a {
@@ -214,7 +220,7 @@
     p {
       float: left;
       margin: 3px 0px 3px 5px;
-      color: #a2a2a2;
+      color: $basic-color;
     }
   }
   div .page-ejection {
@@ -253,7 +259,7 @@
     margin: 5px 0px 0px 0px;
     font-size: 12px;
     font-weight: bold;
-    color: #a2a2a2;
+    color: $basic-color;
     span {
       font-weight: normal;
     }
@@ -270,7 +276,7 @@ ul.tab {
   margin: 20px;
   padding: 0;
   padding-left: 18px;
-  border-bottom: 2px #ddd solid;
+  border-bottom: 2px $basic-color solid;
   width: 810px;
 
   li {
@@ -279,9 +285,9 @@ ul.tab {
     position: relative;
     bottom: -2px;
     list-style-type: none;
-    border: 1px #ddd solid;
-    border-bottom: 2px solid #ddd;
-    border-top: 2px solid #ddd;
+    border: 1px $basic-color solid;
+    border-bottom: 2px solid $basic-color;
+    border-top: 2px solid $basic-color;
     text-align: center;
 
     a {
@@ -292,11 +298,11 @@ ul.tab {
       text-decoration: none;
       background-color: #fff;
       font-size: 15px;
-      color: rgb(162, 162, 162);
+      color: $basic-color;
 
       &:hover {
         position: relative;
-        background-color: #ddd;
+        background-color: $basic-color;
         color: white;
       }
     }
@@ -331,7 +337,7 @@ ul.tab {
     }
   }
   ul > li > a {
-    color: #a2a2a2;
+    color: $basic-color;
   }
   #asc-registered, #desc-registered {
     float: left;
@@ -348,7 +354,7 @@ ul.tab {
 }
 */
 .btn-group > .btn:first-child {
-  color: #a2a2a2;
+  color: $basic-color;
 }
 
 .article-table {
@@ -361,14 +367,14 @@ ul.tab {
   }
 
   th {
-    border-bottom: 2px solid #e5e5e5;
+    border-bottom: 2px solid $basic-color;
   }
 }
 
 .table-top {
-  border: 1px solid #e5e5e5;
+  border: 1px solid $basic-color;
   color: white;
-  background-color: rgb(230, 230, 230);
+  background-color: $basic-color;
 }
 
 #article-title-top {
@@ -410,7 +416,7 @@ ul.tab {
   }
 
   a {
-    color: gray;
+    color: $basic-color;
     &:hover {
       color: #5B91FF;
       text-decoration: underline;
@@ -422,7 +428,7 @@ ul.tab {
   p {
     margin-top: 0px;
     font-size: 11px;
-    color: rgb(162, 162, 162);
+    color: $basic-color;
   }
 
   &+div {
@@ -436,7 +442,7 @@ ul.tab {
     p {
       float: right;
       font-size: 11px;
-      color: gray;
+      color: $basic-color;
       margin: 2px 0 0 3px;
     }
     span {
@@ -448,7 +454,7 @@ ul.tab {
 }
 
 .num-column {
-  border-bottom: 2px solid #e5e5e5;
+  border-bottom: 2px solid $basic-color;
   font-size: 20px;
   font-weight: normal;
 
@@ -458,7 +464,7 @@ ul.tab {
   }
 
   a {
-    color: rgb(162, 162, 162);
+    color: $basic-color;
   }
 
   &>a:hover {
@@ -572,7 +578,7 @@ ul.tab {
   margin-left: 40px;
   font-size: 16px;
   font-style: italic;
-  color: #a2a2a2;
+  color: $basic-color;
 }
 
 .article-tags {
@@ -596,9 +602,10 @@ ul.tab {
 }
 
 .tags a {
+  color: white;
   padding: 2px 10px 2px 12px;
   margin-right: 10px;
-  background-color: #ddd;
+  background-color: $basic-color;
   text-decoration: none;
   -moz-border-radius-bottomright: 4px;
   -webkit-border-bottom-right-radius: 4px;
@@ -616,7 +623,7 @@ ul.tab {
   left: -9px;
   width: 0;
   height: 5px;
-  border-color: transparent #ddd transparent transparent;
+  border-color: transparent $basic-color transparent transparent;
   border-style: solid;
   border-width: 9px 9px 9px 0;
 }
@@ -663,7 +670,7 @@ ul.tab {
 }
 
 #tag-top {
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid $basic-color;
   float: left;
   width: 800px;
   height: 32px;
@@ -706,7 +713,7 @@ ul.tab {
     border-collapse: separate;
     border-spacing: 2px 2px;
     th {
-      border-bottom: 2px solid #e5e5e5;
+      border-bottom: 2px solid $basic-color;
     }
   }
   .summarize-btn {
