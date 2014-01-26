@@ -100,8 +100,7 @@ class SearchController < ApplicationController
 
   def not_read
     @atricle_id = params[:article_id]
-    article = Article.find(@atricle_id)
-    article.user_articles.find_by_user_id(get_login_user.id).destroy()
+    remove_webpage(@atricle_id)
   end
 
   def follow
