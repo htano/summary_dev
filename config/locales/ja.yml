@@ -110,6 +110,9 @@ ja:
     confirm: "登録ボタンを押して下さい。"
     confirm_comment: "タグを設定することも出来ます。"
     tag_edit: "タグを設定して編集ボタンを押して下さい。"
+    add_error: "入力内容を確認して下さい。"
+    add_success: "記事を登録しました。"
+    tag_edit_success: "タグを編集しました。"
   search:
     search: "検索"
     sort_newest: "新しい順"

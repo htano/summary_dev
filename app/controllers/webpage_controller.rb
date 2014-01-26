@@ -8,13 +8,13 @@ class WebpageController < ApplicationController
       @url = params[:url] == BLANK || params[:url] == nil ? params[:searchtext] : params[:url]
       @add_flag =  params[:add_flag]
       if(/[^ -~｡-ﾟ]/ =~ @url)
-        flash[:error] = "入力内容を確認して下さい。"
+        flash[:error] = t("webpage.add_error")
         redirect_to(:back) and return
       end
       @add_flag = params[:add_flag]
       h = get_webpage_element(@url, true, false, false)
       if h == nil || @url.start_with?("chrome://extensions/")
-        flash[:error] = "入力内容を確認して下さい。"
+        flash[:error] = t("webpage.add_error")
         redirect_to(:back) and return
       end
 
@@ -49,14 +49,14 @@ class WebpageController < ApplicationController
       end
       article = add_webpage(@url, tag_list)
       if article == nil
-        flash[:error] = "入力内容を確認して下さい。"
+        flash[:error] = t("webpage.add_error")
         redirect_to :controller => "mypage", :action => "index" and return
       end
       @add_flag =  params[:add_flag]
       if @add_flag == "true"
-        flash[:success] = "記事を登録しました。"
+        flash[:success] = t("webpage.add_success")
       else
-        flash[:success] = "タグを編集しました。"
+        flash[:success] = t("webpage.tag_edit_success")
       end
       redirect_to :controller => "mypage", :action => "index" and return
     else
