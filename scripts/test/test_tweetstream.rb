@@ -19,10 +19,11 @@ end
 # sample 取得 ( 全ツイートからランダムに抽出されたツイートを取得 )
 count = 0
 TweetStream::Client.new.sample do |status|
-  if count > 10000
+  if count > 100000
     break
   end
   if status.user.lang == 'ja' &&
+    !status.text.index("RT") &&
     status.text =~ %r|http://t\.co/(.{10})| &&
     status.urls && status.urls.size > 0
     uname = status.user.screen_name
