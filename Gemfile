@@ -115,3 +115,5 @@ gem 'paperclip'
 gem 'aws-sdk'
 
 gem 'google-analytics-rails'
+
+gem 'tweetstream'
