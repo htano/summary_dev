@@ -128,7 +128,7 @@ ja:
     no_tags: "設定されているタグがありません"
     no_recommend_tags: "この記事にタグは設定されていません。"
     no_recent_tags: "最近タグを設定していません"
-    recommend_tags: "この記事に対して、他のユーザーが設定したタグ"
+    recommend_tags: "この記事に対して設定されている人気のタグ"
     recent_tags: "最近貴方が設定したタグ"
     set_tags: "タグを設定する場合は、テキストボックスに入力して下さい。"
     edit: "タグを編集"
