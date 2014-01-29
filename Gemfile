@@ -97,6 +97,14 @@ gem "i18n-js"
 #Pretty print your Ruby objects with style -- in full color and with proper indentation
 gem "awesome_print"
 
+gem "pry"
+
+group :development do
+    # PryでのSQLの結果を綺麗に表示
+    gem 'hirb'
+    gem 'hirb-unicode'
+end
+
 gem 'delayed_job_active_record'
 gem 'daemons'
 
