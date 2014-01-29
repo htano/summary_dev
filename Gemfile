@@ -91,7 +91,11 @@ gem 'figaro'
 
 gem 'ngrams_parser'
 
+#It's a small library to provide the I18n translations on the Javascript. It comes with Rails support.
 gem "i18n-js"
+
+#Pretty print your Ruby objects with style -- in full color and with proper indentation
+gem "awesome_print"
 
 gem 'delayed_job_active_record'
 gem 'daemons'

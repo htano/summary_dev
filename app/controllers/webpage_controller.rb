@@ -1,4 +1,5 @@
 require "webpage"
+#require "awesome_print"
 include Webpage
 
 class WebpageController < ApplicationController

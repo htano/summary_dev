@@ -1,5 +1,6 @@
 # encoding: utf-8
 require "webpage"
+#require "awesome_print"
 include Webpage
 
 class SearchController < ApplicationController
@@ -64,6 +65,7 @@ class SearchController < ApplicationController
     end
 
     @articles = @articles.page(params[:page]).per(PAGE_PER)
+    #ap @articles
 
     render :template => "search/index"
   end
