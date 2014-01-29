@@ -16,7 +16,7 @@ $(document).ready( function(){
             $("tbody").append("<tr><td>"+data_replace+"</td></tr>");
           }
         }　else {
-          $("tbody").append("<tr><td>この記事に対する要約は登録されていません。</td></tr>");
+          $("tbody").append("<tr><td>"+chrome.i18n.getMessage("no_summary")+"</td></tr>");
         }
       } 
   });
