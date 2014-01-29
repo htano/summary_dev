@@ -100,6 +100,9 @@ gem "awesome_print"
 #An IRB alternative and runtime developer console
 gem "pry"
 
+#Exception Notifier Plugin for Rails http://smartinez87.github.com/exception_notification
+gem 'exception_notification', github: 'smartinez87/exception_notification'
+
 #A mini view framework for console/irb that's easy to use, even while under its influence. Console goodies include a no-wrap table, auto-pager, tree and menu. 
 group :development, :test do
     gem 'hirb'
