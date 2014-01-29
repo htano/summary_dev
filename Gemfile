@@ -99,7 +99,7 @@ gem "awesome_print"
 
 gem "pry"
 
-group :development do
+group :development, :test do
     # PryでのSQLの結果を綺麗に表示
     gem 'hirb'
     gem 'hirb-unicode'
