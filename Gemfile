@@ -97,12 +97,18 @@ gem "i18n-js"
 #Pretty print your Ruby objects with style -- in full color and with proper indentation
 gem "awesome_print"
 
+#An IRB alternative and runtime developer console
 gem "pry"
 
+#A mini view framework for console/irb that's easy to use, even while under its influence. Console goodies include a no-wrap table, auto-pager, tree and menu. 
 group :development, :test do
-    # PryでのSQLの結果を綺麗に表示
     gem 'hirb'
     gem 'hirb-unicode'
+end
+
+#help to kill N+1 queries and unused eager loading
+group :development do
+  gem "bullet"
 end
 
 gem 'delayed_job_active_record'
