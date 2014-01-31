@@ -8,7 +8,7 @@
 <div class="row">
   <div class="col-md-12 hotentry-container">
     <div class="row">
-      <div class="hidden-xs col-md-2">
+      <div class="hidden-sm col-md-2">
         <%= render(:partial => "hotentry/partials/hotentrytab") %>
       </div>
       <div class="col-md-10">
@@ -25,10 +25,10 @@
           <div class="col-md-12 hotentry-small-row hotentry-row-no-summary">
         <% end %>
             <div class="row hotentry-small-body">
-              <div class="hidden-xs col-md-1 hotentry-small-order">
+              <div class="hidden-sm col-md-1 hotentry-small-order">
                 <%= @hash[e.id] %>.
               </div>
-              <div class="col-xs-12 col-md-11">
+              <div class="col-sm-12 col-md-11">
                 <div class="row">
                   <div class="col-md-12 hotentry-small-title">
                     <a href="<%= e.url %>" target="_blank">
@@ -37,7 +37,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-12 col-md-3 hotentry-small-summaries">
+                  <div class="col-sm-12 col-md-3 hotentry-small-summaries">
                     <% if e.user_articles_count %>
                       <%= e.user_articles_count %>
                     <% else %>
@@ -65,7 +65,7 @@
                       <% end %>
                     </a>
                   </div>
-                  <div class="col-xs-12 col-md-5 hotentry-small-summaries">
+                  <div class="col-sm-12 col-md-5 hotentry-small-summaries">
                     <% if e.get_top_rated_summary %>
                       <%= link_to(t('summary.view_all'), 
                                   :controller => 'summary_lists',
@@ -102,7 +102,7 @@
       <% end %>
       <%= paginate(@entries) %>
       </div>
-      <div class="visible-xs">
+      <div class="visible-sm">
         <%= render(:partial => "hotentry/partials/hotentrytab") %>
       </div>
     </div>
