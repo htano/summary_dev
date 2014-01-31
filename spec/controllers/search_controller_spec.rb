@@ -5,129 +5,129 @@ describe SearchController do
   describe "GET #index" do
     it "index" do
       get :index
-      assigns[:target].should == 1
-      assigns[:type].should == 1
-      assigns[:sort].should == 1
-      assigns[:category].should == 0
+      expect(assigns[:target]).to  1
+      expect(assigns[:type]).to  1
+      expect(assigns[:sort]).to  1
+      expect(assigns[:category]).to  0
     end
   end
 
   describe "GET #search_article" do
     it "search_article searchtext nil" do
       get :search_article
-      assigns[:searchtext].should == nil
-      assigns[:target].should == "1"
-      assigns[:type].should == "1"
-      assigns[:sort].should == "1"
-      assigns[:category].should == "0"
-      assigns[:articles].should == nil
-      assigns[:article_num].should == 0
-      assigns[:type_text].should == "タイトル＆本文"
-      assigns[:sort_menu_title].should == nil
+      expect(assigns[:searchtext]).to  nil
+      expect(assigns[:target]).to  "1"
+      expect(assigns[:type]).to  "1"
+      expect(assigns[:sort]).to  "1"
+      expect(assigns[:category]).to  "0"
+      expect(assigns[:articles]).to  nil
+      expect(assigns[:article_num]).to  0
+      expect(assigns[:type_text]).to  "タイトル＆本文"
+      expect(assigns[:sort_menu_title]).to  nil
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
     it "search_article type 1 sort 1" do
       get :search_article, :searchtext => "", :type => "1" , :sort => "1"
 =begin
-      assigns[:searchtext].should == nil
-      assigns[:target].should == "1"
-      assigns[:type].should == "1"
-      assigns[:sort].should == "1"
-      assigns[:category].should == "0"
-      assigns[:articles].should == nil
-      assigns[:article_num].should == 0
-      assigns[:type_text].should == "タイトル＆本文"
-      assigns[:sort_menu_title].should == nil
+      expect(assigns[:searchtext]).to  nil
+      expect(assigns[:target]).to  "1"
+      expect(assigns[:type]).to  "1"
+      expect(assigns[:sort]).to  "1"
+      expect(assigns[:category]).to  "0"
+      expect(assigns[:articles]).to  nil
+      expect(assigns[:article_num]).to  0
+      expect(assigns[:type_text]).to  "タイトル＆本文"
+      expect(assigns[:sort_menu_title]).to  nil
 =end
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
     it "search_article type 2 sort 1" do
       get :search_article, :searchtext => "", :type => "2" , :sort => "1"
 =begin
-      assigns[:searchtext].should == nil
-      assigns[:target].should == "1"
-      assigns[:type].should == "1"
-      assigns[:sort].should == "1"
-      assigns[:category].should == "0"
-      assigns[:articles].should == nil
-      assigns[:article_num].should == 0
-      assigns[:type_text].should == "タイトル＆本文"
-      assigns[:sort_menu_title].should == nil
+      expect(assigns[:searchtext]).to  nil
+      expect(assigns[:target]).to  "1"
+      expect(assigns[:type]).to  "1"
+      expect(assigns[:sort]).to  "1"
+      expect(assigns[:category]).to  "0"
+      expect(assigns[:articles]).to  nil
+      expect(assigns[:article_num]).to  0
+      expect(assigns[:type_text]).to  "タイトル＆本文"
+      expect(assigns[:sort_menu_title]).to  nil
 =end
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
     it "search_article type 3 sort 1" do
       get :search_article, :searchtext => "", :type => "3" , :sort => "1"
 =begin
-      assigns[:searchtext].should == nil
-      assigns[:target].should == "1"
-      assigns[:type].should == "1"
-      assigns[:sort].should == "1"
-      assigns[:category].should == "0"
-      assigns[:articles].should == nil
-      assigns[:article_num].should == 0
-      assigns[:type_text].should == "タイトル＆本文"
-      assigns[:sort_menu_title].should == nil
+      expect(assigns[:searchtext]).to  nil
+      expect(assigns[:target]).to  "1"
+      expect(assigns[:type]).to  "1"
+      expect(assigns[:sort]).to  "1"
+      expect(assigns[:category]).to  "0"
+      expect(assigns[:articles]).to  nil
+      expect(assigns[:article_num]).to  0
+      expect(assigns[:type_text]).to  "タイトル＆本文"
+      expect(assigns[:sort_menu_title]).to  nil
 =end
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
     it "search_article type 4 sort 1" do
       get :search_article, :searchtext => "", :type => "4" , :sort => "1"
 =begin
-      assigns[:searchtext].should == nil
-      assigns[:target].should == "1"
-      assigns[:type].should == "1"
-      assigns[:sort].should == "1"
-      assigns[:category].should == "0"
-      assigns[:articles].should == nil
-      assigns[:article_num].should == 0
-      assigns[:type_text].should == "タイトル＆本文"
-      assigns[:sort_menu_title].should == nil
+      expect(assigns[:searchtext]).to  nil
+      expect(assigns[:target]).to  "1"
+      expect(assigns[:type]).to  "1"
+      expect(assigns[:sort]).to  "1"
+      expect(assigns[:category]).to  "0"
+      expect(assigns[:articles]).to  nil
+      expect(assigns[:article_num]).to  0
+      expect(assigns[:type_text]).to  "タイトル＆本文"
+      expect(assigns[:sort_menu_title]).to  nil
 =end
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
     it "search_article type 1 sort 2" do
       get :search_article, :searchtext => "", :type => "1" , :sort => "2"
 =begin
-      assigns[:searchtext].should == nil
-      assigns[:target].should == "1"
-      assigns[:type].should == "1"
-      assigns[:sort].should == "1"
-      assigns[:category].should == "0"
-      assigns[:articles].should == nil
-      assigns[:article_num].should == 0
-      assigns[:type_text].should == "タイトル＆本文"
-      assigns[:sort_menu_title].should == nil
+      expect(assigns[:searchtext]).to  nil
+      expect(assigns[:target]).to  "1"
+      expect(assigns[:type]).to  "1"
+      expect(assigns[:sort]).to  "1"
+      expect(assigns[:category]).to  "0"
+      expect(assigns[:articles]).to  nil
+      expect(assigns[:article_num]).to  0
+      expect(assigns[:type_text]).to  "タイトル＆本文"
+      expect(assigns[:sort_menu_title]).to  nil
 =end
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
     it "search_article type 1 sort 3" do
       get :search_article, :searchtext => "", :type => "1" , :sort => "3"
 =begin
-      assigns[:searchtext].should == nil
-      assigns[:target].should == "1"
-      assigns[:type].should == "1"
-      assigns[:sort].should == "1"
-      assigns[:category].should == "0"
-      assigns[:articles].should == nil
-      assigns[:article_num].should == 0
-      assigns[:type_text].should == "タイトル＆本文"
-      assigns[:sort_menu_title].should == nil
+      expect(assigns[:searchtext]).to  nil
+      expect(assigns[:target]).to  "1"
+      expect(assigns[:type]).to  "1"
+      expect(assigns[:sort]).to  "1"
+      expect(assigns[:category]).to  "0"
+      expect(assigns[:articles]).to  nil
+      expect(assigns[:article_num]).to  0
+      expect(assigns[:type_text]).to  "タイトル＆本文"
+      expect(assigns[:sort_menu_title]).to  nil
 =end
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
     it "search_article type 1 sort 4" do
       get :search_article, :searchtext => "", :type => "1" , :sort => "4"
 =begin
-      assigns[:searchtext].should == nil
-      assigns[:target].should == "1"
-      assigns[:type].should == "1"
-      assigns[:sort].should == "1"
-      assigns[:category].should == "0"
-      assigns[:articles].should == nil
-      assigns[:article_num].should == 0
-      assigns[:type_text].should == "タイトル＆本文"
-      assigns[:sort_menu_title].should == nil
+      expect(assigns[:searchtext]).to  nil
+      expect(assigns[:target]).to  "1"
+      expect(assigns[:type]).to  "1"
+      expect(assigns[:sort]).to  "1"
+      expect(assigns[:category]).to  "0"
+      expect(assigns[:articles]).to  nil
+      expect(assigns[:article_num]).to  0
+      expect(assigns[:type_text]).to  "タイトル＆本文"
+      expect(assigns[:sort_menu_title]).to  nil
 =end
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
