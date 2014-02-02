@@ -3,7 +3,16 @@ require 'spec_helper'
 describe ChromeController do
   fixtures(:all)
 
-  describe "GET #get_background_info" do
+  describe "GET #get_background_info without signin" do
+    it "get_background_info with url" do
+      get :get_background_info, :url => "http://www.yahoo.co.jp/"
+    end
+  end
+
+  describe "GET #get_background_info with signin" do
+    before(:each) do
+      session[:openid_url] = "oauth://facebook/12354"
+    end
     it "get_background_info with url" do
       get :get_background_info, :url => "http://www.yahoo.co.jp/"
     end
