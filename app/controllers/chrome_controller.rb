@@ -46,7 +46,7 @@ class ChromeController < ApplicationController
         end
       end
     else
-      redirect_to :controller => "consumer", :action => "index"
+      render :text => BLANK and return
     end
   end
 
@@ -59,18 +59,22 @@ class ChromeController < ApplicationController
   end
 
   def get_set_tag
-    url = params[:url]
-    article = Article.find_by_url(url)
-    if article == nil
-      render :text => BLANK and return
-    else
-      user_article = article.user_articles.find_by_user_id(get_login_user.id)
-      set_tags = user_article.get_set_tag
-      if set_tags.length == 0
+    if signed_in?
+      url = params[:url]
+      article = Article.find_by_url(url)
+      if article == nil
         render :text => BLANK and return
       else
-        render :text => set_tags and return
+        user_article = article.user_articles.find_by_user_id(get_login_user.id)
+        set_tags = user_article.get_set_tag
+        if set_tags.length == 0
+          render :text => BLANK and return
+        else
+          render :text => set_tags and return
+        end
       end
+    else
+      render :text => BLANK and return
     end
   end
 

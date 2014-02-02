@@ -57,34 +57,89 @@ describe ChromeController do
     end
   end
 
-  #ここまで
   describe "GET #get_recommend_tag" do
-    it "access to route without no parameters" do
-      get :get_recommend_tag
+    it "get_recommend_tag unuse url" do
+      get :get_recommend_tag, :url => "aaa"
+      expect(response).to be_success
+      expect(response.body).to eq ""
+    end
+    it "get_recommend_tag to tag" do
+      get :get_recommend_tag, :url => "http://www.yahoo.co.jp/"
+      expect(response).to be_success
+      expect(response.body).to eq ""
+    end
+    it "get_recommend_tag some tag" do
+      get :get_recommend_tag, :url => "http://wired.jp/2012/10/29/softbank-sprint/"
+      expect(response).to be_success
+      expect(response.body).to eq "[\"ruby\", \"activerecord\", \"rails\", \"エンタメ\", \"heroku\", \"sqlite3\"]"
     end
   end
 
   describe "GET #get_recent_tag without signin" do
     it "access to route without no parameters" do
       get :get_recent_tag
+      expect(response).to be_success
+      expect(response.body).to eq ""
     end
   end
 
-  describe "GET #get_recent_tag with signin" do
+  describe "GET #get_recent_tag with signin no register user" do
+    before(:each) do
+      session[:openid_url] = "oauth://twitter/12347"
+    end
+    it "get_recent_tag no register user" do
+      get :get_recent_tag
+      expect(response).to be_success
+      expect(response.body).to eq ""
+    end
+  end
+
+  describe "GET #get_recent_tag with signin register user" do
     before(:each) do
       session[:openid_url] = "oauth://facebook/12354"
     end
-    it "access to route without no parameters" do
+    it "get_recent_tag register user" do
       get :get_recent_tag
+      expect(response).to be_success
+      expect(response.body).to eq "[\"１２３４５６７８９０\", \"１２３４５６７８９５\", \"１２３４５６７８９４\", \"１２３４５６７８９３\", \"１２３４５６７８９２\", \"１２３４５６７８９１\", \"Rails\", \"SQL\", \"Ruby\", \"ruby\"]"
     end
   end
 
-  describe "GET #get_set_tag" do
-    it "access to route without no parameters" do
+  describe "GET #get_set_tag without singin" do
+    it "get_set_tag" do
       get :get_set_tag
+      expect(response).to be_success
+      expect(response.body).to eq ""
     end
   end
 
+  describe "GET #get_set_tag with singin" do
+    before(:each) do
+      session[:openid_url] = "oauth://facebook/12354"
+    end
+    it "get_set_tag with singin" do
+      get :get_set_tag, :url => "http://www.yahoo.co.jp/"
+      expect(response).to be_success
+      expect(response.body).to eq ""
+    end
+    it "get_set_tag with singin" do
+      get :get_set_tag, :url => "http://wired.jp/2012/10/29/softbank-sprint/"
+      expect(response).to be_success
+      expect(response.body).to eq "[\"エンタメ\"]"
+    end
+  end
+
+  describe "GET #get_set_tag with singin" do
+    before(:each) do
+      session[:openid_url] = "oauth://twitter/12347"
+    end
+    it "get_set_tag with singin" do
+      get :get_set_tag, :url => "http://wired.jp/2012/10/29/softbank-sprint/"
+      expect(response.body).to eq ""
+    end
+  end
+
+  #ここまで
   describe "GET #get_article_data without signin" do
     it "access to route without no parameters" do
       get :get_article_data
