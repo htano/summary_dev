@@ -38,10 +38,19 @@ module Webpage
         cluster_job.delay.run
       end
     end
-    get_login_user.add_cluster_id(article.cluster_id)
     article.add_strength
-    user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
-    UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
+    begin
+      get_login_user.add_cluster_id(article.cluster_id)
+      user_article = UserArticle.edit_user_article(
+        get_login_user.id, article.id
+      )
+      UserArticleTag.edit_user_article_tag(
+        user_article.id, 
+        tag_list
+      )
+    rescue => err_u
+      Rails.logger.error("Error: #{err_u}")
+    end
     return article
   end
 
