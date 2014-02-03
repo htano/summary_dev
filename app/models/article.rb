@@ -140,8 +140,8 @@ class Article < ActiveRecord::Base
         where( "last_added_at > ?", 
                Time.now - DAYS_OF_FOR_WEEKS.days
              ).order(
-               'strength desc, last_added_at desc'
-                #'last_added_at desc, strength desc'
+               #'strength desc, last_added_at desc'
+               'last_added_at desc, strength desc'
              ).limit(HOTENTRY_CANDIDATE_NUM)
     else
       candidate_entries = 
@@ -149,8 +149,8 @@ class Article < ActiveRecord::Base
                 Time.now - DAYS_OF_FOR_WEEKS.days,
                 Category.find_by_name(category_name)]
              ).order(
-               'strength desc, last_added_at desc'
-               #'last_added_at desc, strength desc'
+               #'strength desc, last_added_at desc'
+               'last_added_at desc, strength desc'
              ).limit(HOTENTRY_CANDIDATE_NUM)
     end
     return candidate_entries.sort{|a,b| 
@@ -192,10 +192,10 @@ class Article < ActiveRecord::Base
                                     DAYS_OF_FOR_WEEKS.days,
                                     cid
                                    ).order(
-                                      #'last_added_at desc, ' +
-                                      #'strength desc'
-                                      'strength desc, ' +
-                                      'last_added_at desc'
+                                      'last_added_at desc, ' +
+                                      'strength desc'
+                                      #'strength desc, ' +
+                                      #'last_added_at desc'
                                    ).limit(
                                       (PERSONAL_HOTENTRY_CANDIDATE_NUM * val).to_i
                                    )
