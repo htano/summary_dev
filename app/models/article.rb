@@ -86,7 +86,7 @@ class Article < ActiveRecord::Base
     score_list = Array.new 
     is_good_completed = Array.new
 
-    self.summaries.each_with_index do |summary,i|  
+    self.summaries.includes(:user).each_with_index do |summary,i|  
     #自分のsummaryがあれば、それを先頭にリストを再結合
       if user then
         if summary.user_id == user.id then
