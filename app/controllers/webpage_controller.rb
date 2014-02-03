@@ -66,7 +66,14 @@ class WebpageController < ApplicationController
 
   def delete
     if signed_in?
-      remove_webpage(params[:article_id])
+      @aid = params[:article_id]
+      user_article = get_login_user.user_articles.find_by_article_id(@aid)
+      if user_article
+        remove_webpage(@aid)
+        render :text => "OK"
+      else
+        render :text => "NG"
+      end
     else
       redirect_to :controller => "consumer", :action => "index"
     end
