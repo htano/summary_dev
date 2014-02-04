@@ -139,10 +139,11 @@ describe ChromeController do
     end
   end
 
-  #ここまで
   describe "GET #get_article_data without signin" do
-    it "access to route without no parameters" do
+    it "get_article_data without signin" do
       get :get_article_data
+      expect(response).to be_success
+      expect(response.body).to eq ""
     end
   end
 
@@ -150,11 +151,33 @@ describe ChromeController do
     before(:each) do
       session[:openid_url] = "oauth://facebook/12354"
     end
-    it "access to route without no parameters" do
-      get :get_article_data
+    it "get_article_data with unuse url" do
+      get :get_article_data, :url => "abcde"
+      expect(response).to be_success
+      @expected = {:article_id  => "", :msg => "この記事は登録出来ません。"}.to_json
+      expect(response.body).to eq @expected
+    end
+    it "get_article_data with url" do
+      get :get_article_data, :url => "http://www.yahoo.co.jp/"
+      expect(response).to be_success
+      @expected = {:article_id  => "", :msg => ""}.to_json
+      expect(response.body).to eq @expected
+    end
+    it "get_article_data with unknown url" do
+      get :get_article_data, :url => "http://irorio.jp/yangping/20130818/73254/"
+      expect(response).to be_success
+      @expected = {:article_id  => "", :msg => ""}.to_json
+      expect(response.body).to eq @expected
+    end
+    it "get_article_data with known url" do
+      get :get_article_data, :url => "http://wired.jp/2012/10/29/softbank-sprint/"
+      expect(response).to be_success
+      @expected = {:article_id  => 20, :msg => "登録済みです。"}.to_json
+      expect(response.body).to eq @expected
     end
   end
 
+  #ちょっと進んだ
   describe "GET #get_login_user_id without singin" do
     it "access to route without no parameters" do
       get :get_login_user_id
