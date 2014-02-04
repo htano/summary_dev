@@ -20,5 +20,6 @@ open(URL_SCORE) do |file|
       Rails.logger.info("add #{article.strength}, #{article.title}")
       article.save
     end
+    sleep(1)
   end
 end
