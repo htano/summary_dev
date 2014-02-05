@@ -177,10 +177,11 @@ describe ChromeController do
     end
   end
 
-  #ちょっと進んだ
   describe "GET #get_login_user_id without singin" do
     it "access to route without no parameters" do
       get :get_login_user_id
+      expect(response).to be_success
+      expect(response.body).to eq ""
     end
   end
 
@@ -190,12 +191,15 @@ describe ChromeController do
     end
     it "access to route without no parameters" do
       get :get_login_user_id
+      expect(response).to be_success
+      expect(response.body).to eq "10"
     end
   end
 
   describe "GET #add without singin" do
     it "access to route without no parameters" do
-      get :add
+      get :add, :url => "http://wired.jp/2012/10/29/softbank-sprint/"
+      expect(response).to redirect_to :controller => 'consumer',:action => 'index'
     end
   end
 
@@ -203,14 +207,30 @@ describe ChromeController do
     before(:each) do
       session[:openid_url] = "oauth://facebook/12354"
     end
-    it "access to route without no parameters" do
-      get :add
+    it "add url with tag" do
+      get :add, :url => "http://wired.jp/2012/10/29/softbank-sprint/", :tag_text_1 => "タグ1"
+      expect(response).to be_success
+      @expected = {:article_id  => 20, :msg => "登録出来ました。"}.to_json
+      expect(response.body).to eq @expected
+    end
+    it "add url with no tag" do
+      get :add, :url => "http://wired.jp/2012/10/29/softbank-sprint/"
+      expect(response).to be_success
+      @expected = {:article_id  => 20, :msg => "登録出来ました。"}.to_json
+      expect(response.body).to eq @expected
+    end
+    it "add unuse url" do
+      get :add, :url => "abcd"
+      expect(response).to be_success
+      @expected = {:article_id  => "", :msg => "この記事は登録出来ません。"}.to_json
+      expect(response.body).to eq @expected
     end
   end
 
   describe "GET #edit_tag without signin" do
-    it "access to route without no parameters" do
+    it "edit_tag without signin" do
       get :edit_tag
+      expect(response).to redirect_to :controller => 'consumer',:action => 'index'
     end
   end
 
@@ -218,8 +238,17 @@ describe ChromeController do
     before(:each) do
       session[:openid_url] = "oauth://facebook/12354"
     end
-    it "access to route without no parameters" do
-      get :edit_tag
+    it "edit_tag with tag" do
+      get :edit_tag, :url => "http://wired.jp/2012/10/29/softbank-sprint/", :tag_text_1 => "タグ1", :tag_text_2 => "タグ2", :tag_text_3 => "タグ3"
+      expect(response).to be_success
+      @expected = {:article_id  => 20, :msg => "タグ編集が完了しました。"}.to_json
+      expect(response.body).to eq @expected
+    end
+    it "edit_tag with no tag" do
+      get :edit_tag, :url => "http://wired.jp/2012/10/29/softbank-sprint/"
+      expect(response).to be_success
+      @expected = {:article_id  => 20, :msg => "タグ編集が完了しました。"}.to_json
+      expect(response.body).to eq @expected
     end
   end
 end
