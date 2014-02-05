@@ -45,7 +45,6 @@ describe SummaryController do
     end
   end
 
-#TODO ちょっと全体的に未完成なので修正する
   describe "POST #edit_complete signing in" do
     before(:each) do
       session[:openid_url] = "oauth://facebook/12350"
