@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'webpage'
 include Webpage
-ADD_PAGE_NUM = 40
+ADD_PAGE_NUM = 10
 URL_SCORE = "#{Rails.root}/tmp/url_score_uniq.txt"
 max_score = 0.01
 count = 0
