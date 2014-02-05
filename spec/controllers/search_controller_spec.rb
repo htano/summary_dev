@@ -5,17 +5,23 @@ describe SearchController do
   describe "GET #index" do
     it "index" do
       get :index
+      expect(assigns[:searchtext]).to eq nil
       expect(assigns[:target]).to eq 1
       expect(assigns[:type]).to eq 1
       expect(assigns[:sort]).to eq 1
       expect(assigns[:category]).to eq 0
+      expect(assigns[:articles]).to eq nil
+      expect(assigns[:article_num]).to eq nil
+      expect(assigns[:type_text]).to eq nil
+      expect(assigns[:sort_menu_title]).to eq nil
+      #expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
   end
 
   describe "GET #search_article" do
     it "search_article searchtext nil" do
-      get :search_article
-      expect(assigns[:searchtext]).to eq nil
+      get :search_article, :searchtext => ""
+      expect(assigns[:searchtext]).to eq ""
       expect(assigns[:target]).to eq "1"
       expect(assigns[:type]).to eq "1"
       expect(assigns[:sort]).to eq "1"
