@@ -64,7 +64,7 @@ ja:
     clear: "消去"
     restore: "戻す"
     delete: "削除"
-    placeholder: "300文字以内で要約を入力して下さい。"
+    #placeholder: "300文字以内で要約を入力して下さい。"
   follow:
     add: "フォロー"
     is_true: "フォロー中"
@@ -105,13 +105,13 @@ ja:
     is_read: "既読"
     is_registered: "登録済み"
   webpage:
-    add: "登録"
+    add: "追加"
     edit: "編集"
-    confirm: "登録ボタンを押して下さい。"
+    confirm: "追加ボタンを押して下さい。"
     confirm_comment: "タグを設定することも出来ます。"
     tag_edit: "タグを設定して編集ボタンを押して下さい。"
     add_error: "入力内容を確認して下さい。"
-    add_success: "記事を登録しました。"
+    add_success: "記事を追加しました。"
     tag_edit_success: "タグを編集しました。"
   search:
     search: "検索"
@@ -133,11 +133,10 @@ ja:
     set_tags: "タグを設定する場合は、テキストボックスに入力して下さい。"
     edit: "タグを編集"
   placeholder:
-    searcht_ext: "検索したい単語を入力して下さい。"
-    input_url_text: "追加したURLを入力して下さい。"
-  navbar:
-    search_menu: "検索窓へ変更する"
-    add_menu: "追加窓へ変更する"
+    search_text: "気になる言葉を検索しましょう！"
+    input_url_text: "URLを入力して記事を追加しましょう！"
+    search_menu: "検索へ変更する"
+    add_menu: "追加へ変更する"
   views:
     pagination:
       truncate: "..."
