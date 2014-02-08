@@ -105,13 +105,13 @@ ja:
     is_read: "既読"
     is_registered: "登録済み"
   webpage:
-    add: "追加"
+    add: "登録"
     edit: "編集"
-    confirm: "追加ボタンを押して下さい。"
+    confirm: "登録ボタンを押して下さい。"
     confirm_comment: "タグを設定することも出来ます。"
     tag_edit: "タグを設定して編集ボタンを押して下さい。"
     add_error: "入力内容を確認して下さい。"
-    add_success: "記事を追加しました。"
+    add_success: "記事を登録しました。"
     tag_edit_success: "タグを編集しました。"
   search:
     search: "検索"
@@ -134,9 +134,9 @@ ja:
     edit: "タグを編集"
   placeholder:
     search_text: "気になる言葉を検索しましょう！"
-    input_url_text: "URLを入力して記事を追加しましょう！"
+    input_url_text: "URLを入力して記事を登録しましょう！"
     search_menu: "検索へ変更する"
-    add_menu: "追加へ変更する"
+    add_menu: "登録へ変更する"
   views:
     pagination:
       truncate: "..."

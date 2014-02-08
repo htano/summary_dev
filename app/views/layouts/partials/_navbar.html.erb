@@ -30,9 +30,10 @@ function click_dropdown_manu_add(){
   $("#navbar_form").attr("action","/webpage/add_confirm");
   $("#navbar_form").attr("method","POST");
   $("#navbar_form").attr("add_flag","true");
-  $("#search_nav").val(I18n.t('webpage.add'));
+  $("#search_nav").val("登録");
+  /*$("#search_nav").val(I18n.t('webpage.add'));*/
   /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.input_url_text'));*/
-  $("#searchtext_nav").attr("placeholder","URLを入力して記事を追加しましょう！");
+  $("#searchtext_nav").attr("placeholder","URLを入力して記事を登録しましょう！");
   $.cookie('type_nav', 2, {path: '/'});
 }
 

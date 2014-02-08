@@ -7,7 +7,7 @@
     "message": "ログイン"
   },
   "edit_summary": {
-    "message": "要約編集"
+    "message": "要約投稿"
   },
   "edit_tag": {
     "message": "タグ編集"
@@ -28,6 +28,6 @@
     "message": "ログインして下さい。"
   },
   "no_summary": {
-    "message": "この記事に対する要約は登録されていません。"
+    "message": "この記事に対する要約は投稿されていません。"
   }
 }
