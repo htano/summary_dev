@@ -64,7 +64,7 @@ ja:
     clear: "消去"
     restore: "戻す"
     delete: "削除"
-    #placeholder: "300文字以内で要約を入力して下さい。"
+    placeholder: "300文字以内で要約を入力して下さい。"
   follow:
     add: "フォロー"
     is_true: "フォロー中"
