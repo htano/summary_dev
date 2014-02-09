@@ -133,5 +133,7 @@ SummaryDev::Application.routes.draw do
   get 'session/consumer/:action' => 'consumer#:action'
   post 'session/consumer/:action' => 'consumer#:action'
 
-  get "*not_found" => "application#render_404"
+  unless Rails.env.development?
+    get "*not_found" => "application#render_404"
+  end
 end
