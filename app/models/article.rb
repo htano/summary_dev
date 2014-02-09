@@ -86,31 +86,38 @@ class Article < ActiveRecord::Base
     score_list = Array.new 
     is_good_completed = Array.new
 
-    self.summaries.each_with_index do |summary,i|  
-    #自分のsummaryがあれば、それを先頭にリストを再結合
+
+    #自分の要約以外の要約を一度ソートし、
+    #その後で先頭に自分の要約を入れることで、
+    #先頭に自分の要約があることを保証
+    b_exist_my_summary = false
+    my_summary = nil
+    my_summary_point = 0
+
+    self.summaries.includes(:user).each do |summary|
       if user then
         if summary.user_id == user.id then
-          good_summary_point = summary.good_summaries.count
-          score_list[0,0] = score_item.new(summary, good_summary_point)
+          b_exist_my_summary = true
+          my_summary = summary
+          my_summary_point = summary.good_summaries.count
         else
           good_summary_point = summary.good_summaries.count
-          score_list[i] = score_item.new(summary, good_summary_point)
+          score_list << score_item.new(summary, good_summary_point)
         end
       else
         good_summary_point = summary.good_summaries.count
-        score_list[i] = score_item.new(summary, good_summary_point)
+        score_list << score_item.new(summary, good_summary_point)
       end
     end 
 
-    #sort summary list
-    #
-    #
-    #Under Construction
+    #sorting by good summary point
     score_list_sorted = score_list.sort{|i,j|
         j.good_summary_point<=>i.good_summary_point                 
     }
-    #
-    #
+    
+    if b_exist_my_summary then
+      score_list_sorted[0,0] = score_item.new(my_summary, my_summary_point)
+    end
 
     summary_item = Struct.new(:summary, :user, :summary_point, :is_good_completed) 
     summary_list = Array.new
