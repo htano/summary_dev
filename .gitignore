@@ -52,4 +52,4 @@ tools/pmd/docs
 .yardoc
 doc
 
-Gemfile.lock
+#Gemfile.lock
