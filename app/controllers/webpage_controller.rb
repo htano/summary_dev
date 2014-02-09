@@ -1,4 +1,5 @@
 require "webpage"
+#require "awesome_print"
 include Webpage
 
 class WebpageController < ApplicationController
@@ -6,14 +7,15 @@ class WebpageController < ApplicationController
     if signed_in?
       @user_id = get_login_user.id
       @url = params[:url] == BLANK || params[:url] == nil ? params[:searchtext] : params[:url]
+      @add_flag =  params[:add_flag]
       if(/[^ -~｡-ﾟ]/ =~ @url)
-        flash[:error] = "Please check URL."
+        flash[:error] = t("webpage.add_error")
         redirect_to(:back) and return
       end
       @add_flag = params[:add_flag]
       h = get_webpage_element(@url, true, false, false)
       if h == nil || @url.start_with?("chrome://extensions/")
-        flash[:error] = "Please check URL."
+        flash[:error] = t("webpage.add_error")
         redirect_to(:back) and return
       end
 
@@ -48,23 +50,16 @@ class WebpageController < ApplicationController
       end
       article = add_webpage(@url, tag_list)
       if article == nil
-        flash[:error] = "Please check URL."
-        redirect_to :controller => "webpage", :action => "add" and return
+        flash[:error] = t("webpage.add_error")
+        redirect_to :controller => "mypage", :action => "index" and return
       end
-      if params[:add_flag] == BLANK
-        redirect_to :controller => "mypage", :action => "index"
+      @add_flag =  params[:add_flag]
+      if @add_flag == "true"
+        flash[:success] = t("webpage.add_success")
+      else
+        flash[:success] = t("webpage.tag_edit_success")
       end
-      @article_id = article.id
-      @title = article.title
-      @contents_preview = article.get_contents_preview
-      @thumbnail = article.get_thumbnail
-      @category = article.get_category_name
-      @tags = []
-      user_article = article.user_articles.find_by_user_id(get_login_user.id)
-      user_article.user_article_tags(:all).each do |user_article_tag|
-        @tags.push(user_article_tag.tag)
-      end
-      @msg = "Completed." and return
+      redirect_to :controller => "mypage", :action => "index" and return
     else
       redirect_to :controller => "consumer", :action => "index"
     end
@@ -72,17 +67,7 @@ class WebpageController < ApplicationController
 
   def delete
     if signed_in?
-      @aid = params[:article_id]
-      user_article = get_login_user.user_articles.find_by_article_id(@aid)
-      if user_article
-        article = Article.find(@aid)
-        article.remove_strength(get_login_user.id)
-        get_login_user.delete_cluster_id(article.cluster_id)
-        user_article.destroy
-        render :text => "OK"
-      else
-        render :text => "NG"
-      end
+      remove_webpage(params[:article_id])
     else
       redirect_to :controller => "consumer", :action => "index"
     end

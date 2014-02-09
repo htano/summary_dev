@@ -36,6 +36,29 @@ SummaryDev::Application.configure do
   config.assets.debug = true
 
   config.assets.initialize_on_precompile = true
-  
+
   config.log_formatter = ::Logger::Formatter.new
+
+  config.after_initialize do
+    Bullet.enable = false # Bulletプラグインを有効
+    Bullet.alert = true # JavaScriptでの通知
+    Bullet.bullet_logger = true # log/bullet.logへの出力
+    Bullet.console = true # ブラウザのコンソールログに記録
+    Bullet.rails_logger = true # Railsログに出力
+  end
+=begin
+  # メール設定
+  config.action_mailer.default_url_options   = { host: '0.0.0.0:3000' }
+  config.action_mailer.delivery_method       = :smtp
+  config.action_mailer.perform_deliveries    = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings         = {
+    address:              "smtp.gmail.com",
+    port:                 587,
+    user_name:            "********@gmail.com",
+    password:             "********",
+    authentication:       'plain',
+    enable_starttls_auto: true,
+  }
+=end
 end

@@ -29,7 +29,7 @@ $(document).ready( function(){
           });
         } else {
           $("#link_to_login").show();
-          setComment("ログインして下さい。");
+          setComment(chrome.i18n.getMessage("not_login"));
           hiddenReadLater();
           hiddenTagArea();
         }

@@ -217,12 +217,7 @@ class SummaryListsController < ApplicationController
       return	
     end
     
-    if UserArticle.create(:user_id => get_login_user.id, 
-                        :article_id => params[:article_id])
-      logger.debug("success read_later")
-    else
-      logger.error("ERROR read_later")
-    end
+    add_webpage(Article.find_by_id(params[:article_id]).url)
 
     respond_to do |format|
       format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
@@ -240,15 +235,8 @@ class SummaryListsController < ApplicationController
       return	
     end
 
-    current_user = get_login_user
-
-    if current_user && current_user.user_articles.exists?(:article_id => params[:article_id])
-      current_user.user_articles.find_by_article_id(params[:article_id]).destroy
-      logger.debug("success cancel_read_later")
-    else
-      logger.error("ERROR cancel_read_later")
-    end 
-
+    remove_webpage(params[:article_id])
+    
     respond_to do |format|
       format.html { redirect_to :action => "index" }
       format.js

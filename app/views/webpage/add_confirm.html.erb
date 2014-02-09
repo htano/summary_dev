@@ -8,7 +8,14 @@ $(document).ready(function() {
 });
 </script>
 
-<div class="comment_box"><%= t("webpage.confirm") %></div>
+<div class="comment_box">
+  <% if @add_flag == "true" %>
+    <%= t("webpage.confirm") %><br>
+    <%= t("webpage.confirm_comment") %>
+  <% else %>
+    <%= t("webpage.tag_edit") %><br>
+  <% end %>
+</div>
 <div class="url_box">
   <form method="POST" action="add_complete" class="confirm_url">
     <p class="url_title"><a href="<%= @url %>"target="_blank"><%= @title[0, 100] %></a></p>
@@ -33,7 +40,7 @@ $(document).ready(function() {
     </span>
     <div id="tag_area">
       <% if @top_rated_tags == nil || @top_rated_tags.length == 0 %>
-        <div id="recommend_tags"><%= t("tag.no_recommend_tags") %><br><br></div>
+        <!--<div id="recommend_tags"><%= t("tag.no_recommend_tags") %><br><br></div>-->
       <% else %>
         <div id="recommend_tags"><%= t("tag.recommend_tags") %><br>
           <% @top_rated_tags.each do |recommend_tag| %>
@@ -43,7 +50,7 @@ $(document).ready(function() {
       <% end %>
 
       <% if @recent_tags == nil || @recent_tags.length == 0 %>
-        <div id="recent_tags"><%= t("tag.no_recent_tags") %><br><br></div>
+        <!--<div id="recent_tags"><%= t("tag.no_recent_tags") %><br><br></div>-->
       <% else %>
         <div id="recent_tags"><%= t("tag.recent_tags") %><br>
           <% @recent_tags.each do |recent_tag| %>
@@ -60,10 +67,10 @@ $(document).ready(function() {
       </div>
     </div>
     <div id="submit_area">
-      <% if @add_flag == nil %>
-        <input type="submit" id="submit" value="<%= t("webpage.confirm") %>" class="button button-flat:hover submit" onclick="ckick_submit_button">
+      <% if @add_flag == "true" %>
+        <input type="submit" id="submit" value="<%= t("webpage.add") %>" class="button button-flat:hover submit" onclick="ckick_submit_button">
       <% else %>
-        <input type="submit" id="submit" value="<%= t("webpage.complete") %>" class="button button-flat:hover submit" onclick="ckick_submit_button">
+        <input type="submit" id="submit" value="<%= t("webpage.edit") %>" class="button button-flat:hover submit" onclick="ckick_submit_button">
       <% end %>
     </div>
       <input type="hidden" name="url" value="<%= @url %>">

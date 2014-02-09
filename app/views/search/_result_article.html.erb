@@ -61,7 +61,7 @@
         </div>
       </div>
       <div id="thumbnail">
-        <%= image_tag(article.get_thumbnail) %>
+        <%= image_tag(article.get_thumbnail, :onerror => 'this.src="'+asset_path('no_image.png')+'"') %>
       </div>
       <div id="url_host">
         <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host[0,18] , {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
