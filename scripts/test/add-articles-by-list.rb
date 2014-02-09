@@ -27,7 +27,7 @@ open(URL_SCORE) do |file|
     break if count > ADD_PAGE_NUM
     article = add_webpage(url)
     if article
-      article.strength += (score / max_score) * 0.3
+      article.strength += (score / max_score) * 0.1
       Rails.logger.info("add #{article.strength}, #{article.title}")
       article.save
     end

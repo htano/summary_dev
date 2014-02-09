@@ -14,7 +14,9 @@ class Article < ActiveRecord::Base
   # And the points are decaying by time spending.
   # This parameter means that '1' point will decay 
   # to '0.01' point until some days after.
-  DAYS_OF_FOR_WEEKS = 3
+  DAYS_OF_HOTENTRY = 3
+  DAYS_OF_CATEGORY_HOTENTRY = 7
+  DAYS_OF_PERSONAL_HOTENTRY = 14
   ZERO_ZERO_ONE_DAYS = 14
   DECAY_DELTA = 0.01**(1.0/(24*ZERO_ZERO_ONE_DAYS))
   HOTENTRY_CANDIDATE_NUM = 100
@@ -138,7 +140,7 @@ class Article < ActiveRecord::Base
     if category_name == 'all'
       candidate_entries = 
         where( "last_added_at > ?", 
-               Time.now - DAYS_OF_FOR_WEEKS.days
+               Time.now - DAYS_OF_HOTENTRY.days
              ).order(
                'strength desc, last_added_at desc'
                #'last_added_at desc, strength desc'
@@ -146,7 +148,7 @@ class Article < ActiveRecord::Base
     else
       candidate_entries = 
         where( ["last_added_at > ? and category_id = ?", 
-                Time.now - DAYS_OF_FOR_WEEKS.days,
+                Time.now - DAYS_OF_CATEGORY_HOTENTRY.days,
                 Category.find_by_name(category_name)]
              ).order(
                'strength desc, last_added_at desc'
@@ -189,7 +191,7 @@ class Article < ActiveRecord::Base
                                     "cluster_id = ?",
                                     #Time.now.beginning_of_hour - 
                                     Time.now - 
-                                    DAYS_OF_FOR_WEEKS.days,
+                                    DAYS_OF_PERSONAL_HOTENTRY.days,
                                     cid
                                    ).order(
                                       #'last_added_at desc, ' +

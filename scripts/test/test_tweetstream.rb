@@ -6,7 +6,9 @@ CONSUMER_SECRET  = ENV['TWITTER_CONSUMER_SECRET']
 # Access Token Key, Secretの設定
 ACCESS_TOKEN_KEY = ENV['TWITTER_ACCESS_TOKEN_KEY']
 ACCESS_SECRET    = ENV['TWITTER_ACCESS_SECRET']
- 
+
+TOUCHE_FILE = "#{Rails.root}/tmp/test_tweetstream.ongoing"
+
 # 設定
 TweetStream.configure do |config|
   config.consumer_key       = CONSUMER_KEY
@@ -32,7 +34,9 @@ domains = [
   'www newsweekjapan jp',
   'www j-cast com',
   'www huffingtonpost jp',
-#  'headlines yahoo co jp',
+  'headlines yahoo co jp hl life',
+  'headlines yahoo co jp hl sci',
+  'news livedoor com article detail',
 #  'zasshi news yahoo co jp',
 #  'www yomiuri co jp',
 #  'www nikkei com',
@@ -42,10 +46,10 @@ domains = [
 #  'www itmedia co jp',
 ]
 
-count = 0
+FileUtils.touch(TOUCHE_FILE)
 #TweetStream::Client.new.sample do |status|
 TweetStream::Client.new.track(domains) do |status|
-  if count > 100000
+  unless File.exist?(TOUCHE_FILE)
     break
   end
   if status.user.lang == 'ja' &&
@@ -58,6 +62,5 @@ TweetStream::Client.new.track(domains) do |status|
     ex_url = status.urls[0].expanded_url
     #puts "#{uname}\t#{tco_id}\t#{tco_url}\t#{ex_url}"
     puts "#{uname}\t#{ex_url}"
-    count += 1
   end
 end
