@@ -5,7 +5,8 @@ $(document).ready(function() {
     set_type_nav();
   } else {
     $("#navbar_form").attr("action","/search/search_article");
-    $("#search_nav").val(I18n.t('search.search'));
+    $("#search_nav").val("検索");
+    /*$("#search_nav").val(I18n.t('search.search'));*/
     /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.search_text'));*/
     $("#searchtext_nav").attr("placeholder","気になる言葉を検索しましょう！");
   }
@@ -20,7 +21,8 @@ function checkSearchtext(){
 function click_dropdown_manu_search(){
   $("#navbar_form").attr("action","/search/search_article");
   $("#navbar_form").attr("method","GET");
-  $("#search_nav").val(I18n.t('search.search'));
+  $("#search_nav").val("検索");
+  /*$("#search_nav").val(I18n.t('search.search'));*/
   /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.search_text'));*/
   $("#searchtext_nav").attr("placeholder","気になる言葉を検索しましょう！");
   $.cookie('type_nav', 1, {path: '/'});
