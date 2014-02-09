@@ -12,7 +12,6 @@ class WebpageController < ApplicationController
         flash[:error] = t("webpage.add_error")
         redirect_to(:back) and return
       end
-      @add_flag = params[:add_flag]
       h = get_webpage_element(@url, true, false, false)
       if h == nil || @url.start_with?("chrome://extensions/")
         flash[:error] = t("webpage.add_error")
@@ -42,6 +41,7 @@ class WebpageController < ApplicationController
     if signed_in?
       @prof_image =  get_login_user.prof_image
       @url = params[:url]
+      @add_flag =  params[:add_flag]
       tag_list = []
       params.each do |key,value|
         if key.start_with?("tag_text_")
@@ -53,7 +53,6 @@ class WebpageController < ApplicationController
         flash[:error] = t("webpage.add_error")
         redirect_to :controller => "mypage", :action => "index" and return
       end
-      @add_flag =  params[:add_flag]
       if @add_flag == "true"
         flash[:success] = t("webpage.add_success")
       else
@@ -67,7 +66,14 @@ class WebpageController < ApplicationController
 
   def delete
     if signed_in?
-      remove_webpage(params[:article_id])
+      @aid = params[:article_id]
+      user_article = get_login_user.user_articles.find_by_article_id(@aid)
+      if user_article
+        remove_webpage(@aid)
+        render :text => "OK"
+      else
+        render :text => "NG"
+      end
     else
       redirect_to :controller => "consumer", :action => "index"
     end

@@ -5,10 +5,9 @@ $(document).ready(function() {
     set_type_nav();
   } else {
     $("#navbar_form").attr("action","/search/search_article");
-    /*$("#navbar_form").attr("method","GET");*/
-    $("#search_nav").val('検索');
     $("#search_nav").val(I18n.t('search.search'));
-    $("#searchtext_nav").attr("placeholder", "検索したい言葉を入力して、ボタンを押して下さい。");
+    /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.search_text'));*/
+    $("#searchtext_nav").attr("placeholder","気になる言葉を検索しましょう！");
   }
 });
 
@@ -21,9 +20,9 @@ function checkSearchtext(){
 function click_dropdown_manu_search(){
   $("#navbar_form").attr("action","/search/search_article");
   $("#navbar_form").attr("method","GET");
-  /*$("#search_nav").val(I18n.t('search.search'));*/
-  $("#search_nav").val('検索');
-  $("#searchtext_nav").attr("placeholder", "検索したい単語を入力して、ボタンを押して下さい。");
+  $("#search_nav").val(I18n.t('search.search'));
+  /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.search_text'));*/
+  $("#searchtext_nav").attr("placeholder","気になる言葉を検索しましょう！");
   $.cookie('type_nav', 1, {path: '/'});
 }
 
@@ -31,9 +30,10 @@ function click_dropdown_manu_add(){
   $("#navbar_form").attr("action","/webpage/add_confirm");
   $("#navbar_form").attr("method","POST");
   $("#navbar_form").attr("add_flag","true");
+  $("#search_nav").val("登録");
   /*$("#search_nav").val(I18n.t('webpage.add'));*/
-  $("#search_nav").val('登録');
-  $("#searchtext_nav").attr("placeholder", "気になる記事のURLを入力して、ボタンを押して下さい。");
+  /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.input_url_text'));*/
+  $("#searchtext_nav").attr("placeholder","URLを入力して記事を登録しましょう！");
   $.cookie('type_nav', 2, {path: '/'});
 }
 
@@ -65,8 +65,8 @@ function set_type_nav(){
                 <div id="type_nav" class="btn-group">
                   <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
                   <ul class="dropdown-menu">
-                    <li><a href="#" onclick="click_dropdown_manu_add()">登録へ変更する</a></li>
-                    <li><a href="#" onclick="click_dropdown_manu_search()">検索へ変更する</a></li>
+                    <li><a href="#" onclick="click_dropdown_manu_add()"><%= t("placeholder.add_menu") %></a></li>
+                    <li><a href="#" onclick="click_dropdown_manu_search()"><%= t("placeholder.search_menu") %></a></li>
                   </ul>
                 </div>
               </li>

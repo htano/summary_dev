@@ -1,4 +1,3 @@
-/*TODO ホストの書き方*/
 $(document).ready( function(){
   var bg = window.chrome.extension.getBackgroundPage();
   console.log( $("#p_title").text() );
@@ -18,6 +17,6 @@ $(document).ready( function(){
         }　else {
           $("tbody").append("<tr><td>"+chrome.i18n.getMessage("no_summary")+"</td></tr>");
         }
-      } 
+      }
   });
 });
