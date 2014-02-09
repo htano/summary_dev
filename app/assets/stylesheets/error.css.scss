@@ -3,11 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "defval";
 
-a {
-    color: gray;
-}
-
 .span2 {
   margin-top: 20px;
+  p {
+    font-size: 16px;
+  }
 }
 

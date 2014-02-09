@@ -38,11 +38,30 @@ module Webpage
         cluster_job.delay.run
       end
     end
-    get_login_user.add_cluster_id(article.cluster_id)
     article.add_strength
-    user_article = UserArticle.edit_user_article(get_login_user.id, article.id)
-    UserArticleTag.edit_user_article_tag(user_article.id, tag_list)
+    begin
+      get_login_user.add_cluster_id(article.cluster_id)
+      user_article = UserArticle.edit_user_article(
+        get_login_user.id, article.id
+      )
+      UserArticleTag.edit_user_article_tag(
+        user_article.id, 
+        tag_list
+      )
+    rescue => err_u
+      Rails.logger.error("Error: #{err_u}")
+    end
     return article
+  end
+
+  def remove_webpage(article_id)
+    user_article = get_login_user.user_articles.find_by_article_id(article_id)
+    if user_article
+      article = Article.find(article_id)
+      article.remove_strength(get_login_user.id)
+      get_login_user.delete_cluster_id(article.cluster_id)
+      user_article.destroy
+    end
   end
 
   def get_webpage_element(url, 

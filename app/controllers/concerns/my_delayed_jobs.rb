@@ -101,6 +101,22 @@ module MyDelayedJobs
       end
     end
 
+    def get_image_size_from_css(img)
+      w = img["width"].to_f
+      h = img["height"].to_f
+      if(w && h &&
+         w > THRESHOLD_IMAGE_SIZE &&
+         h > THRESHOLD_IMAGE_SIZE)
+        denominator = (w>h) ? w/h : h/w
+        return 10 * (w*h)/denominator
+      else
+        Rails.logger.info("[get_image_size_from_css:ImageSize] " + 
+                          "Can't get image size #{img["src"]} : " +
+                          "this image doesn't have the size infomation.")
+        return nil
+      end
+    end
+
     def get_image_url(a)
       img_url = nil
       c_ext = ExtractorFactory.instance.new_extractor(a.url)
@@ -117,7 +133,8 @@ module MyDelayedJobs
       end
       max_size = THRESHOLD_IMAGE_SIZE * THRESHOLD_IMAGE_SIZE
       maz_size_img_url = 'no_image.png'
-      doc.xpath("//img").each_with_index do |img, idx|
+      #doc.xpath("//img").each_with_index do |img, idx|
+      doc.css('img').each_with_index do |img, idx|
         img_url = img["src"]
         Rails.logger.debug("[#{idx}]img_url = #{img_url}")
         break if idx > MAX_CHECK_IMAGE_NUMS
@@ -132,7 +149,11 @@ module MyDelayedJobs
             next
           end
         end
-        img_size = get_image_size(img_url)
+        img_size = get_image_size_from_css(img)
+        unless img_size
+          img_size = get_image_size(img_url)
+        end
+        Rails.logger.debug("[#{idx}] img_size: #{img_size}, #{img_url}")
         if img_size > max_size
           max_size = img_size
           maz_size_img_url = img_url

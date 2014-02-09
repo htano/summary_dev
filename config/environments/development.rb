@@ -36,6 +36,14 @@ SummaryDev::Application.configure do
   config.assets.debug = true
 
   config.assets.initialize_on_precompile = true
-  
+
   config.log_formatter = ::Logger::Formatter.new
+
+  config.after_initialize do
+    Bullet.enable = false # Bulletプラグインを有効
+    Bullet.alert = true # JavaScriptでの通知
+    Bullet.bullet_logger = true # log/bullet.logへの出力
+    Bullet.console = true # ブラウザのコンソールログに記録
+    Bullet.rails_logger = true # Railsログに出力
+  end
 end

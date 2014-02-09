@@ -53,7 +53,7 @@ div.hotentry-menu {
   h3 {
     color: white;
     margin: 0;
-    font-size: 1.3em;
+    font-size: 2.0rem;
     padding: 10px 10px 11px 10px;
   }
   .row > .hidden-xs {
@@ -108,13 +108,13 @@ div.hotentry-large-row-nosum,  {
 }
 
 div.hotentry-small-order, div.hotentry-small-order-nosum {
-  font-size: 2.0em;
+  font-size: 3.0rem;
 }
 
 div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
 
   h4 {
-    font-size: 1.3em;
+    font-size: 2.0rem;
     //color: #666;
     text-decoration: underline;
     margin-top: 2px;
@@ -123,7 +123,7 @@ div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
   }
 
   h5 {
-    font-size: 1.2em;
+    font-size: 1.8rem;
     //color: #666;
     text-decoration: underline;
     margin-top: 2px;
@@ -132,7 +132,7 @@ div.hotentry-normal-title, div.hotentry-small-title, div.hotentry-large-title {
   }
 
   h6 {
-    font-size: 1.1em;
+    font-size: 1.6rem;
     //color: #666;
     text-decoration: underline;
     margin-top: 2px;
@@ -157,20 +157,20 @@ div.hotentry-large-title {
 }
 
 div.hotentry-normal-summaries, div.hotentry-small-summaries {
-  font-size: 1.0em;
+  font-size: 1.4rem;
 }
 
 div.hotentry-normal-contents {
   p {
     min-height: 90px;
-    font-size: 1.1em;
+    font-size: 1.6rem;
     overflow: auto;
   }
 }
 
 div.hotentry-large-contents {
   p {
-    font-size: 1.15em;
+    font-size: 1.7rem;
     border: solid 1px #eee;
     min-height: 160px;
     padding: 5px;
@@ -181,11 +181,11 @@ div.hotentry-large-contents {
 }
 
 span.hotentry-top-summary, span.hotentry-contents-preview, span.hotentry-normal-summary {
-  font-size: 1.1em;
+  font-size: 1.6rem;
 }
 
 div.hotentry-top-summary, div.hotentry-contents-preview, div.hotentry-normal-summary {
-  font-size: 1.2em;
+  font-size: 1.7rem;
 }
 
 .hotentry-top-summary {
@@ -203,22 +203,22 @@ div.hotentry-top-summary, div.hotentry-contents-preview, div.hotentry-normal-sum
 div.hotentry-category {
   border: solid 1px #aaa;
   text-align: center;
-  font-size: 1.2em;
-  margin-bottom: 1em;
+  font-size: 1.7rem;
+  margin-bottom: 1.5rem;
   border-radius: 5px;
 }
 
 div.hotentry-large-image {
   //margin-top: 23px;
-  width: 15em;
-  height: 15em;
+  width: 22rem;
+  height: 22rem;
   overflow: hidden;
 }
 
 div.hotentry-normal-image {
-  margin-top: 1em;
-  width: 10em;
-  height: 11em;
+  margin-top: 1.5rem;
+  width: 14rem;
+  height: 15rem;
   overflow: hidden;
 }
 
@@ -237,7 +237,7 @@ div.hotentry-large-goodsummary {
 }
 
 div.hotentry-normal-domain {
-  font-size: 0.9em;
+  font-size: 1.4rem;
 }
 
 div.hotentry_container {
@@ -294,7 +294,7 @@ div.entry_title {
 }
 
 div.entry_title h3 {
-  font-size: 1.2em;
+  font-size: 1.7rem;
   margin-top: 8px;
   height: 60px;
   text-decoration: underline;
@@ -320,11 +320,11 @@ div.entry_count_num {
 
 //span.entry_count_label {
 //  //text-decoration: underline;
-//  font-size: 1.1em;
+//  font-size: 1.1rem;
 //}
 
 //span.entry_count_num {
-//  font-size: 1.6em;
+//  font-size: 1.6rem;
 //}
 
 div.entry_box_left {
@@ -454,7 +454,7 @@ div.entry_like_num:after {
 //}
 
 button.read_it_later {
-  font-size: 0.9em;
+  font-size: 1.4rem;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #60b044;
@@ -469,13 +469,13 @@ button.read_it_later {
   background-image: -moz-linear-gradient(#8add6d, #60b044);
   background-image: -webkit-linear-gradient(#8add6d, #60b044);
   background-image: linear-gradient(#8add6d, #60b044);
-  //margin-bottom: 1em;
+  //margin-bottom: 1rem;
   margin-top: 5px;
   border: 1px solid #d8d8d8;
 }
 
 button.read_it_cancel {
-  font-size: 0.9em;
+  font-size: 1.4rem;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #999;
@@ -490,13 +490,13 @@ button.read_it_cancel {
   background-image: -moz-linear-gradient(#aaa, #999);
   background-image: -webkit-linear-gradient(#aaa, #999);
   background-image: linear-gradient(#aaa, #999);
-  //margin-bottom: 1em;
+  //margin-bottom: 1rem;
   margin-top: 5px;
   border: 1px solid #d8d8d8;
 }
 
 button.mark_as_read {
-  font-size: 0.9em;
+  font-size: 1.3rem;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #60b044;
@@ -511,12 +511,12 @@ button.mark_as_read {
   background-image: -moz-linear-gradient(#8add6d, #60b044);
   background-image: -webkit-linear-gradient(#8add6d, #60b044);
   background-image: linear-gradient(#8add6d, #60b044);
-  //margin-bottom: 1em;
+  //margin-bottom: 1rem;
   border: 1px solid #d8d8d8;
 }
 
 button.mark_as_unread {
-  font-size: 0.9em;
+  font-size: 1.3rem;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #999;

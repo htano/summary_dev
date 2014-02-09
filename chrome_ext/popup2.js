@@ -1,4 +1,3 @@
-/*TODO ホストの書き方*/
 $(document).ready( function(){
   var bg = window.chrome.extension.getBackgroundPage();
   console.log( $("#p_title").text() );
@@ -16,8 +15,8 @@ $(document).ready( function(){
             $("tbody").append("<tr><td>"+data_replace+"</td></tr>");
           }
         }　else {
-          $("tbody").append("<tr><td>この記事に対する要約は登録されていません。</td></tr>");
+          $("tbody").append("<tr><td>"+chrome.i18n.getMessage("no_summary")+"</td></tr>");
         }
-      } 
+      }
   });
 });
