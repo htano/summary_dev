@@ -35,7 +35,7 @@ domains = [
   'www j-cast com',
   'www huffingtonpost jp',
 #  'headlines yahoo co jp hl',
-  'headlines yahoo co jp hl ent',
+#  'headlines yahoo co jp hl ent',
   'headlines yahoo co jp hl life',
   'headlines yahoo co jp hl sci',
 #  'news livedoor com article detail',
