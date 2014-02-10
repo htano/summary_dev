@@ -133,7 +133,7 @@ ja:
     set_tags: "タグを設定する場合は、テキストボックスに入力して下さい。"
     edit: "タグを編集"
   placeholder:
-    search_text: "気になる言葉を検索しましょう！"
+    search_text: "気になる言葉に関連する記事を検索しましょう！"
     input_url_text: "URLを入力して記事を登録しましょう！"
     search_menu: "検索へ変更する"
     add_menu: "登録へ変更する"
