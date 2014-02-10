@@ -40,7 +40,7 @@ domains = [
   'headlines yahoo co jp hl sci',
 #  'news livedoor com article detail',
 #  'zasshi news yahoo co jp',
-#  'www yomiuri co jp',
+  'www yomiuri co jp news',
 #  'www nikkei com',
 #  'sankei jp msn com',
 #  'jp techcrunch com',
