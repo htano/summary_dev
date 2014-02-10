@@ -33,7 +33,7 @@ domains = [
   'www cnn co jp',
   'www newsweekjapan jp',
   'www j-cast com',
-  'www huffingtonpost jp',
+#  'www huffingtonpost jp',
 #  'headlines yahoo co jp hl',
 #  'headlines yahoo co jp hl ent',
   'headlines yahoo co jp hl life',
