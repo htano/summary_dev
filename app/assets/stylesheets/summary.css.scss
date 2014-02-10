@@ -8,7 +8,7 @@
 @mixin count_style {
   color: $basic-color;
   width: 50px;
-  font-size: 13px;
+  font-size: 15px;
   padding: 10px;
 }
 
@@ -20,7 +20,7 @@
 
 .summary_num {
   /*border-bottom: 2px solid #e5e5e5;*/
-  font-size: 13px;
+  font-size: 15px;
   font-weight: normal;
   text-align: center;
   p {
@@ -34,7 +34,7 @@
     }
   }
   span p {
-    font-size: 13px;
+    font-size: 15px;
     margin-top: 0px;
   }
 }
@@ -46,7 +46,7 @@
   margin-top: 1px;
   margin-left: 10px;
   text-align: left;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: normal;
   a {
     color: $basic-color; 
