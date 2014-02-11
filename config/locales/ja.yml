@@ -48,7 +48,7 @@ ja:
   summary:
     count: "summaries"
     count_one: "summary"
-    edit: "要約する"
+    make_summary: "要約する"
     edit_the_article: "この記事を要約する"
     modify_my_summary: "自分の要約を編集する"
     edit_date: "要約日"

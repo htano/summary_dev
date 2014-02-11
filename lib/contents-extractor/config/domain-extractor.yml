@@ -212,3 +212,6 @@ news24.jp:
 blog.livedoor.jp/rbkyn844:
   extractor_type: xpath
   xpath: //div[@class='article-content']//p[@class='res2']//text()
+natalie.mu:
+  extractor_type: xpath
+  xpath: //div[@id='news-text']//text()
