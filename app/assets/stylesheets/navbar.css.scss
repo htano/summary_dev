@@ -1,5 +1,11 @@
 @import "defval";
 
+#backToTop {
+  position: fixed;
+  right: 20px;
+  bottom: 10px;
+}
+
 body {
   padding-top: 40px;
   line-height: 18px;

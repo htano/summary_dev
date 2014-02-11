@@ -157,6 +157,7 @@ ja:
     sign_in: "サインイン"
     sign_out: "サインアウト"
     guide_url: "https://github.com/summaq/guide/wiki/manual"
+    top: "トップへ"
   settings:
     profile_setting: "プロファイル設定"
     email_setting: "メール設定"

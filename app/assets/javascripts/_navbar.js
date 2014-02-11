@@ -11,6 +11,15 @@ $(document).ready(function() {
   }
 });
 
+function backToTop() {
+  $("#backToTop a").click(function() {
+    $("body,html").animate({
+      scrollTop:0
+    })
+    return false
+  });
+}
+
 function checkSearchtext(){
   if($('#searchtext_nav').val() == ""){
     return false;

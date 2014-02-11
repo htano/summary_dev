@@ -22,6 +22,7 @@
                 </div>
               </li>
             <% end %>
+            <div id="backToTop"><a href="#"><%= t("navbar.top") %></a></div>
             <input type="hidden" name="add_flag" value="true">
             <input type="hidden" name="signed_in_status" value="<%= @signed_in_status %>">
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
