@@ -32,7 +32,8 @@ www.slideshare.net:
   xpath: //ul[@class='transcripts h-transcripts']/li
 matome.naver.jp:
   extractor_type: xpath
-  xpath: //div[@class='mdMTMWidget01ItemQuote01' or @class='mdHeading01Desc' or @class='mdMTMWidget01ItemTweet01' or @class='mdMTMWidget01ItemComment01']//p
+  xpath: //div[@class='mdHeading01Desc']/p[@class='mdHeading01DescTxt']/text()
+#  xpath: //div[@class='mdMTMWidget01ItemQuote01' or @class='mdHeading01Desc' or @class='mdMTMWidget01ItemTweet01' or @class='mdMTMWidget01ItemComment01']//p
 togetter.com:
   extractor_type: xpath
   xpath: //div[@class='tweet' or @class='info_description rad5 balloon_body']
@@ -44,7 +45,7 @@ www.atmarkit.co.jp:
   xpath: //div[@class='inner']//p
 alfalfalfa.com:
   extractor_type: xpath
-  xpath: //div[@class="article-body"]//*[@class='mm' or @class='rr' or @class='news_quote' or @class='r2']
+  xpath: //div[@class="article-body"]//*[@class='mm' or @class='rr' or @class='news_quote' or @class='r2']//text()
 www.google.co.jp:
   extractor_type: xpath
   xpath: //div[@class='maia-col-7']//p
