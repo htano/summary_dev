@@ -13,6 +13,7 @@ open(URL_SCORE) do |file|
     score = score.to_f
     max_score = score if(score > max_score)
     next if url =~ %r{^http://sp\.m\.reuters\.co\.jp/}
+    next if url =~ %r{^http://rd\.yahoo\.co\.jp}
     next if Article.find_by_url(url)
     html = nil
     begin
