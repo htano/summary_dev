@@ -32,8 +32,9 @@ www.slideshare.net:
   xpath: //ul[@class='transcripts h-transcripts']/li
 matome.naver.jp:
   extractor_type: xpath
-  xpath: //div[@class='mdHeading01Desc']/p[@class='mdHeading01DescTxt']/text()
+#  xpath: //div[@class='mdHeading01Desc']/p[@class='mdHeading01DescTxt']/text()
 #  xpath: //div[@class='mdMTMWidget01ItemQuote01' or @class='mdHeading01Desc' or @class='mdMTMWidget01ItemTweet01' or @class='mdMTMWidget01ItemComment01']//p
+  xpath: //div[@class='mdMTMWidget01ItemQuote01' or @class='mdHeading01Desc']//p//text()
 togetter.com:
   extractor_type: xpath
   xpath: //div[@class='tweet' or @class='info_description rad5 balloon_body']
