@@ -18,6 +18,8 @@ open(URL_SCORE) do |file|
     html = nil
     begin
       html = open(url).read
+    rescue => err
+      Rails.logger.info("[add-articles-by-list] #{err}")
     end
     if html
       doc = Nokogiri::HTML(html)
