@@ -22,9 +22,14 @@ open(URL_SCORE) do |file|
       Rails.logger.info("[add-articles-by-list] #{err}")
     end
     if html
-      doc = Nokogiri::HTML(html)
-      meta_refresh = doc.xpath("//meta[@http-equiv='REFRESH' or @http-equiv='refresh']")
-      next if meta_refresh.size > 0
+      begin
+        doc = Nokogiri::HTML(html)
+        meta_refresh = doc.xpath("//meta[@http-equiv='REFRESH' or @http-equiv='refresh']")
+        next if meta_refresh.size > 0
+      rescue => err2
+        Rails.logger.info("[add-articles-by-list] #{err2}")
+        next
+      end
     end
     count += 1
     Rails.logger.info("[#{count}] #{url}, #{score}")
