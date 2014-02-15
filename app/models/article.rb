@@ -14,7 +14,7 @@ class Article < ActiveRecord::Base
   # And the points are decaying by time spending.
   # This parameter means that '1' point will decay 
   # to '0.01' point until some days after.
-  DAYS_OF_HOTENTRY = 3
+  DAYS_OF_HOTENTRY = 1
   DAYS_OF_CATEGORY_HOTENTRY = 7
   DAYS_OF_PERSONAL_HOTENTRY = 14
   ZERO_ZERO_ONE_DAYS = 14
