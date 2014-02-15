@@ -179,7 +179,8 @@ www.nhk.or.jp:
   extractor_type: xpath
   xpath: //div[@class='entry']/p
 himasoku.com:
-  xpath: //div[@class='article-body-inner' or @class='article-body-more']//text()
+  #xpath: //div[@class='article-body-inner' or @class='article-body-more']//text()
+  xpath: //div[@class='article-body-inner']//div[@class='t_b']//text()|//div[@class='article-body-inner']//dd//span//text()
   extractor_type: xpath
 bipblog.com:
   extractor_type: xpath
