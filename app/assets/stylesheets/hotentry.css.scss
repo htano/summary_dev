@@ -7,6 +7,17 @@
   color: $basic-color;
 }
 
+ul.socialBtn {
+  list-style: none;
+  li {
+    float: left;
+  }
+  li.socialBtnNfb {
+    margin-left: 1rem;
+    margin-top: 1rem;
+  }
+}
+
 div.hotentry-container {
   margin: auto;
   //width: 80%;
