@@ -41,6 +41,10 @@ html {
   overflow-y: scroll;
 }
 
+body {
+  overflow-x: hidden; //For smart phone
+}
+
 * {
   font-family: Meiryo;
 }

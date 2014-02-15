@@ -22,6 +22,7 @@ div.hotentry-container {
   margin: auto;
   //width: 80%;
   max-width: 1080px;
+  //overflow: hidden;
   //border: solid 1px #eee;
 }
 
@@ -174,14 +175,14 @@ div.hotentry-normal-summaries, div.hotentry-small-summaries {
 div.hotentry-normal-contents {
   p {
     min-height: 90px;
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     overflow: auto;
   }
 }
 
 div.hotentry-large-contents {
   p {
-    font-size: 1.7rem;
+    font-size: 1.8rem;
     border: solid 1px #eee;
     min-height: 160px;
     padding: 5px;
@@ -192,7 +193,7 @@ div.hotentry-large-contents {
 }
 
 span.hotentry-top-summary, span.hotentry-contents-preview, span.hotentry-normal-summary {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
 }
 
 div.hotentry-top-summary, div.hotentry-contents-preview, div.hotentry-normal-summary {
