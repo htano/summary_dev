@@ -221,3 +221,6 @@ natalie.mu:
 blog.livedoor.jp/yakiusoku:
   extractor_type: xpath
   xpath: //div[@class='t_b']//text()
+#hamusoku.com:
+#  extractor_type: xpath
+#  xpath: //div[@class='article-body-inner']//span[@class='res']//text()
