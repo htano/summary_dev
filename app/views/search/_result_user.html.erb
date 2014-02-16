@@ -60,7 +60,5 @@
         <% end %>
       </div>
   <% end %>
-  <div style='text-align:center;'>
-    <%= paginate @users, :window =>4, :outer_window => 2  %>
-  </div>
+  <span><%= paginate @users, :window =>4, :outer_window => 2  %></span>
 <% end %>
