@@ -227,3 +227,6 @@ blog.livedoor.jp/yakiusoku:
 bylines.news.yahoo.co.jp:
   extractor_type: xpath
   xpath: //div[@class='rics-column bd covered']//p
+blog.livedoor.jp/goldennews:
+  extractor_type: xpath
+  xpath: //dl/dd//text()
