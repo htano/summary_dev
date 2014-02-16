@@ -36,11 +36,16 @@ open(URL_SCORE) do |file|
         next
       end
     end
-    count += 1
-    domain_counter[domain] += 1
     Rails.logger.info("[#{count}] #{url}, #{score}")
     break if count > ADD_PAGE_NUM
-    article = add_webpage(url)
+    begin
+      article = add_webpage(url)
+    rescue => err3
+      Rails.logger.info("[add-articles-by-list] #{err3}")
+      next
+    end
+    count += 1
+    domain_counter[domain] += 1
     if article
       article.strength += 0.1 + (score / max_score) * 0.05
       Rails.logger.info("add #{article.strength}, #{article.title}")
