@@ -174,7 +174,7 @@ zinger-hole.net:
   xpath: //div[@class='main']/dl/dd
 www3.nhk.or.jp:
   extractor_type: xpath
-  xpath: //div[@class='entry' or @class='article']/p
+  xpath: //div[@class='entry' or @class='article' or @id='main']/p
 www.nhk.or.jp:
   extractor_type: xpath
   xpath: //div[@class='entry']/p
