@@ -37,7 +37,7 @@ matome.naver.jp:
   xpath: //div[@class='mdMTMWidget01ItemQuote01' or @class='mdHeading01Desc' or @class='mdMTMWidget01ItemTweet01']//p//text()
 togetter.com:
   extractor_type: xpath
-  xpath: //div[@class='tweet' or @class='info_description rad5 balloon_body']
+  xpath: //div[@class='tweet' or @class='info_description rad5 balloon_body']//text()
 www.jcp.or.jp:
   encoding: shift_jis
 www.atmarkit.co.jp:
@@ -224,3 +224,6 @@ blog.livedoor.jp/yakiusoku:
 #hamusoku.com:
 #  extractor_type: xpath
 #  xpath: //div[@class='article-body-inner']//span[@class='res']//text()
+bylines.news.yahoo.co.jp:
+  extractor_type: xpath
+  xpath: //div[@class='rics-column bd covered']//p
