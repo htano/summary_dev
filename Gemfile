@@ -114,7 +114,7 @@ group :development do
   gem "bullet"
 end
 
-#ZeroClipboard rails gem 
+#ZeroClipboard rails gem
 gem 'zeroclipboard-rails'
 
 gem 'delayed_job_active_record'
