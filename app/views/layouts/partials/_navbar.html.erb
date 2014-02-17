@@ -12,6 +12,14 @@
             <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" ></li>
             <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li>
             <% if signed_in? %>
+<!--
+              <li>
+                <div class="btn-group" data-toggle="buttons-radio">
+                  <button type="button" class="btn btn-info">登録</button>
+                  <button type="button" class="btn btn-info">検索</button>
+                </div>
+              </li>
+-->
               <li>
                 <div id="type_nav" class="btn-group">
                   <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
