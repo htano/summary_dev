@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 SummaryDev::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -40,7 +41,7 @@ SummaryDev::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   config.after_initialize do
-    Bullet.enable = false # Bulletプラグインを有効
+    Bullet.enable = true # Bulletプラグインを有効
     Bullet.alert = true # JavaScriptでの通知
     Bullet.bullet_logger = true # log/bullet.logへの出力
     Bullet.console = true # ブラウザのコンソールログに記録

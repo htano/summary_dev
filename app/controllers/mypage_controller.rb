@@ -372,7 +372,7 @@ private
     if order_condition && order_condition.index("created_at")
       ordered_user_articles = 
         user.user_articles.order(order_condition).offset(offset).unread.limit(num)
-      ordered_user_articles.each do |user_article|
+      ordered_user_articles.includes(:article).each do |user_article|
         article = user_article.article
         articles.push(article)
       end
@@ -388,7 +388,7 @@ private
     if order_condition && order_condition.index("created_at")
       ordered_user_articles = 
         user.user_articles.order(order_condition).offset(offset).read.limit(num)
-      ordered_user_articles.each do |user_article|
+      ordered_user_articles.includes(:article).each do |user_article|
         article = user_article.article
         articles.push(article)
       end
@@ -404,7 +404,7 @@ private
     if order_condition && order_condition.index("created_at")
       ordered_user_articles = 
         user.user_articles.order(order_condition).offset(offset).favorite.limit(num)
-      ordered_user_articles.each do |user_article|
+      ordered_user_articles.includes(:article).each do |user_article|
         article = user_article.article
         articles.push(article)
       end
