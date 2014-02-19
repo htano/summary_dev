@@ -29,7 +29,7 @@ $(document).ready( function(){
           });
         } else {
           $("#link_to_login").show();
-          setComment("ログインして下さい。");
+          setComment(chrome.i18n.getMessage("not_login"));
           hiddenReadLater();
           hiddenTagArea();
         }
@@ -131,7 +131,7 @@ $(document).ready( function(){
         }
       }
   });
-  
+
   $("#button_read_later").click(function(){
     $("#load").show();
     $.ajax({
@@ -188,7 +188,7 @@ $(document).ready( function(){
         $("#load").hide();
         setComment(data.msg);
       }
-    });    
+    });
   });
 });
 
@@ -218,7 +218,6 @@ function removeMark(str){
   return str;
 }
 
-//コメントを設定する
 function setComment(msg){
   $("#comment").text(msg);
   $("#comment").show();
@@ -228,14 +227,12 @@ function setEditTag(){
   $("#edit_tag").show();
 }
 
-//要約編集画面へのリンクを設定する
 function setEditSummary(article_id){
   var bg = window.chrome.extension.getBackgroundPage();
   $("#edit_summary").show();
   $("#link_to_edit_summary").attr("href", "http://" + bg.SERVICE_HOSTNAME + "/summary/"+article_id+"/edit");
 }
 
-//登録ボタンを非活性にする。ついでにクラスも変更する。
 function hiddenReadLater(){
   $("#button_read_later").hide();
 }
@@ -248,7 +245,7 @@ function clickRecommendTag(obj){
       text_list.push(document.getElementById("tag_text_" + i).value);
     }
 
-    if(text_list.indexOf(value) != -1){ 
+    if(text_list.indexOf(value) != -1){
       obj.className = "recommend_tag_pushed";
       return;
     }
@@ -295,7 +292,7 @@ function clickRecentTag(obj){
       text_list.push(document.getElementById("tag_text_" + i).value);
     }
 
-    if(text_list.indexOf(value) != -1){ 
+    if(text_list.indexOf(value) != -1){
       obj.className = "recent_tag_pushed";
       return;
     }

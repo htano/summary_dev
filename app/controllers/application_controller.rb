@@ -2,8 +2,10 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 
-  rescue_from Exception do
-    render :template => "errors/error_500", :status => 500, :layout => 'application'
+  unless Rails.env.development?
+    rescue_from Exception do
+      render :template => "errors/error_500", :status => 500, :layout => 'application'
+    end
   end
 
   protect_from_forgery with: :exception
@@ -78,6 +80,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  private
+  def set_signed_in_status
+    cookies[:signed_in_status] = { :value => signed_in? }
+  end
+
   def authenticate
     authenticate_or_request_with_http_basic('Enter Password') do |u, p|
       u == 'summary.dev' && Digest::MD5.hexdigest(p) == "7fd9244849e93ace721ae1c569a939aa"
@@ -85,4 +92,5 @@ class ApplicationController < ActionController::Base
   end
 
   before_filter :exec_authenticate
+  after_filter :set_signed_in_status
 end

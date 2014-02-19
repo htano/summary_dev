@@ -13,7 +13,7 @@ oldContent = ''
   document.getElementById('content').value = BLANK
 
 @clickClearButton = ->
-  if confirm "clear summary?"
+  if confirm "要約を消去して良いですか？"
     document.getElementById('content').value = BLANK
     document.getElementById('count').innerHTML = '0'
     document.getElementById('count').setAttribute('class', 'count')
@@ -25,18 +25,18 @@ oldContent = ''
   content = document.getElementById('content').value
   content_num = content.replace(/\n|\r\n/g,"").length
   if overFlag
-    alert 'Please edit summary within 300 characters.'
+    alert '要約は300文字以内で入力して下さい。'
     return false
   else
     if content_num is 0
-      alert 'Please edit summary.'
+      alert '要約内容を入力して下さい。'
       return false
     else
       form = $('.edit_form')
       form.submit()
 
 @clickRestoreButton = ->
-  if confirm "restore summary?"
+  if confirm "編集内容を元に戻して良いですか？"
     document.getElementById('content').value = oldContent
     countContentCharacters()
   else
@@ -55,7 +55,7 @@ oldContent = ''
       estr2 = estr.slice(0, em)
       content = unescape(estr2)
       document.getElementById('content').value = content
-      alert "Please edit summary within 30 rows."
+      alert "要約は30行以内で入力して下さい。"
 
   content_num = content.replace(/\n|\r\n/g,"").length
   if content_num > max

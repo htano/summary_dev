@@ -23,7 +23,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', '0.12.0', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -91,7 +91,28 @@ gem 'figaro'
 
 gem 'ngrams_parser'
 
+#It's a small library to provide the I18n translations on the Javascript. It comes with Rails support.
 gem "i18n-js"
+
+#Pretty print your Ruby objects with style -- in full color and with proper indentation
+gem "awesome_print"
+
+#An IRB alternative and runtime developer console
+gem "pry"
+
+#Exception Notifier Plugin for Rails http://smartinez87.github.com/exception_notification
+gem 'exception_notification', github: 'smartinez87/exception_notification'
+
+#A mini view framework for console/irb that's easy to use, even while under its influence. Console goodies include a no-wrap table, auto-pager, tree and menu. 
+group :development, :test do
+    gem 'hirb'
+    gem 'hirb-unicode'
+end
+
+#help to kill N+1 queries and unused eager loading
+group :development do
+  gem "bullet"
+end
 
 gem 'delayed_job_active_record'
 gem 'daemons'
@@ -111,7 +132,9 @@ end
 
 gem 'okura'
 
-gem 'paperclip'
+gem 'paperclip', '3.5.2'
 gem 'aws-sdk'
 
 gem 'google-analytics-rails'
+
+gem 'tweetstream'

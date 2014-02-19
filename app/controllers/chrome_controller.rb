@@ -46,11 +46,10 @@ class ChromeController < ApplicationController
         end
       end
     else
-      redirect_to :controller => "consumer", :action => "index"
+      render :text => BLANK and return
     end
   end
 
-  #TODO 画面からURL直打ちの回避
   def get_login_user_id
     if signed_in?
       render :text => get_login_user.id and return
@@ -60,18 +59,22 @@ class ChromeController < ApplicationController
   end
 
   def get_set_tag
-    url = params[:url]
-    article = Article.find_by_url(url)
-    if article == nil
-      render :text => BLANK and return
-    else
-      user_article = article.user_articles.find_by_user_id(get_login_user.id)
-      set_tags = user_article.get_set_tag
-      if set_tags.length == 0
+    if signed_in?
+      url = params[:url]
+      article = Article.find_by_url(url)
+      if article == nil
         render :text => BLANK and return
       else
-        render :text => set_tags and return
+        user_article = article.user_articles.find_by_user_id(get_login_user.id)
+        set_tags = user_article.get_set_tag
+        if set_tags.length == 0
+          render :text => BLANK and return
+        else
+          render :text => set_tags and return
+        end
       end
+    else
+      render :text => BLANK and return
     end
   end
 
@@ -103,8 +106,6 @@ class ChromeController < ApplicationController
     end
   end
 
-
-  #TODO 画面からURL直打ちの回避
   def add
     if signed_in?
       url = params[:url]
@@ -126,7 +127,6 @@ class ChromeController < ApplicationController
     end
   end
 
-  #TODO 画面からURL直打ちの回避
   def get_background_info
     url = params[:url]
     result = []
@@ -134,14 +134,17 @@ class ChromeController < ApplicationController
     if article == nil then
       result = {"summary_num" => 0, "user_article_id" => BLANK}
     else
-      user_article = article.user_articles.find_by_user_id(get_login_user.id)
-      if user_article == nil then
-        result = {"summary_num" => article.summaries.size, "user_article_id" => BLANK}
+      if signed_in?
+        user_article = article.user_articles.find_by_user_id(get_login_user.id)
+        if user_article == nil then
+          result = {"summary_num" => article.summaries.size, "user_article_id" => BLANK}
+        else
+          result = {"summary_num" => article.summaries.size, "user_article_id" => user_article.id}
+        end
       else
-        result = {"summary_num" => article.summaries.size, "user_article_id" => user_article.id}
+        result = {"summary_num" => 0, "user_article_id" => BLANK}
       end
     end
-    p result
     render :json => result and return
   end
 
