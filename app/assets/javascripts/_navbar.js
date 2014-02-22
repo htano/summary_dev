@@ -22,6 +22,7 @@ function backToTop() {
 
 function checkSearchtext(){
   if($('#searchtext_nav').val() == ""){
+    $("#searchtext_nav").attr("placeholder","何か入力してボタンを押して下さい！");
     return false;
   }
 }
