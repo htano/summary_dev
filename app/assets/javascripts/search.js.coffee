@@ -6,6 +6,7 @@ BLANK = ''
 
 @checkSearchtext_search = ->
   if $("#searchtext").val() == BLANK
+    $("#searchtext").attr("placeholder","何か入力してボタンを押して下さい！");
     return false
 
 @hide_navbar_text = ->

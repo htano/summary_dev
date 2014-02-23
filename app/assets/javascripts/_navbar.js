@@ -27,7 +27,7 @@ function checkSearchtext(){
   }
 }
 
-function click_dropdown_manu_search(){
+function click_dropdown_menu_search(){
   $("#navbar_form").attr("action","/search/search_article");
   $("#navbar_form").attr("method","GET");
   $("#search_nav").val("検索");
@@ -37,7 +37,7 @@ function click_dropdown_manu_search(){
   $.cookie('type_nav', 1, {path: '/'});
 }
 
-function click_dropdown_manu_add(){
+function click_dropdown_menu_add(){
   $("#navbar_form").attr("action","/webpage/add_confirm");
   $("#navbar_form").attr("method","POST");
   $("#navbar_form").attr("add_flag","true");
@@ -51,8 +51,8 @@ function click_dropdown_manu_add(){
 function set_type_nav(){
   var type_nav = $.cookie("type_nav");
   if(type_nav == "1") {
-    click_dropdown_manu_search();
+    click_dropdown_menu_search();
   } else {
-    click_dropdown_manu_add();
+    click_dropdown_menu_add();
   }
 }
