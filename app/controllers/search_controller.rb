@@ -72,7 +72,7 @@ class SearchController < ApplicationController
 
   def search_user
     @searchtext = params[:searchtext]
-    @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
+    @target = params[:target] == BLANK || params[:target] == nil ? "2" : params[:target]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"]).where("yuko_flg" => true)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length

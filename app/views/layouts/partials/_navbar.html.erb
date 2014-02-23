@@ -11,17 +11,18 @@
           <ul class="nav pull-right">
             <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" ></li>
             <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li>
-            <% if signed_in? %>
-              <li>
-                <div id="type_nav" class="btn-group">
-                  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-                  <ul class="dropdown-menu">
+            <li>
+              <div id="type_nav" class="btn-group">
+                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <% if signed_in? %>
                     <li><a href="#" onclick="click_dropdown_menu_add()"><%= t("placeholder.add_menu") %></a></li>
-                    <li><a href="#" onclick="click_dropdown_menu_search()"><%= t("placeholder.search_menu") %></a></li>
-                  </ul>
-                </div>
-              </li>
-            <% end %>
+                  <% end %>
+                  <li><a href="#" onclick="click_dropdown_menu_search_article()"><%= t("placeholder.search_menu_article") %></a></li>
+                  <li><a href="#" onclick="click_dropdown_menu_search_user()"><%= t("placeholder.search_menu_user") %></a></li>
+                </ul>
+              </div>
+            </li>
             <div id="backToTop"><a href="#"><%= t("navbar.top") %></a></div>
             <input type="hidden" name="add_flag" value="true">
             <input type="hidden" name="signed_in_status" value="<%= @signed_in_status %>">
