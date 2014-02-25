@@ -203,7 +203,26 @@ describe SearchController do
     end
   end
 
-  describe "GET #search_user" do
+  describe "GET #search_user without signing" do
+    it "search_user sort 1" do
+      get :search_user, :searchtext => "", :sort => "1"
+      expect(response.response_code).to eq 200
+    end
+    it "search_user sort 2" do
+      get :search_user, :searchtext => "", :sort => "2"
+      expect(response.response_code).to eq 200
+    end
+    it "search_user sort 3" do
+      get :search_user, :searchtext => "", :sort => "3"
+      expect(response.response_code).to eq 302
+    end
+  end
+
+
+  describe "GET #search_user without signing" do
+    before(:each) do
+      session[:openid_url] = "oauth://facebook/12354"
+    end
     it "search_user sort 1" do
       get :search_user, :searchtext => "", :sort => "1"
       expect(response.response_code).to eq 200
