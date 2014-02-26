@@ -1,4 +1,3 @@
-headlines.yahoo.co.jp
 www3.nhk.or.jp
 www.asahi.com.articles.html
 sankei.jp.msn.com
@@ -40,9 +39,7 @@ footballnet.2chblog.jp
 www.nikkansports.com
 irorio.jp
 www.bloomberg.co.jp
-bylines.news.yahoo.co.jp
 news.mynavi.jp
-zasshi.news.yahoo.co.jp
 jp.techcrunch.com
 blog.livedoor.jp.kinisoku
 blog.livedoor.jp.domesoccer
