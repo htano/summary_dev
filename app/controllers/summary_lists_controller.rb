@@ -20,6 +20,7 @@ class SummaryListsController < ApplicationController
     @summary_by_me = @article.summaries.find_by user_id: @user 
     @is_read_later = @article.read_later?(@user) 
     @category_name = t('category.' + @article.get_category_name)
+    @readers_list = @article.get_readers_list
   end
 
   def good_summary 
