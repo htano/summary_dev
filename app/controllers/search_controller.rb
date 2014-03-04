@@ -98,6 +98,17 @@ class SearchController < ApplicationController
     render :template => "search/index"
   end
 
+  def search_user_article
+    article_id = params[:article_id]
+    @users = User.joins(:user_articles).where("user_articles.article_id" => article_id)
+    if signed_in?
+      # 検索結果に自分は出さない
+      @users = @users.where.not(id: get_login_user.id)
+    end
+    p @users
+    render :template => "search/index"
+  end
+
   def read
     @atricle_id = params[:article_id]
     article = Article.find(@atricle_id)

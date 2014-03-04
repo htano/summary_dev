@@ -4,6 +4,7 @@ SummaryDev::Application.routes.draw do
   get "search/index"
   get "search/search_article"
   get "search/search_user"
+  get "search/search_user_article"
   post "search/read"
   post "search/not_read"
   post "search/follow"
