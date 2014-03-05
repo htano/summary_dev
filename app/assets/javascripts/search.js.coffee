@@ -28,6 +28,10 @@ BLANK = ''
       set_target_user_selected()
       $(".type_area").hide 10
       $(".category_area").hide 10
+    when "3"
+      $(".target_area").hide 10
+      $(".type_area").hide 10
+      $(".category_area").hide 10
 
   switch type
     when "1"

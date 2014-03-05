@@ -1,10 +1,18 @@
 <% if @user_num == 0 %>
   <div id="result_operation">
-    <span id="message"><%= @searchtext[0,10] %>の ユーザー検索結果 <%= @user_num %> 件</span>
+    <% if @target == "2" %>
+      <span id="message"><%= @searchtext[0,10] %>の ユーザー検索結果 <%= @user_num %> 件</span>
+    <% else @target == "3" %>
+      <span id="message"><%= @article_title[0,10] %>を登録している人</span>
+    <% end %>
   </div>
 <% else %>
   <div id="result_operation">
-    <span id="message"><%= @searchtext[0,10] %>の ユーザー検索結果 <%= @user_num %> 件</span>
+    <% if @target == "2" %>
+      <span id="message"><%= @searchtext[0,10] %>の ユーザー検索結果 <%= @user_num %> 件</span>
+    <% else @target == "3" %>
+      <span id="message"><%= @article_title[0,10] %>を登録している人</span>
+    <% end %>
     <% if get_login_user %>
     <span id="checkbox">
       <input type="checkbox" id="not_follow_only"><%= t("user.filter_only_not_follow") %></span>

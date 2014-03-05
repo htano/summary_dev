@@ -99,13 +99,19 @@ class SearchController < ApplicationController
   end
 
   def search_user_article
+    @searchtext = ""
     article_id = params[:article_id]
+    @article_title = Article.find(article_id).title
+    @target = params[:target] == BLANK || params[:target] == nil ? "3" : params[:target]
     @users = User.joins(:user_articles).where("user_articles.article_id" => article_id)
+=begin
     if signed_in?
       # 検索結果に自分は出さない
       @users = @users.where.not(id: get_login_user.id)
     end
-    p @users
+=end
+    @user_num = @users == BLANK || @users == nil ? 0 : @users.length
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(PAGE_PER)
     render :template => "search/index"
   end
 
