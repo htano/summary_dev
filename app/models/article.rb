@@ -60,10 +60,6 @@ class Article < ActiveRecord::Base
     return self.user_articles.count
   end
 
-  def get_readers_list
-    return self.user_articles.where(:read_flg => true)
-  end
-
   def read_later?(user)
     is_read_later = false
     if user then
