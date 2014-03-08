@@ -18,9 +18,6 @@ toggleUnfollowBtn();
           <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="<%= t("placeholder.search_text_article") %>">
         <% elsif @target == "2" %>
           <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="<%= t("placeholder.search_text_user") %>">
-        <% elsif @target == "3" %>
-          <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="<%= t("placeholder.search_text_user") %>">
-<!--          <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="<%= t("placeholder.search_text_user") %>">-->
         <% end %>
         <input type="submit" id="search" value="<%= t("search.search") %>" class="button button-flat:hover submit"><br>
       </div>
@@ -65,7 +62,7 @@ toggleUnfollowBtn();
   <% elsif @target == "2" %>
     <%= render :template => "/search/_result_user" %>
   <% elsif @target == "3" %>
-    <%= render :template => "/search/_result_user" %>
+    <%= render :template => "/search/_result_user_article" %>
   <% else %>
   <% end %>
 </div>
