@@ -66,11 +66,6 @@ hr {
       padding-top: 5px;
     }
 
-    #article_readers_num{
-      vertical-align: text-bottom;
-      color: #E88100;
-      font-size: 20px;
-    }
     #read_button{
       font-weight: bold;
     }
@@ -79,6 +74,12 @@ hr {
     }
 
     #article_read_mark{
+    }
+
+    #article_readers_num{
+      vertical-align: middle;
+      color: #E88100;
+      font-size: 20px;
     }
 
     #article_readers_char{

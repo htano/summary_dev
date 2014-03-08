@@ -41,17 +41,7 @@
     <!-- summary list -->
     <div id="summary_list" class="col-md-12">
       <div id="summary_list_header" class="row">
-        <div class="col-md-2">
-          <span id="article_readers_num"><%= @num_of_mark_users %></span>
-          <span id="article_readers_char"> 
-            <% if @num_of_mark_users != 1 then %>
-              <%= t('reader.count')%> 
-            <% else %>
-              <%= t('reader.count_one')%> 
-            <% end %>  
-          </span>
-        </div>
-        <div id="summarize" class="col-md-3">
+        <div id="summarize" class="col-md-5">
           <%= @category_name %>
         </div>
         <div id="summarize" class="col-md-3">
@@ -134,17 +124,24 @@
 
           <% end %>
         </div>
-      </div><!--end article_header-->
-      <div id="hr_summary_list_header" class="row">
+      </div>
+      <div  class="row">
         <div class="col-md-12">
           <hr>
         </div>
       </div><!--end hr_area--> 
-      <div class="row">
-        <div class="col-md-1">
-          <%= t('readers') %> 
+      <div id="summary_list_header" class="row">
+        <div  class="col-md-2">
+          <span id="article_readers_num"><%= @num_of_mark_users %></span>
+          <span id="article_readers_char"> 
+            <% if @num_of_mark_users != 1 then %>
+              <%= t('reader.count')%> 
+            <% else %>
+              <%= t('reader.count_one')%> 
+            <% end %>  
+          </span>
         </div>
-        <div class="col-md-11">
+        <div class="col-md-10">
           <% @readers_list.each_with_index do |reader, index|%>
           <%= link_to image_tag(reader.prof_image, :size => "32x32", :title => reader.name),
             {:controller => "mypage", :action => "index", :name => reader.name} %>
