@@ -5,11 +5,24 @@
 <% end %>
 
 <div id="summary_list_container" class="container">
-  <div class="row">
-    <!-- article recording date -->
-    <div  class="col-md-7">
+  <div id="article_header"class="row">
+    <div id="article_reader" class="col-md-2">
+      <span id="article_readers_num"><%= @num_of_mark_users %></span>
+      <span id="article_readers_char"> 
+        <% if @num_of_mark_users != 1 then %>
+          <%= t('reader.count')%> 
+        <% else %>
+          <%= t('reader.count_one')%> 
+        <% end %>  
+      </span>
+    </div>
+    <div id="category_name" class="col-md-2">
+        <%= @category_name %>
+    </div>
+    <div id="article_date" class="col-md-3">
         <%= @article.created_at.strftime("%Y/%m/%d/ %H:%M:%S") %>
     </div> 
+
 
     <div class="col-md-5">
       <script>(function(d, s, id) {
@@ -41,15 +54,12 @@
     <!-- summary list -->
     <div id="summary_list" class="col-md-12">
       <div id="summary_list_header" class="row">
-        <div id="summarize" class="col-md-5">
-          <%= @category_name %>
-        </div>
-        <div id="summarize" class="col-md-3">
-          <% unless @summary_by_me then %>
-            <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>') + t('summary.edit_the_article'),
-                  {:controller => "summary", :action => "edit", :article_id => @article.id } %>
-          <% end %>
-        </div>
+          <div id="article_title" class="col-md-8">
+            <% if @article.title %>
+              <%= link_to(@article.title,@article.url,:target=>["_blank"]) %>	
+            <% end %>
+          </div>
+
         <div class="col-md-2">
           <% if @user %>
             <div id ="article_read_later">
@@ -130,24 +140,6 @@
           <hr>
         </div>
       </div><!--end hr_area--> 
-      <div id="summary_list_header" class="row">
-        <div  class="col-md-2">
-          <span id="article_readers_num"><%= @num_of_mark_users %></span>
-          <span id="article_readers_char"> 
-            <% if @num_of_mark_users != 1 then %>
-              <%= t('reader.count')%> 
-            <% else %>
-              <%= t('reader.count_one')%> 
-            <% end %>  
-          </span>
-        </div>
-        <div class="col-md-10">
-          <% @readers_list.each_with_index do |reader, index|%>
-          <%= link_to image_tag(reader.prof_image, :size => "32x32", :title => reader.name),
-            {:controller => "mypage", :action => "index", :name => reader.name} %>
-          <% end %>
-        </div>
-      </div><!--end readers_area-->
       
       <div id="summary_list_body" class="row">
         <div class="col-md-8">
@@ -165,11 +157,6 @@
                         :style => "max-width: 15em;") %>
         </div>
         <div  class="col-md-9">
-          <div id="article_title">
-            <% if @article.title %>
-              <%= link_to(@article.title,@article.url,:target=>["_blank"]) %>	
-            <% end %>
-          </div>
           <div class="row">
             <% unless @article_preview == "" %>
               <div id="display_preview" class="col-md-3">
@@ -455,11 +442,25 @@
       </div>
 
     </div>
+   
+    <div  class="row">
+      <div class="col-md-12">
+        <hr>
+      </div>
+    </div><!--end hr_area--> 
     
     <div id="summary_list_footer" class="row">
-      <div class="col-md-12">
+      <div class="col-md-1">
+        <%= t('reader.count')%> 
       </div>
-    </div>
+      <div class="col-md-11">
+        <% @readers_list.each_with_index do |reader, index|%>
+        <%= link_to image_tag(reader.prof_image, :size => "32x32", :title => reader.name),
+          {:controller => "mypage", :action => "index", :name => reader.name} %>
+        <% end %>
+      </div>
+    </div><!--end readers_area-->
+    
   </div>
 
   <!-- pass to other side-->
