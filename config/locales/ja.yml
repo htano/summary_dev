@@ -124,6 +124,9 @@ ja:
     type_content: "内容"
     type_tag: "タグ"
     type_domain: "ドメイン"
+    result_article: "記事検索結果"
+    result_user: "ユーザー検索結果"
+    result_user_article: "を登録したユーザー"
   tag:
     no_tags: "設定されているタグがありません"
     no_recommend_tags: "この記事にタグは設定されていません。"

@@ -1,10 +1,10 @@
 <% if @user_num == 0 %>
   <div id="result_operation">
-    <span id="message"><%= @article_title[0,30] %>を登録したユーザー</span>
+    <span id="message"><%= @article_title[0,30] %><%= t("search.result_user_article") %></span>
   </div>
 <% else %>
   <div id="result_operation">
-    <span id="message"><%= @article_title[0,30] %>を登録したユーザー</span>
+    <span id="message"><%= @article_title[0,30] %><%= t("search.result_user_article") %></span>
     <span id="sort">
       <div class="btn-group sort-split-btn">
         <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><%= @sort_menu_title %><span class="caret"></span></button>
