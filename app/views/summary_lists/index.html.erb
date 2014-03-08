@@ -60,7 +60,7 @@
             <% end %>
           </div>
 
-        <div class="col-md-2">
+        <div id="read_it_button" class="col-md-2">
           <% if @user %>
             <div id ="article_read_later">
               <div id="read_later_button" 
@@ -74,7 +74,7 @@
                      :remote => true},
                      {:type => "button",
                       :id => "read_button",
-                      :class=>"btn btn-info btn-sm", 
+                      :class=>"btn btn-default btn-xs", 
                      :method => :post} %>
              </div>
              <div id="not_read_button" 
@@ -88,13 +88,13 @@
                     :remote => true},
                    {:type => "button",
                     :id => "read_button",
-                    :class=>"btn btn-default btn-sm", 
+                      :class=>"btn btn-default btn-xs", 
                    :method => :post} %>
               </div>
             </div>
           <% end %>
         </div>
-        <div class="col-md-2">
+        <div id="read_it_button" class="col-md-2">
           <% if @user %>
             <div id ="article_read_mark"
               <% unless @is_read_later then %>
@@ -112,7 +112,7 @@
                    :remote => true},
                    {:type => "button",
                     :id => "read_button",
-                    :class=>"btn btn-info btn-sm", 
+                      :class=>"btn btn-default btn-xs", 
                    :method => :post} %>
              </div>
              <div id="already_read_button" 
@@ -126,7 +126,7 @@
                             :remote => true},
                  {:type => "button",
                   :id => "read_button",
-                  :class=>"btn btn-default btn-sm", 
+                      :class=>"btn btn-default btn-xs", 
                  :method => :post} %>
               </div>
 
@@ -153,47 +153,50 @@
 
       <div id="summary_list_body" class="row">
         <div class="col-md-3" style="height=30em; overflow:hidden;">
-          <%= image_tag(@article.thumbnail, :width => "100%",
-                        :style => "max-width: 15em;") %>
+          <div>
+            <%= image_tag(@article.thumbnail, :width => "100%",
+                          :style => "max-width: 15em;") %>
+          </div>
+          <% unless @article_preview == "" %>
+            <div id="preview_head">
+              <%= t('article.contents_preview')%>
+            </div>
+            <div id="preview">
+              <%= @article_preview %>...
+            </div>
+          <% else %>
+          <% end %>
+
         </div>
-        <div  class="col-md-9">
+        <div class="col-md-9">
           <div class="row">
-            <% unless @article_preview == "" %>
-              <div id="display_preview" class="col-md-3">
-                <a><%= t('article.contents_preview') %><span class="glyphicon glyphicon-chevron-down"></span></a>
+            <div id="tags_header" class="col-md-1">
+              <%= t('search.type_tag')%> 
+            </div>
+            <% tags = @article.get_top_rated_tag %>
+            <% unless tags.count == 0 then%>
+              <div id="tags_box" class="col-md-7">
+                <% tags.each do |t| %>
+                  <div id="tags">
+                      <%= t %>
+                  </div>
+                <% end %>
               </div>
-              <div id="hide_preview" class="col-md-3" style="display:none">
-                <a><%= t('article.contents_preview') %><span class="glyphicon glyphicon-chevron-up"></span></a>
+              <div class="col-md-2">
+                <!-- margin -->
               </div>
             <% else %>
-              <div class="col-md-3">
-              </div>
+              <div id="notags" class="col-md-9">
+              <%= t('tag.no_tags')%> 
+              </div> 
             <% end %>
-                <div id="tags_header" class="col-md-1">
-                  <%= t('search.type_tag')%> 
-                </div>
-                <% tags = @article.get_top_rated_tag %>
-                <% unless tags.count == 0 then%>
-                  <div id="tags_box" class="col-md-6">
-                    <% tags.each do |t| %>
-                      <span id="tags">
-                        <%= t %>
-                      </span>
-                    <% end %>
-                  </div>
-                  <div class="col-md-2">
-                    <!-- margin -->
-                  </div>
-                <% else %>
-                  <div id="notags" class="col-md-8">
-                  <%= t('tag.no_tags')%> 
-                  </div> 
-                <% end %>
-          </div>
-          <div id="preview" class="row" style="display:none">
-            <div class="col-md-max">
-              <%= @article_preview %>
-              ...
+            <div class="col-md-2">
+              <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>') + t('summary.summarize'),
+                {:controller => "summary", :action => "edit", :article_id => @article.id },
+                 {:type => "button",
+                  :id => "summarize-button",
+                  :class=>"btn btn-default btn-xs", 
+                 :method => :post} %>
             </div>
           </div>
 
@@ -450,12 +453,12 @@
     </div><!--end hr_area--> 
     
     <div id="summary_list_footer" class="row">
-      <div class="col-md-1">
+      <div id="readers" class="col-md-1">
         <%= t('reader.count')%> 
       </div>
       <div class="col-md-11">
         <% @readers_list.each_with_index do |reader, index|%>
-        <%= link_to image_tag(reader.prof_image, :size => "32x32", :title => reader.name),
+        <%= link_to image_tag(reader.prof_image, :size => "50x50", :title => reader.name),
           {:controller => "mypage", :action => "index", :name => reader.name} %>
         <% end %>
       </div>

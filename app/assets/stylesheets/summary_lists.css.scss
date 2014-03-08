@@ -78,8 +78,9 @@ hr {
     }
 
     #summary_list_header{
-
-      #article_title{ font-weight: bold; 
+      #article_title{ 
+        padding-top: 5px;
+        font-weight: bold; 
         font-size: 19px; 
         overflow: hidden;
         //white-space: nowrap;
@@ -87,7 +88,12 @@ hr {
         -moz-text-overflow:ellipsis; /* Firefox */
         -o-text-overflow: ellipsis; /* Opera */
       }
-
+      #read_already_button{
+        padding-top: 5px;
+      }
+      #read_it_button{
+        padding-top: 5px;
+      }
       padding-top: 5px;
 
 
@@ -117,6 +123,10 @@ hr {
     }
     #summary_list_body{ 
 
+      #preview_head{
+        color: #0FC7f5;
+      }
+
       #paginate{ 
         height: 40px;
         text-align: center; 
@@ -138,27 +148,35 @@ hr {
       }
 
       #tags_header{
-        white-space: nowrap;
-        padding-left: 10px;
-        padding-right: 10px;
-        border: solid;
-        border-color: #FEE5E5;
-        text-align: center;
-        border-radius: 5px;
+        text-align: right;
+        // white-space: nowrap;
+        // padding-left: 10px;
+        // padding-right: 10px;
+        // border: solid;
+        // border-color: #FEE5E5;
+        // text-align: center;
+        // border-radius: 5px;
       }
 
+      #summarize-btn, #edit-tag-btn {
+        height: 20px;
+        a {
+          width: 90px;
+          height: 22px;
+          p {
+            float: left;
+            margin-left: 10px;
+          }
+        }
+      }
       #tags_box{
+        height: 20px;
         #tags{
-          padding: 0px 2px 0px 2px;
-          margin: 2px;
-          white-space: nowrap;
-          background-color: #FEE5E5;
-          border-radius: 5px;
         }
       }
       
       #notags{
-          padding-top: 2px;
+          // padding-top: 2px;
       }
       #summary_box{
         min-height: 80px;
@@ -206,9 +224,6 @@ hr {
             font-size: 18px;
 
           }
-          #summary_box_footer{
-
-          }
         }
 
       }
@@ -221,6 +236,12 @@ hr {
     }
   }
 
+  #summary_list_footer{
+    #readers{
+      text-align: right;
+    }
+    padding: 0px 0px 8px 0px;
+  }
 
   //----------------------------------------	
   //  readmore_char (for readmore.js) 
