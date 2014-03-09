@@ -178,6 +178,12 @@ hr {
       #notags{
           // padding-top: 2px;
       }
+
+      #summarize_button{
+        height: 20px;
+        width: 90%; 
+      }
+
       #summary_box{
         min-height: 80px;
         padding: 3px 3px 10px 3px;
@@ -198,6 +204,12 @@ hr {
             #hr_summary_box_header
             {
               background-color: #FFFFFF;
+            }
+
+            #summarize_button{
+              margin-top: 5px;
+              font-weight: bold;
+              width: 80px;
             }
 
             #follow_button{
@@ -221,7 +233,7 @@ hr {
             }
           }
           #summary_box_body{
-            font-size: 18px;
+            font-size: 17px;
 
           }
         }

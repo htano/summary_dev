@@ -1,5 +1,5 @@
 class SummaryListsController < ApplicationController
-  NUM_OF_SUMMARY_AT_ONE_PAGE = 5
+  NUM_OF_SUMMARY_AT_ONE_PAGE = 4 
   NUM_OF_READERS_LIST = 16 
   def index
     logger.info("index start")

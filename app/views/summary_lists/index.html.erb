@@ -194,7 +194,7 @@
               <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>') + t('summary.summarize'),
                 {:controller => "summary", :action => "edit", :article_id => @article.id },
                  {:type => "button",
-                  :id => "summarize-button",
+                  :id => "summarize_button",
                   :class=>"btn btn-default btn-xs", 
                  :method => :get} %>
             </div>
@@ -228,8 +228,12 @@
                       <%= t('user.yourself')%> 
                     </div>
                     <div>
-                      <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>') + t('summary.modify_my_summary'),
-                        {:controller => "summary", :action => "edit", :article_id => @article.id } %>
+                      <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>') + t('summary.edit'),
+                      {:controller => "summary", :action => "edit", :article_id => @article.id },
+                       {:type => "button",
+                        :id => "summarize_button",
+                        :class=>"btn btn-default btn-xs", 
+                       :method => :get} %>
                     </div>
                   </div>
                   <div id="summary_edit_date" class="col-md-5">
