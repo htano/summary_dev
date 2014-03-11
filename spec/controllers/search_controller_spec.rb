@@ -203,7 +203,7 @@ describe SearchController do
     end
   end
 
-  describe "GET #search_user without signing" do
+  describe "GET #search_user without signin" do
     it "search_user sort 1" do
       get :search_user, :searchtext => "", :sort => "1"
       expect(response.response_code).to eq 200
@@ -219,7 +219,7 @@ describe SearchController do
   end
 
 
-  describe "GET #search_user without signing" do
+  describe "GET #search_user with signin" do
     before(:each) do
       session[:openid_url] = "oauth://facebook/12354"
     end
@@ -233,6 +233,34 @@ describe SearchController do
     end
     it "search_user sort 3" do
       get :search_user, :searchtext => "", :sort => "3"
+      expect(response.response_code).to eq 302
+    end
+  end
+
+  describe "GET #search_user_article with signin" do
+    before(:each) do
+      session[:openid_url] = "oauth://facebook/12354"
+    end
+    it "search_user_article sort 1" do
+      get :search_user_article, :sort => "1", :article_id => "1"
+      expect(assigns[:article_title]).to eq "auのKDDI、あきれた二枚舌営業〜購入時に虚偽説明、強いクレームには特別に補償対応 （Business Journal） - Yahoo!ニュース"
+      expect(assigns[:article_id]).to eq "1"
+      expect(assigns[:target]).to eq "3"
+      expect(assigns[:sort]).to eq "1"
+      expect(assigns[:user_num]).to eq 0
+      expect(response.response_code).to eq 200
+    end
+    it "search_user_article sort 2" do
+      get :search_user_article, :sort => "2", :article_id => "1"
+      expect(assigns[:article_title]).to eq "auのKDDI、あきれた二枚舌営業〜購入時に虚偽説明、強いクレームには特別に補償対応 （Business Journal） - Yahoo!ニュース"
+      expect(assigns[:article_id]).to eq "1"
+      expect(assigns[:target]).to eq "3"
+      expect(assigns[:sort]).to eq "2"
+      expect(assigns[:user_num]).to eq 0
+      expect(response.response_code).to eq 200
+    end
+    it "search_user_article sort 3" do
+      get :search_user_article, :sort => "3", :article_id => "1"
       expect(response.response_code).to eq 302
     end
   end

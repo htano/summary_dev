@@ -75,12 +75,6 @@ class SearchController < ApplicationController
     @target = params[:target] == BLANK || params[:target] == nil ? "2" : params[:target]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"]).where("yuko_flg" => true)
-=begin
-    if signed_in?
-      # 検索結果に自分は出さない
-      @users = @users.where.not(id: get_login_user.id)
-    end
-=end
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
 
     case @sort
@@ -101,19 +95,12 @@ class SearchController < ApplicationController
   end
 
   def search_user_article
-    @searchtext = ""
     @article_title = ""
     @article_id = params[:article_id]
     @article_title = Article.find(@article_id).title
     @target = params[:target] == BLANK || params[:target] == nil ? "3" : params[:target]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @users = User.joins(:user_articles).where("user_articles.article_id" => @article_id)
-=begin
-    if signed_in?
-      # 検索結果に自分は出さない
-      @users = @users.where.not(id: get_login_user.id)
-    end
-=end
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
 
     case @sort
@@ -151,7 +138,7 @@ class SearchController < ApplicationController
         FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
       else
         respond_to do |format|
-          format.html { render :file => "#{Rails.root}/public/404.html", 
+          format.html { render :file => "#{Rails.root}/public/404.html",
                         :status => 404, :layout => false, :content_type => 'text/html'}
           format.js { render '404_error_page' and return }
         end

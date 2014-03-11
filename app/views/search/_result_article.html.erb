@@ -47,11 +47,11 @@
         </div>
         <div id="user_article_num">
           <% if article.user_articles_count == 1 %>
-            <%= link_to article.user_articles_count.to_s+t("reader.count_one") , {:controller =>"search", :action => "search_user_article", :article_id => article.id} %>
-<!--            <p><%= article.user_articles_count.to_s+t("reader.count_one") %></p>-->
+<!--            <%= link_to article.user_articles_count.to_s+t("reader.count_one") , {:controller =>"search", :action => "search_user_article", :article_id => article.id} %>-->
+            <p><%= article.user_articles_count.to_s+t("reader.count_one") %></p>
           <% else %>
-            <%= link_to article.user_articles_count.to_s+t("reader.count") , {:controller =>"search", :action => "search_user_article", :article_id => article.id} %>
-<!--            <p><%= article.user_articles_count.to_s+t("reader.count") %></p>-->
+<!--            <%= link_to article.user_articles_count.to_s+t("reader.count") , {:controller =>"search", :action => "search_user_article", :article_id => article.id} %>-->
+            <p><%= article.user_articles_count.to_s+t("reader.count") %></p>
           <% end %>
         </div>
       </div>
