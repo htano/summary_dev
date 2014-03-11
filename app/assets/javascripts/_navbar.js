@@ -3,11 +3,14 @@ $(document).ready(function() {
   if(signed_in_status == "true"){
     set_type_nav();
   } else {
-    $("#navbar_form").attr("action","/search/search_article");
-    $("#search_nav").val("検索");
-    /*$("#search_nav").val(I18n.t('search.search'));*/
-    /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.search_text'));*/
-    $("#searchtext_nav").attr("placeholder","気になる言葉に関連する記事を検索しましょう！");
+    var type_nav = $.cookie("type_nav");
+    if(type_nav == "2") {
+      click_dropdown_menu_add();
+    } else if(type_nav == "3") {
+      click_dropdown_menu_search_user();
+    } else {
+      click_dropdown_menu_search_article();
+    }
   }
 });
 
