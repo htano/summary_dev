@@ -34,6 +34,11 @@ class User < ActiveRecord::Base
   has_many :good_summaries, :dependent => :destroy
 
   # Class method
+  def self.get_readers_list(article)
+    user_ids = article.user_articles.select(:user_id)
+    return User.where(:id => user_ids)
+  end
+
   def self.get_user_by_openid(openid)
     return where(["open_id = ? and yuko_flg = ?", openid, true]).first
   end

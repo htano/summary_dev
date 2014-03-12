@@ -1,5 +1,6 @@
 class SummaryListsController < ApplicationController
-  NUM_OF_SUMMARY_AT_ONE_PAGE = 5
+  NUM_OF_SUMMARY_AT_ONE_PAGE = 4 
+  NUM_OF_READERS_LIST = 16 
   def index
     logger.info("index start")
 
@@ -20,9 +21,10 @@ class SummaryListsController < ApplicationController
     @summary_by_me = @article.summaries.find_by user_id: @user 
     @is_read_later = @article.read_later?(@user) 
     @category_name = t('category.' + @article.get_category_name)
+    @readers_list = User.get_readers_list(@article).sort_by{rand}[0..NUM_OF_READERS_LIST]
   end
 
-  def good_summary 
+  def good_summary
     logger.debug("start good_summary")
     unless get_login_user then
       redirect_to :controller => "consumer", :action => "index"
