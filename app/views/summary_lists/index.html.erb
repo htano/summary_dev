@@ -5,32 +5,48 @@
 <% end %>
 
 <div id="summary_list_container" class="container">
-  <div class="row">
-    <!-- article recording date -->
-    <div  class="col-md-7">
+  <div id="article_header"class="row">
+    <div id="article_reader" class="col-md-2">
+      <span id="article_readers_num"><%= @num_of_mark_users %></span>
+      <span id="article_readers_char"> 
+        <% if @num_of_mark_users != 1 then %>
+          <%= t('reader.count')%> 
+        <% else %>
+          <%= t('reader.count_one')%> 
+        <% end %>  
+      </span>
+    </div>
+    <div id="category_name" class="col-md-2">
+        <%= @category_name %>
+    </div>
+    <div id="article_date" class="col-md-3">
         <%= @article.created_at.strftime("%Y/%m/%d/ %H:%M:%S") %>
     </div> 
 
+
     <div class="col-md-5">
-    <script>(function(d, s, id) {
+      <script>(function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
       js = d.createElement(s); js.id = id;
       js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=612232268799464";
       fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <div class="fb-like" data-href="<%= request.url %>/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
-
-    <a href="http://b.hatena.ne.jp/entry/<%= request.url %>" class="hatena-bookmark-button" data-hatena-bookmark-title="SummaQ! ｜あとで読むをちゃんと読む 〜 要約キュレーションサービス" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-
-      <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-      <script>!function(d,s,id)
-      {var js,fjs=d.getElementsByTagName(s)[0],
-        p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id))
-        {js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}
-      }(document, 'script', 'twitter-wjs');
       </script>
+      <span id="social_buttons" class="fb-like" data-href="<%= request.url %>/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></span>
+
+        <span id="social_buttons">
+        <a href="http://b.hatena.ne.jp/entry/<%= request.url %>" class="hatena-bookmark-button" data-hatena-bookmark-title="SummaQ! ｜あとで読むをちゃんと読む 〜 要約キュレーションサービス" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+        </v>
+      <span id="social_buttons">
+        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+          <script>!function(d,s,id)
+          {var js,fjs=d.getElementsByTagName(s)[0],
+            p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id))
+            {js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}
+          }(document, 'script', 'twitter-wjs');
+          </script>
+      </span>
     </div>
   </div>
 
@@ -38,26 +54,13 @@
     <!-- summary list -->
     <div id="summary_list" class="col-md-12">
       <div id="summary_list_header" class="row">
-        <div class="col-md-2">
-          <span id="article_readers_num"><%= @num_of_mark_users %></span>
-          <span id="article_readers_char"> 
-            <% if @num_of_mark_users != 1 then %>
-              <%= t('reader.count')%> 
-            <% else %>
-              <%= t('reader.count_one')%> 
-            <% end %>  
-          </span>
-        </div>
-        <div id="summarize" class="col-md-3">
-          <%= @category_name %>
-        </div>
-        <div id="summarize" class="col-md-3">
-          <% unless @summary_by_me then %>
-            <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>') + t('summary.edit_the_article'),
-                  {:controller => "summary", :action => "edit", :article_id => @article.id } %>
-          <% end %>
-        </div>
-        <div class="col-md-2">
+          <div id="article_title" class="col-md-8">
+            <% if @article.title %>
+              <%= link_to(@article.title,@article.url,:target=>["_blank"]) %>	
+            <% end %>
+          </div>
+
+        <div id="read_it_button" class="col-md-2">
           <% if @user %>
             <div id ="article_read_later">
               <div id="read_later_button" 
@@ -71,7 +74,7 @@
                      :remote => true},
                      {:type => "button",
                       :id => "read_button",
-                      :class=>"btn btn-info btn-sm", 
+                      :class=>"btn btn-default btn-xs", 
                      :method => :post} %>
              </div>
              <div id="not_read_button" 
@@ -85,13 +88,13 @@
                     :remote => true},
                    {:type => "button",
                     :id => "read_button",
-                    :class=>"btn btn-default btn-sm", 
+                      :class=>"btn btn-default btn-xs", 
                    :method => :post} %>
               </div>
             </div>
           <% end %>
         </div>
-        <div class="col-md-2">
+        <div id="read_already_button" class="col-md-2">
           <% if @user %>
             <div id ="article_read_mark"
               <% unless @is_read_later then %>
@@ -109,7 +112,7 @@
                    :remote => true},
                    {:type => "button",
                     :id => "read_button",
-                    :class=>"btn btn-info btn-sm", 
+                      :class=>"btn btn-default btn-xs", 
                    :method => :post} %>
              </div>
              <div id="already_read_button" 
@@ -123,7 +126,7 @@
                             :remote => true},
                  {:type => "button",
                   :id => "read_button",
-                  :class=>"btn btn-default btn-sm", 
+                      :class=>"btn btn-default btn-xs", 
                  :method => :post} %>
               </div>
 
@@ -131,13 +134,13 @@
 
           <% end %>
         </div>
-      </div><!--end article_header-->
-      <div id="hr_summary_list_header" class="row">
+      </div>
+      <div  class="row">
         <div class="col-md-12">
           <hr>
         </div>
-      </div><!--end hr_area-->
-
+      </div><!--end hr_area--> 
+      
       <div id="summary_list_body" class="row">
         <div class="col-md-8">
           <%= image_tag "http://favicon.hatena.ne.jp/?url=" + @article.url %> 
@@ -150,52 +153,50 @@
 
       <div id="summary_list_body" class="row">
         <div class="col-md-3" style="height=30em; overflow:hidden;">
-          <%= image_tag(@article.thumbnail, :width => "100%",
-                        :style => "max-width: 15em;") %>
-        </div>
-        <div  class="col-md-9">
-          <div id="article_title">
-            <% if @article.title %>
-              <%= link_to(@article.title,@article.url,:target=>["_blank"]) %>	
-            <% end %>
+          <div>
+            <%= image_tag(@article.thumbnail, :width => "100%",
+                          :style => "max-width: 15em;") %>
           </div>
+          <% unless @article_preview == "" %>
+            <div id="preview_head">
+              <%= t('article.contents_preview')%>
+            </div>
+            <div id="preview">
+              <%= @article_preview %>...
+            </div>
+          <% else %>
+          <% end %>
+
+        </div>
+        <div class="col-md-9">
           <div class="row">
-            <% unless @article_preview == "" %>
-              <div id="display_preview" class="col-md-3">
-                <a><%= t('article.contents_preview') %><span class="glyphicon glyphicon-chevron-down"></span></a>
+            <div id="tags_header" class="col-md-1">
+              <%= t('search.type_tag')%> 
+            </div>
+            <% tags = @article.get_top_rated_tag %>
+            <% unless tags.count == 0 then%>
+              <div id="tags_box" class="col-md-7">
+                <% tags.each do |t| %>
+                  <div id="tags">
+                      <%= t %>
+                  </div>
+                <% end %>
               </div>
-              <div id="hide_preview" class="col-md-3" style="display:none">
-                <a><%= t('article.contents_preview') %><span class="glyphicon glyphicon-chevron-up"></span></a>
+              <div class="col-md-2">
+                <!-- margin -->
               </div>
             <% else %>
-              <div class="col-md-3">
-              </div>
+              <div id="notags" class="col-md-9">
+              <%= t('tag.no_tags')%> 
+              </div> 
             <% end %>
-                <div id="tags_header" class="col-md-1">
-                  <%= t('search.type_tag')%> 
-                </div>
-                <% tags = @article.get_top_rated_tag %>
-                <% unless tags.count == 0 then%>
-                  <div id="tags_box" class="col-md-6">
-                    <% tags.each do |t| %>
-                      <span id="tags">
-                        <%= t %>
-                      </span>
-                    <% end %>
-                  </div>
-                  <div class="col-md-2">
-                    <!-- margin -->
-                  </div>
-                <% else %>
-                  <div id="notags" class="col-md-8">
-                  <%= t('tag.no_tags')%> 
-                  </div> 
-                <% end %>
-          </div>
-          <div id="preview" class="row" style="display:none">
-            <div class="col-md-max">
-              <%= @article_preview %>
-              ...
+            <div class="col-md-2">
+              <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>') + t('summary.summarize'),
+                {:controller => "summary", :action => "edit", :article_id => @article.id },
+                 {:type => "button",
+                  :id => "summarize_button",
+                  :class=>"btn btn-default btn-xs", 
+                 :method => :get} %>
             </div>
           </div>
 
@@ -227,8 +228,12 @@
                       <%= t('user.yourself')%> 
                     </div>
                     <div>
-                      <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>') + t('summary.modify_my_summary'),
-                        {:controller => "summary", :action => "edit", :article_id => @article.id } %>
+                      <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>') + t('summary.edit'),
+                      {:controller => "summary", :action => "edit", :article_id => @article.id },
+                       {:type => "button",
+                        :id => "summarize_button",
+                        :class=>"btn btn-default btn-xs", 
+                       :method => :get} %>
                     </div>
                   </div>
                   <div id="summary_edit_date" class="col-md-5">
@@ -444,11 +449,25 @@
       </div>
 
     </div>
+   
+    <div  class="row">
+      <div class="col-md-12">
+        <hr>
+      </div>
+    </div><!--end hr_area--> 
     
     <div id="summary_list_footer" class="row">
-      <div class="col-md-12">
+      <div id="readers" class="col-md-1">
+        <%= t('reader.count')%> 
       </div>
-    </div>
+      <div class="col-md-11">
+        <% @readers_list.each_with_index do |reader, index|%>
+        <%= link_to image_tag(reader.prof_image, :size => "50x50", :title => reader.name),
+          {:controller => "mypage", :action => "index", :name => reader.name} %>
+        <% end %>
+      </div>
+    </div><!--end readers_area-->
+    
   </div>
 
   <!-- pass to other side-->

@@ -7,7 +7,7 @@ module ApplicationHelper
 
   def render_user_name
     if signed_in?
-      return link_to image_tag(get_login_user.prof_image, :size => "23x23") + 
+      return link_to image_tag(get_login_user.prof_image, :size => "23x23", :onerror => 'this.src="'+asset_path('no_image.png')+'"') + 
                       content_tag(:p, get_current_user_name), :controller => "mypage", :action => "index"
     else
     end

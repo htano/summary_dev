@@ -28,9 +28,11 @@ $(document).ready(function() {
           <th><textarea id="content" name="content"  placeholder="<%= t("summary.placeholder") %>" onKeyUp="countContentCharacters()"><%= @content %></textarea></th>
           <th>
             <span id="count" class="count"><%= @content_num %></span>
+            <!--
             <span>
               <button class='btn' data-clipboard-target='content' data-clipboard-text='Default clipboard text from attribute' id='d_clip_button'>クリップボード</button>
             </span>
+            -->
           </th>
         </tr>
       </table>

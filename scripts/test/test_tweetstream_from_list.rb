@@ -8,6 +8,7 @@ ACCESS_TOKEN_KEY = ENV['TWITTER_ACCESS_TOKEN_KEY']
 ACCESS_SECRET    = ENV['TWITTER_ACCESS_SECRET']
 
 TOUCHE_FILE = "#{Rails.root}/tmp/test_tweetstream.ongoing"
+DOMAIN_RANKING_FILE = "#{Rails.root}/tmp/domains-top50.txt"
 
 # 設定
 TweetStream.configure do |config|
@@ -18,37 +19,14 @@ TweetStream.configure do |config|
   config.auth_method        = :oauth
 end
 
-domains = [
-#  'blog livedoor jp',
-#  'himasoku com',
-#  'matome naver jp',
-#  'alfalfalfa com',
-  'news mynavi jp',
-  'news nicovideo jp',
-  'irorio jp',
-  'www men-joy jp',
-  'jp reuters com',
-  'www3 nhk or jp news',
-#  'mainichi jp',
-  'www cnn co jp html',
-  'www newsweekjapan jp',
-  'www j-cast com',
-#  'www huffingtonpost jp',
-#  'headlines yahoo co jp hl',
-#  'headlines yahoo co jp hl ent',
-#  'headlines yahoo co jp hl life',
-#  'headlines yahoo co jp hl sci',
-  'www asahi com articles',
-#  'news livedoor com article detail',
-#  'zasshi news yahoo co jp',
-  'www yomiuri co jp news',
-#  'www nikkei com',
-#  'sankei jp msn com',
-  'jp techcrunch com',
-  'www gizmodo jp',
-  'www itmedia co jp',
-  'jp wsj com article html',
-]
+domains = []
+open(DOMAIN_RANKING_FILE) do |f|
+  f.each do |line|
+    line.chomp!
+    line.gsub!(/\./, " ")
+    domains.push(line)
+  end
+end
 
 FileUtils.touch(TOUCHE_FILE)
 #TweetStream::Client.new.sample do |status|

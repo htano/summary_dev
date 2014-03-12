@@ -39,7 +39,8 @@ module MyDelayedJobs
       "ad.jp.doubleclick.net",
       "api.amebame.com",
       "stat.profile.ameba.jp",
-      "accesstrade"
+      "accesstrade",
+      "blank"
     ]
     EXCEPTION_PAGE_LIST = [
       "http://g-ec2.images-amazon.com/images/G/09/gno/beacon/BeaconSprite-JP-02._V393500380_.png",

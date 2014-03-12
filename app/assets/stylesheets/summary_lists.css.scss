@@ -30,184 +30,238 @@ hr {
 }
 
 #summary_list_container{
+  text-align: left;
   margin: auto;
   margin-top: 30px;
   margin-bottom: 30px;
   width: 80%;
   max-width: 980px;
-}
-
-#summary_list{
-    border-top: solid;
-    border-bottom: solid;
-    border-color: $basic-color;
-
-  //for my Kaminari
-  .pagination {
-    display: inline-block;
-    padding-left: 0;
-    margin: 0;
-    border-radius: 4px;
+  
+  #article_header{
   }
-
-  #summary_list_header{
-
-
-    padding-top: 5px;
-
-
-    #summarize{
-      padding-top: 5px;
-    }
-
+  #article_reader{
     #article_readers_num{
-      vertical-align: text-bottom;
-      color: #E88100;
-      font-size: 20px;
-    }
-    #read_button{
-      font-weight: bold;
-    }
-
-    #article_read_later{
-    }
-
-    #article_read_mark{
+      font-size: 23px;
     }
 
     #article_readers_char{
-      color: #E88100;
     }
   }
-  #summary_list_footer{
 
-
+  #category_name{
+    padding-top: 10px;
+    vertical-align: bottom;
   }
 
-  #hr_summary_list_header
-  { 
-    
+  #article_date{
+    padding-top: 10px;
+    vertical-align: bottom;
   }
-  #summary_list_body{ 
 
-    #paginate{ 
-      height: 40px;
-      text-align: center; 
-    }
 
-    #article_title{ font-weight: bold; 
-      font-size: 23px; 
-      overflow: hidden;
-      //white-space: nowrap;
-      text-overflow: ellipsis;
-      -moz-text-overflow:ellipsis; /* Firefox */
-      -o-text-overflow: ellipsis; /* Opera */
-    }
-    #display_preview{
-      cursor: pointer;
-    }
+  #social_buttons{
+      vertical-align: top;
+  }
 
-    #hide_preview{
-      cursor: pointer;
-    }
 
-    #preview{
-      padding-top: 10px;
-      padding-right: 10px;
-      padding-bottom: 10px;
-      margin: 0px 5px 15px 0px;
-    }
-
-    #tags_header{
-      white-space: nowrap;
-      padding-left: 10px;
-      padding-right: 10px;
-      border: solid;
-      border-color: #FEE5E5;
-      text-align: center;
-      border-radius: 5px;
-    }
-
-    #tags_box{
-      #tags{
-        padding: 0px 2px 0px 2px;
-        margin: 2px;
-        white-space: nowrap;
-        background-color: #FEE5E5;
-        border-radius: 5px;
-      }
-    }
-    
-    #notags{
-        padding-top: 2px;
-    }
-    #summary_box{
-      min-height: 80px;
-      padding: 3px 3px 10px 3px;
-      margin: 15px 5px 15px 0px;
-      background-color: #FFFFFF;
-      border-style: solid;
+  #summary_list{
+      border-top: solid;
+      border-bottom: solid;
       border-color: $basic-color;
-      border-width: 1px;
-      #summary_box_left{
-        padding: 0px;
-        #summary_auther_img{
-        }
+
+    //for my Kaminari
+    .pagination {
+      display: inline-block;
+      padding-left: 0;
+      margin: 0;
+      border-radius: 4px;
+    }
+
+    #summary_list_header{
+      #article_title{ 
+        padding-top: 5px;
+        font-weight: bold; 
+        font-size: 19px; 
+        overflow: hidden;
+        //white-space: nowrap;
+        text-overflow: ellipsis;
+        -moz-text-overflow:ellipsis; /* Firefox */
+        -o-text-overflow: ellipsis; /* Opera */
+      }
+      #read_already_button{
+        padding-top: 5px;
+      }
+      #read_it_button{
+        padding-top: 5px;
+      }
+      padding-top: 5px;
+
+
+      #summarize{
+        padding-top: 5px;
       }
 
-      #summary_box_right{
-        #summary_box_header{
-          padding-top: 5px;
-          #hr_summary_box_header
-          {
-            background-color: #FFFFFF;
+      #read_button{
+        font-weight: bold;
+      }
+
+      #article_read_later{
+      }
+
+      #article_read_mark{
+      }
+
+    }
+    #summary_list_footer{
+
+
+    }
+
+    #hr_summary_list_header
+    { 
+      
+    }
+    #summary_list_body{ 
+
+      #preview_head{
+        color: #0FC7f5;
+      }
+
+      #paginate{ 
+        height: 40px;
+        text-align: center; 
+      }
+
+      #display_preview{
+        cursor: pointer;
+      }
+
+      #hide_preview{
+        cursor: pointer;
+      }
+
+      #preview{
+        padding-top: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        margin: 0px 5px 15px 0px;
+      }
+
+      #tags_header{
+        text-align: right;
+        // white-space: nowrap;
+        // padding-left: 10px;
+        // padding-right: 10px;
+        // border: solid;
+        // border-color: #FEE5E5;
+        // text-align: center;
+        // border-radius: 5px;
+      }
+
+      #summarize-btn, #edit-tag-btn {
+        height: 20px;
+        a {
+          width: 90px;
+          height: 22px;
+          p {
+            float: left;
+            margin-left: 10px;
           }
-
-          #follow_button{
-            margin-top: 5px;
-            font-weight: bold;
-            width: 80px;
-          }
-
-          #good_button{
-            vertical-align: top;
-            font-weight: bold;
-            width: 80px;
-          }
-
-          #count{
-            border-radius: 10px;
-            padding: 2px 10px 2px 10px;
-            background-color: #FEE5E5;
-            font-weight: bold;
-            font-size: 20px;
-          }
-        }
-        #summary_box_body{
-          font-size: 18px;
-
-        }
-        #summary_box_footer{
-
         }
       }
+      #tags_box{
+        height: 20px;
+        #tags{
+        }
+      }
+      
+      #notags{
+          // padding-top: 2px;
+      }
+
+      #summarize_button{
+        height: 20px;
+        width: 90%; 
+      }
+
+      #summary_box{
+        min-height: 80px;
+        padding: 3px 3px 10px 3px;
+        margin: 15px 5px 15px 0px;
+        background-color: #FFFFFF;
+        border-style: solid;
+        border-color: $basic-color;
+        border-width: 1px;
+        #summary_box_left{
+          padding: 0px;
+          #summary_auther_img{
+          }
+        }
+
+        #summary_box_right{
+          #summary_box_header{
+            padding-top: 5px;
+            #hr_summary_box_header
+            {
+              background-color: #FFFFFF;
+            }
+
+            #summarize_button{
+              margin-top: 5px;
+              font-weight: bold;
+              width: 80px;
+            }
+
+            #follow_button{
+              margin-top: 5px;
+              font-weight: bold;
+              width: 80px;
+            }
+
+            #good_button{
+              vertical-align: top;
+              font-weight: bold;
+              width: 80px;
+            }
+
+            #count{
+              border-radius: 10px;
+              padding: 2px 10px 2px 10px;
+              background-color: #FEE5E5;
+              font-weight: bold;
+              font-size: 20px;
+            }
+          }
+          #summary_box_body{
+            font-size: 17px;
+
+          }
+        }
+
+      }
+    }
+
+    #article_footer{
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
 
     }
   }
 
-  #article_footer{
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-
+  #summary_list_footer{
+    #readers{
+      text-align: right;
+    }
+    padding: 0px 0px 8px 0px;
   }
-}
 
+  //----------------------------------------	
+  //  readmore_char (for readmore.js) 
+  //----------------------------------------
+  .readmore_char{
+    padding-right: 30px;
+    font-size: 14px;
+    text-align: right;
+  }
 
-//----------------------------------------	
-//  readmore_char (for readmore.js) 
-//----------------------------------------
-.readmore_char{
-  padding-right: 30px;
-  font-size: 14px;
-  text-align: right;
 }
