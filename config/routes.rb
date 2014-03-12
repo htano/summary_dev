@@ -1,4 +1,5 @@
 SummaryDev::Application.routes.draw do
+  get "redirector/original_page"
   get "error/render_404"
   get "error/render_500"
   get "search/index"

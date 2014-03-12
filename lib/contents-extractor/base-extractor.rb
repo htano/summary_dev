@@ -143,6 +143,7 @@ class ContentsExtractor::BaseExtractor
           s.gsub!(/[\u3010][^\u3011]+[\u3011]/,"")
           s.gsub!(/[\u0028][^\u0029]+[\u0029]/,"")
           next if s =~ / \- GIGAZINE$/;
+          next if s =~ /ハムスター.*\d{4}年\d\d?月\d\d?日.*ID/;
           next if s =~ /^\d+.*\d{4}.\d{2}.\d{2}.*ID.*$/;
           next if s =~ /^[\x20-\x7E]+$/;
           s.gsub!(/>>\d+/, "")

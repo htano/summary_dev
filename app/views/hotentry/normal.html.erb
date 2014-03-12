@@ -6,26 +6,26 @@
 <% end %> 
 
 <div class="row">
-  <div class="col-md-12 hotentry-container">
+  <div class="col-xs-12 col-sm-12 col-md-12 hotentry-container">
     <div class="row">
-      <div class="hidden-sm col-md-2">
+      <div class="hidden-xs hidden-sm col-md-2">
         <%= render(:partial => "hotentry/partials/hotentrytab") %>
       </div>
-      <div class="col-md-10">
+      <div class="col-xs-12 col-sm-12 col-md-10">
         <%= render(:partial => "hotentry/partials/hotentrymenu") %>
       <% @entries.each do |e| %>
         <div class="row">
         <% if e.get_top_rated_summary %>
           <% if e.has_good_summary? %>
-            <div class="col-md-12 hotentry-row hotentry-row-with-good-summary">
+            <div class="col-xs-12 col-sm-12 col-md-12 hotentry-row hotentry-row-with-good-summary">
           <% else %>
-            <div class="col-md-12 hotentry-row hotentry-row-with-summary">
+            <div class="col-xs-12 col-sm-12 col-md-12 hotentry-row hotentry-row-with-summary">
           <% end %>
         <% else %>
-          <div class="col-md-12 hotentry-row hotentry-row-no-summary">
+          <div class="col-xs-12 col-sm-12 col-md-12 hotentry-row hotentry-row-no-summary">
         <% end %>
             <div class="row hotentry-normal-body">
-              <div class="hidden-sm col-md-2 hotentry-normal-image">
+              <div class="col-xs-12 col-sm-12 col-md-2 hotentry-normal-image">
                 <div class="hotentry-category">
                   <%= t('category.'+e.get_category_name) %>
                 </div>
@@ -35,16 +35,20 @@
                   :onerror => 'this.src="'+asset_path('no_image.png')+'"'
                 ) %>
               </div>
-              <div class="col-md-10">
+              <div class="col-xs-12 col-sm-12 col-md-10">
                 <div class="row">
-                  <div class="col-md-12 hotentry-normal-title">
-                    <a href="<%= e.url %>" target="_blank">
+                  <div class="col-xs-12 col-sm-12 col-md-12 hotentry-normal-title">
+                    <a href="<%= url_for(
+                      :controller => 'redirector',
+                      :action => 'original_page',
+                      :article_id => e.id
+                    ) %>" target="_blank">
                       <h5><%=e.title%></h5>
                     </a>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-12 hotentry-normal-contents">
+                  <div class="col-xs-12 col-sm-12 col-md-12 hotentry-normal-contents">
                     <% if e.get_top_rated_summary %>
                       <% if e.has_good_summary? %>
                         <span class="hotentry-top-summary">
@@ -70,7 +74,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-12 col-md-6 hotentry-normal-summaries">
+                  <div class="col-xs-12 col-sm-12 col-md-6 hotentry-normal-summaries">
                     <% if e.user_articles_count %>
                       <%= e.user_articles_count %>
                     <% else %>
@@ -96,14 +100,14 @@
                       <% end %>
                     </a>
                   </div>
-                  <div class="col-sm-12 col-md-6 hotentry-normal-summaries">
+                  <div class="col-xs-12 col-sm-12 col-md-6 hotentry-normal-summaries">
                     <% if e.get_top_rated_summary %>
                       <%= link_to(t('summary.view_all'),
                                   :controller => 'summary_lists',
                                   :action => 'index',
                                   :article_id => e.id) %>
                     <% else %>
-                      <%= link_to(t('summary.edit'),
+                      <%= link_to(t('summary.make_summary'),
                                   :controller => 'summary',
                                   :action => 'edit',
                                   :article_id => e.id) %>
@@ -137,7 +141,7 @@
       <% end %>
       <%= paginate(@entries) %>
       </div>
-      <div class="visible-sm">
+      <div class="visible-xs visible-sm col-xs-12 col-sm-12">
         <%= render(:partial => "hotentry/partials/hotentrytab") %>
       </div>
     </div>

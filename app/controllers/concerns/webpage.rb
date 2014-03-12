@@ -72,7 +72,7 @@ module Webpage
     c_ext = ext_fac.new_extractor(url)
     html = c_ext.openurl_wrapper(url)
     unless html
-      logger.warn("[get_webpage_element] Can't get html: #{url}")
+      Rails.logger.warn("[get_webpage_element] Can't get html: #{url}")
       return nil
     end
     if c_ext.analyze!(html)

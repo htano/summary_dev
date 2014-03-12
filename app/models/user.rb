@@ -34,6 +34,11 @@ class User < ActiveRecord::Base
   has_many :good_summaries, :dependent => :destroy
 
   # Class method
+  def self.get_readers_list(article)
+    user_ids = article.user_articles.select(:user_id)
+    return User.where(:id => user_ids)
+  end
+
   def self.get_user_by_openid(openid)
     return where(["open_id = ? and yuko_flg = ?", openid, true]).first
   end
@@ -120,7 +125,7 @@ class User < ActiveRecord::Base
     return self.save
   end
 
-  def add_cluster_id(adding_cluster_id)
+  def add_cluster_id(adding_cluster_id, add_val = 1.0)
     if adding_cluster_id != 0
       cluster_hash = Hash.new(0.0)
       if self.cluster_vector
@@ -130,7 +135,7 @@ class User < ActiveRecord::Base
             value.to_f * CLUSTER_DECAY_DELTA
         end
       end
-      cluster_hash[adding_cluster_id.to_i] += 1.0
+      cluster_hash[adding_cluster_id.to_i] += add_val
       cluster_num = 0
       new_cluster_array = Array.new
       cluster_hash.sort_by{|k,v| -v}.each do |cluster_id, value|

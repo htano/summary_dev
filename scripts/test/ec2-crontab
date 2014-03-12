@@ -1,0 +1,5 @@
+0,30 * * * * /usr/bin/curl http://enigmatic-oasis-7465.herokuapp.com/ > /dev/null 2>&1
+0 4 * * * /var/apps/summary_dev/scripts/daily-tasks.sh /var/apps/summary_dev /usr/local/rbenv/shims production >> /var/apps/summary_dev/log/daily_task.log 2>&1
+0 12 * * * /var/apps/summary_dev/tmp/statistical_report.sh >> /var/apps/summary_dev/log/admin_task.log 2>&1
+0 3,11,19 * * * /var/apps/summary_dev/scripts/test/make_news_ranking.sh /var/apps/summary_dev /usr/local/rbenv/shims production >> /var/apps/summary_dev/log/make_news_ranking.log 2>&1
+10 3,11,19 * * * /var/apps/summary_dev/scripts/test/collect_news_tweet.sh /var/apps/summary_dev /usr/local/rbenv/shims production >> /var/apps/summary_dev/log/collect_news_tweet.log 2>&1

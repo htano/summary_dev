@@ -32,19 +32,21 @@ www.slideshare.net:
   xpath: //ul[@class='transcripts h-transcripts']/li
 matome.naver.jp:
   extractor_type: xpath
-  xpath: //div[@class='mdMTMWidget01ItemQuote01' or @class='mdHeading01Desc' or @class='mdMTMWidget01ItemTweet01' or @class='mdMTMWidget01ItemComment01']//p
+#  xpath: //div[@class='mdHeading01Desc']/p[@class='mdHeading01DescTxt']/text()
+#  xpath: //div[@class='mdMTMWidget01ItemQuote01' or @class='mdHeading01Desc' or @class='mdMTMWidget01ItemTweet01' or @class='mdMTMWidget01ItemComment01']//p
+  xpath: //div[@class='mdMTMWidget01ItemQuote01' or @class='mdHeading01Desc' or @class='mdMTMWidget01ItemTweet01']//p
 togetter.com:
   extractor_type: xpath
-  xpath: //div[@class='tweet' or @class='info_description rad5 balloon_body']
+  xpath: //div[@class='tweet' or @class='info_description rad5 balloon_body']//text()
 www.jcp.or.jp:
-  #encoding: utf-8
+  encoding: shift_jis
 www.atmarkit.co.jp:
   #encoding: utf-8
   extractor_type: xpath
   xpath: //div[@class='inner']//p
 alfalfalfa.com:
   extractor_type: xpath
-  xpath: //div[@class="article-body"]//*[@class='mm' or @class='rr' or @class='news_quote' or @class='r2']
+  xpath: //div[@class="article-body"]//*[@class='mm' or @class='rr' or @class='news_quote' or @class='r2']//text()
 www.google.co.jp:
   extractor_type: xpath
   xpath: //div[@class='maia-col-7']//p
@@ -127,7 +129,7 @@ blog.livedoor.jp/dqnplus:
   xpath: //div[@class='main entry-content' or @class='mainmore']//text()
 blog.livedoor.jp/kinisoku:
   extractor_type: xpath
-  xpath: //div[@class='article_body']/span/b/span
+  xpath: //div[@class='article_body']//span//span//span//text()
 blog.livedoor.jp/uwasainfo:
   extractor_type: xpath
   xpath: //div[@class='t_b']
@@ -172,12 +174,13 @@ zinger-hole.net:
   xpath: //div[@class='main']/dl/dd
 www3.nhk.or.jp:
   extractor_type: xpath
-  xpath: //div[@class='entry']/p
+  xpath: //div[@class='entry' or @class='article' or @id='main']/p
 www.nhk.or.jp:
   extractor_type: xpath
   xpath: //div[@class='entry']/p
 himasoku.com:
-  xpath: //div[@class='article-body-inner' or @class='article-body-more']//text()
+  #xpath: //div[@class='article-body-inner' or @class='article-body-more']//text()
+  xpath: //div[@class='article-body-inner']//div[@class='t_b']|//div[@class='article-body-inner']//dd//span
   extractor_type: xpath
 bipblog.com:
   extractor_type: xpath
@@ -212,3 +215,18 @@ news24.jp:
 blog.livedoor.jp/rbkyn844:
   extractor_type: xpath
   xpath: //div[@class='article-content']//p[@class='res2']//text()
+natalie.mu:
+  extractor_type: xpath
+  xpath: //div[@id='news-text']//text()
+blog.livedoor.jp/yakiusoku:
+  extractor_type: xpath
+  xpath: //div[@class='t_b']//text()
+#hamusoku.com:
+#  extractor_type: xpath
+#  xpath: //div[@class='article-body-inner']//span[@class='res']//text()
+bylines.news.yahoo.co.jp:
+  extractor_type: xpath
+  xpath: //div[@class='rics-column bd covered']//p
+blog.livedoor.jp/goldennews:
+  extractor_type: xpath
+  xpath: //dl/dd//text()

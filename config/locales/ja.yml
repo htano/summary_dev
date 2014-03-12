@@ -21,8 +21,8 @@
 
 ja:
   article:
-    top_rated_summary: "人気の要約(グッドが多い)"
-    normal_summary: "要約(グッドがない)"
+    top_rated_summary: "人気の要約"
+    normal_summary: "要約"
     contents_preview:  "プレビュー"
     filter_only_summarized: "要約がある記事に絞る"
     delete: "削除する"
@@ -48,7 +48,9 @@ ja:
   summary:
     count: "summaries"
     count_one: "summary"
+    make_summary: "要約する"
     edit: "要約する"
+    summarize: "要約する"
     edit_the_article: "この記事を要約する"
     modify_my_summary: "自分の要約を編集する"
     edit_date: "要約日"
@@ -142,7 +144,7 @@ ja:
       truncate: "..."
   hotentry:
     personal:
-      no_entry_message: "ログインしていくつかのウェブサイトを登録すると、あなた専用のホットエントリーが作成されます"
+      no_entry_message: "ログインしていくつかのウェブサイトを閲覧・登録すると、あなた専用のホットエントリーが作成されます"
     meta_keywords: "SummaQ,サマキュー,要約,キュレーション,あとで読む,自動要約"
     meta_description: "「あとで読むをちゃんと読む」をコンセプトに作られた要約キュレーションサービス。気になるウェブサイトを登録すれば、心優しい「だれか」がそのページの要約を分かりやすくまとめてくれます。"
   consumer:
