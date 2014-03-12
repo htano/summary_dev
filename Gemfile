@@ -132,7 +132,7 @@ end
 
 gem 'okura'
 
-gem 'paperclip'
+gem 'paperclip', '3.5.2'
 gem 'aws-sdk'
 
 gem 'google-analytics-rails'
