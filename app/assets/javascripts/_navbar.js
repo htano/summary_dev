@@ -36,7 +36,7 @@ function click_dropdown_menu_search_article(){
   $("#search_nav").val("検索");
   /*$("#search_nav").val(I18n.t('search.search'));*/
   /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.search_text'));*/
-  $("#searchtext_nav").attr("placeholder","気になる言葉に関連する記事を検索しましょう！");
+  $("#searchtext_nav").attr("placeholder","気になる記事を検索しましょう！");
   $.cookie('type_nav', 1, {path: '/'});
 }
 
