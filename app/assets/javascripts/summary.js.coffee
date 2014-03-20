@@ -13,12 +13,17 @@ oldContent = ''
   document.getElementById('content').value = BLANK
 
 @clickClearButton = ->
-  if confirm "要約を消去して良いですか？"
-    document.getElementById('content').value = BLANK
-    document.getElementById('count').innerHTML = '0'
-    document.getElementById('count').setAttribute('class', 'count')
-  else
+  content = document.getElementById('content').value
+  content_num = content.replace(/\n|\r\n/g,"").length
+  if content_num is 0
     return false
+  else
+    if confirm "要約を消去して良いですか？"
+      document.getElementById('content').value = BLANK
+      document.getElementById('count').innerHTML = '0'
+      document.getElementById('count').setAttribute('class', 'count')
+    else
+      return false
 
 
 @clickEditButton = ->
@@ -36,9 +41,12 @@ oldContent = ''
       form.submit()
 
 @clickRestoreButton = ->
-  if confirm "編集内容を元に戻して良いですか？"
-    document.getElementById('content').value = oldContent
-    countContentCharacters()
+  if document.getElementById('content').value != oldContent
+    if confirm "編集内容を元に戻して良いですか？"
+      document.getElementById('content').value = oldContent
+      countContentCharacters()
+    else
+      return false
   else
     return false
 

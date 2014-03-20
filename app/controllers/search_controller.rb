@@ -72,7 +72,7 @@ class SearchController < ApplicationController
 
   def search_user
     @searchtext = params[:searchtext]
-    @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
+    @target = params[:target] == BLANK || params[:target] == nil ? "2" : params[:target]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"]).where("yuko_flg" => true)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
@@ -91,6 +91,31 @@ class SearchController < ApplicationController
 
     @users = Kaminari.paginate_array(@users).page(params[:page]).per(PAGE_PER)
 
+    render :template => "search/index"
+  end
+
+  def search_user_article
+    @article_title = ""
+    @article_id = params[:article_id]
+    @article_title = Article.find(@article_id).title
+    @target = params[:target] == BLANK || params[:target] == nil ? "3" : params[:target]
+    @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
+    @users = User.joins(:user_articles).where("user_articles.article_id" => @article_id)
+    @user_num = @users == BLANK || @users == nil ? 0 : @users.length
+
+    case @sort
+    when "1"
+      @users = @users.sort_by! {|user| user.get_followers_count }.reverse
+      @sort_menu_title = t("search.sort_follower_num")
+    when "2"
+      @users = @users.order("summaries_count desc, created_at desc")
+      @sort_menu_title = t("search.sort_summary_num")
+    else
+      flash[:error] = "Please retry."
+      redirect_to :action => "index" and return
+    end
+
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(PAGE_PER)
     render :template => "search/index"
   end
 
@@ -113,7 +138,7 @@ class SearchController < ApplicationController
         FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
       else
         respond_to do |format|
-          format.html { render :file => "#{Rails.root}/public/404.html", 
+          format.html { render :file => "#{Rails.root}/public/404.html",
                         :status => 404, :layout => false, :content_type => 'text/html'}
           format.js { render '404_error_page' and return }
         end

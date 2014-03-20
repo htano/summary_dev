@@ -5,6 +5,7 @@ SummaryDev::Application.routes.draw do
   get "search/index"
   get "search/search_article"
   get "search/search_user"
+  get "search/search_user_article"
   post "search/read"
   post "search/not_read"
   post "search/follow"
@@ -134,5 +135,7 @@ SummaryDev::Application.routes.draw do
   get 'session/consumer/:action' => 'consumer#:action'
   post 'session/consumer/:action' => 'consumer#:action'
 
-  get "*not_found" => "application#render_404"
+  unless Rails.env.development?
+    get "*not_found" => "application#render_404"
+  end
 end

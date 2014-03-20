@@ -53,3 +53,5 @@ tools/pmd/docs
 doc
 
 #Gemfile.lock
+
+rvm.env

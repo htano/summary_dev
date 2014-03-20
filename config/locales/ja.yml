@@ -126,6 +126,9 @@ ja:
     type_content: "内容"
     type_tag: "タグ"
     type_domain: "ドメイン"
+    result_article: "記事検索結果"
+    result_user: "ユーザー検索結果"
+    result_user_article: "を登録したユーザー"
   tag:
     no_tags: "設定されているタグがありません"
     no_recommend_tags: "この記事にタグは設定されていません。"
@@ -135,10 +138,12 @@ ja:
     set_tags: "タグを設定する場合は、テキストボックスに入力して下さい。"
     edit: "タグを編集"
   placeholder:
-    search_text: "気になる言葉を検索しましょう！"
+    search_text_article: "気になる言葉に関連する記事を検索しましょう！"
+    search_text_user: "ユーザーを検索しましょう！"
     input_url_text: "URLを入力して記事を登録しましょう！"
-    search_menu: "検索へ変更する"
-    add_menu: "登録へ変更する"
+    search_menu_article: "記事を検索する"
+    search_menu_user: "ユーザーを検索する"
+    add_menu: "記事を登録する"
   views:
     pagination:
       truncate: "..."
@@ -159,6 +164,7 @@ ja:
     sign_in: "サインイン"
     sign_out: "サインアウト"
     guide_url: "https://github.com/summaq/guide/wiki/manual"
+    top: "トップへ"
   settings:
     profile_setting: "プロファイル設定"
     email_setting: "メール設定"

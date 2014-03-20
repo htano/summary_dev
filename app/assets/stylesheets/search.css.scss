@@ -113,8 +113,8 @@
   width: 85%;
   .user_contents_follow, .user_contents_not_follow {
     margin: auto;
-    padding: 2px 0px 2px 0px;
     position: relative;
+    padding: 2px 0px 2px 0px;
     border-top: 4px solid #ECECEC;
     z-index: 1;
     width: 760px;
@@ -181,7 +181,7 @@
     padding: 0 0 0 70px;
   }
   #message {
-    padding: 0px 150px 0 20px;
+    padding: 0px 50px 0 20px;
     margin: 4px 10px 0 25px;
   }
   #sort {
@@ -218,7 +218,7 @@
       height: 60px;
       p a {
         color: gray;
-        font-size: 18px;
+        font-size: 20px;
       }
     }
     #url_host {
@@ -236,7 +236,7 @@
       width: 580px;
       height: 65px;
       p {
-        font-size: 10px;
+        font-size: 11px;
       }
     }
     #article_infomation {

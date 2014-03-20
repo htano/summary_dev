@@ -1,54 +1,3 @@
-<script>
-$(document).ready(function() {
-  var signed_in_status = $.cookie("signed_in_status");
-  if(signed_in_status == "true"){
-    set_type_nav();
-  } else {
-    $("#navbar_form").attr("action","/search/search_article");
-    $("#search_nav").val("検索");
-    /*$("#search_nav").val(I18n.t('search.search'));*/
-    /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.search_text'));*/
-    $("#searchtext_nav").attr("placeholder","気になる言葉を検索しましょう！");
-  }
-});
-
-function checkSearchtext(){
-  if($('#searchtext_nav').val() == ""){
-    return false;
-  }
-}
-
-function click_dropdown_manu_search(){
-  $("#navbar_form").attr("action","/search/search_article");
-  $("#navbar_form").attr("method","GET");
-  $("#search_nav").val("検索");
-  /*$("#search_nav").val(I18n.t('search.search'));*/
-  /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.search_text'));*/
-  $("#searchtext_nav").attr("placeholder","気になる言葉を検索しましょう！");
-  $.cookie('type_nav', 1, {path: '/'});
-}
-
-function click_dropdown_manu_add(){
-  $("#navbar_form").attr("action","/webpage/add_confirm");
-  $("#navbar_form").attr("method","POST");
-  $("#navbar_form").attr("add_flag","true");
-  $("#search_nav").val("登録");
-  /*$("#search_nav").val(I18n.t('webpage.add'));*/
-  /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.input_url_text'));*/
-  $("#searchtext_nav").attr("placeholder","URLを入力して記事を登録しましょう！");
-  $.cookie('type_nav', 2, {path: '/'});
-}
-
-function set_type_nav(){
-  var type_nav = $.cookie("type_nav");
-  if(type_nav == "1") {
-    click_dropdown_manu_search();
-  } else {
-    click_dropdown_manu_add();
-  }
-}
-</script>
-
 <%= form_tag({:controller => 'search', :action => 'search_article'}, {:id => 'navbar_form', :method => 'GET', :onsubmit => 'return checkSearchtext()'}) do %>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
@@ -62,17 +11,19 @@ function set_type_nav(){
           <ul class="nav pull-right">
             <li><input type="text" name="searchtext" id="searchtext_nav" value="<%= @searchtext %>" ></li>
             <li><input type="submit" id="search_nav" value="<%= t("search.search") %>" class="button button-flat:hover submit"></li>
-            <% if signed_in? %>
-              <li>
-                <div id="type_nav" class="btn-group">
-                  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-                  <ul class="dropdown-menu">
-                    <li><a href="#" onclick="click_dropdown_manu_add()"><%= t("placeholder.add_menu") %></a></li>
-                    <li><a href="#" onclick="click_dropdown_manu_search()"><%= t("placeholder.search_menu") %></a></li>
-                  </ul>
-                </div>
-              </li>
-            <% end %>
+            <li>
+              <div id="type_nav" class="btn-group">
+                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <% if signed_in? %>
+                    <li><a href="#" onclick="click_dropdown_menu_add()"><%= t("placeholder.add_menu") %></a></li>
+                  <% end %>
+                  <li><a href="#" onclick="click_dropdown_menu_search_article()"><%= t("placeholder.search_menu_article") %></a></li>
+                  <li><a href="#" onclick="click_dropdown_menu_search_user()"><%= t("placeholder.search_menu_user") %></a></li>
+                </ul>
+              </div>
+            </li>
+            <div id="backToTop"><a href="#"><%= t("navbar.top") %></a></div>
             <input type="hidden" name="add_flag" value="true">
             <input type="hidden" name="signed_in_status" value="<%= @signed_in_status %>">
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
