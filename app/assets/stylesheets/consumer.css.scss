@@ -27,7 +27,7 @@ ul.login_buttons li {
 }
 
 .login_buttons_contents {
-  width: 715px;
+  max-width: 715px;
   background: $basic-color;
   padding: 3px;
   border-radius: 3px;
@@ -36,7 +36,7 @@ ul.login_buttons li {
 }
 
 .setting_container {
-  width: 980px;
+  max-width: 980px;
   margin-left: auto;
   margin-right: auto;
   padding: 0 10px;
