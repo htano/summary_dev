@@ -4,12 +4,16 @@ $(document).ready(function() {
     set_type_nav();
   } else {
     var type_nav = $.cookie("type_nav");
-    if(type_nav == "2") {
-      click_dropdown_menu_add();
-    } else if(type_nav == "3") {
-      click_dropdown_menu_search_user();
+    if(type_nav == "3") {
+      $("#navbar_form").attr("action","/search/search_user");
+      $("#navbar_form").attr("method","GET");
+      $("#search_nav").val("検索");
+      $("#searchtext_nav").attr("placeholder","ユーザーを検索しましょう！");
     } else {
-      click_dropdown_menu_search_article();
+      $("#navbar_form").attr("action","/search/search_article");
+      $("#navbar_form").attr("method","GET");
+      $("#search_nav").val("検索");
+      $("#searchtext_nav").attr("placeholder","気になる記事を検索しましょう！");
     }
   }
 });
@@ -63,6 +67,7 @@ function click_dropdown_menu_add(){
 
 function set_type_nav(){
   var type_nav = $.cookie("type_nav");
+  alert(type_nav);
   if(type_nav == "1") {
     click_dropdown_menu_search_article();
   } else if(type_nav == "2") {
@@ -70,6 +75,6 @@ function set_type_nav(){
   } else if(type_nav == "3") {
     click_dropdown_menu_search_user();
   } else {
-    click_dropdown_menu_search_article();
+    click_dropdown_menu_add();
   }
 }
