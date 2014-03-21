@@ -67,7 +67,6 @@ function click_dropdown_menu_add(){
 
 function set_type_nav(){
   var type_nav = $.cookie("type_nav");
-  alert(type_nav);
   if(type_nav == "1") {
     click_dropdown_menu_search_article();
   } else if(type_nav == "2") {
