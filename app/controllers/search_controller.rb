@@ -102,7 +102,10 @@ class SearchController < ApplicationController
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @users = User.joins(:user_articles).where("user_articles.article_id" => @article_id)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
-    p @users.user_articles.pluck(:article_id).uniq
+    #p @users.user_articles.pluck(:article_id).uniq
+    @users.each do |user|
+      p user.user_articles.article_id
+    end
 
     case @sort
     when "1"
