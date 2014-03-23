@@ -1,0 +1,27 @@
+{
+  "name": "SummaQ!",
+  "description": "あとで読むをちゃんと読む 〜 要約キュレーションサービス",
+  "default_locale": "ja",
+  "browser_action": {
+    "default_icon": "summary.png",
+    "default_title": "Summary development",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "summary.png",
+    "48" : "summary.png"
+  },
+  "permissions": ["tabs", "http://*/", "https://*/"],
+  "manifest_version": 2,
+  "version": "0.0.1",
+  "content_scripts": [
+    {
+      "matches": ["http://*/", "https://*/"],
+      "js": ["content_script.js"],
+      "run_at" : "document_end"
+    }
+  ],
+  "background": {
+    "scripts": ["background.js", "lib/jquery-1.10.2.min.js"]
+  }
+}

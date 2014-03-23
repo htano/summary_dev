@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script type="text/javascript" src="lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap.js"></script>
+    <script type="text/javascript" src="popup.js"></script>
+    <link href="lib/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="lib/buttons.css" rel="stylesheet" type="text/css">
+    <link href="popup.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+  <h3><a href="http://localhost:3000" target="_blank">SummaQ!　あとで読むをちゃんと読む 〜 要約キュレーションサービス</a></h3>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="tabmenu1.html"><span>登録</span></a></li>
+      <li><a href="popup2.html" ><span>要約一覧</span></a></li>
+    </ul>
+
+    <div class="table">
+      <table class="table-bordered">
+        <tbody>
+          <tr id="title"></tr>
+          <tr>
+            <td><p id="title_data">(default)</p></td>
+          </tr>
+          <tr id="recommend_tag_title"></tr>
+          <tr id="recommend_tag_data">
+            <td id="recommend_tag"></td>
+          </tr>
+          <tr id="recent_tag_title"></tr>
+          <tr id="recent_tag_data">
+            <td id="recent_tag"></td>
+          </tr>
+          <tr id="my_tag_title"></tr>
+          <tr id="my_tag_data">
+            <td>
+              <div id="my_tag">
+                <input type="text" class="tag_text" name="tag_text_1" id="tag_text_1" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_2" id="tag_text_2" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_3" id="tag_text_3" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_4" id="tag_text_4" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_5" id="tag_text_5" maxlength="10"><br>
+                <input type="text" class="tag_text" name="tag_text_6" id="tag_text_6" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_7" id="tag_text_7" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_8" id="tag_text_8" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_9" id="tag_text_9" maxlength="10">
+                <input type="text" class="tag_text" name="tag_text_10" id="tag_text_10" maxlength="10">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button id="button_read_later"class="button button-flat:hover"></button>
+    <p id="comment">(default)</p>
+    <a id="link_to_login" href="http://localhost:3000/session/consumer/index" target="_blank"></a>
+    <span id="edit_summary">
+      <img src="glyphicons_030_pencil_gray.png" width="16" height="16"><a id="link_to_edit_summary" target="_blank"></a>
+    </span>
+    <span id="edit_tag">
+      <img src="glyphicons_066_tags.png" width="16" height="16"><a id="link_to_edit_tag" target="_blank"></a>
+    </span>
+    <img id="load" src="ajax-loader.gif"/>
+  </body>
+</html>
