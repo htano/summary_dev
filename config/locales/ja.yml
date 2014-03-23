@@ -129,6 +129,7 @@ ja:
     result_article: "記事検索結果"
     result_user: "ユーザー検索結果"
     result_user_article: "を登録したユーザー"
+    error: "検索に失敗しました。再度やり直して下さい。"
   tag:
     no_tags: "設定されているタグがありません"
     no_recommend_tags: "この記事にタグは設定されていません。"

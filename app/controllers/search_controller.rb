@@ -35,7 +35,7 @@ class SearchController < ApplicationController
       @articles = Article.search_by_domain(@searchtext)
       @type_text = "ドメイン"
     else
-      flash[:error] = "Please retry."
+      flash[:error] = t("search.error")
       redirect_to :action => "index" and return
     end
     unless @category == "0" or @articles == nil
@@ -60,7 +60,7 @@ class SearchController < ApplicationController
       @articles = @articles.order("user_articles_count desc, created_at desc")
       @sort_menu_title = t("search.sort_reader_num")
     else
-      flash[:error] = "Please retry."
+      flash[:error] = t("search.error")
       redirect_to :action => "index" and return
     end
 
@@ -85,7 +85,7 @@ class SearchController < ApplicationController
       @users = @users.order("summaries_count desc, created_at desc")
       @sort_menu_title = t("search.sort_summary_num")
     else
-      flash[:error] = "Please retry."
+      flash[:error] = t("search.error")
       redirect_to :action => "index" and return
     end
 
@@ -111,7 +111,7 @@ class SearchController < ApplicationController
       @users = @users.order("summaries_count desc, created_at desc")
       @sort_menu_title = t("search.sort_summary_num")
     else
-      flash[:error] = "Please retry."
+      flash[:error] = t("search.error")
       redirect_to :action => "index" and return
     end
 
