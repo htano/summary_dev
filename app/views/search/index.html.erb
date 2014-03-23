@@ -53,6 +53,9 @@ toggleUnfollowBtn();
       <input type="hidden" name="target" id="target" value="<%= @target %>">
       <input type="hidden" name="type" id="type" value="<%= @type %>">
       <input type="hidden" name="category" id="category" value="<%= @category %>">
+      <% if @target == "3" %>
+        <%= render :template => "/search/_recommend_article" %>
+      <% end %>
     </div>
   </div>
 </form>
