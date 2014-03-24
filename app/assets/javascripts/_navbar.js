@@ -32,6 +32,12 @@ function checkSearchtext(){
     $("#searchtext_nav").attr("placeholder","何か入力してボタンを押して下さい！");
     return false;
   }
+  var type_nav = $.cookie("type_nav");
+  if(type_nav == "2" && !$('#searchtext_nav').val().match(/(https?|ftp):\/\/.+/i)){
+    $("#searchtext_nav").val("");
+    $("#searchtext_nav").attr("placeholder","URL形式で入力して下さい！");
+    return false;
+  }
 }
 
 function click_dropdown_menu_search_article(){
