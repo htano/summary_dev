@@ -102,10 +102,9 @@ class SearchController < ApplicationController
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @users = User.joins(:user_articles).where("user_articles.article_id" => @article_id)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
-    #p @users.user_articles.pluck(:article_id).uniq
-    @users.each do |user|
-      p user.user_articles.article_id
-    end
+    @users.scoped.pluck(:id)
+    #作成中
+    @recommend_article_id =  UserArticle.where(["user_id in (?)", @users]).group(:article_id).order("count_article_id desc").count(:article_id).keys
 
     case @sort
     when "1"
