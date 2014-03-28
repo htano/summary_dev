@@ -1,2 +1,2 @@
 source_url	paging_rule	xpath	exclude_string
-http://b.hatena.ne.jp/entrylist/economics?of=___PAGE_FROM___	0,20,200	//div[@class="box-wrap box4 top"]//h3[@class="hb-entry-link-container"]/a	
+http://b.hatena.ne.jp/entrylist/economics?of=___PAGE_FROM___	0,20,200	//div[@class="box1_1"]//h3[@class="hb-entry-link-container"]/a	
