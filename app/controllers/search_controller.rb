@@ -65,8 +65,6 @@ class SearchController < ApplicationController
     end
 
     @articles = @articles.page(params[:page]).per(PAGE_PER)
-    #ap @articles
-
     render :template => "search/index"
   end
 
@@ -90,7 +88,6 @@ class SearchController < ApplicationController
     end
 
     @users = Kaminari.paginate_array(@users).page(params[:page]).per(PAGE_PER)
-
     render :template => "search/index"
   end
 
@@ -103,8 +100,13 @@ class SearchController < ApplicationController
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @users = User.joins(:user_articles).where("user_articles.article_id" => @article_id)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
-    @users.scoped.pluck(:id)
-    recommend_article_id =  UserArticle.where(["user_id in (?)", @users]).group(:article_id).order("count_article_id desc").count(:article_id).keys
+    recommend_article_id =  UserArticle.where(["user_id in (?)", @users.scoped.pluck(:id)]).group(:article_id).order("count_article_id desc").count(:article_id).keys
+=begin
+    p "!!!!!"
+    ap recommend_article_id =  UserArticle.where(["user_id in (?)", @users.scoped.pluck(:id)])
+    p "!!!!!"
+    #.group(:article_id).order("count_article_id desc").count(:article_id).keys
+=end
     @recommend_articles = Article.where(["id in (?) and category_id = ? and id != ?", recommend_article_id, category_id, @article_id])
 
     case @sort
