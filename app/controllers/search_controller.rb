@@ -95,16 +95,15 @@ class SearchController < ApplicationController
   end
 
   def search_user_article
-    @article_title = ""
     @article_id = params[:article_id]
-    @article_title = Article.find(@article_id).title
+    article = Article.find(@article_id)
+    @article_title = article.title
+    category_id = article.category_id
     @target = params[:target] == BLANK || params[:target] == nil ? "3" : params[:target]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
     @users = User.joins(:user_articles).where("user_articles.article_id" => @article_id)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
     @users.scoped.pluck(:id)
-    #作成中
-    category_id = Article.find(@article_id).category_id
     recommend_article_id =  UserArticle.where(["user_id in (?)", @users]).group(:article_id).order("count_article_id desc").count(:article_id).keys
     @recommend_articles = Article.where(["id in (?) and category_id = ? and id != ?", recommend_article_id, category_id, @article_id])
 
