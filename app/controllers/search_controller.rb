@@ -106,7 +106,7 @@ class SearchController < ApplicationController
     #作成中
     category_id = Article.find(@article_id).category_id
     recommend_article_id =  UserArticle.where(["user_id in (?)", @users]).group(:article_id).order("count_article_id desc").count(:article_id).keys
-    @recommend_articles = Article.where(["id in (?) and category_id = ?", recommend_article_id, category_id])
+    @recommend_articles = Article.where(["id in (?) and category_id = ? and id != ?", recommend_article_id, category_id, @article_id])
 
     case @sort
     when "1"
