@@ -104,7 +104,9 @@ class SearchController < ApplicationController
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
     @users.scoped.pluck(:id)
     #作成中
-    @recommend_article_id =  UserArticle.where(["user_id in (?)", @users]).group(:article_id).order("count_article_id desc").count(:article_id).keys
+    category_id = Article.find(@article_id).category_id
+    recommend_article_id =  UserArticle.where(["user_id in (?)", @users]).group(:article_id).order("count_article_id desc").count(:article_id).keys
+    @recommend_articles = Article.where(["id in (?) and category_id = ?", recommend_article_id, category_id])
 
     case @sort
     when "1"
