@@ -28,7 +28,7 @@ describe SearchController do
       expect(assigns[:category]).to eq "0"
       expect(assigns[:articles]).to eq nil
       expect(assigns[:article_num]).to eq 0
-      expect(assigns[:type_text]).to eq "タイトル＆本文"
+      expect(assigns[:type_text]).to eq "内容"
       expect(assigns[:sort_menu_title]).to eq nil
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
@@ -41,7 +41,7 @@ describe SearchController do
       expect(assigns[:category]).to eq "0"
       expect(assigns[:articles]).to eq nil
       expect(assigns[:article_num]).to eq 0
-      expect(assigns[:type_text]).to eq "タイトル＆本文"
+      expect(assigns[:type_text]).to eq "内容"
       expect(assigns[:sort_menu_title]).to eq nil
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
@@ -54,7 +54,7 @@ describe SearchController do
       expect(assigns[:category]).to eq "0"
       expect(assigns[:articles]).to eq nil
       expect(assigns[:article_num]).to eq 0
-      expect(assigns[:type_text]).to eq "タイトル＆本文"
+      expect(assigns[:type_text]).to eq "内容"
       expect(assigns[:sort_menu_title]).to eq nil
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
@@ -67,7 +67,7 @@ describe SearchController do
       expect(assigns[:category]).to eq "0"
       expect(assigns[:articles]).to eq nil
       expect(assigns[:article_num]).to eq 0
-      expect(assigns[:type_text]).to eq "タイトル＆本文"
+      expect(assigns[:type_text]).to eq "内容"
       expect(assigns[:sort_menu_title]).to eq nil
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end
@@ -80,7 +80,7 @@ describe SearchController do
       expect(assigns[:category]).to eq "0"
       expect(assigns[:articles]).to eq nil
       expect(assigns[:article_num]).to eq 0
-      expect(assigns[:type_text]).to eq "タイトル＆本文"
+      expect(assigns[:type_text]).to eq "内容"
       expect(assigns[:sort_menu_title]).to eq nil
       expect(response).to redirect_to :controller => 'search',:action => 'index'
     end

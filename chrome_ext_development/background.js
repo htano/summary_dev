@@ -1,7 +1,7 @@
 var BLANK = ""
 var current_tab = {};
 var counter = 0;
-var SERVICE_HOSTNAME = "www.summaq.net";
+var SERVICE_HOSTNAME = "localhost:3000";
 
 chrome.tabs.onSelectionChanged.addListener(function(tabid){
   chrome.tabs.get(tabid, function(tab){

@@ -1,0 +1,15 @@
+<% if @recommend_articles.length == 0 %>
+ <span id="recommend_text"><%= t("search.no_recommend") %></span>  
+<% else %>
+ <span id="recommend_text"><%= t("search.recommend_text") %></span>
+  <% @recommend_articles[0, 5].each do |recommend_article| %>
+    <div class="row recommend_article_row">
+      <div class="col-md-4 recommend_article_thumbnail">
+        <%= image_tag(recommend_article.get_thumbnail, :onerror => 'this.src="'+asset_path('no_image.png')+'"') %>
+      </div>
+      <div class="col-md-7 recommend_article_title">
+        <%= link_to recommend_article.title[0, 45] , {:controller =>"summary_lists", :action => "index", :article_id => recommend_article.id} %>
+      </div>
+    </div><br>
+  <% end %>
+<% end %>

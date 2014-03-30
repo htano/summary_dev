@@ -375,3 +375,32 @@
   margin-top: 10px;
   border: 1px solid #d8d8d8;
 }
+
+.recommend_article_thumbnail{
+  margin-left: 5px;
+  img {
+    max-height: 60px;
+    max-width: 60px;
+    display: block;
+    margin: auto;
+  }
+}
+
+.recommend_article_title{
+  //padding-left: 0px;
+  //margin: auto;
+  font-size: 11px;
+}
+
+.recommend_article_row{
+　　padding: 10px;
+  //border: 1px solid #d8d8d8;
+}
+
+#recommend_text{
+  margin-left: 5px;
+  //text-align: center;
+  font-size: 12px;
+  color: gray;
+  width: 200px;
+}

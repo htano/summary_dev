@@ -129,6 +129,9 @@ ja:
     result_article: "記事検索結果"
     result_user: "ユーザー検索結果"
     result_user_article: "を登録したユーザー"
+    error: "検索に失敗しました。再度やり直して下さい。"
+    recommend_text: "関連ありそうな記事"
+    no_recommend: "関連ある記事はありません。"
   tag:
     no_tags: "設定されているタグがありません"
     no_recommend_tags: "この記事にタグは設定されていません。"
@@ -138,7 +141,7 @@ ja:
     set_tags: "タグを設定する場合は、テキストボックスに入力して下さい。"
     edit: "タグを編集"
   placeholder:
-    search_text_article: "気になる言葉に関連する記事を検索しましょう！"
+    search_text_article: "気になる記事を検索しましょう！"
     search_text_user: "ユーザーを検索しましょう！"
     input_url_text: "URLを入力して記事を登録しましょう！"
     search_menu_article: "記事を検索する"

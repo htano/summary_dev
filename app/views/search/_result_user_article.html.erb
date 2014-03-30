@@ -1,17 +1,17 @@
 <% if @user_num == 0 %>
   <div id="result_operation">
-    <% if @article_title.length < 30 %>
+    <% if @article_title.length < 25 %>
       <span id="message"><%= @article_title %><%= t("search.result_user_article") %></span>
     <% else %>
-      <span id="message"><%= @article_title[0,30] + "..." %><%= t("search.result_user_article") %></span>
+      <span id="message"><%= @article_title[0,25] + "..." %><%= t("search.result_user_article") %></span>
     <% end %>
   </div>
 <% else %>
   <div id="result_operation">
-    <% if @article_title.length < 30 %>
+    <% if @article_title.length < 25 %>
       <span id="message"><%= @article_title %><%= t("search.result_user_article") %></span>
     <% else %>
-      <span id="message"><%= @article_title[0,30] + "..." %><%= t("search.result_user_article") %></span>
+      <span id="message"><%= @article_title[0,25] + "..." %><%= t("search.result_user_article") %></span>
     <% end %>
     <span id="sort">
       <div class="btn-group sort-split-btn">

@@ -4,12 +4,16 @@ $(document).ready(function() {
     set_type_nav();
   } else {
     var type_nav = $.cookie("type_nav");
-    if(type_nav == "2") {
-      click_dropdown_menu_add();
-    } else if(type_nav == "3") {
-      click_dropdown_menu_search_user();
+    if(type_nav == "3") {
+      $("#navbar_form").attr("action","/search/search_user");
+      $("#navbar_form").attr("method","GET");
+      $("#search_nav").val("検索");
+      $("#searchtext_nav").attr("placeholder","ユーザーを検索しましょう！");
     } else {
-      click_dropdown_menu_search_article();
+      $("#navbar_form").attr("action","/search/search_article");
+      $("#navbar_form").attr("method","GET");
+      $("#search_nav").val("検索");
+      $("#searchtext_nav").attr("placeholder","気になる記事を検索しましょう！");
     }
   }
 });
@@ -28,6 +32,12 @@ function checkSearchtext(){
     $("#searchtext_nav").attr("placeholder","何か入力してボタンを押して下さい！");
     return false;
   }
+  var type_nav = $.cookie("type_nav");
+  if(type_nav == "2" && !$('#searchtext_nav').val().match(/(https?|ftp):\/\/.+/i)){
+    $("#searchtext_nav").val("");
+    $("#searchtext_nav").attr("placeholder","URL形式で入力して下さい！");
+    return false;
+  }
 }
 
 function click_dropdown_menu_search_article(){
@@ -36,7 +46,7 @@ function click_dropdown_menu_search_article(){
   $("#search_nav").val("検索");
   /*$("#search_nav").val(I18n.t('search.search'));*/
   /*$("#searchtext_nav").attr("placeholder",I18n.t('placeholder.search_text'));*/
-  $("#searchtext_nav").attr("placeholder","気になる言葉に関連する記事を検索しましょう！");
+  $("#searchtext_nav").attr("placeholder","気になる記事を検索しましょう！");
   $.cookie('type_nav', 1, {path: '/'});
 }
 
@@ -70,6 +80,6 @@ function set_type_nav(){
   } else if(type_nav == "3") {
     click_dropdown_menu_search_user();
   } else {
-    click_dropdown_menu_search_article();
+    click_dropdown_menu_add();
   }
 }
