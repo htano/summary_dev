@@ -72,7 +72,7 @@ class SearchController < ApplicationController
     @searchtext = params[:searchtext]
     @target = params[:target] == BLANK || params[:target] == nil ? "2" : params[:target]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
-    @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"]).where("yuko_flg" => true)
+    @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"]).where("public_flg = ? and yuko_flg = ?", true ,true)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
 
     case @sort
@@ -98,7 +98,7 @@ class SearchController < ApplicationController
     category_id = article.category_id
     @target = params[:target] == BLANK || params[:target] == nil ? "3" : params[:target]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
-    @users = User.joins(:user_articles).where("user_articles.article_id" => @article_id)
+    @users = User.joins(:user_articles).where("user_articles.article_id" => @article_id).where("public_flg = ? and yuko_flg = ?", true ,true)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
     recommend_article_id =  UserArticle.where(["user_id in (?)", @users.scoped.pluck(:id)]).group(:article_id).order("count_article_id desc").count(:article_id).keys
 =begin
