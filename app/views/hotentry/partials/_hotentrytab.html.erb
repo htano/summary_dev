@@ -4,24 +4,24 @@
     <li>
     <% if @category_name == 'personal' %>
       <%= link_to(t('category.personal'),
-                  {:action => "index", 
-                   :category => 'personal'}, 
+                  {:action => "index"}, 
                    :class => 'selected') %>
     <% else %>
       <%= link_to(t('category.personal'),
-                  {:action => "index",
-                   :category => 'personal'}) %>
+                  {:action => "index"}) %>
     <% end %>
     </li>
 
     <li>
     <% if @category_name == 'all' %>
       <%= link_to(t('category.all'), 
-                  {:action => "index"}, 
-                  :class => 'selected') %>
+                  {:action => "index",
+                   :category => 'all'}, 
+                   :class => 'selected') %>
     <% else %>
       <%= link_to(t('category.all'), 
-                  {:action => "index"}) %>
+                  {:action => "index",
+                   :category => 'all'}) %>
     <% end %>
     </li>
 
