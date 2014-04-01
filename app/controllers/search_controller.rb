@@ -72,7 +72,7 @@ class SearchController < ApplicationController
     @searchtext = params[:searchtext]
     @target = params[:target] == BLANK || params[:target] == nil ? "2" : params[:target]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
-    @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"]).where("yuko_flg" => true)
+    @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"]).where("public_flg = ? and yuko_flg = ?", true ,true)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
 
     case @sort
@@ -98,15 +98,9 @@ class SearchController < ApplicationController
     category_id = article.category_id
     @target = params[:target] == BLANK || params[:target] == nil ? "3" : params[:target]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
-    @users = User.joins(:user_articles).where("user_articles.article_id" => @article_id)
+    @users = User.joins(:user_articles).where("user_articles.article_id" => @article_id).where("public_flg = ? and yuko_flg = ?", true ,true)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
     recommend_article_id =  UserArticle.where(["user_id in (?)", @users.scoped.pluck(:id)]).group(:article_id).order("count_article_id desc").count(:article_id).keys
-=begin
-    p "!!!!!"
-    ap recommend_article_id =  UserArticle.where(["user_id in (?)", @users.scoped.pluck(:id)])
-    p "!!!!!"
-    #.group(:article_id).order("count_article_id desc").count(:article_id).keys
-=end
     @recommend_articles = Article.where(["id in (?) and category_id = ? and id != ?", recommend_article_id, category_id, @article_id])
 
     case @sort
@@ -155,7 +149,6 @@ class SearchController < ApplicationController
     # for renewing followers number on profile view
     @num = FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]})
     @follower_num = "followers" + "<br>" + @num.to_s
-
     respond_to do |format|
       format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
       format.js
@@ -178,7 +171,6 @@ class SearchController < ApplicationController
     @user_id = params[:unfollow_user_id]
     @follower_num = "followers" + "<br>" +
                     FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:unfollow_user_id]}).to_s
-
     respond_to do |format|
       format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
       format.js
