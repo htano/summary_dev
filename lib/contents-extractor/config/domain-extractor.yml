@@ -20,7 +20,6 @@ marketing.itmedia.co.jp:
   xpath: //div[@class='inner']//p
 www.yomiuri.co.jp:
   extractor_type: defalut
-  encoding: shift_jis
 karapaia.livedoor.biz:
   extractor_type: defalut
   #encoding: utf-8

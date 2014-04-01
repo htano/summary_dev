@@ -80,7 +80,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private
+  def force_login
+    if Rails.env.production? || Rails.env.development?
+      if !signed_in? && controller_name != 'consumer'
+        redirect_to(:controller => 'consumer',
+                    :action => 'index')
+      end
+    end
+  end
+
   def set_signed_in_status
     cookies[:signed_in_status] = { :value => signed_in? }
   end
@@ -91,6 +99,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  before_filter :exec_authenticate
+  before_filter :exec_authenticate, :force_login
   after_filter :set_signed_in_status
 end
