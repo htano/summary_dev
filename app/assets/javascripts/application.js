@@ -16,3 +16,8 @@
 //= require_tree .
 //= require i18n
 //= require i18n/translations
+//= require zeroclipboard
+
+$(document).ready(function() {
+  var clip = new ZeroClipboard($("#d_clip_button"))
+});

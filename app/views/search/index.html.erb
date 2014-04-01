@@ -14,7 +14,11 @@ toggleUnfollowBtn();
   <div id="search_main">
     <div id="operation_area">
       <div id="operation">
-        <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="<%= t("placeholder.search_text") %>">
+        <% if @target == "1" %>
+          <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="<%= t("placeholder.search_text_article") %>">
+        <% elsif @target == "2" %>
+          <input type="text" name="searchtext" id="searchtext" value="<%= @searchtext %>" placeholder="<%= t("placeholder.search_text_user") %>">
+        <% end %>
         <input type="submit" id="search" value="<%= t("search.search") %>" class="button button-flat:hover submit"><br>
       </div>
     </div>
@@ -40,15 +44,18 @@ toggleUnfollowBtn();
         <div class="select_area">
           <br>
             <span id="category_all"><%= t("category.all") %></span><br>
-          <% Category.all.each do |c| %>
-            <span id="category_<%= c.name %>"><%= t("category."+c.name) %></span><br>
-          <% end %>
+            <% Category.all.each do |c| %>
+              <span id="category_<%= c.name %>"><%= t("category."+c.name) %></span><br>
+            <% end %>
           <br>
         </div>
       </div>
       <input type="hidden" name="target" id="target" value="<%= @target %>">
       <input type="hidden" name="type" id="type" value="<%= @type %>">
       <input type="hidden" name="category" id="category" value="<%= @category %>">
+      <% if @target == "3" %>
+        <%= render :template => "/search/_recommend_article" %>
+      <% end %>
     </div>
   </div>
 </form>
@@ -57,6 +64,8 @@ toggleUnfollowBtn();
     <%= render :template => "/search/_result_article" %>
   <% elsif @target == "2" %>
     <%= render :template => "/search/_result_user" %>
+  <% elsif @target == "3" %>
+    <%= render :template => "/search/_result_user_article" %>
   <% else %>
   <% end %>
 </div>

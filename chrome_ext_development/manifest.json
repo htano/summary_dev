@@ -1,10 +1,10 @@
 {
   "name": "SummaQ!",
-  "description": "あとで読むをちゃんと読む 〜 要約キュレーションサービス",
+  "description": "あとで読むをちゃんと読む 〜 要約キュレーションサービス(テスト用)",
   "default_locale": "ja",
   "browser_action": {
     "default_icon": "summary.png",
-    "default_title": "SummaQ",
+    "default_title": "SummaQ development",
     "default_popup": "popup.html"
   },
   "icons": {

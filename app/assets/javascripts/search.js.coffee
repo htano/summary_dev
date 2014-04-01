@@ -6,6 +6,7 @@ BLANK = ''
 
 @checkSearchtext_search = ->
   if $("#searchtext").val() == BLANK
+    $("#searchtext").attr("placeholder","何か入力してボタンを押して下さい！")
     return false
 
 @hide_navbar_text = ->
@@ -27,6 +28,12 @@ BLANK = ''
       set_target_user_selected()
       $(".type_area").hide 10
       $(".category_area").hide 10
+    when "3"
+      $(".target_area").hide 10
+      $(".type_area").hide 10
+      $(".category_area").hide 10
+      $("#searchtext").hide 10
+      $("#search").hide 10
 
   switch type
     when "1"
@@ -58,21 +65,27 @@ BLANK = ''
 
 $ ->
   $("#target_article").click ->
+    if $("#searchtext").val() == BLANK
+      $("#searchtext").attr("placeholder","何か入力してボタンを押して下さい！")
+      return false
     $(".type_area").show 10
     $(".category_area").show 10
     set_target_article_selected()
     $("#target").val(1)
-    unless $("#searchtext").val() == BLANK
-      $("#search_form").submit()
+#    unless $("#searchtext").val() == BLANK
+    $("#search_form").submit()
 
 $ ->
   $("#target_user").click ->
+    if $("#searchtext").val() == BLANK
+      $("#searchtext").attr("placeholder","何か入力してボタンを押して下さい！")
+      return false
     $(".type_area").hide 10
     $(".category_area").hide 10
     set_target_user_selected()
     $("#target").val(2)
-    unless $("#searchtext").val() == BLANK
-      $("#search_form").submit()
+#    unless $("#searchtext").val() == BLANK
+    $("#search_form").submit()
 
 $ ->
   $("#type_content").click ->

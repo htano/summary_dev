@@ -1,10 +1,10 @@
 <% if @article_num == 0 %>
   <div id="result_operation">
-    <span id="message"><%= @searchtext[0,10] %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
+    <span id="message"><%= @searchtext[0,10] %> <%= @type_text %> <%= t("search.result_article") %> <%= @article_num %>件</span>
   </div>
 <% else %>
   <div id="result_operation">
-    <span id="message"><%= @searchtext[0,10] %>の <%= @type_text %> 検索結果 <%= @article_num %>件</span>
+    <span id="message"><%= @searchtext[0,10] %> <%= @type_text %> <%= t("search.result_article") %> <%= @article_num %>件</span>
     <% if get_login_user %>
     <span>
       <input type="checkbox" id="not_read_only"><%= t("article.filter_only_not_read") %></span>
@@ -40,16 +40,18 @@
       <div id="article_infomation">
         <div id="summary_num">
           <% if article.summaries_count == 1 %>
-            <%= link_to article.summaries.length.to_s+t("summary.count_one") , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>
+            <%= link_to article.summaries_count.to_s+t("summary.count_one") , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>
           <% else %>
-            <%= link_to article.summaries.length.to_s+t("summary.count") , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>
+            <%= link_to article.summaries_count.to_s+t("summary.count") , {:controller =>"summary_lists", :action => "index", :article_id => article.id} %>
           <% end %>
         </div>
         <div id="user_article_num">
-          <% if article.user_articles.length == 1 %>
-            <p><%= article.user_articles.length.to_s+t("reader.count_one") %></p>
+          <% if article.user_articles_count == 1 %>
+            <%= link_to article.user_articles_count.to_s+t("reader.count_one") , {:controller =>"search", :action => "search_user_article", :article_id => article.id} %>
+<!--            <p><%= article.user_articles_count.to_s+t("reader.count_one") %></p>-->
           <% else %>
-            <p><%= article.user_articles.length.to_s+t("reader.count") %></p>
+            <%= link_to article.user_articles_count.to_s+t("reader.count") , {:controller =>"search", :action => "search_user_article", :article_id => article.id} %>
+<!--            <p><%= article.user_articles_count.to_s+t("reader.count") %></p>-->
           <% end %>
         </div>
       </div>
@@ -64,7 +66,11 @@
         <%= image_tag(article.get_thumbnail, :onerror => 'this.src="'+asset_path('no_image.png')+'"') %>
       </div>
       <div id="url_host">
-        <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host[0,30] , {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
+        <% if URI(article.url).host.length < 20 %>
+          <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host, {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
+        <% else %>
+          <p><%= image_tag "http://favicon.hatena.ne.jp/?url=" + article.url %><%= link_to URI(article.url).host[0,20] + "..." , {:controller =>"search", :action => "search_article", :searchtext => URI(article.url).host, :type => "3", :sort => "1"} %></p>
+        <% end %>
       </div>
       <div id="contents_preview">
         <p><%= article.get_contents_preview %></p>

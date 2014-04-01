@@ -27,15 +27,15 @@ class SearchController < ApplicationController
     case @type
     when "1"
       @articles = Article.search_by_content(@searchtext)
-      @type_text = "タイトル＆本文"
+      @type_text = t("search.type_content")
     when "2"
       @articles = Article.search_by_tag(@searchtext)
-      @type_text = "タグ"
+      @type_text = t("search.type_tag")
     when "3"
       @articles = Article.search_by_domain(@searchtext)
-      @type_text = "ドメイン"
+      @type_text = t("search.type_domain")
     else
-      flash[:error] = "Please retry."
+      flash[:error] = t("search.error")
       redirect_to :action => "index" and return
     end
     unless @category == "0" or @articles == nil
@@ -60,21 +60,19 @@ class SearchController < ApplicationController
       @articles = @articles.order("user_articles_count desc, created_at desc")
       @sort_menu_title = t("search.sort_reader_num")
     else
-      flash[:error] = "Please retry."
+      flash[:error] = t("search.error")
       redirect_to :action => "index" and return
     end
 
     @articles = @articles.page(params[:page]).per(PAGE_PER)
-    #ap @articles
-
     render :template => "search/index"
   end
 
   def search_user
     @searchtext = params[:searchtext]
-    @target = params[:target] == BLANK || params[:target] == nil ? "1" : params[:target]
+    @target = params[:target] == BLANK || params[:target] == nil ? "2" : params[:target]
     @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
-    @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"]).where("yuko_flg" => true)
+    @users = User.where(["name LIKE ? or full_name LIKE ?", "%"+@searchtext+"%", "%"+@searchtext+"%"]).where("public_flg = ? and yuko_flg = ?", true ,true)
     @user_num = @users == BLANK || @users == nil ? 0 : @users.length
 
     case @sort
@@ -85,12 +83,39 @@ class SearchController < ApplicationController
       @users = @users.order("summaries_count desc, created_at desc")
       @sort_menu_title = t("search.sort_summary_num")
     else
-      flash[:error] = "Please retry."
+      flash[:error] = t("search.error")
       redirect_to :action => "index" and return
     end
 
     @users = Kaminari.paginate_array(@users).page(params[:page]).per(PAGE_PER)
+    render :template => "search/index"
+  end
 
+  def search_user_article
+    @article_id = params[:article_id]
+    article = Article.find(@article_id)
+    @article_title = article.title
+    category_id = article.category_id
+    @target = params[:target] == BLANK || params[:target] == nil ? "3" : params[:target]
+    @sort = params[:sort] == BLANK || params[:sort] == nil ? "1" : params[:sort]
+    @users = User.joins(:user_articles).where("user_articles.article_id" => @article_id).where("public_flg = ? and yuko_flg = ?", true ,true)
+    @user_num = @users == BLANK || @users == nil ? 0 : @users.length
+    recommend_article_id =  UserArticle.where(["user_id in (?)", @users.scoped.pluck(:id)]).group(:article_id).order("count_article_id desc").count(:article_id).keys
+    @recommend_articles = Article.where(["id in (?) and category_id = ? and id != ?", recommend_article_id, category_id, @article_id])
+
+    case @sort
+    when "1"
+      @users = @users.sort_by! {|user| user.get_followers_count }.reverse
+      @sort_menu_title = t("search.sort_follower_num")
+    when "2"
+      @users = @users.order("summaries_count desc, created_at desc")
+      @sort_menu_title = t("search.sort_summary_num")
+    else
+      flash[:error] = t("search.error")
+      redirect_to :action => "index" and return
+    end
+
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(PAGE_PER)
     render :template => "search/index"
   end
 
@@ -113,7 +138,7 @@ class SearchController < ApplicationController
         FavoriteUser.create(:user_id => @current_user.id, :favorite_user_id => params[:follow_user_id])
       else
         respond_to do |format|
-          format.html { render :file => "#{Rails.root}/public/404.html", 
+          format.html { render :file => "#{Rails.root}/public/404.html",
                         :status => 404, :layout => false, :content_type => 'text/html'}
           format.js { render '404_error_page' and return }
         end
@@ -124,7 +149,6 @@ class SearchController < ApplicationController
     # for renewing followers number on profile view
     @num = FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:follow_user_id]})
     @follower_num = "followers" + "<br>" + @num.to_s
-
     respond_to do |format|
       format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
       format.js
@@ -138,16 +162,15 @@ class SearchController < ApplicationController
       @current_user.favorite_users.find_by_favorite_user_id(params[:unfollow_user_id]).destroy
     else
       respond_to do |format|
-        format.html { render :file => "#{Rails.root}/public/404.html", 
+        format.html { render :file => "#{Rails.root}/public/404.html",
                       :status => 404, :layout => false, :content_type => 'text/html'}
         format.js { render '404_error_page' and return }
       end
     end
 
     @user_id = params[:unfollow_user_id]
-    @follower_num = "followers" + "<br>" + 
+    @follower_num = "followers" + "<br>" +
                     FavoriteUser.count(:all, :conditions => {:favorite_user_id => params[:unfollow_user_id]}).to_s
-
     respond_to do |format|
       format.html { redirect_to :action => "index", :name => User.find(@user_id).name }
       format.js

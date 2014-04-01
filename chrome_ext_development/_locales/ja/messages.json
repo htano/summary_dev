@@ -1,0 +1,33 @@
+/* message.json */
+{
+  "read_later": {
+    "message": "登録"
+  },
+  "login": {
+    "message": "ログイン"
+  },
+  "edit_summary": {
+    "message": "要約投稿"
+  },
+  "edit_tag": {
+    "message": "タグ編集"
+  },
+  "title": {
+    "message": "タイトル"
+  },
+  "recommend_tag": {
+    "message": "この記事に対して設定されている人気のタグ"
+  },
+  "recent_tag": {
+    "message": "最近貴方が設定したタグ"
+  },
+  "my_tag": {
+    "message": "タグを設定する場合は、テキストボックスに入力して下さい。"
+  },
+  "not_login": {
+    "message": "ログインして下さい。"
+  },
+  "no_summary": {
+    "message": "この記事に対する要約は投稿されていません。"
+  }
+}

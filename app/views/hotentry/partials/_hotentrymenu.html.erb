@@ -9,6 +9,24 @@
 </script>
 
 <div class="row">
+  <% if !signed_in? %>
+  <div class="hotentry-profile visible-xs visible-sm col-xs-12 col-sm-12">
+    <a href="<%= url_for(:controller => 'consumer', :action => 'index')%>">
+      <%=t('navbar.sign_in')%>
+    </a>
+  </div>
+  <% else %>
+  <div class="hotentry-profile visible-xs visible-sm col-xs-8 col-sm-8">
+    <%= render_user_name %>
+  </div>
+  <div class="hotentry-profile visible-xs visible-sm col-xs-4 col-sm-4">
+    <a href="<%= url_for(:controller => 'consumer', :action => 'sign_out')%>">
+      <%=t('navbar.sign_out')%>
+    </a>
+  </div>
+  <% end %>
+</div>
+<div class="row">
   <div class="col-md-offset-7 col-xs-12 col-sm-12 col-md-5">
     <ul class="socialBtn">
       <li class="socialBtnFb">

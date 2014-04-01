@@ -25,7 +25,7 @@ class HotentryController < ApplicationController
     if params[:category]
       @category_name = params[:category]
     else
-      @category_name = 'all'
+      @category_name = 'personal'
     end
     cookies[:hotentry_view_type] = { :value => 'normal' }
     if @category_name == 'personal'
@@ -47,7 +47,7 @@ class HotentryController < ApplicationController
     if params[:category]
       @category_name = params[:category]
     else
-      @category_name = 'all'
+      @category_name = 'personal'
     end
     cookies[:hotentry_view_type] = { :value => 'small' }
     @order = 1
@@ -75,7 +75,7 @@ class HotentryController < ApplicationController
     if params[:category]
       @category_name = params[:category]
     else
-      @category_name = 'all'
+      @category_name = 'personal'
     end
     cookies[:hotentry_view_type] = { :value => 'large' }
     if @category_name == 'personal'
