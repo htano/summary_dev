@@ -37,12 +37,21 @@
               </div>
               <div class="col-xs-12 col-sm-12 col-md-10">
                 <div class="row">
-                  <div class="col-xs-12 col-sm-12 col-md-12 hotentry-normal-title">
+                  <div class="hidden-xs hidden-sm col-md-12 col-lg-12 hotentry-normal-title">
                     <a href="<%= url_for(
                       :controller => 'redirector',
                       :action => 'original_page',
                       :article_id => e.id
                     ) %>" target="_blank">
+                      <h5><%=e.title%></h5>
+                    </a>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 hidden-md hidden-lg hotentry-normal-title">
+                    <a href="<%= url_for(
+                      :controller => 'redirector',
+                      :action => 'original_page',
+                      :article_id => e.id
+                    ) %>">
                       <h5><%=e.title%></h5>
                     </a>
                   </div>
