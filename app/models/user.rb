@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   # Class method
   def self.get_readers_list(article)
     user_ids = article.user_articles.select(:user_id)
-    return User.where(:id => user_ids)
+    return User.where(:id => user_ids).where(:yuko_flg => true).where(:public_flg => true)
   end
 
   def self.get_user_by_openid(openid)
